@@ -2448,6 +2448,1314 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'campaign-list',
+  props: ['oBrandboosts', 'bActiveSubsription', 'currentUserId', 'iActiveCount', 'iArchiveCount', 'user_role', 'canRead', 'canWrite'],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+
+  /*components: { UserAvatar, OverviewStats },*/
+  data: function data() {
+    return {};
+  },
+  methods: {
+    positiveClasses: function positiveClasses(data) {
+      var addPC = '';
+      var extClass = '';
+
+      if (data.metaObj.positiveGraph > 50) {
+        addPC = 'over50';
+      }
+
+      if (data.metaObj.positiveGraph > 0) {
+        extClass = 'createSegment';
+      }
+
+      return 'progress-circle ' + addPC + ' green cp' + data.metaObj.positiveGraph + ' ' + extClass;
+    },
+    neutralClasses: function neutralClasses(data) {
+      var addPC = '';
+      var extClass = '';
+
+      if (data.metaObj.neutralGraph > 50) {
+        addPC = 'over50';
+      }
+
+      if (data.metaObj.neutralGraph > 0) {
+        extClass = 'createSegment';
+      }
+
+      return 'progress-circle ' + addPC + ' grey cp' + data.metaObj.neutralGraph + ' ' + extClass;
+    },
+    negativeClasses: function negativeClasses(data) {
+      var addPC = '';
+      var extClass = '';
+
+      if (data.metaObj.negativeGraph > 50) {
+        addPC = 'over50';
+      }
+
+      if (data.metaObj.negativeGraph > 0) {
+        extClass = 'createSegment';
+      }
+
+      return 'progress-circle ' + addPC + ' red cp' + data.metaObj.negativeGraph + ' ' + extClass;
+    },
+    getStatus: function getStatus(status) {
+      var displayStatus = '';
+
+      if (status == 0) {
+        displayStatus = 'Inactive';
+      } else if (status == 2) {
+        displayStatus = 'Pending';
+      } else if (status == 3) {
+        displayStatus = 'Archive';
+      } else {
+        displayStatus = 'Active';
+      }
+
+      return displayStatus;
+    }
+  },
+  mounted: function mounted() {
+    var elem = this;
+    setTimeout(function () {
+      var tableId = 'offsiteBrandboostCampaign';
+      elem.paginate(tableId);
+    }, 1000);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+/* harmony import */ var _CampaignList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CampaignList */ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title'],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+    CampaignList: _CampaignList__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+
+  /*components: { UserAvatar, OverviewStats },*/
+  data: function data() {
+    return {
+      oBrandboosts: {},
+      viewstats: '',
+      bActiveSubsription: '',
+      currentUserId: '',
+      iActiveCount: 0,
+      iArchiveCount: 0,
+      user_role: '',
+      canRead: '',
+      canWrite: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/admin/brandboost/offsite').then(function (response) {
+      _this.oBrandboosts = response.data.aBrandbosts;
+      _this.viewstats = response.data.viewstats;
+      _this.bActiveSubsription = response.data.bActiveSubsription;
+      _this.iActiveCount = response.data.iActiveCount;
+      _this.iArchiveCount = response.data.iArchiveCount;
+      _this.user_role = response.data.user_role;
+      _this.canRead = response.data.canRead;
+      _this.canWrite = response.data.canWrite;
+      _this.currentUserId = response.data.currentUserId;
+      /*let tableId = 'offsiteBrandboostCampaign';
+      this.paginate(tableId);*/
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+/* harmony import */ var _OverviewStats__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OverviewStats */ "./resources/js/components/admin/brandboost/offsite/OverviewStats.vue");
+/* harmony import */ var _CampaignList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CampaignList */ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title'],
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+    OverviewStats: _OverviewStats__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CampaignList: _CampaignList__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+
+  /*components: { UserAvatar, OverviewStats },*/
+  data: function data() {
+    return {
+      oBrandboosts: {},
+      viewstats: '',
+      bActiveSubsription: '',
+      currentUserId: '',
+      iActiveCount: 0,
+      iArchiveCount: 0,
+      user_role: '',
+      canRead: '',
+      canWrite: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/admin/brandboost/offsite_overview').then(function (response) {
+      _this.oBrandboosts = response.data.aBrandbosts;
+      _this.viewstats = response.data.viewstats;
+      _this.bActiveSubsription = response.data.bActiveSubsription;
+      _this.iActiveCount = response.data.iActiveCount;
+      _this.iArchiveCount = response.data.iArchiveCount;
+      _this.user_role = response.data.user_role;
+      _this.canRead = response.data.canRead;
+      _this.canWrite = response.data.canWrite;
+      _this.currentUserId = response.data.currentUserId;
+      /*let tableId = 'offsiteBrandboostCampaign';
+      this.paginate(tableId);*/
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=script&lang=js& ***!
@@ -3082,817 +4390,6 @@ var tkn = $('meta[name="_token"]').attr('content');
       _this.requests = response.data.oFilteredRequests;
       _this.count = response.data.totalCount;
       var tableId = 'reviewRequestOffsite';
-
-      _this.paginate(tableId);
-    });
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
-/* harmony import */ var _OverviewStats__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OverviewStats */ "./resources/js/components/admin/brandboost/offsite/OverviewStats.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  components: {
-    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
-    OverviewStats: _OverviewStats__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-
-  /*components: { UserAvatar, OverviewStats },*/
-  data: function data() {
-    return {
-      oBrandboosts: {},
-      viewstats: '',
-      bActiveSubsription: '',
-      currentUserId: '',
-      iActiveCount: 0,
-      iArchiveCount: 0,
-      user_role: '',
-      canRead: '',
-      canWrite: ''
-    };
-  },
-  methods: {
-    positiveClasses: function positiveClasses(data) {
-      var addPC = '';
-      var extClass = '';
-
-      if (data.metaObj.positiveGraph > 50) {
-        addPC = 'over50';
-      }
-
-      if (data.metaObj.positiveGraph > 0) {
-        extClass = 'createSegment';
-      }
-
-      return 'progress-circle ' + addPC + ' green cp' + data.metaObj.positiveGraph + ' ' + extClass;
-    },
-    neutralClasses: function neutralClasses(data) {
-      var addPC = '';
-      var extClass = '';
-
-      if (data.metaObj.neutralGraph > 50) {
-        addPC = 'over50';
-      }
-
-      if (data.metaObj.neutralGraph > 0) {
-        extClass = 'createSegment';
-      }
-
-      return 'progress-circle ' + addPC + ' grey cp' + data.metaObj.neutralGraph + ' ' + extClass;
-    },
-    negativeClasses: function negativeClasses(data) {
-      var addPC = '';
-      var extClass = '';
-
-      if (data.metaObj.negativeGraph > 50) {
-        addPC = 'over50';
-      }
-
-      if (data.metaObj.negativeGraph > 0) {
-        extClass = 'createSegment';
-      }
-
-      return 'progress-circle ' + addPC + ' red cp' + data.metaObj.negativeGraph + ' ' + extClass;
-    },
-    getStatus: function getStatus(status) {
-      var displayStatus = '';
-
-      if (status == 0) {
-        displayStatus = 'Inactive';
-      } else if (status == 2) {
-        displayStatus = 'Pending';
-      } else if (status == 3) {
-        displayStatus = 'Archive';
-      } else {
-        displayStatus = 'Active';
-      }
-
-      return displayStatus;
-    }
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/admin/brandboost/offsite_overview').then(function (response) {
-      _this.oBrandboosts = response.data.aBrandbosts;
-      _this.viewstats = response.data.viewstats;
-      _this.bActiveSubsription = response.data.bActiveSubsription;
-      _this.iActiveCount = response.data.iActiveCount;
-      _this.iArchiveCount = response.data.iArchiveCount;
-      _this.user_role = response.data.user_role;
-      _this.canRead = response.data.canRead;
-      _this.canWrite = response.data.canWrite;
-      _this.currentUserId = response.data.currentUserId;
-      var tableId = 'offsiteBrandboostCampaign';
 
       _this.paginate(tableId);
     });
@@ -15022,6 +15519,25 @@ exports.push([module.i, "\n.thumbnail .thumb img {\n    border-radius: 5px 5px 0
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.highcharts-tick{stroke:none!important}\n.highcharts-legend, .highcharts-credits{display: none!important;}\n.highcharts-container, .highcharts-container svg {width: 100% !important;}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=style&index=0&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=style&index=0&lang=css& ***!
@@ -15054,25 +15570,6 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 // module
 exports.push([module.i, "\n.createSegment{\n    cursor:pointer!important;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.highcharts-tick{stroke:none!important}\n.highcharts-legend, .highcharts-credits{display: none!important;}\n.highcharts-container, .highcharts-container svg {width: 100% !important;}\n", ""]);
 
 // exports
 
@@ -15801,6 +16298,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=style&index=0&lang=css& ***!
@@ -15840,36 +16367,6 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReviewRequest.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/ReviewRequest.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -18861,6 +19358,2982 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=template&id=4c87ca42&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=template&id=4c87ca42& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "table",
+    {
+      staticClass: "table datatable-basic-new",
+      attrs: { id: "offsiteBrandboostCampaign" }
+    },
+    [
+      _c("thead", [
+        _c("tr", [
+          _c("th", { staticStyle: { display: "none" } }),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
+          _vm._m(6),
+          _vm._v(" "),
+          _vm._m(7),
+          _vm._v(" "),
+          _vm._m(8),
+          _vm._v(" "),
+          _vm._m(9),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }, [_vm._v("status")]),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }, [_vm._v("status")]),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }, [_vm._v("Positive")]),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }, [_vm._v("Neutral")]),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }, [_vm._v("Negative")]),
+          _vm._v(" "),
+          _c("th", { staticStyle: { display: "none" } }, [_vm._v("Today")]),
+          _vm._v(" "),
+          _vm._m(10),
+          _vm._v(" "),
+          _vm.user_role != "2"
+            ? _c("th", { staticClass: "text-center nosort" }, [
+                _c("i", { staticClass: "fa fa-dot-circle-o" }),
+                _vm._v(" Action\n        ")
+              ])
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.oBrandboosts, function(oBrandboost) {
+          return _c(
+            "tr",
+            {
+              staticClass: "selectedClass",
+              attrs: { id: "append-" + oBrandboost.id }
+            },
+            [
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(_vm._s(oBrandboost.created))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(_vm._s(oBrandboost.id))
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                { staticClass: "editAction", staticStyle: { display: "none" } },
+                [
+                  _c("label", { staticClass: "custmo_checkbox pull-left" }, [
+                    _c("input", {
+                      staticClass: "checkRows",
+                      attrs: {
+                        type: "checkbox",
+                        name: "checkRows[]",
+                        id: "chk" + oBrandboost.id
+                      },
+                      domProps: { value: oBrandboost.id }
+                    }),
+                    _c("span", { staticClass: "custmo_checkmark" })
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "media-left media-middle" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "icons square",
+                      attrs: {
+                        href:
+                          "/admin/brandboost/offsite_setup/" + oBrandboost.id,
+                        brandID: oBrandboost.id,
+                        b_title: oBrandboost.brand_title
+                      }
+                    },
+                    [_c("i", { staticClass: "icon-indent-decrease2 txt_blue" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-left" }, [
+                  _c("div", {}, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-default text-semibold",
+                        attrs: {
+                          href:
+                            "admin/brandboost/offsite_setup/" + oBrandboost.id,
+                          brandID: oBrandboost.id,
+                          b_title: oBrandboost.brand_title
+                        }
+                      },
+                      [_vm._v(_vm._s(oBrandboost.metaObj.offsiteTitle))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-muted text-size-small" }, [
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.setStringLimit(oBrandboost.brand_desc, 28))
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
+                  oBrandboost.metaObj.sourceName == "" ||
+                  oBrandboost.metaObj.sourceName == "NA"
+                    ? [
+                        _c(
+                          "span",
+                          { staticClass: "text-muted text-size-small" },
+                          [_vm._v("[No Data]")]
+                        )
+                      ]
+                    : [
+                        _c("div", { staticClass: "media-left media-middle" }, [
+                          _c(
+                            "a",
+                            { staticClass: "icons", attrs: { href: "#" } },
+                            [
+                              _c("i", {
+                                class:
+                                  "icon-" +
+                                  (oBrandboost.metaObj.sourceName +
+                                    " " +
+                                    oBrandboost.metaObj.sourceClass)
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media-left" }, [
+                          _c("div", { staticClass: "pt-5" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-default text-semibold",
+                                attrs: { href: "#" }
+                              },
+                              [_vm._v(_vm._s(oBrandboost.metaObj.sourceName))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "text-muted text-size-small" },
+                            [_vm._v("View")]
+                          )
+                        ])
+                      ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("div", {}, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-default text-semibold",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v(_vm._s(oBrandboost.created))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-muted text-size-small" }, [
+                    _vm._v(_vm._s(oBrandboost.created))
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "div",
+                  {
+                    attrs: {
+                      "data-toggle": "tooltip",
+                      title:
+                        "Total contacts " +
+                        oBrandboost.metaObj.allSubscribers.length,
+                      "data-placement": "top"
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-default text-semibold",
+                        attrs: {
+                          href:
+                            "admin/brandboost/offsite_setup/" +
+                            oBrandboost.id +
+                            "?t=contacts"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(oBrandboost.metaObj.allSubscribers.length) +
+                            "\n                    "
+                        ),
+                        oBrandboost.metaObj.newContacts
+                          ? _c("span", { staticStyle: { color: "#FF0000" } }, [
+                              _vm._v(
+                                "(" +
+                                  _vm._s(oBrandboost.metaObj.newContacts) +
+                                  " new)"
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "media-left" }, [
+                  _c(
+                    "div",
+                    {
+                      class: _vm.positiveClasses,
+                      attrs: {
+                        "segment-type": "total-positive",
+                        "campaign-id": oBrandboost.id,
+                        "campaign-type": "email",
+                        title: "click to create segment"
+                      }
+                    },
+                    [_vm._m(11, true)]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-left" }, [
+                  _c(
+                    "div",
+                    {
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title:
+                          oBrandboost.metaObj.positiveRating +
+                          " out of " +
+                          oBrandboost.metaObj.revCount +
+                          " Responses",
+                        "data-placement": "top"
+                      }
+                    },
+                    [
+                      oBrandboost.metaObj.positiveRating > 0
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "text-default text-semibold",
+                              attrs: {
+                                href:
+                                  "/admin/feedback/listall/" +
+                                  oBrandboost.id +
+                                  "/?t=positive"
+                              }
+                            },
+                            [_vm._v(_vm._s(oBrandboost.metaObj.positiveRating))]
+                          )
+                        : _c(
+                            "a",
+                            {
+                              staticClass: "text-default text-semibold",
+                              attrs: { href: "javascript:void(0);" }
+                            },
+                            [_vm._v(_vm._s(oBrandboost.metaObj.positiveRating))]
+                          ),
+                      _vm._v(" "),
+                      oBrandboost.metaObj.newPositive > 0
+                        ? _c("span", { staticStyle: { color: "#FF0000" } }, [
+                            _vm._v(
+                              " (" +
+                                _vm._s(oBrandboost.metaObj.newPositive) +
+                                " new)"
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "media-left" }, [
+                  _c(
+                    "div",
+                    {
+                      class: _vm.neutralClasses,
+                      attrs: {
+                        "segment-type": "total-neutral",
+                        "campaign-id": oBrandboost.id,
+                        "campaign-type": "email",
+                        title: "click to create segment"
+                      }
+                    },
+                    [_vm._m(12, true)]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-left" }, [
+                  _c(
+                    "div",
+                    {
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title:
+                          oBrandboost.metaObj.neutralRating +
+                          " out of " +
+                          oBrandboost.metaObj.revCount +
+                          " Responses",
+                        "data-placement": "top"
+                      }
+                    },
+                    [
+                      oBrandboost.metaObj.neutralRating > 0
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "text-default text-semibold",
+                              attrs: {
+                                href:
+                                  "/admin/feedback/listall/" +
+                                  oBrandboost.id +
+                                  "/?t=neutral"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(oBrandboost.metaObj.neutralRating) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "a",
+                            {
+                              staticClass: "text-default text-semibold",
+                              attrs: { href: "javascript:void(0);" }
+                            },
+                            [_vm._v(_vm._s(oBrandboost.metaObj.neutralRating))]
+                          ),
+                      _vm._v(" "),
+                      oBrandboost.metaObj.newNeutral > 0
+                        ? _c("span", { staticStyle: { color: "#FF0000" } }, [
+                            _vm._v(
+                              " (" +
+                                _vm._s(oBrandboost.metaObj.newNeutral) +
+                                " new)"
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "media-left" }, [
+                  _c(
+                    "div",
+                    {
+                      class: _vm.negativeClasses,
+                      attrs: {
+                        "segment-type": "total-negative",
+                        "campaign-id": oBrandboost.id,
+                        "campaign-type": "email",
+                        title: "click to create segment"
+                      }
+                    },
+                    [_vm._m(13, true)]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-left" }, [
+                  _c(
+                    "div",
+                    {
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        title:
+                          oBrandboost.metaObj.negativeRating +
+                          " out of " +
+                          oBrandboost.metaObj.revCount +
+                          " Responses",
+                        "data-placement": "top"
+                      }
+                    },
+                    [
+                      oBrandboost.metaObj.negativeRating > 0
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "text-default text-semibold",
+                              attrs: {
+                                href:
+                                  "/admin/feedback/listall/" +
+                                  oBrandboost.id +
+                                  "/?t=negative"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(oBrandboost.metaObj.negativeRating) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "a",
+                            {
+                              staticClass: "text-default text-semibold",
+                              attrs: { href: "javascript:void(0);" }
+                            },
+                            [_vm._v(_vm._s(oBrandboost.metaObj.negativeRating))]
+                          ),
+                      _vm._v(" "),
+                      oBrandboost.metaObj.newNegative > 0
+                        ? _c("span", { staticStyle: { color: "#FF0000" } }, [
+                            _vm._v(
+                              " (" +
+                                _vm._s(oBrandboost.metaObj.newNegative) +
+                                " new)"
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
+                  oBrandboost.metaObj.revCount > 0
+                    ? [
+                        _c("div", { staticClass: "media-left media-middle" }, [
+                          _c("img", {
+                            staticClass: "img-circle",
+                            attrs: {
+                              src: oBrandboost.metaObj.ratingSrc,
+                              width: "26",
+                              alt: ""
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media-left" }, [
+                          _c("div", {}, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-default text-semibold",
+                                attrs: { href: "#" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(oBrandboost.metaObj.ratingValue) + " "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          oBrandboost.metaObj.subscriberData != "" &&
+                          oBrandboost.metaObj.subscriberData != null
+                            ? _c(
+                                "div",
+                                { staticClass: "text-muted text-size-small" },
+                                [
+                                  oBrandboost.metaObj.subscriberData.firstname
+                                    ? [
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(
+                                              oBrandboost.metaObj.subscriberData
+                                                .firstname
+                                            ) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    : [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "text-muted text-size-small"
+                                          },
+                                          [_vm._v("[No Data]")]
+                                        )
+                                      ]
+                                ],
+                                2
+                              )
+                            : _c(
+                                "div",
+                                { staticClass: "text-muted text-size-small" },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "text-muted text-size-small"
+                                    },
+                                    [_vm._v("[No Data]")]
+                                  )
+                                ]
+                              )
+                        ])
+                      ]
+                    : [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.displayNoData()) +
+                            "\n            "
+                        )
+                      ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "tdropdown" }, [
+                  oBrandboost.status == 0
+                    ? _c("i", {
+                        staticClass: "icon-primitive-dot txt_red fsize16"
+                      })
+                    : oBrandboost.status == 2
+                    ? _c("i", {
+                        staticClass: "icon-primitive-dot txt_grey fsize16"
+                      })
+                    : oBrandboost.status == 3
+                    ? _c("i", {
+                        staticClass: "icon-primitive-dot txt_red fsize16"
+                      })
+                    : _c("i", {
+                        staticClass: "icon-primitive-dot txt_green fsize16"
+                      }),
+                  _vm._v(" "),
+                  _c("a", {
+                    staticClass:
+                      "text-default text-semibold bbot dropdown-toggle",
+                    attrs: { "data-toggle": "dropdown" },
+                    domProps: {
+                      textContent: _vm._s(_vm.getStatus(oBrandboost.status))
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("ul", {
+                    staticClass: "dropdown-menu dropdown-menu-right status"
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(_vm._s(oBrandboost.status))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(_vm._s(oBrandboost.status))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(
+                  _vm._s(oBrandboost.metaObj.positive > 0 ? "positive" : "")
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(_vm._s(oBrandboost.metaObj.neutral > 0 ? "neutral" : ""))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(
+                  _vm._s(oBrandboost.metaObj.negative > 0 ? "negative" : "")
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticStyle: { display: "none" } }, [
+                _vm._v(
+                  _vm._s(oBrandboost.created === new Date() ? "today" : "")
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", {
+                domProps: {
+                  innerHTML: _vm._s(oBrandboost.metaObj.lastListTime)
+                }
+              }),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-center" }, [
+                _c("div", { staticClass: "tdropdown ml10" }, [
+                  _vm._m(14, true),
+                  _vm._v(" "),
+                  _vm.user_role != 2 &&
+                  (_vm.currentUserId == oBrandboost.user_id ||
+                    _vm.user_role == 1)
+                    ? _c(
+                        "ul",
+                        {
+                          staticClass:
+                            "dropdown-menu dropdown-menu-right more_act"
+                        },
+                        [
+                          _vm.canWrite == true
+                            ? [
+                                oBrandboost.status == 1
+                                  ? _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "changeStatusCampaign",
+                                          attrs: {
+                                            href: "javascript:void(0);",
+                                            brandID: oBrandboost.id,
+                                            status: "2"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "icon-file-stats"
+                                          }),
+                                          _vm._v(" Pause")
+                                        ]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                oBrandboost.status == 2
+                                  ? _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "changeStatusCampaign",
+                                          attrs: {
+                                            href: "javascript:void(0);",
+                                            brandID: oBrandboost.id,
+                                            status: "1"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "icon-file-stats"
+                                          }),
+                                          _vm._v(" Start")
+                                        ]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "/admin/brandboost/offsite_setup/" +
+                                          oBrandboost.id,
+                                        brandID: oBrandboost.id,
+                                        b_title: oBrandboost.brand_title
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "icon-gear" }),
+                                      _vm._v(" Edit")
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "deleteCampaign",
+                                      attrs: {
+                                        href: "javascript:void(0);",
+                                        brandID: oBrandboost.id
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "icon-file-locked"
+                                      }),
+                                      _vm._v(" Delete")
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "archiveCampaign",
+                                      attrs: {
+                                        href: "javascript:void(0);",
+                                        brandID: oBrandboost.id
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "icon-file-text2"
+                                      }),
+                                      _vm._v(
+                                        "\n                            Move to Archive"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "/admin/brandboost/statistics/" +
+                                          oBrandboost.id,
+                                        brandID: oBrandboost.id
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "icon-file-text2"
+                                      }),
+                                      _vm._v(" Statistics")
+                                    ]
+                                  )
+                                ])
+                              ]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href:
+                                    "/admin/brandboost/subscribers/" +
+                                    oBrandboost.id
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "icon-gear" }),
+                                _vm._v(" Subscribers")
+                              ]
+                            )
+                          ])
+                        ],
+                        2
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ]
+          )
+        }),
+        0
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "th",
+      {
+        staticClass: "nosort editAction",
+        staticStyle: { width: "30px", display: "none" }
+      },
+      [
+        _c("label", { staticClass: "custmo_checkbox pull-left" }, [
+          _c("input", {
+            staticClass: "control-primary",
+            attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "custmo_checkmark" })
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", { staticClass: "icon-stack-star" }),
+      _vm._v("Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", { staticClass: "icon-star-full2" }),
+      _vm._v("Source")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", { staticClass: "icon-calendar" }),
+      _vm._v("Created")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", { staticClass: "icon-user" }),
+      _vm._v(" Contacts")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", {}, [
+        _c("img", { attrs: { src: "/assets/images/emoji_smile.png" } })
+      ]),
+      _vm._v("\n            Positive\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", {}, [
+        _c("img", { attrs: { src: "/assets/images/emoji_smile2.png" } })
+      ]),
+      _vm._v("\n            Neutral\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", {}, [
+        _c("img", { attrs: { src: "/assets/images/emoji_smile3.png" } })
+      ]),
+      _vm._v("\n            Negative\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", {}, [_c("img", { attrs: { src: "/assets/images/clock.png" } })]),
+      _vm._v("Last\n            feedback\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-dot-circle-o fsize12" }),
+      _vm._v("Status\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("i", { staticClass: "icon-calendar" }),
+      _vm._v("Last Incoming Lead")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "left-half-clipper" }, [
+      _c("div", { staticClass: "first50-bar" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "value-bar" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "left-half-clipper" }, [
+      _c("div", { staticClass: "first50-bar" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "value-bar" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "left-half-clipper" }, [
+      _c("div", { staticClass: "first50-bar" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "value-bar" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "table_more dropdown-toggle",
+        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
+      },
+      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=template&id=8ea29232&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=template&id=8ea29232& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content" }, [
+    _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7 text-right btn_area" }, [
+          _vm._m(1),
+          _vm._v("\n                     \n                "),
+          _vm.user_role != 1 &&
+          _vm.canWrite == true &&
+          _vm.bActiveSubsription == false
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn dark_btn pDisplayNoActiveSubscription",
+                  attrs: {
+                    type: "button",
+                    title: "No Active Subscription",
+                    "data-toggle": "modal"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "icon-plus3" }),
+                  _c("span", [_vm._v("    Add Off Site Review Campaign")])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user_role != 1 &&
+          _vm.canWrite == true &&
+          _vm.bActiveSubsription == true
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn dark_btn addBrandboost",
+                  attrs: {
+                    type: "button",
+                    id: "addBrandboost",
+                    "data-toggle": "modal"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "icon-plus3" }),
+                  _c("span", [_vm._v("    Add Off Site Review Campaign")])
+                ]
+              )
+            : _vm._e()
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.oBrandboosts
+      ? _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tab-pane active",
+              attrs: { id: "right-icon-tab0" }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "panel panel-flat" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _c("span", { staticClass: "pull-left" }, [
+                        _c("h6", { staticClass: "panel-title" }, [
+                          _vm._v(
+                            _vm._s(_vm.iActiveCount) +
+                              " Off Site Review Campaigns"
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _vm._m(3)
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "panel-body p0" },
+                      [
+                        _c("campaign-list", {
+                          attrs: {
+                            oBrandboosts: _vm.oBrandboosts,
+                            bActiveSubsription: _vm.bActiveSubsription,
+                            currentUserId: _vm.currentUserId,
+                            iActiveCount: _vm.iActiveCount,
+                            iArchiveCount: _vm.iArchiveCount,
+                            user_role: _vm.user_role,
+                            canRead: _vm.canRead,
+                            canWrite: _vm.canWrite
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ])
+            ]
+          )
+        ])
+      : _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tab-pane active",
+              attrs: { id: "right-icon-tab0" }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "panel panel-flat" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body p0" }, [
+                      _c("table", { staticClass: "table datatable-basic" }, [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c("tbody", [
+                          _c("tr", [
+                            _c("td", { attrs: { colspan: "13" } }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "text-center",
+                                      staticStyle: { margin: "20px 0px 0" }
+                                    },
+                                    [
+                                      _vm._m(6),
+                                      _vm._v(" "),
+                                      _vm.canWrite
+                                        ? [
+                                            _vm.bActiveSubsription == false
+                                              ? _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn dark_btn pDisplayNoActiveSubscription mb40",
+                                                    attrs: {
+                                                      type: "button",
+                                                      title:
+                                                        "No Active Subscription",
+                                                      "data-toggle": "modal"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "icon-plus3"
+                                                    }),
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        "   Add Off Site Review Campaign"
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn dark_btn addBrandboost mb40",
+                                                    attrs: {
+                                                      type: "button",
+                                                      id: "addBrandboost",
+                                                      "data-toggle": "modal"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "icon-plus3"
+                                                    }),
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        "    Add Off Site Review Campaign"
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                          ]
+                                        : _vm._e()
+                                    ],
+                                    2
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          )
+        ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-5" }, [
+      _c("h3", [
+        _c("img", {
+          staticStyle: { width: "16px" },
+          attrs: { src: "/assets/images/offsite_icon_19.png" }
+        }),
+        _vm._v("   Off Site Review  Campaigns")
+      ]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
+        _c("li", { staticClass: "active all" }, [
+          _c(
+            "a",
+            {
+              staticClass: "filterByColumn",
+              staticStyle: { javascript: "void()" },
+              attrs: { id: "activeCampaign", fil: "1|0|2" }
+            },
+            [_vm._v("Active Campaigns")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "filterByColumn",
+              staticStyle: { javascript: "void()" },
+              attrs: { fil: "3" }
+            },
+            [_vm._v("Archive")]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn light_btn btn-icon dropdown-toggle",
+          attrs: { type: "button", "data-toggle": "dropdown" }
+        },
+        [
+          _c("i", { staticClass: "icon-calendar2" }),
+          _vm._v("    Filter campaign    "),
+          _c("span", { staticClass: "caret" })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "dropdown-menu dropdown-content width-320 dropdown-menu-right"
+        },
+        [
+          _c("div", { staticClass: "dropdown-content-heading" }, [
+            _vm._v(" Filter\n                            "),
+            _c("ul", { staticClass: "icons-list" }, [
+              _c("li", [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", { staticClass: "icon-more" })
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", {}, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
+                attrs: { id: "accordion-control-right" }
+              },
+              [
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c(
+                    "div",
+                    { staticClass: "panel-heading sidebarheadings active" },
+                    [
+                      _c("h6", { staticClass: "panel-title" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              "data-toggle": "collapse",
+                              "data-parent": "#accordion-control-right",
+                              href: "#accordion-control-right-group1"
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-star-empty3" }),
+                            _vm._v(" Campaign Type")
+                          ]
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group1" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(
+                              "\n                                                    Most startups fail. But many of those failures are preventable.\n                                                    The Lean Startup is a new approach being adopted across the\n                                                    globe, changing the way companies are built and new products are\n                                                    launched.\n                                                "
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group2"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-arrow-up-left2" }),
+                          _vm._v("  Source")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group2" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(" Content Goes here...")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group73"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-star-full2" }),
+                          _vm._v("  Rating")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group73" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(" Content Goes here...")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group74"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-calendar" }),
+                          _vm._v("  Date Created")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group74" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(" Content Goes here...")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group83"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-thumbs-up2" }),
+                          _vm._v("  Reviews")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse in",
+                      attrs: { id: "accordion-control-right-group83" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row mb20" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: {
+                                    type: "checkbox",
+                                    checked: "checked"
+                                  }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Total Reviews\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "20" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "100" }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mb20" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: {
+                                    type: "checkbox",
+                                    checked: "checked"
+                                  }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Positive\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "20" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "100" }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mb20" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: { type: "checkbox" }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Neutral\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: {
+                                type: "text",
+                                name: "",
+                                value: "20",
+                                disabled: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: {
+                                type: "text",
+                                name: "",
+                                value: "100",
+                                disabled: ""
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: {
+                                    type: "checkbox",
+                                    checked: "checked"
+                                  }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Negative\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "0" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "10" }
+                            })
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "dropdown-content-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn dark_btn dropdown-toggle",
+                staticStyle: { display: "inline-block" },
+                attrs: { type: "button" }
+              },
+              [
+                _c("i", { staticClass: "icon-filter4" }),
+                _c("span", [_vm._v("    Filter")])
+              ]
+            ),
+            _vm._v(
+              "\n                               \n                            "
+            ),
+            _c(
+              "a",
+              {
+                staticStyle: { display: "inline-block" },
+                attrs: { href: "#" }
+              },
+              [_vm._v("Clear All")]
+            )
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading_links pull-left" }, [
+      _c(
+        "a",
+        {
+          staticClass: "top_links btn btn-xs btn_white_table ml20 top_links_all"
+        },
+        [_vm._v("All")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_Status",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "1" }
+        },
+        [_vm._v("Active")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_Status",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "0" }
+        },
+        [_vm._v("Inactive")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_positive",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "positive" }
+        },
+        [_vm._v("Positive")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_neutral",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "neutral" }
+        },
+        [_vm._v("Neutral")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_negative",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "negative" }
+        },
+        [_vm._v("Negative")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_added_today",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "today" }
+        },
+        [_vm._v("Added Today")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading-elements" }, [
+      _c(
+        "div",
+        {
+          staticClass: "form-group has-feedback has-feedback-left",
+          staticStyle: { display: "inline-block", margin: "0" }
+        },
+        [
+          _c("input", {
+            staticClass: "form-control input-sm cus_search",
+            attrs: {
+              tableID: "offsiteBrandboostCampaign",
+              placeholder: "Search by name",
+              type: "text"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control-feedback" }, [
+            _c("i", { staticClass: "icon-search4" })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table_action_tool" }, [
+        _c("a", { attrs: { href: "javascript:void(0);" } }, [
+          _c("i", { staticClass: "icon-calendar52" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "editDataList",
+            attrs: { href: "javascript:void(0);" }
+          },
+          [_c("i", { staticClass: "icon-pencil" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "custom_action_box",
+            staticStyle: { display: "none" },
+            attrs: {
+              href: "javascript:void(0);",
+              id: "deleteMultipleOffsiteBB"
+            }
+          },
+          [_c("i", { staticClass: "icon-trash position-left" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "custom_action_box",
+            staticStyle: { display: "none" },
+            attrs: {
+              href: "javascript:void(0);",
+              id: "archiveMultipleOffsiteBB"
+            }
+          },
+          [_c("i", { staticClass: "icon-gear position-left" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h6", { staticClass: "panel-title" }, [
+        _vm._v("Off Site Review Campaigns")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "heading-elements" }, [
+        _c(
+          "div",
+          {
+            staticClass: "form-group has-feedback has-feedback-left",
+            staticStyle: { display: "inline-block", margin: "0" }
+          },
+          [
+            _c("input", {
+              staticClass: "form-control input-sm cus_search",
+              attrs: { placeholder: "Search by name", type: "text" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-control-feedback" }, [
+              _c("i", { staticClass: "icon-search4" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs btn-default editDataList",
+            attrs: { type: "button" }
+          },
+          [
+            _c("i", { staticClass: "icon-pencil position-left" }),
+            _vm._v(" Edit\n                                ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs custom_action_box",
+            attrs: { id: "deleteMultipleOffsiteBB" }
+          },
+          [
+            _c("i", { staticClass: "icon-trash position-left" }),
+            _vm._v(" Delete\n                                ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs custom_action_box",
+            attrs: { id: "archiveMultipleOffsiteBB" }
+          },
+          [
+            _c("i", { staticClass: "icon-gear position-left" }),
+            _vm._v(" Archive\n                                ")
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-stack-star" }), _vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-star-full2" }),
+          _vm._v("Source")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-calendar" }),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-graph" }), _vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-alarm-check" }),
+          _vm._v("Last review")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-statistics" }),
+          _vm._v("Statistic")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o fsize12" }),
+          _vm._v("Status\n                                    ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v(" Action\n                                    ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "mb-20 mt40" }, [
+      _vm._v(
+        "\n                                                        Looks Like You Don’t Have Any Off Site Review Campaign\n                                                        Yet "
+      ),
+      _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(
+        "\n                                                        Lets Create Your First Off Site Review Campaign.\n                                                    "
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=template&id=5e8ec18a&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=template&id=5e8ec18a& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content" }, [
+    _c("div", { staticClass: "page_header" }, [
+      _c("div", { staticClass: "row" }, [
+        _vm.viewstats == true
+          ? _c("div", { staticClass: "col-md-5" }, [_vm._m(0)])
+          : _c("div", { staticClass: "col-md-5" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2)
+            ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7 text-right btn_area" }, [
+          _vm._m(3),
+          _vm._v("\n                     \n                "),
+          _vm.user_role != 1 &&
+          _vm.canWrite == true &&
+          _vm.bActiveSubsription == false
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn dark_btn pDisplayNoActiveSubscription",
+                  attrs: {
+                    type: "button",
+                    title: "No Active Subscription",
+                    "data-toggle": "modal"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "icon-plus3" }),
+                  _c("span", [_vm._v("    Add Off Site Review Campaign")])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user_role != 1 &&
+          _vm.canWrite == true &&
+          _vm.bActiveSubsription == true
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn dark_btn addBrandboost",
+                  attrs: {
+                    type: "button",
+                    id: "addBrandboost",
+                    "data-toggle": "modal"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "icon-plus3" }),
+                  _c("span", [_vm._v("    Add Off Site Review Campaign")])
+                ]
+              )
+            : _vm._e()
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.oBrandboosts
+      ? _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tab-pane active",
+              attrs: { id: "right-icon-tab0" }
+            },
+            [
+              _vm.viewstats == true ? _c("overview-stats") : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "panel panel-flat" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _c("span", { staticClass: "pull-left" }, [
+                        _c("h6", { staticClass: "panel-title" }, [
+                          _vm._v(
+                            _vm._s(_vm.iActiveCount) +
+                              " Off Site Review Campaigns"
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _vm._m(5)
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "panel-body p0" },
+                      [
+                        _c("campaign-list", {
+                          attrs: {
+                            oBrandboosts: _vm.oBrandboosts,
+                            bActiveSubsription: _vm.bActiveSubsription,
+                            currentUserId: _vm.currentUserId,
+                            iActiveCount: _vm.iActiveCount,
+                            iArchiveCount: _vm.iArchiveCount,
+                            user_role: _vm.user_role,
+                            canRead: _vm.canRead,
+                            canWrite: _vm.canWrite
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ])
+            ],
+            1
+          )
+        ])
+      : _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tab-pane active",
+              attrs: { id: "right-icon-tab0" }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "panel panel-flat" }, [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body p0" }, [
+                      _c("table", { staticClass: "table datatable-basic" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("tbody", [
+                          _c("tr", [
+                            _c("td", { attrs: { colspan: "13" } }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "text-center",
+                                      staticStyle: { margin: "20px 0px 0" }
+                                    },
+                                    [
+                                      _vm._m(8),
+                                      _vm._v(" "),
+                                      _vm.canWrite
+                                        ? [
+                                            _vm.bActiveSubsription == false
+                                              ? _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn dark_btn pDisplayNoActiveSubscription mb40",
+                                                    attrs: {
+                                                      type: "button",
+                                                      title:
+                                                        "No Active Subscription",
+                                                      "data-toggle": "modal"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "icon-plus3"
+                                                    }),
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        "   Add Off Site Review Campaign"
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn dark_btn addBrandboost mb40",
+                                                    attrs: {
+                                                      type: "button",
+                                                      id: "addBrandboost",
+                                                      "data-toggle": "modal"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "icon-plus3"
+                                                    }),
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        "    Add Off Site Review Campaign"
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                          ]
+                                        : _vm._e()
+                                    ],
+                                    2
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } }),
+                            _vm._v(" "),
+                            _c("td", { staticStyle: { display: "none" } })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          )
+        ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("img", {
+        staticStyle: { width: "16px" },
+        attrs: { src: "/assets/images/offsite_icon_19.png" }
+      }),
+      _vm._v("   Off Site Overview\n                ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("img", {
+        staticStyle: { width: "16px" },
+        attrs: { src: "/assets/images/offsite_icon_19.png" }
+      }),
+      _vm._v("   Off Site Review  Campaigns")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
+      _c("li", { staticClass: "active all" }, [
+        _c(
+          "a",
+          {
+            staticClass: "filterByColumn",
+            staticStyle: { javascript: "void()" },
+            attrs: { id: "activeCampaign", fil: "1|0|2" }
+          },
+          [_vm._v("Active Campaigns")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            staticClass: "filterByColumn",
+            staticStyle: { javascript: "void()" },
+            attrs: { fil: "3" }
+          },
+          [_vm._v("Archive")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn light_btn btn-icon dropdown-toggle",
+          attrs: { type: "button", "data-toggle": "dropdown" }
+        },
+        [
+          _c("i", { staticClass: "icon-calendar2" }),
+          _vm._v("    Filter campaign    "),
+          _c("span", { staticClass: "caret" })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "dropdown-menu dropdown-content width-320 dropdown-menu-right"
+        },
+        [
+          _c("div", { staticClass: "dropdown-content-heading" }, [
+            _vm._v(" Filter\n                            "),
+            _c("ul", { staticClass: "icons-list" }, [
+              _c("li", [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("i", { staticClass: "icon-more" })
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", {}, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
+                attrs: { id: "accordion-control-right" }
+              },
+              [
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c(
+                    "div",
+                    { staticClass: "panel-heading sidebarheadings active" },
+                    [
+                      _c("h6", { staticClass: "panel-title" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              "data-toggle": "collapse",
+                              "data-parent": "#accordion-control-right",
+                              href: "#accordion-control-right-group1"
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-star-empty3" }),
+                            _vm._v(" Campaign Type")
+                          ]
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group1" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(
+                              "\n                                                    Most startups fail. But many of those failures are preventable.\n                                                    The Lean Startup is a new approach being adopted across the\n                                                    globe, changing the way companies are built and new products are\n                                                    launched.\n                                                "
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group2"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-arrow-up-left2" }),
+                          _vm._v("  Source")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group2" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(" Content Goes here...")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group73"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-star-full2" }),
+                          _vm._v("  Rating")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group73" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(" Content Goes here...")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group74"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-calendar" }),
+                          _vm._v("  Date Created")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse",
+                      attrs: { id: "accordion-control-right-group74" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _vm._v(" Content Goes here...")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel panel-white" }, [
+                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
+                    _c("h6", { staticClass: "panel-title" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "collapsed",
+                          attrs: {
+                            "data-toggle": "collapse",
+                            "data-parent": "#accordion-control-right",
+                            href: "#accordion-control-right-group83"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-thumbs-up2" }),
+                          _vm._v("  Reviews")
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "panel-collapse collapse in",
+                      attrs: { id: "accordion-control-right-group83" }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row mb20" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: {
+                                    type: "checkbox",
+                                    checked: "checked"
+                                  }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Total Reviews\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "20" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "100" }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mb20" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: {
+                                    type: "checkbox",
+                                    checked: "checked"
+                                  }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Positive\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "20" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "100" }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mb20" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: { type: "checkbox" }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Neutral\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: {
+                                type: "text",
+                                name: "",
+                                value: "20",
+                                disabled: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: {
+                                type: "text",
+                                name: "",
+                                value: "100",
+                                disabled: ""
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("div", { staticClass: "checkbox" }, [
+                              _c("label", [
+                                _c("input", {
+                                  staticClass: "control-primary",
+                                  attrs: {
+                                    type: "checkbox",
+                                    checked: "checked"
+                                  }
+                                }),
+                                _vm._v(
+                                  "\n                                                            Negative\n                                                        "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-xs-6" }, [
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "0" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control input-sm",
+                              attrs: { type: "text", name: "", value: "10" }
+                            })
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "dropdown-content-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn dark_btn dropdown-toggle",
+                staticStyle: { display: "inline-block" },
+                attrs: { type: "button" }
+              },
+              [
+                _c("i", { staticClass: "icon-filter4" }),
+                _c("span", [_vm._v("    Filter")])
+              ]
+            ),
+            _vm._v(
+              "\n                               \n                            "
+            ),
+            _c(
+              "a",
+              {
+                staticStyle: { display: "inline-block" },
+                attrs: { href: "#" }
+              },
+              [_vm._v("Clear All")]
+            )
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading_links pull-left" }, [
+      _c(
+        "a",
+        {
+          staticClass: "top_links btn btn-xs btn_white_table ml20 top_links_all"
+        },
+        [_vm._v("All")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_Status",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "1" }
+        },
+        [_vm._v("Active")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_Status",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "0" }
+        },
+        [_vm._v("Inactive")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_positive",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "positive" }
+        },
+        [_vm._v("Positive")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_neutral",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "neutral" }
+        },
+        [_vm._v("Neutral")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_negative",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "negative" }
+        },
+        [_vm._v("Negative")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "top_links top_links_added_today",
+          staticStyle: { cursor: "pointer" },
+          attrs: { getValue: "today" }
+        },
+        [_vm._v("Added Today")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "heading-elements" }, [
+      _c(
+        "div",
+        {
+          staticClass: "form-group has-feedback has-feedback-left",
+          staticStyle: { display: "inline-block", margin: "0" }
+        },
+        [
+          _c("input", {
+            staticClass: "form-control input-sm cus_search",
+            attrs: {
+              tableID: "offsiteBrandboostCampaign",
+              placeholder: "Search by name",
+              type: "text"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control-feedback" }, [
+            _c("i", { staticClass: "icon-search4" })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table_action_tool" }, [
+        _c("a", { attrs: { href: "javascript:void(0);" } }, [
+          _c("i", { staticClass: "icon-calendar52" })
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "editDataList",
+            attrs: { href: "javascript:void(0);" }
+          },
+          [_c("i", { staticClass: "icon-pencil" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "custom_action_box",
+            staticStyle: { display: "none" },
+            attrs: {
+              href: "javascript:void(0);",
+              id: "deleteMultipleOffsiteBB"
+            }
+          },
+          [_c("i", { staticClass: "icon-trash position-left" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "custom_action_box",
+            staticStyle: { display: "none" },
+            attrs: {
+              href: "javascript:void(0);",
+              id: "archiveMultipleOffsiteBB"
+            }
+          },
+          [_c("i", { staticClass: "icon-gear position-left" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h6", { staticClass: "panel-title" }, [
+        _vm._v("Off Site Review Campaigns")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "heading-elements" }, [
+        _c(
+          "div",
+          {
+            staticClass: "form-group has-feedback has-feedback-left",
+            staticStyle: { display: "inline-block", margin: "0" }
+          },
+          [
+            _c("input", {
+              staticClass: "form-control input-sm cus_search",
+              attrs: { placeholder: "Search by name", type: "text" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-control-feedback" }, [
+              _c("i", { staticClass: "icon-search4" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs btn-default editDataList",
+            attrs: { type: "button" }
+          },
+          [
+            _c("i", { staticClass: "icon-pencil position-left" }),
+            _vm._v(" Edit\n                                ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs custom_action_box",
+            attrs: { id: "deleteMultipleOffsiteBB" }
+          },
+          [
+            _c("i", { staticClass: "icon-trash position-left" }),
+            _vm._v(" Delete\n                                ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-xs custom_action_box",
+            attrs: { id: "archiveMultipleOffsiteBB" }
+          },
+          [
+            _c("i", { staticClass: "icon-gear position-left" }),
+            _vm._v(" Archive\n                                ")
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", { staticStyle: { display: "none" } }),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-stack-star" }), _vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-star-full2" }),
+          _vm._v("Source")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-calendar" }),
+          _vm._v("Created")
+        ]),
+        _vm._v(" "),
+        _c("th", [_c("i", { staticClass: "icon-graph" }), _vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
+          _vm._v(" ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-alarm-check" }),
+          _vm._v("Last review")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("i", { staticClass: "icon-statistics" }),
+          _vm._v("Statistic")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o fsize12" }),
+          _vm._v("Status\n                                    ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center nosort" }, [
+          _c("i", { staticClass: "fa fa-dot-circle-o" }),
+          _vm._v(" Action\n                                    ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "mb-20 mt40" }, [
+      _vm._v(
+        "\n                                                        Looks Like You Don’t Have Any Off Site Review Campaign\n                                                        Yet "
+      ),
+      _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(
+        "\n                                                        Lets Create Your First Off Site Review Campaign.\n                                                    "
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=template&id=6927a7e5&":
 /*!*****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/OverviewStats.vue?vue&type=template&id=6927a7e5& ***!
@@ -20719,2283 +24192,6 @@ var staticRenderFns = [
       _c("td", { staticStyle: { display: "none" } }),
       _vm._v(" "),
       _c("td", { staticStyle: { display: "none" } })
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=template&id=54c36d6a&":
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=template&id=54c36d6a& ***!
-  \************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content" }, [
-    _c("div", { staticClass: "page_header" }, [
-      _c("div", { staticClass: "row" }, [
-        _vm.viewstats == true
-          ? _c("div", { staticClass: "col-md-5" }, [_vm._m(0)])
-          : _c("div", { staticClass: "col-md-5" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2)
-            ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-7 text-right btn_area" }, [
-          _vm._m(3),
-          _vm._v("\n                     \n                "),
-          _vm.user_role != 1 &&
-          _vm.canWrite == true &&
-          _vm.bActiveSubsription == false
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn dark_btn pDisplayNoActiveSubscription",
-                  attrs: {
-                    type: "button",
-                    title: "No Active Subscription",
-                    "data-toggle": "modal"
-                  }
-                },
-                [
-                  _c("i", { staticClass: "icon-plus3" }),
-                  _c("span", [_vm._v("    Add Off Site Review Campaign")])
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user_role != 1 &&
-          _vm.canWrite == true &&
-          _vm.bActiveSubsription == true
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn dark_btn addBrandboost",
-                  attrs: {
-                    type: "button",
-                    id: "addBrandboost",
-                    "data-toggle": "modal"
-                  }
-                },
-                [
-                  _c("i", { staticClass: "icon-plus3" }),
-                  _c("span", [_vm._v("    Add Off Site Review Campaign")])
-                ]
-              )
-            : _vm._e()
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _vm.oBrandboosts
-      ? _c("div", { staticClass: "tab-content" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane active",
-              attrs: { id: "right-icon-tab0" }
-            },
-            [
-              _vm.viewstats == true ? _c("overview-stats") : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "panel panel-flat" }, [
-                    _c("div", { staticClass: "panel-heading" }, [
-                      _c("span", { staticClass: "pull-left" }, [
-                        _c("h6", { staticClass: "panel-title" }, [
-                          _vm._v(
-                            _vm._s(_vm.iActiveCount) +
-                              " Off Site Review Campaigns"
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(4),
-                      _vm._v(" "),
-                      _vm._m(5)
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "panel-body p0" }, [
-                      _c(
-                        "table",
-                        {
-                          staticClass: "table datatable-basic-new",
-                          attrs: { id: "offsiteBrandboostCampaign" }
-                        },
-                        [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _vm._m(6),
-                              _vm._v(" "),
-                              _vm._m(7),
-                              _vm._v(" "),
-                              _vm._m(8),
-                              _vm._v(" "),
-                              _vm._m(9),
-                              _vm._v(" "),
-                              _vm._m(10),
-                              _vm._v(" "),
-                              _vm._m(11),
-                              _vm._v(" "),
-                              _vm._m(12),
-                              _vm._v(" "),
-                              _vm._m(13),
-                              _vm._v(" "),
-                              _vm._m(14),
-                              _vm._v(" "),
-                              _vm._m(15),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }, [
-                                _vm._v("status")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }, [
-                                _vm._v("status")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }, [
-                                _vm._v("Positive")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }, [
-                                _vm._v("Neutral")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }, [
-                                _vm._v("Negative")
-                              ]),
-                              _vm._v(" "),
-                              _c("th", { staticStyle: { display: "none" } }, [
-                                _vm._v("Today")
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(16),
-                              _vm._v(" "),
-                              _vm.user_role != "2"
-                                ? _c(
-                                    "th",
-                                    { staticClass: "text-center nosort" },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-dot-circle-o"
-                                      }),
-                                      _vm._v(
-                                        " Action\n                                    "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.oBrandboosts, function(oBrandboost) {
-                              return _c(
-                                "tr",
-                                {
-                                  staticClass: "selectedClass",
-                                  attrs: { id: "append-" + oBrandboost.id }
-                                },
-                                [
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [_vm._v(_vm._s(oBrandboost.created))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [_vm._v(_vm._s(oBrandboost.id))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    {
-                                      staticClass: "editAction",
-                                      staticStyle: { display: "none" }
-                                    },
-                                    [
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass:
-                                            "custmo_checkbox pull-left"
-                                        },
-                                        [
-                                          _c("input", {
-                                            staticClass: "checkRows",
-                                            attrs: {
-                                              type: "checkbox",
-                                              name: "checkRows[]",
-                                              id: "chk" + oBrandboost.id
-                                            },
-                                            domProps: { value: oBrandboost.id }
-                                          }),
-                                          _c("span", {
-                                            staticClass: "custmo_checkmark"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "media-left media-middle"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass: "icons square",
-                                            attrs: {
-                                              href:
-                                                "/admin/brandboost/offsite_setup/" +
-                                                oBrandboost.id,
-                                              brandID: oBrandboost.id,
-                                              b_title: oBrandboost.brand_title
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "icon-indent-decrease2 txt_blue"
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", {}, [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold",
-                                            attrs: {
-                                              href:
-                                                "admin/brandboost/offsite_setup/" +
-                                                oBrandboost.id,
-                                              brandID: oBrandboost.id,
-                                              b_title: oBrandboost.brand_title
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                oBrandboost.metaObj.offsiteTitle
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [
-                                          _vm._v(
-                                            " " +
-                                              _vm._s(
-                                                _vm.setStringLimit(
-                                                  oBrandboost.brand_desc,
-                                                  28
-                                                )
-                                              )
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    [
-                                      oBrandboost.metaObj.sourceName == "" ||
-                                      oBrandboost.metaObj.sourceName == "NA"
-                                        ? [
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "text-muted text-size-small"
-                                              },
-                                              [_vm._v("[No Data]")]
-                                            )
-                                          ]
-                                        : [
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "media-left media-middle"
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    staticClass: "icons",
-                                                    attrs: { href: "#" }
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      class:
-                                                        "icon-" +
-                                                        (oBrandboost.metaObj
-                                                          .sourceName +
-                                                          " " +
-                                                          oBrandboost.metaObj
-                                                            .sourceClass)
-                                                    })
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "media-left" },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "pt-5" },
-                                                  [
-                                                    _c(
-                                                      "a",
-                                                      {
-                                                        staticClass:
-                                                          "text-default text-semibold",
-                                                        attrs: { href: "#" }
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            oBrandboost.metaObj
-                                                              .sourceName
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "text-muted text-size-small"
-                                                  },
-                                                  [_vm._v("View")]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", {}, [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold",
-                                            attrs: { href: "#" }
-                                          },
-                                          [_vm._v(_vm._s(oBrandboost.created))]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [_vm._v(_vm._s(oBrandboost.created))]
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "div",
-                                      {
-                                        attrs: {
-                                          "data-toggle": "tooltip",
-                                          title:
-                                            "Total contacts " +
-                                            oBrandboost.metaObj.allSubscribers
-                                              .length,
-                                          "data-placement": "top"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold",
-                                            attrs: {
-                                              href:
-                                                "admin/brandboost/offsite_setup/" +
-                                                oBrandboost.id +
-                                                "?t=contacts"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                " +
-                                                _vm._s(
-                                                  oBrandboost.metaObj
-                                                    .allSubscribers.length
-                                                ) +
-                                                "\n                                                "
-                                            ),
-                                            oBrandboost.metaObj.newContacts
-                                              ? _c(
-                                                  "span",
-                                                  {
-                                                    staticStyle: {
-                                                      color: "#FF0000"
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "(" +
-                                                        _vm._s(
-                                                          oBrandboost.metaObj
-                                                            .newContacts
-                                                        ) +
-                                                        " new)"
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          class: _vm.positiveClasses,
-                                          attrs: {
-                                            "segment-type": "total-positive",
-                                            "campaign-id": oBrandboost.id,
-                                            "campaign-type": "email",
-                                            title: "click to create segment"
-                                          }
-                                        },
-                                        [_vm._m(17, true)]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          attrs: {
-                                            "data-toggle": "tooltip",
-                                            title:
-                                              oBrandboost.metaObj
-                                                .positiveRating +
-                                              " out of " +
-                                              oBrandboost.metaObj.revCount +
-                                              " Responses",
-                                            "data-placement": "top"
-                                          }
-                                        },
-                                        [
-                                          oBrandboost.metaObj.positiveRating > 0
-                                            ? _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href:
-                                                      "/admin/feedback/listall/" +
-                                                      oBrandboost.id +
-                                                      "/?t=positive"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      oBrandboost.metaObj
-                                                        .positiveRating
-                                                    )
-                                                  )
-                                                ]
-                                              )
-                                            : _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href: "javascript:void(0);"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      oBrandboost.metaObj
-                                                        .positiveRating
-                                                    )
-                                                  )
-                                                ]
-                                              ),
-                                          _vm._v(" "),
-                                          oBrandboost.metaObj.newPositive > 0
-                                            ? _c(
-                                                "span",
-                                                {
-                                                  staticStyle: {
-                                                    color: "#FF0000"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    " (" +
-                                                      _vm._s(
-                                                        oBrandboost.metaObj
-                                                          .newPositive
-                                                      ) +
-                                                      " new)"
-                                                  )
-                                                ]
-                                              )
-                                            : _vm._e()
-                                        ]
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          class: _vm.neutralClasses,
-                                          attrs: {
-                                            "segment-type": "total-neutral",
-                                            "campaign-id": oBrandboost.id,
-                                            "campaign-type": "email",
-                                            title: "click to create segment"
-                                          }
-                                        },
-                                        [_vm._m(18, true)]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          attrs: {
-                                            "data-toggle": "tooltip",
-                                            title:
-                                              oBrandboost.metaObj
-                                                .neutralRating +
-                                              " out of " +
-                                              oBrandboost.metaObj.revCount +
-                                              " Responses",
-                                            "data-placement": "top"
-                                          }
-                                        },
-                                        [
-                                          oBrandboost.metaObj.neutralRating > 0
-                                            ? _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href:
-                                                      "/admin/feedback/listall/" +
-                                                      oBrandboost.id +
-                                                      "/?t=neutral"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                    " +
-                                                      _vm._s(
-                                                        oBrandboost.metaObj
-                                                          .neutralRating
-                                                      ) +
-                                                      "\n                                                "
-                                                  )
-                                                ]
-                                              )
-                                            : _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href: "javascript:void(0);"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      oBrandboost.metaObj
-                                                        .neutralRating
-                                                    )
-                                                  )
-                                                ]
-                                              ),
-                                          _vm._v(" "),
-                                          oBrandboost.metaObj.newNeutral > 0
-                                            ? _c(
-                                                "span",
-                                                {
-                                                  staticStyle: {
-                                                    color: "#FF0000"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    " (" +
-                                                      _vm._s(
-                                                        oBrandboost.metaObj
-                                                          .newNeutral
-                                                      ) +
-                                                      " new)"
-                                                  )
-                                                ]
-                                              )
-                                            : _vm._e()
-                                        ]
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          class: _vm.negativeClasses,
-                                          attrs: {
-                                            "segment-type": "total-negative",
-                                            "campaign-id": oBrandboost.id,
-                                            "campaign-type": "email",
-                                            title: "click to create segment"
-                                          }
-                                        },
-                                        [_vm._m(19, true)]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          attrs: {
-                                            "data-toggle": "tooltip",
-                                            title:
-                                              oBrandboost.metaObj
-                                                .negativeRating +
-                                              " out of " +
-                                              oBrandboost.metaObj.revCount +
-                                              " Responses",
-                                            "data-placement": "top"
-                                          }
-                                        },
-                                        [
-                                          oBrandboost.metaObj.negativeRating > 0
-                                            ? _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href:
-                                                      "/admin/feedback/listall/" +
-                                                      oBrandboost.id +
-                                                      "/?t=negative"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                    " +
-                                                      _vm._s(
-                                                        oBrandboost.metaObj
-                                                          .negativeRating
-                                                      ) +
-                                                      "\n                                                "
-                                                  )
-                                                ]
-                                              )
-                                            : _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href: "javascript:void(0);"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      oBrandboost.metaObj
-                                                        .negativeRating
-                                                    )
-                                                  )
-                                                ]
-                                              ),
-                                          _vm._v(" "),
-                                          oBrandboost.metaObj.newNegative > 0
-                                            ? _c(
-                                                "span",
-                                                {
-                                                  staticStyle: {
-                                                    color: "#FF0000"
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    " (" +
-                                                      _vm._s(
-                                                        oBrandboost.metaObj
-                                                          .newNegative
-                                                      ) +
-                                                      " new)"
-                                                  )
-                                                ]
-                                              )
-                                            : _vm._e()
-                                        ]
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    [
-                                      oBrandboost.metaObj.revCount > 0
-                                        ? [
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "media-left media-middle"
-                                              },
-                                              [
-                                                _c("img", {
-                                                  staticClass: "img-circle",
-                                                  attrs: {
-                                                    src:
-                                                      oBrandboost.metaObj
-                                                        .ratingSrc,
-                                                    width: "26",
-                                                    alt: ""
-                                                  }
-                                                })
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "media-left" },
-                                              [
-                                                _c("div", {}, [
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      staticClass:
-                                                        "text-default text-semibold",
-                                                      attrs: { href: "#" }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        _vm._s(
-                                                          oBrandboost.metaObj
-                                                            .ratingValue
-                                                        ) + " "
-                                                      )
-                                                    ]
-                                                  )
-                                                ]),
-                                                _vm._v(" "),
-                                                oBrandboost.metaObj
-                                                  .subscriberData != "" &&
-                                                oBrandboost.metaObj
-                                                  .subscriberData != null
-                                                  ? _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "text-muted text-size-small"
-                                                      },
-                                                      [
-                                                        oBrandboost.metaObj
-                                                          .subscriberData
-                                                          .firstname
-                                                          ? [
-                                                              _vm._v(
-                                                                "\n                                                    " +
-                                                                  _vm._s(
-                                                                    oBrandboost
-                                                                      .metaObj
-                                                                      .subscriberData
-                                                                      .firstname
-                                                                  ) +
-                                                                  "\n                                                "
-                                                              )
-                                                            ]
-                                                          : [
-                                                              _c(
-                                                                "span",
-                                                                {
-                                                                  staticClass:
-                                                                    "text-muted text-size-small"
-                                                                },
-                                                                [
-                                                                  _vm._v(
-                                                                    "[No Data]"
-                                                                  )
-                                                                ]
-                                                              )
-                                                            ]
-                                                      ],
-                                                      2
-                                                    )
-                                                  : _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "text-muted text-size-small"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "span",
-                                                          {
-                                                            staticClass:
-                                                              "text-muted text-size-small"
-                                                          },
-                                                          [_vm._v("[No Data]")]
-                                                        )
-                                                      ]
-                                                    )
-                                              ]
-                                            )
-                                          ]
-                                        : [
-                                            _vm._v(
-                                              "\n                                            " +
-                                                _vm._s(_vm.displayNoData()) +
-                                                "\n                                        "
-                                            )
-                                          ]
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c("div", { staticClass: "tdropdown" }, [
-                                      oBrandboost.status == 0
-                                        ? _c("i", {
-                                            staticClass:
-                                              "icon-primitive-dot txt_red fsize16"
-                                          })
-                                        : oBrandboost.status == 2
-                                        ? _c("i", {
-                                            staticClass:
-                                              "icon-primitive-dot txt_grey fsize16"
-                                          })
-                                        : oBrandboost.status == 3
-                                        ? _c("i", {
-                                            staticClass:
-                                              "icon-primitive-dot txt_red fsize16"
-                                          })
-                                        : _c("i", {
-                                            staticClass:
-                                              "icon-primitive-dot txt_green fsize16"
-                                          }),
-                                      _vm._v(" "),
-                                      _c("a", {
-                                        staticClass:
-                                          "text-default text-semibold bbot dropdown-toggle",
-                                        attrs: { "data-toggle": "dropdown" },
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.getStatus(oBrandboost.status)
-                                          )
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("ul", {
-                                        staticClass:
-                                          "dropdown-menu dropdown-menu-right status"
-                                      })
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [_vm._v(_vm._s(oBrandboost.status))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [_vm._v(_vm._s(oBrandboost.status))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          oBrandboost.metaObj.positive > 0
-                                            ? "positive"
-                                            : ""
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          oBrandboost.metaObj.neutral > 0
-                                            ? "neutral"
-                                            : ""
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          oBrandboost.metaObj.negative > 0
-                                            ? "negative"
-                                            : ""
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { display: "none" } },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          oBrandboost.created === new Date()
-                                            ? "today"
-                                            : ""
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    domProps: {
-                                      innerHTML: _vm._s(
-                                        oBrandboost.metaObj.lastListTime
-                                      )
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", { staticClass: "text-center" }, [
-                                    _c(
-                                      "div",
-                                      { staticClass: "tdropdown ml10" },
-                                      [
-                                        _vm._m(20, true),
-                                        _vm._v(" "),
-                                        _vm.user_role != 2 &&
-                                        (_vm.currentUserId ==
-                                          oBrandboost.user_id ||
-                                          _vm.user_role == 1)
-                                          ? _c(
-                                              "ul",
-                                              {
-                                                staticClass:
-                                                  "dropdown-menu dropdown-menu-right more_act"
-                                              },
-                                              [
-                                                _vm.canWrite == true
-                                                  ? [
-                                                      oBrandboost.status == 1
-                                                        ? _c("li", [
-                                                            _c(
-                                                              "a",
-                                                              {
-                                                                staticClass:
-                                                                  "changeStatusCampaign",
-                                                                attrs: {
-                                                                  href:
-                                                                    "javascript:void(0);",
-                                                                  brandID:
-                                                                    oBrandboost.id,
-                                                                  status: "2"
-                                                                }
-                                                              },
-                                                              [
-                                                                _c("i", {
-                                                                  staticClass:
-                                                                    "icon-file-stats"
-                                                                }),
-                                                                _vm._v(" Pause")
-                                                              ]
-                                                            )
-                                                          ])
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      oBrandboost.status == 2
-                                                        ? _c("li", [
-                                                            _c(
-                                                              "a",
-                                                              {
-                                                                staticClass:
-                                                                  "changeStatusCampaign",
-                                                                attrs: {
-                                                                  href:
-                                                                    "javascript:void(0);",
-                                                                  brandID:
-                                                                    oBrandboost.id,
-                                                                  status: "1"
-                                                                }
-                                                              },
-                                                              [
-                                                                _c("i", {
-                                                                  staticClass:
-                                                                    "icon-file-stats"
-                                                                }),
-                                                                _vm._v(" Start")
-                                                              ]
-                                                            )
-                                                          ])
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      _c("li", [
-                                                        _c(
-                                                          "a",
-                                                          {
-                                                            attrs: {
-                                                              href:
-                                                                "/admin/brandboost/offsite_setup/" +
-                                                                oBrandboost.id,
-                                                              brandID:
-                                                                oBrandboost.id,
-                                                              b_title:
-                                                                oBrandboost.brand_title
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("i", {
-                                                              staticClass:
-                                                                "icon-gear"
-                                                            }),
-                                                            _vm._v(" Edit")
-                                                          ]
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("li", [
-                                                        _c(
-                                                          "a",
-                                                          {
-                                                            staticClass:
-                                                              "deleteCampaign",
-                                                            attrs: {
-                                                              href:
-                                                                "javascript:void(0);",
-                                                              brandID:
-                                                                oBrandboost.id
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("i", {
-                                                              staticClass:
-                                                                "icon-file-locked"
-                                                            }),
-                                                            _vm._v(" Delete")
-                                                          ]
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("li", [
-                                                        _c(
-                                                          "a",
-                                                          {
-                                                            staticClass:
-                                                              "archiveCampaign",
-                                                            attrs: {
-                                                              href:
-                                                                "javascript:void(0);",
-                                                              brandID:
-                                                                oBrandboost.id
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("i", {
-                                                              staticClass:
-                                                                "icon-file-text2"
-                                                            }),
-                                                            _vm._v(
-                                                              "\n                                                    Move to Archive"
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("li", [
-                                                        _c(
-                                                          "a",
-                                                          {
-                                                            attrs: {
-                                                              href:
-                                                                "/admin/brandboost/statistics/" +
-                                                                oBrandboost.id,
-                                                              brandID:
-                                                                oBrandboost.id
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("i", {
-                                                              staticClass:
-                                                                "icon-file-text2"
-                                                            }),
-                                                            _vm._v(
-                                                              " Statistics"
-                                                            )
-                                                          ]
-                                                        )
-                                                      ])
-                                                    ]
-                                                  : _vm._e(),
-                                                _vm._v(" "),
-                                                _c("li", [
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      attrs: {
-                                                        href:
-                                                          "/admin/brandboost/subscribers/" +
-                                                          oBrandboost.id
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass: "icon-gear"
-                                                      }),
-                                                      _vm._v(" Subscribers")
-                                                    ]
-                                                  )
-                                                ])
-                                              ],
-                                              2
-                                            )
-                                          : _vm._e()
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              ])
-            ],
-            1
-          )
-        ])
-      : _c("div", { staticClass: "tab-content" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane active",
-              attrs: { id: "right-icon-tab0" }
-            },
-            [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "panel panel-flat" }, [
-                    _vm._m(21),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "panel-body p0" }, [
-                      _c("table", { staticClass: "table datatable-basic" }, [
-                        _vm._m(22),
-                        _vm._v(" "),
-                        _c("tbody", [
-                          _c("tr", [
-                            _c("td", { attrs: { colspan: "13" } }, [
-                              _c("div", { staticClass: "row" }, [
-                                _c("div", { staticClass: "col-md-12" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "text-center",
-                                      staticStyle: { margin: "20px 0px 0" }
-                                    },
-                                    [
-                                      _vm._m(23),
-                                      _vm._v(" "),
-                                      _vm.canWrite
-                                        ? [
-                                            _vm.bActiveSubsription == false
-                                              ? _c(
-                                                  "button",
-                                                  {
-                                                    staticClass:
-                                                      "btn dark_btn pDisplayNoActiveSubscription mb40",
-                                                    attrs: {
-                                                      type: "button",
-                                                      title:
-                                                        "No Active Subscription",
-                                                      "data-toggle": "modal"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass: "icon-plus3"
-                                                    }),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        "   Add Off Site Review Campaign"
-                                                      )
-                                                    ])
-                                                  ]
-                                                )
-                                              : _c(
-                                                  "button",
-                                                  {
-                                                    staticClass:
-                                                      "btn dark_btn addBrandboost mb40",
-                                                    attrs: {
-                                                      type: "button",
-                                                      id: "addBrandboost",
-                                                      "data-toggle": "modal"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass: "icon-plus3"
-                                                    }),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        "    Add Off Site Review Campaign"
-                                                      )
-                                                    ])
-                                                  ]
-                                                )
-                                          ]
-                                        : _vm._e()
-                                    ],
-                                    2
-                                  )
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } }),
-                            _vm._v(" "),
-                            _c("td", { staticStyle: { display: "none" } })
-                          ])
-                        ])
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]
-          )
-        ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [
-      _c("img", {
-        staticStyle: { width: "16px" },
-        attrs: { src: "/assets/images/offsite_icon_19.png" }
-      }),
-      _vm._v("   Off Site Overview\n                ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [
-      _c("img", {
-        staticStyle: { width: "16px" },
-        attrs: { src: "/assets/images/offsite_icon_19.png" }
-      }),
-      _vm._v("   Off Site Review  Campaigns")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
-      _c("li", { staticClass: "active all" }, [
-        _c(
-          "a",
-          {
-            staticClass: "filterByColumn",
-            staticStyle: { javascript: "void()" },
-            attrs: { id: "activeCampaign", fil: "1|0|2" }
-          },
-          [_vm._v("Active Campaigns")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c(
-          "a",
-          {
-            staticClass: "filterByColumn",
-            staticStyle: { javascript: "void()" },
-            attrs: { fil: "3" }
-          },
-          [_vm._v("Archive")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-group" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn light_btn btn-icon dropdown-toggle",
-          attrs: { type: "button", "data-toggle": "dropdown" }
-        },
-        [
-          _c("i", { staticClass: "icon-calendar2" }),
-          _vm._v("    Filter campaign    "),
-          _c("span", { staticClass: "caret" })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "dropdown-menu dropdown-content width-320 dropdown-menu-right"
-        },
-        [
-          _c("div", { staticClass: "dropdown-content-heading" }, [
-            _vm._v(" Filter\n                            "),
-            _c("ul", { staticClass: "icons-list" }, [
-              _c("li", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("i", { staticClass: "icon-more" })
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", {}, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
-                attrs: { id: "accordion-control-right" }
-              },
-              [
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c(
-                    "div",
-                    { staticClass: "panel-heading sidebarheadings active" },
-                    [
-                      _c("h6", { staticClass: "panel-title" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              "data-toggle": "collapse",
-                              "data-parent": "#accordion-control-right",
-                              href: "#accordion-control-right-group1"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "icon-star-empty3" }),
-                            _vm._v(" Campaign Type")
-                          ]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group1" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(
-                              "\n                                                    Most startups fail. But many of those failures are preventable.\n                                                    The Lean Startup is a new approach being adopted across the\n                                                    globe, changing the way companies are built and new products are\n                                                    launched.\n                                                "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group2"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-arrow-up-left2" }),
-                          _vm._v("  Source")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group2" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(" Content Goes here...")
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group73"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-star-full2" }),
-                          _vm._v("  Rating")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group73" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(" Content Goes here...")
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group74"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-calendar" }),
-                          _vm._v("  Date Created")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group74" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(" Content Goes here...")
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group83"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-thumbs-up2" }),
-                          _vm._v("  Reviews")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse in",
-                      attrs: { id: "accordion-control-right-group83" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row mb20" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: {
-                                    type: "checkbox",
-                                    checked: "checked"
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Total Reviews\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "20" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "100" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row mb20" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: {
-                                    type: "checkbox",
-                                    checked: "checked"
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Positive\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "20" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "100" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row mb20" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: { type: "checkbox" }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Neutral\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                value: "20",
-                                disabled: ""
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                value: "100",
-                                disabled: ""
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: {
-                                    type: "checkbox",
-                                    checked: "checked"
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Negative\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "0" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "10" }
-                            })
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-content-footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn dark_btn dropdown-toggle",
-                staticStyle: { display: "inline-block" },
-                attrs: { type: "button" }
-              },
-              [
-                _c("i", { staticClass: "icon-filter4" }),
-                _c("span", [_vm._v("    Filter")])
-              ]
-            ),
-            _vm._v(
-              "\n                               \n                            "
-            ),
-            _c(
-              "a",
-              {
-                staticStyle: { display: "inline-block" },
-                attrs: { href: "#" }
-              },
-              [_vm._v("Clear All")]
-            )
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "heading_links pull-left" }, [
-      _c(
-        "a",
-        {
-          staticClass: "top_links btn btn-xs btn_white_table ml20 top_links_all"
-        },
-        [_vm._v("All")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "top_links top_links_Status",
-          staticStyle: { cursor: "pointer" },
-          attrs: { getValue: "1" }
-        },
-        [_vm._v("Active")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "top_links top_links_Status",
-          staticStyle: { cursor: "pointer" },
-          attrs: { getValue: "0" }
-        },
-        [_vm._v("Inactive")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "top_links top_links_positive",
-          staticStyle: { cursor: "pointer" },
-          attrs: { getValue: "positive" }
-        },
-        [_vm._v("Positive")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "top_links top_links_neutral",
-          staticStyle: { cursor: "pointer" },
-          attrs: { getValue: "neutral" }
-        },
-        [_vm._v("Neutral")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "top_links top_links_negative",
-          staticStyle: { cursor: "pointer" },
-          attrs: { getValue: "negative" }
-        },
-        [_vm._v("Negative")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "top_links top_links_added_today",
-          staticStyle: { cursor: "pointer" },
-          attrs: { getValue: "today" }
-        },
-        [_vm._v("Added Today")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "heading-elements" }, [
-      _c(
-        "div",
-        {
-          staticClass: "form-group has-feedback has-feedback-left",
-          staticStyle: { display: "inline-block", margin: "0" }
-        },
-        [
-          _c("input", {
-            staticClass: "form-control input-sm cus_search",
-            attrs: {
-              tableID: "offsiteBrandboostCampaign",
-              placeholder: "Search by name",
-              type: "text"
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-control-feedback" }, [
-            _c("i", { staticClass: "icon-search4" })
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "table_action_tool" }, [
-        _c("a", { attrs: { href: "javascript:void(0);" } }, [
-          _c("i", { staticClass: "icon-calendar52" })
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "editDataList",
-            attrs: { href: "javascript:void(0);" }
-          },
-          [_c("i", { staticClass: "icon-pencil" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "custom_action_box",
-            staticStyle: { display: "none" },
-            attrs: {
-              href: "javascript:void(0);",
-              id: "deleteMultipleOffsiteBB"
-            }
-          },
-          [_c("i", { staticClass: "icon-trash position-left" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "custom_action_box",
-            staticStyle: { display: "none" },
-            attrs: {
-              href: "javascript:void(0);",
-              id: "archiveMultipleOffsiteBB"
-            }
-          },
-          [_c("i", { staticClass: "icon-gear position-left" })]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "th",
-      {
-        staticClass: "nosort editAction",
-        staticStyle: { width: "30px", display: "none" }
-      },
-      [
-        _c("label", { staticClass: "custmo_checkbox pull-left" }, [
-          _c("input", {
-            staticClass: "control-primary",
-            attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "custmo_checkmark" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-stack-star" }),
-      _vm._v("Name")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-star-full2" }),
-      _vm._v("Source")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-calendar" }),
-      _vm._v("Created")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-user" }),
-      _vm._v(" Contacts")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", {}, [
-        _c("img", { attrs: { src: "/assets/images/emoji_smile.png" } })
-      ]),
-      _vm._v(
-        "\n                                        Positive\n                                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", {}, [
-        _c("img", { attrs: { src: "/assets/images/emoji_smile2.png" } })
-      ]),
-      _vm._v(
-        "\n                                        Neutral\n                                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", {}, [
-        _c("img", { attrs: { src: "/assets/images/emoji_smile3.png" } })
-      ]),
-      _vm._v(
-        "\n                                        Negative\n                                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", {}, [_c("img", { attrs: { src: "/assets/images/clock.png" } })]),
-      _vm._v(
-        "Last\n                                        feedback\n                                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { staticClass: "text-center" }, [
-      _c("i", { staticClass: "fa fa-dot-circle-o fsize12" }),
-      _vm._v("Status\n                                    ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-calendar" }),
-      _vm._v("Last Incoming Lead")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left-half-clipper" }, [
-      _c("div", { staticClass: "first50-bar" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "value-bar" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left-half-clipper" }, [
-      _c("div", { staticClass: "first50-bar" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "value-bar" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left-half-clipper" }, [
-      _c("div", { staticClass: "first50-bar" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "value-bar" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "table_more dropdown-toggle",
-        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
-      },
-      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-heading" }, [
-      _c("h6", { staticClass: "panel-title" }, [
-        _vm._v("Off Site Review Campaigns")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "heading-elements" }, [
-        _c(
-          "div",
-          {
-            staticClass: "form-group has-feedback has-feedback-left",
-            staticStyle: { display: "inline-block", margin: "0" }
-          },
-          [
-            _c("input", {
-              staticClass: "form-control input-sm cus_search",
-              attrs: { placeholder: "Search by name", type: "text" }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-control-feedback" }, [
-              _c("i", { staticClass: "icon-search4" })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-xs btn-default editDataList",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "icon-pencil position-left" }),
-            _vm._v(" Edit\n                                ")
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-xs custom_action_box",
-            attrs: { id: "deleteMultipleOffsiteBB" }
-          },
-          [
-            _c("i", { staticClass: "icon-trash position-left" }),
-            _vm._v(" Delete\n                                ")
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-xs custom_action_box",
-            attrs: { id: "archiveMultipleOffsiteBB" }
-          },
-          [
-            _c("i", { staticClass: "icon-gear position-left" }),
-            _vm._v(" Archive\n                                ")
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c("th", [_c("i", { staticClass: "icon-stack-star" }), _vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "icon-star-full2" }),
-          _vm._v("Source")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "icon-calendar" }),
-          _vm._v("Created")
-        ]),
-        _vm._v(" "),
-        _c("th", [_c("i", { staticClass: "icon-graph" }), _vm._v("Total")]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
-          _vm._v(" ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
-          _vm._v(" ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "fa fa-smile-o fsize12" }),
-          _vm._v(" ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "icon-alarm-check" }),
-          _vm._v("Last review")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", { staticClass: "icon-statistics" }),
-          _vm._v("Statistic")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [
-          _c("i", { staticClass: "fa fa-dot-circle-o fsize12" }),
-          _vm._v("Status\n                                    ")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center nosort" }, [
-          _c("i", { staticClass: "fa fa-dot-circle-o" }),
-          _vm._v(" Action\n                                    ")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-20 mt40" }, [
-      _vm._v(
-        "\n                                                        Looks Like You Don’t Have Any Off Site Review Campaign\n                                                        Yet "
-      ),
-      _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "\n                                                        Lets Create Your First Off Site Review Campaign.\n                                                    "
-      )
     ])
   }
 ]
@@ -63190,6 +64386,231 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/CampaignList.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CampaignList_vue_vue_type_template_id_4c87ca42___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CampaignList.vue?vue&type=template&id=4c87ca42& */ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=template&id=4c87ca42&");
+/* harmony import */ var _CampaignList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CampaignList.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CampaignList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CampaignList_vue_vue_type_template_id_4c87ca42___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CampaignList_vue_vue_type_template_id_4c87ca42___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/offsite/CampaignList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./CampaignList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=template&id=4c87ca42&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=template&id=4c87ca42& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignList_vue_vue_type_template_id_4c87ca42___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./CampaignList.vue?vue&type=template&id=4c87ca42& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/CampaignList.vue?vue&type=template&id=4c87ca42&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignList_vue_vue_type_template_id_4c87ca42___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignList_vue_vue_type_template_id_4c87ca42___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListOffsiteCampaign_vue_vue_type_template_id_8ea29232___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListOffsiteCampaign.vue?vue&type=template&id=8ea29232& */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=template&id=8ea29232&");
+/* harmony import */ var _ListOffsiteCampaign_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListOffsiteCampaign.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListOffsiteCampaign_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListOffsiteCampaign_vue_vue_type_template_id_8ea29232___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListOffsiteCampaign_vue_vue_type_template_id_8ea29232___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListOffsiteCampaign_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListOffsiteCampaign.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListOffsiteCampaign_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=template&id=8ea29232&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=template&id=8ea29232& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListOffsiteCampaign_vue_vue_type_template_id_8ea29232___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListOffsiteCampaign.vue?vue&type=template&id=8ea29232& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue?vue&type=template&id=8ea29232&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListOffsiteCampaign_vue_vue_type_template_id_8ea29232___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListOffsiteCampaign_vue_vue_type_template_id_8ea29232___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/Overview.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/Overview.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Overview_vue_vue_type_template_id_5e8ec18a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Overview.vue?vue&type=template&id=5e8ec18a& */ "./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=template&id=5e8ec18a&");
+/* harmony import */ var _Overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Overview.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Overview.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Overview_vue_vue_type_template_id_5e8ec18a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Overview_vue_vue_type_template_id_5e8ec18a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/brandboost/offsite/Overview.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Overview.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=template&id=5e8ec18a&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=template&id=5e8ec18a& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_template_id_5e8ec18a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Overview.vue?vue&type=template&id=5e8ec18a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/Overview.vue?vue&type=template&id=5e8ec18a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_template_id_5e8ec18a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Overview_vue_vue_type_template_id_5e8ec18a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/brandboost/offsite/OverviewStats.vue":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/admin/brandboost/offsite/OverviewStats.vue ***!
@@ -63359,93 +64780,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReviewRequest_vue_vue_type_template_id_5bf43cd6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReviewRequest_vue_vue_type_template_id_5bf43cd6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/admin/brandboost/offsite/overview.vue":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/admin/brandboost/offsite/overview.vue ***!
-  \***********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _overview_vue_vue_type_template_id_54c36d6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./overview.vue?vue&type=template&id=54c36d6a& */ "./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=template&id=54c36d6a&");
-/* harmony import */ var _overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./overview.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./overview.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _overview_vue_vue_type_template_id_54c36d6a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _overview_vue_vue_type_template_id_54c36d6a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/admin/brandboost/offsite/overview.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************!*\
-  !*** ./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./overview.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css&":
-/*!********************************************************************************************************!*\
-  !*** ./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css& ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--5-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./overview.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=template&id=54c36d6a&":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=template&id=54c36d6a& ***!
-  \******************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_template_id_54c36d6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./overview.vue?vue&type=template&id=54c36d6a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/brandboost/offsite/overview.vue?vue&type=template&id=54c36d6a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_template_id_54c36d6a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overview_vue_vue_type_template_id_54c36d6a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -65513,8 +66847,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
 /* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
 /* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_overview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/overview */ "./resources/js/components/admin/brandboost/offsite/overview.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/Overview */ "./resources/js/components/admin/brandboost/offsite/Overview.vue");
 /* harmony import */ var _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/feedback/FeedbackList */ "./resources/js/components/admin/feedback/FeedbackList.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ListOffsiteCampaign */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue");
+
 
 
 
@@ -65622,9 +66958,15 @@ var routes = [{
   }
 }, {
   path: '/brandboost/offsite_overview',
-  component: _components_admin_brandboost_offsite_overview__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_15__["default"],
   props: {
     title: 'Offsite overview'
+  }
+}, {
+  path: '/brandboost/offsite',
+  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_17__["default"],
+  props: {
+    title: 'Offsite Brand Boost Campaigns'
   }
 }, {
   path: '/feedback/listall/',

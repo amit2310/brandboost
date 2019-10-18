@@ -13,8 +13,9 @@ import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
 import TagsReview from './components/admin/tags/tagsreview';
 import TagsFeedback from './components/admin/tags/tagsfeedback';
-import OffsiteOverview from './components/admin/brandboost/offsite/overview';
+import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
 import OffsiteNegativeFeedback from './components/admin/feedback/FeedbackList';
+import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteCampaign';
 
 
 const routes = [
@@ -37,6 +38,7 @@ const routes = [
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
     { path: '/brandboost/offsite_overview', component: OffsiteOverview, props: { title: 'Offsite overview'} },
+    { path: '/brandboost/offsite', component: OffsiteCampaigns, props: { title: 'Offsite Brand Boost Campaigns'} },
     { path: '/feedback/listall/', component: OffsiteNegativeFeedback, props: { title: 'Requires Attention'} },
 ];
 
