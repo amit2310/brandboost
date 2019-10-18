@@ -22,7 +22,7 @@ use App\Models\Admin\LiveModel;
 use App\Models\Admin\Crons\InviterModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use PhpParser\Node\Expr\Cast\Object_;
+
 use Session;
 
 class Brandboost extends Controller
@@ -964,8 +964,7 @@ class Brandboost extends Controller
 .     * @param type $param
      * @return type
      */
-    public
-    function offsite()
+    public function offsite()
     {
 
         $aUser = getLoggedUser();
@@ -990,7 +989,39 @@ class Brandboost extends Controller
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
 
-        return view('admin.brandboost.offsite_list', array('title' => 'Offsite Brand Boost Campaigns', 'pagename' => $breadcrumb, 'aBrandbosts' => $aBrandboostList, 'bActiveSubsription' => $bActiveSubsription, 'currentUserId' => $userID, 'user_role' => $user_role, 'moduleName' => $moduleName, 'viewstats' => false));
+        //Do some calculations
+        list($canRead, $canWrite) = fetchPermissions('Offsite Campaign');
+        $iArchiveCount = $iActiveCount = 0;
+        if (!empty($aBrandboostList)) {
+            foreach ($aBrandboostList as $oRec) {
+                if ($oRec->status == 3) {
+                    $iArchiveCount++;
+                } else {
+                    $iActiveCount++;
+                }
+            }
+        }
+
+        $aBradboosts = $this->processOffsiteOverview($aBrandboostList);
+
+        $aData = array(
+            'title' => 'Offsite Brand Boost Campaigns',
+            'pagename' => $breadcrumb,
+            'aBrandbosts' => $aBradboosts,
+            'bActiveSubsription' => $bActiveSubsription,
+            'currentUserId' => $userID,
+            'user_role' => $user_role,
+            'moduleName' => $moduleName,
+            'viewstats' => false,
+            'iActiveCount' => $iActiveCount,
+            'iArchiveCount' => $iArchiveCount,
+            'canRead' => $canRead,
+            'canWrite' => $canWrite
+        );
+
+        //return view('admin.brandboost.offsite_list', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 
