@@ -49,7 +49,7 @@ Misc
 .min_w_96{ min-width:96px;}
 .badge.badge-grey{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
 .badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
-
+.ls4{letter-spacing: 0.4px}
 
 
 /******************************
@@ -61,6 +61,7 @@ FORMS GROUP
 .form-group .form-control.h56{height: 56px;}
 .form-control::placeholder {color: #7B89A6; opacity: 1;}
 .form-control-dark::placeholder {color: #333D54; opacity: 1; font-size: 14px;}
+.form-group .form-control.emoji{ background: url(../images/Emoji.png) 95% 15px #fff no-repeat;}
 
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
@@ -89,11 +90,11 @@ FORMS GROUP
 /*******************************
 CUSTOM SWITCH STYLES
 **********/
-.custom-form-switch {  display: inline-block;  margin-bottom: 8px;  position: relative;  align-items: center; width: 30px; height: 17px;}
+.custom-form-switch {  display: inline-block;  margin-bottom: 8px;  position: relative;  align-items: center; width: 32px; height: 16px;}
 .custom-form-switch > .field {  position: absolute;  top: 0;  left: 0;  opacity: 0; margin: 0;}
-.custom-form-switch > .toggle {  display: inline-block;  background-color: #c5d0e5;  width: 26px;  height: 13px;  vertical-align: middle;  border-radius: 5px;  border: 2px solid #c5d0e5;  margin-right: 8px;  transition: all 0.6s; box-sizing: content-box;}
-.custom-form-switch > .toggle:before {  content: '';  display: block;  width: 13px;  height: 13px;  background-color: white;  border-radius: 4px;  transition: margin 0.3s;}
-.custom-form-switch .field:checked + .toggle:before {  margin-left: 12px;}
+.custom-form-switch > .toggle {  display: inline-block;  background-color: #c5d0e5;  width: 32px;  height: 16px;  vertical-align: middle;  border-radius: 15px;  border:none!important/* 2px solid #c5d0e5*/;  margin-right: 8px;  transition: all 0.6s; box-sizing: content-box;}
+.custom-form-switch > .toggle:before {  content: '';  display: block;  width: 8px;  height: 8px;  background-color: white;  border-radius: 11px;  transition: margin 0.3s; position: absolute; top: 12px; left: 5px}
+.custom-form-switch .field:checked + .toggle:before {  margin-left: 13px;}
 .custom-form-switch .field:checked + .toggle {  border-color: #7f62df;  background-color: #7f62df;}
 .custom-form-switch .field:checked + .toggle.blue {  border-color: #3680dc;  background-color: #3680dc;}
 .custom-form-switch .field:checked + .toggle.blue2 {  border-color: #2eb4dd;  background-color: #2eb4dd;}
@@ -161,6 +162,22 @@ List Styles Classes
 .import_list li a.done{background: url(../images/checkbox-circle-fill-24.svg) 0px 0px no-repeat ;  font-weight: 500; }
 .import_list li:hover a:after{ display: block;}
 .import_list li a:hover{color: #333D54; font-weight: 600}
+
+
+
+.templates_list{margin: 0; padding: 0;}
+.templates_list li{margin: 0; padding: 0; list-style: none;}
+.templates_list li a{margin: 0; padding: 12px 0; list-style: none; border-bottom: 1px solid #e9eff8; display: block; float: left; width: 100%}
+.templates_list li a strong{font-size: 14px; color: #333D54; font-weight: 400!important; float: left}
+.templates_list li a strong img{float: left; margin: 3px 10px 0 0}
+.templates_list li a span{text-align: right; float: right; color: #7B89A6}
+@media only screen and (max-width:1400px){
+	.templates_list{max-width: 210px;}
+}
+
+
+
+
 
 
 
@@ -427,7 +444,7 @@ FONT SIZE CLASSES
 .fsize11{font-size: 11px!important;}
 .fsize12{font-size: 12px!important;}
 .fsize13{font-size: 13px!important;}
-.fsize14{font-size: 13px!important;}
+.fsize14{font-size: 14px!important;}
 .fsize15{font-size: 15px!important;}
 .fsize16{font-size: 16px!important;}
 .fsize17{font-size: 17px!important;}
@@ -452,6 +469,7 @@ PADDING CLASSES
 **********/
 .p0{padding: 0px!important}
 .p10{padding: 10px!important}
+.p12{padding: 12px!important}
 .p15{padding: 15px!important}
 .p20{padding: 20px!important}
 .p25{padding: 25px!important}
