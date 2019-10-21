@@ -21,8 +21,8 @@
             <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
             <div class="tab-content">
-                <email-templates v-if="type == 'email'"></email-templates>
-                <sms-templates v-if="type == 'sms'"></sms-templates>
+                <email-templates :pageColor="pageColor" v-if="type == 'email'"></email-templates>
+                <sms-templates :pageColor="pageColor" v-if="type == 'sms'"></sms-templates>
             </div>
         </div>
 
@@ -34,8 +34,11 @@
     import SmsTemplates from './SmsTemplates.vue';
 
     export default {
-        props: ['title', 'type'],
-        components: {'email-templates': EmailTemplates, 'sms-templates': SmsTemplates}
+        props: ['pageColor', 'title', 'type'],
+        components: {'email-templates': EmailTemplates, 'sms-templates': SmsTemplates},
+        mounted() {
+
+        }
     };
 
     let tkn = $('meta[name="_token"]').attr('content');

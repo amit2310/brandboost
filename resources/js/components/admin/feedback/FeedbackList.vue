@@ -201,6 +201,7 @@
 <script>
     import FeedbackListTable from './partial/FeedbackListTable';
     export default {
+        props : ['pageColor'],
         components: { FeedbackListTable },
         data() {
             return {
@@ -211,6 +212,7 @@
             }
         },
         mounted() {
+            this.$parent.pageColor = this.pageColor;
             axios.get('/admin/feedback/listall')
                 .then(response => {
                     this.results = response.data.result;

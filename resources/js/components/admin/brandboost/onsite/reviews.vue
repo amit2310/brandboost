@@ -649,6 +649,7 @@
 
     export default {
         title: 'Onsite reviews - Brand Boost',
+        props : ['pageColor'],
         components: {UserAvatar},
         data() {
             return {
@@ -658,7 +659,7 @@
         },
 
         mounted() {
-            //getData
+            this.$parent.pageColor = this.pageColor;
             axios.get('/admin/brandboost/reviews')
                 .then(response => {
                     //console.log(response.data);

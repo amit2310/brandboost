@@ -417,6 +417,7 @@
 
     export default {
         title: 'Onsite questions - Brand Boost',
+        props : ['pageColor'],
         components: {UserAvatar},
         data() {
             return {
@@ -425,7 +426,7 @@
             }
         },
         mounted() {
-            //getData
+            this.$parent.pageColor = this.pageColor;
             axios.get('/admin/questions/')
                 .then(response => {
                     //console.log(response.data);

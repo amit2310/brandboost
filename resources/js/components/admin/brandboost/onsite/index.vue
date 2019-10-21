@@ -1019,6 +1019,7 @@
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
+        props : ['pageColor'],
         data() {
             return {
                 oBrandbosts: {}
@@ -1026,7 +1027,7 @@
         },
         // components: {'dashboard-reivews' : DashReviews},
         mounted() {
-            //getData
+            this.$parent.pageColor = this.pageColor;
             axios.get('/admin/brandboost/onsite')
                 .then(response => {
                     //console.log(response);
