@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Website_Light</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8,16 C3.581722,16 0,12.418278 0,8 C0,3.581722 3.581722,0 8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 Z M9.17337539,8.48926842 L11.2409278,7.5077536 C11.4508252,7.40811042 11.4531124,7.23900843 11.2489315,7.12867928 L5.5425939,4.04525959 C5.33870297,3.93508712 5.18551639,4.03292745 5.20108973,4.26414204 L5.63014216,10.6342016 C5.64585248,10.8674493 5.80359765,10.9351664 5.98278175,10.7899932 L7.76329734,9.34743631 L9.27153308,11.761118 C9.39364229,11.9565336 9.65356344,12.016988 9.85064174,11.8938398 L10.536724,11.4651281 C10.7329949,11.3424844 10.7940536,11.0828956 10.671299,10.8864472 L9.17337539,8.48926842 Z" id="path-1"></path>
+        <filter x="-3.1%" y="-3.1%" width="106.2%" height="106.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Website_Light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <g id="Combined-Shape">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

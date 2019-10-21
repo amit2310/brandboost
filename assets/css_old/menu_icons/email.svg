@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>95DECC3B-B519-4D97-AD1E-EC348CDF5A99</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#525378" offset="0%"></stop>
+            <stop stop-color="#9292B4" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="14" height="12"></rect>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-621.000000, -1132.000000)">
+            <g id="🈲/Menu/Email/Default-Copy" transform="translate(621.000000, 1132.000000)">
+                <g id="email-24px">
+                    <g id="Rectangle">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <path d="M6.93998479,-9.5 L16.7126331,-1.01471863 L9.56246851,5.1935431 C8.05811145,6.49972874 5.82185813,6.49972874 4.31750108,5.1935431 L-2.8326635,-1.01471863 L6.93998479,-9.5 Z" fill="#C4C4E1" opacity="0.3" mask="url(#mask-3)"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

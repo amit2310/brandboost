@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="13px" viewBox="0 0 16 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>7A4D9352-7FDC-4F5B-96B2-B936AC35458F</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-3.8376015%" y1="95.0409171%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#6468A0" offset="0%"></stop>
+            <stop stop-color="#8989C1" offset="100%"></stop>
+        </linearGradient>
+        <path d="M15.4886513,7.30696751 L15.4995002,11.3310914 C15.501287,11.9938307 14.9654791,12.5325355 14.3027398,12.5343222 C13.9833599,12.5351832 13.6768129,12.4086912 13.4509765,12.1828547 L12.463899,11.1957772 C12.2765869,11.2258581 12.0844444,11.2414885 11.8886513,11.2414885 L4.1,11.2414885 C2.1117749,11.2414885 0.5,9.62971357 0.5,7.64148847 L0.5,3.6 C0.5,1.6117749 2.1117749,3.65231026e-16 4.1,0 L11.8886513,0 C13.8768764,-3.65231026e-16 15.4886513,1.6117749 15.4886513,3.6 L15.4886513,7.30696751 Z" id="path-2"></path>
+        <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#B36DF5" offset="0%"></stop>
+            <stop stop-color="#7745E3" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-564.000000, -1244.000000)">
+            <g id="🈲/Menu/Off-Site-Boost/Color-Copy" transform="translate(564.000000, 1244.000000)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Combined-Shape" fill="url(#linearGradient-1)" opacity="0.654855" xlink:href="#path-2"></use>
+                <g id="*️⃣/🎨-Color/Product/07-Off-Site/Gradient--" mask="url(#mask-3)" fill="url(#linearGradient-4)" fill-rule="nonzero">
+                    <g transform="translate(0.000000, -1.000000)" id="Rectangle-24">
+                        <rect x="0" y="0" width="16" height="16"></rect>
+                    </g>
+                </g>
+                <path d="M3.82206171,5.85025593 C3.59955308,5.51649299 3.68974252,5.06554578 4.02350547,4.84303715 C4.35726841,4.62052853 4.80821562,4.71071797 5.03072424,5.04448091 C5.87109711,6.30504021 6.86269676,6.9 8.05797193,6.9 C9.25324709,6.9 10.2448467,6.30504021 11.0852196,5.04448091 C11.3077282,4.71071797 11.7586754,4.62052853 12.0924384,4.84303715 C12.4262013,5.06554578 12.5163908,5.51649299 12.2938821,5.85025593 C11.1974129,7.49495979 9.76795992,8.35263158 8.05797193,8.35263158 C6.34798393,8.35263158 4.91853095,7.49495979 3.82206171,5.85025593 Z" id="Path-56" fill="#FFFFFF" opacity="0.9" mask="url(#mask-3)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

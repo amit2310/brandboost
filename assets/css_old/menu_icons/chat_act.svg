@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>7CB171EF-E4F3-4C39-BC45-803380507F0A</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="-5.55111512e-15%" x2="1.11022302e-14%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#78DFAC" offset="3.28757225%"></stop>
+            <stop stop-color="#4ABABF" offset="100%"></stop>
+        </linearGradient>
+        <path d="M3.95073031,12.3667408 L0.7,13 L1.3314348,9.48200614 C0.926431509,8.62279649 0.7,7.6628412 0.7,6.65 C0.7,2.97730641 3.67730641,0 7.35,0 C11.0226936,0 14,2.97730641 14,6.65 C14,10.3226936 11.0226936,13.3 7.35,13.3 C6.10796164,13.3 4.9454526,12.9594945 3.95073031,12.3667408 Z" id="path-2"></path>
+        <linearGradient x1="100%" y1="0%" x2="2.75018064%" y2="97.2498194%" id="linearGradient-4">
+            <stop stop-color="#5A99F6" offset="0%"></stop>
+            <stop stop-color="#1266C1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-454.000000, -1243.000000)">
+            <g id="🈲/Menu/Chat/Active-Copy-2" transform="translate(454.000000, 1243.000000)">
+                <g id="Group">
+                    <g id="*️⃣/🎨-Color/Product/14/Gradient-">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <g id="*️⃣/🎨-Color/Product/05-Chat/Gradient" mask="url(#mask-3)" fill="url(#linearGradient-4)" fill-rule="nonzero">
+                            <g transform="translate(-1.000000, -1.000000)" id="Rectangle-24">
+                                <rect x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="Group-2" transform="translate(3.500000, 4.500000)" fill="#FFFFFF" opacity="0.9">
+                        <rect id="Rectangle-146" x="0.726928105" y="0.545882353" width="6.68339869" height="1.31764706" rx="0.658823529"></rect>
+                        <rect id="Rectangle-146-Copy" x="0.726928105" y="3.18117647" width="4.2530719" height="1.31764706" rx="0.658823529"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

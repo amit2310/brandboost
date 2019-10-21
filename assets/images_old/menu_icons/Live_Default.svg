@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Live_Default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="6.72283212%" y1="84.6486649%" x2="100%" y2="9.36374193%" id="linearGradient-1">
+            <stop stop-color="#5E6893" offset="0%"></stop>
+            <stop stop-color="#5E6893" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M9.12379763,0.426676442 L13.3762024,2.83429828 C14.3810118,3.4032002 15,4.45457431 15,5.59237816 L15,10.4076218 C15,11.5454257 14.3810118,12.5967998 13.3762024,13.1657017 L9.12379763,15.5733236 C8.11898816,16.1422255 6.88101184,16.1422255 5.87620237,15.5733236 L1.62379763,13.1657017 C0.61898816,12.5967998 4.56703638e-15,11.5454257 3.84592537e-15,10.4076218 L0,5.59237816 C-7.21111007e-16,4.45457431 0.61898816,3.4032002 1.62379763,2.83429828 L5.87620237,0.426676442 C6.88101184,-0.142225481 8.11898816,-0.142225481 9.12379763,0.426676442 Z" id="path-2"></path>
+        <filter x="-1.7%" y="-1.6%" width="103.3%" height="103.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.0880321558 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-4">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M10.6677501,7.42857143 L8.07142857,7.42857143 L8.07142857,3.99745528 C8.07142857,3.77654138 7.89234247,3.59745528 7.67142857,3.59745528 C7.54991508,3.59745528 7.43498992,3.65269117 7.35908105,3.74757726 L4.01990242,7.92155055 C3.8818986,8.09405533 3.90986715,8.34577228 4.08237192,8.4837761 C4.15329714,8.54051627 4.24142134,8.57142857 4.33224994,8.57142857 L6.92857143,8.57142857 L6.92857143,12.0025447 C6.92857143,12.2234586 7.10765753,12.4025447 7.32857143,12.4025447 C7.45008492,12.4025447 7.56501008,12.3473088 7.64091895,12.2524227 L10.9800976,8.07844945 C11.1181014,7.90594467 11.0901329,7.65422772 10.9176281,7.5162239 C10.8467029,7.45948373 10.7585787,7.42857143 10.6677501,7.42857143 Z" id="path-5"></path>
+        <filter x="2.3%" y="4.8%" width="95.4%" height="94.4%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Live_Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(0.500000, 0.000000)">
+            <g id="Polygon" opacity="0.6">
+                <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            </g>
+            <g id="Shape">
+                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>

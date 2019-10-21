@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>NPS_Default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="6.72283212%" y1="84.6486649%" x2="100%" y2="9.36374193%" id="linearGradient-1">
+            <stop stop-color="#5E6893" offset="0%"></stop>
+            <stop stop-color="#5E6893" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M7.33607943,14.9721117 L6.76393202,15.1734597 C6.03423107,15.4302533 5.22294714,15.1666512 4.78354618,14.5299933 L4.43901858,14.0307996 C4.18026918,13.6558918 3.801289,13.3805466 3.36477254,13.2503141 L2.78354618,13.0769083 C2.0422662,12.8557512 1.54086515,12.1656319 1.55960042,11.3922915 L1.57429046,10.785927 C1.58532307,10.3305311 1.44056553,9.88501321 1.16396499,9.52307502 L0.7956684,9.04115045 C0.325953143,8.4265172 0.325953143,7.5734828 0.7956684,6.95884955 L1.16396499,6.47692498 C1.44056553,6.11498679 1.58532307,5.66946888 1.57429046,5.21407301 L1.55960042,4.60770854 C1.54086515,3.8343681 2.0422662,3.14424877 2.78354618,2.92309173 L3.36477254,2.74968586 C3.801289,2.61945343 4.18026918,2.34410822 4.43901858,1.96920042 L4.78354618,1.47000667 C5.22294714,0.833348794 6.03423107,0.569746666 6.76393202,0.826540304 L7.33607943,1.02788829 C7.76577737,1.17910598 8.23422263,1.17910598 8.66392057,1.02788829 L9.23606798,0.826540304 C9.96576893,0.569746666 10.7770529,0.833348794 11.2164538,1.47000667 L11.5609814,1.96920042 C11.8197308,2.34410822 12.198711,2.61945343 12.6352275,2.74968586 L13.2164538,2.92309173 C13.9577338,3.14424877 14.4591348,3.8343681 14.4403996,4.60770854 L14.4257095,5.21407301 C14.4146769,5.66946888 14.5594345,6.11498679 14.836035,6.47692498 L15.2043316,6.95884955 C15.6740469,7.5734828 15.6740469,8.4265172 15.2043316,9.04115045 L14.836035,9.52307502 C14.5594345,9.88501321 14.4146769,10.3305311 14.4257095,10.785927 L14.4403996,11.3922915 C14.4591348,12.1656319 13.9577338,12.8557512 13.2164538,13.0769083 L12.6352275,13.2503141 C12.198711,13.3805466 11.8197308,13.6558918 11.5609814,14.0307996 L11.2164538,14.5299933 C10.7770529,15.1666512 9.96576893,15.4302533 9.23606798,15.1734597 L8.66392057,14.9721117 C8.23422263,14.820894 7.76577737,14.820894 7.33607943,14.9721117 Z" id="path-2"></path>
+        <filter x="-3.3%" y="-3.4%" width="106.6%" height="106.9%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.0880321558 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-5">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M7.99724694,11 C4.82734289,11 3.08389566,7.39634375 4.49450296,7.01610184 C4.86696669,6.92104136 5.64359318,7.56053912 6.00813215,7.75066007 C6.63068722,8.06983377 7.30933895,8.23789567 7.99724694,8.24324618 C7.99724694,8.24324618 8.26668879,8.24324618 8.29046307,8.24324618 C8.87890378,8.20143062 9.45456352,8.03715947 9.98636174,7.75930193 C10.7788377,7.34449258 11.4365928,6.5321576 11.9120784,7.35313444 C12.3875641,8.17411128 10.9135587,10.8530884 7.99724694,10.9913581 L7.99724694,11 Z" id="path-6"></path>
+        <filter x="-6.3%" y="-12.5%" width="112.5%" height="149.8%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="NPS_Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="happy-sun">
+            <mask id="mask-3" fill="white">
+                <use xlink:href="#path-2"></use>
+            </mask>
+            <g id="Combined-Shape" opacity="0.6">
+                <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-2"></use>
+            </g>
+            <g id="Shape" mask="url(#mask-3)">
+                <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-6"></use>
+                <use fill="url(#linearGradient-5)" fill-rule="evenodd" xlink:href="#path-6"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>E470D9DC-82C8-4A4C-91A8-46FD8CEBADFC</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#B1B1D0" offset="0%"></stop>
+            <stop stop-color="#D1D1E6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-957.000000, -1246.000000)">
+            <g id="🈲/Menu/Settings/Color-Copy" transform="translate(955.000000, 1244.000000)">
+                <g id="settings-1">
+                    <rect id="bound" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M4.66666667,2 L11.3333333,2 C12.8060927,2 14,3.19390733 14,4.66666667 C14,6.139426 12.8060927,7.33333333 11.3333333,7.33333333 L4.66666667,7.33333333 C3.19390733,7.33333333 2,6.139426 2,4.66666667 C2,3.19390733 3.19390733,2 4.66666667,2 Z M4.66666667,6 C5.40304633,6 6,5.40304633 6,4.66666667 C6,3.930287 5.40304633,3.33333333 4.66666667,3.33333333 C3.930287,3.33333333 3.33333333,3.930287 3.33333333,4.66666667 C3.33333333,5.40304633 3.930287,6 4.66666667,6 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+                    <path d="M4.66666667,8.66666667 L11.3333333,8.66666667 C12.8060927,8.66666667 14,9.860574 14,11.3333333 C14,12.8060927 12.8060927,14 11.3333333,14 L4.66666667,14 C3.19390733,14 2,12.8060927 2,11.3333333 C2,9.860574 3.19390733,8.66666667 4.66666667,8.66666667 Z M11.3333333,12.6666667 C12.069713,12.6666667 12.6666667,12.069713 12.6666667,11.3333333 C12.6666667,10.5969537 12.069713,10 11.3333333,10 C10.5969537,10 10,10.5969537 10,11.3333333 C10,12.069713 10.5969537,12.6666667 11.3333333,12.6666667 Z" id="Combined-Shape" fill="url(#linearGradient-1)" opacity="0.5"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

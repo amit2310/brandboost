@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>People_People_Default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="6.72283212%" y1="84.6486649%" x2="100%" y2="9.36374193%" id="linearGradient-1">
+            <stop stop-color="#5E6893" offset="0%"></stop>
+            <stop stop-color="#5E6893" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0.5" y="0" width="16" height="16" rx="4"></rect>
+        <filter x="-1.6%" y="-1.6%" width="103.1%" height="103.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.0880321558 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-4">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M8.5,7.2 C9.3836556,7.2 10.1,6.4836556 10.1,5.6 C10.1,4.7163444 9.3836556,4 8.5,4 C7.6163444,4 6.9,4.7163444 6.9,5.6 C6.9,6.4836556 7.6163444,7.2 8.5,7.2 Z M4.50028964,11.5996028 C4.49090589,11.72959 4.71187207,12 4.82333432,12 C6.71791238,12 10.5182773,12 12.1652,12 C12.499073,12 12.5042613,11.697737 12.499073,11.6 C12.3688372,9.1465964 10.6205406,8 8.49259616,8 C6.39418326,8 4.67255934,9.21325792 4.50028964,11.5996028 Z" id="path-5"></path>
+        <filter x="-3.1%" y="-3.1%" width="106.3%" height="112.5%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="People_People_Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(-0.500000, 0.000000)">
+            <g id="Rectangle" opacity="0.6">
+                <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            </g>
+            <g id="Combined-Shape">
+                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>

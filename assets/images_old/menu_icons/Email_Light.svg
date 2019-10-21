@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Email_Light</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M12.9589681,0.244469923 L9.56246851,3.1935431 C8.05811145,4.49972874 5.82185813,4.49972874 4.31750108,3.1935431 L0.968813766,0.28598383 C1.26992387,0.104440566 1.62276523,6.92969027e-17 2,0 L12,0 C12.3474739,-6.38299251e-17 12.6742515,0.0886115304 12.9589681,0.244469923 Z" id="path-1"></path>
+        <filter x="-4.2%" y="-12.0%" width="108.3%" height="124.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M13.6687091,1.62822424 C13.8804586,2.03934022 14,2.50570991 14,3 L14,9 C14,10.6568542 12.6568542,12 11,12 L3,12 C1.34314575,12 2.02906125e-16,10.6568542 0,9 L0,3 C-5.69896403e-17,2.53464427 0.105955781,2.09403584 0.295058559,1.7009835 L4.31750108,5.1935431 C5.82185813,6.49972874 8.05811145,6.49972874 9.56246851,5.1935431 L13.6687091,1.62822424 Z" id="path-3"></path>
+        <filter x="-3.6%" y="-4.8%" width="107.1%" height="109.6%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Email_Light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="email-24px" transform="translate(1.000000, 2.000000)">
+            <g id="Rectangle">
+                <g id="Combined-Shape">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                </g>
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-3"></use>
+                </mask>
+                <g id="Combined-Shape">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-3"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
