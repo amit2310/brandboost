@@ -666,7 +666,7 @@
                     this.oData = response.data;
                     this.oLists = response.data.oLists;
                     this.newoLists = response.data.newoLists;
-                    //console.log(this.newoLists);
+                    console.log(this.newoLists);
                 });
             console.log('Component mounted')
         }
@@ -674,6 +674,10 @@
 
 
     $(document).ready(function () {
+/* Test Date Function */
+        formattedDateTime();
+
+        /* Test Date Function End */
 
         $('#automationList thead tr').clone(true).appendTo('#automationList thead');
 
