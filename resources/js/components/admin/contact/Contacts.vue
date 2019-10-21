@@ -37,6 +37,7 @@
 <script>
     import WorkflowSubscribers from '../workflow/WorkflowSubscribers.vue';
     export default {
+        props : ['pageColor'],
         data() {
             return {
                 moduleName: '',
@@ -49,7 +50,7 @@
         },
         components: {'workflow-subscribers' : WorkflowSubscribers},
         mounted() {
-            console.log('Component mounted.');
+            this.$parent.pageColor = this.pageColor;
             axios.get('/admin/contacts/mycontacts')
                 .then(response => {
 

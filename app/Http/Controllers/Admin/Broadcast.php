@@ -67,7 +67,145 @@ class Broadcast extends Controller {
         $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
         $moduleName = 'broadcast';
         Session::put("setTab", '');
-        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
+
+        $aData = array(
+            'title' => 'Brand Boost Broadcast',
+            'oBroadcast' => $oBroadcast,
+            'campaignTemplates' => $campaignTemplates,
+            'pagename' => $breadcrumb,
+            'campaignType' => $campaignType,
+            'moduleName' => $moduleName
+        );
+
+        /* Calculation to render HTML in view template */
+
+        if(count($oBroadcast) > 0) {
+            foreach ($oBroadcast as $broadCastData) {
+                $totalSentGraph = 0;
+                $totalOpenGraph = 0;
+                $totalClickGraph = 0;
+                $totalQueuedGraph = 0;
+                $totalDeliveredGraph = 0;
+                $queued = $open = $click = 0;
+                $newQueue = $newSent = $newDelivered = 0;
+                $iActiveCount = $iArchiveCount = 0;
+
+                if ($broadCastData->bc_status == 'archive') {
+                    $iArchiveCount++;
+                } else {
+                    $iActiveCount++;
+                }
+
+                if (strtolower($broadCastData->campaign_type) == 'email') {
+                    if ($broadCastData->sending_method == 'split') {
+                        $aStats = $mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id, '', 'split');
+                        //pre($aStats);
+                    } else {
+                        $aStats = $mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id);
+                    }
+
+                    $aCategorizedStats = $mBroadcast->getBroadcastSendgridCategorizedStatsData($aStats);
+                    //pre($aCategorizedStats);
+
+                    $totalSent = $aCategorizedStats['processed']['UniqueCount'];
+                    $delivered = $aCategorizedStats['delivered']['UniqueCount'];
+                    $open = $aCategorizedStats['open']['UniqueCount'];
+                    $click = $aCategorizedStats['click']['UniqueCount'];
+
+                    if ($totalSent > 0) {
+                        $totalSentGraph = $delivered * 100 / $totalSent;
+                        $totalSentGraph = ceil($totalSentGraph);
+                    }
+                } else {
+
+                    if ($broadCastData->sending_method == 'split') {
+                        $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id, '', 'split');
+                    } else {
+                        $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id);
+                    }
+
+                    $aCategorizedStatsSms = $mBroadcast->getBroadcastTwilioCategorizedStatsData($aStatsSms);
+
+                    $totalSent = $aCategorizedStatsSms['sent']['UniqueCount'];
+                    $delivered = $aCategorizedStatsSms['delivered']['UniqueCount'];
+                    $queued = $aCategorizedStatsSms['queued']['UniqueCount'];
+                    $open = $aCategorizedStatsSms['accepted']['UniqueCount'];
+
+                    if ($totalSent > 0) {
+                        $totalDeliveredGraph = $delivered * 100 / $totalSent;
+                        $totalDeliveredGraph = ceil($totalDeliveredGraph);
+
+                        $totalSentGraph = $totalSent * 100 / $totalSent;
+                        $totalSentGraph = ceil($totalSentGraph);
+
+                        $totalQueuedGraph = $queued * 100 / $totalSent;
+                        $totalQueuedGraph = ceil($totalQueuedGraph);
+                    }
+                }
+
+                if ($broadCastData->sending_method == 'split') {
+                    $totalVariations = 0;
+                    $oVariations = $mBroadcast->getBroadcastVariations($broadCastData->broadcast_id);
+                    $totalVariations = count($oVariations);
+                }
+
+
+                if ($totalSent > 0) {
+                    $totalOpenGraph = $open * 100 / $totalSent;
+                    $totalOpenGraph = ceil($totalOpenGraph);
+
+                    $totalClickGraph = $click * 100 / $totalSent;
+                    $totalClickGraph = ceil($totalClickGraph);
+                }
+
+                $addPC = '';
+                if ($totalSentGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalOpenGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalDeliveredGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalClickGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalQueuedGraph > 50) {
+                    $addPC = 'over50';
+                }
+
+                $clsCreateSegment = '';
+                if($delivered > 0) {
+                    $clsCreateSegment = 'createSegment';
+                } else if($open > 0) {
+                    $clsCreateSegment = 'createSegment';
+                } else if($click > 0) {
+                    $clsCreateSegment = 'createSegment';
+                } else if($queued > 0) {
+                    $clsCreateSegment = 'createSegment';
+                }
+
+                $broadCastData->totalSent = $totalSent;
+                $broadCastData->delivered = $delivered;
+                $broadCastData->queued = $queued;
+                $broadCastData->open = $open;
+                $broadCastData->click = $click;
+                $broadCastData->clsCreateSegment = $clsCreateSegment;
+                $broadCastData->totalDeliveredGraph = $totalDeliveredGraph;
+                $broadCastData->totalSentGraph = $totalSentGraph;
+                $broadCastData->totalQueuedGraph = $totalQueuedGraph;
+                $broadCastData->totalVariations = $totalVariations;
+                $broadCastData->totalOpenGraph = $totalOpenGraph;
+                $broadCastData->totalClickGraph = $totalClickGraph;
+                $broadCastData->addPC = $addPC;
+                $broadCastData->iActiveCount = $iActiveCount;
+                $broadCastData->iArchiveCount = $iArchiveCount;
+            }
+        }
+
+        /* Calculation to render HTML in view template */
+
+        //return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
+
+        echo json_encode($aData);
+        exit();
     }
 
     /**

@@ -7,31 +7,52 @@ import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
 import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
-import OnsiteReviewRequest from './components/admin/brandboost/ReviewRequest.vue';
+import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
+import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
 import TagsReview from './components/admin/tags/tagsreview';
 import TagsFeedback from './components/admin/tags/tagsfeedback';
+import EmailLists from './components/admin/Lists';
+import EmailBroadcasts from './components/admin/broadcast/Email';
+import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
+import OffsiteNegativeFeedback from './components/admin/feedback/FeedbackList';
+import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteCampaign';
 
 
 const routes = [
-    { path: '/', component: Dashboard },
-    { path: '/dashboard', component: Dashboard },
-    { path: '/live', component: Live },
-    { path: '/contacts/mycontacts', component: Contact },
-    /*{ path: '/templates/email', component: EmailTemplates },
-    { path: '/templates/sms', component: SmsTemplates },*/
-    { path: '/brandboost/onsite_overview', component: OnsiteOverview, meta: { title: 'Onsite overview - Brand Boost'} },
-    { path: '/brandboost/reviews', component: OnsiteReviews, meta: { title: 'Onsite reviews - Brand Boost'} },
-    { path: '/questions', component: OnsiteQuestions, meta: { title: 'Onsite questions - Brand Boost'} },
-    { path: '/templates/email', component: ListTemplates, props : {title : 'Email Templates', type : 'email' } },
-    { path: '/templates/sms', component: ListTemplates, props : {title : 'Sms Templates', type : 'sms' } },
-    { path: '/brandboost/onsite', component: OnsiteList },
-    { path: '/brandboost/review_request/onsite', component: OnsiteReviewRequest, props: {title : 'Review Requests', review_type: 'onsite'} },
+    { path: '/', component: Dashboard, props: { pageColor: 'onsite_sec'} },
+    { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
+    { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
+    { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },
+
+    /*Onsite Module*/
+    { path: '/brandboost/onsite_overview', component: OnsiteOverview, props:{pageColor: 'onsite_sec'}, meta: {title: 'Onsite overview - Brand Boost'} },
+    { path: '/brandboost/onsite', component: OnsiteList, props: {pageColor: 'onsite_sec'} },
+    { path: '/brandboost/reviews', component: OnsiteReviews, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
+    { path: '/questions', component: OnsiteQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite questions - Brand Boost'} },
+    { path: '/brandboost/review_request/onsite', component: OnsiteReviewRequest, props: {pageColor: 'onsite_sec', title : 'Review Requests', review_type: 'onsite'} },
+
+    /*Offsite Module*/
+    { path: '/brandboost/offsite_overview', component: OffsiteOverview, props: {pageColor:'offsite_sec', title: 'Offsite overview'} },
+    { path: '/brandboost/offsite', component: OffsiteCampaigns, props: {pageColor:'offsite_sec', title: 'Offsite Brand Boost Campaigns'} },
+    { path: '/brandboost/review_request/offsite', component: OffsiteReviewRequest, props: {pageColor:'offsite_sec', title : 'Review Requests', review_type: 'offsite'} },
+    { path: '/feedback/listall/', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
+
+    /* Templates Module */
+    { path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
+    { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },
+
+
+
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
-    { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} }
+    { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
+    { path: '/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
+    { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
+
+
 ];
 
 export default routes;

@@ -35,14 +35,11 @@
             }
         },
         mounted() {
-            console.log('Component mounted.');
             axios.post('/admin/helperutility/getSubscriberTags', {_token: tkn, subscriber_id: this.subscriber_id})
                 .then(response => {
                     this.tags = response.data.oTags;
                     this.tagCounts = response.data.tagCount;
                 });
-
-
         },
         methods: {},
     };

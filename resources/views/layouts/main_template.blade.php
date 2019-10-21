@@ -301,7 +301,7 @@
                         @include('admin.sidebar.client_sidebar')
                     @endif
 
-                    <div class="content-wrapper {{ $pageColor }}">
+                    <div class="content-wrapper" :class="pageColor">
                         <router-view>
                         {{--@yield('contents')--}}
                         </router-view>
