@@ -1,0 +1,316 @@
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+body{margin: 0!important;}
+.bbw_section_007 a{text-decoration:none;}
+.bbw_section_007 {font-size: 13px!important; font-family: 'Inter UI'; font-style: normal; font-weight: 400;letter-spacing: 0; padding:0px; margin:0px;}
+.bbw_section_007  .client_widget{max-width: 1440px; width: 100%; margin:200px auto 0;}
+.bbw_section_007  .client_widget .main{float: left; width: 100%;}
+.bbw_section_007  .client_widget .bbpw_slider_widget{box-shadow:0 14px 14px 0 rgba(0, 27, 96, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.03);background: #fff; float: left; width: 100%;}
+.bbw_section_007 .client_widget .right_arrow img, .bbw_section_007 .client_widget .left_arrow img{padding-top: 15px;}
+.bbw_section_007  .client_widget .top_header{border-bottom: 1px solid #d5e0f2; padding: 0 25px; position: relative}
+.bbw_section_007  .client_widget .top_header .rating{padding: 27px 0;width: 100%;display: inline-block;}
+.bbw_section_007  .client_widget .top_header .rating .left img{float: left; margin-right:5px;}
+.bbw_section_007  .client_widget .top_header .rating span{font-size: 14px ; color: #22375e; font-weight: 500; margin-right:3px; float: left;}
+.bbw_section_007  .client_widget .top_header .rating p{margin: 0; padding: 0;}
+.bbw_section_007  .client_widget .top_header .rating p a{color: #1f71d4; text-decoration: none; font-size: 14px; font-weight: 500; margin-left: 20px;}
+.bbw_section_007  .client_widget .top_header .rating .left{float: left; width: 30%;}
+.bbw_section_007  .client_widget .top_header .rating .right{float: right; width: 50%; text-align: right;}
+.bbw_section_007  .client_widget .top_header .rating .right a{border-radius: 5px;  box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.07);  border: solid 1px #d5e0f2; padding: 10px 20px; text-decoration: none;font-size: 14px;  font-weight: 500;color: #102243;margin-left: 10px;}
+.bbw_section_007  .client_widget .top_header .rating .right img{margin-right: 8px;}
+
+.bbw_section_007  .client_widget .top_header .arrow{ position: absolute; top: -22px; right: 0; left: 0; text-align: center;}
+.bbw_section_007  .client_widget .top_header .arrow .left_arrow{background: #fff;width: 42px;height: 42px;border-radius: 100%;display: inline-block;box-shadow: 0 2px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05); line-height: 42px;}
+.bbw_section_007  .client_widget .top_header .arrow .right_arrow{background: #fff;width: 42px;height: 42px;border-radius: 100%;display: inline-block;box-shadow: 0 2px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05); line-height: 42px;}
+.bbw_section_007  .client_widget .right .client_review span{color: #526b9b; font-size: 12px; margin-left:10px;}
+
+.bbw_section_007  .client_widget .box_1{width: 24.91%; float: left; padding: 34px 0px 22px 0px; border-right: 1px solid #e7edf8; height:226px;}
+.bbw_section_007  .client_widget .box_1 .top_div {padding: 0 20px 20px 20px;border-bottom: 1px solid #e7edf8;}
+.bbw_section_007  .client_widget .box_1 .top_div .left {position: relative;width: 45px; display: inline-block; margin-right: 12px;}
+.bbw_section_007  .client_widget .box_1 .top_div .left .circle {position: absolute;width: 10px;height: 10px;background: #69d641;border-radius: 100%;right: 0; border: 2px solid #fff;top: 4px;right: 2px;}
+.bbw_section_007  .client_widget .box_1 .top_div .right {display: inline-block;}
+.bbw_section_007  .client_widget .box_1 .top_div .right .client_n p{margin: 0;color: #364d79; font-size: 14px;  font-weight: 500;margin-bottom: 5px;}
+.bbw_section_007  .client_widget .box_1 .top_div .right .client_n p span{color: #768fbf; margin-left: 10px; font-size:12px;}
+.bbw_section_007  .client_widget .box_1 .bottom_div{padding: 0 20px 20px;}
+.bbw_section_007  .client_widget .box_1 .bottom_div img{float: left; margin-right: 15px;}
+.bbw_section_007  .client_widget .box_1 .bottom_div p{color: #22375e;font-size: 14px; font-weight: normal; line-height: 1.57; overflow: hidden; height: 66px;}
+.bbw_section_007  .client_widget .box_1 .bottom_div p img{float: left; margin-right: 15px; width: 75px; border-radius: 5px; height: auto; margin-top:5px;}
+.bbw_section_007  .client_widget .box_1 .bottom_div a{color: #216cd0; font-size: 14px; text-decoration: none;}
+.bbw_section_007  .client_widget .footer_div{padding: 0px 20px 0;}
+.bbw_section_007  .client_widget .footer_div .comment_div{display: inline-block;}
+.bbw_section_007  .client_widget .footer_div .comment_div p{color: #768fbf; font-size: 12px !important; font-weight: 500;}
+.bbw_section_007  .client_widget .footer_div .comment_div p img{margin-right: 10px; float: left; margin-top: 2px;} 
+.bbw_section_007  .client_widget .footer_div .comment_div p span{margin-left: 6px;padding-left: 8px;border-left: 1px solid;margin-right: 6px;}
+.bbw_section_007  .client_widget .footer_div .liked_icon{display: inline-block;}
+.bbw_section_007  .client_widget .footer_div .liked_icon img{background: #fff;padding: 4px;box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);border-radius: 5px;}
+
+
+
+.bbw_section_007  .clearfix {overflow: auto;}
+.bbw_section_007  .clearfix::after {content: "";clear: both;display: table;}
+.bbw_section_007  .review_sec {display: inline-block;width: 100%; margin-top: 100px;}
+
+.bbw_section_007  .review_chat4{max-width: 520px; width: 100%;font-family: 'Inter UI';font-style: normal; position: absolute; left: 0; right: 0; margin: -400px auto 0; top: 50%;}
+.bbw_section_007  .review_chat4 .second_box{box-shadow: 0 14px 14px 0 rgba(0, 27, 96, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.03); width: 100%; border-radius: 5px; float: left;}
+.bbw_section_007  .review_chat4 .head{box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13);  background-image: linear-gradient(40deg, #1c9ffc, #2160c5); border-radius: 5px 5px 0px 0px;width: 100%; float: left;}
+.bbw_section_007  .review_chat4 .box_left {width: 110px; float: left;}
+.bbw_section_007  .review_chat4 .box_left img{border-radius: 5px 0px 0px 5px;}
+.bbw_section_007  .review_chat4 .box_right {float: left;width: 100%;}
+.bbw_section_007  .review_chat4 .box_right .client_n p {margin: 0;margin-bottom: 0px;color: #fff;font-size: 16px;font-weight: 500;margin-bottom: 5px;}
+.bbw_section_007  .review_chat4 .box_right .client_n p span {display: block;}
+.bbw_section_007  .review_chat4 .box_right .client_n {padding: 14px 20px 10px;}
+.bbw_section_007  .review_chat4 .box_right .client_review{/*background-color:rgba(7, 0, 44, 0.2);*/padding: 17px 20px; text-align: center;}
+.bbw_section_007  .review_chat4 .box_right .client_review span {color: #fff;font-size: 14px;/*margin-left: 5px;margin-right: 2px;*/}
+.bbw_section_007  .review_chat4 .box_right .re_client{ float: right;}
+
+.bbw_section_007  .review_chat4 .middle {width: 100%;background: #fff;display: inline-block;float: left;border-radius:0;}
+.bbw_section_007  .review_chat4 .middle .box_1 {width: 100%;float: left;padding: 20px 0px 18px 0px; border-bottom: 1px solid #e7edf8}
+.bbw_section_007  .review_chat4 .middle .box_1 .top_div {padding: 0 20px 20px 20px;    border-bottom: 1px solid #e7edf8;}
+.bbw_section_007  .review_chat4 .middle  .box_1 .top_div .left {    position: relative;    width: 45px;    display: inline-block;    margin-right: 12px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .top_div .left .circle {position: absolute;width: 10px;height: 10px;background: #69d641;border-radius: 100%;right: 0;border: 2px solid #fff;top: 4px;right: 2px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .top_div .right {    display: inline-block;}
+.bbw_section_007  .review_chat4 .middle .box_1 .top_div .right p{color: #364d79;font-size: 14px;font-weight: 500; margin: 0 0 8px 0; padding: 0}
+.bbw_section_007  .review_chat4 .middle .box_1 .top_div .right p span{color: #768fbf; margin-left: 5px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .top_div .right .client_review span {color: #526b9b;font-size: 12px;margin-left: 10px;}
+
+.bbw_section_007  .review_chat4 .middle .box_1 .bottom_div {padding: 0 20px 20px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .bottom_div img{float: left; margin-right: 15px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .bottom_div p {color: #22375e;font-size: 14px;font-weight: normal;line-height: 1.57; margin-bottom: 10px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .bottom_div p img{float: left; margin-right: 15px; width: 75px; border-radius: 5px; height: auto; margin-top:5px;}
+.bbw_section_007  .review_chat4 .middle .box_1 .bottom_div a {    color: #216cd0;    font-size: 14px;    text-decoration: none;}
+.bbw_section_007  .review_chat4 .middle .box_1:last-child{border-bottom: 0;}
+.bbw_section_007  .review_chat4 .middle .footer_div .comment_div {display: inline-block;}
+.bbw_section_007  .review_chat4 .middle .footer_div .comment_div p {color: #768fbf;font-size: 12px !important;font-weight: 500;}
+
+.bbw_section_007  .review_chat4 .middle .footer_div .comment_div p img {margin-right: 10px;float: left;margin-top: 2px;}
+.bbw_section_007  .review_chat4 .middle .footer_div .comment_div p span {margin-left: 14px;padding-left: 14px;border-left: 1px solid #d5e0f2;margin-right: 14px;}
+.bbw_section_007  .review_chat4 .middle .footer_div .liked_icon {    display: inline-block;position: relative; top: 3px;}
+.bbw_section_007  .review_chat4 .middle .footer_div .liked_icon img {background: #fff;padding: 4px;box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);border-radius: 5px;}
+.bbw_section_007  .review_chat4 .middle .footer_div {padding: 0px 20px 0 145px;}
+
+.bbw_section_007  .review_chat4 .bottom_sec {background: #f5f8fc;padding: 25px 0;float: left;width: 100%;border-radius:0 0px 5px 0px; }
+.bbw_section_007  .review_chat4 .bottom_sec span{color: #768fbf; font-size: 14px; padding-left: 20px;}
+.bbw_section_007  .review_chat4 .bottom_sec img{float: right; padding-right: 20px; margin-top: 3px;}
+
+.bbw_section_007  .review_chat4 .star_div {position: relative;float: left;width: 100%;}
+.bbw_section_007  .review_chat4 .star_bottom {position: absolute;right: -60px;top: 0px;height: 42px; width: 42px; border-radius: 0;text-align: center;line-height: 46px; background: #fff; border-radius: 100%;box-shadow: 0 2px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);}
+.bbw_section_007  .review_chat4 .star_bottom  p{color: #fff; font-size: 14px; font-weight: 500; line-height: normal; float: left; margin-right: 10px;}
+.bbw_section_007  .review_chat4 .star_bottom img{margin-top:14px;}
+
+.bbw_section_007  .review_chat4 .top_header {border-bottom: 1px solid #d5e0f2;padding: 0 25px;position: relative; background: #fff;}
+.bbw_section_007  .review_chat4 .top_header .rating {padding: 23px 0;width: 100%;display: inline-block;}
+.bbw_section_007  .review_chat4 .top_header .rating .left {float: left;    width: 100%; max-width: 140px;}
+.bbw_section_007 .review_chat4 .top_header .rating .left span{font-size: 18px;color: #22375e; margin-bottom: 5px;}
+.bbw_section_007  .review_chat4 .top_header .rating .left img {/*float: left;    margin-right: 5px;*/}
+.bbw_section_007  .review_chat4 .top_header .rating span {font-size: 14px;color: #22375e;font-weight: 500;margin-right: 3px;display: block;}
+.bbw_section_007  .review_chat4 .top_header .rating p {    margin: 0;    padding: 0;}
+.bbw_section_007  .review_chat4 .top_header .rating p a {color: #1f71d4;text-decoration: none;font-size: 14px;font-weight: 500; display: block; margin-top: 8px;}
+.bbw_section_007  .review_chat4 .top_header .rating .right {float: right;text-align: right; margin-top: 38px;}
+.bbw_section_007  .review_chat4 .top_header .rating .right a {border-radius: 5px;box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.07);border: solid 1px #d5e0f2;padding: 10px 18px;text-decoration: none;font-size: 14px;font-weight: 500;color: #102243;margin-left: 10px;}
+.bbw_section_007  .review_chat4 .top_header .rating .right img {margin-right: 8px;}
+.bbw_section_007  .review_chat4 .review_all{background: #fbfdfe; padding:18px 20px;border-bottom: 1px solid #d5e0f2;}
+.bbw_section_007  .review_chat4 .review_all a{color: #768fbf; text-decoration: none;margin-right: 30px; font-weight: 500;}
+.bbw_section_007  .review_chat4 .review_all a:last-child{margin-right: 0;}
+.bbw_section_007  .review_chat4 .review_all a.active{color: #22375e;}
+.bbw_section_007  .img-circle{border-radius:50px; width:35px; height:35px; /*border:2px solid #ccc;*/}
+.bbw_section_007  .review_chat4 .likes_val_box{position: absolute;background: #68d641;color: #fff;border-radius: 10px 10px 10px 0;padding: 4px;font-size: 10px;top: -22px;left: 7px; min-width:30px; text-align:center; display:none;}
+.bbw_section_007  .review_chat4 .dislikes_val_box{position: absolute;background: #fe6f71;color: #fff;border-radius: 10px 0px 10px 10px;padding: 4px;font-size: 10px;bottom: -22px;right: 7px; min-width:30px; text-align:center; display:none;}
+/*.review_chat4 .bbpw_comment_box {padding: 0px 20px 0;float: left;width: 100%;box-sizing: border-box;margin-top: -5px; color:#999} */
+.bbw_section_007  .bbpw_comment_box {padding: 10px 20px 20px; float: left; width: 92%; box-sizing: border-box; color: #999; border-radius: 5px; margin:7px 20px 20px; box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2); display:none; }
+.bbw_section_007  .bbpw_comment_box p {margin: 4px 0; font-size: 10px;}
+.bbw_section_007  .bbpw_comment_box .comment_form {float: left;width: 100%;margin-top: 7px;border: 1px solid #ccc;padding: 0px;box-sizing: border-box; position:relative;}
+.bbw_section_007  .bb_overlay{background:rgba(0, 0, 0, 0.04); position:absolute; top:0; left:0; width:100%; height:100%; text-align:center; line-height:100%; border-radius:5px; display:none;}
+.bbw_section_007  .bb_overlay img{margin-top:-30px; top:50%; position:absolute; left:50%; margin-left:-30px;}
+.bbw_section_007  .bbpw_comment_box .comment_form .form-group {float: left;width: 50%;padding: 0 5px;box-sizing: border-box;}
+.bbw_section_007  .bbpw_comment_box .comment_form .form-control {width: 100%;border: none;box-shadow: 0 0px 0px 1px rgba(0, 57, 163, 0.3);font-size: 10px;padding: 3px 5px;}
+.bbw_section_007  .bbpw_comment_box .comment_form .panel-body.br0 {float: left;width: 100%;padding: 0 6px;box-sizing: border-box;margin-top: 5px;}
+.bbw_section_007  .bbpw_comment_box .comment_form .form-control.addnote {width: 100%;height: 33px;resize: none;box-shadow: 0 0px 0px 1px rgba(0, 57, 163, 0.1);font-size: 10px;}
+
+.bbw_section_007  .bbpw_comment_box .comment_form { float: left; width: 100%; margin-top: 7px; box-sizing: border-box; box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03); border: solid 1px #e3e9f3; padding: 8px 2px; border-radius: 5px;}
+.bbw_section_007  .bbpw_comment_box .comment_form .form-control { width: 100%; box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03); font-size: 12px; padding: 5px; border-radius: 2px; border: solid 1px #e3e9f3; color:#768fbf; }
+.bbw_section_007  .bbpw_comment_box .comment_form .form-control.addnote { width: 100%; height: 60px; resize: none; box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03); font-size: 12px; font-family: 'Inter UI';}
+.bbw_section_007  .bbpw_comment_box p { margin: 3px 0; font-size: 11px; color: #364d79;}
+.bbw_section_007  .bbpw_comment_box p span{margin-right: 10px;font-weight: 600;}
+.bbw_section_007  .bbpw_comment_box .s_comment {padding: 7px 5px 0; float: right;}
+.bbw_section_007  .bbpw_comment_box .s_comment button{float: right;background: linear-gradient(40deg, #1c9ffc, #2160c5);padding: 8px 10px;border-radius: 5px;color: #fff;text-decoration: none;font-size: 11px; border:none;}
+.bbw_section_007  .bbpw_comment_box .bb_comment_row{border-bottom:dotted #ccc 1px; padding:5px;}
+.bbw_section_007  .bbpw_comment_box a{color:#2160c5;}
+.bbw_section_007  .bbpw_comment_box .bbpw_success_message .alert-danger{color:#FF0000;}
+.bbw_section_007  .bbpw_comment_box .bbpw_success_message .alert-success{color:#0bbf20;}
+.bbw_section_007  .bb-hidden{display:none;}
+
+.bbw_section_007  .red_preview_1{background-image: linear-gradient(45deg, #e93474, #541069 98%)!important;}
+.bbw_section_007  .yellow_preview_1{background-image: linear-gradient(42deg, #f9d84a, #f9814a)!important;}
+.bbw_section_007  .orange_preview_1{background-image: linear-gradient(45deg, #ef9d39, #d92a3f)!important;}
+.bbw_section_007  .green_preview_1{background-image: linear-gradient(43deg, #93cf48, #076768)!important;}
+.bbw_section_007  .blue_preview_1{background-image: linear-gradient(to right, #1c9ffc, #2160c5)!important;}
+.bbw_section_007  .purple_preview_1{background-image: linear-gradient(45deg, #4d4d7c 1%, #1e1e40)!important;}
+
+.bbw_section_007  .red_text_color{color: #541069!important;}
+.bbw_section_007  .yellow_text_color{color: #f9814a!important;}
+.bbw_section_007  .orange_text_color{color: #d92a3f!important;}
+.bbw_section_007  .green_text_color{color: #076768!important;}
+.bbw_section_007  .blue_text_color{color: #2160c5!important;}
+.bbw_section_007  .purple_text_color{color: #1e1e40!important;}
+.bbw_section_007 .fa.fa-star.gray_star{color: #d5e0f2;}
+
+.bbw_section_007  .review_chat{max-width: 360px; width: 100%; position: absolute; float: right;font-family: 'Inter UI';font-style: normal; right:30px; bottom:0px; z-index:9999;}
+.bbw_section_007  .second_box{box-shadow: 0 14px 14px 0 rgba(0, 27, 96, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.03);  width: 100%; border-radius: 5px; float: left;}
+.bbw_section_007  .review_chat .head{box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13);  background-image: linear-gradient(40deg, #1c9ffc, #2160c5); border-radius: 5px;width: 100%; height: 115px;margin-bottom: 10px; float: left;box-sizing: border-box;}
+.bbw_section_007  .review_chat .box_left {width: 115px; float: left;padding: 10px;box-sizing: border-box;background: #fff;border-radius: 5px 0px 0px 5px;}
+.bbw_section_007  .review_chat .box_left img{border-radius: 5px 0px 0px 5px; width: 100%;}
+.bbw_section_007  .review_chat .box_right {float: left;max-width: 245px;width: 100%;box-sizing: border-box; position: relative;}
+.bbw_section_007  .review_chat .box_right .client_n p {margin: 0;margin-bottom: 0px;color: #fff;font-size: 16px;font-weight: 500;margin-bottom: 5px;}
+.bbw_section_007  .review_chat .box_right .client_n p span {display: block;}
+.bbw_section_007  .review_chat .box_right .client_n {padding: 17px 20px 5px;}
+.bbw_section_007  .review_chat .box_right .client_review{background-color:rgba(7, 0, 44, 0.2); padding: 13px 15px; border-radius: 0 0 5px 0;box-sizing: border-box; width: 100%;top: 74px;position: absolute; }
+.bbw_section_007  .review_chat .box_right .client_review span {color: #fff;font-size: 14px;margin-left: 5px;margin-right: 2px;}
+
+.bbw_section_007  .review_chat .middle {width: 100%;background: #fff;display: inline-block;float: left;border-radius: 5px 5px 0 0;max-height: 440px; overflow: hidden;}
+.bbw_section_007  .review_chat .middle:hover{overflow-y: auto;}
+.bbw_section_007  .review_chat .middle .box_1 {width: 100%;float: left;padding: 20px 0px 10px 0px; border-bottom: 1px solid #e7edf8}
+.bbw_section_007  .review_chat .middle .box_1 .top_div {padding: 0 20px 20px 20px; border-bottom: 1px solid #e7edf8;}
+.bbw_section_007  .review_chat .middle  .box_1 .top_div .left {position: relative; width: 45px; display: inline-block; margin-right: 2px;}
+.bbw_section_007  .review_chat .middle .box_1 .top_div .left .circle {position: absolute;width: 10px;height: 10px;background: #69d641;border-radius: 100%;right: 0;border: 2px solid #fff;top: 4px;right: 2px;}
+.bbw_section_007  .review_chat .middle .box_1 .top_div .right {display: inline-block;}
+.bbw_section_007  .review_chat .middle .box_1 .top_div .right p{color: #364d79;font-size: 14px;font-weight: 500; margin: 0 0 6px 0; padding: 0}
+.bbw_section_007  .review_chat .middle .box_1 .top_div .right .client_review span {color: #526b9b;font-size: 12px;margin-left: 10px;}
+
+.bbw_section_007  .review_chat .middle .box_1 .bottom_div {padding: 0 20px 20px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .bottom_div img{float: left; margin-right: 15px;}
+.bbw_section_007  .review_chat .middle .box_1 .bottom_div p {color: #22375e;font-size: 14px;font-weight: normal;line-height: 1.57; margin-bottom: 10px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .bottom_div p img{float: left; margin-right: 15px; width: 75px; border-radius: 5px; height: auto; margin-top:5px;}
+.bbw_section_007  .review_chat .middle .box_1 .bottom_div a {color: #216cd0; font-size: 14px; text-decoration: none;}
+.bbw_section_007  .review_chat .middle .footer_div .comment_div {display: inline-block;}
+.bbw_section_007  .review_chat .middle .footer_div .comment_div p {color: #768fbf;font-size: 12px !important;font-weight: 500;}
+
+.bbw_section_007  .review_chat .bbpw_comment_box {width: 89%;}
+.bbw_section_007  .review_chat .middle .footer_div .comment_div p img {margin-right: 10px;float: left;margin-top: 2px;}
+.bbw_section_007  .review_chat .middle .footer_div .comment_div p span {margin-left: 6px;padding-left: 6px;border-left: 1px solid #d5e0f2;margin-right: 8px;}
+.bbw_section_007  .review_chat .middle .footer_div .liked_icon {display: inline-block;position: relative; top: 3px;}
+.bbw_section_007  .review_chat .middle .footer_div .liked_icon img {background: #fff;padding: 4px;box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);border-radius: 5px;}
+.bbw_section_007  .review_chat .middle .footer_div {padding: 0px 20px 0;}
+
+.bbw_section_007  .review_chat .bottom_sec {background: #f5f8fc;padding: 22px 0;float: left;width: 100%;border-radius: 0 0px 5px 5px; border-top: 1px solid #d5e0f2;}
+.bbw_section_007  .review_chat .bottom_sec span{color: #768fbf; font-size: 13px; padding-left: 20px;}
+.bbw_section_007  .review_chat .bottom_sec img{float: right; padding-right: 20px; margin-top: 3px;}
+
+.bbw_section_007  .review_chat .star_div {position: relative;}
+.bbw_section_007  .review_chat .star_bottom {position: absolute;right: 0;bottom: -80px;width: 50px;height: 50px;background: linear-gradient(to top, #1c9ffc, #2160c5);border-radius: 100%;text-align: center;line-height: 58px;}
+
+
+.bbw_section_007  .review_chat3{max-width: 360px; width: 100%;font-family: 'Inter UI';font-style: normal; position: absolute;top: 50%;margin-top: -330px;  }
+.bbw_section_007  .review_chat3 .second_box{box-shadow: 0 14px 14px 0 rgba(0, 27, 96, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.03); width: 100%; border-radius: 5px; float: left;}
+.bbw_section_007  .review_chat3 .head{box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13);  background-image: linear-gradient(40deg, #1c9ffc, #2160c5); border-radius: 0px 5px 0px 0px;width: 100%; float: left;}
+.bbw_section_007  .review_chat3 .box_left {width: 110px; float: left;}
+.bbw_section_007  .review_chat3 .box_left img{border-radius: 5px 0px 0px 5px;}
+.bbw_section_007  .review_chat3 .box_right {float: left;width: 100%;}
+.bbw_section_007  .review_chat3 .box_right .client_n p {margin: 0;margin-bottom: 0px;color: #fff;font-size: 16px;font-weight: 500;margin-bottom: 5px;}
+.bbw_section_007  .review_chat3 .box_right .client_n p span {display: block; font-size:12px;}
+.bbw_section_007  .review_chat3 .box_right .client_n {padding: 14px 20px 10px;}
+.bbw_section_007  .review_chat3 .box_right .client_review{/*background-color:rgba(7, 0, 44, 0.2);*/padding: 17px 20px; }
+.bbw_section_007  .review_chat3 .box_right .client_review span {color: #fff;font-size: 14px;margin-left: 5px;margin-right: 2px;}
+.bbw_section_007  .review_chat3 .box_right .re_client{ float: right;}
+.bbw_section_007  .review_chat3 .box_right .client_review .fa.fa-star{color: #ffc300;margin-right: 2px;}
+
+
+.bbw_section_007  .review_chat3 .middle {width: 100%;background: #fff;display: inline-block;float: left;border-radius:0;height: 550px; overflow: hidden;}
+.bbw_section_007  .review_chat3 .middle:hover{overflow-y: auto;}
+.bbw_section_007  .review_chat3 .middle .box_1 {width: 100%;float: left;padding: 20px 0px 10px 0px; border-bottom: 1px solid #e7edf8}
+.bbw_section_007  .review_chat3 .middle .box_1 .top_div {padding: 0 20px 20px 20px;    border-bottom: 1px solid #e7edf8;}
+.bbw_section_007  .review_chat3 .middle  .box_1 .top_div .left {    position: relative;    width: 45px;    display: inline-block;    margin-right: 5px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .top_div .left .circle {position: absolute;width: 10px;height: 10px;background: #69d641;border-radius: 100%;right: 0;border: 2px solid #fff;top: 4px;right: 2px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .top_div .right {    display: inline-block;}
+.bbw_section_007  .review_chat3 .middle .box_1 .top_div .right p{color: #364d79;font-size: 14px;font-weight: 500; margin: 0 0 5px 0; padding: 0}
+.bbw_section_007  .review_chat3 .middle .box_1 .top_div .right p span {color: #768fbf;margin-left: 10px; font-weight: normal;}
+.bbw_section_007  .review_chat3 .middle .box_1 .top_div .right .client_review span {color: #526b9b;font-size: 12px;margin-left: 10px; margin-left: 5px;font-weight: 500;}
+.bbw_section_007 .bbpw_vpw_review_btn{left: -44px;width: 102px !important;}
+.review_chat3.bbOpenVPopup #bbpw_vpwSection {
+  transform: translateX(0);
+  -webkit-transform: translateX(0);
+}
+.review_chat3 #bbpw_vpwSection, .review_chat3 .bbpw_vpw_review_btn{
+  transition: all .7s ease;
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+}
+
+/*
+.review_chat.bbOpenBPopup #bbpwButtonWidget {
+  transform: translateX(0);
+  -webkit-transform: translateX(0);
+}
+.review_chat #bbpwButtonWidget{
+  transition: all .7s ease;
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+}*/
+.bbw_section_007 .bbpw_clear{clear:both;}
+.bbw_section_007  .bbpw_review_img_box img{width: 86%; border-radius: 5px; height: auto; margin-top:20px;}
+.bbw_section_007  .review_chat3 .bbpw_comment_box {width: 89%;}
+.bbw_section_007  .review_chat3 .middle .box_1 .bottom_div {padding: 0 20px 18px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .bottom_div p {color: #22375e;font-size: 14px;font-weight: normal;line-height: 1.57; margin-bottom: 10px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .bottom_div p img{float: left; margin-right: 15px; width: 75px; border-radius: 5px; height: auto; margin-top:5px;}
+.bbw_section_007  .review_chat3 .middle .box_1 .bottom_div a {    color: #216cd0;    font-size: 14px;    text-decoration: none;}
+.bbw_section_007  .review_chat3 .middle .footer_div .comment_div {display: inline-block;}
+.bbw_section_007  .review_chat3 .middle .footer_div .comment_div p {color: #768fbf;font-size: 12px !important;font-weight: 500;}
+
+.bbw_section_007  .review_chat3 .middle .footer_div .comment_div p img {margin-right: 10px;float: left;margin-top: 2px;}
+.bbw_section_007  .review_chat3 .middle .footer_div .comment_div p span {margin-left: 6px; padding-left: 8px; border-left: 1px solid #d5e0f2; margin-right: 7px;}
+.bbw_section_007  .review_chat3 .middle .footer_div .liked_icon {    display: inline-block;position: relative; top: 3px;}
+.bbw_section_007  .review_chat3 .middle .footer_div .liked_icon img {background: #fff;padding: 4px;box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);border-radius: 5px;}
+.bbw_section_007  .review_chat3 .middle .footer_div {padding: 0px 20px 0;}
+
+.bbw_section_007  .review_chat3 .bottom_sec {background: #f5f8fc;padding: 20px 0;float: left;width: 100%;border-radius:0 0px 5px 0px; }
+.bbw_section_007  .review_chat3 .bottom_sec span{color: #768fbf; font-size: 13px; padding-left: 20px;}
+.bbw_section_007  .review_chat3 .bottom_sec img{float: right; padding-right: 20px; margin-top: 3px;}
+
+.bbw_section_007  .review_chat3 .star_div {position: relative;float: left;width: 100%;}
+.bbw_section_007  .review_chat3 .star_bottom {position: absolute;right: -109px;top: 400px;height: 44px;background: linear-gradient(270deg, #1c9ffc, #2160c5) !important;border-radius:0px 0px 5px 5px;text-align: center;line-height: 58px;padding: 0 30px;-moz-transform: rotate(-90deg);-webkit-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-o-transform: rotate(-90deg); cursor: pointer;}
+.bbw_section_007 .review_chat3.bbOpenVPopup .star_bottom {	right: auto;left: 318px; min-width: 98px !important; text-align: center;}
+.bbw_section_007  .review_chat3 .star_bottom .fa.fa-star{/*float: left;*/font-size: 14px;color: #fff;-webkit-transform: rotate(17deg);-moz-transform: rotate(17deg);-webkit-transform: rotate(17deg);-ms-transform: rotate(17deg);-o-transform: rotate(17deg);/*margin-top: 16px;*/ margin-right: 10px;}
+
+.bbw_section_007  .review_chat3 .star_bottom  p{color: #fff; font-size: 14px; font-weight: 500; line-height: normal; /*float: left;*/ /*margin-left: 10px;*/}
+.bbw_section_007  .review_chat3 .star_bottom img{float: left; margin-top: 10px;}
+
+
+
+@media only screen and (max-width:480px){
+	
+	.bbw_section_007 .review_chat{right: 5px;}
+	.bbw_section_007 .review_chat {max-width: 300px;}
+	.bbw_section_007 .review_chat .head{height: 100px;}
+	.bbw_section_007 .review_chat .box_left {width: 100px;}
+	.bbw_section_007 .review_chat .box_right {max-width: 199px;}
+	.bbw_section_007 .review_chat .box_right .client_n {padding: 17px 10px 5px;}
+	.bbw_section_007 .review_chat .box_right .client_n p{font-size: 12px;}
+	.bbw_section_007 .review_chat .middle .box_1 .bottom_div p{font-size: 12px;}
+	.bbw_section_007 .review_chat .middle .box_1 .bottom_div a{font-size: 12px;}
+	.bbw_section_007 .review_chat .middle .footer_div .comment_div p{font-size: 10px !important;}
+	.bbw_section_007 .review_chat .box_right .client_review{padding: 13px 10px;top: 57px;}
+	.bbw_section_007 .review_chat .box_right .client_review span{font-size: 12px;}
+	.bbw_section_007 .review_chat .middle .box_1 .top_div .right p{font-size: 12px;}
+	
+	.bbw_section_007 .review_chat3 {max-width: 300px;}
+	.bbw_section_007 .review_chat3.bbOpenVPopup .star_bottom{left: 256px;}
+	.bbpw_review_img_box {margin: 0 auto;float: none !important;}
+	.bbw_section_007 .review_chat3 .middle .box_1 .bottom_div p{font-size: 12px;}
+	.bbw_section_007 .review_chat3 .middle .box_1 .bottom_div a{font-size: 12px;}
+	.bbw_section_007 .review_chat3 .middle .box_1 .top_div .right p{font-size: 12px;}
+	.bbw_section_007 .review_chat3 .middle .footer_div .comment_div p{font-size: 10px !important;}
+	
+	
+	.bbpw_review_msg_box{width: 100% !important;}
+	.bbw_section_007 .review_chat4 .middle .footer_div {padding: 0px 20px 0 15px;}
+	.bbw_section_007 .review_chat4 .middle .footer_div .comment_div p span {margin-left: 7px;padding-left: 7px;margin-right: 7px;}
+	.bbw_section_007 .review_chat4 .top_header .rating .right a {padding: 10px 10px;font-size: 12px;margin-left: 0;}
+	.bbw_section_007 .review_chat4 .middle .box_1 .bottom_div p{font-size: 12px;}
+	.bbw_section_007 .review_chat4 .middle .box_1 .top_div .left{margin-right: 5px;}
+	.bbw_section_007 .review_chat4 .review_all a {    margin-right: 10px;    font-size: 11px;}
+	.bbw_section_007 .review_chat4 .top_header .rating .right{margin-top: 20px;}
+	.bbw_section_007 .review_chat4 .star_bottom {position: absolute;right: -9px;top: -14px;height: 34px;width: 34px;border-radius: 0;text-align: center;line-height: 34px;background: #fff;border-radius: 100%;box-shadow: 0 2px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);}
+	.bbw_section_007 .review_chat4 .star_bottom img {margin-top: 11px;}
+}
+
+		
+
+

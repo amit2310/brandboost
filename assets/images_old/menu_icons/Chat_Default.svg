@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Chat_Default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="6.72283212%" y1="84.6486649%" x2="100%" y2="9.36374193%" id="linearGradient-1">
+            <stop stop-color="#5E6893" offset="0%"></stop>
+            <stop stop-color="#5E6893" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M3.910653,14.8772822 L0,15.6390977 L0.759620806,11.4069247 C0.272398808,10.373289 0,9.21845558 0,8 C0,3.581722 3.581722,0 8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 C6.50581851,16 5.1073114,15.5903693 3.910653,14.8772822 Z" id="path-2"></path>
+        <filter x="-3.1%" y="-3.1%" width="106.2%" height="106.2%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.0880321558 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-4">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M1.7269281,0.545882353 L7.4103268,0.545882353 C7.96261155,0.545882353 8.4103268,0.993597603 8.4103268,1.54588235 L8.4103268,1.54588235 C8.4103268,2.0981671 7.96261155,2.54588235 7.4103268,2.54588235 L1.7269281,2.54588235 C1.17464335,2.54588235 0.726928105,2.0981671 0.726928105,1.54588235 L0.726928105,1.54588235 C0.726928105,0.993597603 1.17464335,0.545882353 1.7269281,0.545882353 Z" id="path-5"></path>
+        <filter x="-3.3%" y="-12.5%" width="106.5%" height="150.0%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <path d="M1.7269281,4.18117647 L4.2800001,4.18117647 C4.83228485,4.18117647 5.2800001,4.62889172 5.2800001,5.18117647 L5.2800001,5.18117647 C5.2800001,5.73346122 4.83228485,6.18117647 4.2800001,6.18117647 L1.7269281,6.18117647 C1.17464335,6.18117647 0.726928105,5.73346122 0.726928105,5.18117647 L0.726928105,5.18117647 C0.726928105,4.62889172 1.17464335,4.18117647 1.7269281,4.18117647 Z" id="path-7"></path>
+        <filter x="-5.5%" y="-12.5%" width="111.0%" height="150.0%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Chat_Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <g id="Combined-Shape" opacity="0.6">
+                <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            </g>
+            <g id="Group-2" transform="translate(3.500000, 4.500000)">
+                <g id="Group-3" transform="translate(0.400000, 0.300000)">
+                    <g id="Rectangle-146">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                        <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    </g>
+                    <g id="Rectangle-146-Copy">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                        <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-7"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

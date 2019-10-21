@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Docs_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7.78506236,10.2774262 C9.40801587,9.6552924 11.4089547,9.25473619 13.7878788,9.07575758 C13.7878788,9.02605158 13.7878788,6.22586678 13.7878788,0.675203192 L13.787815,0.675203192 C13.787815,0.399096063 13.5639859,0.175267011 13.2878788,0.175267011 C13.2821481,0.175267011 13.2764179,0.175365544 13.2706906,0.175562568 C11.215814,0.246252434 9.16093728,0.738236628 7.10606061,1.65151515 C7.10606061,1.68417247 7.10606061,4.40382285 7.10606061,9.8104663 L7.10596744,9.8104663 C7.10596744,10.0866601 7.32986678,10.3105595 7.60606061,10.3105595 C7.66725246,10.3105595 7.72792473,10.299329 7.78506236,10.2774262 Z" id="path-1"></path>
+        <filter x="-7.5%" y="-4.9%" width="115.0%" height="118.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="SourceAlpha" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-7.5%" y="-4.9%" width="115.0%" height="118.7%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-4">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M1.14566822,10.2774262 C2.76862172,9.6552924 4.76956053,9.25473619 7.14848464,9.07575758 C7.14848464,9.02605158 7.14848464,6.22586678 7.14848464,0.675203192 L7.14842082,0.675203192 C7.14842082,0.399096063 6.92459177,0.175267011 6.64848464,0.175267011 C6.64275399,0.175267011 6.63702376,0.175365544 6.63129649,0.175562568 C4.57641981,0.246252434 2.52154313,0.738236628 0.466666458,1.65151515 C0.466666458,1.68417247 0.466666458,4.40382285 0.466666458,9.8104663 L0.466573293,9.8104663 C0.466573293,10.0866601 0.690472629,10.3105595 0.966666458,10.3105595 C1.02785831,10.3105595 1.08853058,10.299329 1.14566822,10.2774262 Z" id="path-5"></path>
+        <filter x="-7.5%" y="-4.9%" width="115.0%" height="118.7%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="SourceAlpha" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-7.5%" y="-4.9%" width="115.0%" height="118.7%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Docs_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(1.000000, 3.000000)">
+            <g id="Combined-Shape">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Path-41-Copy" transform="translate(3.807570, 5.270920) scale(-1, 1) translate(-3.807570, -5.270920) ">
+                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                <use fill-opacity="0.9" fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>

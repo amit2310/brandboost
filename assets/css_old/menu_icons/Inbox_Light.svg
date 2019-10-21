@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Inbox_Light</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0.0170375233,9.09144581 C0.0170375233,9.09144581 0.0170375233,9.09144581 0.0170375233,9.09144581 L0.0170375233,9.09144585 Z M0.0407838435,5.6 C0.0458120134,5.58557381 0.052173913,5.57501144 0.052173913,5.56444906 C0.052173913,5.52952183 0.052173913,5.51205821 0.0695652174,5.49459459 C0.0869565217,5.47713098 0.0869565217,5.45966736 0.104347826,5.44220374 C0.104347826,5.40727651 0.12173913,5.38981289 0.139130435,5.37234927 C0.139130435,5.37234927 0.156521739,5.35488565 0.156521739,5.35488565 L3.89565217,0.761954262 C4.03478261,0.587318087 4.22608696,0.5 4.43478261,0.5 L11.5652174,0.5 C11.773913,0.5 11.9652174,0.587318087 12.1043478,0.761954262 L15.8608696,5.35488565 C15.8608696,5.35488565 15.8782609,5.37234927 15.8782609,5.37234927 C15.8782609,5.40727651 15.8956522,5.42474012 15.9130435,5.44220374 C15.9304348,5.45966736 15.9304348,5.47713098 15.9478261,5.49459459 C15.9478261,5.52952183 15.9652174,5.54698545 15.9652174,5.56444906 C15.9652174,5.57331948 15.9697043,5.5866955 15.9741201,5.6 L12.6696691,5.6 L10.63809,7.9875 C10.4065111,8.228125 10.1117741,8.425 9.774932,8.425 L6.259143,8.425 C5.92230089,8.425 5.60651132,8.25 5.395985,7.9875 L3.36440594,5.6 L0.0407838435,5.6 Z" id="path-1"></path>
+        <filter x="-3.1%" y="-5.8%" width="106.3%" height="111.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M13.5789474,7 L2.42105263,7 C1.08394218,7 6.07838013e-16,5.91605782 4.4408921e-16,4.57894737 L0,0 L3.34736842,0 L5.17894737,2.1875 C5.38947368,2.45 5.70526316,2.625 6.04210526,2.625 L9.95789474,2.625 C10.2947368,2.625 10.5894737,2.428125 10.8210526,2.1875 L12.6526316,0 L16,0 L16,4.57894737 C16,5.91605782 14.9160578,7 13.5789474,7 Z" id="path-3"></path>
+        <filter x="-3.1%" y="-7.1%" width="106.2%" height="114.3%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Inbox_Light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Combined-Shape">
+            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+        </g>
+        <g id="inbox" transform="translate(0.000000, 7.500000)">
+            <g id="XMLID_1997_">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+            </g>
+        </g>
+    </g>
+</svg>

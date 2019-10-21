@@ -2765,30 +2765,32 @@ $(document).ready(function () {
     });
   });
 });
-$('.daterange-ranges').daterangepicker({
-  startDate: moment().subtract(29, 'days'),
-  endDate: moment(),
-  minDate: '01/01/2012',
-  maxDate: '12/31/2016',
-  dateLimit: {
-    days: 60
-  },
-  ranges: {
-    'Today': [moment(), moment()],
-    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-    'This Month': [moment().startOf('month'), moment().endOf('month')],
-    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-  },
-  opens: 'left',
-  applyClass: 'btn-small bg-slate-600 btn-block',
-  cancelClass: 'btn-small btn-default btn-block',
-  format: 'MM/DD/YYYY'
-}, function (start, end) {
-  $('.daterange-ranges span').html(start.format('MMMM D') + ' - ' + end.format('MMMM D'));
-});
-$('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));
+/*$('.daterange-ranges').daterangepicker(
+    {
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment(),
+        minDate: '01/01/2012',
+        maxDate: '12/31/2016',
+        dateLimit: {days: 60},
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        opens: 'left',
+        applyClass: 'btn-small bg-slate-600 btn-block',
+        cancelClass: 'btn-small btn-default btn-block',
+        format: 'MM/DD/YYYY'
+    },
+    function (start, end) {
+        $('.daterange-ranges span').html(start.format('MMMM D') + ' - ' + end.format('MMMM D'));
+    }
+);
+
+$('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
 
 /***/ }),
 
@@ -11396,6 +11398,74 @@ __webpack_require__.r(__webpack_exports__);
 /*$(document).on('click', '#addContactForm', function () {
     $('.addModuleContact').trigger('click');
 });*/
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/Dashboard.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/Dashboard.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -40355,6 +40425,150 @@ var staticRenderFns = [
             { attrs: { href: "#right-icon-tab1", "data-toggle": "tab" } },
             [_vm._v("Archive")]
           )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/Dashboard.vue?vue&type=template&id=7427798a&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/Dashboard.vue?vue&type=template&id=7427798a& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card min-h-280" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("h3", { staticClass: "htxt_medium_32 dark_700" }, [
+                  _vm._v("79,3%")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "grey-sub-headings" }, [
+                  _vm._v("YOUR EMAIL MARKETING IS GOOD")
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass: "fsize14 mb30",
+                    staticStyle: { color: "#5a6f80" }
+                  },
+                  [
+                    _vm._v(
+                      "Your recent emails have low avg.\n                            9%\n                            bounce rate. We suggest you to send new email\n                            in next 3 days."
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "fsize15 blue_300", attrs: { href: "#" } },
+                  [
+                    _c("img", { attrs: { src: "assets/images/editpen.svg" } }),
+                    _vm._v(" \n                            Create new email")
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 text-center" }, [
+                _c("img", {
+                  staticClass: "mt40",
+                  staticStyle: { "max-width": "225px" },
+                  attrs: { src: "assets/images/dashboard_image_01.png" }
+                })
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card min-h-280 text-center" }, [
+            _c("img", {
+              staticClass: "mb20",
+              staticStyle: { "max-width": "130px", margin: "0 auto" },
+              attrs: { src: "assets/images/dashboard_graph0.png" }
+            }),
+            _vm._v(" "),
+            _c("p", { staticClass: "grey-sub-headings mb10" }, [
+              _vm._v("CREDITS BALANCE")
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "fsize14 mb30",
+                staticStyle: { color: "#5a6f80" }
+              },
+              [_vm._v("You used 408/450 montly credits")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              { staticClass: "fsize15 dark_600 fw500", attrs: { href: "#" } },
+              [_vm._v("Purchase more credits")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "card min-h-280" }, [
+            _c("h3", { staticClass: "htxt_medium_32 dark_700" }, [
+              _vm._v("51,913")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "grey-sub-headings" }, [_vm._v("Emails")]),
+            _vm._v(" "),
+            _c("img", {
+              staticStyle: { "max-height": "130px" },
+              attrs: { src: "assets/images/dashboard_graph2.png" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "card min-h-280" }, [
+            _c("h3", { staticClass: "htxt_medium_32 dark_700" }, [
+              _vm._v("139")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "grey-sub-headings" }, [
+              _vm._v("Subscriptions")
+            ]),
+            _vm._v(" "),
+            _c("img", {
+              staticStyle: { "max-height": "130px" },
+              attrs: { src: "assets/images/dashboard_graph1.png" }
+            })
+          ])
         ])
       ])
     ])
@@ -72055,6 +72269,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/contact/Dashboard.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/admin/contact/Dashboard.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_7427798a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=7427798a& */ "./resources/js/components/admin/contact/Dashboard.vue?vue&type=template&id=7427798a&");
+/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/contact/Dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Dashboard_vue_vue_type_template_id_7427798a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Dashboard_vue_vue_type_template_id_7427798a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/contact/Dashboard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/contact/Dashboard.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/admin/contact/Dashboard.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/Dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/contact/Dashboard.vue?vue&type=template&id=7427798a&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/admin/contact/Dashboard.vue?vue&type=template&id=7427798a& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_7427798a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=template&id=7427798a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/Dashboard.vue?vue&type=template&id=7427798a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_7427798a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_7427798a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/dashboard/DashReviews.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/admin/dashboard/DashReviews.vue ***!
@@ -73568,23 +73851,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin/dashboard/ */ "./resources/js/components/admin/dashboard/index.vue");
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
-/* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
-/* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/reviews */ "./resources/js/components/admin/brandboost/onsite/reviews.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/questions */ "./resources/js/components/admin/brandboost/onsite/questions.vue");
-/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/onsite/ReviewRequest.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/offsite/ReviewRequest.vue");
-/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
-/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
-/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
-/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
-/* harmony import */ var _components_admin_Lists__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/Lists */ "./resources/js/components/admin/Lists.vue");
-/* harmony import */ var _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/broadcast/Email */ "./resources/js/components/admin/broadcast/Email.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/Overview */ "./resources/js/components/admin/brandboost/offsite/Overview.vue");
-/* harmony import */ var _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/feedback/FeedbackList */ "./resources/js/components/admin/feedback/FeedbackList.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ListOffsiteCampaign */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue");
+/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
+/* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
+/* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/reviews */ "./resources/js/components/admin/brandboost/onsite/reviews.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/questions */ "./resources/js/components/admin/brandboost/onsite/questions.vue");
+/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/onsite/ReviewRequest.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/offsite/ReviewRequest.vue");
+/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
+/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
+/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
+/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+/* harmony import */ var _components_admin_Lists__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/Lists */ "./resources/js/components/admin/Lists.vue");
+/* harmony import */ var _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/broadcast/Email */ "./resources/js/components/admin/broadcast/Email.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/Overview */ "./resources/js/components/admin/brandboost/offsite/Overview.vue");
+/* harmony import */ var _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/feedback/FeedbackList */ "./resources/js/components/admin/feedback/FeedbackList.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ListOffsiteCampaign */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue");
+
 
 
 
@@ -73606,8 +73891,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [{
-  path: '/',
-  component: _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__["default"],
+  path: '/contacts/dashboard',
+  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__["default"],
   props: {
     pageColor: 'onsite_sec'
   }
@@ -73633,7 +73918,7 @@ var routes = [{
 /*Onsite Module*/
 {
   path: '/brandboost/onsite_overview',
-  component: _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__["default"],
   props: {
     pageColor: 'onsite_sec'
   },
@@ -73642,13 +73927,13 @@ var routes = [{
   }
 }, {
   path: '/brandboost/onsite',
-  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_9__["default"],
   props: {
     pageColor: 'onsite_sec'
   }
 }, {
   path: '/brandboost/reviews',
-  component: _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_7__["default"],
   props: {
     pageColor: 'onsite_sec'
   },
@@ -73657,7 +73942,7 @@ var routes = [{
   }
 }, {
   path: '/questions',
-  component: _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_8__["default"],
   props: {
     pageColor: 'onsite_sec'
   },
@@ -73666,7 +73951,7 @@ var routes = [{
   }
 }, {
   path: '/brandboost/review_request/onsite',
-  component: _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
   props: {
     pageColor: 'onsite_sec',
     title: 'Review Requests',
@@ -73676,21 +73961,21 @@ var routes = [{
 /*Offsite Module*/
 {
   path: '/brandboost/offsite_overview',
-  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_17__["default"],
+  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_18__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Offsite overview'
   }
 }, {
   path: '/brandboost/offsite',
-  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_19__["default"],
+  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_20__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Offsite Brand Boost Campaigns'
   }
 }, {
   path: '/brandboost/review_request/offsite',
-  component: _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Review Requests',
@@ -73698,7 +73983,7 @@ var routes = [{
   }
 }, {
   path: '/feedback/listall/',
-  component: _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_18__["default"],
+  component: _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_19__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Requires Attention'
@@ -73707,7 +73992,7 @@ var routes = [{
 /* Templates Module */
 {
   path: '/templates/email',
-  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   props: {
     pageColor: 'email_sec',
     title: 'Email Templates',
@@ -73715,7 +74000,7 @@ var routes = [{
   }
 }, {
   path: '/templates/sms',
-  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   props: {
     pageColor: 'sms_sec',
     title: 'Sms Templates',
@@ -73723,37 +74008,37 @@ var routes = [{
   }
 }, {
   path: '/brandboost/media',
-  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
   props: {
     title: 'On Site Brand Boost Media'
   }
 }, {
   path: '/tags',
-  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_12__["default"],
+  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_13__["default"],
   meta: {
     title: 'Insight Tags - Brand Boost'
   }
 }, {
   path: '/tags/tagsreview',
-  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_13__["default"],
+  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_14__["default"],
   meta: {
     title: 'Tags Review - Brand Boost'
   }
 }, {
   path: '/tags/tagsfeedback',
-  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_14__["default"],
+  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_15__["default"],
   meta: {
     title: 'Tags Feedback - Brand Boost'
   }
 }, {
   path: '/lists',
-  component: _components_admin_Lists__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_admin_Lists__WEBPACK_IMPORTED_MODULE_16__["default"],
   meta: {
     title: 'Email Lists - Brand Boost'
   }
 }, {
   path: '/broadcast/email',
-  component: _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_16__["default"],
+  component: _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_17__["default"],
   meta: {
     title: 'Email Broadcast - Brand Boost'
   }

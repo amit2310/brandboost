@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>On Site Boost_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="0%" x2="1.74765173%" y2="98.2523483%" id="linearGradient-1">
+            <stop stop-color="#9B83FF" offset="0%"></stop>
+            <stop stop-color="#6145D4" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="8" cy="8" r="8"></circle>
+        <filter x="-3.1%" y="-3.1%" width="106.2%" height="112.5%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <path d="M10.8225524,8.5824 C10.6432123,8.7556 10.5617322,9.0052 10.6037322,9.25 L10.8746324,10.8164 C10.9590525,11.304 10.5684522,11.7 10.1253519,11.7 C10.0085918,11.7 9.88805176,11.6724 9.77129164,11.6116 L8.35379064,10.872 C8.24291056,10.8144 8.12153048,10.7856 7.9997304,10.7856 C7.87835032,10.7856 7.75697024,10.8144 7.64609016,10.872 L6.22858916,11.6116 C6.11182908,11.6724 5.99128896,11.7 5.87452888,11.7 C5.4314286,11.7 5.04082832,11.304 5.12524836,10.8164 L5.39614856,9.25 C5.4381486,9.0052 5.35666852,8.7556 5.1773284,8.5824 L4.0303076,7.4732 C3.57922728,7.0368 3.82828744,6.2764 4.45156788,6.1864 L6.036649,5.958 C6.2844492,5.9224 6.49864932,5.768 6.6091094,5.5452 L7.31806992,4.1204 C7.45751,3.84 7.7288302,3.7 7.9997304,3.7 C8.2710506,3.7 8.5423708,3.84 8.68181088,4.1204 L9.3907714,5.5452 C9.50123148,5.768 9.71543164,5.9224 9.9632318,5.958 L11.5483129,6.1864 C12.1715934,6.2764 12.4206535,7.0368 11.9695732,7.4732 L10.8225524,8.5824 Z" id="path-4"></path>
+        <filter x="-3.0%" y="-3.1%" width="106.0%" height="112.5%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="On-Site-Boost_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Oval" fill-rule="nonzero">
+            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            <use fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+        </g>
+        <g id="star_favorite-[#1499]">
+            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+        </g>
+    </g>
+</svg>
