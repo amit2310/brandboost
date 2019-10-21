@@ -47,7 +47,8 @@ Misc
 .min_h_185{min-height: 185px;}
 .min_h_240{min-height: 240px;}
 .min_w_96{ min-width:96px;}
-
+.badge.badge-grey{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
+.badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
 
 
 
@@ -56,8 +57,10 @@ FORMS GROUP
 ******************************/
 .form-group label{font-size: 14px; color: #242B3D; font-weight: 500; margin-bottom: 7px;}
 .form-group .form-control{font-size: 16px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; padding: 5px 17px;}
+.form-group .form-control.h50{height: 50px;}
 .form-group .form-control.h56{height: 56px;}
 .form-control::placeholder {color: #7B89A6; opacity: 1;}
+.form-control-dark::placeholder {color: #333D54; opacity: 1; font-size: 14px;}
 
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
@@ -65,6 +68,46 @@ FORMS GROUP
 .phonenumber .inputbox::placeholder {color: #7B89A6; opacity: 1;}
 
 .img_vid_upload{width: 100%; min-height: 320px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
+
+
+.custmo_checkbox {	display: block;	position: relative;	padding-left: 18px;	margin-bottom: 0px;	cursor: pointer;	font-size: 13px;	-webkit-user-select: none;	-moz-user-select: none;	-ms-user-select: none;	user-select: none; line-height: 17px; height: 17px;  }
+.custmo_checkbox.nolabel{width: 17px; height: 17px;}
+.custmo_checkbox input {	position: absolute;	opacity: 0;	cursor: pointer;}
+.custmo_checkmark {	position: absolute;	top: 0;	left: 0;	height: 17px;	width: 17px;	 background: #fff;	border-radius: 3px; border:1px solid #ddd;}
+.custmo_checkbox:hover input ~ .custmo_checkmark {	background-color: #fff; border:1px solid #ddd;}
+.custmo_checkbox input:checked ~ .custmo_checkmark {	background-color: #313157; border:1px solid #313157;}
+.custmo_checkbox input:checked ~ .custmo_checkmark.purple {	background-color: #7f62df ; border:1px solid #7f62df ;}
+.custmo_checkbox input:checked ~ .custmo_checkmark.green {	background-color: #319f86 ; border:1px solid #319f86 ;}
+.custmo_checkbox input:checked ~ .custmo_checkmark.blue_sky {	background-color: #289adb  ; border:1px solid #289adb  ;}
+.custmo_checkmark:after {	content: "";	position: absolute;	display: none;}
+.custmo_checkbox input:checked ~ .custmo_checkmark:after {	display: block;}
+.custmo_checkbox .custmo_checkmark:after {	left: 5px;	top: 2px;	width: 5px;	height: 9px;	border: solid white;	border-width: 0 2px 2px 0;	-webkit-transform: rotate(45deg);	-ms-transform: rotate(45deg);	transform: rotate(45deg);}
+.custmo_checkbox input:checked ~ .custmo_checkmark.blue {	background-color: #4F8AF4 ; border:1px solid #4F8AF4 ;}
+.custmo_checkbox input:checked ~ .custmo_checkmark.sblue {	background-color: #2f9eee ; border:1px solid #4596d0 ;}
+
+
+/*******************************
+CUSTOM SWITCH STYLES
+**********/
+.custom-form-switch {  display: inline-block;  margin-bottom: 8px;  position: relative;  align-items: center; width: 30px; height: 17px;}
+.custom-form-switch > .field {  position: absolute;  top: 0;  left: 0;  opacity: 0; margin: 0;}
+.custom-form-switch > .toggle {  display: inline-block;  background-color: #c5d0e5;  width: 26px;  height: 13px;  vertical-align: middle;  border-radius: 5px;  border: 2px solid #c5d0e5;  margin-right: 8px;  transition: all 0.6s; box-sizing: content-box;}
+.custom-form-switch > .toggle:before {  content: '';  display: block;  width: 13px;  height: 13px;  background-color: white;  border-radius: 4px;  transition: margin 0.3s;}
+.custom-form-switch .field:checked + .toggle:before {  margin-left: 12px;}
+.custom-form-switch .field:checked + .toggle {  border-color: #7f62df;  background-color: #7f62df;}
+.custom-form-switch .field:checked + .toggle.blue {  border-color: #3680dc;  background-color: #3680dc;}
+.custom-form-switch .field:checked + .toggle.blue2 {  border-color: #2eb4dd;  background-color: #2eb4dd;}
+.custom-form-switch .field:checked + .toggle.sblue {  border-color: #2f9eee;  background-color: #2f9eee;}
+.custom-form-switch .field:checked + .toggle.green {  border-color: #59b06e;  background-color: #59b06e;}
+.custom-form-switch .field:checked + .toggle.green2 {  border-color: #34a285;  background-color: #34a285;}
+.custom-form-switch .field:checked + .toggle.greend {  border-color: #36b4a4;  background-color: #36b4a4;}
+.custom-form-switch .field:checked + .toggle.teal {  border-color: #238398;  background-color: #238398;}
+.custom-form-switch .field:checked + .toggle.dred {  border-color: #962e6c;  background-color: #962e6c;}
+.custom-form-switch .field:checked + .toggle.grey {  border-color: #c5d0e5;  background-color: #c5d0e5;}
+.custom-form-switch .field:checked + .toggle.purple {  border-color: #9559ec;  background-color: #9559ec;}
+.custom-form-switch .field:checked + .toggle.yellow {  border-color: #ed8e8c;  background-color: #ed8e8c;}
+.custom-form-switch .field:checked + .toggle.greenl {  border-color: #9ecc78;  background-color: #9ecc78;}
+
 
 
 /******************************
