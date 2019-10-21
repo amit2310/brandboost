@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Live_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="4.27802827%" y1="9.47159018e-14%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FA8B8B" offset="0%"></stop>
+            <stop stop-color="#DB4065" offset="100%"></stop>
+        </linearGradient>
+        <path d="M9.12379763,0.426676442 L13.3762024,2.83429828 C14.3810118,3.4032002 15,4.45457431 15,5.59237816 L15,10.4076218 C15,11.5454257 14.3810118,12.5967998 13.3762024,13.1657017 L9.12379763,15.5733236 C8.11898816,16.1422255 6.88101184,16.1422255 5.87620237,15.5733236 L1.62379763,13.1657017 C0.61898816,12.5967998 4.56703638e-15,11.5454257 3.84592537e-15,10.4076218 L0,5.59237816 C-7.21111007e-16,4.45457431 0.61898816,3.4032002 1.62379763,2.83429828 L5.87620237,0.426676442 C6.88101184,-0.142225481 8.11898816,-0.142225481 9.12379763,0.426676442 Z" id="path-2"></path>
+        <path d="M7.66775006,5.42857143 L5.07142857,5.42857143 L5.07142857,1.99745528 C5.07142857,1.77654138 4.89234247,1.59745528 4.67142857,1.59745528 C4.54991508,1.59745528 4.43498992,1.65269117 4.35908105,1.74757726 L1.01990242,5.92155055 C0.881898596,6.09405533 0.909867146,6.34577228 1.08237192,6.4837761 C1.15329714,6.54051627 1.24142134,6.57142857 1.33224994,6.57142857 L3.92857143,6.57142857 L3.92857143,10.0025447 C3.92857143,10.2234586 4.10765753,10.4025447 4.32857143,10.4025447 C4.45008492,10.4025447 4.56501008,10.3473088 4.64091895,10.2524227 L7.98009758,6.07844945 C8.1181014,5.90594467 8.09013285,5.65422772 7.91762808,5.5162239 C7.84670286,5.45948373 7.75857866,5.42857143 7.66775006,5.42857143 Z" id="path-4"></path>
+        <filter x="2.3%" y="4.8%" width="95.4%" height="94.4%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Live_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(0.500000, 0.000000)">
+            <g id="*️⃣/🎨-Color/Product/14/Gradient-">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+            </g>
+            <g id="flash" transform="translate(3.000000, 2.000000)">
+                <g id="Filled_Icons">
+                    <g id="Shape">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

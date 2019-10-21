@@ -1079,7 +1079,7 @@
     });
 
 
-    $('.daterange-ranges').daterangepicker(
+    /*$('.daterange-ranges').daterangepicker(
         {
             startDate: moment().subtract(29, 'days'),
             endDate: moment(),
@@ -1104,7 +1104,7 @@
         }
     );
 
-    $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));
+    $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
 
 
 </script>

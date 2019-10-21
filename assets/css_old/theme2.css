@@ -1,0 +1,73 @@
+.panel-body{padding: 20px!important;}
+
+
+
+
+
+
+
+body {color: #868587 !important; background: url(http://brandboost.io/admin_new/images/body_bkg_gr1.jpg) center top repeat-x #dfe9f3!important; font-family: "Gotham SSm A", "Gotham SSm B"!important;}
+
+.btn.btn-success.gr_btnn {
+    width: 219px !important;
+    display: block;
+    margin: 15px 0 15px 20px;
+    padding: 9px 15px 9px 15px;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,.12),0 2px 4px 0 rgba(0,0,0,.08);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.12),0 2px 4px 0 rgba(0,0,0,.08); border-radius: 30px; font-size: 15px!important;
+}
+.btn-labeled > b{padding: 12px;}
+
+.btn.btn-success.gr_btnn:hover {
+    transition: all .15s ease;
+    transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    -webkit-transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08); opacity: 0.9;
+}
+
+
+
+.upgrade_btn {	border-color: #ff0000 !important;	color: #ff0000 !important;	border-radius: 30px;	}
+
+
+.sidebar{background: none!important; border: none!important;}
+.navigation > li.active > a, .navigation > li.active > a:hover, .navigation > li.active > a:focus {	border-radius: 0 30px 30px 0!important;}
+.navigation li a, .navigation li a:hover, .navigation li a:focus {	border-radius: 0 30px 30px 0;}
+
+.navbar-default, .page-header-default {background: none!important; border: none; margin-top: 10px;}
+.page-header-default .breadcrumb-line:not([class*="bg-"]) {background: none!important; border: none;}
+.header-highlight .navbar-header:not([class*="bg-"]) {	background: none!important; border: none;}
+
+.navigation > li ul{border: none!important; box-shadow: none!important;/*background-color: #f4f4f4!important;*/ background: none!important;}
+.page-header-content + .breadcrumb-line{border: none!important;}
+
+
+.text-primary, .text-primary:hover, .text-primary:focus {	color: #6598c7 !important;}
+.panel-group-control .panel-title > a {	padding-left: 35px;	color: #6598c7;}
+.bl_cust_btn {	background: #fff !important;	border: 1px solid #6598c7 !important;	color: #6598c7 !important;	cursor: pointer;}
+.bg-blue-600 {	background-color: #6598c7;	border-color: #6598c7;	color: #fff;}
+.upgrade_btn {	border-color: #e16f49 !important;	color: #fff !important;	border-radius: 30px; background: #e16f49!important;	}
+.upgrade_btn:hover {	border-color: #e16f49 !important;	color: #e16f49 !important;	background: #fff !important;}
+
+a{color: #6598c7;}
+.nav-tabs.nav-tabs-bottom > li.active > a::after {	background-color: #6598c7;}
+.bg-blue, .bg-blue-400 {	background-color: #6598c7;	border-color: #6598c7;	color: #fff;}
+.border-primary-600 {	border-color: #6598c7;}
+.panel.bg-blue h5{color: #fff}
+.text-blue, .text-blue:hover, .text-blue:focus {	color: #6598c7 !important;}
+.btn.green {	background: #6598c7 !important;	color: #fff !important;	width: 100px !important;}
+.work_flow .fa-envelope, .work_flow .fa-comments, .work_flow .fa-tag, .work_flow .fa-list {	color: #6598c7;}
+
+
+.widgetbox .fa{font-size: 25px; color: #6598c7; margin: 10px 0 10px;}
+.widgetbox h3{font-weight: 500; font-size: 19px; color: #333;}
+.widgetbox img.bl_arrow{margin: 5px auto 30px; display: block;}
+.widgetbox p{height: 65px; margin: 0;}
+.widgetbox img{max-width: 100%; margin-bottom: 20px; }
+
+.widgetbox img:hover{transition: all .15s ease;
+                     transform: translateY(-2px);
+                     -ms-transform: translateY(-2px);
+                     -webkit-transform: translateY(-2px); cursor: pointer;}
+.widgetbox a.bg-blue-600{font-size: 15px;}

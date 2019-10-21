@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>70EAA417-FA64-444E-8117-9AD5464DE78B</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-3.8376015%" y1="95.0409171%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#6468A0" offset="0%"></stop>
+            <stop stop-color="#8989C1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-789.000000, -1244.000000)" fill="url(#linearGradient-1)">
+            <g id="🈲/Menu/Push/Default-Copy-3" transform="translate(789.000000, 1243.000000)">
+                <g id="notification-2" transform="translate(0.400000, 0.800000)">
+                    <path d="M7.25976655,1.6969697 C7.15963928,2.05098118 7.10606061,2.42453663 7.10606061,2.81060606 C7.10606061,5.06576879 8.93423123,6.89393939 11.1893939,6.89393939 C11.5754634,6.89393939 11.9490188,6.84036072 12.3030303,6.74023345 L12.3030303,11.3484848 C12.3030303,12.5785736 11.3058463,13.5757576 10.0757576,13.5757576 L2.65151515,13.5757576 C1.42142639,13.5757576 0.424242424,12.5785736 0.424242424,11.3484848 L0.424242424,3.92424242 C0.424242424,2.69415366 1.42142639,1.6969697 2.65151515,1.6969697 L7.25976655,1.6969697 Z" id="Combined-Shape" opacity="0.654855"></path>
+                    <circle id="Oval" opacity="0.254855" cx="11.1893939" cy="2.81060606" r="1.85606061"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

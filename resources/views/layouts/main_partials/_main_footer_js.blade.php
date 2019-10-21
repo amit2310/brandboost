@@ -1,3 +1,19 @@
+<!--******************
+ jQuery
+**********************-->
+<script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/metisMenu.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/waves.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<script src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/pages/datatables_basic.js') }}"></script>
+<script src="{{ URL::asset('assets/js/custom_datatable.js') }}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="{{ URL::asset('assets/js/plugins/media/fancybox.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/pages/gallery.js') }}"></script>
+
 <script>
     function displayMessagePopup(msgType = '', msgHeading = '', msgDescription = '') {
         var msgBoxId = 'success_notice';

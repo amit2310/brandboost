@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="15px" viewBox="0 0 16 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>0A31939D-F180-44DD-A64E-09135BA96BC8</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="122.312477%" x2="73.6051958%" y2="22.1384636%" id="linearGradient-1">
+            <stop stop-color="#4E5DD5" offset="0%"></stop>
+            <stop stop-color="#9078FF" offset="100%"></stop>
+        </linearGradient>
+        <path d="M12.2894667,8.5442 C11.9756215,8.8473 11.8330314,9.2841 11.9065314,9.7125 L12.3806068,12.4537 C12.5283419,13.307 11.8447914,14 11.0693659,14 C10.8650357,14 10.6540906,13.9517 10.4497604,13.8453 L7.96913362,12.551 C7.77509348,12.4502 7.56267834,12.3998 7.3495282,12.3998 C7.13711306,12.3998 6.92469792,12.4502 6.73065778,12.551 L4.25003103,13.8453 C4.04570089,13.9517 3.83475568,14 3.63042554,14 C2.85500005,14 2.17144956,13.307 2.31918463,12.4537 L2.79325998,9.7125 C2.86676005,9.2841 2.72416991,8.8473 2.4103247,8.5442 L0.4030383,6.6031 C-0.38635226,5.8394 0.0495030203,4.5087 1.14024379,4.3512 L3.91413575,3.9515 C4.3477861,3.8892 4.72263631,3.619 4.91594145,3.2291 L6.15662236,0.7357 C6.4006425,0.245 6.87545285,0 7.3495282,0 C7.82433855,0 8.2991489,0.245 8.54316904,0.7357 L9.78384995,3.2291 C9.97715509,3.619 10.3520054,3.8892 10.7856557,3.9515 L13.5595476,4.3512 C14.6502884,4.5087 15.0861437,5.8394 14.2967531,6.6031 L12.2894667,8.5442 Z" id="path-2"></path>
+        <linearGradient x1="100%" y1="0%" x2="1.74765173%" y2="98.2523483%" id="linearGradient-4">
+            <stop stop-color="#9B83FF" offset="0%"></stop>
+            <stop stop-color="#6145D4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-508.000000, -1242.000000)">
+            <g id="🈲/Menu/On-Site-Boost/Color-Copy" transform="translate(508.000000, 1242.000000)">
+                <g id="star-favorite-1499" transform="translate(0.500000, 0.500000)">
+                    <g id="Rectangle">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <g id="*️⃣/🎨-Color/Product/06-On-Site/Gradient" mask="url(#mask-3)" fill="url(#linearGradient-4)" fill-rule="nonzero">
+                            <g transform="translate(-0.500000, -0.500000)" id="Rectangle-24">
+                                <rect x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                        </g>
+                        <rect fill="#FFFFFF" opacity="0.2" mask="url(#mask-3)" x="-1" y="-4" width="8.5" height="21"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
