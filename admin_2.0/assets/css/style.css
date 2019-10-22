@@ -1215,6 +1215,15 @@ PAGE WITH SIDEBAR CSS
 .sidebar_search input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
 .sidebar_search .sidebar_search_submit{border: none; background: none; box-shadow: none; width: 36px; height: 36px; padding: 0; margin: 0 0 0 3px;}
 
+
+.sidebar_search_big{padding: 10px 0; margin-bottom: 15px;}
+.sidebar_search_big input[type="text"]{background: #f4f6f9;border-radius: 50px; height: 36px; border: none; max-width: 266px; padding: 0 15px; color: #B4C0D4; font-size: 14px;}
+.sidebar_search_big input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
+.sidebar_search_big .sidebar_search_submit{border: none; background: none; box-shadow: none; width: 36px; height: 36px; padding: 0; margin: 0 0 0 7px;}
+
+
+.sidebar_headings{background: rgba(196, 207, 225, 0.1); border-top: 1px solid #eef1f7; border-bottom: 1px solid #eef1f7; padding: 7px 24px; font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #687693; line-height: 23px;}
+
 .list_with_icons{margin: 0; padding: 0;}
 .list_with_icons li{padding: 15px 0; border-bottom: 1px solid #eef2f9; border-top: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px;}
 .list_with_icons li p{margin: 0; padding: 0; line-height: 23px;}
@@ -1224,7 +1233,8 @@ PAGE WITH SIDEBAR CSS
 .circle_32.blue{background: #deebff; color: #73ABFF} 
 .circle_32.green{background: #e1f2e7; color: #83CE86} 
 .circle_32.red{background: #f5e7e5; color: #E4977F} 
-.circle_32 span.text{ opacity:1; } 
+.circle_32 span.text{ opacity:1; }
+.circle_32.img{line-height: 30px;}
 
 .media_left{display: inline-block; margin-right: 13px; float: left;}
 
@@ -1269,6 +1279,16 @@ PAGE WITH SIDEBAR CSS
 
 .nav.nav-pills.sidebar a{color: #7B89A6}
 .nav.nav-pills.sidebar a.active{color: #151A25}
+
+.nav.nav-pills.top_tab a{color: #7B89A6}
+.nav.nav-pills.top_tab a.active{color: #151A25; border-bottom: 2px solid #73abff; padding-bottom: 35px;}
+
+
+
+
+.fullscreen{position: fixed; width: 100%; height: 100%; top: 0; bottom: 0; right: 0; left: 0; background: #F6F9FE; z-index: 99999}
+.workflow_dots_bkg{background: url(../images/dot_bkg.png) left top repeat}
+
 
 
 

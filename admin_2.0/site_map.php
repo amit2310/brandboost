@@ -85,6 +85,8 @@
      			<li><a target="_blank" href="people_contact_import3.php">People Import step 3 </a></li>
      			<li><a target="_blank" href="people_campaign1.php">People Camapign 1 </a></li>
      			<li><a target="_blank" href="people_campaign2.php">People Camapign 2 </a></li>
+     			<li><a target="_blank" href="people_editor1.php">People Editor </a></li>
+     			<li><a target="_blank" href="people_workflow.php">People Workflow </a></li>
      			
      		</ul>
      			

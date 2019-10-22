@@ -16,6 +16,7 @@
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 	<style>
 		.navbar-custom{background: #ffffff!important}
+		.fullscreen{position: fixed; width: 100%; height: 100%; top: 0; bottom: 0; right: 0; left: 0; background: #F6F9FE; z-index: 99999}
 	</style>
 </head>
 
@@ -49,10 +50,21 @@
   <div class="top-bar-top-section shadow2 bkg_light_000">
   <div class="container-fluid">
    <div class="row">
-   	<div class="col-md-6 col-6">
+   	<div class="col-md-2">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
    	<h3 class="htxt_medium_24 dark_700">Editor</h3>
    	</div>
+   	<div class="col-md-4">
+   		<ul class="nav nav-pills top_tab mt-1" role="tablist">
+				<li class="mr40">
+				  <a class="htxt_bold_14 active" data-toggle="pill" href="#Visual"><img src="assets/images/git-merge-fill.svg" /> &nbsp; Visual Canvas</a>
+				</li>
+				<li class="">
+				  <a class="htxt_bold_14" data-toggle="pill" href="#ListView"><img src="assets/images/list-settings-line.svg" /> &nbsp; List View</a>
+				</li>
+			  </ul>
+			  
+	   </div>
    	<div class="col-md-6 col-6 text-right">
    		<button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/settings-3-fill.svg"/></button>
    		<button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/play-fill.svg"/></button>
@@ -71,17 +83,48 @@
   Content Area
  **********************-->
    <div class="content-area">
-    <div class="container-fluid">
+    
+     
+     
+     <div class="tab-content">
+   <!--======Tab 1====-->
+    <div id="Visual" class="tab-pane active">
+      	<div class="container-fluid">
     
     <div class="row">
-    	<div class="col-md-12 mb-3">
-            main editor
+    	<div class="col-md-6 mb20">
+           <div class="link_button">
+           	<a href="#"><img src="assets/images/arrow-right-line_grey.svg"/></a> 
+           	<a href="#"><img src="assets/images/arrow-left-line_grey.svg"/></a>
+           </div> 
     	</div>
+    	
+    	<div class="col-md-6 mb20 text-right">
+          <div class="link_button mr20">
+           	<a id="fullscreen" href="#"><img src="assets/images/share-box-fill.svg"/></a>
+           </div> 
+           
+           <div class="link_button">
+           	<a id="desktop" href="#"><img src="assets/images/macbook-fill.svg"/></a>
+           	<a id="tablet" href="#"><img src="assets/images/tablet-fill.svg"/></a>
+           	<a id="mobile" href="#"><img src="assets/images/smartphone-fill.png"/></a>
+           </div> 
+    	</div>
+    	
+    	
     </div>
     
     <div class="row">
     	<div class="col-md-12 mb-3">
-            <img class="w-100" src="assets/images/desktop.png"/>
+           <div class="device_box desktop text-center">
+           	<img style="max-width: 936px;" class="w-100" src="assets/images/desktop.png"/>
+           </div>
+           <div class="device_box tablet text-center" style="display: none;">
+           	<img style="max-width: 460px;" class="w-100" src="assets/images/iPadPro.png"/>
+           </div>
+           <div class="device_box mobile text-center" style="display: none;">
+           	<img style="max-width: 320px;" class="w-100" src="assets/images/iPhoneX.png"/>
+           </div>
     	</div>
     </div>
     
@@ -89,6 +132,16 @@
     
     
      </div>
+    </div>
+    <!--======Tab 2=====-->
+    <div id="ListView" class="tab-pane fade">
+		2nd tab content goes here...
+    </div>
+  </div>
+  
+  
+  
+  
    </div>
       
 <!--******************
@@ -120,6 +173,7 @@
         
         <!-- Tab panes -->
   <div class="tab-content">
+   <!--======Tab 1====-->
     <div id="Appearance" class="tab-pane active">
       <div class="inner2 editor_option mt20">
           	<h4 class="htxt_regular_14 dark_300 mb10">Position</h4>
@@ -143,8 +197,8 @@
           	</div>
           	
           	<h4 class="htxt_regular_14 dark_300 mb10">Content</h4>
-          	<div class="card border p0 mb30 shadow_none">
-          	<div class="p12 bbot">
+          	<div class="card border p20 mb30 shadow_none">
+          	<div class="pb15 bbot">
           		<ul class="editor_icons">
           		<li><a href="#"><img src="assets/images/bold.svg"/></a></li>
           		<li><a href="#"><img src="assets/images/font-color.svg"/></a></li>
@@ -153,7 +207,7 @@
           		<li><a href="#"><img src="assets/images/list-unordered.svg"/></a></li>
           		</ul>
           	</div>
-          	<textarea style="border: none; box-shadow: none; resize: none; min-height: 170px;" class="form-control p20" placeholder="Placeholder"></textarea>
+          	<textarea style="border: none; box-shadow: none; resize: none; min-height: 170px;" class="form-control p0 pt20" placeholder="Placeholder"></textarea>
 			  </div>
          	<hr/>
          	
@@ -190,6 +244,7 @@
           	
           </div>
     </div>
+    <!--======Tab 2=====-->
     <div id="Content" class="tab-pane fade">
 		<div class="inner2 editor_option mt20">
 			Content Goes here...
@@ -253,6 +308,37 @@ var color_picker = $('.colorpickerplus-dropdown .colorpickerplus-container');
         	  el.css('background-color', color);
 			}
         });
+	
+	
+	
+	
+	
+$(document).ready(function(){
+  $("#desktop").click(function(){
+    $(".tablet").hide();
+    $(".mobile").hide();
+	$(".desktop").show();
+  });
+	
+  $("#tablet").click(function(){
+    $(".desktop").hide();
+    $(".mobile").hide();
+    $(".tablet").show();
+  });
+	
+	$("#mobile").click(function(){
+    $(".desktop").hide();
+    $(".tablet").hide();
+	$(".mobile").show();
+  });	
+});
+	
+
+	$("#fullscreen").click(function(){
+  $(".content-area").toggleClass("fullscreen");
+});
+	
+	
 </script>
 
 
