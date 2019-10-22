@@ -87,7 +87,7 @@
      		<div class="col-md-8">
      		<div class="form-group">
                 <label for="fname" class="fsize12 fw300">This text will be displayed in the ‘Subject’ field in your recepient’s email client.</label>
-                <input type="text" class="form-control h50" id="fname" placeholder="Default subject" name="fname">
+                <input type="text" class="form-control emoji h50" id="fname" placeholder="Default subject" name="fname">
               </div>
               </div>
               <div class="col-md-4">

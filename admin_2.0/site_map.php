@@ -79,9 +79,12 @@
      			<li><a target="_blank" href="people_contact_list_kanban1.php">People Kanban 1</a></li>
      			<li><a target="_blank" href="people_contact_list_kanban2.php">People Kanban 2</a></li>
      			<li><a target="_blank" href="people_contact_list.php">People Contact List</a></li>
+     			<li><a target="_blank" href="people_contact_create.php">People Contact Create</a></li>
      			<li><a target="_blank" href="people_contact_import1.php">People Import step 1 </a></li>
      			<li><a target="_blank" href="people_contact_import2.php">People Import step 2 </a></li>
      			<li><a target="_blank" href="people_contact_import3.php">People Import step 3 </a></li>
+     			<li><a target="_blank" href="people_campaign1.php">People Camapign 1 </a></li>
+     			<li><a target="_blank" href="people_campaign2.php">People Camapign 2 </a></li>
      			
      		</ul>
      			
