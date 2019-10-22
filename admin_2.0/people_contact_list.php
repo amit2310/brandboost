@@ -115,7 +115,7 @@
 				  
 				  
 				  <tr>
-					<td><span class="table-img mr15"><img src="assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
+					<td><span class="table-img mr15"><!--<img src="assets/images/table_user.png"/>--><span class="fl_name">am</span></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
 					<td class="text-right">nina.hernandez@example.com</td>
 					<td># lead, subscriber</td>
 					<td><span class="badge badge-dark">+4</span></td>

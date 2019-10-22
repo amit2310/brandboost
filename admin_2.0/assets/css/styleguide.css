@@ -15,8 +15,8 @@ CARD CLASSES
 SHADOWS STYLES
 ******************************/
 .shadow1{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
+.shadow2{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06)!important;}
 .shadow_none{box-shadow: none!important;}
-
 
 
 
@@ -50,7 +50,7 @@ Misc
 .badge.badge-grey{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
 .badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
 .ls4{letter-spacing: 0.4px}
-
+.h-100-vh{height: 100vh}
 
 /******************************
 FORMS GROUP
@@ -65,10 +65,12 @@ FORMS GROUP
 
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
+.phonenumber.h50{ height: 50px;}
 .phonenumber .inputbox{border: none; font-size: 16px; color: #7B89A6; font-weight: 400; background: none; border-left: 1px solid #C4CFE1; padding-left: 17px; margin: 11px 0 0 10px; height: 20px; max-width: 230px; }
 .phonenumber .inputbox::placeholder {color: #7B89A6; opacity: 1;}
 
 .img_vid_upload{width: 100%; min-height: 320px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
+.img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 4px; background:url(../../assets/images/no_image.png) 20px 17px no-repeat #fff; border: 1px solid #dfe5f0;}
 
 
 .custmo_checkbox {	display: block;	position: relative;	padding-left: 18px;	margin-bottom: 0px;	cursor: pointer;	font-size: 13px;	-webkit-user-select: none;	-moz-user-select: none;	-ms-user-select: none;	user-select: none; line-height: 17px; height: 17px;  }
@@ -130,6 +132,9 @@ TABLES STYLES
 .table_action_dropdown{background: none; border: none; color: #7B89A6; font-size: 14px; font-weight: 400;}
 .table_search{border: none; padding-left: 25px; background: url(../images/search_icon_16.svg) left 4px no-repeat; color: #7B89A6; font-size: 14px; font-weight: 400; max-width: 90px; height: 20px}
 .table_search::placeholder {color: #7B89A6; opacity: 1;}
+
+
+span.fl_name{width: 32px; height: 32px; display: inline-block; border-radius: 100%; text-align: center; line-height: 32px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #07080A;background: #ebedf2 }
 
 
 
@@ -209,7 +214,7 @@ Animate Btn CLASSES
 /******************************
 BORDER CLASSES
 ******************************/
-.border{border: 1px solid #e9eff8;}
+.border{border: 1px solid #e9eff8!important;}
 .bbot{border-bottom: 1px solid #e9eff8;}
 .btop{border-top: 1px solid #e9eff8;}
 .brig{border-right: 1px solid #e9eff8;}
