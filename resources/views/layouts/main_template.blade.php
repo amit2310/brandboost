@@ -153,48 +153,12 @@
         <!--******************
          TOPBAR
         **********************-->
-    @include('layouts.main_partials._main_topmenu')
+        @include('layouts.main_partials._main_topmenu')
 
-
-    <!--******************
-  Top Heading area
- **********************-->
-
-        <div class="top-bar-top-section bbot">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Dashboard</h3>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000">Main Action <span><img
-                                    src="assets/images/blue-plus.svg"/></span></button>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
+        <div id="masterContainer2">
+            <router-view></router-view>
         </div>
 
-
-        <!--******************
-         Content Area
-        **********************-->
-        <div class="content-area">
-            <div class="container-fluid" id="masterContainer2">
-                <router-view>
-
-                </router-view>
-
-
-            </div>
-
-        </div>
-
-        <!--******************
-          Content Area End
-         **********************-->
 
     </div>
 

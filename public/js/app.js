@@ -11371,6 +11371,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['pageColor'],
@@ -11398,6 +11500,13 @@ __webpack_require__.r(__webpack_exports__);
       _this.archiveCount = response.data.archiveCount;
     });
   }
+});
+$(document).ready(function () {
+  $(".slidebox").click(function () {
+    $(".box").animate({
+      width: "toggle"
+    });
+  });
 });
 /*$(document).on('click', '#addContactForm', function () {
     $('.addModuleContact').trigger('click');
@@ -17632,6 +17741,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -17761,10 +17962,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -40333,113 +40530,217 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "content" },
-    [
-      _c("div", { staticClass: "page_header" }, [
-        _c("div", { staticClass: "row" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-9 text-right btn_area" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn light_btn importModuleContact",
-                attrs: {
-                  type: "button",
-                  "data-modulename": _vm.moduleName,
-                  "data-moduleaccountid": _vm.moduleUnitID,
-                  "data-redirect": "/admin/contacts/mycontacts"
-                }
-              },
-              [
-                _c("i", { staticClass: "icon-arrow-up16" }),
-                _c("span", [_vm._v("    Import Contacts")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn light_btn ml10",
-                attrs: {
-                  href:
-                    "/admin/subscriber/exportSubscriberCSV?module_name=" +
-                    _vm.moduleName +
-                    "&module_account_id=" +
-                    _vm.moduleUnitID
-                }
-              },
-              [
-                _c("i", { staticClass: "icon-arrow-down16" }),
-                _c("span", [_vm._v("    Export Contacts")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn dark_btn dropdown-toggle ml10 addModuleContact",
-                attrs: {
-                  type: "button",
-                  "data-modulename": _vm.moduleName,
-                  "data-moduleaccountid": _vm.moduleUnitID
-                }
-              },
-              [
-                _c("i", { staticClass: "icon-plus3" }),
-                _c("span", [_vm._v("    Add Contact")])
-              ]
-            ),
-            _vm._v("\n                 \n            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("workflow-subscribers", {
-        attrs: {
-          "show-archived": true,
-          "subscribers-data": _vm.subscribers,
-          "active-count": _vm.activeCount,
-          "archive-count": _vm.archiveCount,
-          "module-name": _vm.moduleName,
-          "module-unit-id": _vm.moduleUnitID
-        }
-      })
-    ],
-    1
-  )
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "content-area" },
+      [
+        _c("workflow-subscribers", {
+          attrs: {
+            "show-archived": true,
+            "subscribers-data": _vm.subscribers,
+            "active-count": _vm.activeCount,
+            "archive-count": _vm.archiveCount,
+            "module-name": _vm.moduleName,
+            "module-unit-id": _vm.moduleUnitID
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("h3", [
-        _c("img", { attrs: { src: "/assets/images/people_sec_icon.png" } }),
-        _vm._v(" Contacts")
+    return _c("div", { staticClass: "top-bar-top-section bbot" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 col-6" }, [
+            _c("span", { staticClass: "float-left mr20" }, [
+              _c("img", { attrs: { src: "/assets/images/BACK.svg" } })
+            ]),
+            _vm._v(" "),
+            _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
+              _vm._v("People Contact List")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
+            _c("button", { staticClass: "circle-icon-40 mr15" }, [
+              _c("img", { attrs: { src: "/assets/images/filter.svg" } })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-md bkg_blue_200 light_000 slidebox" },
+              [
+                _vm._v("Main Action "),
+                _c("span", [
+                  _c("img", { attrs: { src: "/assets/images/blue-plus.svg" } })
+                ])
+              ]
+            )
+          ])
+        ])
       ]),
       _vm._v(" "),
-      _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
-        _c("li", { staticClass: "active" }, [
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+      _c(
+        "div",
+        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        [
           _c(
-            "a",
-            { attrs: { href: "#right-icon-tab0", "data-toggle": "tab" } },
-            [_vm._v("Active Contacts")]
+            "div",
+            {
+              staticStyle: {
+                height: "100%",
+                "overflow-y": "auto",
+                "overflow-x": "hidden"
+              }
+            },
+            [
+              _c("a", { staticClass: "cross_icon slidebox" }, [
+                _c("i", {}, [
+                  _c("img", { attrs: { src: "assets/images/cross.svg" } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p40" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/list-icon.svg" }
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
+                      _vm._v("Create List ")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("form", { attrs: { action: "/action_page.php" } }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "fname" } }, [
+                          _vm._v("List name")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control h56",
+                          attrs: {
+                            type: "text",
+                            id: "fname",
+                            placeholder: "Enter list name",
+                            name: "fname"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "phonenumber" } }, [
+                          _vm._v("Color")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "phonenumber" }, [
+                          _c("div", { staticClass: "colorbox" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "colorpickerplus-dropdown",
+                                attrs: { id: "color_picker" }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "dropdown-toggle pickerbutton",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "dropdown"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass:
+                                        "color-fill-icon dropdown-color-fill-icon"
+                                    }),
+                                    _vm._v(
+                                      "\n                                                      Pick a Color   "
+                                    ),
+                                    _c("b", { staticClass: "caret" })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("ul", { staticClass: "dropdown-menu" }, [
+                                  _c("li", { staticClass: "disabled" }, [
+                                    _c("div", {
+                                      staticClass: "colorpickerplus-container"
+                                    })
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "desc" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          staticClass: "form-control min_h_185 p20 pt10",
+                          attrs: { id: "desc", placeholder: "List description" }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row bottom-position" }, [
+                  _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                      },
+                      [_vm._v("Create\n                            ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "blue_300 fsize16 fw600 ml20",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Close")]
+                    )
+                  ])
+                ])
+              ])
+            ]
           )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "a",
-            { attrs: { href: "#right-icon-tab1", "data-toggle": "tab" } },
-            [_vm._v("Archive")]
-          )
-        ])
-      ])
+        ]
+      )
     ])
   }
 ]
@@ -53741,1452 +54042,70 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "tab-content" }, [
-    _c(
-      "div",
-      { staticClass: "tab-pane active", attrs: { id: "right-icon-tab0" } },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-12" }, [
-            _c("div", { staticClass: "panel panel-flat" }, [
-              _c("div", { staticClass: "panel-heading" }, [
-                _c("span", { staticClass: "pull-left" }, [
-                  _c("h6", { staticClass: "panel-title" }, [
-                    _vm._v(_vm._s(_vm.activeCount) + " Contacts")
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "heading-elements" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "table_action_tool" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "custom_action_box",
-                        staticStyle: { display: "none" },
-                        attrs: {
-                          href: "javascript:void(0);",
-                          id: "deleteBulkModuleContacts",
-                          "data-modulename": _vm.moduleName,
-                          "data-moduleaccountid": _vm.moduleUnitID
-                        }
-                      },
-                      [_c("i", { staticClass: "icon-trash position-left" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-xs custom_action_box",
-                        attrs: {
-                          id: "archiveBulkModuleContacts",
-                          "data-modulename": _vm.moduleName,
-                          "data-moduleaccountid": _vm.moduleUnitID
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon-gear position-left" }),
-                        _vm._v(" Archive\n                                ")
-                      ]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "panel-body p0" }, [
-                _c(
-                  "table",
-                  { staticClass: "table", attrs: { id: "mySubsContact" } },
-                  [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.activeUsers, function(contact) {
-                        return _vm.activeUsers.length > 0
-                          ? _c(
-                              "tr",
-                              {
-                                staticClass: "selectedClass",
-                                attrs: { id: "append-" + contact.subscriber_id }
-                              },
-                              [
-                                _c("td", { staticStyle: { display: "none" } }, [
-                                  _vm._v(_vm._s(contact.created))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticStyle: { display: "none" } }, [
-                                  _vm._v(_vm._s(contact.subscriber_id))
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(5, true),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "media-left media-middle"
-                                      },
-                                      [
-                                        _c("user-avatar", {
-                                          attrs: {
-                                            avatar: contact.avatar,
-                                            firstname: contact.firstname,
-                                            lastname: contact.lastname
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", { staticClass: "pt-5" }, [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold bbot",
-                                            attrs: {
-                                              href: "javascript:void(0);"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                " +
-                                                _vm._s(contact.firstname) +
-                                                " " +
-                                                _vm._s(contact.lastname)
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("img", {
-                                          staticClass: "flags",
-                                          attrs: {
-                                            src:
-                                              "`/assets/images/flags/${(contact.country_code).toLowerCase()}.png`",
-                                            onerror:
-                                              "this.src='/assets/images/flags/us.png'"
-                                          }
-                                        })
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [_vm._v(_vm._s(contact.email))]
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", { staticClass: "pt-5" }, [
-                                        contact.phone
-                                          ? _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "text-default text-semibold dark"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                " +
-                                                    _vm._s(
-                                                      _vm.mobileNoFormat(
-                                                        contact.phone
-                                                      )
-                                                    ) +
-                                                    "\n                                            "
-                                                )
-                                              ]
-                                            )
-                                          : _c(
-                                              "span",
-                                              {
-                                                staticStyle: {
-                                                  color: "#999999"
-                                                }
-                                              },
-                                              [_vm._v("Phone Unavailable")]
-                                            )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value: contact.phone,
-                                              expression: "contact.phone"
-                                            }
-                                          ],
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [_vm._v("Chat")]
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", { staticClass: "pt-5" }, [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold dark"
-                                          },
-                                          [_vm._v(_vm._s(contact.created))]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(contact.created) +
-                                              "\n                                        "
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _vm._m(6, true),
-                                    _vm._v(" "),
-                                    _vm._m(7, true)
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("td", [
-                                  contact.twitter_profile
-                                    ? _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: contact.twitter_profile,
-                                            target: "_blank",
-                                            title: "View twitter profile"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/twitter.svg"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    : _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: "javascript:void(0);",
-                                            title: "This profile not found"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/twitter.svg"
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                  _vm._v(" "),
-                                  contact.facebook_profile
-                                    ? _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: "contact.facebook_profile",
-                                            target: "_blank",
-                                            title: "View facebook profile"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/facebook.svg"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    : _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: "javascript:void(0);",
-                                            title: "This profile not found"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/facebook.svg"
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                  _vm._v(" "),
-                                  _vm._m(8, true),
-                                  _vm._v(" "),
-                                  _vm._m(9, true)
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    class:
-                                      "tag_container_" + contact.subscriber_id,
-                                    attrs: {
-                                      id:
-                                        "tag_container_" + contact.subscriber_id
-                                    }
-                                  },
-                                  [
-                                    _c("contact-tags", {
-                                      attrs: {
-                                        subscriber_id: contact.subscriber_id
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("div", { staticClass: "tdropdown" }, [
-                                    contact.status == 1 &&
-                                    contact.globalStatus == 1
-                                      ? _c("i", {
-                                          staticClass:
-                                            "icon-primitive-dot txt_green fsize16"
-                                        })
-                                      : _c("i", {
-                                          staticClass:
-                                            "icon-primitive-dot txt_red fsize16"
-                                        }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass:
-                                          "text-default text-semibold bbot dropdown-toggle",
-                                        attrs: { "data-toggle": "dropdown" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            contact.status == 1 &&
-                                              contact.globalStatus == 1
-                                              ? " Active"
-                                              : " Inactive"
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "dropdown-menu dropdown-menu-right status",
-                                        staticStyle: { right: "0" }
-                                      },
-                                      [
-                                        contact.status == 1 &&
-                                        contact.globalStatus == 1
-                                          ? _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "changeModuleContactStatus",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "0",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-primitive-dot txt_grey"
-                                                  }),
-                                                  _vm._v(
-                                                    " Inactive\n                                                "
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          : _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "{(contact.globalStatus == 1) ? 'changeModuleContactStatus' : 'changeModuleContactStatusDisabled'}",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "1",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-primitive-dot txt_green"
-                                                  }),
-                                                  _vm._v(" Active")
-                                                ]
-                                              )
-                                            ]),
-                                        _vm._v(" "),
-                                        _c("li", [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "moveToArchiveModuleContact",
-                                              attrs: {
-                                                href: "javascript:void(0);",
-                                                "data-modulesubscriberid":
-                                                  contact.id,
-                                                "data-modulename":
-                                                  _vm.moduleName,
-                                                "data-moduleaccountid":
-                                                  _vm.moduleUnitID,
-                                                csrf_token: "csrf_token()"
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass:
-                                                  "icon-primitive-dot txt_red"
-                                              }),
-                                              _vm._v(" Archive")
-                                            ]
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "text-center" }, [
-                                  _c("div", { staticClass: "tdropdown ml10" }, [
-                                    _vm._m(10, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "dropdown-menu dropdown-menu-right status",
-                                        staticStyle: {
-                                          right: "0",
-                                          width: "150px"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.showArchived == true,
-                                                expression:
-                                                  "showArchived == true"
-                                              }
-                                            ]
-                                          },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass:
-                                                  "moveToArchiveModuleContact",
-                                                attrs: {
-                                                  href: "javascript:void(0);",
-                                                  "data-modulesubscriberid":
-                                                    contact.id,
-                                                  "data-modulename":
-                                                    _vm.moduleName,
-                                                  "data-moduleaccountid":
-                                                    _vm.moduleUnitID,
-                                                  csrf_token: "csrf_token()"
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "icon-trash"
-                                                }),
-                                                _vm._v(
-                                                  " Move To Archive\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        contact.status == 1 &&
-                                        contact.globalStatus == 1
-                                          ? _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "changeModuleContactStatus",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "0",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-file-locked"
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                                                Inactive"
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          : _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "{(contact.globalStatus == 1) ? 'changeModuleContactStatus' : 'changeModuleContactStatusDisabled'}",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "1",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-file-locked"
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                                                    Active"
-                                                  )
-                                                ]
-                                              )
-                                            ]),
-                                        _vm._v(" "),
-                                        _vm._m(11, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.showArchived == true,
-                                                expression:
-                                                  "showArchived == true"
-                                              }
-                                            ]
-                                          },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass:
-                                                  "editModuleSubscriber",
-                                                attrs: {
-                                                  href: "javascript:void(0);",
-                                                  "data-modulesubscriberid":
-                                                    contact.id,
-                                                  "data-modulename":
-                                                    _vm.moduleName,
-                                                  "data-moduleaccountid":
-                                                    _vm.moduleUnitID,
-                                                  "data-redirect":
-                                                    "admin/lists/getListContacts?list_id="
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "icon-pencil"
-                                                }),
-                                                _vm._v(" Edit")
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("li", [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "deleteModuleSubscriber",
-                                              attrs: {
-                                                "data-modulesubscriberid":
-                                                  contact.id,
-                                                "data-modulename":
-                                                  _vm.moduleName,
-                                                "data-moduleaccountid":
-                                                  _vm.moduleUnitID,
-                                                csrf_token: "csrf_token()",
-                                                href: "javascript:void(0);"
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "icon-trash"
-                                              }),
-                                              _vm._v(" Delete")
-                                            ]
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ]
-                            )
-                          : _c("tr", [
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _vm._m(12),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } })
-                            ])
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
-        ])
-      ]
-    ),
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.showArchived == true,
-            expression: "showArchived == true"
-          }
-        ],
-        staticClass: "tab-pane",
-        attrs: { id: "right-icon-tab1" }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-12" }, [
-            _c("div", { staticClass: "panel panel-flat" }, [
-              _c("div", { staticClass: "panel-heading" }, [
-                _c("span", { staticClass: "pull-left" }, [
-                  _c("h6", { staticClass: "panel-title" }, [
-                    _vm._v(_vm._s(_vm.archiveCount) + " Contacts")
-                  ])
-                ]),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "table-responsive" }, [
+          _c("table", { staticClass: "table table-borderless" }, [
+            _c(
+              "tbody",
+              [
+                _vm._m(1),
                 _vm._v(" "),
-                _vm._m(13),
+                _vm._m(2),
                 _vm._v(" "),
-                _c("div", { staticClass: "heading-elements" }, [
-                  _vm._m(14),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "table_action_tool" }, [
-                    _vm._m(15),
-                    _vm._v(" "),
-                    _vm._m(16),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "custom_action_box",
-                        staticStyle: { display: "none" },
-                        attrs: {
-                          href: "javascript:void(0);",
-                          id: "deleteBulkArchiveModuleContacts",
-                          "data-modulename": _vm.moduleName,
-                          "data-moduleaccountid": _vm.moduleUnitID
-                        }
-                      },
-                      [_c("i", { staticClass: "icon-trash position-left" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-xs custom_action_box",
-                        attrs: {
-                          id: "activeBulkModuleContacts",
-                          "data-modulename": _vm.moduleName,
-                          "data-moduleaccountid": _vm.moduleUnitID
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon-gear position-left" }),
-                        _vm._v(" Archive\n                                ")
-                      ]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "panel-body p0" }, [
-                _c(
-                  "table",
-                  { staticClass: "table", attrs: { id: "mySubsContact2" } },
-                  [
-                    _vm._m(17),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.archiveUsers, function(contact) {
-                        return _vm.archiveUsers.length > 0
-                          ? _c(
-                              "tr",
-                              {
-                                staticClass: "selectedClass",
-                                attrs: { id: "append-" + contact.subscriber_id }
-                              },
+                _vm._l(_vm.activeUsers, function(contact) {
+                  return _vm.activeUsers.length > 0
+                    ? _c("tr", [
+                        _c(
+                          "td",
+                          [
+                            _c("user-avatar", {
+                              attrs: {
+                                avatar: contact.avatar,
+                                firstname: contact.firstname,
+                                lastname: contact.lastname
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "htxt_medium_14 dark_900" },
                               [
-                                _c("td", { staticStyle: { display: "none" } }, [
-                                  _vm._v(_vm._s(contact.created))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticStyle: { display: "none" } }, [
-                                  _vm._v(_vm._s(contact.subscriber_id))
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(18, true),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "media-left media-middle"
-                                      },
-                                      [
-                                        _c("user-avatar", {
-                                          attrs: {
-                                            avatar: contact.avatar,
-                                            firstname: contact.firstname,
-                                            lastname: contact.lastname
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", { staticClass: "pt-5" }, [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold bbot",
-                                            attrs: {
-                                              href: "javascript:void(0);"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                " +
-                                                _vm._s(contact.firstname) +
-                                                " " +
-                                                _vm._s(contact.lastname)
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("img", {
-                                          staticClass: "flags",
-                                          attrs: {
-                                            src:
-                                              "`/assets/images/flags/${(contact.country_code).toLowerCase()}.png`",
-                                            onerror:
-                                              "this.src='/assets/images/flags/us.png'"
-                                          }
-                                        })
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [_vm._v(_vm._s(contact.email))]
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", { staticClass: "pt-5" }, [
-                                        contact.phone
-                                          ? _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "text-default text-semibold dark"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                " +
-                                                    _vm._s(
-                                                      _vm.mobileNoFormat(
-                                                        contact.phone
-                                                      )
-                                                    ) +
-                                                    "\n                                            "
-                                                )
-                                              ]
-                                            )
-                                          : _c(
-                                              "span",
-                                              {
-                                                staticStyle: {
-                                                  color: "#999999"
-                                                }
-                                              },
-                                              [_vm._v("Phone Unavailable")]
-                                            )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value: contact.phone,
-                                              expression: "contact.phone"
-                                            }
-                                          ],
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [_vm._v("Chat")]
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "media-left" }, [
-                                      _c("div", { staticClass: "pt-5" }, [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold dark"
-                                          },
-                                          [_vm._v(_vm._s(contact.created))]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "text-muted text-size-small"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(contact.created) +
-                                              "\n                                        "
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticClass: "viewContactSmartPopup",
-                                    attrs: {
-                                      "data-modulesubscriberid": contact.id,
-                                      "data-modulename": _vm.moduleName
-                                    }
-                                  },
-                                  [
-                                    _vm._m(19, true),
-                                    _vm._v(" "),
-                                    _vm._m(20, true)
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("td", [
-                                  contact.twitter_profile
-                                    ? _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: contact.twitter_profile,
-                                            target: "_blank",
-                                            title: "View twitter profile"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/twitter.svg"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    : _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: "javascript:void(0);",
-                                            title: "This profile not found"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/twitter.svg"
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                  _vm._v(" "),
-                                  contact.facebook_profile
-                                    ? _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: "contact.facebook_profile",
-                                            target: "_blank",
-                                            title: "View facebook profile"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/facebook.svg"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    : _c(
-                                        "a",
-                                        {
-                                          staticClass: "icons social",
-                                          attrs: {
-                                            href: "javascript:void(0);",
-                                            title: "This profile not found"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                "/assets/images/icons/facebook.svg"
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                  _vm._v(" "),
-                                  _vm._m(21, true),
-                                  _vm._v(" "),
-                                  _vm._m(22, true)
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    class:
-                                      "tag_container_" + contact.subscriber_id,
-                                    attrs: {
-                                      id:
-                                        "tag_container_" + contact.subscriber_id
-                                    }
-                                  },
-                                  [
-                                    _c("contact-tags", {
-                                      attrs: {
-                                        subscriber_id: contact.subscriber_id
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("div", { staticClass: "tdropdown" }, [
-                                    contact.status == 1 &&
-                                    contact.globalStatus == 1
-                                      ? _c("i", {
-                                          staticClass:
-                                            "icon-primitive-dot txt_green fsize16"
-                                        })
-                                      : _c("i", {
-                                          staticClass:
-                                            "icon-primitive-dot txt_red fsize16"
-                                        }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass:
-                                          "text-default text-semibold bbot dropdown-toggle",
-                                        attrs: { "data-toggle": "dropdown" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            contact.status == 1 &&
-                                              contact.globalStatus == 1
-                                              ? " Active"
-                                              : " Inactive"
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "dropdown-menu dropdown-menu-right status",
-                                        staticStyle: { right: "0" }
-                                      },
-                                      [
-                                        contact.status == 1 &&
-                                        contact.globalStatus == 1
-                                          ? _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "changeModuleContactStatus",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "0",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-primitive-dot txt_grey"
-                                                  }),
-                                                  _vm._v(
-                                                    " Inactive\n                                                "
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          : _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "{(contact.globalStatus == 1) ? 'changeModuleContactStatus' : 'changeModuleContactStatusDisabled'}",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "1",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-primitive-dot txt_green"
-                                                  }),
-                                                  _vm._v(" Active")
-                                                ]
-                                              )
-                                            ])
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "text-center" }, [
-                                  _c("div", { staticClass: "tdropdown ml10" }, [
-                                    _vm._m(23, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "dropdown-menu dropdown-menu-right status",
-                                        staticStyle: {
-                                          right: "0",
-                                          width: "150px"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.showArchived == true,
-                                                expression:
-                                                  "showArchived == true"
-                                              }
-                                            ]
-                                          },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass:
-                                                  "moveToArchiveModuleContact",
-                                                attrs: {
-                                                  href: "javascript:void(0);",
-                                                  "data-modulesubscriberid":
-                                                    contact.id,
-                                                  "data-modulename":
-                                                    _vm.moduleName,
-                                                  "data-moduleaccountid":
-                                                    _vm.moduleUnitID,
-                                                  csrf_token: "csrf_token()"
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "icon-trash"
-                                                }),
-                                                _vm._v(
-                                                  " Move To Archive\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        contact.status == 1 &&
-                                        contact.globalStatus == 1
-                                          ? _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "changeModuleContactStatus",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "0",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-file-locked"
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                                                    Inactive"
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          : _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "{(contact.globalStatus == 1) ? 'changeModuleContactStatus' : 'changeModuleContactStatusDisabled'}",
-                                                  attrs: {
-                                                    "data-modulesubscriberid":
-                                                      contact.id,
-                                                    "data-modulename":
-                                                      _vm.moduleName,
-                                                    "data-moduleaccountid":
-                                                      _vm.moduleUnitID,
-                                                    data_status: "1",
-                                                    csrf_token: "csrf_token()"
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "icon-file-locked"
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                                                    Active"
-                                                  )
-                                                ]
-                                              )
-                                            ]),
-                                        _vm._v(" "),
-                                        _vm._m(24, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.showArchived == true,
-                                                expression:
-                                                  "showArchived == true"
-                                              }
-                                            ]
-                                          },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass:
-                                                  "editModuleSubscriber",
-                                                attrs: {
-                                                  href: "javascript:void(0);",
-                                                  "data-modulesubscriberid":
-                                                    contact.id,
-                                                  "data-modulename":
-                                                    _vm.moduleName,
-                                                  "data-moduleaccountid":
-                                                    _vm.moduleUnitID,
-                                                  "data-redirect":
-                                                    "admin/lists/getListContacts?list_id="
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "icon-pencil"
-                                                }),
-                                                _vm._v(" Edit")
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("li", [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "deleteModuleSubscriber",
-                                              attrs: {
-                                                "data-modulesubscriberid":
-                                                  contact.id,
-                                                "data-modulename":
-                                                  _vm.moduleName,
-                                                "data-moduleaccountid":
-                                                  _vm.moduleUnitID,
-                                                csrf_token: "csrf_token()",
-                                                href: "javascript:void(0);"
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "icon-trash"
-                                              }),
-                                              _vm._v(" Delete")
-                                            ]
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ])
-                                ])
+                                _vm._v(
+                                  _vm._s(contact.firstname) +
+                                    " " +
+                                    _vm._s(contact.lastname)
+                                )
                               ]
                             )
-                          : _c("tr", [
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _vm._m(25),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } }),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { display: "none" } })
-                            ])
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ])
-            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-right" }, [
+                          _vm._v(_vm._s(contact.email))
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(3, true),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Customer")]),
+                        _vm._v(" "),
+                        _vm._m(4, true),
+                        _vm._v(" "),
+                        _vm._m(5, true)
+                      ])
+                    : _vm._e()
+                })
+              ],
+              2
+            )
           ])
         ])
-      ]
-    )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -55194,70 +54113,100 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "heading_links pull-left" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-xs btn_white_table ml20",
-          attrs: { type: "button" }
-        },
-        [_vm._v("All")]
-      ),
-      _vm._v(" "),
-      _c("a", { staticClass: "top_links txt_blue", attrs: { href: "#" } }, [
-        _vm._v("Customers USA")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "top_links", attrs: { href: "#" } }, [
-        _vm._v("Added reviews")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "top_links", attrs: { href: "#" } }, [
-        _vm._v("Age 25-40")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "top_links", attrs: { href: "#" } }, [
-        _vm._v("Negative review")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "form-group has-feedback has-feedback-left",
-        staticStyle: { display: "inline-block", margin: "0" }
-      },
-      [
-        _c("input", {
-          staticClass: "form-control input-sm cus_search",
-          attrs: {
-            tableID: "mySubsContact",
-            placeholder: "Search by name",
-            type: "text"
-          }
-        }),
+    return _c("div", { staticClass: "table_head_action" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("h3", { staticClass: "htxt_medium_16 dark_400" }, [
+            _vm._v("Contact Lists")
+          ])
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-control-feedback" }, [
-          _c("i", {}, [
-            _c("img", {
-              attrs: { src: "/assets/images/icon_search.png", width: "14" }
-            })
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table_action" }, [
+            _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", {
+                      attrs: { src: "/assets/images/date_created.svg" }
+                    })
+                  ]),
+                  _vm._v("  Date Created\n                        ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right ml10 mr10" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", {
+                      attrs: { src: "/assets/images/list_view.svg" }
+                    })
+                  ]),
+                  _vm._v("  List View\n                        ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right" }, [
+              _c("input", {
+                staticClass: "table_search",
+                attrs: { type: "text", placeholder: "Search" }
+              })
+            ])
           ])
         ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "javascript:void(0);" } }, [
-      _c("i", {}, [
-        _c("img", { attrs: { src: "/assets/images/icon_calender.png" } })
       ])
     ])
   },
@@ -55265,96 +54214,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "editDataList", attrs: { href: "javascript:void(0);" } },
-      [
-        _c("i", {}, [
-          _c("img", { attrs: { src: "/assets/images/icon_edit.png" } })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "nosort editAction",
-            staticStyle: { display: "none", width: "30px" }
-          },
-          [
-            _c("label", { staticClass: "custmo_checkbox pull-left" }, [
-              _c("input", {
-                staticClass: "control-primary",
-                attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
-              }),
-              _c("span", { staticClass: "custmo_checkmark" })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_name.png" } })
-          ]),
-          _vm._v("Name")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_device.png" } })
-          ]),
-          _vm._v("Phone\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_clock.png" } })
-          ]),
-          _vm._v("Created\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_source.png" } })
-          ]),
-          _vm._v("Source\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_social.png" } })
-          ]),
-          _vm._v("Social\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_id.png" } })
-          ]),
-          _vm._v("Tags")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_status.png" } })
-          ]),
-          _vm._v("Status\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
-          _c("i", { staticClass: "fa fa-dot-circle-o" }),
-          _vm._v("Action\n                                ")
-        ])
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "1" } }, [
+        _c("span", { staticClass: "fsize12 fw300" }, [_vm._v("Visitor name ")])
+      ]),
+      _vm._v(" "),
+      _c("td", { attrs: { colspan: "3" } }, [
+        _c("span", { staticClass: "fsize12 fw300" }, [_vm._v("Preview data")])
+      ]),
+      _vm._v(" "),
+      _c("td", { attrs: { colspan: "3" } }, [
+        _c("span", { staticClass: "fsize12 fw300" }, [_vm._v("List fields")])
       ])
     ])
   },
@@ -55362,38 +54232,55 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "td",
-      { staticClass: "editAction", staticStyle: { display: "none" } },
-      [
-        _c("label", { staticClass: "custmo_checkbox pull-left" }, [
-          _c("input", {
-            staticClass: "checkRows",
-            attrs: {
-              type: "checkbox",
-              name: "checkRows[]",
-              value: "contact.subscriber_id"
-            }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "custmo_checkmark" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-left text-right" }, [
-      _c("div", { staticClass: "pt-5" }, [
-        _c("span", { staticClass: "text-default text-semibold dark" }, [
-          _vm._v("Email")
+    return _c("tr", [
+      _c("td", [
+        _c("span", { staticClass: "table-img mr15" }, [
+          _c("img", { attrs: { src: "/assets/images/table_user.png" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+          _vm._v("Courtney Black")
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "text-muted text-size-small" }, [
-        _vm._v("Form #183")
+      _c("td", { staticClass: "text-right" }, [
+        _vm._v("nina.hernandez@example.com")
+      ]),
+      _vm._v(" "),
+      _c("td", [
+        _vm._v("# lead, subscriber "),
+        _c(
+          "span",
+          {
+            staticClass: "badge badge-dark",
+            staticStyle: { "margin-left": "15px" }
+          },
+          [_vm._v("+4")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Customer")]),
+      _vm._v(" "),
+      _c("td", [
+        _c("span", { staticClass: "dot_6 bkg_blue_300" }, [_vm._v(" ")])
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "text-right" }, [
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/message-2-line.svg" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/mail-open-line-16.svg" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/message-3-line-16.svg" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+        ])
       ])
     ])
   },
@@ -55401,62 +54288,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-left media-middle brig pr10" }, [
-      _c("span", { staticClass: "icons s28" }, [
-        _c("img", {
-          staticClass: "img-circle img-xs",
-          attrs: { src: "/assets/images/icon_round_email.png", alt: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "icons social", attrs: { href: "contact.socialProfile" } },
-      [_c("img", { attrs: { src: "/assets/images/icons/google.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "icons social",
-        attrs: { href: "`mailto:${contact.email}`" }
-      },
-      [_c("img", { attrs: { src: "/assets/images/icons/mail.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "table_more dropdown-toggle",
-        attrs: { "data-toggle": "dropdown" }
-      },
-      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
+    return _c("td", [
+      _vm._v("# lead, subscriber "),
       _c(
-        "a",
+        "span",
         {
-          attrs: { href: "`/admin/contacts/profile/${contact.subscriber_id}`" }
+          staticClass: "badge badge-dark",
+          staticStyle: { "margin-left": "15px" }
         },
-        [_c("i", { staticClass: "icon-eye" }), _vm._v(" View Details")]
+        [_vm._v("+4")]
       )
     ])
   },
@@ -55464,338 +54304,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "10" } }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c(
-            "div",
-            {
-              staticClass: "text-center",
-              staticStyle: { margin: "20px 0px 0" }
-            },
-            [
-              _c("h5", { staticClass: "mb-20 mt40" }, [
-                _vm._v(
-                  "\n                                                    Looks Like You Don’t Have Any Contact Yet "
-                ),
-                _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(
-                  "\n                                                    Lets Create Your First Contact.\n                                                "
-                )
-              ])
-            ]
-          )
-        ])
-      ])
+    return _c("td", [
+      _c("span", { staticClass: "dot_6 bkg_blue_300" }, [_vm._v(" ")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "heading_links pull-left" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-xs btn_white_table ml20",
-          attrs: { type: "button" }
-        },
-        [_vm._v("All")]
-      ),
-      _vm._v(" "),
-      _c("a", { staticClass: "top_links txt_blue", attrs: { href: "#" } }, [
-        _vm._v("Customers USA")
+    return _c("td", { staticClass: "text-right" }, [
+      _c("span", { staticClass: "icons" }, [
+        _c("img", { attrs: { src: "/assets/images/message-2-line.svg" } })
       ]),
       _vm._v(" "),
-      _c("a", { staticClass: "top_links", attrs: { href: "#" } }, [
-        _vm._v("Added reviews")
+      _c("span", { staticClass: "icons" }, [
+        _c("img", { attrs: { src: "assets/images/mail-open-line-16.svg" } })
       ]),
       _vm._v(" "),
-      _c("a", { staticClass: "top_links", attrs: { href: "#" } }, [
-        _vm._v("Age 25-40")
+      _c("span", { staticClass: "icons" }, [
+        _c("img", { attrs: { src: "assets/images/message-3-line-16.svg" } })
       ]),
       _vm._v(" "),
-      _c("a", { staticClass: "top_links", attrs: { href: "#" } }, [
-        _vm._v("Negative review")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "form-group has-feedback has-feedback-left",
-        staticStyle: { display: "inline-block", margin: "0" }
-      },
-      [
-        _c("input", {
-          staticClass: "form-control input-sm cus_search",
-          attrs: {
-            tableID: "mySubsContact",
-            placeholder: "Search by name",
-            type: "text"
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-control-feedback" }, [
-          _c("i", {}, [
-            _c("img", {
-              attrs: { src: "/assets/images/icon_search.png", width: "14" }
-            })
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "javascript:void(0);" } }, [
-      _c("i", {}, [
-        _c("img", { attrs: { src: "/assets/images/icon_calender.png" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "editArchiveDataList",
-        attrs: { href: "javascript:void(0);" }
-      },
-      [
-        _c("i", {}, [
-          _c("img", { attrs: { src: "/assets/images/icon_edit.png" } })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "nosort editArchiveAction",
-            staticStyle: { display: "none", width: "30px" }
-          },
-          [
-            _c("label", { staticClass: "custmo_checkbox pull-left" }, [
-              _c("input", {
-                staticClass: "control-primary",
-                attrs: {
-                  type: "checkbox",
-                  name: "checkArchiveAll[]",
-                  id: "checkArchiveAll"
-                }
-              }),
-              _c("span", { staticClass: "custmo_checkmark" })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_name.png" } })
-          ]),
-          _vm._v("Name")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_device.png" } })
-          ]),
-          _vm._v("Phone\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_clock.png" } })
-          ]),
-          _vm._v("Created\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_source.png" } })
-          ]),
-          _vm._v("Source\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_social.png" } })
-          ]),
-          _vm._v("Social\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_id.png" } })
-          ]),
-          _vm._v("Tags")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _c("i", {}, [
-            _c("img", { attrs: { src: "/assets/images/icon_status.png" } })
-          ]),
-          _vm._v("Status\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center nosort sorting_disabled" }, [
-          _c("i", { staticClass: "fa fa-dot-circle-o" }),
-          _vm._v("Action\n                                ")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "td",
-      { staticClass: "editArchiveAction", staticStyle: { display: "none" } },
-      [
-        _c("label", { staticClass: "custmo_checkbox pull-left" }, [
-          _c("input", {
-            staticClass: "checkArchiveRows",
-            attrs: {
-              type: "checkbox",
-              name: "checkRows[]",
-              value: "contact.id"
-            }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "custmo_checkmark" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-left text-right" }, [
-      _c("div", { staticClass: "pt-5" }, [
-        _c("span", { staticClass: "text-default text-semibold dark" }, [
-          _vm._v("Email")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "text-muted text-size-small" }, [
-        _vm._v("Form #183")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-left media-middle brig pr10" }, [
-      _c("span", { staticClass: "icons s28" }, [
-        _c("img", {
-          staticClass: "img-circle img-xs",
-          attrs: { src: "/assets/images/icon_round_email.png", alt: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "icons social", attrs: { href: "contact.socialProfile" } },
-      [_c("img", { attrs: { src: "/assets/images/icons/google.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "icons social",
-        attrs: { href: "`mailto:${contact.email}`" }
-      },
-      [_c("img", { attrs: { src: "/assets/images/icons/mail.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "table_more dropdown-toggle",
-        attrs: { "data-toggle": "dropdown" }
-      },
-      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c(
-        "a",
-        {
-          attrs: { href: "`/admin/contacts/profile/${contact.subscriber_id}`" }
-        },
-        [_c("i", { staticClass: "icon-eye" }), _vm._v(" View Details")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "10" } }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c(
-            "div",
-            {
-              staticClass: "text-center",
-              staticStyle: { margin: "20px 0px 0" }
-            },
-            [
-              _c("h5", { staticClass: "mb-20 mt40" }, [
-                _vm._v(
-                  "\n                                                    Looks Like You Don’t Have Any Contact Yet "
-                ),
-                _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(
-                  "\n                                                    Lets Create Your First Contact.\n                                                "
-                )
-              ])
-            ]
-          )
-        ])
+      _c("span", { staticClass: "icons" }, [
+        _c("img", { attrs: { src: "assets/images/star-line.svg" } })
       ])
     ])
   }
@@ -55893,36 +54424,34 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.avatar
-    ? _c("span", { staticClass: "icons s32" }, [
-        _c("span", { staticClass: "icons s32" }, [
-          _c("img", {
-            staticClass: "img-circle",
-            class: _vm.width == null || _vm.height == null ? "img-xs" : "",
-            style:
-              "width: " +
-              _vm.width +
-              "px!important; height: " +
-              _vm.height +
-              "px; line-height: " +
-              _vm.width +
-              "px; font-size: " +
-              _vm.fontsize +
-              "px;",
-            attrs: {
-              src:
-                "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" +
-                _vm.avatar,
-              onerror: "this.src='/assets/images/default_avt.jpeg'"
-            }
-          })
-        ])
+    ? _c("span", { staticClass: "table-img mr15" }, [
+        _c("img", {
+          staticClass: "rounded-circle",
+          class: _vm.width == null || _vm.height == null ? "img-xs" : "",
+          style:
+            "width: " +
+            _vm.width +
+            "px!important; height: " +
+            _vm.height +
+            "px; line-height: " +
+            _vm.width +
+            "px; font-size: " +
+            _vm.fontsize +
+            "px;",
+          attrs: {
+            src:
+              "https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/" +
+              _vm.avatar,
+            onerror: "this.src='/assets/images/default_avt.jpeg'"
+          }
+        })
       ])
-    : _c("span", { staticClass: "icons s32" }, [
+    : _c("span", { staticClass: "table-img mr15" }, [
         _vm.firstname || _vm.lastname
           ? _c(
               "span",
               {
-                staticClass: "icons s32",
+                staticClass: "fl_name",
                 class:
                   _vm.firstname || _vm.lastname
                     ? "fl_letters"
@@ -55954,7 +54483,7 @@ var render = function() {
           : _c(
               "span",
               {
-                staticClass: "icons s32",
+                staticClass: "fl_name",
                 class:
                   _vm.firstname || _vm.lastname
                     ? "fl_letters"
@@ -73978,7 +72507,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin/dashboard/ */ "./resources/js/components/admin/dashboard/index.vue");
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
-/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
+/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
 /* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
 /* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
 /* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
@@ -74019,7 +72548,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/contacts/dashboard',
-  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__["default"],
   props: {
     pageColor: 'onsite_sec'
   }
@@ -74181,7 +72710,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
