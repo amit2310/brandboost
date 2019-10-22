@@ -5,10 +5,11 @@ CARD CLASSES
 .card hr{border-color: #f0f1f4!important}
 .card.card_shadow{position: relative; z-index: 1;}
 .card.card_shadow:before{position: absolute; height: 11px; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius:0 0 4px 4px; width: 90%; left: 5%; bottom: -11px; content: ''; background:url(../images/shadow_bkg.png) left top repeat-x #fff; z-index: 0;}
-
-
 .card .dot_dropdown{position: absolute; right: 15px; top: 20px; z-index: 8}
 .card .dot_dropdown .dropdown-toggle:after{display: none;}
+
+
+
 
 
 /******************************
@@ -124,16 +125,11 @@ TABLES STYLES
 .table.table-borderless tbody tr td:first-child{padding-left: 40px ; border-radius: 2px 0 0 2px; }
 .table.table-borderless tbody tr td:last-child{padding-right: 40px ; border-radius: 0 2px 2px 0;}
 .table.table-borderless tbody tr:hover td{background: #fcfdff;}
-
-
 .table.table-borderless span.icons{margin: 0 5px;}
 .table.table-borderless .badge.badge-dark{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
-
 .table_action_dropdown{background: none; border: none; color: #7B89A6; font-size: 14px; font-weight: 400;}
 .table_search{border: none; padding-left: 25px; background: url(../images/search_icon_16.svg) left 4px no-repeat; color: #7B89A6; font-size: 14px; font-weight: 400; max-width: 90px; height: 20px}
 .table_search::placeholder {color: #7B89A6; opacity: 1;}
-
-
 span.fl_name{width: 32px; height: 32px; display: inline-block; border-radius: 100%; text-align: center; line-height: 32px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #07080A;background: #ebedf2 }
 
 
@@ -157,7 +153,6 @@ List Styles Classes
 .list1 li a.active{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 600; border-radius: 45px;}
 .list1 li a:hover{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 600; border-radius: 45px;}
 
-
 .import_list{margin: 0 ;padding: 0;}
 .import_list li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 24px; display: inline-block; width: 24.5%}
 .import_list li a{margin: 0 ;padding: 0 0px 0 35px; font-weight: 500;font-size: 14px; color: #687693; background: url(../images/checkbox-blank-circle-line-24.svg) 0px 1px no-repeat; display: inline-block; position: relative;}
@@ -167,8 +162,6 @@ List Styles Classes
 .import_list li a.done{background: url(../images/checkbox-circle-fill-24.svg) 0px 0px no-repeat ;  font-weight: 500; }
 .import_list li:hover a:after{ display: block;}
 .import_list li a:hover{color: #333D54; font-weight: 600}
-
-
 
 .templates_list{margin: 0; padding: 0;}
 .templates_list li{margin: 0; padding: 0; list-style: none;}
@@ -199,6 +192,10 @@ Button CLASSES
 
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
+
+
+.link_button{background: #FFFFFF;box-shadow: 0px 1px 1px rgba(1, 21, 64, 0.08);border-radius: 44px; height: 40px; line-height: 40px; display: inline-block; padding: 0 5px;}
+.link_button a{display: inline-block; margin: 0 7px;}
 
 
 /******************************
