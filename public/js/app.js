@@ -2384,12 +2384,17 @@ __webpack_require__.r(__webpack_exports__);
       console.log(response.data);
       _this.oData = response.data;
       _this.oLists = response.data.oLists;
-      _this.newoLists = response.data.newoLists; //console.log(this.newoLists);
+      _this.newoLists = response.data.newoLists;
+      console.log(_this.newoLists);
     });
     console.log('Component mounted');
   }
 });
 $(document).ready(function () {
+  /* Test Date Function */
+  console.log("Date Formatted: " + date("l jS F Y", strtotime('2019-06-19 16:36:46')));
+  /* Test Date Function End */
+
   $('#automationList thead tr').clone(true).appendTo('#automationList thead');
   $('#automationList thead tr:eq(1) th').each(function (i) {
     if (i === 12) {
@@ -2789,8 +2794,7 @@ $(document).ready(function () {
         $('.daterange-ranges span').html(start.format('MMMM D') + ' - ' + end.format('MMMM D'));
     }
 );
-
-$('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
+ $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
 
 /***/ }),
 
@@ -20014,7 +20018,12 @@ var render = function() {
                                                 [
                                                   _vm._v(
                                                     " " +
-                                                      _vm._s(oList.list_created)
+                                                      _vm._s(
+                                                        _vm.displayDateFormat(
+                                                          "F jS Y",
+                                                          oList.list_created
+                                                        )
+                                                      )
                                                   )
                                                 ]
                                               )
@@ -20028,8 +20037,12 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  _vm._s(oList.list_created) +
-                                                    " "
+                                                  _vm._s(
+                                                    _vm.displayDateFormat(
+                                                      "h:i A",
+                                                      oList.list_created
+                                                    )
+                                                  ) + " "
                                                 )
                                               ]
                                             )
@@ -73784,10 +73797,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: _defineProperty({
+  methods: {
     capitalizeFirstLetter: function capitalizeFirstLetter(str) {
       if (typeof str !== 'string') return '';
       return str.charAt(0).toUpperCase() + str.slice(1);
@@ -73830,11 +73841,127 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Base64DecodeUrl: function Base64DecodeUrl(str) {
       str = (str + '===').slice(0, str.length + str.length % 4);
       return str.replace(/-/g, '+').replace(/_/g, '/');
+    },
+    formattedDateTime: function formattedDateTime() {
+      /*
+       * Accepts a date, a mask, or a date and a mask.
+       * Returns a formatted version of the given date.
+       * The date defaults to the current date/time.
+       * The mask defaults to dateFormat.masks.default.
+       */
+      var dateFormat = function () {
+        var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+            timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+            timezoneClip = /[^-+\dA-Z]/g,
+            pad = function pad(val, len) {
+          val = String(val);
+          len = len || 2;
+
+          while (val.length < len) {
+            val = "0" + val;
+          }
+
+          return val;
+        }; // Regexes and supporting functions are cached through closure
+
+
+        return function (date, mask, utc) {
+          var dF = dateFormat; // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+
+          if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+            mask = date;
+            date = undefined;
+          } // Passing date through Date applies Date.parse, if necessary
+
+
+          date = date ? new Date(date) : new Date();
+          if (isNaN(date)) throw SyntaxError("invalid date");
+          mask = String(dF.masks[mask] || mask || dF.masks["default"]); // Allow setting the utc argument via the mask
+
+          if (mask.slice(0, 4) == "UTC:") {
+            mask = mask.slice(4);
+            utc = true;
+          }
+
+          var _ = utc ? "getUTC" : "get",
+              d = date[_ + "Date"](),
+              D = date[_ + "Day"](),
+              m = date[_ + "Month"](),
+              y = date[_ + "FullYear"](),
+              H = date[_ + "Hours"](),
+              M = date[_ + "Minutes"](),
+              s = date[_ + "Seconds"](),
+              L = date[_ + "Milliseconds"](),
+              o = utc ? 0 : date.getTimezoneOffset(),
+              flags = {
+            d: d,
+            dd: pad(d),
+            ddd: dF.i18n.dayNames[D],
+            dddd: dF.i18n.dayNames[D + 7],
+            m: m + 1,
+            mm: pad(m + 1),
+            mmm: dF.i18n.monthNames[m],
+            mmmm: dF.i18n.monthNames[m + 12],
+            yy: String(y).slice(2),
+            yyyy: y,
+            h: H % 12 || 12,
+            hh: pad(H % 12 || 12),
+            H: H,
+            HH: pad(H),
+            M: M,
+            MM: pad(M),
+            s: s,
+            ss: pad(s),
+            l: pad(L, 3),
+            L: pad(L > 99 ? Math.round(L / 10) : L),
+            t: H < 12 ? "a" : "p",
+            tt: H < 12 ? "am" : "pm",
+            T: H < 12 ? "A" : "P",
+            TT: H < 12 ? "AM" : "PM",
+            Z: utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+            o: (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+            S: ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+          };
+
+          return mask.replace(token, function ($0) {
+            return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+          });
+        };
+      }(); // Some common format strings
+
+
+      dateFormat.masks = {
+        "default": "ddd mmm dd yyyy HH:MM:ss",
+        shortDate: "m/d/yy",
+        mediumDate: "mmm d, yyyy",
+        longDate: "mmmm d, yyyy",
+        fullDate: "dddd, mmmm d, yyyy",
+        shortTime: "h:MM TT",
+        mediumTime: "h:MM:ss TT",
+        longTime: "h:MM:ss TT Z",
+        isoDate: "yyyy-mm-dd",
+        isoTime: "HH:MM:ss",
+        isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
+        isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+      }; // Internationalization strings
+
+      dateFormat.i18n = {
+        dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      }; // For convenience...
+
+      Date.prototype.format = function (mask, utc) {
+        return dateFormat(this, mask, utc);
+      };
+
+      var today = new Date();
+      var dateString = today.format("ddS-m-yy"); //alert("Formatted Date: "+dateString);
+    },
+    displayDateFormat: function displayDateFormat(format, datetime) {
+      //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
+      return date(format, strtotime(datetime));
     }
-  }, "displayNoData", function displayNoData() {
-    var noData = '[No Data]';
-    return noData;
-  })
+  }
 });
 
 /***/ }),
@@ -73851,7 +73978,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin/dashboard/ */ "./resources/js/components/admin/dashboard/index.vue");
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
-/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
+/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
 /* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
 /* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
 /* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
@@ -73892,7 +74019,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/contacts/dashboard',
-  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__["default"],
+  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"],
   props: {
     pageColor: 'onsite_sec'
   }
@@ -74054,7 +74181,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })

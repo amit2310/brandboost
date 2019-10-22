@@ -13,6 +13,7 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="{{ URL::asset('assets/js/plugins/media/fancybox.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/gallery.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datetime.min.js') }}"></script>
 
 <script>
     function displayMessagePopup(msgType = '', msgHeading = '', msgDescription = '') {
