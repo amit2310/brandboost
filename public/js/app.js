@@ -2392,7 +2392,7 @@ __webpack_require__.r(__webpack_exports__);
 });
 $(document).ready(function () {
   /* Test Date Function */
-  formattedDateTime();
+  console.log("Date Formatted: " + date("l jS F Y", strtotime('2019-06-19 16:36:46')));
   /* Test Date Function End */
 
   $('#automationList thead tr').clone(true).appendTo('#automationList thead');
@@ -2794,8 +2794,7 @@ $(document).ready(function () {
         $('.daterange-ranges span').html(start.format('MMMM D') + ' - ' + end.format('MMMM D'));
     }
 );
-
-$('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
+ $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
 
 /***/ }),
 
@@ -20019,7 +20018,12 @@ var render = function() {
                                                 [
                                                   _vm._v(
                                                     " " +
-                                                      _vm._s(oList.list_created)
+                                                      _vm._s(
+                                                        _vm.displayDateFormat(
+                                                          "F jS Y",
+                                                          oList.list_created
+                                                        )
+                                                      )
                                                   )
                                                 ]
                                               )
@@ -20033,8 +20037,12 @@ var render = function() {
                                               },
                                               [
                                                 _vm._v(
-                                                  _vm._s(oList.list_created) +
-                                                    " "
+                                                  _vm._s(
+                                                    _vm.displayDateFormat(
+                                                      "h:i A",
+                                                      oList.list_created
+                                                    )
+                                                  ) + " "
                                                 )
                                               ]
                                             )
@@ -73947,8 +73955,11 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       var today = new Date();
-      var dateString = today.format("ddS-m-yy");
-      alert("Formatted Date: " + dateString);
+      var dateString = today.format("ddS-m-yy"); //alert("Formatted Date: "+dateString);
+    },
+    displayDateFormat: function displayDateFormat(format, datetime) {
+      //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
+      return date(format, strtotime(datetime));
     }
   }
 });
@@ -73967,7 +73978,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin/dashboard/ */ "./resources/js/components/admin/dashboard/index.vue");
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
-/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
+/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
 /* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
 /* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
 /* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
@@ -74008,7 +74019,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/contacts/dashboard',
-  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_21__["default"],
+  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"],
   props: {
     pageColor: 'onsite_sec'
   }

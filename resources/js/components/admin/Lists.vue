@@ -310,10 +310,10 @@
                                         <td>
                                             <div class="media-left">
                                                 <div class="pt-5"><a href="#"
-                                                                     class="text-default text-semibold"> {{ oList.list_created }}</a>
+                                                                     class="text-default text-semibold"> {{ displayDateFormat("F jS Y",oList.list_created) }}</a>
                                                 </div>
                                                 <div
-                                                    class="text-muted text-size-small">{{ oList.list_created }} </div>
+                                                    class="text-muted text-size-small">{{ displayDateFormat("h:i A",oList.list_created) }} </div>
                                             </div>
 
                                         </td>
@@ -675,7 +675,7 @@
 
     $(document).ready(function () {
 /* Test Date Function */
-        formattedDateTime();
+        console.log("Date Formatted: " +date("l jS F Y", strtotime('2019-06-19 16:36:46')));
 
         /* Test Date Function End */
 

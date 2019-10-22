@@ -163,7 +163,11 @@ export default {
 
             var today = new Date();
             var dateString = today.format("ddS-m-yy");
-            alert("Formatted Date: "+dateString);
+            //alert("Formatted Date: "+dateString);
+        },
+        displayDateFormat(format, datetime) {
+            //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
+            return date(format, strtotime(datetime));
         }
 
     }
