@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Referral_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="95.657966%" y1="95.657966%" x2="-28.1719539%" y2="-30.4899458%" id="linearGradient-1">
+            <stop stop-color="#00C1A7" offset="0%"></stop>
+            <stop stop-color="#2563E6" offset="100%"></stop>
+        </linearGradient>
+        <path d="M2.96797375,10.6616983 L6.90005046,7.23194517 C7.02144312,7.12606043 7.03401477,6.94181571 6.92813009,6.82042311 C6.91961832,6.8106647 6.91046611,6.80148391 6.9007343,6.79294181 L2.96865756,3.34156071 C2.84759535,3.23529834 2.66331237,3.24729597 2.55704999,3.36835817 C2.51034197,3.42157151 2.48458584,3.48995857 2.48458584,3.56076322 L2.48458584,10.4418975 C2.48458584,10.6029806 2.61516946,10.7335642 2.77625251,10.7335642 C2.84674429,10.7335642 2.91485094,10.7080347 2.96797375,10.6616983 Z" id="path-2"></path>
+        <filter x="-5.5%" y="-3.3%" width="111.1%" height="112.4%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <path d="M6.46797376,10.6616983 L10.4000504,7.23194517 C10.5214431,7.12606043 10.5340148,6.94181571 10.4281301,6.82042311 C10.4196183,6.8106647 10.4104661,6.80148391 10.4007343,6.79294181 L6.46865754,3.34156071 C6.34759534,3.23529834 6.16331235,3.24729597 6.05704996,3.36835817 C6.01034199,3.42157151 5.98458584,3.48995857 5.98458584,3.56076322 L5.98458584,10.4418975 C5.98458584,10.6029806 6.11516944,10.7335642 6.27625251,10.7335642 C6.34674426,10.7335642 6.41485093,10.7080347 6.46797376,10.6616983 Z" id="path-4"></path>
+        <filter x="-5.5%" y="-3.3%" width="111.1%" height="112.4%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Referral_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M9.62379763,0.426676442 L13.8762024,2.83429828 C14.8810118,3.4032002 15.5,4.45457431 15.5,5.59237816 L15.5,10.4076218 C15.5,11.5454257 14.8810118,12.5967998 13.8762024,13.1657017 L9.62379763,15.5733236 C8.61898816,16.1422255 7.38101184,16.1422255 6.37620237,15.5733236 L2.12379763,13.1657017 C1.11898816,12.5967998 0.5,11.5454257 0.5,10.4076218 L0.5,5.59237816 C0.5,4.45457431 1.11898816,3.4032002 2.12379763,2.83429828 L6.37620237,0.426676442 C7.38101184,-0.142225481 8.61898816,-0.142225481 9.62379763,0.426676442 Z" id="Polygon" fill="url(#linearGradient-1)"></path>
+        <g id="backward" transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) translate(1.000000, 1.000000)">
+            <rect id="bound" x="0" y="0" width="14" height="14"></rect>
+            <g id="Path-10-Copy" transform="translate(4.742293, 7.001328) scale(-1, 1) translate(-4.742293, -7.001328) ">
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-2"></use>
+            </g>
+            <g id="Path-10" transform="translate(8.242293, 7.001328) scale(-1, 1) translate(-8.242293, -7.001328) ">
+                <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+            </g>
+        </g>
+    </g>
+</svg>

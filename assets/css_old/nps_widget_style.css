@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+/*.bb_nps_widget{font-family: 'Open Sans', sans-serif;width: 485px; text-align: center; position: absolute;box-sizing: border-box;box-shadow:0px 10px 30px 17px rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03); top:50%; margin-top:-120px; left:50%; margin-left:-243;}	*/
+
+/*
+.bb_nps_widget{font-family: 'Open Sans', sans-serif;width: 100%; text-align: center; position: absolute;box-sizing: border-box;box-shadow:0px 10px 30px 17px rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03); bottom:0;}	
+.bb_nps_widget .bb_nps_main_box{box-shadow: 0 10px 20px 0 rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);border-radius: 5px; width: 100%;box-sizing: border-box; padding: 50px;background: #fff;}
+.bb_nps_widget .bb_nps_footer_box{width: 100%;padding: 20px;border-radius:5px;background-color: #ffffff;box-shadow: 0 10px 20px 0 rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);position: relative; margin-top: 1px;box-sizing: border-box;}
+.bb_nps_widget .bb_nps_heading {font-size: 16px;color: #102243;font-weight: 500;margin: 10px 0; font-weight: 600;}
+.bb_nps_widget .bb_nps_text {font-size: 13px;color: #102243;font-weight: 500;margin: 0px;}
+.bb_nps_widget .bb_nps_product_icon {width: 66px;height: 66px;position: absolute;padding: 8px;border-radius: 100px;background-color: #fafafd;top: -33px;left: 50%;margin-left: -33px;box-sizing: border-box;}
+.bb_nps_widget .bb_nps_product_icon img{width:50px; height:50px;border-radius: 25px;}
+.bb_nps_widget .bb_nps_rating {margin: 0;padding: 0;display: inline-block;width: 24px;height: 24px;box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.07);border-radius: 100px;background: #fff;border: 1px solid #e7e7f0;color: #9292b4;font-size: 10px;line-height: 22px; text-decoration: none;}
+.bb_nps_widget .bb_nps_rating:hover{background:#000; color:#fff;}
+.bb_nps_widget .bb_nps_ratings{margin: 0; padding: 0}
+.bb_nps_widget ul.bb_nps_ratings li {margin: 0;padding: 0;display: inline-block;}
+.bb_nps_widget .bb_nps_input {border-radius: 0px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;appearance: none;-webkit-appearance: none;-moz-appearance: none;position: relative;height: 32px;box-sizing: border-box; width: 100%; margin-bottom: 5px; padding: 10px;color: #666;}
+.bb_nps_widget .bb_nps_form .bb_nps_textarea {min-height: 80px;resize: none;padding: 10px;font-family: 'Open Sans', sans-serif; font-size: 13px; color: #666; height: 80px;}
+.bb_nps_widget .bb_nps_submit{text-align: right; margin-top: 10px;}
+.bb_nps_widget .bb_nps_submit_a{background: #000;height: 35px;padding: 7px 20px;font-weight: 400;border-radius: 0px;font-size: 13px; color: #fff; border:none;}
+
+.bb_txt_success{color: green; font-size: 12px; text-align: center; padding-bottom:10px;}
+.bb_txt_danger{color:red; font-size: 12px; text-align: left; padding-bottom:10px;}
+
+.bb_nps_widget  .bb_overlay{background:rgba(0, 0, 0, 0.04); position:absolute; top:0; left:0; width:100%; height:100%; text-align:center; line-height:100%; border-radius:5px; display:none; z-index:1;}
+.bb_nps_widget  .bb_overlay img{margin-top:-30px; top:50%; position:absolute; left:50%; margin-left:-30px;}
+*/
+
+/*#bbnpspopup.bbOpenVPopup {
+  transform: translateY(500px);
+  -webkit-transform: translateY(500px);
+}
+#bbnpspopup{
+  transition: all 1s ease;
+  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+}*/
+
+.bb_overlay{background:rgba(0, 0, 0, 0.04); position:absolute; top:0; left:0; width:100%; height:100%; text-align:center; line-height:100%; border-radius:5px; display:none; z-index:1;}
+.bb_overlay img{margin-top:-30px; top:50%; position:absolute; left:50%; margin-left:-30px;}
+.nps_bb_cboth{clear: both;}
+.nps_bb_bot_widget{position: fixed; bottom: 0; left: 0;  background: #fff; text-align: center; padding:0 0 10px; box-sizing: border-box; box-shadow: 0px 10px 30px 17px rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);  font-family: 'Open Sans', sans-serif; width: 100%; }	
+.nps_bb_bot_widget h3{ font-size: 15px; font-weight: 600; margin:40px 0 8px 0;}
+.bb_nps_text {font-size: 13px;color: #102243;font-weight: 500;margin-bottom: 15px;}
+.nps_bb_footer_box{width: 100%;padding: 15px;border-radius:0px;background-color: #ffffff;position: relative; margin-top: 1px;box-sizing: border-box; margin: 0; border-top: 1px solid #eee;}
+.nps_bb_rating{margin: 0; padding: 0;}
+.nps_rating_lists{list-style: none; display: inline-block; font-size: 12px; color: #ccc; line-height: 23px; margin: 0 2px;}
+.nps_rating_numbers{display: inline-block; border-radius: 3px; background: #636363; color: #fff; text-decoration: none; text-align: center; width: 23px; height: 23px; font-size: 12px; font-weight: 400; }
+.nps_rating_numbers:hover{background: #dfdfdf; color: #636363}
+.nps_poweredby{position: absolute; right: 20px; top: 20px; font-size: 12px; margin: 0;}
+.bb_nps_widget_close{position: absolute; right: 20px; top: 20px; font-size: 15px; margin: 0; color: #636363; text-decoration: none; font-weight: 600;}
+
+.nps_bb_bot_widget .bb_nps_product_icon {width: 66px;height: 66px;position: absolute;padding: 8px;border-radius: 100px;background-color: #fafafd;top: -33px;left: 50%;margin-left: -33px;box-sizing: border-box; margin-bottom:20px;}
+.nps_bb_bot_widget .bb_nps_product_icon img{width:50px; height:50px;border-radius: 25px;}
+.bb_nps_ratings{margin: 0; padding: 0}
+
+.bb_txt_success{color: green; font-size: 12px; text-align: center; padding-bottom:10px;}
+.bb_txt_danger{color:red; font-size: 12px; text-align: left; padding-bottom:10px;}
+
+.nps_bb_form_box{ width:500px; margin: 15px auto; display: none; box-sizing: border-box; text-align: left;}
+.nps_bb_form_box .bb_nps_input {
+border-radius: 0px;
+box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);
+background-color: #ffffff;
+border: solid 1px #e3e9f3;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+position: relative;
+height: 32px;
+box-sizing: border-box;
+width: 100%;
+margin-bottom: 5px;
+padding: 10px;
+color: #666;
+}
+ .nps_bb_form_box .bb_nps_textarea {
+min-height: 80px;
+resize: none;
+padding: 10px;
+font-family: 'Open Sans', sans-serif;
+font-size: 13px;
+color: #666;
+height: 80px;
+}
+.bb_nps_submit_a {
+background: #000;
+height: 35px;
+padding: 7px 20px;
+font-weight: 400;
+border-radius: 0px;
+font-size: 13px;
+color: #fff;
+border: none;
+	margin-top: 10px;
+	float: right;
+}
+
+.bb_nps_success_box{position: absolute; padding: 30px; bottom: 0; left: 0; width: 100%; background: #fff; box-sizing: border-box; text-align: center;  border-box; box-shadow: 0px 10px 30px 17px rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);  font-family: 'Open Sans', sans-serif; display: none;}
+.bb_nps_success_box p{font-size: 13px; font-weight: 600;}
+.bb_nps_success_box p a{font-size: 13px; font-weight: 600; color: #1d88d3; text-decoration: none;}
+.bb_nps_success_box h3{margin: 0; font-size: 18px; color: #7aa32a; font-weight: 600;}
+.bb_nps_success_box h4{margin: 15px 0 25px; font-size: 16px; color: #333333; font-weight: 600;}
+.bb_nps_success_box img.nps_share_btn{height: 25px; border-radius: 3px; margin: 0 3px;}

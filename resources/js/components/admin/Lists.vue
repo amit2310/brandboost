@@ -310,10 +310,10 @@
                                         <td>
                                             <div class="media-left">
                                                 <div class="pt-5"><a href="#"
-                                                                     class="text-default text-semibold"> {{ oList.list_created }}</a>
+                                                                     class="text-default text-semibold"> {{ displayDateFormat("F jS Y",oList.list_created) }}</a>
                                                 </div>
                                                 <div
-                                                    class="text-muted text-size-small">{{ oList.list_created }} </div>
+                                                    class="text-muted text-size-small">{{ displayDateFormat("h:i A",oList.list_created) }} </div>
                                             </div>
 
                                         </td>
@@ -666,7 +666,7 @@
                     this.oData = response.data;
                     this.oLists = response.data.oLists;
                     this.newoLists = response.data.newoLists;
-                    //console.log(this.newoLists);
+                    console.log(this.newoLists);
                 });
             console.log('Component mounted')
         }
@@ -674,6 +674,10 @@
 
 
     $(document).ready(function () {
+/* Test Date Function */
+        console.log("Date Formatted: " +date("l jS F Y", strtotime('2019-06-19 16:36:46')));
+
+        /* Test Date Function End */
 
         $('#automationList thead tr').clone(true).appendTo('#automationList thead');
 
@@ -1075,7 +1079,7 @@
     });
 
 
-    $('.daterange-ranges').daterangepicker(
+    /*$('.daterange-ranges').daterangepicker(
         {
             startDate: moment().subtract(29, 'days'),
             endDate: moment(),
@@ -1100,7 +1104,7 @@
         }
     );
 
-    $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));
+    $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
 
 
 </script>

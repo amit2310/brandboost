@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>E9E1D8D3-88DA-4911-9488-D93A357D39CE</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#525378" offset="0%"></stop>
+            <stop stop-color="#9292B4" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-397.000000, -1134.000000)" fill="url(#linearGradient-1)">
+            <g id="🈲/Menu/Analytics/Default-Copy" transform="translate(397.000000, 1134.000000)">
+                <g id="Group">
+                    <path d="M10.8,0 C11.4627417,-1.21743675e-16 12,0.5372583 12,1.2 L12,10 C12,10.6627417 11.4627417,11.2 10.8,11.2 C10.1372583,11.2 9.6,10.6627417 9.6,10 L9.6,1.2 C9.6,0.5372583 10.1372583,1.21743675e-16 10.8,0 Z M1.2,7.2 C1.8627417,7.2 2.4,7.7372583 2.4,8.4 L2.4,10 C2.4,10.6627417 1.8627417,11.2 1.2,11.2 C0.5372583,11.2 1.53434283e-16,10.6627417 -2.22044605e-16,10 L0,8.4 C-8.11624501e-17,7.7372583 0.5372583,7.2 1.2,7.2 Z" id="Combined-Shape"></path>
+                    <rect id="Rectangle-62-Copy-2" opacity="0.8" x="4.8" y="4" width="2.4" height="7.2" rx="1.2"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

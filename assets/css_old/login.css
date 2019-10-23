@@ -1,0 +1,279 @@
+@import url("fonts/inter-ui.css");
+
+/*******************************
+LOGIN & SIGN UP 
+**********/
+.login_sec2{background: #f3f4f7;}
+.login_main_p{background: #f3f4f7; width: 100%;}
+.login_main2{width: 100%; margin: 0 auto; border-radius: 0px; height: 100%;position:absolute; background: #f3f4f7;}
+.login-container .page-container .login-form2 {width: 50%;height: 100%;border-radius: 0;background-color: #f3f4f7 !important;box-shadow: 0 3px 2px 0 rgba(0, 53, 193, 0.01), 0 1px 1px 0 rgba(0, 19, 151, 0.05), 0 24px 24px 0 rgba(0, 20, 62, 0.03) !important;margin: 0 !important;float: left;/*padding: 140px 135px 0 145px;*/ position: relative;}
+.login-container .list-inline-condensed > li{padding: 0;}
+.login_main2 h5{ font-size: 15px; font-weight: 400; color: #1e1e40;}
+.login_main2 h5 small{ font-size: 12px; color: #64658b; font-weight: 300!important; line-height: 1.7; padding: 0 40px; min-height: 47px;}
+.login_main2 label{font-size: 12px!important; color: #525378; font-weight: 300!important; }
+.login_main2 .form-control{box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03)!important;  background-color: #ffffff;  border: solid 1px #f0f1f6!important; font-size: 13px; color: #7d7da1!important; font-weight: 300!important;}
+.login_main2 .login-form2 .br_s{box-shadow: 0 4px 2px 0 rgba(0, 53, 193, 0.01), 0 1px 1px 0 rgba(0, 19, 151, 0.05), 0 29px 29px 0 rgba(0, 20, 62, 0.03);}
+.sign_go img{float: left;}
+.sign_go{display: inline-block;line-height: 41px;box-shadow: 0 1px 1px 0 rgba(30, 30, 64, 0.05), 0 2px 3px 0 rgba(30, 30, 64, 0.03);} 
+.login_main2 .form-control-feedback {line-height: 52px;}
+.login_main2 .form_m{box-shadow: 0 3px 3px 0 rgba(30, 30, 64, 0.02);}
+
+.form_center {max-width: 320px;margin: 0 auto;position: absolute;left: 0;right: 0;top: 50%;margin-top: -340px;}
+
+
+.login_main2 .login-options img{margin-right: 10px;}
+.login_main2 .form-control-feedback.h52{width: 110px;color: #000;font-size: 14px;text-align: left;padding-left: 20px; font-size: 14px; font-weight: 500; color: #525378;}
+.login_main2 .text-muted {color: #c4c4e1 !important;margin-right: 8px; font-size: 12px;}
+.login_main2 .form-control.input-lg.h52{padding-left: 122px;}
+.login_main2 .login_slider2 .slider_c{ margin: 0 auto;}
+.login_main2 .login_footer {color: #425784 !important;}
+.login_main2 .login_footer a{color: #425784 !important;}
+
+.line_or { position: relative;text-align: center;padding: 40px 0;}
+.line_or:after {height: 1px;display: block;width: 133px;background: #e7e7f0;border-right: 1px white;content: '';position: absolute; left: 0}
+.line_or:before {display: block;content: '';background: #e7e7f0;height: 1px;position: absolute; right: 0; width: 133px}
+.line_or p{position: absolute;left: 0;right: 0;margin: 0 auto;top: 29px; color: #c4c4e1;}
+
+.login_slider2{width: 50%;  height: 100%;  border-radius: 0; background: url(../images/form-bg-new.jpg) center center no-repeat; float: right; /*padding: 235px 60px 60px;*/background-size: 100% 100%; position: relative; padding: 0;}
+
+
+
+.login_slider2 img{margin-bottom: 20px;}
+.login_slider2 p{ color: #c4c4e1!important;}
+
+.account_ready .form_center{margin-top: -235px;}
+
+.login_slider2 p strong{ color: #ffffff!important;}
+.login_slider2 .carousel-indicators{margin-left: 0px!important; bottom: -50px!important; left: 0!important; right: 0}
+.login_slider2 .carousel-indicators li{margin-right: 10px; background-color: #9d9ff0!important;}
+.login_slider2 .carousel-indicators .active{background-color: #f46c71!important;}
+.login_slider2 .box_main{max-width: 270px; margin: 0 auto;} 
+
+.forget_pass { margin-top: 5px;}
+.forget_pass a{border-bottom: 1px solid #e7e7f0;padding-bottom: 4px;}
+.login_footer a{border-bottom: 1px solid #e7e7f0;padding-bottom: 4px;}
+
+
+
+
+.login_slider2.signup{width: 330px; min-height: 562px; background-size: cover; padding: 45px 60px; }
+.login_slider2.signup .pricing_inner{ margin-top: 50px!important; max-width: 210px}
+.login_slider2 .box_main .box_1{width: 135px; float: left; border-right: 1px solid rgba(0, 0, 0, 0.06); border-bottom: 1px solid #242350;}
+
+
+
+.login_main2.fpassmain{width: 360px; margin-left: -180px; height: 380px; margin-top: -190px;}
+.login-container .page-container .login-form2.forgot_pass{border-radius: 8px; float: none; margin: 0 auto!important; height: 360px;}
+
+.login_main2 a.icons{ width: 20px; height: 20px; line-height: 22px;}
+.login_main2 a.icons i{font-size: 9px;}
+.login_terms{margin: 0; padding: 0;}
+.login_main2 .login_terms li{margin: 0; padding: 0; list-style: none; font-size: 12px;color: #525378; float: left; width: 100%; margin-bottom: 10px;}
+
+.custmo_checkmark{box-shadow: 0 3px 3px 0 rgba(30, 30, 64, 0.02);}
+.login_main2 .custmo_checkbox input:checked ~ .custmo_checkmark {    background-color: #5d7df3;    border: 1px solid #5d7df3;}
+
+
+.click_icon {position: absolute;z-index: 4;top: 0;right: 20px;height: 52px;line-height: 52px;}
+.click_icon .fa {color: #17c974; font-size: 10px;}
+.click_icon span .fa{color: #c4c4e1;margin-right: 9px;font-size: 11px;}
+.login_main2 .form_m .fa{background-color:rgba(0, 0, 0, 0) ;}
+
+
+.login_new .box_main{max-width: 480px;}
+.login_new .box_main .box_1 {width: 160px;}
+.login_new .box_main .box_1{border-bottom: 0px;}
+.login_new .login_slider2{background: url(../images/form-bg-new_l.jpg) center center no-repeat; background-size:cover; }
+.login_new .login_slider2 img{margin-bottom: 30px;}
+.login_new .login_slider2 .mt-5.fsize14{padding: 0 70px; line-height: 1.86;}
+.login_new .carousel-indicators .active{background:#ffcae8 !important;}
+.login_new2 .carousel-indicators .active{background-image: linear-gradient(to left, #d5ff87, #2fad71) !important;}
+.login_new3 .carousel-indicators .active{background-image: linear-gradient(117deg, #32cfff, #2f8dff) !important;}
+
+.login_new2 .login_slider2{background: url(../images/form-bg-new_l2.png) center center no-repeat; }
+.login_new .fa{font-size: 10px;background-color:rgba(0, 0, 0, 0.1);width: 24px;height: 24px;border-radius: 100%;line-height: 24px; color: #ffcae8;}
+.login_new2 .fa{color: #2fad71;}
+.login_new2 .carousel-indicators .active{background-image: linear-gradient(to left, #d5ff87, #2fad71);}
+.login_new .carousel_main{margin-top: -310px;}
+
+
+.login_new2 .carousel_main { margin-top: -315px !important;}
+.login_new3 .login_slider2{background: url(../images/form-bg-new_l3.jpg) center center no-repeat; background-size:cover; }
+
+.width_350 {width: 350px;}
+.width_500 {width: 500px;}
+.fsize22{font-size: 22px!important;}
+.btn_pruple2{background: #6d41f2 !important;}
+.btn_grey2{background: #e9e9f1 !important; box-shadow: none !important;color: #7d7da1 !important ; width: auto!important}
+.btn_grey2:hover{background-color: #2f3053 !important;
+box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 -1px 0 0 rgba(0, 0, 0, 0.05) !important; color: #fff !important}
+.b_r{border-right: 0 !important;}
+.b_b{border-bottom: 0 !important;}
+.btn_skyblue{background: #2f8dff !important;}
+
+.login_main2 .login-form2 .user_profile {text-align: center;width: 78px;height: 78px;margin: 60px auto 40px;padding: 4px;background: #fff;border-radius: 100%;line-height: 69px;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08); position: relative;}
+.login_main2 .login-form2 .user_profile span {position: absolute;line-height: 0;bottom: -2px;background: #fff;width: 24px;height: 24px;line-height: 24px;border-radius: 100%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08);right: 0px;}
+.login_main2 .login-form2 .user_profile span i{color: #6d41f2;}
+.login_main2 .login-form2 .user_profile img{width: 100%;}
+.sign_up_form .form_center{max-width: 400px !important;}
+.sign_up_form .selectbox_cls{width: 262px; text-align: left;background: url(../images/select_bkg3.png) right 6px no-repeat !important;}
+.sign_up_form #about_company_position {    border: 0 !important;}
+
+.sign_up_form .input-lg{font-size: 14px !important;}
+.sign_up_form .form-control{font-size: 14px ; color: #7d7da1 !important;}
+
+
+.price_list .login-form2{width: 100% !important;}
+.price_list .login_slider2{width: 20%;}
+.price_list .modal-body .pricing_modal{max-width: 856px !important; width: 100%}
+.price_list  .form_center {    max-width: 850px !important;}
+.price_list .pricing_modal {position: relative;}
+.price_list .pricing_modal .left_div{position: absolute;}
+
+.price_list .panel{background: none}
+.price_list .login_main2{background: none !important; border: none;z-index: 999;}
+.price_list.login-container .page-container .login-form2{background-color: none !important; box-shadow: none !important;}
+.price_list .left_price_bkg{background: url(../images/form-bg-new_l3.png) center center no-repeat;position: absolute; width: 50%; right: 0; height: 100%; z-index:9; background-size: 100%;}
+.price_list .left_price_bkg:before{position: absolute; content: ''; width: 290px; height: 100%; background: #f3f4f7; top: 0; left: 0;}
+.price_list .price_in img{float: left; padding-bottom: 20px;}
+.price_list .price_in{max-width: 440px;margin-top: 40px;margin-bottom: 70px;}
+.price_list .price_in h5{margin-left: 90px !important;}
+.price_list .price_in h5 small{padding: 0 !important;}
+.price_list .text-muted{color: #414165 !important;}
+.price_list .price_plan ul li{font-weight: 500;}
+.price_list .price_plan h3{font-weight: 600; font-size: 30px;}
+.price_list .price_plan h3 span{font-size: 13px; font-weight: normal;}
+.price_list .bbot.p20.text-center .text-muted{color: #9292b4 !important;}
+.price_list .login_main2{height: auto;}
+.price_list .login-container .page-container .login-form2 {height: auto;}
+
+
+.price_plan{background: #fff;box-shadow: 0 3px 3px 0 rgba(30, 30, 64, 0.02); border-radius: 5px;display: inline-block;width: 100%;box-sizing: border-box;}
+.price_plan p{line-height: 1.4;}
+.yearly_price {float: left;width: 50%;}
+.montly_plan {float: left;width: 50%;border-right: 1px solid #f0f2f8;}
+.bill_pay .custmo_radiobox input:checked ~ .custmo_radiomark{background-color: #6d41f2; margin-right: 2px; border: none;}
+/*.bill_pay .custmo_radiomark{background: #fff;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);}*/
+.bill_pay  .custmo_radiomark{top:2px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);border: 1px solid #e3e9f3; background: #fff;}
+.price_plan .custmo_radiobox{padding-left: 28px;}
+.bill_pay .back_btn {color: #6d41f2;font-weight: 500; position: relative;}
+.back_btn .icon-arrow-left12{margin-right: 5px;}
+
+.card_main {float: left;width: 100%;}
+.card_pay {width: 50%;float: left;}
+.left_in {width: 68%;float: left;}
+.right_in {width: 32%;float: left;}
+.cvv-23{ width: 100%; box-sizing:border-box;}
+.payment_sec .form-control.input-lg.h52 {padding-left: 55px;}
+.payment_sec .right_in .form-control-feedback{left: inherit; right: auto;}
+.payment_sec .selectbox_cls{width: 327px;}
+.payment_sec .form-control {font-size: 14px;color: #1e1e40 !important;font-weight: 600 !important;}
+
+.payment_sec .form-control-feedback.h52 {font-size: 12px;font-weight: 500;color: #c4c4e1;}
+.bill_pay {float: left;width: 100%;}
+.bor_b {position: absolute;height: 1px;background: #e5e2f5;width: 139px;right: 5px;bottom: -6px;}
+.cvv-23 .form-control{box-shadow:none; border-radius: 0; border: 0;}
+.btn_left{float: left;}
+.btn_right{float: left; position: relative;}
+.bor_s{position: absolute; width: 28px; height: 1px; background: #e5e2f5;bottom: 11px;}
+.btn_right .btn {background: none;}
+.payment_sec .login_slider2 .slider_c{width: 370px;}
+.payment_sec .login_slider2 .price_plan{width: 268px;}
+.payment_sec .login_slider2 .price_plan ul li{font-weight: 500;}
+.payment_sec .login_slider2 .txt_red {color: #eb4f76 !important}
+.payment_sec .login_slider2 .price_plan h3 {    font-weight: 500;    font-size: 30px;}
+.payment_sec .login_slider2 .text-muted{color: #9292b4 !important;}
+.payment_sec .login_slider2 .midd_52 .text-muted{color: #414165 !important;}
+.payment_sec .login_main2 h5 small{padding: 0 65px;}
+
+.payment_sec .login_slider2 .price_main:before{position: absolute; content: ''; width: 360px; height: 388px; background: #fff; bottom:0; left: 15px; opacity: 0.2;border-radius: 4px;box-shadow: 0 2px 1px 0 rgba(37, 37, 104, 0.03);}
+
+.carousel_main{position: absolute;right: 0;left: 0;top: 46%;margin-top: -300px;}
+.price_list .form_center{margin-top: 0;}
+
+
+.sign_in .carousel_main{top: 57%;margin-top: -287px;}
+.sign_in .carousel-indicators{bottom: -125px !important;}
+.sign_in .content-group-lg{margin-bottom: 10px !important;}
+
+
+.sign_up_n .carousel_main{top: 61%;margin-top: -280px;}
+.sign_up_n .carousel-indicators{bottom: -130px !important;}
+
+.sign_up_5 .carousel_main{top: 61%;margin-top: -310px;}
+.sign_up_5 h5 small{padding: 0 65px;}
+.sign_up_5 .login-form2 .user_profile{margin: 35px auto 40px;}
+.account_ready .carousel-indicators{bottom: -143px !important;}
+
+
+.login_sec2 .price_plan ul li i{background:rgba(90, 212, 145, 0.2);border-radius: 100%;width: 12px;height: 12px;font-size: 6px;line-height: 10px;text-align: center;padding-left: 1px;}
+.login_sec2 .price_plan ul li.disabled i{background: #f0f1f6; color: #b1b1d0; font-size: 9px;line-height: 12px;padding-left: 2px;}
+
+.login_new  .carousel-indicators {    bottom: -85px !important;}
+
+/*.payment_sec .price_plan ul li i{background:rgba(90, 212, 145, 0.2);border-radius: 100%;width: 12px;height: 12px;font-size: 6px;line-height: 10px;text-align: center;padding-left: 1px;}
+.payment_sec .price_plan ul li.disabled i{background: #f0f1f6; color: #b1b1d0; font-size: 9px;line-height: 12px;padding-left: 2px;}
+*/
+
+.price_list .imgicon {position: absolute;height: auto;width: auto;top: -120px;margin-left:inherit;text-align: center;left: 0;right: 0;margin: 0 auto;text-align: center;}
+.price_list .imgicon .starter {margin-top: 104px;}
+.price_list .imgicon .business_26{margin-top: 64px;}
+.price_list .txt_lblue.fsize12.mt-5.fw600{margin-top: 60px !important; text-transform: uppercase; margin-bottom: 7px !important;}
+.price_list .doller_526 {font-size: 15px !important;font-weight: bold !important;color: #212653 !important;margin-right: 8px;top: -3px;position: relative;}
+.price_list .btn.w100.h52.fsize14.fw500.txt_blue{background: none;}
+.price_list .btn.w100.h52.fsize14.fw500.txt_blue img{margin-left: 10px;margin-top: -2px;}
+.price_list .bootom_content{    margin-top: 80px;    padding-right: 449px;    color: #7d7da1 !important;    line-height: 1.83;}
+
+
+@media only screen and (min-width:768px) and (max-width:1449px){
+	.login_sec2 .form_center{position: relative; margin-top: 0;}
+	.login_sec2 .login_main2{position: relative;}
+	.login-container .page-container .login-form2{padding: 40px; min-height: 915px;}
+	.login_sec2 .carousel_main{position: relative; padding:180px 40px; margin-top: 0 !important;}
+	.login_sec2 .login_slider2{padding: 40px; }
+	.login_sec2 .login_slider2 .width_500 {width: 100%;}
+	.login_new .box_main .box_1 {width: 33%;padding: 5px !important;}
+	.login_sec2 .carousel-indicators {bottom: -40px !important;}
+}
+
+@media only screen and (min-width:768px) and (max-width:991px){
+	.width_350 {width: 100%;}
+	.login_slider2 .box_main .box_1{width: 50%;}
+	.login_new3 .login_slider2 .box_1{width: 33% !important;}
+	.login_new .login_slider2 .mt-5.fsize14{padding: 0;}
+
+
+}
+
+
+@media only screen and (max-width:767px){
+	.login-container .page-container .login-form2 {width: 100%;padding: 30px;}
+	.login_sec2 .login_main2{position: relative;padding:0px;}
+	.login_sec2 .login_slider2{width: 100%; padding: 30px;}
+	.login_sec2 .carousel_main{position: relative; padding: 30px; margin-top: 0 !important;}
+	.login_sec2 .form_center{position: relative; margin-top: 0;}
+	.login_sec2 .form_center .pt30{padding-bottom: 0 !important;}
+	.login_sec2 .carousel-indicators {bottom: -40px !important;}
+	.login_sec2 .login_slider2 .width_500 {width: 100%;}
+	.login_new .box_main .box_1 {width: 33%;padding: 5px !important;}
+	.price_list .bootom_content{padding-right: 0px;}
+	.price_list .login_main2 .panel {overflow: inherit;}
+	.price_list .login_main2 .price_plan:nth-child(3n){margin-bottom: 100px;}
+	.login_new3 .login_slider2 .box_1{width: 33% !important;}
+	
+}
+
+@media only screen and (max-width:480px){
+	.login_new .login_slider2 .mt-5.fsize14 {padding: 0px !important;line-height: 1.86;}
+	.login_sec2 .carousel_main {position: relative;padding:0 0px 30px;}
+	.width_350 {    width: 100%;}
+	.login_slider2 .box_main .box_1 {width: 50%;}
+	.line_or::after{width: 100px;}
+	.line_or::before{width: 100px;}
+	.login_main2 .form-control-feedback.h52{width: 100px;font-size: 12px;}
+	.login_main2 .form-control.input-lg.h52 {    padding-left: 105px;}
+	.click_icon{width: 44px; background: #fff; padding: 0 5px; text-align: right; right: 5px;}
+	.sign_up_form .selectbox_cls {width: 100%;}
+	.sign_up_5 h5 small {    padding: 0;}
+	
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Brand Page_Light</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0,7.1875 L16,7.1875 L16,12.8125 C16,14.4693542 14.6568542,15.8125 13,15.8125 L3,15.8125 C1.34314575,15.8125 2.02906125e-16,14.4693542 0,12.8125 L0,7.1875 Z" id="path-1"></path>
+        <filter x="-3.1%" y="-5.8%" width="106.2%" height="111.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M0,3.64575 C-2.02906125e-16,1.98889575 1.34314575,0.64575 3,0.64575 L13,0.64575 C14.6568542,0.64575 16,1.98889575 16,3.64575 L16,5.4375 L0,5.4375 L0,3.64575 Z M3.56714286,3.758125 C3.98135642,3.758125 4.31714286,3.42233856 4.31714286,3.008125 C4.31714286,2.59391144 3.98135642,2.258125 3.56714286,2.258125 C3.15292929,2.258125 2.81714286,2.59391144 2.81714286,3.008125 C2.81714286,3.42233856 3.15292929,3.758125 3.56714286,3.758125 Z M5.975714,3.758125 C6.38992756,3.758125 6.725714,3.42233856 6.725714,3.008125 C6.725714,2.59391144 6.38992756,2.258125 5.975714,2.258125 C5.56150044,2.258125 5.225714,2.59391144 5.225714,3.008125 C5.225714,3.42233856 5.56150044,3.758125 5.975714,3.758125 Z M8.384285,3.758125 C8.79849856,3.758125 9.134285,3.42233856 9.134285,3.008125 C9.134285,2.59391144 8.79849856,2.258125 8.384285,2.258125 C7.97007144,2.258125 7.634285,2.59391144 7.634285,3.008125 C7.634285,3.42233856 7.97007144,3.758125 8.384285,3.758125 Z" id="path-3"></path>
+        <filter x="-3.1%" y="-10.4%" width="106.2%" height="120.9%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Brand-Page_Light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="favorite-favourite-web-website-browser">
+            <g id="Rectangle">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Combined-Shape">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+            </g>
+        </g>
+    </g>
+</svg>

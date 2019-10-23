@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Sms_Default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-1">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M0,11 L13.6111111,11 L13.6111111,12.5714286 C13.6111111,14.4649763 12.0760874,16 10.1825397,16 L3.42857143,16 C1.53502371,16 -2.12196495e-16,14.4649763 -4.4408921e-16,12.5714286 L0,11 Z" id="path-2"></path>
+        <filter x="-3.7%" y="-10.0%" width="107.3%" height="140.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="6.72283212%" y1="84.6486649%" x2="100%" y2="9.36374193%" id="linearGradient-4">
+            <stop stop-color="#5E6893" offset="0%"></stop>
+            <stop stop-color="#5E6893" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M4,0.3 L9.61111111,0.3 C11.8202501,0.3 13.6111111,2.090861 13.6111111,4.3 L13.6111111,10.9666667 L-8.10906897e-13,10.9666667 L-8.10906897e-13,4.3 C-8.11177439e-13,2.090861 1.790861,0.3 4,0.3 Z" id="path-5"></path>
+        <filter x="-3.7%" y="-4.7%" width="107.3%" height="109.4%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.0880321558 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <ellipse id="path-7" cx="6.80555556" cy="13.3333333" rx="1.36111111" ry="1.33333333"></ellipse>
+        <filter x="-18.4%" y="-18.8%" width="136.7%" height="137.5%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.0880321558 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Sms_Default" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="email-24px" transform="translate(1.000000, 0.000000)">
+            <g id="Rectangle">
+                <g id="Mask">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <g id="Rectangle-2" opacity="0.6">
+                    <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                </g>
+                <g id="Oval" opacity="0.6">
+                    <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-7"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

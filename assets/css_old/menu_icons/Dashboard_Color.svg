@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Dashboard_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="9.1824051%" x2="50%" y2="218.114672%" id="linearGradient-1">
+            <stop stop-color="#BCC6EF" offset="0%"></stop>
+            <stop stop-color="#BCC6EF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="8" cy="8" r="8"></circle>
+        <filter x="-3.1%" y="-3.1%" width="106.2%" height="112.5%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="SourceAlpha" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <path d="M4.65358837,0.791816287 C4.65358837,0.791816287 2.15358837,5.68727898 2.15358837,6.7915663 C2.15358837,7.89585362 3.32378078,9.06321108 4.70461411,9.06321108 C6.08503078,9.06321108 7.15358837,7.89585362 7.15358837,6.7915663 C7.15358837,5.68727898 4.65358837,0.791816287 4.65358837,0.791816287 Z" id="path-4"></path>
+        <filter x="-10.0%" y="-6.0%" width="120.0%" height="112.1%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Dashboard_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dashboard-2">
+            <g id="dashboard">
+                <g id="Shape">
+                    <g id="Oval">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                        <use fill-opacity="0.9" fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    </g>
+                </g>
+                <g id="Indicator_2_" transform="translate(3.687500, 2.468750)" opacity="0.85265532">
+                    <g id="Path" transform="translate(4.653588, 4.927514) rotate(20.000000) translate(-4.653588, -4.927514) ">
+                        <use fill="#011243" fill-rule="evenodd" xlink:href="#path-4"></use>
+                        <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

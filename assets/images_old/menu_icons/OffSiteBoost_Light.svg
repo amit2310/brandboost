@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Off Site Boost_Light</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M15.9872238,8.19848103 L16.0000313,13.0129232 C16.0019118,13.7198155 15.4303868,14.2943894 14.7234945,14.2962699 C14.4308176,14.2970485 14.1467139,14.1974984 13.9185337,14.0142112 L11.9730749,12.4515093 L3.83983885,12.4515093 C1.71915441,12.4515093 -6.28469479e-16,10.7323549 -8.8817842e-16,8.61167043 L-8.8817842e-16,4.13983885 C-1.14788736e-15,2.01915441 1.71915441,0.3 3.83983885,0.3 L12.1473849,0.3 C14.2680693,0.3 15.9872238,2.01915441 15.9872238,4.13983885 L15.9872238,8.19848103 Z M4.2006439,6.79240638 C5.29516607,7.95021147 6.57786552,8.55781498 8,8.55781498 C9.42213448,8.55781498 10.7048339,7.95021147 11.7993561,6.79240638 C12.2166984,6.3509342 12.1971373,5.65472747 11.7556652,5.23738513 C11.314193,4.82004279 10.6179862,4.83960389 10.2006439,5.28107607 C9.50396449,6.01803599 8.78666395,6.35781498 8,6.35781498 C7.21333605,6.35781498 6.49603551,6.01803599 5.7993561,5.28107607 C5.38201375,4.83960389 4.68580702,4.82004279 4.24433484,5.23738513 C3.80286266,5.65472747 3.78330156,6.3509342 4.2006439,6.79240638 Z" id="path-1"></path>
+        <filter x="-3.1%" y="-3.6%" width="106.2%" height="107.1%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Off-Site-Boost_Light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(0.000000, 1.000000)">
+            <g id="Combined-Shape">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>
