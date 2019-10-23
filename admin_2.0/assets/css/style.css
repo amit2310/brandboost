@@ -1288,6 +1288,53 @@ PAGE WITH SIDEBAR CSS
 
 .fullscreen{position: fixed; width: 100%; height: 100%; top: 0; bottom: 0; right: 0; left: 0; background: #F6F9FE; z-index: 99999}
 .workflow_dots_bkg{background: url(../images/dot_bkg.png) left top repeat}
+.touchspin-step{border: none; background: #fff; height: 40px; width: 50px!important;}
+.btn.bootstrap-touchspin-down, .btn.bootstrap-touchspin-up{border: none; box-shadow: none; background: none; padding:0 10px!important; color: #7B89A6; font-size: 25px; font-weight: 400;}
+.btn.bootstrap-touchspin-down:hover, .btn.bootstrap-touchspin-up:hover{background: none!important; color: #7B89A6}
+.workflow_box{width: 560px; margin: 50px auto; text-align: center;}
+.workflow_card{background: #FFFFFF;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);border-radius: 4px; width: 200px; height: 157px; margin: 0 auto; padding: 45px 0 0 0; margin-top: 26px; position: relative;}
+.workflow_card .wf_icons{height: 56px; width: 56px; position: absolute; top: -26px; left: 50%; margin-left: -26px; border-radius: 100px; line-height: 52px; text-align: center;}
+.workflow_card .wf_icons.br8{border-radius: 8px!important; transform: rotate(45deg);}
+.rotate-45{transform: rotate(-45deg);}
+.workflow_list{margin: 0; padding: 0;}
+.workflow_list li{margin: 0; padding: 0; list-style: none; display: inline-block;}
+.workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 300;}
+
+
+.activity_date{font-style: normal;font-weight: 500;font-size: 10px;line-height: 11px;letter-spacing: 0.06em;text-transform: uppercase;color: #98ADCF; margin: 25px 0 25px 30px}
+.activity_card{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 2px; min-height: 104px; max-height: 104px; padding: 32px; position: relative;}
+.activity_card .icons{height: 40px; width: 40px; display: inline-block; margin-right: 21px; border-radius: 100px; line-height: 37px; text-align: center; float: left;}
+.activity_card:after{position: absolute; content: ''; background: #e8eef9; height: 46px; width: 1px; left: 52px; bottom: -20px;}
+.activity_card:before{position: absolute; content: ''; background: #e8eef9; height: 46px; width: 1px; left: 52px; top: -20px;}
+
+
+
+.activity_date_small{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 12px;padding: 32px; position: relative;}
+.activity_date_small .icons{height: 40px; width: 40px; display: inline-block; margin:0 21px 50px 0; border-radius: 100px; line-height: 37px; text-align: center; float: left;}
+.activity_date_small .time{position: absolute; top: 30px; right: 30px; }
+.activity_date_small .activity_button{ border: 1px solid #E1E9F6;border-radius: 60px; padding: 0 15px; color: #56627F; font-size: 12px;  height: 32px; margin: 15px 0 0 0px; background: #fff;} 
+.activity_date_small .activity_button i{margin-right: 4px;}
+
+
+.user_profile{}
+.user_profile .profile_icon{ width: 76px; height: 76px; border-radius: 100px; text-align: center; line-height: 76px; float: left; background: #8bd4b6; position: relative; margin-right: 30px;}
+.user_profile .profile_details{float: left; padding-left: 45px; }
+.profile_form .form-group .form-control.h36{font-size: 14px!important; color: #333D54!important; padding: 0 0 0 10px!important}
+.profile_form .form-group .form-control.h36::placeholder {	color: #333D54!important;	opacity: 1;}
+@media only screen and (min-width:1600px){
+	.user_profile .profile_details{float: left; padding-left: 0px; }
+}
+
+.info_list{margin: 0; padding: 0;}
+.info_list li{margin: 0; padding: 0; font-size: 14px; list-style: none; line-height: 30px;}
+.info_list li span{color: #56627F; font-weight: 300; }
+.info_list li strong{ color: #151A25; font-weight: 400!important; float: right; text-align: right}
+.nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}
+.nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 600!important}
+
+
+
+
 
 
 

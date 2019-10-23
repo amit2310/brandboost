@@ -59,6 +59,7 @@ FORMS GROUP
 .form-group label{font-size: 14px; color: #242B3D; font-weight: 500; margin-bottom: 7px;}
 .form-group .form-control{font-size: 16px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; padding: 5px 17px;}
 .form-group .form-control.h50{height: 50px;}
+.form-group .form-control.h36{height: 36px;}
 .form-group .form-control.h56{height: 56px;}
 .form-control::placeholder {color: #7B89A6; opacity: 1;}
 .form-control-dark::placeholder {color: #333D54; opacity: 1; font-size: 14px;}
@@ -123,7 +124,7 @@ TABLES STYLES
 .table.table-borderless tbody tr:last-child{border: none!important; }
 .table.table-borderless tbody tr td{background: #fff;  color: #687693; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
 .table.table-borderless tbody tr td:first-child{padding-left: 40px ; border-radius: 2px 0 0 2px; }
-.table.table-borderless tbody tr td:last-child{padding-right: 40px ; border-radius: 0 2px 2px 0;}
+.table.table-borderless tbody tr td:last-child{padding-right: 30px ; border-radius: 0 2px 2px 0;}
 .table.table-borderless tbody tr:hover td{background: #fcfdff;}
 .table.table-borderless span.icons{margin: 0 5px;}
 .table.table-borderless .badge.badge-dark{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
@@ -132,6 +133,9 @@ TABLES STYLES
 .table_search::placeholder {color: #7B89A6; opacity: 1;}
 span.fl_name{width: 32px; height: 32px; display: inline-block; border-radius: 100%; text-align: center; line-height: 32px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #07080A;background: #ebedf2 }
 
+
+.table_dots_dd{border: none; background: none; box-shadow: none; }
+.table_dots_dd:after{display: none}
 
 
 
@@ -273,7 +277,7 @@ COLOR CLASSES
 .light_800{color: #B4C0D4}
 .light_900{color: #A3ADC0}
 
-.dark_100{color: #97A4BD}
+.dark_100{color: #97A4BD!important}
 .dark_200{color: #7B89A6}
 .dark_300{color: #687693}
 .dark_400{color: #56627F}
