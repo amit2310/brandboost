@@ -103,10 +103,8 @@
            	<a id="fullscreen" href="#"><img src="assets/images/share-box-fill.svg"/></a>
            </div> 
            
-           <div class="link_button">
-           	<a id="desktop" href="#"><img src="assets/images/macbook-fill.svg"/></a>
-           	<a id="tablet" href="#"><img src="assets/images/tablet-fill.svg"/></a>
-           	<a id="mobile" href="#"><img src="assets/images/smartphone-fill.png"/></a>
+           <div class="link_button" style="line-height: 35px;">
+           	<input type="text" name="" value="10" class="touchspin-step" />
            </div> 
     	</div>
     	
@@ -115,18 +113,55 @@
     
     <div class="row">
     	<div class="col-md-12 mb-3">
-           Working On Work flow tree
+           
+           <div class="workflow_box">
+           	<div class="row">
+           		<div class="col-md-12">
+					<div class="workflow_card">
+					<div class="wf_icons br8 bkg_blue_300"><img class="rotate-45" src="assets/images/peopleLight.svg"/></div>
+						<p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
+						<p class="dark_800 htxt_bold_14 mb25">New Customer </p>
+						<div class="p15 btop">
+							<p class="dark_200 htxt_regular_12 text-uppercase m0">1,394 Contacts </p>
+						</div>
+					</div>
+           		</div>
+           		<div class="col-md-12"><img src="assets/images/wfline.png"/></div>
+           	</div>
+           	<div class="row">
+           		<div class="col-md-6">
+           			<div class="workflow_card">
+           			<div class="wf_icons bkg_email_400"><img src="assets/images/send-plane-fill-24.svg"/></div>
+						<p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
+						<p class="dark_800 htxt_bold_14 mb25">New Customer </p>
+						<div class="p15 pt10 btop">
+							<ul class="workflow_list">
+								<li><a href="#"><span><img src="assets/images/send-plane-line.svg"/></span> 3k</a></li>
+								<li><a href="#"><span><img src="assets/images/mail-open-line.svg"/></span> 28%</a></li>
+								<li><a href="#"><span><img src="assets/images/cursor-line.svg"/></span> 67%</a></li>
+							</ul>
+						</div>
+					</div>
+           		</div>
+           		<div class="col-md-6">
+           			<div class="workflow_card">
+           			<div class="wf_icons bkg_reviews_500"><img src="assets/images/star-s-fill.png"/></div>
+						<p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
+						<p class="dark_800 htxt_bold_14 mb25">New Customer </p>
+						<div class="p15 pt10 btop">
+							<ul class="workflow_list">
+								<li><a href="#"><span><img src="assets/images/send-plane-line.svg"/></span> 3k</a></li>
+								<li><a href="#"><span><img src="assets/images/mail-open-line.svg"/></span> 28%</a></li>
+								<li><a href="#"><span><img src="assets/images/cursor-line.svg"/></span> 67%</a></li>
+							</ul>
+						</div>
+					</div>
+           		</div>
+           	</div>
+           	
+           </div>
     	</div>
     	
-    	
-    	<div class="form-group">
-										
-										<input type="text" value="10" class="touchspin-step">
-									</div>
-									
-									
-									
-									
     </div>
     
     

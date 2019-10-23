@@ -109,7 +109,7 @@
 			     <tr>
 					<td colspan="1"><span class="fsize12 fw300">Visitor name </span></td>
 					<td colspan="3"><span class="fsize12 fw300">Preview data</span></td>
-					<td colspan="3"><span class="fsize12 fw300">List fields</span></td>
+					<td colspan="4"><span class="fsize12 fw300">List fields</span></td>
 				  </tr>
 				  
 				  
@@ -123,6 +123,18 @@
 					<td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
 					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				   <tr>
@@ -134,6 +146,18 @@
 					<td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
 					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -144,6 +168,18 @@
 					<td>Customer</td>
 					<td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
+					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
 				  </tr>
 				  
@@ -157,6 +193,18 @@
 					<td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
 					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -167,6 +215,18 @@
 					<td>Ticket</td>
 					<td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
+					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
 				  </tr>
 				  
@@ -181,6 +241,18 @@
 					<td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
 					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				   <tr>
@@ -192,6 +264,18 @@
 					<td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
 					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -202,6 +286,18 @@
 					<td>Customer</td>
 					<td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
+					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
 				  </tr>
 				  
@@ -215,6 +311,18 @@
 					<td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
 					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -225,6 +333,18 @@
 					<td>Ticket</td>
 					<td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
 					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span> 
+					</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-vertical.svg"/></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
 				  </tr>
 				  
