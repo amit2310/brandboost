@@ -14,7 +14,7 @@
             v-if="firstname || lastname"
             :style="`width: ${width}px!important; height: ${height}px; line-height: ${width}px; font-size: ${fontsize}px;`"
         >
-            {{(firstname) ? firstname.charAt(0).toUpperCase() : ''}}{{(lastname) ? lastname.charAt(0).toUpperCase() : ''}}
+            {{(firstname) ? firstname.trim().charAt(0).toUpperCase() : ''}}{{(lastname) ? lastname.trim().charAt(0).toUpperCase() : ''}}
         </span>
 
         <span
@@ -35,7 +35,7 @@
         props: ['avatar','firstname', 'lastname', 'width', 'height', 'fontsize'],
         data(){
             return {
-                //alert(this.avatar);
+
             }
         },
         mounted() {
