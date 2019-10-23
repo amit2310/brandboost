@@ -65,20 +65,33 @@
                                     :avatar="contact.avatar"
                                     :firstname="contact.firstname"
                                     :lastname="contact.lastname"
+                                    :width="32"
+                                    :height="32"
+                                    :fontsize="12"
                                 ></user-avatar>
-                                <span class="htxt_medium_14 dark_900">{{ contact.firstname }} {{ contact.lastname }}</span>
+                                <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
                              </td>
 
                             <td class="text-right">{{ contact.email }}</td>
-                            <td># lead, subscriber <span style="margin-left:15px;" class="badge badge-dark">+4</span></td>
+                            <td>
+                                <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
+                            </td>
                             <!--<td><span class="badge badge-dark">+4</span></td>-->
                             <td>Customer</td>
                             <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
-                            <td class="text-right"><span class="icons"><img
-                                src="/assets/images/message-2-line.svg"/></span> <span class="icons"><img
-                                src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img
-                                src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img
-                                src="assets/images/star-line.svg"/></span>
+                            <td class="text-right">
+                                <span class="icons">
+                                    <img src="/assets/images/message-2-line.svg"/>
+                                </span>
+                                <span class="icons">
+                                    <a :href="`mailto:${contact.email}`"><img src="/assets/images/mail-open-line-16.svg"/></a>
+                                </span>
+                                <span class="icons">
+                                    <img src="assets/images/message-3-line-16.svg"/>
+                                </span>
+                                <span class="icons">
+                                    <img src="assets/images/star-line.svg"/>
+                                </span>
                             </td>
                         </tr>
 

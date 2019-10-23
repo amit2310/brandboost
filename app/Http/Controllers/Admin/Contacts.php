@@ -381,6 +381,7 @@ class Contacts extends Controller
             'archiveCount' => $iArchiveCount,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
+            'moduleAccountID' => $userID,
             'getClientTags' => $getClientTags,
             'bActiveSubsription' => $bActiveSubsription,
             'list_id' => ''

@@ -6,6 +6,7 @@
 <script src="{{ URL::asset('assets/js/metisMenu.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/waves.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/jQuery.tagify.js') }}"></script>
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/datatables_basic.js') }}"></script>
@@ -114,7 +115,7 @@
 
     });
 
-    $("#addCentralSubscriberData").submit(function (event) {
+    $(document).on("submit", "#addCentralSubscriberData", function (event) {
         event.preventDefault();
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);
