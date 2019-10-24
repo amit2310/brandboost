@@ -21,8 +21,10 @@ class SubscriberModel extends Model {
                 ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus', 'tbl_users.avatar')
                 ->where('tbl_subscribers.owner_id', $userID)
                 ->where('tbl_subscribers.firstname', '!=', 'NA')
+                ->where('tbl_subscribers.status', 1)
                 ->orderBy('tbl_subscribers.id', 'desc')
-                ->get();
+                /*->get()*/
+                ->paginate(10);
         return $oData;
     }
 

@@ -351,12 +351,15 @@ class Contacts extends Controller
 
         if (!empty($userID)) {
             $subscribersData = SubscriberModel::getGlobalSubscribers($userID);
+            /*pre($subscribersData);
+            die;*/
             $archiveContacts = SubscriberModel::getArchiveGlobalSubscribers($userID);
             $getClientTags = TagsModel::getClientTags($userID);
         }
         $iActiveCount = $iArchiveCount = 0;
+
         if(!empty($subscribersData)){
-            foreach($subscribersData as $oSubscriber){
+            foreach($subscribersData->items() as $oSubscriber){
                 if ($oSubscriber->status == 2) {
                     $iArchiveCount++;
                 } else {
@@ -376,7 +379,8 @@ class Contacts extends Controller
             'title' => 'Contacts',
             'pagename' => $breadcrumb,
             'archiveContacts' => $archiveContacts,
-            'subscribersData' => $subscribersData,
+            'subscribersData' => $subscribersData->items(),
+            'allData' => $subscribersData,
             'activeCount' => $iActiveCount,
             'archiveCount' => $iArchiveCount,
             'moduleName' => $moduleName,

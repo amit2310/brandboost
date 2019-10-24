@@ -50,7 +50,7 @@
                             <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
                         </tr>
 
-                        <tr>
+                        <!--<tr>
                             <td><span class="table-img mr15"><img src="/assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
                             <td class="text-right">nina.hernandez@example.com</td>
                             <td># lead, subscriber <span style="margin-left:15px;" class="badge badge-dark">+4</span></td>
@@ -58,7 +58,7 @@
                             <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
                             <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
                             </td>
-                        </tr>
+                        </tr>-->
                         <tr v-for="contact in activeUsers" v-if="activeUsers.length>0">
                             <td>
                                 <user-avatar
@@ -100,6 +100,12 @@
 
                         </tbody>
                     </table>
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4">
+                    </pagination>
+
                 </div>
             </div>
         </div>
@@ -740,13 +746,15 @@
 <script>
 
     import UserAvatar from '../../helpers/UserAvatar';
+    import Pagination from '../../helpers/Pagination';
     import ContactTags from '../contact/ContactTags';
 
     export default {
-        props: ['showArchived', 'subscribersData', 'activeCount', 'archiveCount', 'moduleName', 'moduleUnitID'],
-        components: {UserAvatar, ContactTags},
+        props: ['showArchived', 'subscribersData', 'allData', 'activeCount', 'archiveCount', 'moduleName', 'moduleUnitID'],
+        components: {UserAvatar, ContactTags, Pagination},
         data() {
             return {
+                current_page: 1
                 //alert(subscribersData)
             }
         },
@@ -784,6 +792,10 @@
             setOptimizer(){
 
                 //alert(this.activeCount);
+            },
+            showPaginationData: function(current_page){
+                /*alert('current Page is '+ t);*/
+                this.$emit('navPage', current_page);
             }
         },
 
