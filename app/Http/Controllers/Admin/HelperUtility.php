@@ -19,7 +19,6 @@ class HelperUtility extends Controller
         if(!empty($oTags)){
             $iTagCount = count($oTags);
         }
-
         echo json_encode(['oTags'=> $oTags, 'tagCount'=> $iTagCount]);
         exit;
     }

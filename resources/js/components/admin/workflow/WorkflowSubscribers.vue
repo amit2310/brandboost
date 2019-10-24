@@ -1,11 +1,122 @@
 <template>
-    <div class="tab-content">
+    <div class="container-fluid">
+
+        <div class="table_head_action">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="htxt_medium_16 dark_400">Contact Lists</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="table_action">
+                        <div class="float-right">
+                            <button type="button" class="dropdown-toggle table_action_dropdown"
+                                    data-toggle="dropdown">
+                                <span><img src="/assets/images/date_created.svg"/></span>&nbsp; Date Created
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Link 1</a>
+                                <a class="dropdown-item" href="#">Link 2</a>
+                                <a class="dropdown-item" href="#">Link 3</a>
+                            </div>
+                        </div>
+                        <div class="float-right ml10 mr10">
+                            <button type="button" class="dropdown-toggle table_action_dropdown"
+                                    data-toggle="dropdown">
+                                <span><img src="/assets/images/list_view.svg"/></span>&nbsp; List View
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Link 1</a>
+                                <a class="dropdown-item" href="#">Link 2</a>
+                                <a class="dropdown-item" href="#">Link 3</a>
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <input class="table_search" type="text" placeholder="Search"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+
+                        <tr>
+                            <td colspan="1"><span class="fsize12 fw300">Visitor name </span></td>
+                            <td colspan="3"><span class="fsize12 fw300">Preview data</span></td>
+                            <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
+                        </tr>
+
+                        <!--<tr>
+                            <td><span class="table-img mr15"><img src="/assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
+                            <td class="text-right">nina.hernandez@example.com</td>
+                            <td># lead, subscriber <span style="margin-left:15px;" class="badge badge-dark">+4</span></td>
+                            <td>Customer</td>
+                            <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
+                            <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
+                            </td>
+                        </tr>-->
+                        <tr v-for="contact in activeUsers" v-if="activeUsers.length>0">
+                            <td>
+                                <user-avatar
+                                    :avatar="contact.avatar"
+                                    :firstname="contact.firstname"
+                                    :lastname="contact.lastname"
+                                    :width="32"
+                                    :height="32"
+                                    :fontsize="12"
+                                ></user-avatar>
+                                <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
+                             </td>
+
+                            <td class="text-right">{{ contact.email }}</td>
+                            <td>
+                                <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
+                            </td>
+                            <!--<td><span class="badge badge-dark">+4</span></td>-->
+                            <td>Customer</td>
+                            <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
+                            <td class="text-right">
+                                <span class="icons">
+                                    <img src="/assets/images/message-2-line.svg"/>
+                                </span>
+                                <span class="icons">
+                                    <a :href="`mailto:${contact.email}`"><img src="/assets/images/mail-open-line-16.svg"/></a>
+                                </span>
+                                <span class="icons">
+                                    <img src="assets/images/message-3-line-16.svg"/>
+                                </span>
+                                <span class="icons">
+                                    <img src="assets/images/star-line.svg"/>
+                                </span>
+                            </td>
+                        </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4">
+                    </pagination>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="tab-content">
         <div class="tab-pane active" id="right-icon-tab0">
             <div class="row">
                 <div class="col-lg-12">
-                    <!-- Marketing campaigns -->
+                    &lt;!&ndash; Marketing campaigns &ndash;&gt;
                     <div class="panel panel-flat">
-                        <!--@include('admin.components.smart-popup.smart-contact-widget')-->
+                        &lt;!&ndash;@include('admin.components.smart-popup.smart-contact-widget')&ndash;&gt;
                         <div class="panel-heading">
                             <span class="pull-left">
                                 <h6 class="panel-title">{{ activeCount }} Contacts</h6>
@@ -319,9 +430,9 @@
         <div v-show="showArchived == true" class="tab-pane" id="right-icon-tab1">
             <div class="row">
                 <div class="col-lg-12">
-                    <!-- Marketing campaigns -->
+                    &lt;!&ndash; Marketing campaigns &ndash;&gt;
                     <div class="panel panel-flat">
-                        <!--@include('admin.components.smart-popup.smart-contact-widget')-->
+                        &lt;!&ndash;@include('admin.components.smart-popup.smart-contact-widget')&ndash;&gt;
                         <div class="panel-heading">
                             <span class="pull-left">
                                 <h6 class="panel-title">{{ archiveCount }} Contacts</h6>
@@ -628,20 +739,22 @@
             </div>
         </div>
 
-    </div>
+    </div>-->
 
 </template>
 
 <script>
 
     import UserAvatar from '../../helpers/UserAvatar';
+    import Pagination from '../../helpers/Pagination';
     import ContactTags from '../contact/ContactTags';
 
     export default {
-        props: ['showArchived', 'subscribersData', 'activeCount', 'archiveCount', 'moduleName', 'moduleUnitID'],
-        components: {UserAvatar, ContactTags},
+        props: ['showArchived', 'subscribersData', 'allData', 'activeCount', 'archiveCount', 'moduleName', 'moduleUnitID'],
+        components: {UserAvatar, ContactTags, Pagination},
         data() {
             return {
+                current_page: 1
                 //alert(subscribersData)
             }
         },
@@ -679,6 +792,10 @@
             setOptimizer(){
 
                 //alert(this.activeCount);
+            },
+            showPaginationData: function(current_page){
+                /*alert('current Page is '+ t);*/
+                this.$emit('navPage', current_page);
             }
         },
 

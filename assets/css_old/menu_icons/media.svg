@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="13px" viewBox="0 0 16 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>10BE8DD0-0EAF-4A54-BD4A-7171ADCDA7FC</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#525378" offset="0%"></stop>
+            <stop stop-color="#9292B4" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0.564705882" y="0.188235294" width="15.0588235" height="12.0470588" rx="2.4"></rect>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-900.000000, -1132.000000)">
+            <g id="🈲/Menu/Media/Default-Copy" transform="translate(900.000000, 1132.000000)">
+                <g id="Picture">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="Rectangle-25" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                    <g id="Group" mask="url(#mask-3)" fill="#0A003A">
+                        <g transform="translate(2.013299, 5.082353)">
+                            <polygon id="Path" fill-opacity="0.2" style="mix-blend-mode: multiply;" points="0.0572890026 7.15294118 4.95140665 0.376470588 9.8455243 7.15294118"></polygon>
+                            <polygon id="Path-Copy" fill-opacity="0.6" style="mix-blend-mode: multiply;" points="5.32787724 7.15294118 8.71611253 2.63529412 12.1043478 7.15294118"></polygon>
+                        </g>
+                    </g>
+                    <circle id="Oval-76" fill-opacity="0.2" fill="#0A003A" style="mix-blend-mode: multiply;" mask="url(#mask-3)" cx="12.9882353" cy="3.57647059" r="1.12941176"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>F7FE3BCB-062D-47A9-8E3C-EBEB13A6809D</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.36790373%" y1="87.950164%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#525378" offset="0%"></stop>
+            <stop stop-color="#9292B4" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-453.000000, -1131.000000)">
+            <g id="🈲/Menu/Chat/Default-Copy" transform="translate(453.000000, 1131.000000)">
+                <g id="Group">
+                    <path d="M3.95073031,12.3667408 L0.7,13 L1.3314348,9.48200614 C0.926431509,8.62279649 0.7,7.6628412 0.7,6.65 C0.7,2.97730641 3.67730641,0 7.35,0 C11.0226936,0 14,2.97730641 14,6.65 C14,10.3226936 11.0226936,13.3 7.35,13.3 C6.10796164,13.3 4.9454526,12.9594945 3.95073031,12.3667408 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+                    <g id="Group-2" transform="translate(3.500000, 4.500000)" fill="#1E1E40">
+                        <rect id="Rectangle-146" style="mix-blend-mode: darken;" x="0.726928105" y="0.545882353" width="6.68339869" height="1.31764706" rx="0.658823529"></rect>
+                        <rect id="Rectangle-146-Copy" style="mix-blend-mode: darken;" x="0.726928105" y="3.18117647" width="4.2530719" height="1.31764706" rx="0.658823529"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

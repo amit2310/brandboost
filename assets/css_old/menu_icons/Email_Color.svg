@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Email_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#2EB4DD" offset="0%"></stop>
+            <stop stop-color="#2779DC" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="14" height="12"></rect>
+        <path d="M6.93998479,-9.5 L16.7126331,-1.01471863 L9.56246851,5.1935431 C8.05811145,6.49972874 5.82185813,6.49972874 4.31750108,5.1935431 L-2.8326635,-1.01471863 L6.93998479,-9.5 Z" id="path-4"></path>
+        <filter x="-1.3%" y="-1.6%" width="102.6%" height="106.4%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Email_Color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="email-24px" transform="translate(1.000000, 2.000000)">
+            <g id="Rectangle">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <g mask="url(#mask-3)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

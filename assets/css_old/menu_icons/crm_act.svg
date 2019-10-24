@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>CF839DC8-8F39-4866-921C-711B12A62C33</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="1.11022302e-14%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#1270E3" offset="0%"></stop>
+            <stop stop-color="#4EB5FB" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0.5" y="0" width="14" height="14" rx="5"></rect>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-4">
+            <stop stop-color="#5869EB" offset="0%"></stop>
+            <stop stop-color="#6190FA" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-339.000000, -1243.000000)">
+            <g id="🈲/Menu/Crm/Color-Copy" transform="translate(338.000000, 1243.000000)">
+                <g id="Group" transform="translate(0.500000, 0.000000)">
+                    <g id="*️⃣/🎨-Color/Product/14/Gradient-">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <g id="*️⃣/🎨-Color/Product/03-People/Gradient" mask="url(#mask-3)" fill="url(#linearGradient-4)">
+                            <g transform="translate(-0.500000, -1.000000)" id="Rectangle-24">
+                                <rect x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                        </g>
+                    </g>
+                    <path d="M7.5,6.2 C8.3836556,6.2 9.1,5.4836556 9.1,4.6 C9.1,3.7163444 8.3836556,3 7.5,3 C6.6163444,3 5.9,3.7163444 5.9,4.6 C5.9,5.4836556 6.6163444,6.2 7.5,6.2 Z M3.50028964,10.5996028 C3.49090589,10.72959 3.71187207,11 3.82333432,11 C7.0709888,11 9.51827728,11 11.1652,11 C11.499073,11 11.5042613,10.697737 11.499073,10.6 C11.3688372,8.1465964 9.62054064,7 7.49259616,7 C5.39418326,7 3.67255934,8.21325792 3.50028964,10.5996028 Z" id="Combined-Shape" fill="#FFFFFF" opacity="0.9"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

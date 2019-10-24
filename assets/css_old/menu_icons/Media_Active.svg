@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Media_Active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M3.42857143,1 L12.5714286,1 C14.4649763,1 16,2.53502371 16,4.42857143 L16,11.5714286 C16,13.4649763 14.4649763,15 12.5714286,15 L3.42857143,15 C1.53502371,15 2.31892715e-16,13.4649763 0,11.5714286 L0,4.42857143 C-2.31892715e-16,2.53502371 1.53502371,1 3.42857143,1 Z M6.13307862,4 C5.53318085,4 5.04729081,4.52327001 5.04729081,5.16931847 C5.04729081,5.81536692 5.53318085,6.33863693 6.13307862,6.33863693 C6.73297638,6.33863693 7.21886642,5.81536692 7.21886642,5.16931847 C7.21886642,4.52327001 6.73297638,4 6.13307862,4 Z M12.7930587,11.5642058 C12.9561745,11.5642058 13.0500897,11.3710721 12.9438172,11.2406442 L9.57028548,6.87632505 C9.49119902,6.77348765 9.33796901,6.77348765 9.25888255,6.87632505 L7.33609302,9.36448861 L6.32032632,8.05017641 C6.24123986,7.947339 6.08800984,7.947339 6.00892338,8.05017641 L3.54241445,11.2406442 C3.44108493,11.3710721 3.53252864,11.5642058 3.69811592,11.5642058 L12.7930587,11.5642058 Z" id="path-1"></path>
+        <filter x="-3.1%" y="-3.6%" width="106.2%" height="107.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Media_Active" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <g id="Combined-Shape">
+            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

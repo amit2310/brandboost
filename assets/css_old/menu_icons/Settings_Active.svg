@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Settings_Active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4.66666667,2 L11.3333333,2 C12.8060927,2 14,3.19390733 14,4.66666667 C14,6.139426 12.8060927,7.33333333 11.3333333,7.33333333 L4.66666667,7.33333333 C3.19390733,7.33333333 2,6.139426 2,4.66666667 C2,3.19390733 3.19390733,2 4.66666667,2 Z M4.66666667,6 C5.40304633,6 6,5.40304633 6,4.66666667 C6,3.930287 5.40304633,3.33333333 4.66666667,3.33333333 C3.930287,3.33333333 3.33333333,3.930287 3.33333333,4.66666667 C3.33333333,5.40304633 3.930287,6 4.66666667,6 Z" id="path-1"></path>
+        <filter x="-4.2%" y="-9.4%" width="108.3%" height="118.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M4.66666667,8.66666667 L11.3333333,8.66666667 C12.8060927,8.66666667 14,9.860574 14,11.3333333 C14,12.8060927 12.8060927,14 11.3333333,14 L4.66666667,14 C3.19390733,14 2,12.8060927 2,11.3333333 C2,9.860574 3.19390733,8.66666667 4.66666667,8.66666667 Z M11.3333333,12.6666667 C12.069713,12.6666667 12.6666667,12.069713 12.6666667,11.3333333 C12.6666667,10.5969537 12.069713,10 11.3333333,10 C10.5969537,10 10,10.5969537 10,11.3333333 C10,12.069713 10.5969537,12.6666667 11.3333333,12.6666667 Z" id="path-3"></path>
+        <filter x="-4.2%" y="-9.4%" width="108.3%" height="118.7%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Settings_Active" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="settings-1">
+            <rect id="bound" x="0" y="0" width="16" height="16"></rect>
+            <g id="Combined-Shape">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Combined-Shape">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+            </g>
+        </g>
+    </g>
+</svg>

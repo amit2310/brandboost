@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="13px" viewBox="0 0 16 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>04000FB1-2092-4F86-BBD9-6D294C079B6E</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-3.8376015%" y1="95.0409171%" x2="85.1417443%" y2="7.47862228%" id="linearGradient-1">
+            <stop stop-color="#6468A0" offset="0%"></stop>
+            <stop stop-color="#8989C1" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0.564705882" y="0.188235294" width="15.0588235" height="12.0470588" rx="2.4"></rect>
+        <linearGradient x1="97.048862%" y1="2.95113801%" x2="0%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#F0598C" offset="0%"></stop>
+            <stop stop-color="#9E42AC" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="👨🏻‍🎨-Styleguide-+-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-900.000000, -1246.000000)">
+            <g id="🈲/Menu/Media/Color-Copy" transform="translate(900.000000, 1246.000000)">
+                <g id="Picture">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="Rectangle-25" fill="url(#linearGradient-1)" opacity="0.654855" xlink:href="#path-2"></use>
+                    <g id="*️⃣/🎨-Color/Product/13-Media/Gradient" mask="url(#mask-3)" fill="url(#linearGradient-4)">
+                        <g transform="translate(0.000000, -2.000000)" id="Rectangle-24">
+                            <rect x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                    </g>
+                    <g id="Group" mask="url(#mask-3)" fill="#FFFFFF">
+                        <g transform="translate(2.013299, 5.082353)">
+                            <polygon id="Path" opacity="0.3" points="0.0572890026 7.15294118 4.95140665 0.376470588 9.8455243 7.15294118"></polygon>
+                            <polygon id="Path-Copy" points="5.32787724 7.15294118 8.71611253 2.63529412 12.1043478 7.15294118"></polygon>
+                        </g>
+                    </g>
+                    <circle id="Oval-76" fill="#FFFFFF" mask="url(#mask-3)" cx="12.9882353" cy="3.57647059" r="1.12941176"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
