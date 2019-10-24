@@ -25,10 +25,12 @@
             <workflow-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
+                :all-data="allData"
                 :active-count="activeCount"
                 :archive-count="archiveCount"
                 :module-name="moduleName"
                 :module-unit-id="moduleUnitID"
+                @navPage ="navigatePagination"
             ></workflow-subscribers>
         </div>
 
@@ -175,25 +177,30 @@
                 activeCount: 0,
                 archiveCount: 0,
                 subscribers: {},
+                allData: {},
+                current_page: 1,
+
 
             }
         },
         components: {'workflow-subscribers': WorkflowSubscribers},
         mounted() {
-            this.$parent.pageColor = this.pageColor;
-            axios.get('/admin/contacts/mycontacts')
-                .then(response => {
-
-                    this.moduleName = response.data.moduleName;
-                    this.moduleUnitID = response.data.moduleUnitID;
-                    this.subscribers = response.data.subscribersData;
-                    this.activeCount = response.data.activeCount;
-                    this.archiveCount = response.data.archiveCount;
-                    this.moduleAccountID = response.data.moduleAccountID;
-
-                });
+            this.loadPaginatedData();
         },
         methods: {
+            loadPaginatedData : function(){
+                axios.get('/admin/contacts/mycontacts?page='+this.current_page)
+                    .then(response => {
+                        this.moduleName = response.data.moduleName;
+                        this.moduleUnitID = response.data.moduleUnitID;
+                        this.subscribers = response.data.subscribersData;
+                        this.allData = response.data.allData;
+                        this.activeCount = response.data.activeCount;
+                        this.archiveCount = response.data.archiveCount;
+                        this.moduleAccountID = response.data.moduleAccountID;
+                    });
+            },
+
             addNewContact : function(e){
                 //e.preventDefault();
                 let form = document.getElementById('addNewContactVue');
@@ -203,10 +210,14 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             alert(('form submitted successfully'))
-                            vm.$forceUpdate();
+                            /*vm.$forceUpdate();*/
                         }
 
                     });
+            },
+            navigatePagination: function(p){
+                this.current_page = p;
+                this.loadPaginatedData();
             }
         }
 
