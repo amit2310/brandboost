@@ -41,7 +41,7 @@
    <div class="row">
    	<div class="col-md-6 col-6">
    	<span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">People Contact Kanban 1</h3>
+   	<h3 class="htxt_medium_24 dark_700">People Deals 2</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
    		<button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
@@ -254,9 +254,10 @@
  <!--******************
   Create Contact Sliding Smart Popup
  **********************-->
- <?php include("people_contact_create_smart_popup.php"); ?>
+ <?php include("people_deals_smart_popup.php"); ?>
  
     
+ 
  
  
  
@@ -271,9 +272,9 @@
 <script src="assets/js/waves.min.js"></script>
 <script src="assets/js/jquery.slimscroll.min.js"></script>
 <script src="assets/js/jQuery.tagify.js"></script>
+
+
 <script src="assets/js/app.js"></script>
-
-
 <script>
 $(document).ready(function(){
 	$(".slidebox").click(function(){
@@ -283,10 +284,11 @@ $(document).ready(function(){
 	});
 });
 </script>
-
 <script>
 $('[name=tags]').tagify();
 </script>
+
+
 
 </body>
 </html>
