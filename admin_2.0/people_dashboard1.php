@@ -60,7 +60,7 @@
  **********************-->
    <div class="content-area">
     <div class="container-fluid">
-    <div class="row">
+    <!--<div class="row">
     	<div class="col-md-12">
     		<div class="card p25">
      		<div class="row">
@@ -77,7 +77,7 @@
      		</div>
      		</div>
     	</div>
-    </div>
+    </div>-->
      
      		
      		

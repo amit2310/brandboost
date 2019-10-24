@@ -71,22 +71,37 @@
      		<h3 class="htxt_bold_16 blue_300">People Contact Section</h3>
      		<hr>
      		<ul>
-     			<li><a target="_blank" href="people_dashboard.php">People Dashboard</a></li>
-     			<li><a target="_blank" href="people_list_create.php">People List Create</a></li>
-     			<li><a target="_blank" href="people_step1.php">People Step 1</a></li>
-     			<li><a target="_blank" href="people_step2.php">People Step 2</a></li>
-     			<li><a target="_blank" href="people_contact_manage.php">People Manage</a></li>
-     			<li><a target="_blank" href="people_contact_list_kanban1.php">People Kanban 1</a></li>
-     			<li><a target="_blank" href="people_contact_list_kanban2.php">People Kanban 2</a></li>
-     			<li><a target="_blank" href="people_contact_list.php">People Contact List</a></li>
-     			<li><a target="_blank" href="people_contact_create.php">People Contact Create</a></li>
+     			<li><a target="_blank" href="people_dashboard1.php">People Dashboard 1</a></li>
+     			<li><a target="_blank" href="people_dashboard2.php">People Dashboard 2</a></li>
+     			<li><a target="_blank" href="people_contact1.php">People Contact 1</a></li>
+     			<li><a target="_blank" href="people_contact2.php">People Contact 2</a></li>
+     			<li><a target="_blank" href="people_contact3_profile.php">People Contact 3</a> (Profile)</li>
+     			<li><a target="_blank" href="people_contact4.php">People Contact 4</a></li>
+     			<li><a target="_blank" href="people_list1.php">People List 1</a></li>
+     			<li><a target="_blank" href="people_list2.php">People List 2</a></li>
+     			<li><a target="_blank" href="people_list3.php">People List 3</a></li>
+     			<li><a target="_blank" href="people_tag1.php">People Tag 1</a></li>
+     			<li><a target="_blank" href="people_tag2.php">People Tag 2</a></li>
+     			<li><a target="_blank" href="people_segment1.php">People Segment 1</a></li>
+     			<li><a target="_blank" href="people_segment2.php">People Segment 2</a></li>
+     			<li><a target="_blank" href="people_deals1.php">People Deals 1</a></li>
+     			<li><a target="_blank" href="people_deals2.php">People Deals 2</a></li>
+     			
+     			
+     			<hr>
+     			
+     			
+     			
      			<li><a target="_blank" href="people_contact_import1.php">People Import step 1 </a></li>
      			<li><a target="_blank" href="people_contact_import2.php">People Import step 2 </a></li>
      			<li><a target="_blank" href="people_contact_import3.php">People Import step 3 </a></li>
      			<li><a target="_blank" href="people_campaign1.php">People Camapign 1 </a></li>
      			<li><a target="_blank" href="people_campaign2.php">People Camapign 2 </a></li>
-     			<li><a target="_blank" href="people_editor1.php">People Editor </a></li>
+     			<li><a target="_blank" href="people_editor.php">People Editor </a></li>
      			<li><a target="_blank" href="people_workflow.php">People Workflow </a></li>
+     			<li><a target="_blank" href="people_activity.php">People Activity </a></li>
+     			<li><a target="_blank" href="calendar.php">Calendar </a></li>
+     			
      			
      		</ul>
      			

@@ -60,8 +60,6 @@
    <div class="content-area">
     <div class="container-fluid">
     
-    
-    
     <div class="row">
     	<div class="col-md-12">
     		<div class="card p30 pl40 pr50 user_profile">

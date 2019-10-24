@@ -61,9 +61,6 @@
     
     
     
-    
-    
-    
     <div class="table_head_action">
     <div class="row">
     	<div class="col-md-6">

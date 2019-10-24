@@ -68,8 +68,6 @@
      			</div>
      			<div class="col-md-6 text-right">
      			    <a class="float-right htxt_bold_14 blue_300" href="#">Continue setup <i><img src="assets/images/chevron-right.svg"/></i></a>
-     				
-     				
      			</div>
      		</div>
      		</div>

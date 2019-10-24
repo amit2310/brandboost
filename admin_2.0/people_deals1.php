@@ -41,11 +41,11 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Dashboard</h3>
+   	<h3 class="htxt_medium_24 dark_700">People Deals 1</h3>
    	</div>
    	<div class="col-md-6 text-right">
    		<button class="circle-icon-40 mr15"><img src="assets/images/filter.svg"/></button>
-   		<button class="btn btn-md bkg_blue_200 light_000">Main Action <span><img src="assets/images/blue-plus.svg"/></span></button>
+   		<button class="btn btn-md bkg_blue_200 light_000 slidebox">Create new<span><img src="assets/images/blue-plus.svg"/></span></button>
    	</div>
    </div>
    </div>
@@ -60,54 +60,45 @@
  **********************-->
    <div class="content-area">
     <div class="container-fluid">
-     <div class="row">
-     	<div class="col-md-8">
-     		<div class="card min-h-280">
-     		<div class="row">
-     		<div class="col-md-6">
-     			<h3 class="htxt_medium_32 dark_700">79,3%</h3>
-     			<p class="grey-sub-headings">YOUR EMAIL MARKETING IS GOOD</p>
-     			<hr>
-     			<p class="fsize14 mb30" style="color: #5a6f80;">Your recent emails have low avg. 9% bounce rate. We suggest you to send new email 
-in next 3 days.</p>
-    		<a class="fsize15 blue_300" href="#"><img src="assets/images/editpen.svg"/>&nbsp; Create new email</a>
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="card card_shadow min-h-280">
+    		
+    		<div class="row mb65">
+     		<div class="col-md-6 text-left">
+     			<a class="lh_32 blue_400 htxt_bold_14" href="#">
+     				<span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
+     				Import Tag
+     			</a>
      		</div>
-     		<div class="col-md-6 text-center">
-     			<img class="mt40" style="max-width: 225px; " src="assets/images/dashboard_image_01.png"/>
+     		<div class="col-md-6 text-right">
+     			<a class="lh_32 htxt_regular_14 dark_200" href="#">
+     				<span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+     				Learn how to use Tag
+     			</a>
      		</div>
+     		</div>
+     		
+    		
+     		<div class="row mb65">
+     		<div class="col-md-12 text-center">
+     			<img class="mt40" style="max-width: 325px; " src="assets/images/deals.png">
+     			<h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any deals yet</h3>
+     			<h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import companies!</h3>
+     			<button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">New company</button>
+     		</div>
+     		</div>
+     		
+     		
+     		
+     		
+     		
      			
      		</div>
-     			
-     		</div>
-     	</div>
-     	<div class="col-md-4">
-     		<div class="card min-h-280 text-center">
-     			<img class="mb20" style="max-width: 130px; margin: 0 auto" src="assets/images/dashboard_graph0.png"/>
-     			<p class="grey-sub-headings mb10">CREDITS BALANCE</p>
-     			<p class="fsize14 mb30" style="color: #5a6f80;">You used 408/450 montly credits</p>
-     			<a class="fsize15 dark_600 fw500" href="#">Purchase more credits</a>
-     		</div>
-     	</div>
-     </div>
+    	</div>
+    </div>
      
-     <div class="row">
-     	<div class="col-md-6">
-     		<div class="card min-h-280">
-     			<h3 class="htxt_medium_32 dark_700">51,913</h3>
-     			<p class="grey-sub-headings">Emails</p>
-     			<img style="max-height: 130px;" src="assets/images/dashboard_graph2.png"/>
-     		</div>
-     	</div>
-     	<div class="col-md-6">
-     		<div class="card min-h-280">
-     			<h3 class="htxt_medium_32 dark_700">139</h3>
-     			<p class="grey-sub-headings">Subscriptions</p>
-     			<img style="max-height: 130px;" src="assets/images/dashboard_graph1.png"/>
-     		</div>
-     	</div>
-     </div>
-     
-     
+   
       </div>
       
       </div>
@@ -123,8 +114,17 @@ in next 3 days.</p>
  
  
  
+ <!--******************
+  Create Contact Sliding Smart Popup
+ **********************-->
+ <?php include("people_deals_smart_popup.php"); ?>
+ 
+    
  
  
+ 
+ 
+
  <!--******************
   jQuery
  **********************-->
@@ -133,7 +133,24 @@ in next 3 days.</p>
 <script src="assets/js/metisMenu.min.js"></script>
 <script src="assets/js/waves.min.js"></script>
 <script src="assets/js/jquery.slimscroll.min.js"></script>
+<script src="assets/js/jQuery.tagify.js"></script>
+
+
 <script src="assets/js/app.js"></script>
+<script>
+$(document).ready(function(){
+	$(".slidebox").click(function(){
+		$(".box").animate({
+			width: "toggle"
+		});
+	});
+});
+</script>
+<script>
+$('[name=tags]').tagify();
+</script>
+
+
 
 </body>
 </html>
