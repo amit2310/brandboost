@@ -102,6 +102,12 @@
      			<li><a target="_blank" href="people_activity.php">People Activity </a></li>
      			<li><a target="_blank" href="calendar.php">Calendar </a></li>
      			
+     			<hr>
+     			
+     			<li><a target="_blank" href="people_companies.php">People Companies </a></li>
+     			<li><a target="_blank" href="people_configuration.php">People Cconfiguration </a></li>
+     			<li><a target="_blank" href="email_setup.php">Email Setup </a></li>
+     			
      			
      		</ul>
      			
