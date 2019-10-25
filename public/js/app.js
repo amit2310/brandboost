@@ -1717,391 +1717,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _helpers_PeopleListCreateSmartPopup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/PeopleListCreateSmartPopup */ "./resources/js/components/helpers/PeopleListCreateSmartPopup.vue");
 //
 //
 //
@@ -2364,10 +1980,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Email Lists - Brand Boost',
   components: {
-    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"],
+    PeopleListCreateSmartPopup: _helpers_PeopleListCreateSmartPopup__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2376,425 +1994,34 @@ __webpack_require__.r(__webpack_exports__);
       newoLists: {}
     };
   },
+  methods: {
+    firstListname: function firstListname(object) {
+      return object.value[0].list_name;
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
     //getData
     axios.get('/admin/lists/').then(function (response) {
-      console.log(response.data);
-      _this.oData = response.data;
-      _this.oLists = response.data.oLists;
-      _this.newoLists = response.data.newoLists;
+      var rDataArr = response.data.split("^^^^^");
+      _this.oData = JSON.parse(rDataArr[0]);
+      _this.oLists = _this.oData.oLists; //console.log(this.oLists);
+
+      _this.newoLists = JSON.parse(rDataArr[1]);
       console.log(_this.newoLists);
     });
     console.log('Component mounted');
   }
 });
 $(document).ready(function () {
-  /* Test Date Function */
-  console.log("Date Formatted: " + date("l jS F Y", strtotime('2019-06-19 16:36:46')));
-  /* Test Date Function End */
-
-  $('#automationList thead tr').clone(true).appendTo('#automationList thead');
-  $('#automationList thead tr:eq(1) th').each(function (i) {
-    if (i === 12) {
-      var title = $(this).text();
-      $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');
-      $('input', this).on('keyup change', function () {
-        if (tableBase.column(i).search() !== this.value) {
-          tableBase.column(i).search(this.value).draw();
-        }
-      });
-    }
-  });
-  $(document).on('click', '.filterByColumn', function () {
-    $('.nav-tabs').each(function (i) {
-      $(this).children().removeClass('active');
+  $(".slidebox").click(function () {
+    $(".box").animate({
+      width: "toggle"
     });
-    $(this).parent().addClass('active');
-    var fil = $(this).attr('fil');
-    $('#filterByStatus').val(fil);
-    $('#filterByStatus').keyup();
   });
-  var tableId = 'automationList';
-  var tableBase = custom_data_table(tableId);
-  $('#activeCampaign').trigger('click');
+  $('[name=tags]').tagify();
 });
-$(document).ready(function () {
-  $(document).on('click', '.editDataList', function () {
-    $('.editAction').toggle();
-  });
-  $(document).on('click', '.editDataListArchive', function () {
-    $('.editActionArchive').toggle();
-  });
-  $(document).on('change', '#checkAllArchive', function () {
-    if (false == $(this).prop("checked")) {
-      $(".checkRowsArchive").prop('checked', false);
-      $(".selectedClass").removeClass('success');
-      $('.custom_action_box_archive').hide();
-    } else {
-      $(".checkRowsArchive").prop('checked', true);
-      $(".selectedClass").addClass('success');
-      $('.custom_action_box_archive').show();
-    }
-  });
-  $(document).on('change', '#checkAll', function () {
-    if (false == $(this).prop("checked")) {
-      $(".checkRows").prop('checked', false);
-      $(".selectedClass").removeClass('success');
-      $('.custom_action_box').hide();
-    } else {
-      $(".checkRows").prop('checked', true);
-      $(".selectedClass").addClass('success');
-      $('.custom_action_box').show();
-    }
-  });
-  $(document).on('click', '.checkRows', function () {
-    var inc = 0;
-    var rowId = $(this).val();
-
-    if (false == $(this).prop("checked")) {
-      $('#append-' + rowId).removeClass('success');
-    } else {
-      $('#append-' + rowId).addClass('success');
-    }
-
-    $('.checkRows:checkbox:checked').each(function (i) {
-      inc++;
-    });
-
-    if (inc == 0) {
-      $('.custom_action_box').hide();
-    } else {
-      $('.custom_action_box').show();
-    }
-
-    var numberOfChecked = $('.checkRows:checkbox:checked').length;
-    var totalCheckboxes = $('.checkRows:checkbox').length;
-
-    if (totalCheckboxes > numberOfChecked) {
-      $('#checkAll').prop('checked', false);
-    }
-
-    if (totalCheckboxes == numberOfChecked) {
-      $('#checkAll').prop('checked', true);
-    }
-  });
-  $(document).on('click', '.checkRowsArchive', function () {
-    var inc = 0;
-    var rowId = $(this).val();
-
-    if (false == $(this).prop("checked")) {
-      $('#append-' + rowId).removeClass('success');
-    } else {
-      $('#append-' + rowId).addClass('success');
-    }
-
-    $('.checkRowsArchive:checkbox:checked').each(function (i) {
-      inc++;
-    });
-
-    if (inc == 0) {
-      $('.custom_action_box_archive').hide();
-    } else {
-      $('.custom_action_box_archive').show();
-    }
-
-    var numberOfChecked = $('.checkRowsArchive:checkbox:checked').length;
-    var totalCheckboxes = $('.checkRowsArchive:checkbox').length;
-
-    if (totalCheckboxes > numberOfChecked) {
-      $('#checkAllArchive').prop('checked', false);
-    }
-
-    if (totalCheckboxes == numberOfChecked) {
-      $('#checkAllArchive').prop('checked', true);
-    }
-  });
-  $(document).on('click', '#deleteButtonLists', function () {
-    var val = [];
-    $('.checkRows:checkbox:checked').each(function (i) {
-      val[i] = $(this).val();
-    });
-
-    if (val.length === 0) {
-      alert('Please select a row.');
-    } else {
-      var elem = $(this);
-      swal({
-        title: "Are you sure? You want to delete this record!",
-        text: "You will not be able to recover this record!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#EF5350",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel pls!",
-        closeOnConfirm: true,
-        closeOnCancel: true
-      }, function (isConfirm) {
-        if (isConfirm) {
-          $('.overlaynew').show();
-          $.ajax({
-            url: "/admin/lists/deleteMultipalLists",
-            type: "POST",
-            data: {
-              _token: '{{csrf_token()}}',
-              multi_list_id: val
-            },
-            dataType: "json",
-            success: function success(data) {
-              if (data.status == 'success') {
-                $('.overlaynew').hide();
-                window.location.href = window.location.href;
-              }
-            }
-          });
-        }
-      });
-    }
-  });
-  $(document).on('click', '#deleteButtonListsArchive', function () {
-    var val = [];
-    $('.checkRowsArchive:checkbox:checked').each(function (i) {
-      val[i] = $(this).val();
-    });
-
-    if (val.length === 0) {
-      alert('Please select a row.');
-    } else {
-      var elem = $(this);
-      swal({
-        title: "Are you sure? You want to delete this record!",
-        text: "You will not be able to recover this record!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#EF5350",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel pls!",
-        closeOnConfirm: true,
-        closeOnCancel: true
-      }, function (isConfirm) {
-        if (isConfirm) {
-          $('.overlaynew').show();
-          $.ajax({
-            url: "/admin/lists/deleteMultipalLists",
-            type: "POST",
-            data: {
-              _token: '{{csrf_token()}}',
-              multi_list_id: val
-            },
-            dataType: "json",
-            success: function success(data) {
-              if (data.status == 'success') {
-                $('.overlaynew').hide();
-                window.location.href = window.location.href;
-              }
-            }
-          });
-        }
-      });
-    }
-  });
-  $(document).on('click', '#archiveButtonLists', function () {
-    var val = [];
-    $('.checkRows:checkbox:checked').each(function (i) {
-      val[i] = $(this).val();
-    });
-
-    if (val.length === 0) {
-      alert('Please select a row.');
-    } else {
-      var elem = $(this);
-      swal({
-        title: "Are you sure? You want to move to archive this record!",
-        text: "",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#EF5350",
-        confirmButtonText: "Yes, move to archive it!",
-        cancelButtonText: "No, cancel pls!",
-        closeOnConfirm: true,
-        closeOnCancel: true
-      }, function (isConfirm) {
-        if (isConfirm) {
-          $('.overlaynew').show();
-          $.ajax({
-            url: "/admin/lists/archiveMultipalLists",
-            type: "POST",
-            data: {
-              _token: '{{csrf_token()}}',
-              multi_list_id: val
-            },
-            dataType: "json",
-            success: function success(data) {
-              if (data.status == 'success') {
-                $('.overlaynew').hide();
-                window.location.href = window.location.href;
-              }
-            }
-          });
-        }
-      });
-    }
-  });
-  $('#addList').click(function () {
-    $('#Createnewlist').modal();
-  });
-  $(document).on('click', '#addListN', function () {
-    $('#addList').trigger('click');
-  });
-  $(document).on('click', '.viewContact', function () {
-    var list_id = $(this).attr('list_id');
-    window.location.href = '/admin/lists/getListContacts?list_id=' + list_id;
-  });
-  $('#frmaddListModal').on('submit', function () {
-    $('.overlaynew').show();
-    var formdata = $("#frmaddListModal").serialize();
-    var tkn = $('meta[name="_token"]').attr('content');
-    $.ajax({
-      url: "admin/lists/addList",
-      type: "POST",
-      data: formdata + '&_token=' + tkn,
-      dataType: "json",
-      success: function success(data) {
-        if (data.status == 'success') {
-          $('.overlaynew').hide();
-          $('#Createnewlist').modal('hide'); //alertMessageAndRedirect(data.msg, window.location.href);
-
-          window.location.href = '{{ $editListPath }}' + data.list_id;
-        } else if (data.status == 'error' && data.type == 'duplicate') {
-          $('.overlaynew').hide();
-          $("#addListValidation").html(data.msg).show();
-          setTimeout(function () {
-            $("#addListValidation").html("").hide();
-          }, 5000);
-        }
-      }
-    });
-    return false;
-  });
-  $(document).on("click", ".editlist", function () {
-    var listID = $(this).attr('list_id');
-    $.ajax({
-      url: "admin/lists/getList",
-      type: "POST",
-      data: {
-        _token: '{{csrf_token()}}',
-        'list_id': listID
-      },
-      dataType: "json",
-      success: function success(data) {
-        if (data.status == 'success') {
-          $("#edit_title").val(data.title);
-          $("#edit_description").val(data.description);
-          $("#hidlistid").val(listID);
-          $("#editlistModel").modal();
-        } else {
-          alertMessage('Error: Some thing wrong!');
-        }
-      }
-    });
-  });
-  $(document).on("click", ".changeStatus", function () {
-    var listID = $(this).attr('list_id');
-    var status = $(this).attr('status');
-    $(".overlaynew").show();
-    $.ajax({
-      url: "/admin/lists/changeListStatus",
-      type: "POST",
-      data: {
-        _token: '{{csrf_token()}}',
-        'list_id': listID,
-        status: status
-      },
-      dataType: "json",
-      success: function success(data) {
-        if (data.status == 'success') {
-          $(".overlaynew").hide();
-          displayMessagePopup('success', '', data.msg);
-          window.location.href = window.location.href;
-        } else {
-          alertMessage('Error: Some thing wrong!');
-        }
-      }
-    });
-  });
-  $('#frmeditlistModel').on('submit', function () {
-    $('.overlaynew').show();
-    var formdata = $("#frmeditlistModel").serialize();
-    var listID = $("#hidlistid").val();
-    $.ajax({
-      url: "/admin/lists/updateList",
-      type: "POST",
-      data: formdata,
-      dataType: "json",
-      success: function success(data) {
-        if (data.status == 'success') {
-          $('.overlaynew').hide();
-          $("#editlistModel").modal('hide'); //alertMessageAndRedirect(data.msg, window.location.href);
-          //displayMessagePopup('success', '', data.msg);
-
-          window.location.href = '{{ $editListPath }}' + listID;
-        } else if (data.status == 'error' && data.type == 'duplicate') {
-          $('.overlaynew').hide();
-          $("#editlistValidation").html(data.msg).show();
-          setTimeout(function () {
-            $("#editlistValidation").html("").hide();
-          }, 5000);
-        }
-      }
-    });
-    return false;
-  });
-  $(document).on('click', '.deletelist', function () {
-    var elem = $(this);
-    deleteConfirmationPopup("This record will deleted immediately.<br>You can't undo this action.", function () {
-      $('.overlaynew').show();
-      var listID = $(elem).attr('list_id');
-      $.ajax({
-        url: "/admin/lists/deleteLists",
-        type: "POST",
-        data: {
-          _token: '{{ csrf_token() }}',
-          list_id: listID
-        },
-        dataType: "json",
-        success: function success(data) {
-          if (data.status == 'success') {
-            $('.overlaynew').hide(); //alertMessageAndRedirect(data.msg, window.location.href);
-
-            window.location.href = window.location.href;
-          }
-        }
-      });
-    });
-  });
-});
-/*$('.daterange-ranges').daterangepicker(
-    {
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2016',
-        dateLimit: {days: 60},
-        ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        opens: 'left',
-        applyClass: 'btn-small bg-slate-600 btn-block',
-        cancelClass: 'btn-small btn-default btn-block',
-        format: 'MM/DD/YYYY'
-    },
-    function (start, end) {
-        $('.daterange-ranges span').html(start.format('MMMM D') + ' - ' + end.format('MMMM D'));
-    }
-);
- $('.daterange-ranges span').html(moment().subtract(29, 'days').format('MMMM D') + ' - ' + moment().format('MMMM D'));*/
 
 /***/ }),
 
@@ -17721,6 +16948,86 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'create-list-smart-popup',
+  data: function data() {
+    return {//alert(this.avatar);
+    };
+  },
+  mounted: function mounted() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/helpers/PlatformImage.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/helpers/PlatformImage.vue?vue&type=script&lang=js& ***!
@@ -19678,1097 +18985,53 @@ var render = function() {
     "div",
     { staticClass: "content", attrs: { id: "masterContainer" } },
     [
-      _c("div", { staticClass: "page_header" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-5" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("ul", { staticClass: "nav nav-tabs nav-tabs-bottom" }, [
-              _c("li", { staticClass: "active all" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "filterByColumn",
-                    staticStyle: { javascript: "void()" },
-                    attrs: { id: "activeCampaign", fil: "active" }
-                  },
-                  [_vm._v("Active " + _vm._s(_vm.oData.title))]
-                )
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
-            ])
-          ]),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "content-area" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _vm._m(1),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-7 text-right btn_area" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _vm.oData.bActiveSubsription == false
-              ? _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn dark_btn ml20 pDisplayNoActiveSubscription",
-                    attrs: {
-                      type: "button",
-                      title: "No Active Subscription",
-                      "data-toggle": "modal",
-                      "data-target": "#addPeopleList"
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-plus3" }),
-                    _c("span", [_vm._v("    New List")])
-                  ]
-                )
-              : _c(
-                  "button",
-                  {
-                    staticClass: "btn dark_btn ml20",
-                    attrs: {
-                      type: "button",
-                      id: "addList",
-                      "data-toggle": "modal",
-                      "data-target": "#addPeopleList"
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-plus3" }),
-                    _c("span", [_vm._v("    New List")])
-                  ]
-                )
-          ])
+          _c(
+            "div",
+            { staticClass: "row" },
+            [
+              _vm._l(_vm.newoLists, function(newoList, name, index) {
+                return _c("div", { staticClass: "col-md-3 text-center" }, [
+                  _c("div", { staticClass: "card p30 h235 animate_top" }, [
+                    _c("img", {
+                      staticClass: "mt20",
+                      attrs: { src: "assets/images/subs-icon_big.svg" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "h3",
+                      { staticClass: "htxt_bold_16 dark_700 mt25 mb15" },
+                      _vm._l(newoList.slice(0, 1), function(nList) {
+                        return _c("span", [_vm._v(_vm._s(nList.list_name))])
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
+                      _vm._m(2, true),
+                      _vm._v(" " + _vm._s(newoList.length))
+                    ])
+                  ])
+                ])
+              }),
+              _vm._v(" "),
+              _vm._m(3)
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5)
         ])
       ]),
       _vm._v(" "),
-      _vm.oLists.length > 0
-        ? _c("div", { staticClass: "tab-content" }, [
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane active",
-                attrs: { id: "right-icon-tab0" }
-              },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "panel panel-flat",
-                        staticStyle: { margin: "0" }
-                      },
-                      [
-                        _c("div", { staticClass: "panel-heading" }, [
-                          _c("h6", { staticClass: "panel-title" }, [
-                            _vm._v(_vm._s(_vm.oData.activeList) + " Lists")
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(3)
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "panel-body p0" }, [
-                          _c(
-                            "table",
-                            {
-                              staticClass: "table",
-                              attrs: { id: "automationList" }
-                            },
-                            [
-                              _c("thead", [
-                                _c("tr", [
-                                  _c("th", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("th", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm._m(4),
-                                  _vm._v(" "),
-                                  _vm._m(5),
-                                  _vm._v(" "),
-                                  _vm._m(6),
-                                  _vm._v(" "),
-                                  _vm._m(7),
-                                  _vm._v(" "),
-                                  _vm.oData.uRole
-                                    ? _c("th", [
-                                        _c("i", { staticClass: "icon-user" }),
-                                        _vm._v("Created By")
-                                      ])
-                                    : _c("th", {
-                                        staticStyle: { display: "none" }
-                                      }),
-                                  _vm._v(" "),
-                                  _vm._m(8),
-                                  _vm._v(" "),
-                                  _vm._m(9),
-                                  _vm._v(" "),
-                                  _vm._m(10),
-                                  _vm._v(" "),
-                                  _vm._m(11),
-                                  _vm._v(" "),
-                                  _vm._m(12),
-                                  _vm._v(" "),
-                                  _c(
-                                    "th",
-                                    { staticStyle: { display: "none" } },
-                                    [_vm._v("status")]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(_vm.oLists, function(oList) {
-                                  return _c(
-                                    "tr",
-                                    {
-                                      staticClass: "selectedClass",
-                                      attrs: { id: "append-" + oList.id }
-                                    },
-                                    [
-                                      _c(
-                                        "td",
-                                        { staticStyle: { display: "none" } },
-                                        [
-                                          _vm._v(
-                                            _vm._s(oList.list_created) + " "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        { staticStyle: { display: "none" } },
-                                        [_vm._v(_vm._s(oList.id))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        {
-                                          staticClass: "editAction",
-                                          staticStyle: { display: "none" }
-                                        },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "custmo_checkbox pull-left"
-                                            },
-                                            [
-                                              _c("input", {
-                                                staticClass: "checkRows",
-                                                attrs: {
-                                                  type: "checkbox",
-                                                  name: "checkRows[]"
-                                                },
-                                                domProps: {
-                                                  value: "" + oList.id
-                                                }
-                                              }),
-                                              _c("span", {
-                                                staticClass: "custmo_checkmark"
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("td", { attrs: { width: "22%" } }, [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "media-left media-middle"
-                                          },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass: "icons square",
-                                                attrs: {
-                                                  href:
-                                                    "/admin/lists/getListContacts?list_id=" +
-                                                    oList.id
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass:
-                                                    "icon-indent-decrease2 txt_blue"
-                                                })
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c("div", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: {
-                                                    href:
-                                                      "/admin/lists/getListContacts?list_id=" +
-                                                      oList.id,
-                                                    list_id: "" + oList.id
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      oList.list_name.substring(
-                                                        0,
-                                                        20
-                                                      )
-                                                    ) + " "
-                                                  )
-                                                ]
-                                              )
-                                            ]),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "text-muted text-size-small"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    oList.description.substring(
-                                                      0,
-                                                      25
-                                                    )
-                                                  ) + " "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c("div", {}, [
-                                              _vm.oData.totAll > 0
-                                                ? _c(
-                                                    "span",
-                                                    { staticClass: "txt_grey" },
-                                                    [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "text-default text-semibold",
-                                                          attrs: {
-                                                            href:
-                                                              "/admin/lists/getListContacts?list_id=" +
-                                                              oList.id
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              _vm.oData.totAll
-                                                            )
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                : _c(
-                                                    "span",
-                                                    {
-                                                      staticClass:
-                                                        "text-muted text-size-small"
-                                                    },
-                                                    [_vm._v("[No Data]")]
-                                                  )
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c("div", { staticClass: "pt-5" }, [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "text-default text-semibold",
-                                                  attrs: { href: "#" }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    " " +
-                                                      _vm._s(
-                                                        _vm.displayDateFormat(
-                                                          "F jS Y",
-                                                          oList.list_created
-                                                        )
-                                                      )
-                                                  )
-                                                ]
-                                              )
-                                            ]),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "text-muted text-size-small"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    _vm.displayDateFormat(
-                                                      "h:i A",
-                                                      oList.list_created
-                                                    )
-                                                  ) + " "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm.oData.uRole
-                                        ? _c("td", [
-                                            _vm._m(13, true),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "media-left" },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "pt-5" },
-                                                  [
-                                                    _c(
-                                                      "a",
-                                                      {
-                                                        staticClass:
-                                                          "text-default text-semibold editlist",
-                                                        attrs: {
-                                                          href: "#",
-                                                          list_id: "" + oList.id
-                                                        }
-                                                      },
-                                                      [
-                                                        _c("span", [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              oList.lCreateUsername
-                                                            )
-                                                          )
-                                                        ]),
-                                                        _vm._v(" "),
-                                                        _c("img", {
-                                                          staticClass: "flags",
-                                                          attrs: {
-                                                            src:
-                                                              "/assets/images/flags/ao.png"
-                                                          }
-                                                        })
-                                                      ]
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "text-muted text-size-small"
-                                                  },
-                                                  [_vm._v(_vm._s(oList.cEmai))]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "text-muted text-size-small"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(oList.cMobile)
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ])
-                                        : _c("td", {
-                                            staticStyle: { display: "none" }
-                                          }),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                class:
-                                                  "progress-circle " +
-                                                  _vm.oData.addPC +
-                                                  " green cp" +
-                                                  _vm.oData.totalEmailGraph
-                                              },
-                                              [_vm._m(14, true)]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                attrs: {
-                                                  "data-toggle": "tooltip",
-                                                  title:
-                                                    _vm.oData.totEmailCount +
-                                                    " have email address out of " +
-                                                    _vm.oData.totalContacts +
-                                                    " contacts",
-                                                  "data-placement": "top"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    staticClass:
-                                                      "text-default text-semibold",
-                                                    attrs: {
-                                                      href:
-                                                        "javascript:void(0);"
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        _vm.oData.totEmailCount
-                                                      )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _vm.oData.newEmails
-                                                  ? _c(
-                                                      "span",
-                                                      {
-                                                        staticStyle: {
-                                                          color: "#FF0000"
-                                                        }
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          " ( " +
-                                                            _vm._s(
-                                                              _vm.oData
-                                                                .newEmails
-                                                            ) +
-                                                            " new)"
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e()
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                class:
-                                                  "progress-circle " +
-                                                  _vm.oData.addPC +
-                                                  " grey cp" +
-                                                  _vm.oData.totalSMSGraph
-                                              },
-                                              [_vm._m(15, true)]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "media-left" },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                attrs: {
-                                                  "data-toggle": "tooltip",
-                                                  title:
-                                                    _vm.oData.totSMSCount +
-                                                    " have numbers out of " +
-                                                    _vm.oData.totalContacts +
-                                                    " contacts",
-                                                  "data-placement": "top"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    staticClass:
-                                                      "text-default text-semibold",
-                                                    attrs: {
-                                                      href:
-                                                        "javascript:void(0);"
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        _vm.oData.totSMSCount
-                                                      )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _vm.oData.newSMS
-                                                  ? _c(
-                                                      "span",
-                                                      {
-                                                        staticStyle: {
-                                                          color: "#FF0000"
-                                                        }
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          " ( " +
-                                                            _vm._s(
-                                                              _vm.oData.newSMS
-                                                            ) +
-                                                            " new)"
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e()
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c("span", {
-                                          domProps: {
-                                            innerHTML: _vm._s(
-                                              _vm.oData.lastListTime
-                                            )
-                                          }
-                                        })
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", { staticClass: "text-center" }, [
-                                        oList.status == "active"
-                                          ? _c("i", {
-                                              staticClass:
-                                                "icon-primitive-dot txt_green fsize16"
-                                            })
-                                          : oList.status == "archive"
-                                          ? _c("i", {
-                                              staticClass:
-                                                "icon-primitive-dot txt_red fsize16"
-                                            })
-                                          : _c("i", {
-                                              staticClass:
-                                                "icon-primitive-dot txt_red fsize16"
-                                            }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "text-default text-semibold bbot dropdown-toggle",
-                                            attrs: { "data-toggle": "dropdown" }
-                                          },
-                                          [
-                                            oList.status == "active"
-                                              ? _c("span", [_vm._v("Active")])
-                                              : oList.status == "archive"
-                                              ? _c("span", [_vm._v("Archive")])
-                                              : _c("span", [_vm._v("Inactive")])
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("ul", {
-                                          staticClass:
-                                            "dropdown-menu dropdown-menu-right status"
-                                        })
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", { staticClass: "text-right" }, [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "media-left pull-right"
-                                          },
-                                          [
-                                            _c(
-                                              "div",
-                                              { staticClass: "tdropdown ml10" },
-                                              [
-                                                _vm._m(16, true),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "ul",
-                                                  {
-                                                    staticClass:
-                                                      "dropdown-menu dropdown-menu-right more_act width-200"
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "a",
-                                                      {
-                                                        staticClass:
-                                                          "dropdown_close",
-                                                        attrs: { href: "#" }
-                                                      },
-                                                      [_vm._v("X")]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "viewContact",
-                                                          attrs: {
-                                                            href:
-                                                              "javascript:void(0);",
-                                                            list_id:
-                                                              "" + oList.id,
-                                                            target: "_blank"
-                                                          }
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "icon-gear"
-                                                          }),
-                                                          _vm._v(
-                                                            " View Contacts"
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "editlist",
-                                                          attrs: {
-                                                            href:
-                                                              "javascript:void(0);",
-                                                            list_id:
-                                                              "" + oList.id
-                                                          }
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "icon-file-stats"
-                                                          }),
-                                                          _vm._v(" Edit")
-                                                        ]
-                                                      )
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    oList.status == "active"
-                                                      ? _c("li", [
-                                                          _c(
-                                                            "a",
-                                                            {
-                                                              staticClass:
-                                                                "changeStatus",
-                                                              attrs: {
-                                                                href:
-                                                                  "javascript:void(0);",
-                                                                status:
-                                                                  "inactive",
-                                                                list_id:
-                                                                  "" + oList.id
-                                                              }
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "icon-file-stats"
-                                                              }),
-                                                              _vm._v(
-                                                                " Inactive"
-                                                              )
-                                                            ]
-                                                          )
-                                                        ])
-                                                      : _vm._e(),
-                                                    _vm._v(" "),
-                                                    oList.status ==
-                                                      "inactive" &&
-                                                    oList.status != "archive"
-                                                      ? _c("li", [
-                                                          _c(
-                                                            "a",
-                                                            {
-                                                              staticClass:
-                                                                "changeStatus",
-                                                              attrs: {
-                                                                href:
-                                                                  "javascript:void(0);",
-                                                                status:
-                                                                  "active",
-                                                                list_id:
-                                                                  "" + oList.id
-                                                              }
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "icon-file-stats"
-                                                              }),
-                                                              _vm._v(" Active")
-                                                            ]
-                                                          )
-                                                        ])
-                                                      : _vm._e(),
-                                                    _vm._v(" "),
-                                                    oList.status != "archive"
-                                                      ? _c("li", [
-                                                          _c(
-                                                            "a",
-                                                            {
-                                                              staticClass:
-                                                                "changeStatus",
-                                                              attrs: {
-                                                                href:
-                                                                  "javascript:void(0);",
-                                                                status:
-                                                                  "archive",
-                                                                list_id:
-                                                                  "" + oList.id
-                                                              }
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "icon-file-stats"
-                                                              }),
-                                                              _vm._v(
-                                                                " Move to Archive"
-                                                              )
-                                                            ]
-                                                          )
-                                                        ])
-                                                      : _vm._e(),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "deletelist",
-                                                          attrs: {
-                                                            href:
-                                                              "javascript:void(0);",
-                                                            list_id:
-                                                              "" + oList.id
-                                                          }
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "icon-file-text2"
-                                                          }),
-                                                          _vm._v(" Delete")
-                                                        ]
-                                                      )
-                                                    ])
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "media-left pull-right"
-                                          },
-                                          [
-                                            _c("div", {}, [
-                                              _c(
-                                                "a",
-                                                {
-                                                  staticClass:
-                                                    "addModuleContact text-default text-semibold bbotb",
-                                                  attrs: {
-                                                    href: "javascript:void(0);",
-                                                    list_id: "" + oList.id,
-                                                    "data-modulename": "list",
-                                                    "data-moduleaccountid":
-                                                      "" + oList.id
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "span",
-                                                    {
-                                                      staticClass:
-                                                        "txt_blue_sky2"
-                                                    },
-                                                    [_vm._v("Add Contacts")]
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        { staticStyle: { display: "none" } },
-                                        [
-                                          oList.status == "archive"
-                                            ? _c("span", [_vm._v("Archive")])
-                                            : _c("span", [_vm._v("Active")])
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                }),
-                                0
-                              )
-                            ]
-                          )
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ])
-        : _c("div", { staticClass: "tab-content" }, [
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane active",
-                attrs: { id: "right-icon-tab0" }
-              },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "panel panel-flat",
-                        staticStyle: { margin: "0" }
-                      },
-                      [
-                        _c("div", { staticClass: "panel-heading" }, [
-                          _c("h6", { staticClass: "panel-title" }, [
-                            _vm._v(_vm._s(_vm.oData.activeList) + " Lists")
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(17)
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "panel-body p0" }, [
-                          _c(
-                            "table",
-                            { staticClass: "table datatable-basic" },
-                            [
-                              _c("thead", [
-                                _c("tr", [
-                                  _c("th", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("th", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm._m(18),
-                                  _vm._v(" "),
-                                  _vm._m(19),
-                                  _vm._v(" "),
-                                  _vm.oData.uRole
-                                    ? _c("th", [
-                                        _c("i", { staticClass: "icon-user" }),
-                                        _vm._v("Created By")
-                                      ])
-                                    : _c("th", {
-                                        staticStyle: { display: "none" }
-                                      }),
-                                  _vm._v(" "),
-                                  _vm._m(20),
-                                  _vm._v(" "),
-                                  _vm._m(21),
-                                  _vm._v(" "),
-                                  _vm._m(22),
-                                  _vm._v(" "),
-                                  _vm._m(23),
-                                  _vm._v(" "),
-                                  _c("th", { staticClass: "text-right" })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("tbody", [
-                                _c("tr", [
-                                  _c("td", { attrs: { colspan: "10" } }, [
-                                    _c("div", { staticClass: "row" }, [
-                                      _c("div", { staticClass: "col-md-12" }, [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "text-center",
-                                            staticStyle: {
-                                              margin: "20px 0px 0"
-                                            }
-                                          },
-                                          [
-                                            _vm._m(24),
-                                            _vm._v(" "),
-                                            _vm.oData.bActiveSubsription
-                                              ? _c(
-                                                  "button",
-                                                  {
-                                                    staticClass:
-                                                      "btn dark_btn ml20 mb40",
-                                                    attrs: {
-                                                      type: "button",
-                                                      id: "addListN",
-                                                      "data-toggle": "modal",
-                                                      "data-target":
-                                                        "#addPeopleList"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass: "icon-plus3"
-                                                    }),
-                                                    _c("span", [
-                                                      _vm._v("    New List")
-                                                    ])
-                                                  ]
-                                                )
-                                              : _c(
-                                                  "button",
-                                                  {
-                                                    staticClass:
-                                                      "btn dark_btn ml20 mb40 pDisplayNoActiveSubscription",
-                                                    attrs: {
-                                                      type: "button",
-                                                      title:
-                                                        "No Active Subscription",
-                                                      "data-toggle": "modal",
-                                                      "data-target":
-                                                        "#addPeopleList"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass: "icon-plus3"
-                                                    }),
-                                                    _c("span", [
-                                                      _vm._v("    New List")
-                                                    ])
-                                                  ]
-                                                )
-                                          ]
-                                        )
-                                      ])
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", {
-                                    staticStyle: { display: "none" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("td", { staticStyle: { display: "none" } })
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ]),
-      _vm._v(" "),
-      _vm._m(25),
-      _vm._v(" "),
-      _vm._m(26)
+      _vm._m(6)
     ]
   )
 }
@@ -20777,971 +19040,726 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", [
-      _c("img", { attrs: { src: "/assets/images/email_icon_active.png" } }),
-      _vm._v(" Lists")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c(
-        "a",
-        {
-          staticClass: "filterByColumn",
-          staticStyle: { javascript: "void(0)" },
-          attrs: { fil: "archive" }
-        },
-        [_vm._v("Archive")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-group" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn light_btn btn-icon dropdown-toggle",
-          attrs: { type: "button", "data-toggle": "dropdown" }
-        },
-        [
-          _c("i", { staticClass: "icon-calendar2" }),
-          _vm._v("    Filter Lists     "),
-          _c("span", { staticClass: "caret" })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "dropdown-menu dropdown-content width-320 dropdown-menu-right"
-        },
-        [
-          _c("div", { staticClass: "dropdown-content-heading" }, [
-            _vm._v(" Filter\n                            "),
-            _c("ul", { staticClass: "icons-list" }, [
-              _c("li", [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("i", { staticClass: "icon-more" })
-                ])
-              ])
+    return _c("div", { staticClass: "top-bar-top-section bbot" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 col-6" }, [
+            _c("span", { staticClass: "float-left mr20 back_btn" }, [
+              _c("img", {
+                staticClass: "back_img_icon",
+                attrs: { src: "assets/images/BACK.svg" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
+              _vm._v("People Contact Manager")
             ])
           ]),
           _vm._v(" "),
-          _c("div", {}, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign",
-                attrs: { id: "accordion-control-right" }
-              },
-              [
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c(
-                    "div",
-                    { staticClass: "panel-heading sidebarheadings active" },
-                    [
-                      _c("h6", { staticClass: "panel-title" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              "data-toggle": "collapse",
-                              "data-parent": "#accordion-control-right",
-                              href: "#accordion-control-right-group1"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "icon-star-empty3" }),
-                            _vm._v(" Campaign Type")
-                          ]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group1" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(
-                              "\n                                                    Most startups fail. But many of those failures are preventable.\n                                                    The Lean Startup is a new approach being adopted across the\n                                                    globe, changing the way companies are built and new products are\n                                                    launched.\n                                                "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group2"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-arrow-up-left2" }),
-                          _vm._v("  Source")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group2" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(" Conetent Goes here...")
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group73"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-star-full2" }),
-                          _vm._v("  Rating")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group73" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(" Conetent Goes here...")
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group74"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-calendar" }),
-                          _vm._v("  Date Created")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse",
-                      attrs: { id: "accordion-control-right-group74" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _vm._v(" Conetent Goes here...")
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "panel panel-white" }, [
-                  _c("div", { staticClass: "panel-heading sidebarheadings" }, [
-                    _c("h6", { staticClass: "panel-title" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "collapsed",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            "data-parent": "#accordion-control-right",
-                            href: "#accordion-control-right-group83"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "icon-thumbs-up2" }),
-                          _vm._v("  Reviews")
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "panel-collapse collapse in",
-                      attrs: { id: "accordion-control-right-group83" }
-                    },
-                    [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row mb20" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: {
-                                    type: "checkbox",
-                                    checked: "checked"
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Total Reviews\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "20" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "100" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row mb20" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: {
-                                    type: "checkbox",
-                                    checked: "checked"
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Positive\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "20" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "100" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row mb20" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: { type: "checkbox" }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Neutral\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                value: "20",
-                                disabled: ""
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                value: "100",
-                                disabled: ""
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("div", { staticClass: "checkbox" }, [
-                              _c("label", [
-                                _c("input", {
-                                  staticClass: "control-primary",
-                                  attrs: {
-                                    type: "checkbox",
-                                    checked: "checked"
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                                                            Negative\n                                                        "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-6" }, [
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "0" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "dash" }, [_vm._v("-")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "form-control input-sm",
-                              attrs: { type: "text", name: "", value: "10" }
-                            })
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-content-footer" }, [
+          _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
+            _c("button", { staticClass: "circle-icon-40 mr15 back_btn" }, [
+              _c("img", {
+                staticClass: "back_img_icon",
+                attrs: { src: "assets/images/filter.svg" }
+              })
+            ]),
+            _vm._v(" "),
             _c(
               "button",
-              {
-                staticClass: "btn dark_btn dropdown-toggle",
-                staticStyle: { display: "inline-block" },
-                attrs: { type: "button" }
-              },
+              { staticClass: "btn btn-md bkg_blue_200 light_000 slidebox" },
               [
-                _c("i", { staticClass: "icon-filter4" }),
-                _c("span", [_vm._v("    Filter")])
-              ]
-            ),
-            _vm._v(
-              "\n                               \n                            "
-            ),
-            _c(
-              "a",
-              {
-                staticStyle: { display: "inline-block" },
-                attrs: { href: "#" }
-              },
-              [_vm._v("Clear All")]
-            )
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "heading-elements" }, [
-      _c(
-        "div",
-        {
-          staticClass: "form-group has-feedback has-feedback-left",
-          staticStyle: { display: "inline-block", margin: "0" }
-        },
-        [
-          _c("input", {
-            staticClass: "form-control input-sm cus_search",
-            attrs: {
-              tableid: "automationList",
-              placeholder: "Search by name",
-              type: "text"
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-control-feedback" }, [
-            _c("i", { staticClass: "icon-search4" })
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "table_action_tool" }, [
-        _c("a", { attrs: { href: "javascript:void(0);" } }, [
-          _c("i", { staticClass: "icon-calendar52" })
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "editDataList",
-            attrs: { href: "javascript:void(0);" }
-          },
-          [_c("i", { staticClass: "icon-pencil" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "custom_action_box",
-            staticStyle: { display: "none" },
-            attrs: { href: "javascript:void(0);", id: "deleteButtonLists" }
-          },
-          [_c("i", { staticClass: "icon-trash position-left" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "custom_action_box",
-            staticStyle: { display: "none" },
-            attrs: { href: "javascript:void(0);", id: "archiveButtonLists" }
-          },
-          [_c("i", { staticClass: "icon-gear position-left" })]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "th",
-      { staticClass: "nosort editAction", staticStyle: { display: "none" } },
-      [
-        _c("label", { staticClass: "custmo_checkbox pull-left" }, [
-          _c("input", {
-            staticClass: "control-primary",
-            attrs: { type: "checkbox", name: "checkAll[]", id: "checkAll" }
-          }),
-          _c("span", { staticClass: "custmo_checkmark" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v("Name")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v("Contacts")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-calendar" }),
-      _vm._v("Created")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-envelop" }), _vm._v("Email")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-iphone" }), _vm._v("SMS")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-calendar" }),
-      _vm._v("Last Incoming Lead")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { staticClass: "text-center" }, [
-      _c("i", { staticClass: "fa fa-dot-circle-o" }),
-      _vm._v("Status")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { staticClass: "text-right" }, [
-      _c("i", { staticClass: "fa fa-dot-circle-o" }),
-      _vm._v("Action")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-left media-middle" }, [
-      _c("a", { staticClass: "icons", attrs: { href: "#" } }, [
-        _c("img", {
-          staticClass: "img-circle img-xs",
-          attrs: { src: "/images/cust1.png", alt: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left-half-clipper" }, [
-      _c("div", { staticClass: "first50-bar" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "value-bar" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left-half-clipper" }, [
-      _c("div", { staticClass: "first50-bar" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "value-bar" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "table_more dropdown-toggle",
-        attrs: { "data-toggle": "dropdown", "aria-expanded": "false" }
-      },
-      [_c("img", { attrs: { src: "/assets/images/more.svg" } })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "heading-elements" }, [
-      _c(
-        "div",
-        {
-          staticClass: "form-group has-feedback has-feedback-left",
-          staticStyle: { display: "inline-block", margin: "0" }
-        },
-        [
-          _c("input", {
-            staticClass: "form-control input-sm cus_search",
-            attrs: { placeholder: "Search by name", type: "text" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-control-feedback" }, [
-            _c("i", { staticClass: "icon-search4" })
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-xs btn-default editDataList",
-          attrs: { type: "button" }
-        },
-        [
-          _c("i", { staticClass: "icon-pencil position-left" }),
-          _vm._v(" Edit\n                                ")
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-xs btn-danger btn-xs lgrey custom_action_box",
-          attrs: { id: "deleteButtonLists" }
-        },
-        [_vm._v("Delete\n                                ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-xs btn-danger btn-xs lgrey custom_action_box",
-          attrs: { id: "archiveButtonLists" }
-        },
-        [
-          _vm._v(
-            "Move To\n                                    Archive\n                                "
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-user" }), _vm._v("Name")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-calendar" }),
-      _vm._v("Created")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-user" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-envelop" }), _vm._v("Email")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("i", { staticClass: "icon-iphone" }), _vm._v("SMS")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("i", { staticClass: "icon-warning2" }),
-      _vm._v("Unsubscribed")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h5", { staticClass: "mb-20 mt40" }, [
-      _vm._v(
-        "\n                                                        Looks Like You Don’t Have Created Any Contact List Yet\n                                                        "
-      ),
-      _c("img", { attrs: { src: "/assets/images/smiley.png" } }),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(
-        "\n                                                        Lets Create Contact List.\n                                                    "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal fade in", attrs: { id: "editlistModel" } },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c(
-              "form",
-              {
-                attrs: {
-                  method: "post",
-                  id: "frmeditlistModel",
-                  name: "frmeditlistModel"
-                }
-              },
-              [
-                _vm._v("\n                    @csrf\n                    "),
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "close",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("×")]
-                  ),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "modal-title" }, [
-                    _c("img", {
-                      attrs: { src: "/assets/images/menu_icons/List_Color.svg" }
-                    }),
-                    _vm._v(
-                      " Edit Contact List\n                              "
-                    ),
-                    _c("i", { staticClass: "icon-info22 fsize12 txt_grey" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "modal-body",
-                    staticStyle: { "padding-bottom": "0px" }
-                  },
-                  [
-                    _c("p", [_vm._v("List Name:")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control h52",
-                      attrs: {
-                        id: "edit_title",
-                        name: "title",
-                        placeholder: "Enter List Name",
-                        type: "text",
-                        required: ""
-                      }
-                    }),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("div", {
-                      staticStyle: { color: "#FF0000", display: "none" },
-                      attrs: { id: "editlistValidation" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "modal-body",
-                    staticStyle: { "padding-top": "0px" }
-                  },
-                  [
-                    _c("p", [_vm._v("List Description:")]),
-                    _vm._v(" "),
-                    _c("textarea", {
-                      staticClass: "form-control h52",
-                      attrs: {
-                        id: "edit_description",
-                        name: "edit_description"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c("input", {
-                    attrs: {
-                      type: "hidden",
-                      name: "list_id",
-                      id: "hidlistid",
-                      value: ""
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary h52",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Update")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-link h52",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Close")]
-                  )
+                _vm._v("Main Action "),
+                _c("span", [
+                  _c("img", { attrs: { src: "assets/images/blue-plus.svg" } })
                 ])
               ]
             )
           ])
         ])
-      ]
-    )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal fade", attrs: { id: "Createnewlist" } },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c(
-              "form",
-              {
-                attrs: {
-                  method: "post",
-                  name: "frmaddListModal",
-                  id: "frmaddListModal",
-                  action: "javascript:void();"
-                }
-              },
-              [
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "close",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("×")]
-                  ),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "modal-title" }, [
+    return _c("div", { staticClass: "table_head_action" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("h3", { staticClass: "htxt_medium_16 dark_400" }, [
+            _vm._v("Contact lists")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table_action" }, [
+            _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
                     _c("img", {
-                      attrs: { src: "/assets/css/menu_icons/Email_Color.svg" }
-                    }),
-                    _vm._v(
-                      "\n                            Create a new list   "
-                    ),
-                    _c("i", { staticClass: "icon-info22 fsize12 txt_grey" })
+                      attrs: { src: "assets/images/date_created.svg" }
+                    })
+                  ]),
+                  _vm._v("  Date Created\n                                   ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right ml10 mr10" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", { attrs: { src: "assets/images/list_view.svg" } })
+                  ]),
+                  _vm._v("  List View\n                                   ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right" }, [
+              _c("input", {
+                staticClass: "table_search",
+                attrs: { type: "text", placeholder: "Search" }
+              })
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "assets/images/user_16_grey.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 text-center" }, [
+      _c(
+        "div",
+        { staticClass: "card p30 bkg_light_200 shadow_none h235 animate_top" },
+        [
+          _c("img", {
+            staticClass: "mt20 mb30",
+            attrs: { src: "assets/images/plus_icon_circle_64.svg" }
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
+            _vm._v("Create"),
+            _c("br"),
+            _vm._v("contacts list")
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table_head_action mt10" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("h3", { staticClass: "htxt_medium_16 dark_400" }, [
+            _vm._v("Latest contacts")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table_action" }, [
+            _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", {
+                      attrs: { src: "assets/images/date_created.svg" }
+                    })
+                  ]),
+                  _vm._v("  Date Created\n                                   ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right ml10 mr10" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", { attrs: { src: "assets/images/list_view.svg" } })
+                  ]),
+                  _vm._v("  List View\n                                   ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right" }, [
+              _c("input", {
+                staticClass: "table_search",
+                attrs: { type: "text", placeholder: "Search" }
+              })
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "table-responsive" }, [
+          _c("table", { staticClass: "table table-borderless" }, [
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "table-img mr15" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/table_user.png" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+                    _vm._v("Courtney Black")
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v("nina.hernandez@example.com")
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("# lead, subscriber")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-dark" }, [
+                    _vm._v("+4")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Customer")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "dot_6 bkg_blue_300" }, [
+                    _vm._v(" ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-2-line.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/mail-open-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-3-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "table-img mr15" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/table_user2.png" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+                    _vm._v("Savannah Webb")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v("ivan.carter@example.com")
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("# lead, subscriber")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-dark" }, [
+                    _vm._v("+4")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Ticket")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "dot_6 bkg_yellow_500" }, [
+                    _vm._v(" ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-2-line.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/mail-open-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-3-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "table-img mr15" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/table_user3.png" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+                    _vm._v("Bessie Flores")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v("tim.jennings@example.com")
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("# lead, subscriber")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-dark" }, [
+                    _vm._v("+4")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Customer")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "dot_6 bkg_blue_300" }, [
+                    _vm._v(" ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-2-line.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/mail-open-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-3-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "table-img mr15" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/table_user4.png" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+                    _vm._v("Dianne Mckinney")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v("logan.hopkins@example.com")
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("# lead, subscriber")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-dark" }, [
+                    _vm._v("+4")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Ticket")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "dot_6 bkg_yellow_500" }, [
+                    _vm._v(" ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-2-line.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/mail-open-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-3-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [
+                  _c("span", { staticClass: "table-img mr15" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/table_user2.png" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+                    _vm._v("Dianne Mckinney")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v("logan.hopkins@example.com")
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("# lead, subscriber")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "badge badge-dark" }, [
+                    _vm._v("+4")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Ticket")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "dot_6 bkg_yellow_500" }, [
+                    _vm._v(" ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-2-line.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/mail-open-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/message-3-line-16.svg" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "icons" }, [
+                    _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+      _c(
+        "div",
+        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                height: "100%",
+                "overflow-y": "auto",
+                "overflow-x": "hidden"
+              }
+            },
+            [
+              _c("a", { staticClass: "cross_icon slidebox" }, [
+                _c("i", {}, [
+                  _c("img", { attrs: { src: "assets/images/cross.svg" } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p40" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/list-icon.svg" }
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
+                      _vm._v("Create List ")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("form", { attrs: { action: "/action_page.php" } }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Please Enter Title below:")]),
+                        _c("label", { attrs: { for: "fname" } }, [
+                          _vm._v("List name")
+                        ]),
                         _vm._v(" "),
                         _c("input", {
-                          staticClass: "form-control",
+                          staticClass: "form-control h56",
                           attrs: {
-                            id: "title",
-                            name: "title",
-                            placeholder: "Enter Title",
                             type: "text",
-                            required: ""
+                            id: "fname",
+                            placeholder: "Enter list name",
+                            name: "fname"
                           }
                         })
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group mb0" }, [
-                        _c("label", [_vm._v("Please Enter Description:")]),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "phonenumber" } }, [
+                          _vm._v("Color")
+                        ]),
                         _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control h52",
-                          attrs: {
-                            type: "text",
-                            id: "listDescription",
-                            name: "listDescription",
-                            value: "",
-                            placeholder: "Enter list description"
-                          }
+                        _c("div", { staticClass: "phonenumber" }, [
+                          _c("div", { staticClass: "colorbox" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "colorpickerplus-dropdown",
+                                attrs: { id: "color_picker" }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "dropdown-toggle pickerbutton",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "dropdown"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass:
+                                        "color-fill-icon dropdown-color-fill-icon"
+                                    }),
+                                    _vm._v("   Pick a Color    "),
+                                    _c("b", { staticClass: "caret" })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("ul", { staticClass: "dropdown-menu" }, [
+                                  _c("li", { staticClass: "disabled" }, [
+                                    _c("div", {
+                                      staticClass: "colorpickerplus-container"
+                                    })
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "desc" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          staticClass: "form-control min_h_185 p20 pt10",
+                          attrs: { id: "desc", placeholder: "List description" }
                         })
                       ])
                     ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn dark_btn bkg_sblue fsize14 h52",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Continue")]
-                  ),
+                _c("div", { staticClass: "row bottom-position" }, [
+                  _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-link fsize14 txt_blue h52",
-                      attrs: {
-                        "data-toggle": "modal",
-                        "data-dismiss": "modal",
-                        type: "button"
-                      }
-                    },
-                    [_vm._v("Cancel\n                        ")]
-                  )
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                      },
+                      [_vm._v("Create")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "blue_300 fsize16 fw600 ml20",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Close")]
+                    )
+                  ])
                 ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
+              ])
+            ]
+          )
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -55847,6 +53865,178 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+      _c(
+        "div",
+        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                height: "100%",
+                "overflow-y": "auto",
+                "overflow-x": "hidden"
+              }
+            },
+            [
+              _c("a", { staticClass: "cross_icon slidebox" }, [
+                _c("i", {}, [
+                  _c("img", { attrs: { src: "assets/images/cross.svg" } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p40" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("img", {
+                      attrs: { src: "assets/images/list-icon.svg" }
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
+                      _vm._v("Create List ")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("form", { attrs: { action: "/action_page.php" } }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "fname" } }, [
+                          _vm._v("List name")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control h56",
+                          attrs: {
+                            type: "text",
+                            id: "fname",
+                            placeholder: "Enter list name",
+                            name: "fname"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "phonenumber" } }, [
+                          _vm._v("Color")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "phonenumber" }, [
+                          _c("div", { staticClass: "colorbox" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "colorpickerplus-dropdown",
+                                attrs: { id: "color_picker" }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "dropdown-toggle pickerbutton",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "dropdown"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass:
+                                        "color-fill-icon dropdown-color-fill-icon"
+                                    }),
+                                    _vm._v("   Pick a Color    "),
+                                    _c("b", { staticClass: "caret" })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("ul", { staticClass: "dropdown-menu" }, [
+                                  _c("li", { staticClass: "disabled" }, [
+                                    _c("div", {
+                                      staticClass: "colorpickerplus-container"
+                                    })
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "desc" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          staticClass: "form-control min_h_185 p20 pt10",
+                          attrs: { id: "desc", placeholder: "List description" }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row bottom-position" }, [
+                  _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                      },
+                      [_vm._v("Create")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "blue_300 fsize16 fw600 ml20",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Close")]
+                    )
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/helpers/PlatformImage.vue?vue&type=template&id=8a5f437a&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/helpers/PlatformImage.vue?vue&type=template&id=8a5f437a& ***!
@@ -73650,6 +71840,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/helpers/PeopleListCreateSmartPopup.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/helpers/PeopleListCreateSmartPopup.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PeopleListCreateSmartPopup_vue_vue_type_template_id_0e30cee1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1& */ "./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1&");
+/* harmony import */ var _PeopleListCreateSmartPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PeopleListCreateSmartPopup.vue?vue&type=script&lang=js& */ "./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PeopleListCreateSmartPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PeopleListCreateSmartPopup_vue_vue_type_template_id_0e30cee1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PeopleListCreateSmartPopup_vue_vue_type_template_id_0e30cee1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/helpers/PeopleListCreateSmartPopup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleListCreateSmartPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PeopleListCreateSmartPopup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleListCreateSmartPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleListCreateSmartPopup_vue_vue_type_template_id_0e30cee1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/helpers/PeopleListCreateSmartPopup.vue?vue&type=template&id=0e30cee1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleListCreateSmartPopup_vue_vue_type_template_id_0e30cee1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleListCreateSmartPopup_vue_vue_type_template_id_0e30cee1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/helpers/PlatformImage.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/helpers/PlatformImage.vue ***!
@@ -73958,6 +72217,43 @@ __webpack_require__.r(__webpack_exports__);
       var dateString = today.format("ddS-m-yy"); //alert("Formatted Date: "+dateString);
     },
     displayDateFormat: function displayDateFormat(format, datetime) {
+      /*
+          Day:
+          d - Numeric day of the month with leading zeros (01 to 31)
+          D - Short day abbreviation (three letters). Mon through Sun.
+          j - Day of the month without leading zeros ( 1 to 31)
+          l (lowercase 'L') - Full day name (Sunday through Saturday)
+          N - ISO-8601 numeric representation of a day of a week (1 (for Monday) through 7 (for Sunday).
+          S - English ordinal suffix for the day of the month, 2 characters (st, nd, rd or th. Works well with j)
+          w - Numeric day of the week. (0 (for Sunday) through 6 (for Saturday)
+          z - Numeric day of the year (0 to 365)
+           Week:
+          W - ISO-8601 numeric representation of week number of year. Week starting from Monday
+           Month :
+          F - Full month name. (January through December)
+          m - Numeric representation of a month with leading zeros (01 to 12)
+          M - Short month abbreviation (three letters). Jan through Dec
+          n - Numeric representation of a month, without leading zeros (1 through 12)
+          t -Number of days of a specified month (28 through 31)
+           Year :
+          L - Whether it's a leap year (set 1 if leapyear otherwise 0)
+          o - ISO-8601 year number
+          Y - Numeric year value in 4 digits (1999)
+          y - Numeric year value in two digit (1999 as 99)
+           Time :
+          a - Lowercase am or pm.
+          A - Uppercase AM or PM.
+          B - Swatch Internet time (000 through 999)
+          g - 12-hour format of an hour without leading zeros (1 to 12)
+          G - 24-hour format of an hour without leading zeros (0 to 23)
+          h - 12-hour format of an hour with leading zeros (01 to 12)
+          H - 24-hour format of an hour with leading zeros(00 to 23)
+          i - Minutes with leading zeros (00 to 59)
+          s - Seconds, with leading zeros (00 to 59)
+          u - Microseconds(numeric value) Example : 574925
+           Timezone :
+          T - Timezone abbreviation. (Examples: EST, MDT)
+       */
       //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
       return date(format, strtotime(datetime));
     }
