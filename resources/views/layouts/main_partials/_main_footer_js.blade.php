@@ -115,7 +115,7 @@
 
     });
 
-    $("#addCentralSubscriberData").submit(function (event) {
+    $(document).on("submit", "#addCentralSubscriberData", function (event) {
         event.preventDefault();
         $('.overlaynew').show();
         var formData = new FormData($(this)[0]);

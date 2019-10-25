@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\SettingsModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -162,6 +163,10 @@ class Contacts extends Controller
                 }
             } else {
                 $getUserById = $subscribersData;
+            }
+            $notificationSettings = '';
+            if(!empty($userId)){
+                $notificationSettings = SettingsModel::getNotificationSettings($userId);
             }
 
             $subBrandEmail = $mSubscriber->getSubscriberEmailSms($contactId, 'email');
@@ -327,7 +332,8 @@ class Contacts extends Controller
                 'oNotes' => $oNotes,
                 'result' => $result,
                 'pagename' => $breadcrumb,
-                'oPrograms' => $oPrograms
+                'oPrograms' => $oPrograms,
+                'notificationSettings' => $notificationSettings
             );
         }
 
@@ -339,7 +345,9 @@ class Contacts extends Controller
             echo json_encode($response);
             exit;
         } else {
-            return view('admin.contacts.contact_profile', $aData);
+            //return view('admin.contacts.contact_profile', $aData);
+            echo json_encode($aData);
+            exit;
         }
     }
 
@@ -351,12 +359,15 @@ class Contacts extends Controller
 
         if (!empty($userID)) {
             $subscribersData = SubscriberModel::getGlobalSubscribers($userID);
+            /*pre($subscribersData);
+            die;*/
             $archiveContacts = SubscriberModel::getArchiveGlobalSubscribers($userID);
             $getClientTags = TagsModel::getClientTags($userID);
         }
         $iActiveCount = $iArchiveCount = 0;
+
         if(!empty($subscribersData)){
-            foreach($subscribersData as $oSubscriber){
+            foreach($subscribersData->items() as $oSubscriber){
                 if ($oSubscriber->status == 2) {
                     $iArchiveCount++;
                 } else {
@@ -376,11 +387,13 @@ class Contacts extends Controller
             'title' => 'Contacts',
             'pagename' => $breadcrumb,
             'archiveContacts' => $archiveContacts,
-            'subscribersData' => $subscribersData,
+            'subscribersData' => $subscribersData->items(),
+            'allData' => $subscribersData,
             'activeCount' => $iActiveCount,
             'archiveCount' => $iArchiveCount,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
+            'moduleAccountID' => $userID,
             'getClientTags' => $getClientTags,
             'bActiveSubsription' => $bActiveSubsription,
             'list_id' => ''

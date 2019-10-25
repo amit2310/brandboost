@@ -1,7 +1,7 @@
 export default {
     methods: {
         capitalizeFirstLetter(str) {
-            if (typeof str !== 'string') return '';
+            if (typeof str !== 'string') return str;
             return str.charAt(0).toUpperCase() + str.slice(1);
         },
         paginate(tableId, time = 1000) {

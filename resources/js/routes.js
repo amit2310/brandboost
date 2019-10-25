@@ -1,6 +1,7 @@
 import Dashboard from './components/admin/dashboard/';
 import Live from './components/admin/live/';
 import Contact from './components/admin/contact/Contacts.vue';
+import ContactProfile from './components/admin/contact/ContactProfile';
 import ContactDashboard from './components/admin/contact/Dashboard';
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
 import Service from './components/Services.vue';
@@ -26,6 +27,7 @@ const routes = [
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
     { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },
+    { path: '/contacts/profile/:id', component: ContactProfile, props:{ pageColor: 'people_sec'} },
 
     /*Onsite Module*/
     { path: '/brandboost/onsite_overview', component: OnsiteOverview, props:{pageColor: 'onsite_sec'}, meta: {title: 'Onsite overview - Brand Boost'} },
