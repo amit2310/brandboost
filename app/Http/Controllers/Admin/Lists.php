@@ -125,7 +125,8 @@ class Lists extends Controller {
             $addPC = '';
             if ($totalEmailGraph > 50)
                 $addPC = 'over50';
-
+            //$newolists1 = arrayToObject($newolists);
+            //print_r($newolists1);
             $aData = array(
                 'title' => 'Lists',
                 'pagename' => $breadcrumb,
@@ -155,8 +156,26 @@ class Lists extends Controller {
 
         //return view('admin.lists.index', $aData);
 
-        echo json_encode($aData);
+        echo json_encode($aData)."^^^^^".json_encode($newolists);
         exit();
+    }
+
+    /**
+     * Convert Array into Object
+     */
+    public function arrayToObject($d) {
+        if (is_array($d)) {
+            /*
+            * Return array converted to object
+            * Using __FUNCTION__ (Magic constant)
+            * for recursive call
+            */
+            return (object) array_map(__FUNCTION__, $d);
+        }
+        else {
+            // Return object
+            return $d;
+        }
     }
 
     /**

@@ -166,6 +166,49 @@ export default {
             //alert("Formatted Date: "+dateString);
         },
         displayDateFormat(format, datetime) {
+            /*
+                Day:
+                d - Numeric day of the month with leading zeros (01 to 31)
+                D - Short day abbreviation (three letters). Mon through Sun.
+                j - Day of the month without leading zeros ( 1 to 31)
+                l (lowercase 'L') - Full day name (Sunday through Saturday)
+                N - ISO-8601 numeric representation of a day of a week (1 (for Monday) through 7 (for Sunday).
+                S - English ordinal suffix for the day of the month, 2 characters (st, nd, rd or th. Works well with j)
+                w - Numeric day of the week. (0 (for Sunday) through 6 (for Saturday)
+                z - Numeric day of the year (0 to 365)
+
+                Week:
+                W - ISO-8601 numeric representation of week number of year. Week starting from Monday
+
+                Month :
+                F - Full month name. (January through December)
+                m - Numeric representation of a month with leading zeros (01 to 12)
+                M - Short month abbreviation (three letters). Jan through Dec
+                n - Numeric representation of a month, without leading zeros (1 through 12)
+                t -Number of days of a specified month (28 through 31)
+
+                Year :
+                L - Whether it's a leap year (set 1 if leapyear otherwise 0)
+                o - ISO-8601 year number
+                Y - Numeric year value in 4 digits (1999)
+                y - Numeric year value in two digit (1999 as 99)
+
+                Time :
+                a - Lowercase am or pm.
+                A - Uppercase AM or PM.
+                B - Swatch Internet time (000 through 999)
+                g - 12-hour format of an hour without leading zeros (1 to 12)
+                G - 24-hour format of an hour without leading zeros (0 to 23)
+                h - 12-hour format of an hour with leading zeros (01 to 12)
+                H - 24-hour format of an hour with leading zeros(00 to 23)
+                i - Minutes with leading zeros (00 to 59)
+                s - Seconds, with leading zeros (00 to 59)
+                u - Microseconds(numeric value) Example : 574925
+
+                Timezone :
+                T - Timezone abbreviation. (Examples: EST, MDT)
+             */
+
             //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
             return date(format, strtotime(datetime));
         }
