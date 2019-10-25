@@ -610,8 +610,12 @@ class SubscriberModel extends Model {
     */
 
     public function getPeopleSubscriberInfo($id) {
+
+
     $oData = DB::table('tbl_subscribers')
-    ->where('id', $id)
+        ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus', 'tbl_users.avatar', 'tbl_users.last_login', 'tbl_users.created AS regdate')
+        ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+    ->where('tbl_subscribers.id', $id)
     ->get();
     return $oData;
     }
