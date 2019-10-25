@@ -41395,11 +41395,9 @@ var render = function() {
                   _vm._v(" "),
                   _vm.reviewsData
                     ? _c("strong", [_vm._v(_vm._s(_vm.reviewsData.length))])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("strong", {
-                    domProps: { innerHTML: _vm._s(_vm.displayNoData()) }
-                  })
+                    : _c("strong", {
+                        domProps: { innerHTML: _vm._s(_vm.displayNoData()) }
+                      })
                 ]),
                 _vm._v(" "),
                 _c("li", [

@@ -244,7 +244,7 @@
                             </li>
                             <li><span>Reviews</span>
                                 <strong v-if="reviewsData">{{reviewsData.length}}</strong>
-                                <strong v-html="displayNoData()"></strong>
+                                <strong v-else v-html="displayNoData()"></strong>
                             </li>
                             <li><span>Notification</span>
                                 <strong>{{ (notificationSettings.system_notify) ? 'On' : 'Off' }}</strong>
