@@ -11265,6 +11265,347 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactProfile.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/ContactProfile.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    UserAvatar: _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      formFields: {},
+      newNote: '',
+      profileID: this.$route.params.id,
+      profileData: {},
+      personalData: {
+        firstname: '',
+        lastname: '',
+        email: ''
+      },
+      notesData: {},
+      listData: {},
+      activityData: {},
+      reviewsData: {},
+      notificationSettings: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/admin/contacts/profile/' + this.profileID).then(function (response) {
+      _this.profileData = response.data;
+      _this.personalData = response.data.subscribersData;
+      _this.notesData = response.data.oNotes;
+      _this.listData = response.data.oLists;
+      _this.activityData = response.data.userActivities;
+      _this.reviewsData = response.data.aReviews;
+      _this.notificationSettings = response.data.notificationSettings;
+      /*console.log(response.data);*/
+    });
+  },
+  methods: {
+    submitNotes: function submitNotes() {
+      var _this2 = this;
+
+      console.log(this.formFields);
+      axios.post('/admin/contacts/add_contact_notes', this.formFields).then(function (response) {
+        alert('Notes added succesfully');
+        _this2.formFields.notes = '';
+      });
+      alert('form submitted');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactTags.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/ContactTags.vue?vue&type=script&lang=js& ***!
@@ -17952,6 +18293,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -18002,6 +18346,10 @@ __webpack_require__.r(__webpack_exports__);
     showPaginationData: function showPaginationData(current_page) {
       /*alert('current Page is '+ t);*/
       this.$emit('navPage', current_page);
+    },
+    loadProfile: function loadProfile(id) {
+      window.location.href = '/admin#/contacts/profile/' + id;
+      /*alert('Load Profile for '+id);*/
     }
   },
   mounted: function mounted() {
@@ -40654,6 +41002,843 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactProfile.vue?vue&type=template&id=89a6183a&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/ContactProfile.vue?vue&type=template&id=89a6183a& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "content-area" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card p30 pl40 pr50 user_profile" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-1" }, [
+                  _vm.personalData.avatar
+                    ? _c(
+                        "div",
+                        { staticClass: "profile_icon" },
+                        [
+                          _c("user-avatar", {
+                            attrs: {
+                              avatar: _vm.personalData.avatar,
+                              firstname: _vm.personalData.firstname,
+                              lastname: _vm.personalData.lastname,
+                              width: 76,
+                              height: 76,
+                              fontsize: 12
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _c("div", { staticClass: "profile_icon" }, [
+                        _c("img", {
+                          attrs: { src: "/assets/images/profile-icon-36.svg" }
+                        })
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("div", { staticClass: "profile_details" }, [
+                    _c(
+                      "h3",
+                      { staticClass: "htxt_medium_20 dark_700 mb-2 mt15" },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.personalData.firstname +
+                              " " +
+                              _vm.personalData.lastname
+                          )
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "p",
+                      { staticClass: "fsize12 dark_200 text-uppercase mb0" },
+                      [
+                        _vm._v(
+                          "#" +
+                            _vm._s(_vm.personalData.id) +
+                            ". " +
+                            _vm._s(_vm.personalData.email)
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-8" }, [
+            _c("div", { staticClass: "card p20 pl30 pr30 min_h_240" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content" }, [
+                _c(
+                  "div",
+                  { staticClass: "tab-pane active", attrs: { id: "AddNote" } },
+                  [
+                    _c(
+                      "form",
+                      {
+                        attrs: { method: "post" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.submitNotes(this)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "p-0 mb20" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: (_vm.formFields.subscriberid =
+                                  _vm.personalData.id),
+                                expression:
+                                  "formFields.subscriberid=personalData.id"
+                              }
+                            ],
+                            attrs: { type: "hidden", name: "subscriberid" },
+                            domProps: {
+                              value: (_vm.formFields.subscriberid =
+                                _vm.personalData.id)
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  (_vm.formFields.subscriberid =
+                                    _vm.personalData),
+                                  "id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: (_vm.formFields._token = _vm.csrf_token()),
+                                expression: "formFields._token=csrf_token()"
+                              }
+                            ],
+                            attrs: { type: "hidden", name: "_token" },
+                            domProps: {
+                              value: (_vm.formFields._token = _vm.csrf_token())
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.formFields,
+                                  "_token=csrf_token()",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.formFields.notes,
+                                expression: "formFields.notes"
+                              }
+                            ],
+                            staticClass: "border-0 w-100 fsize15 dark_200",
+                            staticStyle: { resize: "none" },
+                            attrs: {
+                              required: "",
+                              placeholder: "Leave your note here..."
+                            },
+                            domProps: { value: _vm.formFields.notes },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.formFields,
+                                  "notes",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(4)
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tab-pane fade", attrs: { id: "Chat" } },
+                  [
+                    _vm._v(
+                      "\n                            Chat\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tab-pane fade", attrs: { id: "Email" } },
+                  [
+                    _vm._v(
+                      "\n                            Email\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: { id: "TextMessage" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Text Message\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tab-pane fade", attrs: { id: "Review" } },
+                  [
+                    _vm._v(
+                      "\n                            Review\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(5)
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-8" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-12" },
+                [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _vm._l(_vm.activityData, function(activity, index) {
+                    return _c("div", { staticClass: "activity_date_small" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          index % 2 == 0
+                            ? _c(
+                                "div",
+                                { staticClass: "icons bkg_yellow_400" },
+                                [_vm._m(8, true)]
+                              )
+                            : index % 3 == 0
+                            ? _c(
+                                "div",
+                                { staticClass: "icons bkg_green_400" },
+                                [_vm._m(9, true)]
+                              )
+                            : _c("div", { staticClass: "icons bkg_blue_200" }, [
+                                _vm._m(10, true)
+                              ]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            { staticClass: "htxt_bold_16 dark_800 mb-2" },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.capitalizeFirstLetter(
+                                    activity.action_name.replace("_", " ")
+                                  )
+                                )
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            { staticClass: "htxt_regular_14 dark_400 mb0" },
+                            [_vm._v(_vm._s(activity.activity_message))]
+                          ),
+                          _vm._v(" "),
+                          _vm._m(11, true)
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "time" }, [
+                          _c("p", { staticClass: "htxt_regular_14 dark_200" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.displayDateFormat(
+                                  "d M Y, h:i A",
+                                  activity.activity_created
+                                )
+                              )
+                            )
+                          ])
+                        ])
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card p20 min_h_240 " }, [
+              _c("h3", { staticClass: "htxt_medium_16 dark_800" }, [
+                _vm._v("Info")
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("ul", { staticClass: "info_list" }, [
+                _vm._m(12),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("First Seen")]),
+                  _vm._v(" "),
+                  _vm.personalData.regdate
+                    ? _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.displayDateFormat(
+                              "d M Y",
+                              _vm.personalData.regdate
+                            )
+                          )
+                        )
+                      ])
+                    : _c("strong", {
+                        domProps: { innerHTML: _vm._s(_vm.displayNoData()) }
+                      })
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("Lase Seen")]),
+                  _vm._v(" "),
+                  _vm.personalData.last_login
+                    ? _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.displayDateFormat(
+                              "d M Y",
+                              _vm.personalData.last_login
+                            )
+                          )
+                        )
+                      ])
+                    : _c("strong", {
+                        domProps: { innerHTML: _vm._s(_vm.displayNoData()) }
+                      })
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("Page views")]),
+                  _vm._v(" "),
+                  _c("strong", {
+                    domProps: { innerHTML: _vm._s(_vm.displayNoData()) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("Reviews")]),
+                  _vm._v(" "),
+                  _vm.reviewsData
+                    ? _c("strong", [_vm._v(_vm._s(_vm.reviewsData.length))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("strong", {
+                    domProps: { innerHTML: _vm._s(_vm.displayNoData()) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("Notification")]),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.notificationSettings.system_notify ? "On" : "Off"
+                      )
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("Id")]),
+                  _c("strong", [_vm._v(_vm._s(_vm.personalData.id))])
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("span", [_vm._v("SMS")]),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.notificationSettings.system_notify ? "On" : "Off"
+                      )
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "top-bar-top-section bbot" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 col-6" }, [
+            _c("span", { staticClass: "float-left mr20" }, [
+              _c("img", { attrs: { src: "/assets/images/BACK.svg" } })
+            ]),
+            _vm._v(" "),
+            _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
+              _vm._v("People Profile")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
+            _c("button", { staticClass: "circle-icon-40 mr15" }, [
+              _c("img", { attrs: { src: "/assets/images/filter.svg" } })
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-md bkg_blue_200 light_000" }, [
+              _vm._v("Main Action "),
+              _c("span", [
+                _c("img", { attrs: { src: "/assets/images/blue-plus.svg" } })
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 text-center" }, [
+      _c("img", {
+        staticClass: "mt15",
+        staticStyle: { "max-width": "250px" },
+        attrs: { src: "/assets/images/profile_graph.svg" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-2 text-center" }, [
+      _c("img", {
+        staticStyle: { "max-width": "86px" },
+        attrs: { src: "/assets/images/lead_source.png" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills profile_tab mt-0 mb20 bbot pb20",
+        attrs: { role: "tablist" }
+      },
+      [
+        _c("li", { staticClass: "mr30" }, [
+          _c(
+            "a",
+            {
+              staticClass: "htxt_bold_14 active",
+              attrs: { "data-toggle": "pill", href: "#AddNote" }
+            },
+            [
+              _c("img", { attrs: { src: "/assets/images/file-3-line.svg" } }),
+              _vm._v("   Add Note")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "mr30" }, [
+          _c(
+            "a",
+            {
+              staticClass: "htxt_bold_14",
+              attrs: { "data-toggle": "pill", href: "#Chat" }
+            },
+            [
+              _c("img", {
+                attrs: { src: "/assets/images/message-2-line.svg" }
+              }),
+              _vm._v("   Chat")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "mr30" }, [
+          _c(
+            "a",
+            {
+              staticClass: "htxt_bold_14",
+              attrs: { "data-toggle": "pill", href: "#Email" }
+            },
+            [
+              _c("img", {
+                attrs: { src: "/assets/images/mail-open-line.svg" }
+              }),
+              _vm._v("   Email")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "mr30" }, [
+          _c(
+            "a",
+            {
+              staticClass: "htxt_bold_14",
+              attrs: { "data-toggle": "pill", href: "#TextMessage" }
+            },
+            [
+              _c("img", {
+                attrs: { src: "/assets/images/message-3-line-16.svg" }
+              }),
+              _vm._v("   Text Message")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", {}, [
+          _c(
+            "a",
+            {
+              staticClass: "htxt_bold_14",
+              attrs: { "data-toggle": "pill", href: "#Review" }
+            },
+            [
+              _c("img", { attrs: { src: "/assets/images/star-line.svg" } }),
+              _vm._v("   Review")
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-0 text-right" }, [
+      _c(
+        "button",
+        { staticClass: "border-0 bkg_none p-0", attrs: { type: "submit" } },
+        [
+          _c("img", {
+            attrs: { src: "/assets/images/blue_48_send_circle.svg" }
+          })
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4" }, [
+      _c("div", { staticClass: "card p20 min_h_240 profile_form" }, [
+        _c("h3", { staticClass: "htxt_medium_16 dark_800" }, [
+          _vm._v("Sales pipeline")
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            {
+              staticClass: "fsize12 fw400 dark_100",
+              attrs: { for: "Leadsource" }
+            },
+            [_vm._v("Lead source")]
+          ),
+          _vm._v(" "),
+          _c("select", { staticClass: "form-control h36" }, [
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group mb-0" }, [
+          _c(
+            "label",
+            { staticClass: "fsize12 fw400 dark_100", attrs: { for: "Stage" } },
+            [_vm._v("Stage")]
+          ),
+          _vm._v(" "),
+          _c("select", { staticClass: "form-control h36" }, [
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Email Campaign")])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table_head_action mt-1 mb25" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("h3", { staticClass: "htxt_bold_20 dark_700" }, [
+            _vm._v("Activity")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table_action" }, [
+            _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _vm._v(
+                    "\n                                        Last week\n                                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right ml10 mr10" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _vm._v(
+                    "\n                                        All types\n                                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "activity_date_small" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "icons bkg_green_400" }, [
+            _c("i", [
+              _c("img", { attrs: { src: "/assets/images/message-3-line.svg" } })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "htxt_bold_16 dark_800 mb-2" }, [
+            _vm._v("Received SMS")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "htxt_regular_14 dark_400 mb0" }, [
+            _vm._v(
+              "Hey Alex, do you have few minutes for a quick call at 11:30 AM?"
+            )
+          ]),
+          _vm._v(" "),
+          _c("button", { staticClass: "activity_button" }, [
+            _c("i", [
+              _c("img", {
+                attrs: { src: "/assets/images/message-3-line-16.svg" }
+              })
+            ]),
+            _vm._v(" Answer with SMS")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "time" }, [
+          _c("p", { staticClass: "htxt_regular_14 dark_200" }, [
+            _vm._v("11:44AM")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "/assets/images/message-3-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "/assets/images/message-3-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "/assets/images/message-3-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "activity_button" }, [
+      _c("i", [
+        _c("img", { attrs: { src: "/assets/images/message-3-line-16.svg" } })
+      ]),
+      _vm._v(" Answer with SMS")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("span", [_vm._v("Source")]),
+      _c("strong", [_vm._v("Email")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactTags.vue?vue&type=template&id=4adbc14f&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/ContactTags.vue?vue&type=template&id=4adbc14f& ***!
@@ -54484,45 +55669,67 @@ var render = function() {
                 [
                   _vm._m(1),
                   _vm._v(" "),
+                  _vm._m(2),
+                  _vm._v(" "),
                   _vm._l(_vm.activeUsers, function(contact) {
                     return _vm.activeUsers.length > 0
                       ? _c("tr", [
-                          _c(
-                            "td",
-                            [
-                              _c("user-avatar", {
-                                attrs: {
-                                  avatar: contact.avatar,
-                                  firstname: contact.firstname,
-                                  lastname: contact.lastname,
-                                  width: 32,
-                                  height: 32,
-                                  fontsize: 12
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "javascript:void(0);" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.loadProfile(
+                                      contact.subscriber_id
+                                    )
+                                  }
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "htxt_medium_14 dark_900" },
-                                [
-                                  _vm._v(
+                              },
+                              [
+                                _c("user-avatar", {
+                                  attrs: {
+                                    avatar: contact.avatar,
+                                    firstname: contact.firstname,
+                                    lastname: contact.lastname,
+                                    width: 32,
+                                    height: 32,
+                                    fontsize: 12
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "htxt_medium_14 dark_900",
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.loadProfile(
+                                      contact.subscriber_id
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.capitalizeFirstLetter(contact.firstname)
+                                  ) +
+                                    " " +
                                     _vm._s(
                                       _vm.capitalizeFirstLetter(
-                                        contact.firstname
+                                        contact.lastname
                                       )
-                                    ) +
-                                      " " +
-                                      _vm._s(
-                                        _vm.capitalizeFirstLetter(
-                                          contact.lastname
-                                        )
-                                      )
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          ),
+                                    )
+                                )
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c("td", { staticClass: "text-right" }, [
                             _vm._v(_vm._s(contact.email))
@@ -54540,10 +55747,10 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [_vm._v("Customer")]),
                           _vm._v(" "),
-                          _vm._m(2, true),
+                          _vm._m(3, true),
                           _vm._v(" "),
                           _c("td", { staticClass: "text-right" }, [
-                            _vm._m(3, true),
+                            _vm._m(4, true),
                             _vm._v(" "),
                             _c("span", { staticClass: "icons" }, [
                               _c(
@@ -54560,9 +55767,9 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _vm._m(4, true),
+                            _vm._m(5, true),
                             _vm._v(" "),
-                            _vm._m(5, true)
+                            _vm._m(6, true)
                           ])
                         ])
                       : _vm._e()
@@ -54700,6 +55907,62 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("td", { attrs: { colspan: "3" } }, [
         _c("span", { staticClass: "fsize12 fw300" }, [_vm._v("List fields")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [
+        _c("span", { staticClass: "table-img mr15" }, [
+          _c("img", { attrs: { src: "/assets/images/table_user.png" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "htxt_medium_14 dark_900" }, [
+          _vm._v("Courtney Black")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "text-right" }, [
+        _vm._v("nina.hernandez@example.com")
+      ]),
+      _vm._v(" "),
+      _c("td", [
+        _vm._v("# lead, subscriber "),
+        _c(
+          "span",
+          {
+            staticClass: "badge badge-dark",
+            staticStyle: { "margin-left": "15px" }
+          },
+          [_vm._v("+4")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Customer")]),
+      _vm._v(" "),
+      _c("td", [
+        _c("span", { staticClass: "dot_6 bkg_blue_300" }, [_vm._v(" ")])
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "text-right" }, [
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/message-2-line.svg" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/mail-open-line-16.svg" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/message-3-line-16.svg" } })
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "icons" }, [
+          _c("img", { attrs: { src: "assets/images/star-line.svg" } })
+        ])
       ])
     ])
   },
@@ -71213,6 +72476,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/contact/ContactProfile.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/admin/contact/ContactProfile.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ContactProfile_vue_vue_type_template_id_89a6183a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactProfile.vue?vue&type=template&id=89a6183a& */ "./resources/js/components/admin/contact/ContactProfile.vue?vue&type=template&id=89a6183a&");
+/* harmony import */ var _ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactProfile.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/contact/ContactProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ContactProfile_vue_vue_type_template_id_89a6183a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ContactProfile_vue_vue_type_template_id_89a6183a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/contact/ContactProfile.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/contact/ContactProfile.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/admin/contact/ContactProfile.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ContactProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/contact/ContactProfile.vue?vue&type=template&id=89a6183a&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/admin/contact/ContactProfile.vue?vue&type=template&id=89a6183a& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_89a6183a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ContactProfile.vue?vue&type=template&id=89a6183a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/ContactProfile.vue?vue&type=template&id=89a6183a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_89a6183a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_89a6183a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/contact/ContactTags.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/admin/contact/ContactTags.vue ***!
@@ -73116,24 +74448,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_dashboard___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin/dashboard/ */ "./resources/js/components/admin/dashboard/index.vue");
 /* harmony import */ var _components_admin_live___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/admin/live/ */ "./resources/js/components/admin/live/index.vue");
 /* harmony import */ var _components_admin_contact_Contacts_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/contact/Contacts.vue */ "./resources/js/components/admin/contact/Contacts.vue");
-/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
-/* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
-/* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/reviews */ "./resources/js/components/admin/brandboost/onsite/reviews.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/questions */ "./resources/js/components/admin/brandboost/onsite/questions.vue");
-/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
-/* harmony import */ var _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/onsite/ReviewRequest.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/offsite/ReviewRequest.vue");
-/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
-/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
-/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
-/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
-/* harmony import */ var _components_admin_Lists__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/Lists */ "./resources/js/components/admin/Lists.vue");
-/* harmony import */ var _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/broadcast/Email */ "./resources/js/components/admin/broadcast/Email.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/Overview */ "./resources/js/components/admin/brandboost/offsite/Overview.vue");
-/* harmony import */ var _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/feedback/FeedbackList */ "./resources/js/components/admin/feedback/FeedbackList.vue");
-/* harmony import */ var _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ListOffsiteCampaign */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue");
+/* harmony import */ var _components_admin_contact_ContactProfile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/contact/ContactProfile */ "./resources/js/components/admin/contact/ContactProfile.vue");
+/* harmony import */ var _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/contact/Dashboard */ "./resources/js/components/admin/contact/Dashboard.vue");
+/* harmony import */ var _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/templates/ListTemplates.vue */ "./resources/js/components/admin/templates/ListTemplates.vue");
+/* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/onsite_overview */ "./resources/js/components/admin/brandboost/onsite/onsite_overview.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/reviews */ "./resources/js/components/admin/brandboost/onsite/reviews.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/questions */ "./resources/js/components/admin/brandboost/onsite/questions.vue");
+/* harmony import */ var _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ */ "./resources/js/components/admin/brandboost/onsite/index.vue");
+/* harmony import */ var _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/brandboost/onsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/onsite/ReviewRequest.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ReviewRequest.vue */ "./resources/js/components/admin/brandboost/offsite/ReviewRequest.vue");
+/* harmony import */ var _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/brandboost/Media.vue */ "./resources/js/components/admin/brandboost/Media.vue");
+/* harmony import */ var _components_admin_tags___WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/tags/ */ "./resources/js/components/admin/tags/index.vue");
+/* harmony import */ var _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/tags/tagsreview */ "./resources/js/components/admin/tags/tagsreview.vue");
+/* harmony import */ var _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/tags/tagsfeedback */ "./resources/js/components/admin/tags/tagsfeedback.vue");
+/* harmony import */ var _components_admin_Lists__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/Lists */ "./resources/js/components/admin/Lists.vue");
+/* harmony import */ var _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/broadcast/Email */ "./resources/js/components/admin/broadcast/Email.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/Overview */ "./resources/js/components/admin/brandboost/offsite/Overview.vue");
+/* harmony import */ var _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/admin/feedback/FeedbackList */ "./resources/js/components/admin/feedback/FeedbackList.vue");
+/* harmony import */ var _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/brandboost/offsite/ListOffsiteCampaign */ "./resources/js/components/admin/brandboost/offsite/ListOffsiteCampaign.vue");
+
 
 
 
@@ -73157,7 +74491,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/contacts/dashboard',
-  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _components_admin_contact_Dashboard__WEBPACK_IMPORTED_MODULE_4__["default"],
   props: {
     pageColor: 'onsite_sec'
   }
@@ -73179,11 +74513,17 @@ var routes = [{
   props: {
     pageColor: 'people_sec'
   }
+}, {
+  path: '/contacts/profile/:id',
+  component: _components_admin_contact_ContactProfile__WEBPACK_IMPORTED_MODULE_3__["default"],
+  props: {
+    pageColor: 'people_sec'
+  }
 },
 /*Onsite Module*/
 {
   path: '/brandboost/onsite_overview',
-  component: _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _components_admin_brandboost_onsite_onsite_overview__WEBPACK_IMPORTED_MODULE_7__["default"],
   props: {
     pageColor: 'onsite_sec'
   },
@@ -73192,13 +74532,13 @@ var routes = [{
   }
 }, {
   path: '/brandboost/onsite',
-  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _components_admin_brandboost_onsite___WEBPACK_IMPORTED_MODULE_10__["default"],
   props: {
     pageColor: 'onsite_sec'
   }
 }, {
   path: '/brandboost/reviews',
-  component: _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _components_admin_brandboost_onsite_reviews__WEBPACK_IMPORTED_MODULE_8__["default"],
   props: {
     pageColor: 'onsite_sec'
   },
@@ -73207,7 +74547,7 @@ var routes = [{
   }
 }, {
   path: '/questions',
-  component: _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _components_admin_brandboost_onsite_questions__WEBPACK_IMPORTED_MODULE_9__["default"],
   props: {
     pageColor: 'onsite_sec'
   },
@@ -73216,7 +74556,7 @@ var routes = [{
   }
 }, {
   path: '/brandboost/review_request/onsite',
-  component: _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _components_admin_brandboost_onsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
   props: {
     pageColor: 'onsite_sec',
     title: 'Review Requests',
@@ -73226,21 +74566,21 @@ var routes = [{
 /*Offsite Module*/
 {
   path: '/brandboost/offsite_overview',
-  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_18__["default"],
+  component: _components_admin_brandboost_offsite_Overview__WEBPACK_IMPORTED_MODULE_19__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Offsite overview'
   }
 }, {
   path: '/brandboost/offsite',
-  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_20__["default"],
+  component: _components_admin_brandboost_offsite_ListOffsiteCampaign__WEBPACK_IMPORTED_MODULE_21__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Offsite Brand Boost Campaigns'
   }
 }, {
   path: '/brandboost/review_request/offsite',
-  component: _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+  component: _components_admin_brandboost_offsite_ReviewRequest_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Review Requests',
@@ -73248,7 +74588,7 @@ var routes = [{
   }
 }, {
   path: '/feedback/listall/',
-  component: _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_19__["default"],
+  component: _components_admin_feedback_FeedbackList__WEBPACK_IMPORTED_MODULE_20__["default"],
   props: {
     pageColor: 'offsite_sec',
     title: 'Requires Attention'
@@ -73257,7 +74597,7 @@ var routes = [{
 /* Templates Module */
 {
   path: '/templates/email',
-  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   props: {
     pageColor: 'email_sec',
     title: 'Email Templates',
@@ -73265,7 +74605,7 @@ var routes = [{
   }
 }, {
   path: '/templates/sms',
-  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+  component: _components_admin_templates_ListTemplates_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   props: {
     pageColor: 'sms_sec',
     title: 'Sms Templates',
@@ -73273,37 +74613,37 @@ var routes = [{
   }
 }, {
   path: '/brandboost/media',
-  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+  component: _components_admin_brandboost_Media_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
   props: {
     title: 'On Site Brand Boost Media'
   }
 }, {
   path: '/tags',
-  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_13__["default"],
+  component: _components_admin_tags___WEBPACK_IMPORTED_MODULE_14__["default"],
   meta: {
     title: 'Insight Tags - Brand Boost'
   }
 }, {
   path: '/tags/tagsreview',
-  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_14__["default"],
+  component: _components_admin_tags_tagsreview__WEBPACK_IMPORTED_MODULE_15__["default"],
   meta: {
     title: 'Tags Review - Brand Boost'
   }
 }, {
   path: '/tags/tagsfeedback',
-  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_admin_tags_tagsfeedback__WEBPACK_IMPORTED_MODULE_16__["default"],
   meta: {
     title: 'Tags Feedback - Brand Boost'
   }
 }, {
   path: '/lists',
-  component: _components_admin_Lists__WEBPACK_IMPORTED_MODULE_16__["default"],
+  component: _components_admin_Lists__WEBPACK_IMPORTED_MODULE_17__["default"],
   meta: {
     title: 'Email Lists - Brand Boost'
   }
 }, {
   path: '/broadcast/email',
-  component: _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_17__["default"],
+  component: _components_admin_broadcast_Email__WEBPACK_IMPORTED_MODULE_18__["default"],
   meta: {
     title: 'Email Broadcast - Brand Boost'
   }

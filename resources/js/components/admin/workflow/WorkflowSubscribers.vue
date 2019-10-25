@@ -50,7 +50,7 @@
                             <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
                         </tr>
 
-                        <!--<tr>
+                        <tr>
                             <td><span class="table-img mr15"><img src="/assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
                             <td class="text-right">nina.hernandez@example.com</td>
                             <td># lead, subscriber <span style="margin-left:15px;" class="badge badge-dark">+4</span></td>
@@ -58,18 +58,21 @@
                             <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
                             <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
                             </td>
-                        </tr>-->
+                        </tr>
                         <tr v-for="contact in activeUsers" v-if="activeUsers.length>0">
                             <td>
-                                <user-avatar
-                                    :avatar="contact.avatar"
-                                    :firstname="contact.firstname"
-                                    :lastname="contact.lastname"
-                                    :width="32"
-                                    :height="32"
-                                    :fontsize="12"
-                                ></user-avatar>
-                                <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
+                                <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
+                                    <user-avatar
+                                        :avatar="contact.avatar"
+                                        :firstname="contact.firstname"
+                                        :lastname="contact.lastname"
+                                        :width="32"
+                                        :height="32"
+                                        :fontsize="12"
+                                    ></user-avatar>
+                                </a>
+
+                                <span class="htxt_medium_14 dark_900" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
                              </td>
 
                             <td class="text-right">{{ contact.email }}</td>
@@ -796,6 +799,10 @@
             showPaginationData: function(current_page){
                 /*alert('current Page is '+ t);*/
                 this.$emit('navPage', current_page);
+            },
+            loadProfile: function(id){
+                window.location.href='/admin#/contacts/profile/'+id;
+                /*alert('Load Profile for '+id);*/
             }
         },
 
