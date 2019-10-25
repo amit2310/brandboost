@@ -180,7 +180,19 @@ List Styles Classes
 
 
 
+/******************************
+Accordion Panel
+******************************/
 
+.panel-heading {  padding: 0;	border:0;background: #fff; border-radius: 4px; margin-bottom: 2px;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);}
+.panel-title>a, .panel-title>a:active{	display:block;	padding:15px 15px 15px 40px;  color:#7B89A6;  font-size:14px;  font-weight:400;	text-transform:uppercase;	letter-spacing:0.02em;;
+	text-decoration:none;	position: relative;}
+.panel-heading  a:before {   content: "";   float: right;   transition: all 0.5s;	background: url(../images/acc_icon.svg) no-repeat;	position: absolute;	top: 17px; right: 40px; width: 20px; height: 20px;}
+.panel-heading.active a:before {	-webkit-transform: rotate(180deg);	-moz-transform: rotate(180deg);	transform: rotate(180deg);} 
+.panel-body{background: #fff; border-radius: 4px; margin-bottom: 2px;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);margin-top: -5px;padding: 40px;}
+.panel-heading.active a{border-bottom: 1px solid #e9eff8;}
+.panel-title>a img{margin-right: 15px;}
+.panel-body .form-group .form-control, .panel-body .form-group .form-control::placeholder{font-size: 14px!important; color: #242B3D}
 
 
 /******************************
