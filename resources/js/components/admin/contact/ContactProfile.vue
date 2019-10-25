@@ -315,7 +315,7 @@
                         alert('Notes added succesfully');
                         this.formFields.notes = '';
                     });
-                alert('form submitted');
+
             }
         }
 

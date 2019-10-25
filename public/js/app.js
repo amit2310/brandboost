@@ -11599,7 +11599,6 @@ __webpack_require__.r(__webpack_exports__);
         alert('Notes added succesfully');
         _this2.formFields.notes = '';
       });
-      alert('form submitted');
     }
   }
 });
