@@ -14,11 +14,17 @@ import routes from './routes';
 import axios from 'axios';
 import helpers from './helpers';
 
+import commonComponents from './components/helpers/Common/LoadCommonComponents.js';
+
+commonComponents.forEach(component => {
+    Vue.component(component.name, component);
+});
+
 
 window.axios = axios;
 Vue.use(VueRouter);
 
-Vue.mixin(helpers)
+Vue.mixin(helpers);
 
 /*Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard-reivews', require('./components/admin/dashboard/DashReviews.vue').default);*/

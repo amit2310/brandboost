@@ -54,7 +54,16 @@
     </div>
 </template>
 <script>
-    export default {};
+    export default {
+        data(){
+            return {
+                breadcrumb: {Home:'#/', People:'#/contacts/dashboard', Dashboard:''},
+            }
+        },
+        mounted() {
+            this.makeBreadcrumb(this.breadcrumb);
+        }
+    };
 </script>
 
 
