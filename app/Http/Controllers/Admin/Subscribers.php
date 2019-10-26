@@ -592,6 +592,13 @@ class Subscribers extends Controller
      */
     public function add_contact(Request $request)
     {
+        //Apply validations
+        $validatedData = $request->validate([
+            'firstname' => ['required'],
+            'lastname' => ['required'],
+            'email' => ['required', 'email']
+        ]);
+
         $mSubscriber = new SubscriberModel();
         $response = array();
         $result = array();
@@ -622,6 +629,7 @@ class Subscribers extends Controller
         //$tagID = $request->tagID;
         $moduleName = $request->module_name;
         $moduleAccountID = $request->module_account_id;
+
         //$emailUser = getUserDetailByEmailId($email);
         $oUserAccount = UsersModel::checkEmailExist($email);
 

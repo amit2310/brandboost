@@ -211,6 +211,32 @@ export default {
 
             //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
             return date(format, strtotime(datetime));
+        },
+        makeBreadcrumb(elements){
+            if(elements!= ''){
+                let breadcrumbString = '';
+                breadcrumbString = '<ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">';
+                for(name in elements){
+                    let url = elements[name];
+                    breadcrumbString += '<li>';
+                    if(url != ''){
+                        breadcrumbString += '<a href="'+url+'">';
+                        breadcrumbString += '<img src="/assets/images/mail-open-line.svg"/>';
+                    }
+                    breadcrumbString += ' &nbsp;' + name;
+                    if(url != ''){
+                        breadcrumbString += '</a>';
+                    }
+                    breadcrumbString += '</li>';
+                    if(url != '') {
+                        breadcrumbString += '<li class="ml10 mr10"><img src="/assets/images/chevron-left.svg"/></li>';
+                    }
+                }
+
+                breadcrumbString += '</ul>';
+                document.getElementById("breadcrumb").innerHTML = breadcrumbString;
+
+            }
         }
 
     }
