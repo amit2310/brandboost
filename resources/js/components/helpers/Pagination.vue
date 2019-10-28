@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%;display:block;">
+    <div style="width:100%;display:block;" v-if="pagination.total > pagination.per_page">
         <div style="width:80%;float:left;">
             <ul class="pagination">
                 <li v-if="pagination.current_page > 1" class="page-item">
@@ -24,20 +24,6 @@
             <span><strong>Page {{pagination.current_page}} of {{pagesNumber.length}}</strong></span>
         </div>
 
-
-
-            <!--<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" style="float:right;">
-                Per Page
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> 5 </a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> 10 </a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> 25 </a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> 50 </a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> 100 </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="http://vue.brandboostx.com/admin/login/logout"><i class="dripicons-exit text-muted mr-2"></i> View All </a>
-            </div>-->
         </div>
 
 </template>

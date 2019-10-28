@@ -2425,8 +2425,65 @@ class Broadcast extends Controller {
         $mBroadcast = new BroadcastModel();
         $mWorkflow = new WorkflowModel();
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Segments' => ''
+        );
+
 
         $oSegments = $mBroadcast->getSegments($userID);
+        foreach ($oSegments->items() as $key => $oSegment) {
+            $oSubscribers = BroadcastModel::getSegmentSubscribers($oSegment->id, $userID);
+            $aCampaignIDs = @unserialize($oSegment->source_campaign_id);
+            $moduleName = $oSegment->source_module_name;
+            $modName = '';
+            $campaignCollection = [];
+            if (!empty($aCampaignIDs)) {
+                $campaignCollection = array();
+                foreach ($aCampaignIDs as $campaignId) {
+                    $modName = $moduleName;
+                    if (in_array($moduleName, array('brandboost-onsite', 'brandboost-offsite'))) {
+                        $modName = 'brandboost';
+                    }
+
+                    if (in_array($moduleName, array('nps-feedback'))) {
+                        $modName = 'nps';
+                    }
+                    $oCampaign = $mWorkflow->getModuleUnitInfo($modName, $campaignId);
+                    if (!empty($oCampaign)) {
+                        //$campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        if ($moduleName == 'brandboost') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/details/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                        } else if ($moduleName == 'brandboost-onsite') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/onsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                        } else if ($moduleName == 'brandboost-offsite') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/offsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                        } else if ($moduleName == 'broadcast') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'automation') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/emails/setupAutomation/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'nps') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'nps-feedback') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'referral') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/referral/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        }
+                    }
+
+
+
+                }
+            }
+
+            $oSegment->segmentSubscribers = $oSubscribers;
+            $oSegment->moduleName = $modName;
+            $oSegment->campaignCollection = $campaignCollection;
+            //$oSegments[$key]->data = $oSegment;
+        }
+
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -2437,11 +2494,18 @@ class Broadcast extends Controller {
 
         $aData = array(
             'title' => 'My Segments',
-            'oSegments' => $oSegments,
-            'pagename' => $breadcrumb
+            'allData' => $oSegments,
+            'oSegments' => $oSegments->items(),
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
+            'moduleName' => '',
+            'moduleUnitID' => '',
+            'moduleAccountID' => ''
         );
 
-        return view('admin.broadcast.segments', $aData)->with(['mWorkflow'=> $mWorkflow]);
+        //return view('admin.broadcast.segments', $aData)->with(['mWorkflow'=> $mWorkflow]);
+        echo json_encode($aData);
+        exit;
     }
 
     /**
@@ -2669,6 +2733,54 @@ class Broadcast extends Controller {
         echo json_encode($response);
         exit;
     }
+
+    public function makeSegment(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'segmentName' => ['required'],
+            'segmentDescription' => ['required']
+        ]);
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+
+        $segmentName = $request->segmentName;
+        $description = $request->segmentDescription;
+        //check for already
+        $bDuplicate = $mBroadcast->isDuplicateSegment($segmentName, $userID);
+        if ($bDuplicate == true) {
+            //Display Error and ask to enter template name something else
+            $response['status'] = 'error';
+            $response['msg'] = 'duplicate';
+        } else {
+            //Insert Segment
+            $aData = array(
+                'user_id' => $userID,
+                'segment_name' => $segmentName,
+                'segment_desc' => $description,
+                'created' => date("Y-m-d H:i:s")
+            );
+
+            $segmentID = $mBroadcast->createSegment($aData);
+
+            if ($segmentID) {
+                $response = array('status' => 'success');
+            } else {
+                $response = array('status' => 'error');
+            }
+        }
+
+
+
+        echo json_encode($response);
+        exit;
+
+
+    }
+
 
     /**
      * Used to create segments

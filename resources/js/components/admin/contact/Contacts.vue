@@ -22,6 +22,8 @@
         </div>
 
         <div class="content-area">
+            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+            <loading :isLoading="loading"></loading>
             <workflow-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
@@ -53,7 +55,7 @@
                                     <div class="form-group">
                                         <label for="firstname">First name</label>
                                         <input type="text" class="form-control h56" id="firstname"
-                                               placeholder="Enter name" name="firstname" required="required">
+                                               placeholder="Enter name" name="firstname">
                                     </div>
                                     <div class="form-group">
                                         <label for="lastname">Last name</label>
@@ -63,7 +65,7 @@
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control h56" id="email"
-                                               placeholder="Enter email address" name="email" required="required">
+                                               placeholder="Enter email address" name="email">
                                     </div>
                                     <!--<div class="form-group">
                                       <label for="pwd">Phone number</label>
@@ -171,6 +173,9 @@
         props: ['pageColor'],
         data() {
             return {
+                successMsg : '',
+                errorMsg: '',
+                loading: true,
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
@@ -179,6 +184,7 @@
                 subscribers: {},
                 allData: {},
                 current_page: 1,
+                breadcrumb: ''
 
 
             }
@@ -191,6 +197,8 @@
             loadPaginatedData : function(){
                 axios.get('/admin/contacts/mycontacts?page='+this.current_page)
                     .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.subscribers = response.data.subscribersData;
@@ -198,6 +206,15 @@
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
+                        this.loading = false;
+                        /*let elem = this;
+                        setTimeout(function(){
+                            elem.successMsg = 'This is a success message';
+                            elem.loading = false;
+                        }, 10000);*/
+
+
+
                     });
             },
 
@@ -216,6 +233,7 @@
                     });
             },
             navigatePagination: function(p){
+                this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
             }
@@ -224,12 +242,13 @@
     };
 
     $(document).ready(function () {
-        $(".slidebox").click(function () {
+        $(document).on('click', '.slidebox', function(){
             $('[name=tags]').tagify();
             $(".box").animate({
                 width: "toggle"
             });
         });
+
     });
 
 

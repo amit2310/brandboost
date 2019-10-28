@@ -1303,11 +1303,12 @@ PAGE WITH SIDEBAR CSS
 
 .activity_date{font-style: normal;font-weight: 500;font-size: 10px;line-height: 11px;letter-spacing: 0.06em;text-transform: uppercase;color: #98ADCF; margin: 25px 0 25px 30px}
 .activity_card{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 2px; min-height: 104px; max-height: 104px; padding: 32px; position: relative;}
+.activity_card.email{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 15px; min-height: 104px; max-height:100%; padding: 32px; position: relative;}
 .activity_card .icons{height: 40px; width: 40px; display: inline-block; margin-right: 21px; border-radius: 100px; line-height: 37px; text-align: center; float: left;}
 .activity_card:after{position: absolute; content: ''; background: #e8eef9; height: 46px; width: 1px; left: 52px; bottom: -20px;}
 .activity_card:before{position: absolute; content: ''; background: #e8eef9; height: 46px; width: 1px; left: 52px; top: -20px;}
 
-
+.activity_card.email:before, .activity_card.email:after{display: none!important}
 
 .activity_date_small{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 12px;padding: 32px; position: relative;}
 .activity_date_small .icons{height: 40px; width: 40px; display: inline-block; margin:0 21px 50px 0; border-radius: 100px; line-height: 37px; text-align: center; float: left;}
@@ -1334,9 +1335,11 @@ PAGE WITH SIDEBAR CSS
 
 
 
-
-
-
+.people_config_list{margin: 0; padding: 0;}
+.people_config_list li{ list-style: none; margin: 0; padding: 0; line-height: 40px;}
+.people_config_list li a{  margin: 0; padding: 0 0 0px; color: #687693; font-weight: 500; font-size: 14px; }
+.people_config_list li a img{margin-right: 10px;}
+.people_config_list li a:hover, .people_config_list li a.active{color: #5D82F1; font-weight: 600;}
 
 
 /*.main-icon-menu:hover .enlarge-menu .main-menu-inner, .enlarge-menu .main-menu-inner.active {

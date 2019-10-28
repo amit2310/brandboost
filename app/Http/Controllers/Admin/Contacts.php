@@ -376,6 +376,13 @@ class Contacts extends Controller
             }
         }
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Contacts' => ''
+        );
+
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a class="sidebar-control hidden-xs slace">/</a></li>
@@ -386,6 +393,7 @@ class Contacts extends Controller
         $aData = array(
             'title' => 'Contacts',
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'archiveContacts' => $archiveContacts,
             'subscribersData' => $subscribersData->items(),
             'allData' => $subscribersData,

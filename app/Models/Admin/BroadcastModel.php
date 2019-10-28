@@ -343,7 +343,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $userID
      * @return typeUsed to get lists associated with the logged user
      */
@@ -365,7 +365,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $userID
      * @return typeUsed to get Twillio related account details
      */
@@ -377,13 +377,13 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $userID
      * @param type $id
      * @return typeUsed to get logged user's broadcast campaign
      */
     public function getMyBroadcasts($userID, $id = 0) {
-	
+
         $oData = DB::table('tbl_automations_emails')
                 ->leftJoin('tbl_automations_emails_events', 'tbl_automations_emails_events.automation_id', '=', 'tbl_automations_emails.id')
                 ->leftJoin('tbl_automations_emails_campaigns', 'tbl_automations_emails_campaigns.event_id', '=', 'tbl_automations_emails_events.id')
@@ -402,7 +402,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $automationID
      * @return typeUsed to get Automation lists
      */
@@ -414,7 +414,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $automationID
      * @return typeUsed to get broadcast users list
      */
@@ -436,7 +436,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $automationID
      * @return typeUsed to get the list of excluded users
      */
@@ -470,7 +470,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * Used to delete contact from the broadcast campaign 
+     * Used to delete contact from the broadcast campaign
      */
     public function deleteContactToCampaign($automationID, $subscriberID) {
         if ($automationID > 0) {
@@ -484,7 +484,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $automationID
      * @param type $subscriberID
      * @return booleanUsed to delete contact from excluded list of contacts
@@ -524,7 +524,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $broadcastID
      * @return type
      */
@@ -537,7 +537,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @param type $sendingMethod
      * @return typeUsed to add new broadcast campaign
@@ -564,7 +564,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return booleanUsed to delete variation from the broadcast campaign
      */
@@ -579,7 +579,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @param type $id
      * @return booleanUsed to update broadcast variation
@@ -595,10 +595,10 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @param type $id
-     * @return booleanUsed to update split test 
+     * @return booleanUsed to update split test
      */
     public function updateSplitTest($aData, $id) {
         if ($id > 0) {
@@ -633,7 +633,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * Used to add new segment 
+     * Used to add new segment
      */
     public function createSegment($aData) {
         $insert_id = DB::table('tbl_segments')
@@ -670,7 +670,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $segmentID
      * @param type $campaignID
      * @param type $segmentType
@@ -738,7 +738,7 @@ class BroadcastModel extends Model {
                 $sql = "INSERT INTO `tbl_segments_users` (`user_id`, `segment_id`, `subscriber_id`, `created`) VALUES " . implode(",", $aSqlParam);
 
                 $result = DB::statement($sql);
-                return true;                
+                return true;
             }
         }
 
@@ -843,7 +843,7 @@ class BroadcastModel extends Model {
      * Used to get broadcast segments
      * @param type $userID
      * @param type $id
-     * @return type 
+     * @return type
      */
     public function getSegments($userID, $id = '') {
         $oData = DB::table('tbl_segments')
@@ -855,7 +855,9 @@ class BroadcastModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('tbl_segments.id', $id);
                 })
-                ->get();
+            ->orderBy('tbl_segments.id', 'desc')
+                ->paginate(10);
+                //->get();
 
         return $oData;
     }
@@ -883,7 +885,7 @@ class BroadcastModel extends Model {
      * @param type $userID
      * @param type $segmentId
      * @return type
-     * 
+     *
      */
     public function getSegmentById($userID, $segmentId) {
         $oData = DB::table('tbl_segments')
@@ -901,7 +903,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $segmentID
      * @return typeUsed to delete segment by id
      */
@@ -1021,7 +1023,7 @@ class BroadcastModel extends Model {
      * Used to update broadcast settings
      * @param type $aData
      * @param type $campaignId
-     * @return type 
+     * @return type
      */
     public function updateBroadcastSettings($aData, $campaignId) {
         $result = DB::table('tbl_automations_emails_campaigns_settings')
@@ -1035,7 +1037,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $campaignId
      * @return typeUsed to get broadcast settings
      */
@@ -1061,7 +1063,7 @@ class BroadcastModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return typeUsed to add broadcast settings
      */
@@ -1254,7 +1256,7 @@ class BroadcastModel extends Model {
         }
         return false;
     }
-    
+
     /**
      * Used to get conditional broadcast subscribers
      * @param type $eventId
@@ -1270,7 +1272,7 @@ class BroadcastModel extends Model {
                 ->where('tbl_broadcast_emails_tracking_sendgrid.event_name', $eventType)
                 ->groupBy('tbl_broadcast_emails_tracking_sendgrid.subscriber_id')
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
     /**
@@ -1285,8 +1287,8 @@ class BroadcastModel extends Model {
                 ->where('tbl_broadcast_emails_tracking_twillio.event_name', $eventType)
                 ->groupBy('tbl_broadcast_emails_tracking_twillio.subscriber_id')
                 ->get();
-        return $oData; 
-        
+        return $oData;
+
     }
 
     /**
@@ -1301,7 +1303,7 @@ class BroadcastModel extends Model {
         return $result;
     }
 
-    
+
     /**
      * Used to get broadcast campaign twilio stats
      * @param type $param
@@ -1363,7 +1365,7 @@ class BroadcastModel extends Model {
         return $oData;
     }
 
-    
+
     /**
      * Used to get categorized stats from an stats object
      * @param type $oData
