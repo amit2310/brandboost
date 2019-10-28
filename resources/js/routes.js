@@ -20,6 +20,7 @@ import EmailBroadcasts from './components/admin/broadcast/Email';
 import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
 import OffsiteNegativeFeedback from './components/admin/feedback/FeedbackList';
 import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteCampaign';
+import Segments from './components/admin/broadcast/Segments';
 
 
 const routes = [
@@ -55,6 +56,8 @@ const routes = [
     { path: '/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
     { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
 
+    /*Segments*/
+    { path: '/broadcast/mysegments', component: Segments, meta: { title: 'My Segments'} },
 
 ];
 
