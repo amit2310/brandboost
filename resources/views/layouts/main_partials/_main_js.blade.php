@@ -17,6 +17,10 @@
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/custom_datatable.js') }}"></script>
 
+<script src="{{ URL::asset('assets/js/bootstrap-colorpicker.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/bootstrap-colorpicker-plus.js') }}"></script>
+
+
 <script>
     var redirectURL = '';
 
