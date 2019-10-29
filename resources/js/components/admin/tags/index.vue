@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-6 col-6">
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">People Tag 2</h3>
+                        <h3 class="htxt_medium_24 dark_700">Tag Reviews</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
@@ -24,115 +24,7 @@
         <!--******************
           Content Area
          **********************-->
-        <div class="content-area">
-            <div class="container-fluid">
-
-                <div class="table_head_action">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">Tags</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="table_action">
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                                <div class="float-right ml10 mr10">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                                <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Serch" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">contact</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">brownpeacock574</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">redladybug753</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">yellowbear776</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">organicbear529</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">sadpanda176</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">My List</h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 bkg_none border_dashed shadow_none h235 animate_top">
-                            <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-                            <p class="htxt_regular_16 dark_100 mb15">Create<br>Tag list</p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-            </div>
-
-        </div>
-
-        
-        <div class="content-area">
+        <div v-if="!oTags" class="content-area">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -177,9 +69,132 @@
 
         </div>
 
+        <div v-else class="content-area">
+            <div class="container-fluid">
+
+                <div class="table_head_action">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="htxt_medium_16 dark_400">Tags</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table_action">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
+                                </div>
+                                <div class="float-right ml10 mr10">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <input class="table_search" type="text" placeholder="Serch" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div v-for="oTag in oTags" class="col-md-3 text-center">
+                        <div class="card p30 h235 animate_top">
+                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
+                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                {{capitalizeFirstLetter(setStringLimit(oTag.group_name, 20))}}
+                            </h3>
+                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ oTag.length }}1</p>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="col-md-3 text-center">
+                        <div class="card p30 bkg_none border_dashed shadow_none h235 animate_top">
+                            <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
+                            <p class="htxt_regular_16 dark_100 mb15">Create<br>Tag list</p>
+                        </div>
+                    </div>-->
+                </div>
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    :offset="4">
+                </pagination>
+
+            </div>
+
+        </div>
+
         <!--******************
           Content Area End
          **********************-->
+
+        <div class="box" style="width: 424px;">
+            <div style="width: 424px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <div class="p40">
+                        <div class="row">
+                            <div class="col-md-12"> <img src="assets/images/tag.svg"/>
+                                <h3 class="htxt_medium_24 dark_800 mt20">Create Tag </h3>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <form action="/action_page.php">
+                                    <div class="form-group">
+                                        <label for="fname">Tag name</label>
+                                        <input type="text" class="form-control h56" id="fname" placeholder="Enter list name" name="fname">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="phonenumber">Color</label>
+                                        <div class="phonenumber">
+                                            <div class="colorbox">
+                                                <div class="colorpickerplus-dropdown" id="color_picker">
+                                                    <button type="button" class="dropdown-toggle pickerbutton" data-toggle="dropdown">
+                                                        <span class="color-fill-icon dropdown-color-fill-icon"></span> &nbsp; Pick a Color  &nbsp; <b class="caret"></b></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li class="disabled"><div class="colorpickerplus-container"></div></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="desc">Description</label>
+                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="List description"></textarea>
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row bottom-position">
+                            <div class="col-md-12 mb15">
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Create</button>
+                                <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -187,32 +202,63 @@
 
 <script>
 
-    let tkn = $('meta[name="_token"]').attr('content');
+    import Pagination from '../../helpers/Pagination';
 
     export default {
         title: 'Insight Tags - Brand Boost',
+        props: ['pageColor'],
+        components: {Pagination},
         data() {
             return {
-                oTags: {},
-                oGroupIDs : {}
+                oTags: '',
+                oGroupIDs : '',
+                current_page: 1,
+                allData: ''
             }
         },
-
         mounted() {
-            //getData
-            axios.get('/admin/tags/')
-                .then(response => {
-                    //console.log(response.data);
-
-                    this.oTags = response.data.aTag;
-                    this.oGroupIDs = response.data.aGroupID;
-                    //console.log(this.oTags);
-                    //console.log(this.oGroupIDs);
-                });
+            this.loadPaginatedData();
 
             console.log('Component mounted.');
-        }
+        },
+        methods: {
+            loadPaginatedData: function () {
+                axios.get('/admin/tags/?page=' + this.current_page)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.moduleUnitID = response.data.moduleUnitID;
+                        this.moduleAccountID = response.data.moduleAccountID;
+                        this.loading = false;
+                        this.oTags = response.data.aTag;
+                        this.oGroupIDs = response.data.aGroupID;
+                        this.allData = response.data.allData;
 
+                        console.log(this.oTags);
+                        console.log(this.allData);
+
+                    });
+            },
+            showPaginationData: function (current_page) {
+                this.navigatePagination(current_page);
+            },
+            navigatePagination: function (p) {
+                this.loading = true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            }
+        }
     }
+
+    $(document).ready(function(){
+        $(document).on('click', '.slidebox', function () {
+            $(".box").animate({
+                width: "toggle"
+            });
+        });
+    });
+
+
 </script>
 

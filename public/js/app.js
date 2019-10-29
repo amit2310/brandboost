@@ -14900,6 +14900,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_Pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Pagination */ "./resources/js/components/helpers/Pagination.vue");
 //
 //
 //
@@ -15087,27 +15088,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var tkn = $('meta[name="_token"]').attr('content');
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Insight Tags - Brand Boost',
+  props: ['pageColor'],
+  components: {
+    Pagination: _helpers_Pagination__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      oTags: {},
-      oGroupIDs: {}
+      oTags: '',
+      oGroupIDs: '',
+      current_page: 1,
+      allData: ''
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    //getData
-    axios.get('/admin/tags/').then(function (response) {
-      //console.log(response.data);
-      _this.oTags = response.data.aTag;
-      _this.oGroupIDs = response.data.aGroupID; //console.log(this.oTags);
-      //console.log(this.oGroupIDs);
-    });
+    this.loadPaginatedData();
     console.log('Component mounted.');
+  },
+  methods: {
+    loadPaginatedData: function loadPaginatedData() {
+      var _this = this;
+
+      axios.get('/admin/tags/?page=' + this.current_page).then(function (response) {
+        _this.breadcrumb = response.data.breadcrumb;
+
+        _this.makeBreadcrumb(_this.breadcrumb);
+
+        _this.moduleName = response.data.moduleName;
+        _this.moduleUnitID = response.data.moduleUnitID;
+        _this.moduleAccountID = response.data.moduleAccountID;
+        _this.loading = false;
+        _this.oTags = response.data.aTag;
+        _this.oGroupIDs = response.data.aGroupID;
+        _this.allData = response.data.allData;
+        console.log(_this.oTags);
+        console.log(_this.allData);
+      });
+    },
+    showPaginationData: function showPaginationData(current_page) {
+      this.navigatePagination(current_page);
+    },
+    navigatePagination: function navigatePagination(p) {
+      this.loading = true;
+      this.current_page = p;
+      this.loadPaginatedData();
+    }
   }
+});
+$(document).ready(function () {
+  $(document).on('click', '.slidebox', function () {
+    $(".box").animate({
+      width: "toggle"
+    });
+  });
 });
 
 /***/ }),
@@ -49175,461 +49225,467 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "content", attrs: { id: "masterContainer" } },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      !_vm.oTags
+        ? _c("div", { staticClass: "content-area" }, [_vm._m(1)])
+        : _c("div", { staticClass: "content-area" }, [
+            _c(
+              "div",
+              { staticClass: "container-fluid" },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.oTags, function(oTag) {
+                    return _c("div", { staticClass: "col-md-3 text-center" }, [
+                      _c("div", { staticClass: "card p30 h235 animate_top" }, [
+                        _c("img", {
+                          staticClass: "mt20",
+                          attrs: { src: "assets/images/tag_icon_circle.svg" }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "h3",
+                          { staticClass: "htxt_bold_16 dark_700 mt25 mb15" },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.capitalizeFirstLetter(
+                                    _vm.setStringLimit(oTag.group_name, 20)
+                                  )
+                                ) +
+                                "\n                        "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          { staticClass: "htxt_regular_12 dark_300 mb15" },
+                          [
+                            _vm._m(3, true),
+                            _vm._v(" " + _vm._s(oTag.length) + "1")
+                          ]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c("pagination", {
+                  attrs: { pagination: _vm.allData, offset: 4 },
+                  on: { paginate: _vm.showPaginationData }
+                })
+              ],
+              1
+            )
+          ]),
+      _vm._v(" "),
+      _vm._m(4)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "content", attrs: { id: "masterContainer" } },
-      [
-        _c("div", { staticClass: "top-bar-top-section bbot" }, [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-6 col-6" }, [
-                _c("span", { staticClass: "float-left mr20 back_btn" }, [
-                  _c("img", {
-                    staticClass: "back_img_icon",
-                    attrs: { src: "assets/images/BACK.svg" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
-                  _vm._v("People Tag 2")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
-                _c("button", { staticClass: "circle-icon-40 mr15 back_btn" }, [
-                  _c("img", {
-                    staticClass: "back_img_icon",
-                    attrs: { src: "assets/images/filter.svg" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-md bkg_blue_200 light_000 slidebox" },
-                  [
-                    _vm._v("New Tag "),
-                    _c("span", [
-                      _c("img", {
-                        attrs: { src: "assets/images/blue-plus.svg" }
-                      })
-                    ])
-                  ]
-                )
-              ])
+    return _c("div", { staticClass: "top-bar-top-section bbot" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 col-6" }, [
+            _c("span", { staticClass: "float-left mr20 back_btn" }, [
+              _c("img", {
+                staticClass: "back_img_icon",
+                attrs: { src: "assets/images/BACK.svg" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
+              _vm._v("Tag Reviews")
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "content-area" }, [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("div", { staticClass: "table_head_action" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("h3", { staticClass: "htxt_medium_16 dark_400" }, [
-                    _vm._v("Tags")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "table_action" }, [
-                    _c("div", { staticClass: "float-right" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "dropdown-toggle table_action_dropdown",
-                          attrs: { type: "button", "data-toggle": "dropdown" }
-                        },
-                        [
-                          _c("span", [
-                            _c("img", {
-                              attrs: { src: "assets/images/date_created.svg" }
-                            })
-                          ]),
-                          _vm._v(
-                            "  Date Created\n                                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "dropdown-menu" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Link 1")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Link 2")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Link 3")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "float-right ml10 mr10" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "dropdown-toggle table_action_dropdown",
-                          attrs: { type: "button", "data-toggle": "dropdown" }
-                        },
-                        [
-                          _c("span", [
-                            _c("img", {
-                              attrs: { src: "assets/images/list_view.svg" }
-                            })
-                          ]),
-                          _vm._v(
-                            "  List View\n                                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "dropdown-menu" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Link 1")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Link 2")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Link 3")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "float-right" }, [
-                      _c("input", {
-                        staticClass: "table_search",
-                        attrs: { type: "text", placeholder: "Serch" }
-                      })
-                    ])
-                  ])
-                ])
-              ])
+          _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
+            _c("button", { staticClass: "circle-icon-40 mr15 back_btn" }, [
+              _c("img", {
+                staticClass: "back_img_icon",
+                attrs: { src: "assets/images/filter.svg" }
+              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("contact")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
+            _c(
+              "button",
+              { staticClass: "btn btn-md bkg_blue_200 light_000 slidebox" },
+              [
+                _vm._v("New Tag "),
+                _c("span", [
+                  _c("img", { attrs: { src: "assets/images/blue-plus.svg" } })
                 ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("brownpeacock574")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("redladybug753")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("yellowbear776")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("organicbear529")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("sadpanda176")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
-                _c("div", { staticClass: "card p30 h235 animate_top" }, [
-                  _c("img", {
-                    staticClass: "mt20",
-                    attrs: { src: "assets/images/tag_icon_circle.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "htxt_bold_16 dark_700 mt25 mb15" }, [
-                    _vm._v("My List")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "htxt_regular_12 dark_300 mb15" }, [
-                    _c("i", [
-                      _c("img", {
-                        attrs: { src: "assets/images/user_16_grey.svg" }
-                      })
-                    ]),
-                    _vm._v(" 1,356")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card card_shadow min-h-280" }, [
+            _c("div", { staticClass: "row mb65" }, [
+              _c("div", { staticClass: "col-md-6 text-left" }, [
                 _c(
-                  "div",
+                  "a",
                   {
-                    staticClass:
-                      "card p30 bkg_none border_dashed shadow_none h235 animate_top"
+                    staticClass: "lh_32 blue_400 htxt_bold_14",
+                    attrs: { href: "#" }
                   },
                   [
-                    _c("img", {
-                      staticClass: "mt20 mb30",
-                      attrs: { src: "assets/images/plus_icon_circle_64.svg" }
-                    }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
-                      _vm._v("Create"),
-                      _c("br"),
-                      _vm._v("Tag list")
-                    ])
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "circle-icon-32 float-left bkg_blue_000 mr10"
+                      },
+                      [
+                        _c("img", {
+                          attrs: { src: "assets/images/download-fill.svg" }
+                        })
+                      ]
+                    ),
+                    _vm._v(
+                      "\n                                    Import Tag\n                                "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 text-right" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "lh_32 htxt_regular_14 dark_200",
+                    attrs: { href: "#" }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "circle-icon-32 float-right ml10 bkg_light_200"
+                      },
+                      [
+                        _c("img", {
+                          attrs: { src: "assets/images/question-line.svg" }
+                        })
+                      ]
+                    ),
+                    _vm._v(
+                      "\n                                    Learn how to use Tag\n                                "
+                    )
                   ]
                 )
               ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "content-area" }, [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "card card_shadow min-h-280" }, [
-                  _c("div", { staticClass: "row mb65" }, [
-                    _c("div", { staticClass: "col-md-6 text-left" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "lh_32 blue_400 htxt_bold_14",
-                          attrs: { href: "#" }
-                        },
-                        [
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "circle-icon-32 float-left bkg_blue_000 mr10"
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "assets/images/download-fill.svg"
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(
-                            "\n                                    Import Tag\n                                "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6 text-right" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "lh_32 htxt_regular_14 dark_200",
-                          attrs: { href: "#" }
-                        },
-                        [
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "circle-icon-32 float-right ml10 bkg_light_200"
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src: "assets/images/question-line.svg"
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(
-                            "\n                                    Learn how to use Tag\n                                "
-                          )
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mb65" }, [
-                    _c("div", { staticClass: "col-md-12 text-center" }, [
-                      _c("img", {
-                        staticClass: "mt40",
-                        staticStyle: { "max-width": "225px" },
-                        attrs: { src: "assets/images/tag_Frame.svg" }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "htxt_bold_18 dark_700 mt30" }, [
-                        _vm._v("No tags so far. But you can change it!")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "h3",
-                        { staticClass: "htxt_regular_14 dark_200 mt20 mb25" },
-                        [_vm._v("It’s very easy to create or import tags!")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-sm bkg_blue_000 pr20 blue_300 slidebox"
-                        },
-                        [_vm._v("Add New Tag")]
-                      )
-                    ])
-                  ])
-                ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mb65" }, [
+              _c("div", { staticClass: "col-md-12 text-center" }, [
+                _c("img", {
+                  staticClass: "mt40",
+                  staticStyle: { "max-width": "225px" },
+                  attrs: { src: "assets/images/tag_Frame.svg" }
+                }),
+                _vm._v(" "),
+                _c("h3", { staticClass: "htxt_bold_18 dark_700 mt30" }, [
+                  _vm._v("No tags so far. But you can change it!")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h3",
+                  { staticClass: "htxt_regular_14 dark_200 mt20 mb25" },
+                  [_vm._v("It’s very easy to create or import tags!")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-sm bkg_blue_000 pr20 blue_300 slidebox"
+                  },
+                  [_vm._v("Add New Tag")]
+                )
               ])
             ])
           ])
         ])
-      ]
-    )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table_head_action" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("h3", { staticClass: "htxt_medium_16 dark_400" }, [_vm._v("Tags")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "table_action" }, [
+            _c("div", { staticClass: "float-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", {
+                      attrs: { src: "assets/images/date_created.svg" }
+                    })
+                  ]),
+                  _vm._v("  Date Created\n                                ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right ml10 mr10" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle table_action_dropdown",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", [
+                    _c("img", { attrs: { src: "assets/images/list_view.svg" } })
+                  ]),
+                  _vm._v("  List View\n                                ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu" }, [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 1")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 2")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Link 3")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right" }, [
+              _c("input", {
+                staticClass: "table_search",
+                attrs: { type: "text", placeholder: "Serch" }
+              })
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "assets/images/user_16_grey.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+      _c(
+        "div",
+        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                height: "100%",
+                "overflow-y": "auto",
+                "overflow-x": "hidden"
+              }
+            },
+            [
+              _c("a", { staticClass: "cross_icon slidebox" }, [
+                _c("i", {}, [
+                  _c("img", { attrs: { src: "assets/images/cross.svg" } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p40" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("img", { attrs: { src: "assets/images/tag.svg" } }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
+                      _vm._v("Create Tag ")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("form", { attrs: { action: "/action_page.php" } }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "fname" } }, [
+                          _vm._v("Tag name")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control h56",
+                          attrs: {
+                            type: "text",
+                            id: "fname",
+                            placeholder: "Enter list name",
+                            name: "fname"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "phonenumber" } }, [
+                          _vm._v("Color")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "phonenumber" }, [
+                          _c("div", { staticClass: "colorbox" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "colorpickerplus-dropdown",
+                                attrs: { id: "color_picker" }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "dropdown-toggle pickerbutton",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "dropdown"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass:
+                                        "color-fill-icon dropdown-color-fill-icon"
+                                    }),
+                                    _vm._v("   Pick a Color    "),
+                                    _c("b", { staticClass: "caret" })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("ul", { staticClass: "dropdown-menu" }, [
+                                  _c("li", { staticClass: "disabled" }, [
+                                    _c("div", {
+                                      staticClass: "colorpickerplus-container"
+                                    })
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "desc" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          staticClass: "form-control min_h_185 p20 pt10",
+                          attrs: { id: "desc", placeholder: "List description" }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row bottom-position" }, [
+                  _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                      },
+                      [_vm._v("Create")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "blue_300 fsize16 fw600 ml20",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Close")]
+                    )
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -73920,7 +73976,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
