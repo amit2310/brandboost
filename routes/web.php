@@ -591,6 +591,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 //Subscriber
     Route::post('admin/subscriber/add_contact', 'Admin\Subscribers@add_contact');
+    Route::post('admin/subscriber/update_contact', 'Admin\Subscribers@update_contact');
     Route::get('admin/subscriber/exportSubscriberCSV', 'Admin\Subscribers@exportSubscriberCSV');
     Route::post('admin/subscriber/importSubscriberCSV', 'Admin\Subscribers@importSubscriberCSV');
     Route::post('admin/subscriber/moveToArchiveModuleContact', 'Admin\Subscribers@moveToArchiveModuleContact');

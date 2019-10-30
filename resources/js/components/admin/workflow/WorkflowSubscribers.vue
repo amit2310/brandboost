@@ -121,7 +121,7 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1">Inactive</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else>Active</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">View Details</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)">Edit</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)">Delete</a>
                                     </div>
                                 </div>
@@ -260,6 +260,9 @@
                     });
                 }
             },
+            prepareContactUpdate: function(contactId) {
+                this.$emit('prepareUpdate', {contactId});
+            }
         },
 
         mounted() {
