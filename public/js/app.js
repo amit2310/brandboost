@@ -20212,7 +20212,7 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "content-area" }, [
-        _vm.newoLists
+        _vm.lists
           ? _c("div", { staticClass: "container-fluid" }, [
               _vm._m(1),
               _vm._v(" "),
