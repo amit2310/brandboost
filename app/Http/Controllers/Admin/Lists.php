@@ -253,7 +253,12 @@ class Lists extends Controller {
             exit();
         }
         $bActiveSubsription = $mUser->isActiveSubscription();
-
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Lists' => '#/lists/',
+            'Subscribers' => ''
+        );
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -266,16 +271,23 @@ class Lists extends Controller {
 
         $aData = array(
             'title' => 'List Subscribers',
-            'subscribersData' => $subscribersData,
+            'allData' => $subscribersData,
+            'subscribersData' => $subscribersData->items(),
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
+            'moduleAccountID' => '',
             'listName' => $listName,
+            'activeCount' => 0,
+            'archiveCount' => 0,
             'list_id' => $listID,
             'listtype' => 'email',
             'bActiveSubsription' => $bActiveSubsription
         );
-        return view('admin.lists.list-contacts-beta', $aData);
+        echo json_encode($aData);
+        exit;
+        //return view('admin.lists.list-contacts-beta', $aData);
     }
 
 

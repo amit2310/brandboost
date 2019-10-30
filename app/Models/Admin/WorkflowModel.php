@@ -112,7 +112,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $eventID
      * @param type $moduleName
      * @return boolean
@@ -723,8 +723,10 @@ class WorkflowModel extends Model {
                     ->leftJoin("tbl_subscribers", "{$tableName}.subscriber_id", "=", "tbl_subscribers.id")
                     ->select("{$tableName}.*", "tbl_subscribers.email", "tbl_subscribers.firstname", "tbl_subscribers.lastname", "tbl_subscribers.phone", "tbl_subscribers.status AS globalStatus")
                     ->where("{$tableName}.{$filterField}", $id)
+                    //->where("{$tableName}.status", 1)
                     ->orderBy("{$tableName}.id", "desc")
-                    ->get();
+                    ->paginate(10);
+                    //->get();
         }
         return $oSubscribers;
     }
@@ -1402,10 +1404,10 @@ class WorkflowModel extends Model {
                     }
                 }
             }
-            
+
             //Get From Email, Name info
             $oFrom = $this->getWorkflowFromNameEmailInfo($moduleName, $accountID);
-            
+
             $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $resultData->stripo_compiled_html;
             $aCampaignData = array(
                 'event_id' => $eventID,
@@ -1797,7 +1799,7 @@ class WorkflowModel extends Model {
                 })
                 ->update($aData);
 
-        //print_r(DB::getQuerylog());        
+        //print_r(DB::getQuerylog());
 
         if ($result > -1) {
             return true;
@@ -2633,7 +2635,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * This method used to get list of contacts 
+     * This method used to get list of contacts
      * @param type $automationID
      * @return type
      */
@@ -3559,7 +3561,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * used to add tagid into workflow tags 
+     * used to add tagid into workflow tags
      * @param array $aData
      * @param type $moduleName
      * @param type $moduleUnitID
@@ -4266,7 +4268,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * Used to sync worflow global audience 
+     * Used to sync worflow global audience
      */
     public function syncWorkflowAudienceGlobalModel() {
         $aUser = getLoggedUser();

@@ -64,11 +64,13 @@
 
                 <div class="row">
 
-                    <div v-for="(newoList, name, index) in newoLists" class="col-md-3 text-center">
+                    <div v-for="list in lists" class="col-md-3 text-center" @click="showListSubscribers(list[0].id)" style="cursor:pointer;">
                         <div class="card p30 h235 animate_top">
                             <img class="mt20" src="assets/images/subs-icon_big.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15"><span v-for="nList in newoList.slice(0,1)">{{ nList.list_name }}</span></h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ newoList.length }}</p>
+                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                <span>{{ list[0].list_name }}</span>
+                            </h3>
+                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ list.length }}</p>
                         </div>
                     </div>
 
@@ -118,7 +120,7 @@
                 </div>
 
 
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless">
@@ -185,7 +187,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
 
             </div>
@@ -270,13 +272,16 @@
             return {
                 oData: {},
                 oLists: {},
-                newoLists: {}
+                lists: {}
             }
         },
         methods: {
             firstListname(object) {
                 return object.value[0].list_name
-            }
+            },
+            showListSubscribers: function(listId){
+                window.location.href='#/lists/getListContacts/'+listId;
+            },
         },
         mounted() {
             //getData
@@ -287,8 +292,8 @@
                     this.oData = JSON.parse(rDataArr[0]);
                     this.oLists = this.oData.oLists;
                     //console.log(this.oLists);
-                    this.newoLists = JSON.parse(rDataArr[1]);
-                    console.log(this.newoLists);
+                    this.lists = JSON.parse(rDataArr[1]);
+                    //console.log(this.lists);
                 });
             console.log('Component mounted')
         }
