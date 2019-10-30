@@ -26,7 +26,7 @@
          **********************-->
         <div class="content-area">
 
-            <div v-if="newoLists" class="container-fluid">
+            <div v-if="lists" class="container-fluid">
 
                 <div class="table_head_action">
                     <div class="row">
