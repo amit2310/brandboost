@@ -43,7 +43,7 @@ class Tags extends Controller {
 
         //$aTag->aGroupID = $aGroupID;
 //        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
-        echo json_encode(['aTag' => $aTag, 'aGroupID' => $aGroupID]);
+        echo json_encode(['allData' => $aTag, 'aTag' => $aTag->items(), 'aGroupID' => $aGroupID]);
         exit;
     }
 
