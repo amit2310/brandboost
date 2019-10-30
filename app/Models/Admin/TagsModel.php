@@ -22,11 +22,34 @@ class TagsModel extends Model {
                 ->when(($userID > 0), function ($query) use ($userID) {
                     return $query->where('tbl_tag_groups.user_id', $userID);
                 })
-                ->orderBy('tbl_tag_groups.id', 'desc')
-                ->orderBy('tbl_tag_groups_entity.id', 'asc')
+                ->orderBy('tbl_tag_groups.id', 'DESC')
+                ->orderBy('tbl_tag_groups_entity.id', 'DESC')
                 ->paginate(10);
                 //->get();
 
+        return $oData;
+    }
+
+    /**
+     * Used to add new tag review
+     */
+    public function createTagReview($aData) {
+        $insert_id = DB::table('tbl_tag_groups_entity')
+            ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to check if duplicate tag review
+     * @param type $tagReviewName
+     * @param type $userID
+     * @return boolean
+     */
+    public function isDuplicateTagReview($tagGroupId, $tagReviewName, $userID = 0) {
+        $oData = DB::table('tbl_tag_groups_entity')
+            ->where('group_id', $tagGroupId)
+            ->where('tag_name', $tagReviewName)
+            ->exists();
         return $oData;
     }
 
@@ -710,6 +733,18 @@ class TagsModel extends Model {
                     ->where('tag_id', $aTagID)
                     ->where('subscriber_id', $subscriberID)
                     ->first();
+        return $oData;
+    }
+
+    /**
+     * Used to get subscriber on which tags are applied
+     * @param type $aTagID
+     * @return type
+     */
+    public function getSubscriberIDsByTagId($aTagID) {
+        $oData = DB::table('tbl_subscriber_tags')
+            ->where('tag_id', $aTagID)
+            ->count();
         return $oData;
     }
 
