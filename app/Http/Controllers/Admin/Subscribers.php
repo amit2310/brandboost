@@ -752,6 +752,108 @@ class Subscribers extends Controller
         exit;
     }
 
+    /**
+     * Used to update subscribers details
+     */
+    public function update_contact(Request $request)
+    {
+        $mSubscriber = new SubscriberModel();
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+
+        $firstName = $request->firstname;
+        $lastName = $request->lastname;
+        $email = $request->email;
+        $phone = $request->phone;
+        $gender = $request->gender;
+        $countryCode = $request->countryCode;
+        $cityName = $request->cityName;
+        $stateName = $request->stateName;
+        $zipCode = $request->zipCode;
+        $facebookProfile = $request->facebook_profile;
+        $twitterProfile = $request->twitter_profile;
+        $linkedInProfile = $request->linkedin_profile;
+        $instagramProfile = $request->instagram_profile;
+        $socialProfile = $request->socialProfile;
+        //$tagID = $request->edit_tags;
+        $moduleName = $request->module_name;
+        $subscriberId = $request->id;
+        $bInsertedNewGlobalSubscriber = false;
+
+        if (!empty($email)) {
+            $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
+            if (!empty($oGlobalUser)) {
+                $iSubscriberID = $oGlobalUser->id;
+                $aGlobalUserData = array(
+                    'firstName' => $firstName,
+                    'lastName' => $lastName,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'gender' => $gender,
+                    'country_code' => $countryCode,
+                    'cityName' => $cityName,
+                    'stateName' => $stateName,
+                    'zipCode' => $zipCode,
+                    'facebook_profile' => $facebookProfile,
+                    'twitter_profile' => $twitterProfile,
+                    'linkedin_profile' => $linkedInProfile,
+                    'instagram_profile' => $instagramProfile,
+                    'socialProfile' => $socialProfile,
+                    //'tagID' => $tagID,
+                    'updated' => date("Y-m-d H:i:s")
+                );
+
+                $mSubscriber->updateGlobalSubscriber($aGlobalUserData, $iSubscriberID);
+                $response = array('status' => 'success', 'msg' => "Subscriber updated successfully!");
+            } else {
+                //Add global subscriber
+                $emailUser = $this->mUser->checkEmailExist($email);
+                if (!empty($emailUser)) {
+                    $emailUserId = $emailUser[0]->id;
+                }
+
+                $aSubscriberData = array(
+                    'owner_id' => $userID,
+                    'firstName' => $firstName,
+                    'lastName' => $lastName,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'gender' => $gender,
+                    'country_code' => $countryCode,
+                    'cityName' => $cityName,
+                    'stateName' => $stateName,
+                    'zipCode' => $zipCode,
+                    'socialProfile' => $socialProfile,
+                    'tagID' => '', //$tagID,
+                    'created' => date("Y-m-d H:i:s")
+                );
+
+
+                if (!empty($emailUserId)) {
+                    $aSubscriberData['user_id'] = $emailUserId;
+                }
+                $iSubscriberID = $this->mSubscriber->addGlobalSubscriber($aSubscriberData);
+                $bInsertedNewGlobalSubscriber = true;
+            }
+        }
+
+        if ($bInsertedNewGlobalSubscriber == true) {
+            $aData = array(
+                'subscriber_id' => $iSubscriberID
+            );
+
+            $res = $mSubscriber->updateModuleSubscriber($moduleName, $aData, $subscriberId);
+
+            if ($res) {
+                $response = array('status' => 'success', 'msg' => "Subscriber updated successfully!");
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
 
     /**
      * Used to import subscribers through csv file
