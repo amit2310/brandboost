@@ -863,6 +863,18 @@ class BroadcastModel extends Model {
     }
 
     /**
+     * This function is used to get segment details
+     * @param $id
+     * @return mixed
+     */
+    public function getSegmentInfo($id){
+        $oData = DB::table('tbl_segments')
+                ->where('id', $id)
+                ->first();
+        return $oData;
+    }
+
+    /**
      * Used to get segment subscribers
      * @param type $segmentID
      * @param type $userID
@@ -871,11 +883,13 @@ class BroadcastModel extends Model {
     public static function getSegmentSubscribers($segmentID, $userID) {
         $oData = DB::table('tbl_segments_users')
                 ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
-                ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId', 'tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status')
+                ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+                ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId', 'tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status', 'tbl_users.avatar')
                 ->where('tbl_segments_users.segment_id', $segmentID)
                 ->where('tbl_segments_users.user_id', $userID)
                 ->orderBy('tbl_subscribers.id', 'desc')
-                ->get();
+                ->paginate(10);
+                //->get();
 
         return $oData;
     }

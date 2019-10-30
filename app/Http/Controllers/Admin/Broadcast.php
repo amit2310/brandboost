@@ -2602,9 +2602,17 @@ class Broadcast extends Controller {
     public function segmentcontacts($segmentID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Segments' => '#/broadcast/mysegments',
+            'Subscribers' => ''
+        );
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+
+        //Get Segment Info
+        $oSegment = $mBroadcast->getSegmentInfo($segmentID);
 
 
         $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID);
@@ -2619,13 +2627,22 @@ class Broadcast extends Controller {
                     </ul>';
 
         $aData = array(
-            'title' => 'Segment Contacts',
-            'oSubscribers' => $oSubscribers,
+            'title' => 'Segment Subscribers',
+            'subscribersData' => $oSubscribers->items(),
+            'allData' => $oSubscribers,
+            'segmentInfo' => $oSegment,
             'moduleName' => 'people',
-            'pagename' => $breadcrumb
+            'moduleUnitID' => '',
+            'moduleAccountID' => '',
+            'activeCount' => '',
+            'archiveCount' => '',
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb
         );
 
-        return view('admin.broadcast.segment_subscribers', $aData);
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.segment_subscribers', $aData);
     }
 
     /**

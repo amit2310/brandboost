@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox"> New Segment<span><img
+                        <button class="btn btn-md bkg_blue_200 light_000 js-slidebox"> New Segment<span><img
                             src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                     <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import
                                         segment!</h3>
-                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">Add segment</button>
+                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-slidebox">Add segment</button>
                                 </div>
                             </div>
 
@@ -108,13 +108,13 @@
                                 <p class="htxt_regular_12 dark_300 mb15"><i><img src="/assets/images/user_16_grey.svg"/></i> 1,356</p>
                             </div>
                         </div>-->
-                        <div class="col-md-3 text-center" v-for="segment in segments">
+                        <div class="col-md-3 text-center" v-for="segment in segments" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
                             <div class="card p30 h235 animate_top">
                                 <img class="mt20" src="/assets/images/subs-icon_big.svg">
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">
                                     {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}</h3>
                                 <p class="htxt_regular_12 dark_300 mb15"><i><img src="/assets/images/user_16_grey.svg"/></i>
-                                    {{segment.segmentSubscribers.length}}</p>
+                                    {{segment.segmentSubscribers.data.length}}</p>
                             </div>
                         </div>
 
@@ -139,7 +139,7 @@
 
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon slidebox"><i
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-slidebox"><i
                     class=""><img src="/assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="submitAddSegment">
                         <div class="p40">
@@ -384,6 +384,9 @@
 
                     });
             },
+            showSegmentSubscribers: function(segmentId){
+                window.location.href='#/broadcast/segmentContacts/'+segmentId;
+            },
             showPaginationData: function (current_page) {
                 this.navigatePagination(current_page);
             },
@@ -415,7 +418,7 @@
     };
 
     $(document).ready(function () {
-        $(document).on('click', '.slidebox', function () {
+        $(document).on('click', '.js-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });

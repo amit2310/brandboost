@@ -21,6 +21,8 @@ import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
 import OffsiteNegativeFeedback from './components/admin/feedback/FeedbackList';
 import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteCampaign';
 import Segments from './components/admin/broadcast/Segments';
+import SegmentSubscribers from './components/admin/contact/SegmentSubscribers';
+import ListSubscribers from './components/admin/contact/ListSubscribers';
 
 
 const routes = [
@@ -54,10 +56,12 @@ const routes = [
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
     { path: '/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
+    { path: '/lists/getListContacts/:id', component: ListSubscribers, meta: { title: 'Segments Subscribers'} },
     { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
 
     /*Segments*/
     { path: '/broadcast/mysegments', component: Segments, meta: { title: 'My Segments'} },
+    { path: '/broadcast/segmentContacts/:id', component: SegmentSubscribers, meta: { title: 'Segments Subscribers'} },
 
 ];
 

@@ -9,11 +9,11 @@
                 <div class="row">
                     <div class="col-md-6 col-6">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">People Contact List</h3>
+                        <h3 class="htxt_medium_24 dark_700">Segment Subscribers:: {{capitalizeFirstLetter(setStringLimit(segmentInfo.segment_name, 14))}}</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img
+                        <button class="btn btn-md bkg_blue_200 light_000">Main Action <span><img
                             src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
@@ -131,47 +131,11 @@
 
     </div>
 
-
-    <!--<div class="content">
-
-        <div class="page_header">
-            <div class="row">
-                &lt;!&ndash;=============Headings & Tabs menu==============&ndash;&gt;
-                <div class="col-md-3">
-                    <h3><img src="/assets/images/people_sec_icon.png"> Contacts</h3>
-                    <ul class="nav nav-tabs nav-tabs-bottom">
-                        <li class="active"><a href="#right-icon-tab0" data-toggle="tab">Active Contacts</a></li>
-                        <li><a href="#right-icon-tab1" data-toggle="tab">Archive</a></li>
-                    </ul>
-                </div>
-                &lt;!&ndash;=============Button Area Right Side==============&ndash;&gt;
-                <div class="col-md-9 text-right btn_area">
-                    <button type="button" class="btn light_btn importModuleContact" :data-modulename="moduleName" :data-moduleaccountid="moduleUnitID" data-redirect="/admin/contacts/mycontacts"><i class="icon-arrow-up16"></i><span> &nbsp;  Import Contacts</span> </button>
-                    <a class="btn light_btn ml10" :href="`/admin/subscriber/exportSubscriberCSV?module_name=${moduleName}&module_account_id=${moduleUnitID}`"><i class="icon-arrow-down16"></i><span> &nbsp;  Export Contacts</span> </a>
-                    <button type="button" class="btn dark_btn dropdown-toggle ml10 addModuleContact" :data-modulename="moduleName" :data-moduleaccountid="moduleUnitID"><i class="icon-plus3"></i><span> &nbsp;  Add Contact</span> </button>
-                    &nbsp;
-                </div>
-            </div>
-        </div>
-        &lt;!&ndash;&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&&ndash;&gt;
-
-
-            <workflow-subscribers
-                :show-archived="true"
-                :subscribers-data="subscribers"
-                :active-count="activeCount"
-                :archive-count="archiveCount"
-                :module-name = "moduleName"
-                :module-unit-id ="moduleUnitID"
-            ></workflow-subscribers>
-
-    </div>-->
 </template>
 <script>
     import WorkflowSubscribers from '../workflow/WorkflowSubscribers.vue';
 
     export default {
-        props: ['pageColor'],
         data() {
             return {
                 successMsg : '',
@@ -184,8 +148,10 @@
                 archiveCount: 0,
                 subscribers: {},
                 allData: {},
+                segmentInfo: {},
                 current_page: 1,
-                breadcrumb: ''
+                breadcrumb: '',
+                profileID : this.$route.params.id,
 
 
             }
@@ -196,7 +162,7 @@
         },
         methods: {
             loadPaginatedData : function(){
-                axios.get('/admin/contacts/mycontacts?page='+this.current_page)
+                axios.get('/admin/broadcast/segmentcontacts/'+this.profileID +'?page='+this.current_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -204,6 +170,7 @@
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.subscribers = response.data.subscribersData;
                         this.allData = response.data.allData;
+                        this.segmentInfo = response.data.segmentInfo;
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
@@ -219,20 +186,6 @@
                     });
             },
 
-            addNewContact : function(e){
-                //e.preventDefault();
-                let form = document.getElementById('addNewContactVue');
-                let formData = new FormData(form);
-                formData.append('_token', this.csrf_token());
-                axios.post('/admin/subscriber/add_contact', this)
-                    .then(response => {
-                        if(response.data.status == 'success'){
-                            alert(('form submitted successfully'))
-                            /*vm.$forceUpdate();*/
-                        }
-
-                    });
-            },
             navigatePagination: function(p){
                 this.loading=true;
                 this.current_page = p;
@@ -241,23 +194,6 @@
         }
 
     };
-
-    $(document).ready(function () {
-        $(document).on('click', '.slidebox', function(){
-            $('[name=tags]').tagify();
-            $(".box").animate({
-                width: "toggle"
-            });
-        });
-
-    });
-
-
-
-
-    /*$(document).on('click', '#addContactForm', function () {
-        $('.addModuleContact').trigger('click');
-    });*/
 
 </script>
 

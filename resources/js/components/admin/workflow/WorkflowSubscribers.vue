@@ -50,7 +50,7 @@
                             <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
                         </tr>
 
-                        <tr>
+                        <!--<tr>
                             <td><span class="table-img mr15"><img src="/assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
                             <td class="text-right">nina.hernandez@example.com</td>
                             <td># lead, subscriber <span style="margin-left:15px;" class="badge badge-dark">+4</span></td>
@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                         <tr v-for="contact in activeUsers" v-if="activeUsers.length>0">
                             <td>
                                 <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
