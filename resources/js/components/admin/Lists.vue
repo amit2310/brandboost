@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 js-list-slidebox">New List<span><img src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -65,17 +65,17 @@
 
                 <div class="row">
 
-                    <div v-for="list in lists" class="col-md-3 text-center" @click="showListSubscribers(list[0].id)" style="cursor:pointer;">
+                    <div v-for="list in lists" class="col-md-3 text-center" @click="showListSubscribers(list.id)" style="cursor:pointer;">
                         <div class="card p30 h235 animate_top">
                             <img class="mt20" src="assets/images/subs-icon_big.svg">
                             <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                <span>{{ list[0].list_name }}</span>
+                                <span>{{ list.list_name }}</span>
                             </h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ list.length }}</p>
+                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ list.countSubscribers }}</p>
                         </div>
                     </div>
 
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-3 text-center js-list-slidebox">
                         <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>contacts list</p>
@@ -83,8 +83,13 @@
                     </div>
 
                 </div>
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    :offset="4">
+                </pagination>
 
-                <div class="table_head_action mt10">
+                <!--<div class="table_head_action mt10">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_16 dark_400">Latest contacts</h3>
@@ -121,7 +126,7 @@
 
 
 
-                <!--<div class="row">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless">
@@ -202,7 +207,7 @@
                                     <img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
                                     <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any List contacts</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import!</h3>
-                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">Add List Contact</button>
+                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-list-slidebox">Add List Contact</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -242,7 +247,7 @@
          **********************-->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-list-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
@@ -303,45 +308,64 @@
 <script>
     import UserAvatar from '../helpers/UserAvatar';
     import PeopleListCreateSmartPopup from '../helpers/PeopleListCreateSmartPopup';
+    import Pagination from '../helpers/Pagination';
 
     export default {
         title: 'Email Lists - Brand Boost',
-        components: {UserAvatar, PeopleListCreateSmartPopup},
+        components: {UserAvatar, PeopleListCreateSmartPopup, Pagination},
         data() {
             return {
-                oData: {},
-                oLists: {},
-                lists: {}
+                successMsg: '',
+                errorMsg: '',
+                loading: true,
+                breadcrumb: '',
+                moduleName: '',
+                moduleUnitID: '',
+                moduleAccountID: '',
+                lists: '',
+                current_page: 1,
+                allData: ''
             }
         },
+        mounted() {
+            this.loadPaginatedData();
+
+            console.log('Component mounted')
+        },
         methods: {
-            firstListname(object) {
-                return object.value[0].list_name
-            },
             showListSubscribers: function(listId){
                 window.location.href='#/lists/getListContacts/'+listId;
             },
-        },
-        mounted() {
-            //getData
-            axios.get('/admin/lists/')
-                .then(response => {
-                    const rDataArr = response.data.split("^^^^^");
-
-                    this.oData = JSON.parse(rDataArr[0]);
-                    this.oLists = this.oData.oLists;
-                    //console.log(this.oLists);
-                    this.lists = JSON.parse(rDataArr[1]);
-                    //console.log(this.lists);
-                });
-            console.log('Component mounted')
+            loadPaginatedData: function () {
+                //getData
+                axios.get('/admin/lists/?page='+this.current_page)
+                    .then(response => {
+                        //console.log(response.data);
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.moduleUnitID = response.data.moduleUnitID;
+                        this.moduleAccountID = response.data.moduleAccountID;
+                        this.loading = false;
+                        this.lists = response.data.oLists;
+                        this.allData = response.data.allData;
+                    });
+            },
+            showPaginationData: function (current_page) {
+                this.navigatePagination(current_page);
+            },
+            navigatePagination: function (p) {
+                this.loading = true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            }
         }
     }
 
 
     $(document).ready(function () {
 
-        $(".slidebox").click(function(){
+        $(".js-list-slidebox").click(function(){
             $(".box").animate({
                 width: "toggle"
             });

@@ -737,7 +737,7 @@ class TagsModel extends Model {
     }
 
     /**
-     * Used to get subscriber on which tags are applied
+     * Used to count subscriber on which tags are applied
      * @param type $aTagID
      * @return type
      */
@@ -745,6 +745,28 @@ class TagsModel extends Model {
         $oData = DB::table('tbl_subscriber_tags')
             ->where('tag_id', $aTagID)
             ->count();
+        return $oData;
+    }
+
+    /**
+     * Used to get subscriber on which tags are applied
+     * @param type $userID
+     * @param type $listID
+     * @return type
+     */
+    public function getTagContacts($tagID, $userID = '') {
+        $oData = DB::table('tbl_tag_groups_entity')
+            ->join('tbl_subscriber_tags', 'tbl_subscriber_tags.tag_id', '=', 'tbl_tag_groups_entity.id')
+            ->leftJoin('tbl_subscribers', 'tbl_subscriber_tags.subscriber_id', '=', 'tbl_subscribers.id')
+            ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+            ->select('tbl_subscriber_tags.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.user_id AS clientID', 'tbl_tag_groups_entity.tag_name', 'tbl_users.avatar')
+            ->when(($tagID > 0), function ($query) use ($tagID) {
+                return $query->where('tbl_tag_groups_entity.id', $tagID);
+            })
+            ->when(($userID > 0), function ($query) use ($userID) {
+                return $query->where('tbl_subscribers.user_id', $userID);
+            })
+            ->paginate(10);
         return $oData;
     }
 

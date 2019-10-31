@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="row">
-                    <div v-for="oTag in oTags" class="col-md-3 text-center">
+                    <div v-for="oTag in oTags" class="col-md-3 text-center" @click="showTagSubscribers(oTag.tagid)" style="cursor:pointer;">
                         <div class="card p30 h235 animate_top">
                             <img class="mt20" src="assets/images/tag_icon_circle.svg">
                             <h3 class="htxt_bold_16 dark_700 mt25 mb15">
@@ -225,6 +225,9 @@
             console.log('Component mounted.');
         },
         methods: {
+            showTagSubscribers: function(tagId){
+                window.location.href='#/tags/getTagContacts/'+tagId;
+            },
             loadPaginatedData: function () {
                 axios.get('/admin/tags/?page=' + this.current_page)
                     .then(response => {
