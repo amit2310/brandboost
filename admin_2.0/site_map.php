@@ -116,18 +116,22 @@
      	
      	<div class="col-md-6">
      		<div class="card min-h-280">
-     		
-     			
+     		<h3 class="htxt_bold_16 email_400">Email Section</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="email_dashboard.php">Email Dashboard</a></li>
+     			<li><a target="_blank" href="email_campaign1.php">Email Camapaign 1</a></li>
+     			<li><a target="_blank" href="email_campaign2.php">Email Camapaign 2</a></li>
+     			<li><a target="_blank" href="email_subscribers.php">Email Subscribers</a></li>
+     		</ul>
      		</div>
      	</div>
-     	
      </div>
      
      
      
      
       </div>
-      
       </div>
       
 <!--******************
