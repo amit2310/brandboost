@@ -13,8 +13,11 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img
+                        <button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">Main Action <span><img
                             src="/assets/images/blue-plus.svg"/></span></button>
+                        <button class="js-contact-slidebox" v-show="false">
+                            Display Form
+                        </button>
                     </div>
                 </div>
             </div>
@@ -33,7 +36,8 @@
                 :module-name="moduleName"
                 :module-unit-id="moduleUnitID"
                 @navPage ="navigatePagination"
-                :key="subscribers"
+                @prepareUpdate="getContactInfo"
+                :key="current_page"
             ></workflow-subscribers>
         </div>
 
@@ -41,13 +45,13 @@
         <!--Smart Popup-->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon slidebox"><i
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-contact-slidebox"><i
                     class=""><img src="/assets/images/cross.svg"/></i></a>
-                    <form method="post" id="addCentralSubscriberData">
+                    <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"><img src="/assets/images/create_cotact_people.svg"/>
-                                <h3 class="htxt_medium_24 dark_800 mt20">Create Contact </h3>
+                                <h3 class="htxt_medium_24 dark_800 mt20">{{formLabel}} Contact </h3>
                                 <hr>
                             </div>
 
@@ -55,18 +59,18 @@
 
                                     <div class="form-group">
                                         <label for="firstname">First name</label>
-                                        <input type="text" class="form-control h56" id="firstname"
-                                               placeholder="Enter name" name="firstname">
+                                        <input type="text" class="form-control h56" v-model="form.firstname"
+                                               name="firstname" placeholder="Enter name">
                                     </div>
                                     <div class="form-group">
                                         <label for="lastname">Last name</label>
-                                        <input type="text" class="form-control h56" id="lastname"
-                                               placeholder="Enter last name" name="lastname">
+                                        <input type="text" class="form-control h56" v-model="form.lastname"
+                                               placeholder="Enter last name">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control h56" id="email"
-                                               placeholder="Enter email address" name="email">
+                                        <input type="email" class="form-control h56" v-model="form.email"
+                                               placeholder="Enter email address">
                                     </div>
                                     <!--<div class="form-group">
                                       <label for="pwd">Phone number</label>
@@ -87,8 +91,8 @@
                                                     <a class="dropdown-item" href="#">Link 3</a>
                                                 </div>
                                             </div>
-                                            <input type="number" class="inputbox" id="phone"
-                                                   placeholder="Enter phone number" name="phone">
+                                            <input type="number" class="inputbox" v-model="form.phone"
+                                                   placeholder="Enter phone number">
                                         </div>
 
                                     </div>
@@ -185,7 +189,15 @@
                 subscribers: {},
                 allData: {},
                 current_page: 1,
-                breadcrumb: ''
+                breadcrumb: '',
+                form: {
+                    firstname: '',
+                    lastname: '',
+                    email: '',
+                    phone: '',
+                    id: ''
+                },
+                formLabel: 'Create'
 
 
             }
@@ -195,6 +207,71 @@
             this.loadPaginatedData();
         },
         methods: {
+            displayForm : function(lbl){
+                if(lbl == 'Create'){
+                    this.form={};
+                }
+                this.formLabel = lbl;
+                document.querySelector('.js-contact-slidebox').click();
+            },
+            getContactInfo: function(contactId){
+                axios.post('/admin/subscriber/getSubscriberDetail', {
+                    module_subscriber_id:contactId,
+                    moduleName: this.moduleName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            //Fill up the form fields
+                            let formData = response.data.result[0];
+                            this.form.firstname = formData.firstname;
+                            this.form.lastname = formData.lastname;
+                            this.form.email = formData.email;
+                            this.form.phone = formData.phone;
+                            this.form.id = formData.id;
+                            this.formLabel = 'Update';
+                            this.displayForm(this.formLabel);
+
+                            //document.get    '.js-contact-slidebox'
+
+                        }
+
+                    });
+            },
+
+            processForm : function(){
+                this.loading = true;
+                let formActionSrc = '';
+                this.form.module_name = this.moduleName;
+                if(this.form.id>0){
+                    formActionSrc = '/admin/subscriber/update_contact';
+                }else{
+                    formActionSrc = '/admin/subscriber/add_contact';
+                    this.form.module_account_id = this.moduleAccountID;
+                }
+                axios.post(formActionSrc , this.form)
+                    .then(response => {
+                        if (response.data.status == 'success') {
+                            this.loading = false;
+                            //this.form = {};
+                            this.form.id ='';
+                            document.querySelector('.js-contact-slidebox').click();
+                            this.successMsg = 'Action completed successfully.';
+                            var elem = this;
+                            setTimeout(function () {
+                                elem.loadPaginatedData();
+                            }, 500);
+
+                            syncContactSelectionSources();
+                        }
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        console.log(error);
+                        //error.response.data
+                        //alert('All form fields are required');
+                    });
+            },
             loadPaginatedData : function(){
                 axios.get('/admin/contacts/mycontacts?page='+this.current_page)
                     .then(response => {
@@ -243,7 +320,7 @@
     };
 
     $(document).ready(function () {
-        $(document).on('click', '.slidebox', function(){
+        $(document).on('click', '.js-contact-slidebox', function(){
             $('[name=tags]').tagify();
             $(".box").animate({
                 width: "toggle"

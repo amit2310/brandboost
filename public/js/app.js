@@ -11634,6 +11634,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['pageColor'],
@@ -11650,7 +11654,15 @@ __webpack_require__.r(__webpack_exports__);
       subscribers: {},
       allData: {},
       current_page: 1,
-      breadcrumb: ''
+      breadcrumb: '',
+      form: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        phone: '',
+        id: ''
+      },
+      formLabel: 'Create'
     };
   },
   components: {
@@ -11660,22 +11672,86 @@ __webpack_require__.r(__webpack_exports__);
     this.loadPaginatedData();
   },
   methods: {
-    loadPaginatedData: function loadPaginatedData() {
+    displayForm: function displayForm(lbl) {
+      if (lbl == 'Create') {
+        this.form = {};
+      }
+
+      this.formLabel = lbl;
+      document.querySelector('.js-contact-slidebox').click();
+    },
+    getContactInfo: function getContactInfo(contactId) {
       var _this = this;
 
+      axios.post('/admin/subscriber/getSubscriberDetail', {
+        module_subscriber_id: contactId,
+        moduleName: this.moduleName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          //Fill up the form fields
+          var formData = response.data.result[0];
+          _this.form.firstname = formData.firstname;
+          _this.form.lastname = formData.lastname;
+          _this.form.email = formData.email;
+          _this.form.phone = formData.phone;
+          _this.form.id = formData.id;
+          _this.formLabel = 'Update';
+
+          _this.displayForm(_this.formLabel); //document.get    '.js-contact-slidebox'
+
+        }
+      });
+    },
+    processForm: function processForm() {
+      var _this2 = this;
+
+      this.loading = true;
+      var formActionSrc = '';
+      this.form.module_name = this.moduleName;
+
+      if (this.form.id > 0) {
+        formActionSrc = '/admin/subscriber/update_contact';
+      } else {
+        formActionSrc = '/admin/subscriber/add_contact';
+        this.form.module_account_id = this.moduleAccountID;
+      }
+
+      axios.post(formActionSrc, this.form).then(function (response) {
+        if (response.data.status == 'success') {
+          _this2.loading = false; //this.form = {};
+
+          _this2.form.id = '';
+          document.querySelector('.js-contact-slidebox').click();
+          _this2.successMsg = 'Action completed successfully.';
+          var elem = _this2;
+          setTimeout(function () {
+            elem.loadPaginatedData();
+          }, 500);
+          syncContactSelectionSources();
+        }
+      })["catch"](function (error) {
+        _this2.loading = false;
+        console.log(error); //error.response.data
+        //alert('All form fields are required');
+      });
+    },
+    loadPaginatedData: function loadPaginatedData() {
+      var _this3 = this;
+
       axios.get('/admin/contacts/mycontacts?page=' + this.current_page).then(function (response) {
-        _this.breadcrumb = response.data.breadcrumb;
+        _this3.breadcrumb = response.data.breadcrumb;
 
-        _this.makeBreadcrumb(_this.breadcrumb);
+        _this3.makeBreadcrumb(_this3.breadcrumb);
 
-        _this.moduleName = response.data.moduleName;
-        _this.moduleUnitID = response.data.moduleUnitID;
-        _this.subscribers = response.data.subscribersData;
-        _this.allData = response.data.allData;
-        _this.activeCount = response.data.activeCount;
-        _this.archiveCount = response.data.archiveCount;
-        _this.moduleAccountID = response.data.moduleAccountID;
-        _this.loading = false;
+        _this3.moduleName = response.data.moduleName;
+        _this3.moduleUnitID = response.data.moduleUnitID;
+        _this3.subscribers = response.data.subscribersData;
+        _this3.allData = response.data.allData;
+        _this3.activeCount = response.data.activeCount;
+        _this3.archiveCount = response.data.archiveCount;
+        _this3.moduleAccountID = response.data.moduleAccountID;
+        _this3.loading = false;
         /*let elem = this;
         setTimeout(function(){
             elem.successMsg = 'This is a success message';
@@ -11703,7 +11779,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 $(document).ready(function () {
-  $(document).on('click', '.slidebox', function () {
+  $(document).on('click', '.js-contact-slidebox', function () {
     $('[name=tags]').tagify();
     $(".box").animate({
       width: "toggle"
@@ -18007,6 +18083,11 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    prepareContactUpdate: function prepareContactUpdate(contactId) {
+      this.$emit('prepareUpdate', {
+        contactId: contactId
+      });
     }
   },
   mounted: function mounted() {
@@ -40976,7 +41057,52 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "top-bar-top-section bbot" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-md bkg_blue_200 light_000",
+                on: {
+                  click: function($event) {
+                    return _vm.displayForm("Create")
+                  }
+                }
+              },
+              [_vm._v("Main Action "), _vm._m(2)]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: false,
+                    expression: "false"
+                  }
+                ],
+                staticClass: "js-contact-slidebox"
+              },
+              [
+                _vm._v(
+                  "\n                        Display Form\n                    "
+                )
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -40989,7 +41115,7 @@ var render = function() {
         _c("loading", { attrs: { isLoading: _vm.loading } }),
         _vm._v(" "),
         _c("workflow-subscribers", {
-          key: _vm.subscribers,
+          key: _vm.current_page,
           attrs: {
             "show-archived": true,
             "subscribers-data": _vm.subscribers,
@@ -40999,7 +41125,10 @@ var render = function() {
             "module-name": _vm.moduleName,
             "module-unit-id": _vm.moduleUnitID
           },
-          on: { navPage: _vm.navigatePagination }
+          on: {
+            navPage: _vm.navigatePagination,
+            prepareUpdate: _vm.getContactInfo
+          }
         })
       ],
       1
@@ -41020,19 +41149,188 @@ var render = function() {
               }
             },
             [
-              _vm._m(1),
+              _vm._m(3),
               _vm._v(" "),
               _c(
                 "form",
-                { attrs: { method: "post", id: "addCentralSubscriberData" } },
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.processForm($event)
+                    }
+                  }
+                },
                 [
                   _c("div", { staticClass: "p40" }, [
-                    _vm._m(2),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/assets/images/create_cotact_people.svg"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "h3",
+                          { staticClass: "htxt_medium_24 dark_800 mt20" },
+                          [_vm._v(_vm._s(_vm.formLabel) + " Contact ")]
+                        ),
+                        _vm._v(" "),
+                        _c("hr")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "firstname" } }, [
+                            _vm._v("First name")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.firstname,
+                                expression: "form.firstname"
+                              }
+                            ],
+                            staticClass: "form-control h56",
+                            attrs: {
+                              type: "text",
+                              name: "firstname",
+                              placeholder: "Enter name"
+                            },
+                            domProps: { value: _vm.form.firstname },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "firstname",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "lastname" } }, [
+                            _vm._v("Last name")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.lastname,
+                                expression: "form.lastname"
+                              }
+                            ],
+                            staticClass: "form-control h56",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Enter last name"
+                            },
+                            domProps: { value: _vm.form.lastname },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "lastname",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "email" } }, [
+                            _vm._v("Email")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.email,
+                                expression: "form.email"
+                              }
+                            ],
+                            staticClass: "form-control h56",
+                            attrs: {
+                              type: "email",
+                              placeholder: "Enter email address"
+                            },
+                            domProps: { value: _vm.form.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "email", $event.target.value)
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "phone" } }, [
+                            _vm._v("Phone number")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "phonenumber" }, [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.phone,
+                                  expression: "form.phone"
+                                }
+                              ],
+                              staticClass: "inputbox",
+                              attrs: {
+                                type: "number",
+                                placeholder: "Enter phone number"
+                              },
+                              domProps: { value: _vm.form.phone },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "phone",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(5)
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm._m(3),
+                    _vm._m(6),
                     _vm._v(" "),
                     _c("div", { staticClass: "row bottom-position" }, [
-                      _vm._m(4),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12" }, [
                         _c("input", {
@@ -41088,46 +41386,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "top-bar-top-section bbot" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6 col-6" }, [
-            _c("span", { staticClass: "float-left mr20" }, [
-              _c("img", { attrs: { src: "/assets/images/BACK.svg" } })
-            ]),
-            _vm._v(" "),
-            _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
-              _vm._v("People Contact List")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 col-6 text-right" }, [
-            _c("button", { staticClass: "circle-icon-40 mr15" }, [
-              _c("img", { attrs: { src: "/assets/images/filter.svg" } })
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-md bkg_blue_200 light_000 slidebox" },
-              [
-                _vm._v("Main Action "),
-                _c("span", [
-                  _c("img", { attrs: { src: "/assets/images/blue-plus.svg" } })
-                ])
-              ]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "col-md-6 col-6" }, [
+      _c("span", { staticClass: "float-left mr20" }, [
+        _c("img", { attrs: { src: "/assets/images/BACK.svg" } })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "clearfix" })
+      _c("h3", { staticClass: "htxt_medium_24 dark_700" }, [
+        _vm._v("People Contact List")
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "cross_icon slidebox" }, [
+    return _c("button", { staticClass: "circle-icon-40 mr15" }, [
+      _c("img", { attrs: { src: "/assets/images/filter.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("img", { attrs: { src: "/assets/images/blue-plus.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "cross_icon js-contact-slidebox" }, [
       _c("i", {}, [_c("img", { attrs: { src: "/assets/images/cross.svg" } })])
     ])
   },
@@ -41135,130 +41424,50 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("img", {
-          attrs: { src: "/assets/images/create_cotact_people.svg" }
-        }),
-        _vm._v(" "),
-        _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
-          _vm._v("Create Contact ")
-        ]),
-        _vm._v(" "),
-        _c("hr")
-      ]),
+    return _c("div", { staticClass: "float-left" }, [
+      _c(
+        "button",
+        {
+          staticClass: "dropdown-toggle table_action_dropdown p0 mt10",
+          attrs: { type: "button", "data-toggle": "dropdown" }
+        },
+        [_c("span", [_c("img", { attrs: { src: "assets/images/USA.png" } })])]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "firstname" } }, [_vm._v("First name")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control h56",
-            attrs: {
-              type: "text",
-              id: "firstname",
-              placeholder: "Enter name",
-              name: "firstname"
-            }
-          })
+      _c("div", { staticClass: "dropdown-menu" }, [
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Link 1")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "lastname" } }, [_vm._v("Last name")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control h56",
-            attrs: {
-              type: "text",
-              id: "lastname",
-              placeholder: "Enter last name",
-              name: "lastname"
-            }
-          })
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Link 2")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control h56",
-            attrs: {
-              type: "email",
-              id: "email",
-              placeholder: "Enter email address",
-              name: "email"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "phone" } }, [_vm._v("Phone number")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "phonenumber" }, [
-            _c("div", { staticClass: "float-left" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "dropdown-toggle table_action_dropdown p0 mt10",
-                  attrs: { type: "button", "data-toggle": "dropdown" }
-                },
-                [
-                  _c("span", [
-                    _c("img", { attrs: { src: "assets/images/USA.png" } })
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "dropdown-menu" }, [
-                _c(
-                  "a",
-                  { staticClass: "dropdown-item", attrs: { href: "#" } },
-                  [_vm._v("Link 1")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  { staticClass: "dropdown-item", attrs: { href: "#" } },
-                  [_vm._v("Link 2")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  { staticClass: "dropdown-item", attrs: { href: "#" } },
-                  [_vm._v("Link 3")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "inputbox",
-              attrs: {
-                type: "number",
-                id: "phone",
-                placeholder: "Enter phone number",
-                name: "phone"
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "tags" } }, [_vm._v("Tags")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control h56",
-            staticStyle: { display: "none" },
-            attrs: {
-              type: "text",
-              id: "tags",
-              value: "Removeable Tag, Other Tag",
-              name: "tags"
-            }
-          })
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Link 3")
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "tags" } }, [_vm._v("Tags")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control h56",
+        staticStyle: { display: "none" },
+        attrs: {
+          type: "text",
+          id: "tags",
+          value: "Removeable Tag, Other Tag",
+          name: "tags"
+        }
+      })
     ])
   },
   function() {
@@ -55214,7 +55423,14 @@ var render = function() {
                                   "a",
                                   {
                                     staticClass: "dropdown-item",
-                                    attrs: { href: "javascript:void(0);" }
+                                    attrs: { href: "javascript:void(0);" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.prepareContactUpdate(
+                                          contact.subscriber_id
+                                        )
+                                      }
+                                    }
                                   },
                                   [_vm._v("Edit")]
                                 ),
