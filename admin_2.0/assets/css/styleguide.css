@@ -47,6 +47,7 @@ Misc
 .h235{height: 235px;}
 .min_h_185{min-height: 185px;}
 .min_h_240{min-height: 240px;}
+.min_h_275{min-height: 275px;}
 .min_w_96{ min-width:96px;}
 .badge.badge-grey{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
 .badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
@@ -56,7 +57,7 @@ Misc
 /******************************
 FORMS GROUP
 ******************************/
-.form-group label{font-size: 14px; color: #242B3D; font-weight: 500; margin-bottom: 7px;}
+.form-group label{font-size: 14px; color: #242B3D; font-weight: 400; margin-bottom: 7px;}
 .form-group .form-control{font-size: 16px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; padding: 5px 17px;}
 .form-group .form-control.h50{height: 50px;}
 .form-group .form-control.h36{height: 36px;}
@@ -91,6 +92,15 @@ FORMS GROUP
 .custmo_checkbox input:checked ~ .custmo_checkmark.sblue {	background-color: #2f9eee ; border:1px solid #4596d0 ;}
 
 
+
+
+
+.custom-control-inline{position: absolute; width: 20px; height: 20px; top: 10px; right: -10px;}
+.custom-control-input:checked ~ .custom-control-label::before {
+	color: #fff;
+	border-color: #56acd8;
+	background-color: #56acd8;
+}
 /*******************************
 CUSTOM SWITCH STYLES
 **********/
@@ -134,10 +144,14 @@ TABLES STYLES
 span.fl_name{width: 32px; height: 32px; display: inline-block; border-radius: 100%; text-align: center; line-height: 32px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #07080A;background: #ebedf2 }
 
 
-.table_dots_dd{border: none; background: none; box-shadow: none; }
+.table_dots_dd{border: none; background: none; box-shadow: none; padding: 0!important }
 .table_dots_dd:after{display: none}
 
 
+@media only screen and (max-width:1500px){
+	.table.table-borderless tbody tr td:first-child{padding-left: 12px ; border-radius: 2px 0 0 2px; }
+	.table.table-borderless tbody tr td:last-child{padding-right: 12px ; border-radius: 0 2px 2px 0;}
+}
 
 
 /******************************
@@ -200,7 +214,7 @@ Button CLASSES
 ******************************/
 .btn{font-size: 14px; font-weight: 600; line-height: 120%; box-shadow: 0px 2px 2px rgba(0, 121, 170, 0.05); border-radius: 50px; padding-left: 20px; padding-right: 10px }
 .btn span{margin-left: 10px}
-.btn:hover{color: #ffffff; background: #5d96f8 }
+.btn:hover{/*color: #ffffff;*/ /*background: #5d96f8*/ color:inherit}
 .btn-lg{height: 52px; line-height: 26px;}
 .btn-md{height: 40px; line-height: 26px;}
 .btn-sm{height: 36px; line-height: 26px;}
@@ -208,6 +222,7 @@ Button CLASSES
 
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
+.circle-icon-64{width: 64px;height: 64px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 64px;  }
 
 
 .link_button{background: #FFFFFF;box-shadow: 0px 1px 1px rgba(1, 21, 64, 0.08);border-radius: 44px; height: 40px; line-height: 40px; display: inline-block; padding: 0 5px;}
@@ -228,6 +243,7 @@ Animate Btn CLASSES
 BORDER CLASSES
 ******************************/
 .border{border: 1px solid #e9eff8!important;}
+.border.active{border: 1px solid #67BAE4!important;}
 .bbot{border-bottom: 1px solid #e9eff8;}
 .btop{border-top: 1px solid #e9eff8;}
 .brig{border-right: 1px solid #e9eff8;}
@@ -303,7 +319,7 @@ COLOR CLASSES
 .email_100{color: #A8E0EE}
 .email_200{color: #8AD4EB}
 .email_300{color: #72C9EA}
-.email_400{color: #56ACD8}
+.email_400{color: #56ACD8!important}
 .email_500{color: #3C91CE}
 
 
@@ -389,6 +405,7 @@ Background COLOR CLASSES
 .bkg_light_800{background: #B4C0D4}
 .bkg_light_900{background: #A3ADC0}
 
+.bkg_dark_000{background: #f7f9fb}
 .bkg_dark_100{background: #97A4BD}
 .bkg_dark_200{background: #7B89A6}
 .bkg_dark_300{background: #687693}
@@ -400,6 +417,7 @@ Background COLOR CLASSES
 .bkg_dark_900{background: #07080A}
 
 
+.bkg_email_000{background: #eef7fb}
 .bkg_email_100{background: #A8E0EE}
 .bkg_email_200{background: #8AD4EB}
 .bkg_email_300{background: #72C9EA}
@@ -550,6 +568,7 @@ PADDING CLASSES
 /*******************************
 MARGIN CLASSES
 **********/
+.m0auto{margin: 0 auto}
 .m0{margin: 0px!important}
 .m10{margin: 10px!important}
 .m20{margin: 20px!important}
