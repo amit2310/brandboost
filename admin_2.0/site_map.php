@@ -123,6 +123,12 @@
      			<li><a target="_blank" href="email_campaign1.php">Email Camapaign 1</a></li>
      			<li><a target="_blank" href="email_campaign2.php">Email Camapaign 2</a></li>
      			<li><a target="_blank" href="email_subscribers.php">Email Subscribers</a></li>
+     			<li><a target="_blank" href="email_subscribers2.php">Email Subscribers 2</a></li>
+     			<li><a target="_blank" href="email_subscribers3.php">Email Subscribers 3</a></li>
+     			<li><a target="_blank" href="email_template1.php">Email Template 1</a></li>
+     			<li><a target="_blank" href="email_template2.php">Email Template 2</a></li>
+     			<li><a target="_blank" href="email_forms1.php">Email Forms 1</a></li>
+     			<li><a target="_blank" href="email_forms2.php">Email Forms 2</a></li>
      		</ul>
      		</div>
      	</div>
