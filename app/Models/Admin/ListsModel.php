@@ -16,7 +16,7 @@ class ListsModel extends Model {
      * @param type $status
      * @return type object
      */
-    public function getLists($userID = '', $listID = '', $status = 'all') {
+    public function getListsOld($userID = '', $listID = '', $status = 'all') {
 
 
         $oData = DB::table('tbl_common_lists')
@@ -37,6 +37,36 @@ class ListsModel extends Model {
                 ->orderBy('tbl_common_lists.id', 'desc')
                 ->where('tbl_common_lists.delete_status', 0)
                 ->get();
+
+        return $oData;
+    }
+
+
+    /**
+     * Get Lists
+     * @param type $userID
+     * @param type $listID
+     * @param type $status
+     * @return type object
+     */
+    public function getLists($userID = '', $listID = '', $status = 'all') {
+
+        $oData = DB::table('tbl_common_lists')
+            ->select('tbl_common_lists.*'
+            )
+            ->when(($listID > 0), function ($query) use ($listID) {
+                return $query->where('tbl_common_lists.id', $listID);
+            })
+            ->when(($userID > 0), function ($query) use ($userID) {
+                return $query->where('tbl_common_lists.user_id', $userID);
+            })
+            ->when(($status != 'all'), function ($query) use ($status) {
+                return $query->where('tbl_common_lists.status', $status);
+            })
+            ->orderBy('tbl_common_lists.id', 'desc')
+            ->where('tbl_common_lists.delete_status', 0)
+            //->get();
+            ->paginate(10);
 
         return $oData;
     }
@@ -116,7 +146,7 @@ class ListsModel extends Model {
      */
     public function addLists($aData) {
         $insert_id = DB::table('tbl_common_lists')->insertGetId($aData);
-        return $insert_id;        
+        return $insert_id;
     }
 
 
@@ -134,10 +164,10 @@ class ListsModel extends Model {
             return $query->where("user_id", $userID);
             })->update($aData);
             return true;
-        
+
     }
 
-   
+
      /**
      * Used to delete a list
      * @param type $aData
@@ -152,7 +182,7 @@ class ListsModel extends Model {
             })->update(array('delete_status' => '1'));
          return true;
 
-       
+
     }
 
     public function archiveLists($id, $userID = '') {
@@ -183,7 +213,7 @@ class ListsModel extends Model {
             return $query->where("user_id", $userID);
             })->update(array('status' => $status));
         return true;
-        
+
     }
 
     public function addListSubscriber($aData) {
@@ -264,7 +294,7 @@ class ListsModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $userID
      * @param type $listID
      * @return type

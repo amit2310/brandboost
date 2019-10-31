@@ -23,14 +23,68 @@ class Lists extends Controller {
     {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Lists' => '#/lists',
+            'Subscribers' => ''
+        );
 
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
+        if ($userRole != '1') {
+            $oLists = $mLists->getLists($userID);
+        } else {
+            $oLists = $mLists->getLists();
+        }
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        $moduleName = 'list';
+
+        if(!empty($oLists->items())) {
+            foreach ($oLists->items() as $val) {
+
+                $moduleUnitID = $val->id;
+                $ListSubscribers = $mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
+
+                $cnt = $ListSubscribers->total();
+                $val->countSubscribers = $cnt;
+            }
+        }
+        //pre($oLists);
+        //exit;
+
+        $aData = array(
+            'title' => 'Lists',
+            'allData' => $oLists,
+            'oLists' => $oLists->items(),
+            'moduleName' => 'list',
+            'moduleUnitID' => '',
+            'moduleAccountID' => '',
+            'activeCount' => '',
+            'archiveCount' => '',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb
+        );
+
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
+     * Default controller
+     */
+    public function indexOld()
+    {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-
-
         $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if ($userRole != '1') {
@@ -38,10 +92,8 @@ class Lists extends Controller {
         } else {
             $oLists = $mLists->getLists();
         }
-
         //$oContacts = $mLists->getListContacts($userID);
         $bActiveSubsription = $mUser->isActiveSubscription();
-
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -49,30 +101,23 @@ class Lists extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Lists" class="sidebar-control active hidden-xs ">Lists</a></li>
                     </ul>';
-
         /* Computed Data In A List */
         if (count($oLists) > 0) {
-
             $newolists = array();
-
             $archiveList = $activeList = 0;
             foreach ($oLists as $value) {
                 $newolists[$value->id][] = $value;
             }
-
             $totEmailCount = 0;
             $totSMSCount = 0;
             $totUnsubscribeCount = 0;
             $newEmails = $newSMS = $newUnsubs = 0;
-
             foreach ($newolists as $countObject) {
-
                 if ($countObject[0]->status == 'archive') {
                     $archiveList++;
                 } else {
                     $activeList++;
                 }
-
                 $lastList = end($countObject);
                 //pre($lastList->l_created);
                 if (!empty($lastList->l_created)) {
@@ -89,9 +134,7 @@ class Lists extends Controller {
                 } else {
                     $totAll = 0;
                 }
-
                 foreach ($countObject as $value) {
-
                     if (!empty($value->l_email)) {
                         $totEmailCount++;
                     }
@@ -102,26 +145,20 @@ class Lists extends Controller {
                         $totUnsubscribeCount++;
                     }
                 }
-
                 $countObject = $countObject[0];
-
                 $totalContacts = $totAll;
                 $totalEmailGraph = 0;
                 $totalSMSGraph = 0;
                 $totalUnsubGraph = 0;
-
                 if ($totalContacts > 0) {
                     $totalEmailGraph = $totEmailCount * 100 / $totalContacts;
                     $totalEmailGraph = ceil($totalEmailGraph);
-
                     $totalSMSGraph = $totSMSCount * 100 / $totalContacts;
                     $totalSMSGraph = ceil($totalSMSGraph);
-
                     $totalUnsubGraph = $totUnsubscribeCount * 100 / $totalContacts;
                     $totalUnsubGraph = ceil($totalUnsubGraph);
                 }
             }
-
             $addPC = '';
             if ($totalEmailGraph > 50)
                 $addPC = 'over50';
@@ -153,30 +190,11 @@ class Lists extends Controller {
             );
         }
         /* Computed Data In A List */
-
         //return view('admin.lists.index', $aData);
-
         echo json_encode($aData)."^^^^^".json_encode($newolists);
         exit();
     }
 
-    /**
-     * Convert Array into Object
-     */
-    public function arrayToObject($d) {
-        if (is_array($d)) {
-            /*
-            * Return array converted to object
-            * Using __FUNCTION__ (Magic constant)
-            * for recursive call
-            */
-            return (object) array_map(__FUNCTION__, $d);
-        }
-        else {
-            // Return object
-            return $d;
-        }
-    }
 
     /**
      * Used to get Sms lists

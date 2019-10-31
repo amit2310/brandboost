@@ -13,6 +13,7 @@ import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequ
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
+import TagSubscribers from './components/admin/tags/TagSubscribers';
 import TagsReview from './components/admin/tags/tagsreview';
 import TagsFeedback from './components/admin/tags/tagsfeedback';
 import EmailLists from './components/admin/Lists';
@@ -53,6 +54,7 @@ const routes = [
 
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} },
+    { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
     { path: '/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },

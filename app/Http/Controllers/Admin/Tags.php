@@ -21,6 +21,7 @@ class Tags extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mTag = new TagsModel();
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -32,19 +33,74 @@ class Tags extends Controller {
 
         $aTag = TagsModel::getClientTags($userID);
 
-        if (!empty($aTag)) {
-            foreach ($aTag as $aUnit) {
+        if (!empty($aTag->items())) {
+            foreach ($aTag->items() as $aUnit) {
                 $aGroupID[$aUnit->id]['group_name'] = $aUnit->group_name;
                 $aGroupID[$aUnit->id]['status'] = $aUnit->status;
                 $aGroupID[$aUnit->id]['id'] = $aUnit->id;
+
+                $tagIdArr[] = $aUnit->tagid;
             }
         }
         krsort($aGroupID);
 
+        array_unique($tagIdArr);
+
+        $TagSubscribers = [];
+        if(!empty($tagIdArr)) {
+            foreach ($tagIdArr as $tid) {
+                $TagSubscribers[$tid] = $mTag->getSubscriberIDsByTagId($tid);
+            }
+        }
+
         //$aTag->aGroupID = $aGroupID;
 //        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
-        echo json_encode(['allData' => $aTag, 'aTag' => $aTag->items(), 'aGroupID' => $aGroupID]);
+        echo json_encode(['allData' => $aTag, 'aTag' => $aTag->items(), 'aGroupID' => $aGroupID, 'aTagSubscribers' => $TagSubscribers]);
         exit;
+    }
+
+    /**
+     * Used to get contact lists
+     */
+    public function getTagContacts(Request $request) {
+
+        $tagID = strip_tags($request->tag_id);
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        //Instantiate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+
+        $oList = $mTag->getTagContacts($tagID);
+
+        $tagName = $oList->items()[0]->tag_name;
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Tags' => '#/tags/',
+            'Subscribers' => ''
+        );
+
+        $aData = array(
+            'title' => 'Tags Subscribers',
+            'allData' => $oList,
+            'subscribersData' => $oList->items(),
+            'breadcrumb' => $aBreadcrumb,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $moduleUnitID,
+            'moduleAccountID' => '',
+            'tagName' => $tagName,
+            'activeCount' => 0,
+            'archiveCount' => 0,
+            'tag_id' => $tagID
+        );
+
+        echo json_encode($aData);
+        exit;
+
+        //return view('admin.lists.list-contacts-beta', $aData);
     }
 
     public function review($tagID) {
@@ -870,6 +926,58 @@ class Tags extends Controller {
             $this->mSettings->logExportHistory($aHistoryData);
         }
         exit;
+    }
+
+    /**
+     * Used to add tag review under a tag group
+     */
+    public function addTagReviews(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'tagReviewName' => ['required'],
+            'tagGroupId' => ['required'],
+            'tagReviewDescription' => ['required']
+        ]);
+
+        //Instantiate Tags model to get its methods and properties
+        $mTag  = new TagsModel();
+
+        $tagReviewName = $request->tagReviewName;
+        $tagGroupId = $request->tagGroupId;
+        $tagReviewDescription = $request->tagReviewDescription;
+
+        //check for already
+        $bDuplicate = $mTag->isDuplicateTagReview($tagGroupId, $tagReviewName, $userID);
+        if ($bDuplicate == true) {
+            //Display Error and ask to enter template name something else
+            $response['status'] = 'error';
+            $response['msg'] = 'duplicate';
+        } else {
+            //Insert Segment
+            $aData = array(
+                'group_id' => $tagGroupId,
+                'tag_name' => $tagReviewName,
+                'tag_description' => $tagReviewDescription,
+                'tag_created' => date("Y-m-d H:i:s")
+            );
+
+            $tagReviewIdID = $mTag->createTagReview($aData);
+
+            if ($tagReviewIdID) {
+                $response = array('status' => 'success');
+            } else {
+                $response = array('status' => 'error');
+            }
+        }
+
+
+
+        echo json_encode($response);
+        exit;
+
+
     }
 
 }

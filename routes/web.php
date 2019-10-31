@@ -682,6 +682,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 //Tag Module
     Route::get('admin/tags', 'Admin\Tags@index');
+    Route::get('admin/tags/getTagContacts', 'Admin\Tags@getTagContacts');
     Route::post('admin/tags/addgroupentity', 'Admin\Tags@addgroupentity');
     Route::post('admin/tags/addgroup', 'Admin\Tags@addgroup');
     Route::get('admin/tags/tagsreview', 'Admin\Tags@tagsreview');
@@ -689,6 +690,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/tags/review/{id}', 'Admin\Tags@review');
     Route::get('admin/tags/listAllTags', 'Admin\Tags@listAllTags');
     Route::post('admin/tags/applyReviewTag', 'Admin\Tags@applyReviewTag');
+    Route::post('admin/tags/addTagReviews', 'Admin\Tags@addTagReviews');
     Route::post('admin/reviews/update_review_status', 'Admin\Reviews@updateReviewStatus');
     Route::post('admin/reviews/displayreview', 'Admin\Reviews@displayreview');
     Route::post('admin/reviews/saveReviewNotes', 'Admin\Reviews@saveReviewNotes');
