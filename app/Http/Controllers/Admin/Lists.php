@@ -487,6 +487,11 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'listDescription' => ['required']
+        ]);
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
