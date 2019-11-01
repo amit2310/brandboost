@@ -147,7 +147,7 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
-                                <form action="/action_page.php">
+
                                     <div class="form-group">
                                         <label for="fname">Tag name</label>
                                         <input type="text" class="form-control h56" id="fname" placeholder="Enter tag name" name="tagReviewName"
@@ -171,8 +171,6 @@
                                     </div>
 
 
-
-                                </form>
                             </div>
                         </div>
 
@@ -267,7 +265,7 @@
                         //error.response.data
                         alert('All form fields are required');
                     });
-            },
+            }
         }
     }
 

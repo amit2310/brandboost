@@ -27,7 +27,8 @@
         <div class="content-area">
 
             <div v-if="lists" class="container-fluid">
-
+                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -248,6 +249,7 @@
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-list-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <form method="post" @submit.prevent="submitAddList">
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
@@ -255,10 +257,10 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
-                                <form action="/action_page.php">
                                     <div class="form-group">
                                         <label for="fname">List name</label>
-                                        <input type="text" class="form-control h56" id="fname" placeholder="Enter list name" name="fname">
+                                        <input type="text" class="form-control h56" id="fname" placeholder="Enter list name" name="title"
+                                               v-model="form.title">
                                     </div>
 
 
@@ -279,12 +281,10 @@
 
                                     <div class="form-group">
                                         <label for="desc">Description</label>
-                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="List description"></textarea>
+                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="List description"
+                                                  name="listDescription"
+                                                  v-model="form.listDescription"></textarea>
                                     </div>
-
-
-
-                                </form>
                             </div>
                         </div>
 
@@ -297,6 +297,7 @@
                                 <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -315,6 +316,10 @@
         components: {UserAvatar, PeopleListCreateSmartPopup, Pagination},
         data() {
             return {
+                form: {
+                    title: '',
+                    listDescription: ''
+                },
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
@@ -358,6 +363,23 @@
                 this.loading = true;
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            submitAddList: function () {
+                this.loading = true;
+                axios.post('/admin/lists/addList', this.form)
+                    .then(response => {
+                        if (response.data.status == 'success') {
+                            this.loading = false;
+                            this.successMsg = 'New List Added successfully';
+                            this.form = {};
+                            this.showPaginationData(this.current_page);
+                        }
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        //error.response.data
+                        alert('All form fields are required');
+                    });
             }
         }
     }

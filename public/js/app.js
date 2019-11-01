@@ -2026,6 +2026,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2038,6 +2039,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      form: {
+        title: '',
+        listDescription: ''
+      },
       successMsg: '',
       errorMsg: '',
       loading: true,
@@ -2083,6 +2088,24 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       this.current_page = p;
       this.loadPaginatedData();
+    },
+    submitAddList: function submitAddList() {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.post('/admin/lists/addList', this.form).then(function (response) {
+        if (response.data.status == 'success') {
+          _this2.loading = false;
+          _this2.successMsg = 'New List Added successfully';
+          _this2.form = {};
+
+          _this2.showPaginationData(_this2.current_page);
+        }
+      })["catch"](function (error) {
+        _this2.loading = false; //error.response.data
+
+        alert('All form fields are required');
+      });
     }
   }
 });
@@ -16346,8 +16369,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Insight Tags - Brand Boost',
@@ -21066,6 +21087,12 @@ var render = function() {
               "div",
               { staticClass: "container-fluid" },
               [
+                _c("system-messages", {
+                  attrs: { successMsg: _vm.successMsg, errorMsg: _vm.errorMsg }
+                }),
+                _vm._v(" "),
+                _c("loading", { attrs: { isLoading: _vm.loading } }),
+                _vm._v(" "),
                 _vm._m(1),
                 _vm._v(" "),
                 _c(
@@ -21135,7 +21162,128 @@ var render = function() {
           : _c("div", { staticClass: "container-fluid" }, [_vm._m(4)])
       ]),
       _vm._v(" "),
-      _vm._m(5)
+      _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+        _c(
+          "div",
+          {
+            staticStyle: { width: "424px", overflow: "hidden", height: "100%" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticStyle: {
+                  height: "100%",
+                  "overflow-y": "auto",
+                  "overflow-x": "hidden"
+                }
+              },
+              [
+                _vm._m(5),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "post" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.submitAddList($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "p40" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "fname" } }, [
+                              _vm._v("List name")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.title,
+                                  expression: "form.title"
+                                }
+                              ],
+                              staticClass: "form-control h56",
+                              attrs: {
+                                type: "text",
+                                id: "fname",
+                                placeholder: "Enter list name",
+                                name: "title"
+                              },
+                              domProps: { value: _vm.form.title },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "title",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(7),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "desc" } }, [
+                              _vm._v("Description")
+                            ]),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.listDescription,
+                                  expression: "form.listDescription"
+                                }
+                              ],
+                              staticClass: "form-control min_h_185 p20 pt10",
+                              attrs: {
+                                id: "desc",
+                                placeholder: "List description",
+                                name: "listDescription"
+                              },
+                              domProps: { value: _vm.form.listDescription },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "listDescription",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(8)
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ])
     ]
   )
 }
@@ -21414,147 +21562,89 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
-      _c(
-        "div",
-        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
-        [
+    return _c("a", { staticClass: "cross_icon js-list-slidebox" }, [
+      _c("i", {}, [_c("img", { attrs: { src: "assets/images/cross.svg" } })])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("img", { attrs: { src: "assets/images/list-icon.svg" } }),
+      _vm._v(" "),
+      _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
+        _vm._v("Create List ")
+      ]),
+      _vm._v(" "),
+      _c("hr")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "phonenumber" } }, [_vm._v("Color")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "phonenumber" }, [
+        _c("div", { staticClass: "colorbox" }, [
           _c(
             "div",
             {
-              staticStyle: {
-                height: "100%",
-                "overflow-y": "auto",
-                "overflow-x": "hidden"
-              }
+              staticClass: "colorpickerplus-dropdown",
+              attrs: { id: "color_picker" }
             },
             [
-              _c("a", { staticClass: "cross_icon js-list-slidebox" }, [
-                _c("i", {}, [
-                  _c("img", { attrs: { src: "assets/images/cross.svg" } })
-                ])
-              ]),
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-toggle pickerbutton",
+                  attrs: { type: "button", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", {
+                    staticClass: "color-fill-icon dropdown-color-fill-icon"
+                  }),
+                  _vm._v("   Pick a Color    "),
+                  _c("b", { staticClass: "caret" })
+                ]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "p40" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("img", {
-                      attrs: { src: "assets/images/list-icon.svg" }
-                    }),
-                    _vm._v(" "),
-                    _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
-                      _vm._v("Create List ")
-                    ]),
-                    _vm._v(" "),
-                    _c("hr")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("form", { attrs: { action: "/action_page.php" } }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "fname" } }, [
-                          _vm._v("List name")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control h56",
-                          attrs: {
-                            type: "text",
-                            id: "fname",
-                            placeholder: "Enter list name",
-                            name: "fname"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "phonenumber" } }, [
-                          _vm._v("Color")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "phonenumber" }, [
-                          _c("div", { staticClass: "colorbox" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "colorpickerplus-dropdown",
-                                attrs: { id: "color_picker" }
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "dropdown-toggle pickerbutton",
-                                    attrs: {
-                                      type: "button",
-                                      "data-toggle": "dropdown"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass:
-                                        "color-fill-icon dropdown-color-fill-icon"
-                                    }),
-                                    _vm._v("   Pick a Color    "),
-                                    _c("b", { staticClass: "caret" })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("ul", { staticClass: "dropdown-menu" }, [
-                                  _c("li", { staticClass: "disabled" }, [
-                                    _c("div", {
-                                      staticClass: "colorpickerplus-container"
-                                    })
-                                  ])
-                                ])
-                              ]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "desc" } }, [
-                          _vm._v("Description")
-                        ]),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          staticClass: "form-control min_h_185 p20 pt10",
-                          attrs: { id: "desc", placeholder: "List description" }
-                        })
-                      ])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row bottom-position" }, [
-                  _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
-                      },
-                      [_vm._v("Create")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "blue_300 fsize16 fw600 ml20",
-                        attrs: { href: "#" }
-                      },
-                      [_vm._v("Close")]
-                    )
-                  ])
+              _c("ul", { staticClass: "dropdown-menu" }, [
+                _c("li", { staticClass: "disabled" }, [
+                  _c("div", { staticClass: "colorpickerplus-container" })
                 ])
               ])
             ]
           )
-        ]
-      )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row bottom-position" }, [
+      _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+          },
+          [_vm._v("Create")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "blue_300 fsize16 fw600 ml20", attrs: { href: "#" } },
+          [_vm._v("Close")]
+        )
+      ])
     ])
   }
 ]
@@ -52637,156 +52727,147 @@ var render = function() {
                         _vm._m(5),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
-                          _c(
-                            "form",
-                            { attrs: { action: "/action_page.php" } },
-                            [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { attrs: { for: "fname" } }, [
-                                  _vm._v("Tag name")
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.form.tagReviewName,
-                                      expression: "form.tagReviewName"
-                                    }
-                                  ],
-                                  staticClass: "form-control h56",
-                                  attrs: {
-                                    type: "text",
-                                    id: "fname",
-                                    placeholder: "Enter tag name",
-                                    name: "tagReviewName"
-                                  },
-                                  domProps: { value: _vm.form.tagReviewName },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.form,
-                                        "tagReviewName",
-                                        $event.target.value
-                                      )
-                                    }
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "fname" } }, [
+                              _vm._v("Tag name")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.tagReviewName,
+                                  expression: "form.tagReviewName"
+                                }
+                              ],
+                              staticClass: "form-control h56",
+                              attrs: {
+                                type: "text",
+                                id: "fname",
+                                placeholder: "Enter tag name",
+                                name: "tagReviewName"
+                              },
+                              domProps: { value: _vm.form.tagReviewName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { attrs: { for: "phonenumber" } }, [
-                                  _vm._v("Tag Group")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "select",
+                                  _vm.$set(
+                                    _vm.form,
+                                    "tagReviewName",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "phonenumber" } }, [
+                              _vm._v("Tag Group")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
                                   {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.tagGroupId,
-                                        expression: "form.tagGroupId"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "tagGroupId",
-                                      placeholder: "Please Select"
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.form,
-                                          "tagGroupId",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "option",
-                                      {
-                                        attrs: {
-                                          value: "",
-                                          disabled: "",
-                                          hidden: ""
-                                        }
-                                      },
-                                      [_vm._v("Please Select")]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.oGroupIDs, function(oGroupID) {
-                                      return _c(
-                                        "option",
-                                        { domProps: { value: oGroupID.id } },
-                                        [_vm._v(_vm._s(oGroupID.group_name))]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { attrs: { for: "desc" } }, [
-                                  _vm._v("Description")
-                                ]),
-                                _vm._v(" "),
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.form.tagReviewDescription,
-                                      expression: "form.tagReviewDescription"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "form-control min_h_185 p20 pt10",
-                                  attrs: {
-                                    id: "desc",
-                                    placeholder: "Tag Review Description",
-                                    name: "tagReviewDescription"
-                                  },
-                                  domProps: {
-                                    value: _vm.form.tagReviewDescription
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.form,
-                                        "tagReviewDescription",
-                                        $event.target.value
-                                      )
-                                    }
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.tagGroupId,
+                                    expression: "form.tagGroupId"
                                   }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  name: "tagGroupId",
+                                  placeholder: "Please Select"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "tagGroupId",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  {
+                                    attrs: {
+                                      value: "",
+                                      disabled: "",
+                                      hidden: ""
+                                    }
+                                  },
+                                  [_vm._v("Please Select")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.oGroupIDs, function(oGroupID) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: oGroupID.id } },
+                                    [_vm._v(_vm._s(oGroupID.group_name))]
+                                  )
                                 })
-                              ])
-                            ]
-                          )
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "desc" } }, [
+                              _vm._v("Description")
+                            ]),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.tagReviewDescription,
+                                  expression: "form.tagReviewDescription"
+                                }
+                              ],
+                              staticClass: "form-control min_h_185 p20 pt10",
+                              attrs: {
+                                id: "desc",
+                                placeholder: "Tag Review Description",
+                                name: "tagReviewDescription"
+                              },
+                              domProps: {
+                                value: _vm.form.tagReviewDescription
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "tagReviewDescription",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
                         ])
                       ]),
                       _vm._v(" "),
@@ -77443,7 +77524,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_contact_SegmentSubscribers__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/admin/contact/SegmentSubscribers */ "./resources/js/components/admin/contact/SegmentSubscribers.vue");
 /* harmony import */ var _components_admin_contact_ListSubscribers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/admin/contact/ListSubscribers */ "./resources/js/components/admin/contact/ListSubscribers.vue");
 /* harmony import */ var _components_admin_modules_emails_Dashboard__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/admin/modules/emails/Dashboard */ "./resources/js/components/admin/modules/emails/Dashboard.vue");
-/* harmony import */ var _components_admin_modules_emails_Campaigns__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/admin/modules/emails/Campaigns */ "./resources/js/components/admin/modules/emails/Campaigns.vue");
+/* harmony import */ var _components_admin_modules_emails_Campaigns__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/admin/modules/emails/Campaigns */ "./resources/js/components/admin/modules/emails/Campaigns.vue");
 
 
 
@@ -77668,7 +77749,7 @@ var routes = [{
   }
 }, {
   path: '/modules/emails/index',
-  component: _components_admin_modules_emails_Campaigns__WEBPACK_IMPORTED_MODULE_28__["default"],
+  component: _components_admin_modules_emails_Campaigns__WEBPACK_IMPORTED_MODULE_27__["default"],
   meta: {
     title: 'Email Campaigns'
   }
@@ -77684,7 +77765,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
