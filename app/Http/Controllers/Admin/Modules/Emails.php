@@ -71,17 +71,81 @@ class Emails extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Automations" class="sidebar-control active hidden-xs ">Automations</a></li>
                     </ul>';
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/emails/dashboard',
+            'Campaigns' => ''
+        );
+
+        if(!empty($oAutomations->items())){
+            foreach($oAutomations->items() as $oAutomation){
+                $sentValue = 0;
+                $openValue = 0;
+                $clickValue = 0;
+                if ($oAutomation->status != '') {
+                    $oEvents = EmailsModel::getAutomationEvents($oAutomation->id);
+                    foreach ($oEvents as $oEventsValue) {
+                        $aStats = EmailsModel::getEmailSendgridStats('campaign', $oEventsValue->id);
+                        $aCategorizedStats = EmailsModel::getEmailSendgridCategorizedStatsData($aStats);
+                        $sent = $aCategorizedStats['delivered']['UniqueCount'];
+                        $open = $aCategorizedStats['open']['UniqueCount'];
+                        $click = $aCategorizedStats['click']['UniqueCount'];
+                        if ($sent > 0) {
+                            $sentValue = $sent + $sentValue;
+                        }
+
+                        if ($open > 0) {
+                            $openValue = $open + $openValue;
+                        }
+                        if ($click > 0) {
+                            $clickValue = $click + $clickValue;
+                        }
+
+                    }
+                    $totalValue = $sentValue + $openValue + $clickValue;
+
+                    $totalSentGraph = 0;
+                    $totalOpenGraph = 0;
+                    $totalClickGraph = 0;
+
+                    $totalSentGraph = ($totalValue == 0) ? 0 : ($sentValue * 100 / $totalValue);
+                    $totalSentGraph = ceil($totalOpenGraph);
+
+                    $totalOpenGraph = ($totalValue == 0) ? 0 : ($openValue * 100 / $totalValue);
+                    $totalOpenGraph = ceil($totalOpenGraph);
+
+                    $totalClickGraph = ($totalValue == 0) ? 0 : ($clickValue * 100 / $totalValue);
+                    $totalClickGraph = ceil($totalClickGraph);
+
+                }
+
+                $oAutomation->stats = array(
+                    'sent_total' => $sentValue,
+                    'sent_rate' => $totalSentGraph,
+                    'open_total' => $openValue,
+                    'open_rate' => $totalOpenGraph,
+                    'click_total' => $clickValue,
+                    'click_rate' => $totalClickGraph
+                );
+            }
+
+        }
+
         $aData = array(
             'title' => 'Email Automations',
             'pagename' => $breadcrumb,
-            'oAutomations' => $oAutomations,
+            'oAutomations' => $oAutomations->items(),
+            'allData' => $oAutomations,
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
             'moduleName' => 'automation',
             'automation_type' => 'email'
         );
 
-        return view('admin.modules.emails.index', $aData);
+        echo json_encode($aData);
+        exit;
+        //return view('admin.modules.emails.index', $aData);
     }
 
     /**

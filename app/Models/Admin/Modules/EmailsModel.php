@@ -31,7 +31,9 @@ class EmailsModel extends Model {
 			->when(!empty($automationType), function ($query) use ($automationType) {
 				return $query->where('tbl_automations_emails.automation_type', $automationType);
 			})
-			->get();
+            ->orderBy('tbl_automations_emails.id', 'desc')
+            ->paginate(10);
+			//->get();
 
         return $oData;
     }
@@ -405,7 +407,7 @@ class EmailsModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @param type $id
      * @param type $userID
@@ -416,7 +418,7 @@ class EmailsModel extends Model {
         ->where('id', $id)
         ->when(($userID > 0), function($query) use ($userID) {
             return $query->where('user_id', $userID);
-        })        
+        })
         ->update($aData);
         if($oData>-1){
             return true;
@@ -425,25 +427,25 @@ class EmailsModel extends Model {
         }
     }
 
-    
+
     /**
-     * 
+     *
      * @param type $id
      * @param type $userID
      * @return boolean
      */
     public function deleteEmailAutomation($id, $userID = '') {
         $aData = array(
-           'deleted' => '1' 
+           'deleted' => '1'
         );
         $oData = DB::table('tbl_automations_emails')
         ->where('id', $id)
         ->when(($userID > 0), function($query) use ($userID) {
             return $query->where('user_id', $userID);
-        })        
+        })
         ->delete();
         return true;
-        
+
     }
 
     /**
@@ -687,7 +689,7 @@ class EmailsModel extends Model {
                     return $query->where('user_id', 0);
                 })
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
     public function getEmailMoudleTemplateInfo($id) {

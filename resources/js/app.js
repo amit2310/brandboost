@@ -13,6 +13,7 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import axios from 'axios';
 import helpers from './helpers';
+/*import forms from './forms';*/
 
 import commonComponents from './components/helpers/Common/LoadCommonComponents.js';
 
