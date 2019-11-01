@@ -131,6 +131,13 @@
                             </div>
                         </div>
 
+                        <div class="col-md-3 text-center js-segment-slidebox" style="cursor: pointer;">
+                            <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
+                                <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
+                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Segment</p>
+                            </div>
+                        </div>
+
                     </div>
                     <pagination
                         :pagination="allData"
@@ -158,7 +165,7 @@
                         <div class="p40">
                             <div class="row">
                                 <div class="col-md-12"><img src="assets/images/tag.svg"/>
-                                    <h3 class="htxt_medium_24 dark_800 mt20">{{formLabel}} Segment </h3>
+                                    <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Segment </h3>
                                     <hr>
                                 </div>
                                 <div class="col-md-12">
@@ -211,7 +218,7 @@
                                            :value="moduleAccountID">
 
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">
-                                        {{formLabel}}
+                                        {{ formLabel }}
                                     </button>
                                     <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a></div>
                             </div>

@@ -583,9 +583,79 @@ class Lists extends Controller {
 
 
         if (!empty($oList)) {
-            $response = array('status' => 'success', 'title' => $oList[0]->list_name, 'description' => $oList[0]->description);
+            $response = array('status' => 'success', 'list_id' => $listID, 'title' => $oList[0]->list_name, 'description' => $oList[0]->description);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Used to update contact lists
+     */
+
+    public function updatePeopleList(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'listDescription' => ['required']
+        ]);
+
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        $listID = strip_tags($request->list_id);
+        $title = strip_tags($request->title);
+        $description = strip_tags($request->listDescription);
+        $dateTime = date("Y-m-d H:i:s");
+        $aData = array(
+            'list_name' => $title,
+            'description' => $description
+        );
+
+        $bAlreadyExists = $mLists->checkIfListExists($title, $userID, $listID);
+        if ($bAlreadyExists == true) {
+            $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'List name already exists');
+            echo json_encode($response);
+            exit;
+        }
+
+        if ($userRole != '1') {
+            $bUpdated = $mLists->updateLists($aData, $listID, $userID);
+        } else {
+            $userID = '';
+            $bUpdated = $mLists->updateLists($aData, $listID, $userID);
+        }
+
+        if ($bUpdated) {
+            //Add Useractivity log
+            $aActivityData = array(
+                'user_id' => $userID,
+                'event_type' => 'manage_lists',
+                'action_name' => 'updated_list',
+                'list_id' => $listID,
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Updated contact list',
+                'activity_created' => $dateTime
+            );
+            logUserActivity($aActivityData);
+            $response = array('status' => 'success', 'msg' => "List updated successfully!");
         }
 
         echo json_encode($response);

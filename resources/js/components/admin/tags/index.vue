@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">New Tag <span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 js-tag-slidebox">New Tag <span><img src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                                         <img class="mt40" style="max-width: 225px; " src="assets/images/tag_Frame.svg">
                                         <h3 class="htxt_bold_18 dark_700 mt30">No tags so far. But you can change it!</h3>
                                         <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import tags!</h3>
-                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">Add New Tag</button>
+                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-tag-slidebox">Add New Tag</button>
                                     </div>
                                 </div>
 
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="float-right">
-                                <input class="table_search" type="text" placeholder="Serch" />
+                                <input class="table_search" type="text" placeholder="Search" />
                             </div>
                         </div>
                     </div>
@@ -130,12 +130,13 @@
                     </div>
 
 
-                    <!--<div class="col-md-3 text-center">
+                    <div class="col-md-3 text-center js-tag-slidebox" style="cursor: pointer;">
                         <div class="card p30 bkg_none border_dashed shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>Tag list</p>
                         </div>
-                    </div>-->
+                    </div>
+
                 </div>
                     <pagination
                         :pagination="allData"
@@ -154,7 +155,7 @@
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
-                    <a class="cross_icon slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <a class="cross_icon js-tag-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="submitAddTagReview">
                         <div class="p40">
                         <div class="row">
@@ -304,7 +305,7 @@
     }
 
     $(document).ready(function(){
-        $(document).on('click', '.slidebox', function () {
+        $(document).on('click', '.js-tag-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });
