@@ -2527,11 +2527,11 @@ class Broadcast extends Controller {
         $mBroadcast = new BroadcastModel();
 
 
-        echo "-------".$segment_id = $request->segment_id;
+        $segment_id = $request->segment_id;
         $oSegments = $mBroadcast->getSegmentById($userID, $segment_id);
 
         if (!empty($oSegments)) {
-            $response = array('status' => 'success', 'title' => $oSegments[0]->segment_name, 'description' => $oSegments[0]->segment_desc);
+            $response = array('status' => 'success', 'segment_id' => $segment_id, 'title' => $oSegments[0]->segment_name, 'description' => $oSegments[0]->segment_desc);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
@@ -2747,6 +2747,50 @@ class Broadcast extends Controller {
             }
         }
         $response['status'] = 'success';
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Used to update broadcast segments
+     */
+    public function updatePeopleSegment(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        $segmentID = strip_tags($request->segment_id);
+        $title = strip_tags($request->segmentName);
+        $description = strip_tags($request->segmentDescription);
+        $dateTime = date("Y-m-d H:i:s");
+        $aData = array(
+            'segment_name' => $title,
+            'segment_desc' => $description,
+            'status' => 1
+        );
+
+        if ($userRole != '1') {
+            $bUpdated = $mBroadcast->updateSegment($aData, $segmentID, $userID);
+        } else {
+            $userID = '';
+            $bUpdated = $mBroadcast->updateSegment($aData, $segmentID, $userID);
+        }
+
+        if ($bUpdated) {
+            $response = array('status' => 'success', 'msg' => "Segment updated successfully!");
+        }
+
         echo json_encode($response);
         exit;
     }

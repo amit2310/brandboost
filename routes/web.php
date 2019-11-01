@@ -762,6 +762,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/segments/syncSegment', 'Admin\Segments@syncSegment');
     Route::post('admin/broadcast/getSegment', 'Admin\Broadcast@getSegment');
     Route::post('admin/broadcast/updateSegment', 'Admin\Broadcast@updateSegment');
+    Route::post('admin/broadcast/updatePeopleSegment', 'Admin\Broadcast@updatePeopleSegment');
     Route::post('admin/broadcast/archive_multipal_segment', 'Admin\Broadcast@archive_multipal_segment');
     Route::post('admin/broadcast/deleteSegment', 'Admin\Broadcast@deleteSegment');
 

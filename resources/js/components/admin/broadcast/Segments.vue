@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 js-slidebox"> New Segment<span><img
+                        <button class="btn btn-md bkg_blue_200 light_000 js-segment-slidebox"> New Segment<span><img
                             src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                     <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import
                                         segment!</h3>
-                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-slidebox">Add segment</button>
+                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
                                 </div>
                             </div>
 
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="float-right">
-                                        <input class="table_search" type="text" placeholder="Serch"/>
+                                        <input class="table_search" type="text" placeholder="Search"/>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
 
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-slidebox"><i
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-segment-slidebox"><i
                     class=""><img src="/assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="processForm">
                         <div class="p40">
@@ -237,7 +237,7 @@
                 form: {
                     segmentName: '',
                     segmentDescription: '',
-                    id: ''
+                    segment_id: ''
                 },
                 formLabel: 'Create',
                 successMsg: '',
@@ -261,10 +261,10 @@
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-contact-slidebox').click();
+                document.querySelector('.js-segment-slidebox').click();
             },
             prepareSegmentUpdate: function(segmentId) {
-                this.getSegmentInfo();
+                this.getSegmentInfo(segmentId);
             },
             getSegmentInfo: function(segmentID){
                 axios.post('/admin/broadcast/getSegment', {
@@ -275,10 +275,10 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             //Fill up the form fields
-                            let formData = response.data.result[0];
-                            this.form.segmentName = formData.segmentName;
-                            this.form.segmentDescription = formData.segmentDescription;
-                            this.form.id = formData.id;
+                            let formData = response.data;
+                            this.form.segmentName = formData.title;
+                            this.form.segmentDescription = formData.description;
+                            this.form.segment_id = formData.segment_id;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
@@ -289,8 +289,8 @@
                 this.loading = true;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
-                if(this.form.id>0){
-                    formActionSrc = '/admin/broadcast/updateSegment';
+                if(this.form.segment_id>0){
+                    formActionSrc = '/admin/broadcast/updatePeopleSegment';
                 }else{
                     formActionSrc = '/admin/broadcast/makeSegment';
                     this.form.module_account_id = this.moduleAccountID;
@@ -300,8 +300,8 @@
                         if (response.data.status == 'success') {
                             this.loading = false;
                             //this.form = {};
-                            this.form.id ='';
-                            document.querySelector('.js-contact-slidebox').click();
+                            this.form.segment_id ='';
+                            document.querySelector('.js-segment-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
                             var elem = this;
                             setTimeout(function () {
@@ -315,7 +315,7 @@
                         this.loading = false;
                         console.log(error);
                         //error.response.data
-                        //alert('All form fields are required');
+                        alert('All form fields are required');
                     });
             },
             loadPaginatedData: function () {
@@ -401,7 +401,7 @@
     };
 
     $(document).ready(function () {
-        $(document).on('click', '.js-slidebox', function () {
+        $(document).on('click', '.js-segment-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });
