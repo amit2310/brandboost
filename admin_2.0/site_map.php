@@ -129,6 +129,15 @@
      			<li><a target="_blank" href="email_template2.php">Email Template 2</a></li>
      			<li><a target="_blank" href="email_forms1.php">Email Forms 1</a></li>
      			<li><a target="_blank" href="email_forms2.php">Email Forms 2</a></li>
+     			
+     			
+     			<li><a target="_blank" href="email_workflow1.php">Email Workflow 1</a></li>
+     			<li><a target="_blank" href="email_workflow2.php">Email Workflow 2</a></li>
+     			
+     			
+     			<li><a target="_blank" href="email_campaign3.php">Email Camapaign 3</a></li>
+     			<li><a target="_blank" href="email_campaign4.php">Email Camapaign 4</a></li>
+     			<li><a target="_blank" href="email_campaign5.php">Email Camapaign 5</a></li>
      		</ul>
      		</div>
      	</div>
