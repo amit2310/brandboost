@@ -103,13 +103,29 @@
                 </div>
 
                 <div class="row">
-                    <div v-for="oTag in oTags" class="col-md-3 text-center" @click="showTagSubscribers(oTag.tagid)" style="cursor:pointer;">
+                    <div v-for="oTag in oTags" class="col-md-3 text-center">
                         <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                {{capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20))}}
-                            </h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ oTagSubscribers[oTag.tagid] }}</p>
+                            <div class="dot_dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteTagGroupEntity(oTag.tagid)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                </div>
+                            </div>
+                            <div v-if="oTagSubscribers[oTag.tagid] > 0" @click="showTagSubscribers(oTag.tagid)" style="cursor:pointer;">
+                                <img class="mt20" src="assets/images/tag_icon_circle.svg">
+                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                    {{capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20))}}
+                                </h3>
+                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ oTagSubscribers[oTag.tagid] }}</p>
+                            </div>
+                            <div v-else>
+                                <img class="mt20" src="assets/images/tag_icon_circle.svg">
+                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                    {{capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20))}}
+                                </h3>
+                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ oTagSubscribers[oTag.tagid] }}</p>
+                            </div>
                         </div>
                     </div>
 
@@ -265,6 +281,24 @@
                         //error.response.data
                         alert('All form fields are required');
                     });
+            },
+            deleteTagGroupEntity: function(tagId){
+                if(confirm('Are you sure you want to delete this tag?')){
+                    //Do axios
+                    axios.post('/admin/tags/deleteTagGroupEntity', {
+                        id:tagId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
             }
         }
     }

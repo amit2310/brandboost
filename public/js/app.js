@@ -16369,6 +16369,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Insight Tags - Brand Boost',
@@ -16438,6 +16454,25 @@ __webpack_require__.r(__webpack_exports__);
 
         alert('All form fields are required');
       });
+    },
+    deleteTagGroupEntity: function deleteTagGroupEntity(tagId) {
+      var _this3 = this;
+
+      if (confirm('Are you sure you want to delete this tag?')) {
+        //Do axios
+        axios.post('/admin/tags/deleteTagGroupEntity', {
+          id: tagId,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this3.showPaginationData(_this3.current_page);
+          }
+        });
+      }
     }
   }
 });
@@ -52615,62 +52650,161 @@ var render = function() {
                       _vm._l(_vm.oTags, function(oTag) {
                         return _c(
                           "div",
-                          {
-                            staticClass: "col-md-3 text-center",
-                            staticStyle: { cursor: "pointer" },
-                            on: {
-                              click: function($event) {
-                                return _vm.showTagSubscribers(oTag.tagid)
-                              }
-                            }
-                          },
+                          { staticClass: "col-md-3 text-center" },
                           [
                             _c(
                               "div",
                               { staticClass: "card p30 h235 animate_top" },
                               [
-                                _c("img", {
-                                  staticClass: "mt20",
-                                  attrs: {
-                                    src: "assets/images/tag_icon_circle.svg"
-                                  }
-                                }),
+                                _c("div", { staticClass: "dot_dropdown" }, [
+                                  _vm._m(3, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "dropdown-menu dropdown-menu-right"
+                                    },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "dropdown-item",
+                                          attrs: {
+                                            href: "javascript:void(0);"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteTagGroupEntity(
+                                                oTag.tagid
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "dripicons-user text-muted mr-2"
+                                          }),
+                                          _vm._v(" Delete")
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]),
                                 _vm._v(" "),
-                                _c(
-                                  "h3",
-                                  {
-                                    staticClass:
-                                      "htxt_bold_16 dark_700 mt25 mb15"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                            " +
-                                        _vm._s(
-                                          _vm.capitalizeFirstLetter(
-                                            _vm.setStringLimit(
-                                              oTag.tag_name,
-                                              20
+                                _vm.oTagSubscribers[oTag.tagid] > 0
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticStyle: { cursor: "pointer" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showTagSubscribers(
+                                              oTag.tagid
                                             )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          staticClass: "mt20",
+                                          attrs: {
+                                            src:
+                                              "assets/images/tag_icon_circle.svg"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h3",
+                                          {
+                                            staticClass:
+                                              "htxt_bold_16 dark_700 mt25 mb15"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                " +
+                                                _vm._s(
+                                                  _vm.capitalizeFirstLetter(
+                                                    _vm.setStringLimit(
+                                                      oTag.tag_name,
+                                                      20
+                                                    )
+                                                  )
+                                                ) +
+                                                "\n                            "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "htxt_regular_12 dark_300 mb15"
+                                          },
+                                          [
+                                            _vm._m(4, true),
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  _vm.oTagSubscribers[
+                                                    oTag.tagid
+                                                  ]
+                                                )
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _c("div", [
+                                      _c("img", {
+                                        staticClass: "mt20",
+                                        attrs: {
+                                          src:
+                                            "assets/images/tag_icon_circle.svg"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h3",
+                                        {
+                                          staticClass:
+                                            "htxt_bold_16 dark_700 mt25 mb15"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                " +
+                                              _vm._s(
+                                                _vm.capitalizeFirstLetter(
+                                                  _vm.setStringLimit(
+                                                    oTag.tag_name,
+                                                    20
+                                                  )
+                                                )
+                                              ) +
+                                              "\n                            "
                                           )
-                                        ) +
-                                        "\n                        "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "p",
-                                  {
-                                    staticClass: "htxt_regular_12 dark_300 mb15"
-                                  },
-                                  [
-                                    _vm._m(3, true),
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(_vm.oTagSubscribers[oTag.tagid])
-                                    )
-                                  ]
-                                )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "htxt_regular_12 dark_300 mb15"
+                                        },
+                                        [
+                                          _vm._m(5, true),
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.oTagSubscribers[oTag.tagid]
+                                              )
+                                          )
+                                        ]
+                                      )
+                                    ])
                               ]
                             )
                           ]
@@ -52708,7 +52842,7 @@ var render = function() {
                 }
               },
               [
-                _vm._m(4),
+                _vm._m(6),
                 _vm._v(" "),
                 _c(
                   "form",
@@ -52724,7 +52858,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "p40" }, [
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(5),
+                        _vm._m(7),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
                           _c("div", { staticClass: "form-group" }, [
@@ -52871,7 +53005,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(6)
+                      _vm._m(8)
                     ])
                   ]
                 )
@@ -53110,6 +53244,37 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          "data-toggle": "dropdown",
+          href: "#",
+          role: "button",
+          "aria-haspopup": "false",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "assets/images/user_16_grey.svg" } })
     ])
   },
   function() {
