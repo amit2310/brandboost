@@ -24,6 +24,10 @@ import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteC
 import Segments from './components/admin/broadcast/Segments';
 import SegmentSubscribers from './components/admin/contact/SegmentSubscribers';
 import ListSubscribers from './components/admin/contact/ListSubscribers';
+/*Email Module*/
+import EmailDashboard from './components/admin/modules/emails/Dashboard';
+import EmailCampaigns from './components/admin/modules/emails/Campaigns';
+
 
 
 const routes = [
@@ -64,6 +68,10 @@ const routes = [
     /*Segments*/
     { path: '/broadcast/mysegments', component: Segments, meta: { title: 'My Segments'} },
     { path: '/broadcast/segmentContacts/:id', component: SegmentSubscribers, meta: { title: 'Segments Subscribers'} },
+
+    /*Email Module*/
+    { path: '/modules/emails/dashboard', component: EmailDashboard, meta: { title: 'Email Dashboard'} },
+    { path: '/modules/emails/index', component: EmailCampaigns, meta: { title: 'Email Campaigns'} },
 
 ];
 
