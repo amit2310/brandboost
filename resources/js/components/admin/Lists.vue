@@ -66,13 +66,36 @@
 
                 <div class="row">
 
-                    <div v-for="list in lists" class="col-md-3 text-center" @click="showListSubscribers(list.id)" style="cursor:pointer;">
+                    <div v-for="list in lists" class="col-md-3 text-center">
                         <div class="card p30 h235 animate_top">
-                            <img class="mt20" src="assets/images/subs-icon_big.svg">
-                            <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                <span>{{ list.list_name }}</span>
-                            </h3>
-                            <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ list.countSubscribers }}</p>
+                            <div class="dot_dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a v-if="list.countSubscribers > 0" class="dropdown-item" href="javascript:void(0);" @click="showListSubscribers(list.id)"><i class="dripicons-user text-muted mr-2"></i> View Contacts</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareListUpdate(list.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <a v-if="list.status == 'inactive' && list.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(list.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(list.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="list.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(list.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteList(list.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                </div>
+                            </div>
+                            <div v-if="list.countSubscribers > 0" @click="showListSubscribers(list.id)" style="cursor:pointer;">
+                                <img class="mt20" src="assets/images/subs-icon_big.svg">
+                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                    <span>{{capitalizeFirstLetter(setStringLimit(list.list_name, 20))}}</span>
+                                </h3>
+                                <p><em>({{ list.status }})</em></p>
+                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ list.countSubscribers }}</p>
+                            </div>
+                            <div v-else>
+                                <img class="mt20" src="assets/images/subs-icon_big.svg">
+                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                    <span>{{capitalizeFirstLetter(setStringLimit(list.list_name, 20))}}</span>
+                                </h3>
+                                <p><em>({{ list.status }})</em></p>
+                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ list.countSubscribers }}</p>
+                            </div>
                         </div>
                     </div>
 
@@ -363,6 +386,43 @@
                 this.loading = true;
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            changeStatus: function(listID, status) {
+                if(confirm('Are you sure you want to change the status of this list?')){
+                    //Do axios
+                    axios.post('/admin/lists/changeListStatus', {
+                        list_id:listID,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            },
+            deleteList: function(listID) {
+                if(confirm('Are you sure you want to delete this list?')){
+                    //Do axios
+                    axios.post('/admin/lists/deleteLists', {
+                        list_id:listID,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
             },
             submitAddList: function () {
                 this.loading = true;
