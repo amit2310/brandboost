@@ -612,6 +612,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/lists/addList', 'Admin\Lists@addList');
     Route::post('admin/lists/getList', 'Admin\Lists@getList');
     Route::post('admin/lists/updateList', 'Admin\Lists@updateList');
+    Route::post('admin/lists/updatePeopleList', 'Admin\Lists@updatePeopleList');
     Route::post('admin/lists/archiveMultipalLists', 'Admin\Lists@archiveMultipalLists');
     Route::post('admin/lists/deleteMultipalLists', 'Admin\Lists@deleteMultipalLists');
     Route::post('admin/lists/deleteLists', 'Admin\Lists@deleteLists');
