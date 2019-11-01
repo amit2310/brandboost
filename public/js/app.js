@@ -10898,7 +10898,7 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         segmentName: '',
         segmentDescription: '',
-        id: ''
+        segment_id: ''
       },
       formLabel: 'Create',
       successMsg: '',
@@ -10923,10 +10923,10 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.formLabel = lbl;
-      document.querySelector('.js-contact-slidebox').click();
+      document.querySelector('.js-segment-slidebox').click();
     },
     prepareSegmentUpdate: function prepareSegmentUpdate(segmentId) {
-      this.getSegmentInfo();
+      this.getSegmentInfo(segmentId);
     },
     getSegmentInfo: function getSegmentInfo(segmentID) {
       var _this = this;
@@ -10938,10 +10938,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.data.status == 'success') {
           //Fill up the form fields
-          var formData = response.data.result[0];
-          _this.form.segmentName = formData.segmentName;
-          _this.form.segmentDescription = formData.segmentDescription;
-          _this.form.id = formData.id;
+          var formData = response.data;
+          _this.form.segmentName = formData.title;
+          _this.form.segmentDescription = formData.description;
+          _this.form.segment_id = formData.segment_id;
           _this.formLabel = 'Update';
 
           _this.displayForm(_this.formLabel);
@@ -10955,8 +10955,8 @@ __webpack_require__.r(__webpack_exports__);
       var formActionSrc = '';
       this.form.module_name = this.moduleName;
 
-      if (this.form.id > 0) {
-        formActionSrc = '/admin/broadcast/updateSegment';
+      if (this.form.segment_id > 0) {
+        formActionSrc = '/admin/broadcast/updatePeopleSegment';
       } else {
         formActionSrc = '/admin/broadcast/makeSegment';
         this.form.module_account_id = this.moduleAccountID;
@@ -10966,8 +10966,8 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data.status == 'success') {
           _this2.loading = false; //this.form = {};
 
-          _this2.form.id = '';
-          document.querySelector('.js-contact-slidebox').click();
+          _this2.form.segment_id = '';
+          document.querySelector('.js-segment-slidebox').click();
           _this2.successMsg = 'Action completed successfully.';
           var elem = _this2;
           setTimeout(function () {
@@ -10978,7 +10978,8 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this2.loading = false;
         console.log(error); //error.response.data
-        //alert('All form fields are required');
+
+        alert('All form fields are required');
       });
     },
     loadPaginatedData: function loadPaginatedData() {
@@ -11067,7 +11068,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 $(document).ready(function () {
-  $(document).on('click', '.js-slidebox', function () {
+  $(document).on('click', '.js-segment-slidebox', function () {
     $(".box").animate({
       width: "toggle"
     });
@@ -40909,7 +40910,10 @@ var staticRenderFns = [
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-md bkg_blue_200 light_000 js-slidebox" },
+              {
+                staticClass:
+                  "btn btn-md bkg_blue_200 light_000 js-segment-slidebox"
+              },
               [
                 _vm._v(" New Segment"),
                 _c("span", [
@@ -41005,7 +41009,8 @@ var staticRenderFns = [
             _c(
               "button",
               {
-                staticClass: "btn btn-sm bkg_blue_000 pr20 blue_300 js-slidebox"
+                staticClass:
+                  "btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox"
               },
               [_vm._v("Add segment")]
             )
@@ -41107,7 +41112,7 @@ var staticRenderFns = [
             _c("div", { staticClass: "float-right" }, [
               _c("input", {
                 staticClass: "table_search",
-                attrs: { type: "text", placeholder: "Serch" }
+                attrs: { type: "text", placeholder: "Search" }
               })
             ])
           ])
@@ -41150,7 +41155,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "cross_icon js-slidebox" }, [
+    return _c("a", { staticClass: "cross_icon js-segment-slidebox" }, [
       _c("i", {}, [_c("img", { attrs: { src: "/assets/images/cross.svg" } })])
     ])
   },
