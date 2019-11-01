@@ -2027,6 +2027,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2089,20 +2112,59 @@ __webpack_require__.r(__webpack_exports__);
       this.current_page = p;
       this.loadPaginatedData();
     },
-    submitAddList: function submitAddList() {
+    changeStatus: function changeStatus(listID, status) {
       var _this2 = this;
+
+      if (confirm('Are you sure you want to change the status of this list?')) {
+        //Do axios
+        axios.post('/admin/lists/changeListStatus', {
+          list_id: listID,
+          status: status,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this2.showPaginationData(_this2.current_page);
+          }
+        });
+      }
+    },
+    deleteList: function deleteList(listID) {
+      var _this3 = this;
+
+      if (confirm('Are you sure you want to delete this list?')) {
+        //Do axios
+        axios.post('/admin/lists/deleteLists', {
+          list_id: listID,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this3.showPaginationData(_this3.current_page);
+          }
+        });
+      }
+    },
+    submitAddList: function submitAddList() {
+      var _this4 = this;
 
       this.loading = true;
       axios.post('/admin/lists/addList', this.form).then(function (response) {
         if (response.data.status == 'success') {
-          _this2.loading = false;
-          _this2.successMsg = 'New List Added successfully';
-          _this2.form = {};
+          _this4.loading = false;
+          _this4.successMsg = 'New List Added successfully';
+          _this4.form = {};
 
-          _this2.showPaginationData(_this2.current_page);
+          _this4.showPaginationData(_this4.current_page);
         }
       })["catch"](function (error) {
-        _this2.loading = false; //error.response.data
+        _this4.loading = false; //error.response.data
 
         alert('All form fields are required');
       });
@@ -10825,121 +10887,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['pageColor'],
@@ -10950,8 +10897,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       form: {
         segmentName: '',
-        segmentDescription: ''
+        segmentDescription: '',
+        id: ''
       },
+      formLabel: 'Create',
       successMsg: '',
       errorMsg: '',
       loading: true,
@@ -10964,25 +10913,88 @@ __webpack_require__.r(__webpack_exports__);
       allData: ''
     };
   },
-  //components: {'workflow-subscribers': WorkflowSubscribers},
   mounted: function mounted() {
     this.loadPaginatedData();
   },
   methods: {
-    loadPaginatedData: function loadPaginatedData() {
+    displayForm: function displayForm(lbl) {
+      if (lbl == 'Create') {
+        this.form = {};
+      }
+
+      this.formLabel = lbl;
+      document.querySelector('.js-contact-slidebox').click();
+    },
+    prepareSegmentUpdate: function prepareSegmentUpdate(segmentId) {
+      this.getSegmentInfo();
+    },
+    getSegmentInfo: function getSegmentInfo(segmentID) {
       var _this = this;
 
+      axios.post('/admin/broadcast/getSegment', {
+        segment_id: segmentID,
+        moduleName: this.moduleName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          //Fill up the form fields
+          var formData = response.data.result[0];
+          _this.form.segmentName = formData.segmentName;
+          _this.form.segmentDescription = formData.segmentDescription;
+          _this.form.id = formData.id;
+          _this.formLabel = 'Update';
+
+          _this.displayForm(_this.formLabel);
+        }
+      });
+    },
+    processForm: function processForm() {
+      var _this2 = this;
+
+      this.loading = true;
+      var formActionSrc = '';
+      this.form.module_name = this.moduleName;
+
+      if (this.form.id > 0) {
+        formActionSrc = '/admin/broadcast/updateSegment';
+      } else {
+        formActionSrc = '/admin/broadcast/makeSegment';
+        this.form.module_account_id = this.moduleAccountID;
+      }
+
+      axios.post(formActionSrc, this.form).then(function (response) {
+        if (response.data.status == 'success') {
+          _this2.loading = false; //this.form = {};
+
+          _this2.form.id = '';
+          document.querySelector('.js-contact-slidebox').click();
+          _this2.successMsg = 'Action completed successfully.';
+          var elem = _this2;
+          setTimeout(function () {
+            elem.loadPaginatedData();
+          }, 500);
+          syncContactSelectionSources();
+        }
+      })["catch"](function (error) {
+        _this2.loading = false;
+        console.log(error); //error.response.data
+        //alert('All form fields are required');
+      });
+    },
+    loadPaginatedData: function loadPaginatedData() {
+      var _this3 = this;
+
       axios.get('/admin/broadcast/mysegments?page=' + this.current_page).then(function (response) {
-        _this.breadcrumb = response.data.breadcrumb;
+        _this3.breadcrumb = response.data.breadcrumb;
 
-        _this.makeBreadcrumb(_this.breadcrumb);
+        _this3.makeBreadcrumb(_this3.breadcrumb);
 
-        _this.moduleName = response.data.moduleName;
-        _this.moduleUnitID = response.data.moduleUnitID;
-        _this.moduleAccountID = response.data.moduleAccountID;
-        _this.loading = false;
-        _this.segments = response.data.oSegments;
-        _this.allData = response.data.allData;
+        _this3.moduleName = response.data.moduleName;
+        _this3.moduleUnitID = response.data.moduleUnitID;
+        _this3.moduleAccountID = response.data.moduleAccountID;
+        _this3.loading = false;
+        _this3.segments = response.data.oSegments;
+        _this3.allData = response.data.allData;
       });
     },
     showSegmentSubscribers: function showSegmentSubscribers(segmentId) {
@@ -10992,19 +11004,19 @@ __webpack_require__.r(__webpack_exports__);
       this.navigatePagination(current_page);
     },
     submitAddSegment: function submitAddSegment() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.loading = true;
       axios.post('/admin/broadcast/makeSegment', this.form).then(function (response) {
         if (response.data.status == 'success') {
-          _this2.loading = false;
-          _this2.successMsg = 'Segment Added successfully';
-          _this2.form = {};
+          _this4.loading = false;
+          _this4.successMsg = 'Segment Added successfully';
+          _this4.form = {};
 
-          _this2.showPaginationData(_this2.current_page);
+          _this4.showPaginationData(_this4.current_page);
         }
       })["catch"](function (error) {
-        _this2.loading = false; //error.response.data
+        _this4.loading = false; //error.response.data
 
         alert('All form fields are required');
       });
@@ -11013,6 +11025,44 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       this.current_page = p;
       this.loadPaginatedData();
+    },
+    deleteSegment: function deleteSegment(segmentID) {
+      var _this5 = this;
+
+      if (confirm('Are you sure you want to delete this segment?')) {
+        //Do axios
+        axios.post('/admin/broadcast/deleteSegment', {
+          segmentID: segmentID,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this5.showPaginationData(_this5.current_page);
+          }
+        });
+      }
+    },
+    moveArchive: function moveArchive(segmentID) {
+      var _this6 = this;
+
+      if (confirm('Are you sure you want to move this segment to archive?')) {
+        //Do axios
+        axios.post('/admin/broadcast/archive_multipal_segment', {
+          multi_segment_id: segmentID,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this6.showPaginationData(_this6.current_page);
+          }
+        });
+      }
     }
   }
 });
@@ -21137,52 +21187,294 @@ var render = function() {
                     _vm._l(_vm.lists, function(list) {
                       return _c(
                         "div",
-                        {
-                          staticClass: "col-md-3 text-center",
-                          staticStyle: { cursor: "pointer" },
-                          on: {
-                            click: function($event) {
-                              return _vm.showListSubscribers(list.id)
-                            }
-                          }
-                        },
+                        { staticClass: "col-md-3 text-center" },
                         [
                           _c(
                             "div",
                             { staticClass: "card p30 h235 animate_top" },
                             [
-                              _c("img", {
-                                staticClass: "mt20",
-                                attrs: {
-                                  src: "assets/images/subs-icon_big.svg"
-                                }
-                              }),
+                              _c("div", { staticClass: "dot_dropdown" }, [
+                                _vm._m(2, true),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "dropdown-menu dropdown-menu-right"
+                                  },
+                                  [
+                                    list.countSubscribers > 0
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showListSubscribers(
+                                                  list.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" View Contacts")
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.prepareListUpdate(
+                                              list.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-user text-muted mr-2"
+                                        }),
+                                        _vm._v(" Edit")
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    list.status == "inactive" &&
+                                    list.status != "archive"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  list.id,
+                                                  "active"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Active")
+                                          ]
+                                        )
+                                      : _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  list.id,
+                                                  "inactive"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Inactive")
+                                          ]
+                                        ),
+                                    _vm._v(" "),
+                                    list.status != "archive"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  list.id,
+                                                  "archive"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Move To Archive")
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteList(list.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-user text-muted mr-2"
+                                        }),
+                                        _vm._v(" Delete")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
                               _vm._v(" "),
-                              _c(
-                                "h3",
-                                {
-                                  staticClass: "htxt_bold_16 dark_700 mt25 mb15"
-                                },
-                                [_c("span", [_vm._v(_vm._s(list.list_name))])]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                {
-                                  staticClass: "htxt_regular_12 dark_300 mb15"
-                                },
-                                [
-                                  _vm._m(2, true),
-                                  _vm._v(" " + _vm._s(list.countSubscribers))
-                                ]
-                              )
+                              list.countSubscribers > 0
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticStyle: { cursor: "pointer" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.showListSubscribers(
+                                            list.id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        staticClass: "mt20",
+                                        attrs: {
+                                          src: "assets/images/subs-icon_big.svg"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h3",
+                                        {
+                                          staticClass:
+                                            "htxt_bold_16 dark_700 mt25 mb15"
+                                        },
+                                        [
+                                          _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.capitalizeFirstLetter(
+                                                  _vm.setStringLimit(
+                                                    list.list_name,
+                                                    20
+                                                  )
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _c("em", [
+                                          _vm._v(
+                                            "(" + _vm._s(list.status) + ")"
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "htxt_regular_12 dark_300 mb15"
+                                        },
+                                        [
+                                          _vm._m(3, true),
+                                          _vm._v(
+                                            " " + _vm._s(list.countSubscribers)
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                : _c("div", [
+                                    _c("img", {
+                                      staticClass: "mt20",
+                                      attrs: {
+                                        src: "assets/images/subs-icon_big.svg"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      {
+                                        staticClass:
+                                          "htxt_bold_16 dark_700 mt25 mb15"
+                                      },
+                                      [
+                                        _c("span", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.capitalizeFirstLetter(
+                                                _vm.setStringLimit(
+                                                  list.list_name,
+                                                  20
+                                                )
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("em", [
+                                        _vm._v("(" + _vm._s(list.status) + ")")
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass:
+                                          "htxt_regular_12 dark_300 mb15"
+                                      },
+                                      [
+                                        _vm._m(4, true),
+                                        _vm._v(
+                                          " " + _vm._s(list.countSubscribers)
+                                        )
+                                      ]
+                                    )
+                                  ])
                             ]
                           )
                         ]
                       )
                     }),
                     _vm._v(" "),
-                    _vm._m(3)
+                    _vm._m(5)
                   ],
                   2
                 ),
@@ -21194,7 +21486,7 @@ var render = function() {
               ],
               1
             )
-          : _c("div", { staticClass: "container-fluid" }, [_vm._m(4)])
+          : _c("div", { staticClass: "container-fluid" }, [_vm._m(6)])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
@@ -21214,7 +21506,7 @@ var render = function() {
                 }
               },
               [
-                _vm._m(5),
+                _vm._m(7),
                 _vm._v(" "),
                 _c(
                   "form",
@@ -21230,7 +21522,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "p40" }, [
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(6),
+                        _vm._m(8),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
                           _c("div", { staticClass: "form-group" }, [
@@ -21270,7 +21562,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(7),
+                          _vm._m(9),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", { attrs: { for: "desc" } }, [
@@ -21310,7 +21602,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(8)
+                      _vm._m(10)
                     ])
                   ]
                 )
@@ -21468,6 +21760,37 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          "data-toggle": "dropdown",
+          href: "#",
+          role: "button",
+          "aria-haspopup": "false",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "assets/images/user_16_grey.svg" } })
     ])
   },
   function() {
@@ -40210,59 +40533,156 @@ var render = function() {
                     _vm._l(_vm.segments, function(segment) {
                       return _c(
                         "div",
-                        {
-                          staticClass: "col-md-3 text-center",
-                          staticStyle: { cursor: "pointer" },
-                          on: {
-                            click: function($event) {
-                              return _vm.showSegmentSubscribers(segment.id)
-                            }
-                          }
-                        },
+                        { staticClass: "col-md-3 text-center" },
                         [
                           _c(
                             "div",
                             { staticClass: "card p30 h235 animate_top" },
                             [
-                              _c("img", {
-                                staticClass: "mt20",
-                                attrs: {
-                                  src: "/assets/images/subs-icon_big.svg"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "h3",
-                                {
-                                  staticClass: "htxt_bold_16 dark_700 mt25 mb15"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(
-                                        _vm.capitalizeFirstLetter(
-                                          _vm.setStringLimit(
-                                            segment.segment_name,
-                                            20
-                                          )
+                              _c("div", { staticClass: "dot_dropdown" }, [
+                                _vm._m(3, true),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "dropdown-menu dropdown-menu-right"
+                                  },
+                                  [
+                                    segment.status != "2"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.moveArchive(
+                                                  segment.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Move To Archive")
+                                          ]
                                         )
-                                      )
-                                  )
-                                ]
-                              ),
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.prepareSegmentUpdate(
+                                              segment.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-user text-muted mr-2"
+                                        }),
+                                        _vm._v(" Edit")
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteSegment(segment.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-user text-muted mr-2"
+                                        }),
+                                        _vm._v(" Delete")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
                               _vm._v(" "),
                               _c(
-                                "p",
+                                "div",
                                 {
-                                  staticClass: "htxt_regular_12 dark_300 mb15"
+                                  staticStyle: { cursor: "pointer" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showSegmentSubscribers(
+                                        segment.id
+                                      )
+                                    }
+                                  }
                                 },
                                 [
-                                  _vm._m(3, true),
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(
-                                        segment.segmentSubscribers.data.length
+                                  _c("img", {
+                                    staticClass: "mt20",
+                                    attrs: {
+                                      src: "/assets/images/subs-icon_big.svg"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "h3",
+                                    {
+                                      staticClass:
+                                        "htxt_bold_16 dark_700 mt25 mb15"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(
+                                            _vm.capitalizeFirstLetter(
+                                              _vm.setStringLimit(
+                                                segment.segment_name,
+                                                20
+                                              )
+                                            )
+                                          )
                                       )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  segment.status == "2"
+                                    ? _c("p", [
+                                        _c("em", [_vm._v("(Archived)")])
+                                      ])
+                                    : _c("p", [_c("em", [_vm._v("(Active)")])]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "htxt_regular_12 dark_300 mb15"
+                                    },
+                                    [
+                                      _vm._m(4, true),
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(
+                                            segment.segmentSubscribers.data
+                                              .length
+                                          )
+                                      )
+                                    ]
                                   )
                                 ]
                               )
@@ -40301,7 +40721,7 @@ var render = function() {
               }
             },
             [
-              _vm._m(4),
+              _vm._m(5),
               _vm._v(" "),
               _c(
                 "form",
@@ -40310,14 +40730,24 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.submitAddSegment($event)
+                      return _vm.processForm($event)
                     }
                   }
                 },
                 [
                   _c("div", { staticClass: "p40" }, [
                     _c("div", { staticClass: "row" }, [
-                      _vm._m(5),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("img", { attrs: { src: "assets/images/tag.svg" } }),
+                        _vm._v(" "),
+                        _c(
+                          "h3",
+                          { staticClass: "htxt_medium_24 dark_800 mt20" },
+                          [_vm._v(_vm._s(_vm.formLabel) + " Segment ")]
+                        ),
+                        _vm._v(" "),
+                        _c("hr")
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12" }, [
                         _c("div", { staticClass: "form-group" }, [
@@ -40397,7 +40827,53 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(7)
+                    _c("div", { staticClass: "row bottom-position" }, [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("input", {
+                          attrs: {
+                            type: "hidden",
+                            name: "module_name",
+                            id: "active_module_name"
+                          },
+                          domProps: { value: _vm.moduleName }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "hidden",
+                            name: "module_account_id",
+                            id: "module_account_id"
+                          },
+                          domProps: { value: _vm.moduleAccountID }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                          },
+                          [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(_vm.formLabel) +
+                                "\n                                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "blue_300 fsize16 fw600 ml20",
+                            attrs: { href: "#" }
+                          },
+                          [_vm._v("Close")]
+                        )
+                      ])
+                    ])
                   ])
                 ]
               )
@@ -40643,6 +41119,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          "data-toggle": "dropdown",
+          href: "#",
+          role: "button",
+          "aria-haspopup": "false",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("i", [
       _c("img", { attrs: { src: "/assets/images/user_16_grey.svg" } })
     ])
@@ -40653,20 +41152,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("a", { staticClass: "cross_icon js-slidebox" }, [
       _c("i", {}, [_c("img", { attrs: { src: "/assets/images/cross.svg" } })])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("img", { attrs: { src: "assets/images/tag.svg" } }),
-      _vm._v(" "),
-      _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
-        _vm._v("Create Segment ")
-      ]),
-      _vm._v(" "),
-      _c("hr")
     ])
   },
   function() {
@@ -40717,30 +41202,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row bottom-position" }, [
-      _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
-          },
-          [
-            _vm._v(
-              "\n                                    Create\n                                "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "blue_300 fsize16 fw600 ml20", attrs: { href: "#" } },
-          [_vm._v("Close")]
-        )
-      ])
-    ])
+    return _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")])
   }
 ]
 render._withStripped = true

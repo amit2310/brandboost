@@ -282,7 +282,7 @@
                         alert('All form fields are required');
                     });
             },
-            deleteTagGroupEntity: function(tagId){
+            deleteTagGroupEntity: function(tagId) {
                 if(confirm('Are you sure you want to delete this tag?')){
                     //Do axios
                     axios.post('/admin/tags/deleteTagGroupEntity', {

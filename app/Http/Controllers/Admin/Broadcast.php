@@ -2527,7 +2527,7 @@ class Broadcast extends Controller {
         $mBroadcast = new BroadcastModel();
 
 
-        $segment_id = $request->segment_id;
+        echo "-------".$segment_id = $request->segment_id;
         $oSegments = $mBroadcast->getSegmentById($userID, $segment_id);
 
         if (!empty($oSegments)) {
