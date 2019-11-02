@@ -102,24 +102,27 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> Active</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Move to Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareCampaignUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <a v-if="campaign.status == 'inactive' || campaign.status == 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-if="campaign.status == 'active' && campaign.status != 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'draft')"><i class="dripicons-user text-muted mr-2"></i> Draft</a>
+                                    <a v-if="campaign.status == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="campaign.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
 
                             <a href="#" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/send-plane-fill-email_blue.svg"/> </a>
                             <a href="#" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/send-plane-fill-grey.svg"> </a>
                             <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
-                            <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p>
+                            <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
+                            <p class="fsize11 fw500 dark_200"><em>({{ campaign.status }})</em></p>
                             <div style="min-height: 40px; margin: 4px 0;" class="img_box">
                                 <img src="assets/images/email_campaign_graph.png"/>
                             </div>
 
                             <div class="p15 pt15 btop">
                                 <ul class="workflow_list">
-                                    <li><a href="#"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.stats.sent_total>999 ? (campaign.stats.sent_total/100)+'k' : campaign.stats.sent_total}}</a></li>
+                                    <li><a href="javascript:void(0);" @click="setupAutomation(campaign.id)"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.stats.sent_total>999 ? (campaign.stats.sent_total/100)+'k' : campaign.stats.sent_total}}</a></li>
                                     <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.stats.open_rate}}%</a></li>
                                     <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.stats.click_rate}}%</a></li>
                                 </ul>
@@ -127,12 +130,14 @@
 
                         </div>
                     </div>
-                    <div class="col-md-3 text-center">
-                        <div class="card p30 min_h_275 animate_top">
+
+                    <div class="col-md-3 text-center js-email-campaign-slidebox" style="cursor: pointer;">
+                        <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-                            <p class="htxt_regular_16 dark_100 mb15">Create<br>contacts list</p>
+                            <p class="htxt_regular_16 dark_100 mb15">Create<br>Email Campaign</p>
                         </div>
                     </div>
+
                 </div>
 
                 <pagination
@@ -150,22 +155,26 @@
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-email-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
+                    <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"> <img src="/assets/images/email_campaign_icon.svg"/>
-                                <h3 class="htxt_medium_24 dark_800 mt20">Create Email Campaign </h3>
+                                <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Email Campaign </h3>
                                 <hr class="mt30 mb30">
                             </div>
                             <div class="col-md-12">
-                                <form action="/action_page.php">
+
                                     <div class="form-group">
-                                        <label for="campaignname">Campaign name</label>
-                                        <input type="text" class="form-control h56" id="campaignname" placeholder="Enter campaign name" name="campaignname">
+                                        <label for="title">Campaign name</label>
+                                        <input type="text" class="form-control h56" id="title" placeholder="Enter campaign name" name="title"
+                                               v-model="form.title">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="Category">Category</label>
-                                        <input type="text" class="form-control h56" id="Category" placeholder="No category..." name="Category">
+                                        <label for="desc">Description</label>
+                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Campaign description"
+                                                  name="description"
+                                                  v-model="form.description"></textarea>
                                     </div>
 
                                     <hr class="mt30 mb30"/>
@@ -188,7 +197,7 @@
 
 
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="Broadcast_campaign" name="rad1" >
+                                                    <input type="radio" class="custom-control-input" id="Broadcast_campaign" name="campaign_type">
                                                     <label class="custom-control-label" for="customRadio"></label>
                                                 </div>
 
@@ -209,7 +218,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="Emailworkflows" name="rad1" >
+                                                    <input type="radio" class="custom-control-input" id="Emailworkflows" name="campaign_type">
                                                     <label class="custom-control-label" for="customRadio"></label>
                                                 </div>
                                             </div>
@@ -227,15 +236,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="Transactionalemails" name="rad1" >
+                                                    <input type="radio" class="custom-control-input" id="Transactionalemails" name="campaign_type">
                                                     <label class="custom-control-label" for="customRadio"></label>
                                                 </div>
                                             </div>
                                         </label>
 
-
                                     </div>
-                                </form>
                             </div>
                         </div>
 
@@ -244,10 +251,14 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">Create</button>
+                                <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                <input type="hidden" name="module_account_id" id="module_account_id"
+                                       :value="moduleAccountID">
+                                <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
                                 <a class="dark_200 fsize16 fw400 ml20" href="#">Close</a> </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -270,11 +281,10 @@
                 current_page: 1,
                 breadcrumb: '',
                 form: {
-                    firstname: '',
-                    lastname: '',
-                    email: '',
-                    phone: '',
-                    id: ''
+                    title: '',
+                    description: '',
+                    campaign_type: '',
+                    automation_id: ''
                 },
                 formLabel: 'Create'
             }
@@ -283,30 +293,61 @@
             this.loadPaginatedData();
         },
         methods: {
+            setupAutomation: function(campaignID){
+                window.location.href='#/modules/emails/setupAutomation/'+campaignID;
+            },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-contact-slidebox').click();
+                document.querySelector('.js-email-campaign-slidebox').click();
+            },
+            prepareCampaignUpdate: function(campaignId) {
+                this.getCampaignInfo(campaignId);
+            },
+            getCampaignInfo: function(campaignId){
+                axios.post('/admin/modules/emails/getAutomation', {
+                    automation_id:campaignId,
+                    moduleName: this.moduleName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            //Fill up the form fields
+                            let formData = response.data;
+                            this.form.title = formData.title;
+                            this.form.description = formData.description;
+                            this.form.campaign_type = formData.automation_type;
+                            this.form.automation_id = formData.id;
+                            this.formLabel = 'Update';
+                            this.displayForm(this.formLabel);
+                        }
+
+                    });
             },
             processForm : function(){
                 this.loading = true;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
-                if(this.form.id>0){
-                    formActionSrc = '/admin/subscriber/update_contact';
+                if(this.form.automation_id>0){
+                    formActionSrc = '/admin/modules/emails/updateAutomation';
                 }else{
-                    formActionSrc = '/admin/subscriber/add_contact';
+                    formActionSrc = '/admin/modules/emails/addAutiomation';
                     this.form.module_account_id = this.moduleAccountID;
                 }
+
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
+                            if(this.form.automation_id>0){
+                                this.setupAutomation(this.form.automation_id);
+                                return false;
+                            }
                             this.loading = false;
                             //this.form = {};
-                            this.form.id ='';
-                            document.querySelector('.js-contact-slidebox').click();
+                            this.form.automation_id ='';
+                            document.querySelector('.js-email-campaign-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
                             var elem = this;
                             setTimeout(function () {
@@ -315,12 +356,20 @@
 
                             syncContactSelectionSources();
                         }
+                        else if (response.data.status == 'error') {
+                            if (response.data.type == 'duplicate') {
+                                alert('Error: Campaign already exists.');
+                            }
+                            else {
+                                alert('Error: Something went wrong.');
+                            }
+                        }
                     })
                     .catch(error => {
                         this.loading = false;
                         console.log(error);
                         //error.response.data
-                        //alert('All form fields are required');
+                        alert('All form fields are required');
                     });
             },
             loadPaginatedData : function(){
@@ -339,20 +388,42 @@
                 this.current_page = p;
                 this.loadPaginatedData();
             },
+            changeStatus: function(campaignID, status) {
+                if(confirm('Are you sure you want to change the status of this campaign?')){
+                    //Do axios
+                    axios.post('/admin/modules/emails/changeAutomationStatus', {
+                        automation_id:campaignID,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
 
-            addNewContact : function(e){
-                //e.preventDefault();
-                let form = document.getElementById('addNewContactVue');
-                let formData = new FormData(form);
-                formData.append('_token', this.csrf_token());
-                axios.post('/admin/subscriber/add_contact', this)
-                    .then(response => {
-                        if(response.data.status == 'success'){
-                            alert(('form submitted successfully'))
-                            /*vm.$forceUpdate();*/
-                        }
+                        });
+                }
+            },
+            deleteCampaign: function(campaignID) {
+                if(confirm('Are you sure you want to delete this campaign?')){
+                    //Do axios
+                    axios.post('/admin/modules/emails/deleteAutomation', {
+                        automation_id:campaignID,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
 
-                    });
+                        });
+                }
             },
             navigatePagination: function(p){
                 this.loading=true;

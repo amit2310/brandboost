@@ -153,7 +153,7 @@ class Emails extends Controller {
      * @param Request $request
      */
     public function setupAutomation(Request $request) {
-        $id = $request->id;
+        echo "--------".$id = $request->id; exit;
         if (empty($id)) {
             redirect("/admin/modules/emails");
             exit;
@@ -419,6 +419,7 @@ class Emails extends Controller {
      * @param Request $request
      */
     public function addAutiomation(Request $request) {
+
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         if (empty($request)) {
@@ -426,6 +427,10 @@ class Emails extends Controller {
             echo json_encode($response);
             exit;
         }
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
 
         //Instantiate Email model to get its methods and properties
         $mEmails = new EmailsModel();
@@ -440,7 +445,7 @@ class Emails extends Controller {
             'title' => !empty($title) ? $title : '',
             'description' => !empty($description) ? $description : '',
             'email_type' => 'automation',
-            'automation_type' => $automation_type,
+            'automation_type' => !empty($automation_type) ? $automation_type : 'email',
             'user_id' => $userID,
             'created' => $dateTime
         );
@@ -1445,7 +1450,7 @@ class Emails extends Controller {
                 'activity_created' => date("Y-m-d H:i:s")
             );
             logUserActivity($aActivityData);
-            $response = array('status' => 'success', 'msg' => "List deleted successfully!");
+            $response = array('status' => 'success', 'msg' => "Status updated successfully!");
         }
 
         echo json_encode($response);
