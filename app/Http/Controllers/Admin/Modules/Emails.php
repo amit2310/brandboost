@@ -153,7 +153,7 @@ class Emails extends Controller {
      * @param Request $request
      */
     public function setupAutomation(Request $request) {
-        echo "--------".$id = $request->id; exit;
+        $id = $request->id;
         if (empty($id)) {
             redirect("/admin/modules/emails");
             exit;
