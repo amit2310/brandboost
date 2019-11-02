@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -55,7 +55,7 @@ if (!empty($oAutomations)) {
                                     <div id="accordion-control-right-group1" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12"> 
+                                                <div class="col-md-12">
                                                     Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
                                                 </div>
                                             </div>
@@ -174,11 +174,11 @@ if (!empty($oAutomations)) {
                 </div>
 
                 @if (!empty($oAutomations) && $user_role != 1)
-                    <button 
+                    <button
                         @if ($bActiveSubsription == false)
-                            title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20" 
-                        @else 
-                            id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20" 
+                            title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20"
+                        @else
+                            id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20"
                         @endif
                             type="button" ><i class="icon-plus3"></i><span> &nbsp; {{ $title }} </span></button>
                 @endif
@@ -192,7 +192,7 @@ if (!empty($oAutomations)) {
     <!-- Dashboard content -->
     @if (!empty($oAutomations))
 
-        <div class="tab-content"> 
+        <div class="tab-content">
             <!--===========TAB 1===========-->
             <div class="tab-pane active" id="right-icon-tab0">
                 <div class="row">
@@ -257,10 +257,10 @@ if (!empty($oAutomations)) {
                                                         Looks Like You Don’t Have Created Any {{ ucfirst($automation_type) }} Automation Yet <img src="{{ site_url('assets/images/smiley.png') }}"> <br>
                                                         Lets Create {{ ucfirst($automation_type) }} Automation.
                                                     </h5>
-                                                    <button @if ($bActiveSubsription == false) 
-                                                             title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20 mb40" 
+                                                    <button @if ($bActiveSubsription == false)
+                                                             title="No Active Subscription" class="btn bl_cust_btn btn-default pDisplayNoActiveSubscription dark_btn ml20 mb40"
                                                             @else
-                                                                id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20 mb40" 
+                                                                id="addEmailAutiomation" class="btn bl_cust_btn btn-default dark_btn ml20 mb40"
                                                             @endif
                                                                  type="button" ><i class="icon-plus3"></i><span> &nbsp; {{ $title }} </span></button>
 
@@ -280,7 +280,7 @@ if (!empty($oAutomations)) {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
     @endif

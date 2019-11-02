@@ -16511,6 +16511,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -16529,11 +16540,10 @@ __webpack_require__.r(__webpack_exports__);
       current_page: 1,
       breadcrumb: '',
       form: {
-        firstname: '',
-        lastname: '',
-        email: '',
-        phone: '',
-        id: ''
+        title: '',
+        description: '',
+        campaign_type: '',
+        automation_id: ''
       },
       formLabel: 'Create'
     };
@@ -16542,59 +16552,99 @@ __webpack_require__.r(__webpack_exports__);
     this.loadPaginatedData();
   },
   methods: {
+    setupAutomation: function setupAutomation(campaignID) {
+      window.location.href = '#/modules/emails/setupAutomation/' + campaignID;
+    },
     displayForm: function displayForm(lbl) {
       if (lbl == 'Create') {
         this.form = {};
       }
 
       this.formLabel = lbl;
-      document.querySelector('.js-contact-slidebox').click();
+      document.querySelector('.js-email-campaign-slidebox').click();
+    },
+    prepareCampaignUpdate: function prepareCampaignUpdate(campaignId) {
+      this.getCampaignInfo(campaignId);
+    },
+    getCampaignInfo: function getCampaignInfo(campaignId) {
+      var _this = this;
+
+      axios.post('/admin/modules/emails/getAutomation', {
+        automation_id: campaignId,
+        moduleName: this.moduleName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          //Fill up the form fields
+          var formData = response.data;
+          _this.form.title = formData.title;
+          _this.form.description = formData.description;
+          _this.form.campaign_type = formData.automation_type;
+          _this.form.automation_id = formData.id;
+          _this.formLabel = 'Update';
+
+          _this.displayForm(_this.formLabel);
+        }
+      });
     },
     processForm: function processForm() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       var formActionSrc = '';
       this.form.module_name = this.moduleName;
 
-      if (this.form.id > 0) {
-        formActionSrc = '/admin/subscriber/update_contact';
+      if (this.form.automation_id > 0) {
+        formActionSrc = '/admin/modules/emails/updateAutomation';
       } else {
-        formActionSrc = '/admin/subscriber/add_contact';
+        formActionSrc = '/admin/modules/emails/addAutiomation';
         this.form.module_account_id = this.moduleAccountID;
       }
 
       axios.post(formActionSrc, this.form).then(function (response) {
         if (response.data.status == 'success') {
-          _this.loading = false; //this.form = {};
+          if (_this2.form.automation_id > 0) {
+            _this2.setupAutomation(_this2.form.automation_id);
 
-          _this.form.id = '';
-          document.querySelector('.js-contact-slidebox').click();
-          _this.successMsg = 'Action completed successfully.';
-          var elem = _this;
+            return false;
+          }
+
+          _this2.loading = false; //this.form = {};
+
+          _this2.form.automation_id = '';
+          document.querySelector('.js-email-campaign-slidebox').click();
+          _this2.successMsg = 'Action completed successfully.';
+          var elem = _this2;
           setTimeout(function () {
             elem.loadPaginatedData();
           }, 500);
           syncContactSelectionSources();
+        } else if (response.data.status == 'error') {
+          if (response.data.type == 'duplicate') {
+            alert('Error: Campaign already exists.');
+          } else {
+            alert('Error: Something went wrong.');
+          }
         }
       })["catch"](function (error) {
-        _this.loading = false;
+        _this2.loading = false;
         console.log(error); //error.response.data
-        //alert('All form fields are required');
+
+        alert('All form fields are required');
       });
     },
     loadPaginatedData: function loadPaginatedData() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/admin/modules/emails/?page=' + this.current_page).then(function (response) {
-        _this2.breadcrumb = response.data.breadcrumb;
+        _this3.breadcrumb = response.data.breadcrumb;
 
-        _this2.makeBreadcrumb(_this2.breadcrumb);
+        _this3.makeBreadcrumb(_this3.breadcrumb);
 
-        _this2.moduleName = response.data.moduleName;
-        _this2.campaigns = response.data.oAutomations;
-        _this2.allData = response.data.allData;
-        _this2.loading = false;
+        _this3.moduleName = response.data.moduleName;
+        _this3.campaigns = response.data.oAutomations;
+        _this3.allData = response.data.allData;
+        _this3.loading = false;
       });
     },
     showPaginationData: function showPaginationData(p) {
@@ -16602,17 +16652,44 @@ __webpack_require__.r(__webpack_exports__);
       this.current_page = p;
       this.loadPaginatedData();
     },
-    addNewContact: function addNewContact(e) {
-      //e.preventDefault();
-      var form = document.getElementById('addNewContactVue');
-      var formData = new FormData(form);
-      formData.append('_token', this.csrf_token());
-      axios.post('/admin/subscriber/add_contact', this).then(function (response) {
-        if (response.data.status == 'success') {
-          alert('form submitted successfully');
-          /*vm.$forceUpdate();*/
-        }
-      });
+    changeStatus: function changeStatus(campaignID, status) {
+      var _this4 = this;
+
+      if (confirm('Are you sure you want to change the status of this campaign?')) {
+        //Do axios
+        axios.post('/admin/modules/emails/changeAutomationStatus', {
+          automation_id: campaignID,
+          status: status,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this4.showPaginationData(_this4.current_page);
+          }
+        });
+      }
+    },
+    deleteCampaign: function deleteCampaign(campaignID) {
+      var _this5 = this;
+
+      if (confirm('Are you sure you want to delete this campaign?')) {
+        //Do axios
+        axios.post('/admin/modules/emails/deleteAutomation', {
+          automation_id: campaignID,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this5.showPaginationData(_this5.current_page);
+          }
+        });
+      }
     },
     navigatePagination: function navigatePagination(p) {
       this.loading = true;
@@ -53543,7 +53620,176 @@ var render = function() {
                                 "card p0 pt30 min_h_275 text-center animate_top"
                             },
                             [
-                              _vm._m(3, true),
+                              _c("div", { staticClass: "dot_dropdown" }, [
+                                _vm._m(3, true),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "dropdown-menu dropdown-menu-right"
+                                  },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.prepareCampaignUpdate(
+                                              campaign.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-user text-muted mr-2"
+                                        }),
+                                        _vm._v(" Edit")
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    campaign.status == "inactive" ||
+                                    campaign.status == "draft"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  campaign.id,
+                                                  "active"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Active")
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    campaign.status == "active" &&
+                                    campaign.status != "draft"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  campaign.id,
+                                                  "draft"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Draft")
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    campaign.status == "active"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  campaign.id,
+                                                  "inactive"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Inactive")
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    campaign.status != "archive"
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.changeStatus(
+                                                  campaign.id,
+                                                  "archive"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Move To Archive")
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c("div", {
+                                      staticClass: "dropdown-divider"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteCampaign(
+                                              campaign.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-exit text-muted mr-2"
+                                        }),
+                                        _vm._v(" Delete")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
                               _vm._v(" "),
                               (campaign.status = "active")
                                 ? _c(
@@ -53606,11 +53852,12 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "p",
-                                {
-                                  staticClass:
-                                    "fsize11 fw500 dark_200 text-uppercase"
-                                },
-                                [_vm._v("Campaign")]
+                                { staticClass: "fsize11 fw500 dark_200" },
+                                [
+                                  _c("em", [
+                                    _vm._v("(" + _vm._s(campaign.status) + ")")
+                                  ])
+                                ]
                               ),
                               _vm._v(" "),
                               _vm._m(4, true),
@@ -53618,19 +53865,32 @@ var render = function() {
                               _c("div", { staticClass: "p15 pt15 btop" }, [
                                 _c("ul", { staticClass: "workflow_list" }, [
                                   _c("li", [
-                                    _c("a", { attrs: { href: "#" } }, [
-                                      _vm._m(5, true),
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            campaign.stats.sent_total > 999
-                                              ? campaign.stats.sent_total /
-                                                  100 +
-                                                  "k"
-                                              : campaign.stats.sent_total
-                                          )
-                                      )
-                                    ])
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.setupAutomation(
+                                              campaign.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._m(5, true),
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              campaign.stats.sent_total > 999
+                                                ? campaign.stats.sent_total /
+                                                    100 +
+                                                    "k"
+                                                : campaign.stats.sent_total
+                                            )
+                                        )
+                                      ]
+                                    )
                                   ]),
                                   _vm._v(" "),
                                   _c("li", [
@@ -53678,7 +53938,178 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm._m(9)
+    _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+      _c(
+        "div",
+        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                height: "100%",
+                "overflow-y": "auto",
+                "overflow-x": "hidden"
+              }
+            },
+            [
+              _vm._m(9),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.processForm($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "p40" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/assets/images/email_campaign_icon.svg"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "h3",
+                          { staticClass: "htxt_medium_24 dark_800 mt20" },
+                          [_vm._v(_vm._s(_vm.formLabel) + " Email Campaign ")]
+                        ),
+                        _vm._v(" "),
+                        _c("hr", { staticClass: "mt30 mb30" })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "title" } }, [
+                            _vm._v("Campaign name")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.title,
+                                expression: "form.title"
+                              }
+                            ],
+                            staticClass: "form-control h56",
+                            attrs: {
+                              type: "text",
+                              id: "title",
+                              placeholder: "Enter campaign name",
+                              name: "title"
+                            },
+                            domProps: { value: _vm.form.title },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "title", $event.target.value)
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "desc" } }, [
+                            _vm._v("Description")
+                          ]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.description,
+                                expression: "form.description"
+                              }
+                            ],
+                            staticClass: "form-control min_h_185 p20 pt10",
+                            attrs: {
+                              id: "desc",
+                              placeholder: "Campaign description",
+                              name: "description"
+                            },
+                            domProps: { value: _vm.form.description },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "description",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("hr", { staticClass: "mt30 mb30" }),
+                        _vm._v(" "),
+                        _vm._m(10)
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row bottom-position" }, [
+                      _vm._m(11),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("input", {
+                          attrs: {
+                            type: "hidden",
+                            name: "module_name",
+                            id: "active_module_name"
+                          },
+                          domProps: { value: _vm.moduleName }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "hidden",
+                            name: "module_account_id",
+                            id: "module_account_id"
+                          },
+                          domProps: { value: _vm.moduleAccountID }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600"
+                          },
+                          [_vm._v(_vm._s(_vm.formLabel))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dark_200 fsize16 fw400 ml20",
+                            attrs: { href: "#" }
+                          },
+                          [_vm._v("Close")]
+                        )
+                      ])
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -53920,50 +54351,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dot_dropdown" }, [
-      _c(
-        "a",
-        {
-          staticClass: "dropdown-toggle",
-          attrs: {
-            "data-toggle": "dropdown",
-            href: "#",
-            role: "button",
-            "aria-haspopup": "false",
-            "aria-expanded": "false"
-          }
-        },
-        [
-          _c("img", {
-            attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-user text-muted mr-2" }),
-          _vm._v(" Edit")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-wallet text-muted mr-2" }),
-          _vm._v(" Active")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-gear text-muted mr-2" }),
-          _vm._v(" Move to Archive")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "dropdown-divider" }),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-exit text-muted mr-2" }),
-          _vm._v(" Delete")
-        ])
-      ])
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          "data-toggle": "dropdown",
+          href: "#",
+          role: "button",
+          "aria-haspopup": "false",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -54006,345 +54411,195 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 text-center" }, [
-      _c("div", { staticClass: "card p30 min_h_275 animate_top" }, [
-        _c("img", {
-          staticClass: "mt20 mb30",
-          attrs: { src: "assets/images/plus_icon_circle_64.svg" }
-        }),
-        _vm._v(" "),
-        _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
-          _vm._v("Create"),
-          _c("br"),
-          _vm._v("contacts list")
-        ])
-      ])
+    return _c(
+      "div",
+      {
+        staticClass: "col-md-3 text-center js-email-campaign-slidebox",
+        staticStyle: { cursor: "pointer" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card p30 bkg_light_200 shadow_none h235 animate_top"
+          },
+          [
+            _c("img", {
+              staticClass: "mt20 mb30",
+              attrs: { src: "assets/images/plus_icon_circle_64.svg" }
+            }),
+            _vm._v(" "),
+            _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
+              _vm._v("Create"),
+              _c("br"),
+              _vm._v("Email Campaign")
+            ])
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "cross_icon js-email-campaign-slidebox" }, [
+      _c("i", {}, [_c("img", { attrs: { src: "/assets/images/cross.svg" } })])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { staticClass: "mb10" }, [_vm._v("Campaign type")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        "label",
+        { staticClass: "w-100 mb0", attrs: { for: "Broadcast_campaign" } },
         [
-          _c(
-            "div",
-            {
-              staticStyle: {
-                height: "100%",
-                "overflow-y": "auto",
-                "overflow-x": "hidden"
-              }
-            },
-            [
-              _c(
-                "a",
-                { staticClass: "cross_icon js-email-campaign-slidebox" },
-                [
-                  _c("i", {}, [
-                    _c("img", { attrs: { src: "/assets/images/cross.svg" } })
-                  ])
-                ]
-              ),
+          _c("div", { staticClass: "card border active  shadow_none p20" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("img", { attrs: { src: "/assets/images/campaign1.svg" } })
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "p40" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("img", {
-                      attrs: { src: "/assets/images/email_campaign_icon.svg" }
-                    }),
-                    _vm._v(" "),
-                    _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
-                      _vm._v("Create Email Campaign ")
-                    ]),
-                    _vm._v(" "),
-                    _c("hr", { staticClass: "mt30 mb30" })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("form", { attrs: { action: "/action_page.php" } }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "campaignname" } }, [
-                          _vm._v("Campaign name")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control h56",
-                          attrs: {
-                            type: "text",
-                            id: "campaignname",
-                            placeholder: "Enter campaign name",
-                            name: "campaignname"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "Category" } }, [
-                          _vm._v("Category")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control h56",
-                          attrs: {
-                            type: "text",
-                            id: "Category",
-                            placeholder: "No category...",
-                            name: "Category"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("hr", { staticClass: "mt30 mb30" }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { staticClass: "mb10" }, [
-                          _vm._v("Campaign type")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "clearfix" }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "w-100 mb0",
-                            attrs: { for: "Broadcast_campaign" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "card border active  shadow_none p20"
-                              },
-                              [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col-md-3" }, [
-                                    _c("img", {
-                                      attrs: {
-                                        src: "/assets/images/campaign1.svg"
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-md-9 pl0" }, [
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "fsize16 fw400 dark_700 m0"
-                                      },
-                                      [_vm._v("Broadcast")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "fsize12 fw300 dark_200 m0"
-                                      },
-                                      [_vm._v("Simple one time emails")]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "custom-control custom-radio custom-control-inline"
-                                  },
-                                  [
-                                    _c("input", {
-                                      staticClass: "custom-control-input",
-                                      attrs: {
-                                        type: "radio",
-                                        id: "Broadcast_campaign",
-                                        name: "rad1"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("label", {
-                                      staticClass: "custom-control-label",
-                                      attrs: { for: "customRadio" }
-                                    })
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "w-100 mb0",
-                            attrs: { for: "Emailworkflows" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "card border shadow_none p20" },
-                              [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col-md-3" }, [
-                                    _c("img", {
-                                      attrs: {
-                                        src: "/assets/images/campaign2.svg"
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-md-9 pl0" }, [
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "fsize16 fw400 dark_700 m0"
-                                      },
-                                      [_vm._v("Email workflows")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "fsize12 fw300 dark_200 m0"
-                                      },
-                                      [_vm._v("Simple one time emails")]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "custom-control custom-radio custom-control-inline"
-                                  },
-                                  [
-                                    _c("input", {
-                                      staticClass: "custom-control-input",
-                                      attrs: {
-                                        type: "radio",
-                                        id: "Emailworkflows",
-                                        name: "rad1"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("label", {
-                                      staticClass: "custom-control-label",
-                                      attrs: { for: "customRadio" }
-                                    })
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "w-100 mb0",
-                            attrs: { for: "Transactionalemails" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "card border shadow_none p20" },
-                              [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col-md-3" }, [
-                                    _c("img", {
-                                      attrs: {
-                                        src: "/assets/images/campaign3.svg"
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-md-9 pl0" }, [
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "fsize16 fw400 dark_700 m0"
-                                      },
-                                      [_vm._v("Transactional emails")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "fsize12 fw300 dark_200 m0"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Send automated transactional emails"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "custom-control custom-radio custom-control-inline"
-                                  },
-                                  [
-                                    _c("input", {
-                                      staticClass: "custom-control-input",
-                                      attrs: {
-                                        type: "radio",
-                                        id: "Transactionalemails",
-                                        name: "rad1"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("label", {
-                                      staticClass: "custom-control-label",
-                                      attrs: { for: "customRadio" }
-                                    })
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
+              _c("div", { staticClass: "col-md-9 pl0" }, [
+                _c("p", { staticClass: "fsize16 fw400 dark_700 m0" }, [
+                  _vm._v("Broadcast")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "row bottom-position" }, [
-                  _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600"
-                      },
-                      [_vm._v("Create")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dark_200 fsize16 fw400 ml20",
-                        attrs: { href: "#" }
-                      },
-                      [_vm._v("Close")]
-                    )
-                  ])
+                _c("p", { staticClass: "fsize12 fw300 dark_200 m0" }, [
+                  _vm._v("Simple one time emails")
                 ])
               ])
-            ]
-          )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "custom-control custom-radio custom-control-inline"
+              },
+              [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: {
+                    type: "radio",
+                    id: "Broadcast_campaign",
+                    name: "campaign_type"
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "customRadio" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "label",
+        { staticClass: "w-100 mb0", attrs: { for: "Emailworkflows" } },
+        [
+          _c("div", { staticClass: "card border shadow_none p20" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("img", { attrs: { src: "/assets/images/campaign2.svg" } })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9 pl0" }, [
+                _c("p", { staticClass: "fsize16 fw400 dark_700 m0" }, [
+                  _vm._v("Email workflows")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fsize12 fw300 dark_200 m0" }, [
+                  _vm._v("Simple one time emails")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "custom-control custom-radio custom-control-inline"
+              },
+              [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: {
+                    type: "radio",
+                    id: "Emailworkflows",
+                    name: "campaign_type"
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "customRadio" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "label",
+        { staticClass: "w-100 mb0", attrs: { for: "Transactionalemails" } },
+        [
+          _c("div", { staticClass: "card border shadow_none p20" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("img", { attrs: { src: "/assets/images/campaign3.svg" } })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9 pl0" }, [
+                _c("p", { staticClass: "fsize16 fw400 dark_700 m0" }, [
+                  _vm._v("Transactional emails")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fsize12 fw300 dark_200 m0" }, [
+                  _vm._v("Send automated transactional emails")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "custom-control custom-radio custom-control-inline"
+              },
+              [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: {
+                    type: "radio",
+                    id: "Transactionalemails",
+                    name: "campaign_type"
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "customRadio" }
+                })
+              ]
+            )
+          ])
         ]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")])
   }
 ]
 render._withStripped = true
@@ -78588,7 +78843,7 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home1/lamppp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/vue.brandboostx.com/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })
