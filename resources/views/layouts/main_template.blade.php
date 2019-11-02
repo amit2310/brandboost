@@ -179,6 +179,17 @@
 
 <script src="{{ base_url() }}assets/js/modules/people/subscribers.js" type="text/javascript"></script>
 <script type="text/javascript" src="/public/js/app.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".nav-link").click(function(){
+            $(".main-icon-menu-pane .nav-link").each(function(){
+                $(this).removeClass('active');
+            })
+            $(this).addClass(('active'));
+        });
+    });
+
+</script>
 
 </body>
 </html>
