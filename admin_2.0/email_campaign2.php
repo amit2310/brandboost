@@ -110,8 +110,8 @@
 				<a href="#" class="circle-icon-64 bkg_email_000 m0auto"><img src="assets/images/send-plane-fill-email_blue.svg"/> </a>
    				<h3 class="htxt_bold_16 dark_700 mb-1 mt-4">2nd Training Email</h3>
    				<p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p>
-   				<div style="min-height: 40px; margin: 4px 0;" class="img_box">
-   					<img src="assets/images/email_campaign_graph.png"/>	
+   				<div style="min-height: 40px; margin: 4px 0 10px;" class="img_box">
+   					<div id="sparklinechart1"></div>
    				</div>
    				
    			<div class="p15 pt15 btop">
@@ -166,8 +166,8 @@
 				<a href="#" class="circle-icon-64 bkg_email_000 m0auto"><img src="assets/images/send-plane-fill-email_blue.svg"/> </a>
    				<h3 class="htxt_bold_16 dark_700 mb-1 mt-4">2nd Training Email</h3>
    				<p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p>
-   				<div style="min-height: 40px; margin: 4px 0;" class="img_box">
-   					<img src="assets/images/email_campaign_graph.png"/>	
+   				<div style="min-height: 40px; margin: 4px 0 10px;" class="img_box">
+   					<div id="sparklinechart2"></div>
    				</div>
    				
    			<div class="p15 pt15 btop">
@@ -247,6 +247,107 @@ $(document).ready(function(){
 	$(".main-icon-menu-pane.people").removeClass("active");
 </script>
 
+
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+
+  <script>
+  var options7 = {
+      chart: {
+        type: 'bar',
+        width: 165,
+        height: 35,
+        sparkline: {
+          enabled: true
+        }
+      },
+		colors: ['#d4dce6'],
+      plotOptions: {
+        bar: {
+          columnWidth: '80%'
+        }
+      },
+      series: [{
+        data: [47, 45, 74, 14, 56, 74, 14, 11, 77, 39, 82, 56, 74, 14, 91]
+      }],
+      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      xaxis: {
+        crosshairs: {
+          width: 1
+        },
+      },
+      tooltip: {
+        fixed: {
+          enabled: false
+        },
+        x: {
+          show: false
+        },
+        y: {
+          title: {
+            formatter: function (seriesName) {
+              return ''
+            }
+          }
+        },
+        marker: {
+          show: false
+        }
+      }
+	  
+	  
+	  
+    }
+
+    var options8 = {
+      chart: {
+        type: 'bar',
+        width: 165,
+        height: 35,
+        sparkline: {
+          enabled: true
+        }
+      },
+		
+		colors: ['#d4dce6'],
+      plotOptions: {
+        bar: {
+          columnWidth: '80%'
+        }
+      },
+      series: [{
+        data: [47, 45, 74, 14, 56, 74, 14, 11, 77, 39, 82, 56, 74, 14, 91]
+      }],
+      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      xaxis: {
+        crosshairs: {
+          width: 1
+        },
+      },
+      tooltip: {
+        fixed: {
+          enabled: false
+        },
+        x: {
+          show: false
+        },
+        y: {
+          title: {
+            formatter: function (seriesName) {
+              return ''
+            }
+          }
+        },
+        marker: {
+          show: false
+        }
+      }
+    }
+
+   
+    new ApexCharts(document.querySelector("#sparklinechart1"), options7).render();
+    new ApexCharts(document.querySelector("#sparklinechart2"), options8).render();
+  </script>
 
 </body>
 </html>

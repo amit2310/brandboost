@@ -28,14 +28,27 @@ import ListSubscribers from './components/admin/contact/ListSubscribers';
 import EmailDashboard from './components/admin/modules/emails/Dashboard';
 import EmailCampaigns from './components/admin/modules/emails/Campaigns';
 
+import Companies from './components/admin/companies/Companies';
+import Configurations from './components/admin/contact/Configurations';
+import PeopleDeals from './components/admin/deals/Deals';
+
 
 
 const routes = [
-    { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
+
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
+
+    /*Contacts*/
+    { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
     { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },
     { path: '/contacts/profile/:id', component: ContactProfile, props:{ pageColor: 'people_sec'} },
+    { path: '/contacts/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
+    { path: '/contacts/segments', component: Segments, meta: { title: 'My Segments'} },
+    { path: '/contacts/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} },
+    { path: '/contacts/deals', component: PeopleDeals, meta: { title: 'Contact Deals'} },
+    { path: '/contacts/companies', component: Companies, meta: { title: 'Companies'} },
+    { path: '/contacts/configuration', component: Configurations, meta: { title: 'Contact Configuration'} },
 
     /*Onsite Module*/
     { path: '/brandboost/onsite_overview', component: OnsiteOverview, props:{pageColor: 'onsite_sec'}, meta: {title: 'Onsite overview - Brand Boost'} },
@@ -51,27 +64,28 @@ const routes = [
     { path: '/feedback/listall/', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
 
     /* Templates Module */
-    { path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
-    { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },
+    /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
+    { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
 
 
 
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
-    { path: '/tags', component: Tags, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
-    { path: '/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
     { path: '/lists/getListContacts/:id', component: ListSubscribers, meta: { title: 'Segments Subscribers'} },
     { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
 
     /*Segments*/
-    { path: '/broadcast/mysegments', component: Segments, meta: { title: 'My Segments'} },
+
     { path: '/broadcast/segmentContacts/:id', component: SegmentSubscribers, meta: { title: 'Segments Subscribers'} },
 
     /*Email Module*/
     { path: '/modules/emails/dashboard', component: EmailDashboard, meta: { title: 'Email Dashboard'} },
     { path: '/modules/emails/index', component: EmailCampaigns, meta: { title: 'Email Campaigns'} },
+    { path: '/modules/emails/templates', component: ListTemplates, props : {title : 'Email Templates', type : 'email' } },
+
+
 
 ];
 

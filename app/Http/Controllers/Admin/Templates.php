@@ -9,9 +9,11 @@ use App\Models\Admin\WorkflowModel;
 use Cookie;
 use Session;
 
-class Templates extends Controller {
+class Templates extends Controller
+{
 
-    public function index() {
+    public function index()
+    {
 
     }
 
@@ -19,7 +21,8 @@ class Templates extends Controller {
     /**
      * Used to get the list of all email templates
      */
-    public function email() {
+    public function email()
+    {
         $templateLink = base_url('admin/templates/email');
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -28,18 +31,25 @@ class Templates extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Email Templates" class="sidebar-control active hidden-xs ">Emails</a></li>
                     </ul>';
+        $aBreadcrumb = [
+            'Home' => '#/',
+            'Email' => '#/modules/emails/dashboard',
+            'Templates' => ''
+        ];
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
-        $oTemplates = $mTemplates->getCommonTemplates('', '', '', 'email');
+        $oTemplates = $mTemplates->getCommonTemplates('', '', '', 'email', true);
         $oCategories = $mTemplates->getCommonTemplateCategories();
         $aData = array(
             'title' => 'Email Templates',
             'pagename' => $breadcrumb,
-            'oTemplates' => $oTemplates,
+            'breadcrumb' => $aBreadcrumb,
+            'oTemplates' => $oTemplates->items(),
+            'allData' => $oTemplates,
             'oCategories' => $oCategories,
             'templateType' => 'email',
             'method' => 'manage',
@@ -54,7 +64,8 @@ class Templates extends Controller {
     /**
      * Used to get the list of all sms templates
      */
-    public function sms() {
+    public function sms()
+    {
         $templateLink = base_url('admin/templates/sms');
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -91,7 +102,8 @@ class Templates extends Controller {
     /**
      * Used to create user templates
      */
-    public function addUserTemplate(Request $request) {
+    public function addUserTemplate(Request $request)
+    {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         if (empty($request)) {
@@ -168,12 +180,13 @@ class Templates extends Controller {
      *
      * @param type $idUsed to edit email/sms template
      */
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        $id=$request->id;
+        $id = $request->id;
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -193,7 +206,7 @@ class Templates extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . $templateLink . '" class="sidebar-control hidden-xs">Templates </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Edit Template" class="sidebar-control active hidden-xs ">'.$activeTitle.'</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Edit Template" class="sidebar-control active hidden-xs ">' . $activeTitle . '</a></li>
                     </ul>';
         $aData = array(
             'title' => 'Edit Template',
@@ -210,7 +223,8 @@ class Templates extends Controller {
     /**
      * Used to update User's Email/Sms templates
      */
-    public function updateUserTemplate(Request $request) {
+    public function updateUserTemplate(Request $request)
+    {
         $response = array();
 
         $aUser = getLoggedUser();
@@ -223,7 +237,6 @@ class Templates extends Controller {
         $templateID = strip_tags($request->templateId);
 
         $aData = array();
-
 
 
         if (!empty($compiledHtml)) {
@@ -246,7 +259,8 @@ class Templates extends Controller {
     /**
      * Used to update user template name
      */
-    public function updateUserTemplateName(Request $request) {
+    public function updateUserTemplateName(Request $request)
+    {
         $response = array();
 
         $aUser = getLoggedUser();
@@ -260,7 +274,6 @@ class Templates extends Controller {
         $templateName = strip_tags($request->templateName);
 
         $aData = array();
-
 
 
         if (!empty($templateName)) {
@@ -290,7 +303,8 @@ class Templates extends Controller {
     /**
      * This function used to load the content of selected email template
      */
-    public function loadEmailTemplate(Request $request) {
+    public function loadEmailTemplate(Request $request)
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -312,7 +326,8 @@ class Templates extends Controller {
      * This function used to load the content of selected sms template
      * @param type $id
      */
-    public function loadSMSTemplate(Request $request) {
+    public function loadSMSTemplate(Request $request)
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $id = $request->id;
@@ -332,7 +347,8 @@ class Templates extends Controller {
     /**
      * Used to get the list of categorized templates
      */
-    public function getCategorizedTemplates(Request $request) {
+    public function getCategorizedTemplates(Request $request)
+    {
         $response = array();
         $aUser = getLoggedUser();
 
@@ -369,7 +385,7 @@ class Templates extends Controller {
 
         //pre($oCategorizedTemplates);
 
-        if ($campaignType == 'email') {
+        /*if ($campaignType == 'email') {
             $templateList = view('admin.templates.emails.partials.categorized_template_list', array('oCategorizedTemplates' => $oCategorizedTemplates, 'selected_template' => $selected_template, 'source' => $source, 'campaignType' => $campaignType, 'aUser' => $aUser, 'method' => $method))->render();
         }
 
@@ -378,13 +394,35 @@ class Templates extends Controller {
         }
 
 
-
         if (!empty($templateList)) {
             $response = array('status' => 'success', 'actionName' => $actionName, 'content' => $templateList);
         } else {
             $response = array('status' => 'error');
         }
+
         echo json_encode($response);
+        exit;
+
+        */
+
+        $aBreadcrumb = [
+            'Home' => '#/',
+            'Email' => '#/modules/emails/dashboard',
+            'Templates' => ''
+        ];
+        $oCategories = $mTemplates->getCommonTemplateCategories();
+        $aData = array(
+            'title' => 'Email Templates',
+            'breadcrumb' => $aBreadcrumb,
+            'oTemplates' => $oCategorizedTemplates->items(),
+            'allData' => $oCategorizedTemplates,
+            'oCategories' => $oCategories,
+            'templateType' => 'email',
+            'method' => 'manage',
+            'userID' => $userID
+        );
+
+        echo json_encode($aData);
         exit;
     }
 
@@ -395,7 +433,8 @@ class Templates extends Controller {
      * @param type $draft
      * @param type $uidUsed to load preview content of the selected template
      */
-    public function loadTemplatePreview(Request $request, $tempID = '', $draft = '', $uid = '') {
+    public function loadTemplatePreview(Request $request, $tempID = '', $draft = '', $uid = '')
+    {
         $bURLPreview = false;
 
         $aUser = getLoggedUser();
@@ -457,7 +496,8 @@ class Templates extends Controller {
     /**
      * Used to load Strip Resources(This will be deprecated soon)
      */
-    public function loadStripoResources($type, $templateID, $returnType = false, $isDraft = false, $source = '', $modName = '', $moduleUnitID = '') {
+    public function loadStripoResources($type, $templateID, $returnType = false, $isDraft = false, $source = '', $modName = '', $moduleUnitID = '')
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -536,7 +576,6 @@ class Templates extends Controller {
             }
 
 
-
             $stripo_html = (!empty($html)) ? $html : $blankHtml;
 
             $stripo_css = (!empty($css)) ? $css : $blankCss;
@@ -572,7 +611,8 @@ class Templates extends Controller {
     /**
      * Used to parse the template tags for selected module
      */
-    public function parseModuleStatictemplate($moduleName, $sCode, $type, $oUnitData) {
+    public function parseModuleStatictemplate($moduleName, $sCode, $type, $oUnitData)
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($oUnitData)) {
@@ -673,7 +713,8 @@ class Templates extends Controller {
     /**
      * This function retrun the blank template html content
      */
-    public function getStripoBlankTemplateContent() {
+    public function getStripoBlankTemplateContent()
+    {
         $html = 'PCFET0NUWVBFIGh0bWwgUFVCTElDICItLy9XM0MvL0RURCBYSFRNTCAxLjAgVHJhbnNpdGlvbmFsLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL1RSL3hodG1sMS9EVEQveGh0bWwxLXRyYW5zaXRpb25hbC5kdGQiPjxodG1sPjxoZWFkPiAKICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+IAogIDxtZXRhIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xIiBuYW1lPSJ2aWV3cG9ydCI+IAogIDxtZXRhIG5hbWU9IngtYXBwbGUtZGlzYWJsZS1tZXNzYWdlLXJlZm9ybWF0dGluZyI+IAogIDxtZXRhIGh0dHAtZXF1aXY9IlgtVUEtQ29tcGF0aWJsZSIgY29udGVudD0iSUU9ZWRnZSI+IAogIDxtZXRhIGNvbnRlbnQ9InRlbGVwaG9uZT1ubyIgbmFtZT0iZm9ybWF0LWRldGVjdGlvbiI+IAogIDx0aXRsZT48L3RpdGxlPiAKICA8IS0tW2lmIChtc28gMTYpXT4KICAgIDxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+CiAgICBhIHt0ZXh0LWRlY29yYXRpb246IG5vbmU7fQogICAgPC9zdHlsZT4KICAgIDwhW2VuZGlmXS0tPiAKICA8IS0tW2lmIGd0ZSBtc28gOV0+PHN0eWxlPnN1cCB7IGZvbnQtc2l6ZTogMTAwJSAhaW1wb3J0YW50OyB9PC9zdHlsZT48IVtlbmRpZl0tLT4gCiA8L2hlYWQ+PGJvZHkgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyI+IAogIDxkaXYgY2xhc3M9ImVzLXdyYXBwZXItY29sb3IiPiAKICAgPCEtLVtpZiBndGUgbXNvIDldPgoJCQk8djpiYWNrZ3JvdW5kIHhtbG5zOnY9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206dm1sIiBmaWxsPSJ0Ij4KCQkJCTx2OmZpbGwgdHlwZT0idGlsZSIgc3JjPSIiIGNvbG9yPSIjZjZmNmY2Ij48L3Y6ZmlsbD4KCQkJPC92OmJhY2tncm91bmQ+CgkJPCFbZW5kaWZdLS0+IAogICA8dGFibGUgY2xhc3M9ImVzLXdyYXBwZXIiIHdpZHRoPSIxMDAlIiBjZWxsc3BhY2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiPiAKICAgIDx0Ym9keT4gCiAgICAgPHRyPiAKICAgICAgPHRkIGNsYXNzPSJlc2QtZW1haWwtcGFkZGluZ3MiIHZhbGlnbj0idG9wIj4gCiAgICAgICA8dGFibGUgY2xhc3M9ImVzZC1oZWFkZXItcG9wb3ZlciBlcy1jb250ZW50IiBjZWxsc3BhY2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiIGFsaWduPSJjZW50ZXIiPiAKICAgICAgICA8dGJvZHk+IAogICAgICAgICA8dHI+IAogICAgICAgICAgPHRkIGNsYXNzPSJlc2Qtc3RyaXBlIiBhbGlnbj0iY2VudGVyIj4KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgCiAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAKICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgCiAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgICAKICAgICAgICAgICA8dGFibGUgY2xhc3M9ImVzLWNvbnRlbnQtYm9keSIgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50OyIgd2lkdGg9IjYwMCIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIwIiBhbGlnbj0iY2VudGVyIiBlc2QtaW1nLXByZXYtc3JjPSIiPiAKICAgICAgICAgICAgPHRib2R5PiAKICAgICAgICAgICAgIDx0cj4gCiAgICAgICAgICAgICAgPHRkIGNsYXNzPSJlc2Qtc3RydWN0dXJlIGVzLXAyMHQgZXMtcDIwYiBlcy1wMjByIGVzLXAyMGwiIGFsaWduPSJsZWZ0Ij4KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgIDwhLS1baWYgbXNvXT48dGFibGUgd2lkdGg9IjU2MCIgY2VsbHBhZGRpbmc9IjAiIGNlbGxzcGFjaW5nPSIwIj48dHI+PHRkIHdpZHRoPSIzNTYiIHZhbGlnbj0idG9wIj48IVtlbmRpZl0tLT4gCiAgICAgICAgICAgICAgIDx0YWJsZSBjbGFzcz0iZXMtbGVmdCIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIwIiBhbGlnbj0ibGVmdCI+IAogICAgICAgICAgICAgICAgPHRib2R5PiAKICAgICAgICAgICAgICAgICA8dHI+IAogICAgICAgICAgICAgICAgICA8dGQgY2xhc3M9ImVzLW0tcDByIGVzLW0tcDIwYiBlc2QtY29udGFpbmVyLWZyYW1lIiB3aWR0aD0iMzU2IiB2YWxpZ249InRvcCIgYWxpZ249ImNlbnRlciI+CiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgPHRhYmxlIHdpZHRoPSIxMDAlIiBjZWxsc3BhY2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiPiAKICAgICAgICAgICAgICAgICAgICA8dGJvZHk+IAogICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgPHRyPjx0ZCBhbGlnbj0iY2VudGVyIiBjbGFzcz0iZXNkLWVtcHR5LWNvbnRhaW5lciIgc3R5bGU9ImRpc3BsYXk6IG5vbmU7Ij48L3RkPjwvdHI+PC90Ym9keT4gCiAgICAgICAgICAgICAgICAgICA8L3RhYmxlPiA8L3RkPiAKICAgICAgICAgICAgICAgICA8L3RyPiAKICAgICAgICAgICAgICAgIDwvdGJvZHk+IAogICAgICAgICAgICAgICA8L3RhYmxlPiAKICAgICAgICAgICAgICAgPCEtLVtpZiBtc29dPjwvdGQ+PHRkIHdpZHRoPSIyMCI+PC90ZD48dGQgd2lkdGg9IjE4NCIgdmFsaWduPSJ0b3AiPjwhW2VuZGlmXS0tPiAKICAgICAgICAgICAgICAgPHRhYmxlIGNlbGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCIgYWxpZ249InJpZ2h0Ij4gCiAgICAgICAgICAgICAgICA8dGJvZHk+IAogICAgICAgICAgICAgICAgIDx0cj4gCiAgICAgICAgICAgICAgICAgIDx0ZCBjbGFzcz0iZXNkLWNvbnRhaW5lci1mcmFtZSIgd2lkdGg9IjE4NCIgYWxpZ249ImxlZnQiPgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgIDx0YWJsZSB3aWR0aD0iMTAwJSIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIwIj4gCiAgICAgICAgICAgICAgICAgICAgPHRib2R5PiAKICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgIDx0cj48dGQgYWxpZ249ImNlbnRlciIgY2xhc3M9ImVzZC1lbXB0eS1jb250YWluZXIiIHN0eWxlPSJkaXNwbGF5OiBub25lOyI+PC90ZD48L3RyPjwvdGJvZHk+IAogICAgICAgICAgICAgICAgICAgPC90YWJsZT4gPC90ZD4gCiAgICAgICAgICAgICAgICAgPC90cj4gCiAgICAgICAgICAgICAgICA8L3Rib2R5PiAKICAgICAgICAgICAgICAgPC90YWJsZT4gCiAgICAgICAgICAgICAgIDwhLS1baWYgbXNvXT48L3RkPjwvdHI+PC90YWJsZT48IVtlbmRpZl0tLT4gPC90ZD4gCiAgICAgICAgICAgICA8L3RyPiAKICAgICAgICAgICAgPC90Ym9keT4gCiAgICAgICAgICAgPC90YWJsZT4gPC90ZD4gCiAgICAgICAgIDwvdHI+IAogICAgICAgIDwvdGJvZHk+IAogICAgICAgPC90YWJsZT4gCiAgICAgICAgCiAgICAgICAgCiAgICAgICA8dGFibGUgY2xhc3M9ImVzZC1mb290ZXItcG9wb3ZlciBlcy1jb250ZW50IiBjZWxsc3BhY2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiIGFsaWduPSJjZW50ZXIiPiAKICAgICAgICA8dGJvZHk+IAogICAgICAgICA8dHI+IAogICAgICAgICAgPHRkIGNsYXNzPSJlc2Qtc3RyaXBlIiBhbGlnbj0iY2VudGVyIj4KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgCiAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAKICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgCiAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgICAKICAgICAgICAgICA8dGFibGUgY2xhc3M9ImVzLWNvbnRlbnQtYm9keSIgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50OyIgd2lkdGg9IjYwMCIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIwIiBhbGlnbj0iY2VudGVyIj4gCiAgICAgICAgICAgIDx0Ym9keT4gCiAgICAgICAgICAgICA8dHI+IAogICAgICAgICAgICAgIDx0ZCBjbGFzcz0iZXNkLXN0cnVjdHVyZSBlcy1wMzBiIGVzLXAyMHIgZXMtcDIwbCIgYWxpZ249ImxlZnQiPgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgPHRhYmxlIHdpZHRoPSIxMDAlIiBjZWxsc3BhY2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiPiAKICAgICAgICAgICAgICAgIDx0Ym9keT4gCiAgICAgICAgICAgICAgICAgPHRyPiAKICAgICAgICAgICAgICAgICAgPHRkIGNsYXNzPSJlc2QtY29udGFpbmVyLWZyYW1lIiB3aWR0aD0iNTYwIiB2YWxpZ249InRvcCIgYWxpZ249ImNlbnRlciI+CiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgPHRhYmxlIHdpZHRoPSIxMDAlIiBjZWxsc3BhY2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiPiAKICAgICAgICAgICAgICAgICAgICA8dGJvZHk+IAogICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgPHRyPjx0ZCBhbGlnbj0iY2VudGVyIiBjbGFzcz0iZXNkLWVtcHR5LWNvbnRhaW5lciIgc3R5bGU9ImRpc3BsYXk6IG5vbmU7Ij48L3RkPjwvdHI+PC90Ym9keT4gCiAgICAgICAgICAgICAgICAgICA8L3RhYmxlPiA8L3RkPiAKICAgICAgICAgICAgICAgICA8L3RyPiAKICAgICAgICAgICAgICAgIDwvdGJvZHk+IAogICAgICAgICAgICAgICA8L3RhYmxlPiA8L3RkPiAKICAgICAgICAgICAgIDwvdHI+IAogICAgICAgICAgICA8L3Rib2R5PiAKICAgICAgICAgICA8L3RhYmxlPiA8L3RkPiAKICAgICAgICAgPC90cj4gCiAgICAgICAgPC90Ym9keT4gCiAgICAgICA8L3RhYmxlPiA8L3RkPiAKICAgICA8L3RyPiAKICAgIDwvdGJvZHk+IAogICA8L3RhYmxlPiAKICA8L2Rpdj4gCiA8L2JvZHk+PC9odG1sPg==';
 
         $css = 'LyoKQ09ORklHIFNUWUxFUwpQbGVhc2UgZG8gbm90IGRlbGV0ZSBhbmQgZWRpdCBDU1Mgc3R5bGVzIGJlbG93CiovCi8qIElNUE9SVEFOVCBUSElTIFNUWUxFUyBNVVNUIEJFIE9OIEZJTkFMIEVNQUlMICovCgojb3V0bG9vayBhIHsKCXBhZGRpbmc6IDA7Cn0KLkV4dGVybmFsQ2xhc3MgewoJd2lkdGg6IDEwMCU7Cn0KLkV4dGVybmFsQ2xhc3MsCi5FeHRlcm5hbENsYXNzIHAsCi5FeHRlcm5hbENsYXNzIHNwYW4sCi5FeHRlcm5hbENsYXNzIGZvbnQsCi5FeHRlcm5hbENsYXNzIHRkLAouRXh0ZXJuYWxDbGFzcyBkaXYgewoJbGluZS1oZWlnaHQ6IDEwMCU7Cn0KLmVzLWJ1dHRvbiB7Cgltc28tc3R5bGUtcHJpb3JpdHk6IDEwMCAhaW1wb3J0YW50OwoJdGV4dC1kZWNvcmF0aW9uOiBub25lICFpbXBvcnRhbnQ7Cn0KYVt4LWFwcGxlLWRhdGEtZGV0ZWN0b3JzXSB7Cgljb2xvcjogaW5oZXJpdCAhaW1wb3J0YW50OwoJdGV4dC1kZWNvcmF0aW9uOiBub25lICFpbXBvcnRhbnQ7Cglmb250LXNpemU6IGluaGVyaXQgIWltcG9ydGFudDsKCWZvbnQtZmFtaWx5OiBpbmhlcml0ICFpbXBvcnRhbnQ7Cglmb250LXdlaWdodDogaW5oZXJpdCAhaW1wb3J0YW50OwoJbGluZS1oZWlnaHQ6IGluaGVyaXQgIWltcG9ydGFudDsKfQouZXMtZGVzay1oaWRkZW4gewogICAgZGlzcGxheTogbm9uZTsKICAgIGZsb2F0OiBsZWZ0OwogICAgb3ZlcmZsb3c6IGhpZGRlbjsKICAgIHdpZHRoOiAwOwogICAgbWF4LWhlaWdodDogMDsKICAgIGxpbmUtaGVpZ2h0OiAwOwogICAgbXNvLWhpZGU6IGFsbDsKfQovKgpFTkQgT0YgSU1QT1JUQU5UCiovCmh0bWwsCmJvZHkgewoJd2lkdGg6IDEwMCU7Cglmb250LWZhbWlseTogYXJpYWwsICdoZWx2ZXRpY2EgbmV1ZScsIGhlbHZldGljYSwgc2Fucy1zZXJpZjsKCS13ZWJraXQtdGV4dC1zaXplLWFkanVzdDogMTAwJTsKCS1tcy10ZXh0LXNpemUtYWRqdXN0OiAxMDAlOwp9CnRhYmxlIHsKCW1zby10YWJsZS1sc3BhY2U6IDBwdDsKCW1zby10YWJsZS1yc3BhY2U6IDBwdDsKCWJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7Cglib3JkZXItc3BhY2luZzogMHB4Owp9CnRhYmxlIHRkLApodG1sLApib2R5LAouZXMtd3JhcHBlciB7CglwYWRkaW5nOiAwOwoJTWFyZ2luOiAwOwp9Ci5lcy1jb250ZW50LAouZXMtaGVhZGVyLAouZXMtZm9vdGVyIHsKCXRhYmxlLWxheW91dDogZml4ZWQgIWltcG9ydGFudDsKCXdpZHRoOiAxMDAlOwp9CmltZyB7CglkaXNwbGF5OiBibG9jazsKCWJvcmRlcjogMDsKCW91dGxpbmU6IG5vbmU7Cgl0ZXh0LWRlY29yYXRpb246IG5vbmU7CgktbXMtaW50ZXJwb2xhdGlvbi1tb2RlOiBiaWN1YmljOwp9CnRhYmxlIHRyIHsKCWJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7Cn0KcCwKaHIgewoJTWFyZ2luOiAwOwp9CmgxLApoMiwKaDMsCmg0LApoNSB7CglNYXJnaW46IDA7CglsaW5lLWhlaWdodDogMTIwJTsKCW1zby1saW5lLWhlaWdodC1ydWxlOiBleGFjdGx5OwoJZm9udC1mYW1pbHk6IGFyaWFsLCAnaGVsdmV0aWNhIG5ldWUnLCBoZWx2ZXRpY2EsIHNhbnMtc2VyaWY7Cn0KcCwKdWwgbGksCm9sIGxpLAphIHsKCS13ZWJraXQtdGV4dC1zaXplLWFkanVzdDogbm9uZTsKCS1tcy10ZXh0LXNpemUtYWRqdXN0OiBub25lOwoJbXNvLWxpbmUtaGVpZ2h0LXJ1bGU6IGV4YWN0bHk7Cn0KLmVzLWxlZnQgewoJZmxvYXQ6IGxlZnQ7Cn0KLmVzLXJpZ2h0IHsKCWZsb2F0OiByaWdodDsKfQouZXMtcDUgewoJcGFkZGluZzogNXB4Owp9Ci5lcy1wNXQgewoJcGFkZGluZy10b3A6IDVweDsKfQouZXMtcDViIHsKCXBhZGRpbmctYm90dG9tOiA1cHg7Cn0KLmVzLXA1bCB7CglwYWRkaW5nLWxlZnQ6IDVweDsKfQouZXMtcDVyIHsKCXBhZGRpbmctcmlnaHQ6IDVweDsKfQouZXMtcDEwIHsKCXBhZGRpbmc6IDEwcHg7Cn0KLmVzLXAxMHQgewoJcGFkZGluZy10b3A6IDEwcHg7Cn0KLmVzLXAxMGIgewoJcGFkZGluZy1ib3R0b206IDEwcHg7Cn0KLmVzLXAxMGwgewoJcGFkZGluZy1sZWZ0OiAxMHB4Owp9Ci5lcy1wMTByIHsKCXBhZGRpbmctcmlnaHQ6IDEwcHg7Cn0KLmVzLXAxNSB7CglwYWRkaW5nOiAxNXB4Owp9Ci5lcy1wMTV0IHsKCXBhZGRpbmctdG9wOiAxNXB4Owp9Ci5lcy1wMTViIHsKCXBhZGRpbmctYm90dG9tOiAxNXB4Owp9Ci5lcy1wMTVsIHsKCXBhZGRpbmctbGVmdDogMTVweDsKfQouZXMtcDE1ciB7CglwYWRkaW5nLXJpZ2h0OiAxNXB4Owp9Ci5lcy1wMjAgewoJcGFkZGluZzogMjBweDsKfQouZXMtcDIwdCB7CglwYWRkaW5nLXRvcDogMjBweDsKfQouZXMtcDIwYiB7CglwYWRkaW5nLWJvdHRvbTogMjBweDsKfQouZXMtcDIwbCB7CglwYWRkaW5nLWxlZnQ6IDIwcHg7Cn0KLmVzLXAyMHIgewoJcGFkZGluZy1yaWdodDogMjBweDsKfQouZXMtcDI1IHsKCXBhZGRpbmc6IDI1cHg7Cn0KLmVzLXAyNXQgewoJcGFkZGluZy10b3A6IDI1cHg7Cn0KLmVzLXAyNWIgewoJcGFkZGluZy1ib3R0b206IDI1cHg7Cn0KLmVzLXAyNWwgewoJcGFkZGluZy1sZWZ0OiAyNXB4Owp9Ci5lcy1wMjVyIHsKCXBhZGRpbmctcmlnaHQ6IDI1cHg7Cn0KLmVzLXAzMCB7CglwYWRkaW5nOiAzMHB4Owp9Ci5lcy1wMzB0IHsKCXBhZGRpbmctdG9wOiAzMHB4Owp9Ci5lcy1wMzBiIHsKCXBhZGRpbmctYm90dG9tOiAzMHB4Owp9Ci5lcy1wMzBsIHsKCXBhZGRpbmctbGVmdDogMzBweDsKfQouZXMtcDMwciB7CglwYWRkaW5nLXJpZ2h0OiAzMHB4Owp9Ci5lcy1wMzUgewoJcGFkZGluZzogMzVweDsKfQouZXMtcDM1dCB7CglwYWRkaW5nLXRvcDogMzVweDsKfQouZXMtcDM1YiB7CglwYWRkaW5nLWJvdHRvbTogMzVweDsKfQouZXMtcDM1bCB7CglwYWRkaW5nLWxlZnQ6IDM1cHg7Cn0KLmVzLXAzNXIgewoJcGFkZGluZy1yaWdodDogMzVweDsKfQouZXMtcDQwIHsKCXBhZGRpbmc6IDQwcHg7Cn0KLmVzLXA0MHQgewoJcGFkZGluZy10b3A6IDQwcHg7Cn0KLmVzLXA0MGIgewoJcGFkZGluZy1ib3R0b206IDQwcHg7Cn0KLmVzLXA0MGwgewoJcGFkZGluZy1sZWZ0OiA0MHB4Owp9Ci5lcy1wNDByIHsKCXBhZGRpbmctcmlnaHQ6IDQwcHg7Cn0KLmVzLW1lbnUgdGQgewoJYm9yZGVyOiAwOwp9Ci5lcy1tZW51IHRkIGEgaW1nIHsKCWRpc3BsYXk6IGlubGluZSAhaW1wb3J0YW50Owp9Ci8qCkVORCBDT05GSUcgU1RZTEVTCiovCmEgewoJZm9udC1mYW1pbHk6IGFyaWFsLCAnaGVsdmV0aWNhIG5ldWUnLCBoZWx2ZXRpY2EsIHNhbnMtc2VyaWY7Cglmb250LXNpemU6IDE0cHg7Cgl0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsKfQpoMSB7Cglmb250LXNpemU6IDMwcHg7Cglmb250LXN0eWxlOiBub3JtYWw7Cglmb250LXdlaWdodDogbm9ybWFsOwoJY29sb3I6ICMzMzMzMzM7Cn0KaDEgYSB7Cglmb250LXNpemU6IDMwcHg7Cn0KaDIgewoJZm9udC1zaXplOiAyNHB4OwoJZm9udC1zdHlsZTogbm9ybWFsOwoJZm9udC13ZWlnaHQ6IG5vcm1hbDsKCWNvbG9yOiAjMzMzMzMzOwp9CmgyIGEgewoJZm9udC1zaXplOiAyNHB4Owp9CmgzIHsKCWZvbnQtc2l6ZTogMjBweDsKCWZvbnQtc3R5bGU6IG5vcm1hbDsKCWZvbnQtd2VpZ2h0OiBub3JtYWw7Cgljb2xvcjogIzMzMzMzMzsKfQpoMyBhIHsKCWZvbnQtc2l6ZTogMjBweDsKfQpwLAp1bCBsaSwKb2wgbGkgewoJZm9udC1zaXplOiAxNHB4OwoJZm9udC1mYW1pbHk6IGFyaWFsLCAnaGVsdmV0aWNhIG5ldWUnLCBoZWx2ZXRpY2EsIHNhbnMtc2VyaWY7CglsaW5lLWhlaWdodDogMTUwJTsKfQp1bCBsaSwKb2wgbGkgewoJTWFyZ2luLWJvdHRvbTogMTVweDsKfQouZXMtbWVudSB0ZCBhIHsKCXRleHQtZGVjb3JhdGlvbjogbm9uZTsKCWRpc3BsYXk6IGJsb2NrOwp9Ci5lcy13cmFwcGVyIHsKCXdpZHRoOiAxMDAlOwoJaGVpZ2h0OiAxMDAlOwoJYmFja2dyb3VuZC1pbWFnZTogOwoJYmFja2dyb3VuZC1yZXBlYXQ6IHJlcGVhdDsKCWJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlciB0b3A7Cn0KLmVzLXdyYXBwZXItY29sb3IgewoJYmFja2dyb3VuZC1jb2xvcjogI2Y2ZjZmNjsKfQouZXMtY29udGVudC1ib2R5IHsKCWJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7Cn0KLmVzLWNvbnRlbnQtYm9keSBwLAouZXMtY29udGVudC1ib2R5IHVsIGxpLAouZXMtY29udGVudC1ib2R5IG9sIGxpIHsKCWNvbG9yOiAjMzMzMzMzOwp9Ci5lcy1jb250ZW50LWJvZHkgYSB7Cgljb2xvcjogIzEzNzZjODsKfQouZXMtaGVhZGVyIHsKCWJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50OwoJYmFja2dyb3VuZC1pbWFnZTogOwoJYmFja2dyb3VuZC1yZXBlYXQ6IHJlcGVhdDsKCWJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlciB0b3A7Cn0KLmVzLWhlYWRlci1ib2R5IHsKCWJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50Owp9Ci5lcy1oZWFkZXItYm9keSBwLAouZXMtaGVhZGVyLWJvZHkgdWwgbGksCi5lcy1oZWFkZXItYm9keSBvbCBsaSB7Cgljb2xvcjogIzMzMzMzMzsKCWZvbnQtc2l6ZTogMTRweDsKfQouZXMtaGVhZGVyLWJvZHkgYSB7Cgljb2xvcjogIzEzNzZjODsKCWZvbnQtc2l6ZTogMTRweDsKfQouZXMtZm9vdGVyIHsKCWJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50OwoJYmFja2dyb3VuZC1pbWFnZTogOwoJYmFja2dyb3VuZC1yZXBlYXQ6IHJlcGVhdDsKCWJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlciB0b3A7Cn0KLmVzLWZvb3Rlci1ib2R5IHsKCWJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50Owp9Ci5lcy1mb290ZXItYm9keSBwLAouZXMtZm9vdGVyLWJvZHkgdWwgbGksCi5lcy1mb290ZXItYm9keSBvbCBsaSB7Cgljb2xvcjogIzMzMzMzMzsKCWZvbnQtc2l6ZTogMTFweDsKfQouZXMtZm9vdGVyLWJvZHkgYSB7Cgljb2xvcjogIzEzNzZjODsKCWZvbnQtc2l6ZTogMTFweDsKfQouZXMtaW5mb2Jsb2NrLAouZXMtaW5mb2Jsb2NrIHAsCi5lcy1pbmZvYmxvY2sgdWwgbGksCi5lcy1pbmZvYmxvY2sgb2wgbGkgewoJbGluZS1oZWlnaHQ6IDEyMCU7Cglmb250LXNpemU6IDEycHg7Cgljb2xvcjogI2NjY2NjYzsKfQouZXMtaW5mb2Jsb2NrIGEgewoJZm9udC1zaXplOiAxMnB4OwoJY29sb3I6ICMyY2I1NDM7Cn0KYS5lcy1idXR0b24gewoJYm9yZGVyLXN0eWxlOiBzb2xpZDsKCWJvcmRlci1jb2xvcjogIzMxY2I0YjsKCWJvcmRlci13aWR0aDogMTBweCAyMHB4IDEwcHggMjBweDsKCWRpc3BsYXk6IGlubGluZS1ibG9jazsKCWJhY2tncm91bmQ6ICMzMWNiNGI7Cglib3JkZXItcmFkaXVzOiAzMHB4OwoJZm9udC1zaXplOiAxOHB4OwoJZm9udC1mYW1pbHk6IGFyaWFsLCAnaGVsdmV0aWNhIG5ldWUnLCBoZWx2ZXRpY2EsIHNhbnMtc2VyaWY7Cglmb250LXdlaWdodDogbm9ybWFsOwoJZm9udC1zdHlsZTogbm9ybWFsOwoJbGluZS1oZWlnaHQ6IDEyMCU7Cgljb2xvcjogI2ZmZmZmZjsKCXRleHQtZGVjb3JhdGlvbjogbm9uZSAhaW1wb3J0YW50OwoJd2lkdGg6IGF1dG87Cgl0ZXh0LWFsaWduOiBjZW50ZXI7Cn0KLmVzLWJ1dHRvbi1ib3JkZXIgewoJYm9yZGVyLXN0eWxlOiBzb2xpZCBzb2xpZCBzb2xpZCBzb2xpZDsKCWJvcmRlci1jb2xvcjogIzJjYjU0MyAjMmNiNTQzICMyY2I1NDMgIzJjYjU0MzsKCWJhY2tncm91bmQ6ICMyY2I1NDM7Cglib3JkZXItd2lkdGg6IDBweCAwcHggMnB4IDBweDsKCWRpc3BsYXk6IGlubGluZS1ibG9jazsKCWJvcmRlci1yYWRpdXM6IDMwcHg7Cgl3aWR0aDogYXV0bzsKfQovKgpSRVNQT05TSVZFIFNUWUxFUwpQbGVhc2UgZG8gbm90IGRlbGV0ZSBhbmQgZWRpdCBDU1Mgc3R5bGVzIGJlbG93LgogCklmIHlvdSBkb24ndCBuZWVkIHJlc3BvbnNpdmUgbGF5b3V0LCBwbGVhc2UgZGVsZXRlIHRoaXMgc2VjdGlvbi4KKi8KQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA2MDBweCkgewoJcCwKICAgIHVsIGxpLAogICAgb2wgbGksCiAgICBhIHsKCQlmb250LXNpemU6IDE2cHggIWltcG9ydGFudDsKCX0KCWgxIHsKCQlmb250LXNpemU6IDMwcHggIWltcG9ydGFudDsKCQl0ZXh0LWFsaWduOiBjZW50ZXI7Cgl9CgloMiB7CgkJZm9udC1zaXplOiAyNnB4ICFpbXBvcnRhbnQ7CgkJdGV4dC1hbGlnbjogY2VudGVyOwoJfQoJaDMgewoJCWZvbnQtc2l6ZTogMjBweCAhaW1wb3J0YW50OwoJCXRleHQtYWxpZ246IGNlbnRlcjsKCX0KCWgxIGEgewoJCWZvbnQtc2l6ZTogMzBweCAhaW1wb3J0YW50OwoJfQoJaDIgYSB7CgkJZm9udC1zaXplOiAyNnB4ICFpbXBvcnRhbnQ7Cgl9CgloMyBhIHsKCQlmb250LXNpemU6IDIwcHggIWltcG9ydGFudDsKCX0KCS5lcy1tZW51IHRkIGEgewoJCWZvbnQtc2l6ZTogMTZweCAhaW1wb3J0YW50OwoJfQoJLmVzLWhlYWRlci1ib2R5IHAsCiAgICAuZXMtaGVhZGVyLWJvZHkgdWwgbGksCiAgICAuZXMtaGVhZGVyLWJvZHkgb2wgbGksCiAgICAuZXMtaGVhZGVyLWJvZHkgYSB7CgkJZm9udC1zaXplOiAxNnB4ICFpbXBvcnRhbnQ7Cgl9CgkuZXMtZm9vdGVyLWJvZHkgcCwKICAgIC5lcy1mb290ZXItYm9keSB1bCBsaSwKICAgIC5lcy1mb290ZXItYm9keSBvbCBsaSwKICAgIC5lcy1mb290ZXItYm9keSBhIHsKCQlmb250LXNpemU6IDE2cHggIWltcG9ydGFudDsKCX0KCS5lcy1pbmZvYmxvY2sgcCwKICAgIC5lcy1pbmZvYmxvY2sgdWwgbGksCiAgICAuZXMtaW5mb2Jsb2NrIG9sIGxpLAogICAgLmVzLWluZm9ibG9jayBhIHsKCQlmb250LXNpemU6IDEycHggIWltcG9ydGFudDsKCX0KCSpbY2xhc3M9ImdtYWlsLWZpeCJdIHsKCQlkaXNwbGF5OiBub25lICFpbXBvcnRhbnQ7Cgl9CgkuZXMtbS10eHQtYywKICAgIC5lcy1tLXR4dC1jIGgxLAogICAgLmVzLW0tdHh0LWMgaDIsCiAgICAuZXMtbS10eHQtYyBoMyB7CgkJdGV4dC1hbGlnbjogY2VudGVyICFpbXBvcnRhbnQ7Cgl9CgkuZXMtbS10eHQtciwKICAgIC5lcy1tLXR4dC1yIGgxLAogICAgLmVzLW0tdHh0LXIgaDIsCiAgICAuZXMtbS10eHQtciBoMyB7CgkJdGV4dC1hbGlnbjogcmlnaHQgIWltcG9ydGFudDsKCX0KCS5lcy1tLXR4dC1sLAogICAgLmVzLW0tdHh0LWwgaDEsCiAgICAuZXMtbS10eHQtbCBoMiwKICAgIC5lcy1tLXR4dC1sIGgzIHsKCQl0ZXh0LWFsaWduOiBsZWZ0ICFpbXBvcnRhbnQ7Cgl9CgkuZXMtbS10eHQtciBhIGltZywKICAgIC5lcy1tLXR4dC1jIGEgaW1nLAogICAgLmVzLW0tdHh0LWwgYSBpbWcgewoJCWRpc3BsYXk6IGlubGluZSAhaW1wb3J0YW50OwoJfQoJLmVzLWJ1dHRvbi1ib3JkZXIgewoJCWRpc3BsYXk6IGJsb2NrICFpbXBvcnRhbnQ7Cgl9CgkuZXMtYnV0dG9uIHsKCQlmb250LXNpemU6IDIwcHggIWltcG9ydGFudDsKCQlkaXNwbGF5OiBibG9jayAhaW1wb3J0YW50OwoJCWJvcmRlci13aWR0aDogMTBweCAwcHggMTBweCAwcHggIWltcG9ydGFudDsKCX0KCS5lcy1idG4tZncgewoJCWJvcmRlci13aWR0aDogMTBweCAwcHggIWltcG9ydGFudDsKCQl0ZXh0LWFsaWduOiBjZW50ZXIgIWltcG9ydGFudDsKCX0KCS5lcy1hZGFwdGl2ZSB0YWJsZSwKICAgIC5lcy1idG4tZncsCiAgICAuZXMtYnRuLWZ3LWJyZHIsCiAgICAuZXMtbGVmdCwKICAgIC5lcy1yaWdodCB7CgkJd2lkdGg6IDEwMCUgIWltcG9ydGFudDsKCX0KCS5lcy1jb250ZW50IHRhYmxlLAogICAgLmVzLWhlYWRlciB0YWJsZSwKICAgIC5lcy1mb290ZXIgdGFibGUsCiAgICAuZXMtY29udGVudCwKICAgIC5lcy1mb290ZXIsCiAgICAuZXMtaGVhZGVyIHsKCQl3aWR0aDogMTAwJSAhaW1wb3J0YW50OwoJCW1heC13aWR0aDogNjAwcHggIWltcG9ydGFudDsKCX0KCS5lcy1hZGFwdC10ZCB7CgkJZGlzcGxheTogYmxvY2sgIWltcG9ydGFudDsKCQl3aWR0aDogMTAwJSAhaW1wb3J0YW50OwoJfQoJLmFkYXB0LWltZyB7CgkJd2lkdGg6IDEwMCUgIWltcG9ydGFudDsKCQloZWlnaHQ6IGF1dG8gIWltcG9ydGFudDsKCX0KCS5lcy1tLXAwIHsKCQlwYWRkaW5nOiAwcHggIWltcG9ydGFudDsKCX0KCS5lcy1tLXAwciB7CgkJcGFkZGluZy1yaWdodDogMHB4ICFpbXBvcnRhbnQ7Cgl9CgkuZXMtbS1wMGwgewoJCXBhZGRpbmctbGVmdDogMHB4ICFpbXBvcnRhbnQ7Cgl9CgkuZXMtbS1wMHQgewoJCXBhZGRpbmctdG9wOiAwcHggIWltcG9ydGFudDsKCX0KCS5lcy1tLXAwYiB7CgkJcGFkZGluZy1ib3R0b206IDAgIWltcG9ydGFudDsKCX0KCS5lcy1tLXAyMGIgewoJCXBhZGRpbmctYm90dG9tOiAyMHB4ICFpbXBvcnRhbnQ7Cgl9CgkuZXMtbW9iaWxlLWhpZGRlbiwKICAgIAkuZXMtaGlkZGVuIHsKICAgICAgICBkaXNwbGF5OiBub25lICFpbXBvcnRhbnQ7CiAgICAJfQogICAgCS5lcy1kZXNrLWhpZGRlbiB7CiAgICAgICAgZGlzcGxheTogdGFibGUtcm93IWltcG9ydGFudDsKICAgICAgICB3aWR0aDogYXV0byFpbXBvcnRhbnQ7CiAgICAgICAgb3ZlcmZsb3c6IHZpc2libGUhaW1wb3J0YW50OwogICAgICAgIGZsb2F0OiBub25lIWltcG9ydGFudDsKICAgICAgICBtYXgtaGVpZ2h0OiBpbmhlcml0IWltcG9ydGFudDsKICAgICAgICBsaW5lLWhlaWdodDogaW5oZXJpdCFpbXBvcnRhbnQ7CiAgICAJfQogICAgCS5lcy1kZXNrLW1lbnUtaGlkZGVuIHsKICAgICAgICBkaXNwbGF5OiB0YWJsZS1jZWxsIWltcG9ydGFudDsKICAgIAl9Cgl0YWJsZS5lcy10YWJsZS1ub3QtYWRhcHQsCiAgICAJLmVzZC1ibG9jay1odG1sIHRhYmxlIHsKCQl3aWR0aDogYXV0byAhaW1wb3J0YW50OwoJfQoJdGFibGUuZXMtc29jaWFsIHsKCQlkaXNwbGF5OiBpbmxpbmUtYmxvY2sgIWltcG9ydGFudDsKCX0KCXRhYmxlLmVzLXNvY2lhbCB0ZCB7CgkJZGlzcGxheTogaW5saW5lLWJsb2NrICFpbXBvcnRhbnQ7Cgl9Cn0KLyoKRU5EIFJFU1BPTlNJVkUgU1RZTEVTCiovCgo=';
@@ -687,7 +728,8 @@ class Templates extends Controller {
     /**
      * Used to send test email
      */
-    public function sendTestEmail(Request $request) {
+    public function sendTestEmail(Request $request)
+    {
         $response = array();
 
         $aUser = getLoggedUser();
@@ -749,7 +791,8 @@ class Templates extends Controller {
     /**
      * Used to send test sms
      */
-    public function sendTestSMS(Request $request) {
+    public function sendTestSMS(Request $request)
+    {
         $response = array();
 
         $aUser = getLoggedUser();
@@ -776,7 +819,6 @@ class Templates extends Controller {
             $content = str_replace('<br/>', "\n", $content);
             $content = str_replace('<br />', "\n", $content);
             $content = strip_tags(nl2br($content));
-
 
 
             //Get Twilio Info of client
@@ -831,7 +873,8 @@ class Templates extends Controller {
     /**
      * Used to clone selected template
      */
-    public function cloneTemplate(Request $request) {
+    public function cloneTemplate(Request $request)
+    {
         $response = array();
 
         $aUser = getLoggedUser();
@@ -844,7 +887,7 @@ class Templates extends Controller {
         $templateType = strip_tags($request->templateType);
         $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
         if (!empty($oTemplate)) {
-            $aData = (array) $oTemplate;
+            $aData = (array)$oTemplate;
             unset($aData['id']);
             unset($aData['created']);
             unset($aData['updated']);
@@ -861,7 +904,8 @@ class Templates extends Controller {
     /**
      * Used to delete template
      */
-    public function deleteTemplate(Request $request) {
+    public function deleteTemplate(Request $request)
+    {
         $response = array();
         $response['status'] = 'error';
 
@@ -890,7 +934,8 @@ class Templates extends Controller {
      * Used to create and store thumbnail for selected template
      * @param type $templateID
      */
-    public function saveThumbnail(Request $request) {
+    public function saveThumbnail(Request $request)
+    {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $templateID = $request->id;
@@ -920,7 +965,8 @@ class Templates extends Controller {
     /**
      * Used to update thumbnail of selected template
      */
-    public function updateThumbnail(Request $request) {
+    public function updateThumbnail(Request $request)
+    {
         $response = array();
         $response['status'] = 'error';
 
@@ -958,7 +1004,8 @@ class Templates extends Controller {
      * @param type $subscriberInfo
      * @return type
      */
-    public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
+    public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo)
+    {
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
 
@@ -1009,7 +1056,7 @@ class Templates extends Controller {
                         break;
 
                     case '{PRODUCTS_LIST}':
-                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails'=> $productsDetails])->render();
+                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails' => $productsDetails])->render();
                         break;
 
                     case '{BRAND_LOGO}':

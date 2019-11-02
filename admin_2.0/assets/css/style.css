@@ -1310,7 +1310,7 @@ PAGE WITH SIDEBAR CSS
 .rotate-45{transform: rotate(-45deg);}
 .workflow_list{margin: 0; padding: 0;}
 .workflow_list li{margin: 0; padding: 0; list-style: none; display: inline-block;}
-.workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 300;}
+.workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 300; letter-spacing: 0.04em;}
 
 
 .activity_date{font-style: normal;font-weight: 500;font-size: 10px;line-height: 11px;letter-spacing: 0.06em;text-transform: uppercase;color: #98ADCF; margin: 25px 0 25px 30px}
@@ -2742,6 +2742,24 @@ td.fc-basic-view .fc-week-number > * {
 .ui-datepicker-multi-4 .ui-datepicker-group {
   width: 25%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/************************
+APEX CHART
+***********************/
+.apexcharts-canvas{margin: 0 auto;}
+.apexcharts-legend, .apexcharts-pie-label{visibility: hidden; display: none}
+
 
 
 

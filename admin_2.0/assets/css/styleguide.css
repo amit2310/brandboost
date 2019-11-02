@@ -111,6 +111,7 @@ CUSTOM SWITCH STYLES
 .custom-form-switch .field:checked + .toggle:before {  margin-left: 13px;}
 .custom-form-switch .field:checked + .toggle {  border-color: #7f62df;  background-color: #7f62df;}
 .custom-form-switch .field:checked + .toggle.blue {  border-color: #3680dc;  background-color: #3680dc;}
+.custom-form-switch .field:checked + .toggle.email {  border-color: #67bae4;  background-color: #67bae4;}
 .custom-form-switch .field:checked + .toggle.blue2 {  border-color: #2eb4dd;  background-color: #2eb4dd;}
 .custom-form-switch .field:checked + .toggle.sblue {  border-color: #2f9eee;  background-color: #2f9eee;}
 .custom-form-switch .field:checked + .toggle.green {  border-color: #59b06e;  background-color: #59b06e;}
@@ -190,6 +191,26 @@ List Styles Classes
 @media only screen and (max-width:1400px){
 	.templates_list{max-width: 210px;}
 }
+
+
+
+.email_config_list{margin: 0 ;padding: 0;}
+.email_config_list li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 36px; display: inline-block; width: 24.5%}
+.email_config_list li a{margin: 0 ;padding: 0 0px 0 0px; font-weight: 500;font-size: 12px; color: #687693; letter-spacing: 0.04em; display: inline-block; position: relative; text-transform: uppercase;}
+
+.email_config_list li a span.num_circle{width: 36px; height: 36px; display: block; text-align: center; line-height: 36px; background: #fff;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4); border-radius: 100%; float: left; margin-right: 11px;}
+.email_config_list li a.active span.num_circle{color: #56ACD8}
+.email_config_list li a span.num_circle span.check_img{display: none}
+
+.email_config_list li a.active{color: #242B3D; font-weight: 600 }
+.email_config_list li a.done{ color: #687693; font-weight: 500  }
+.email_config_list li a.done span.num_circle span.check_img{display: block}
+.email_config_list li a.done span.num_circle span.num{display: none}
+
+
+.email_config_list li a:hover{color: #242B3D; font-weight: 600 }
+
+
 
 
 
@@ -306,7 +327,7 @@ COLOR CLASSES
 .light_900{color: #A3ADC0}
 
 .dark_100{color: #97A4BD!important}
-.dark_200{color: #7B89A6}
+.dark_200{color: #7B89A6!important}
 .dark_300{color: #687693}
 .dark_400{color: #56627F}
 .dark_500{color: #445069}
