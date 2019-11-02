@@ -2050,6 +2050,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2064,8 +2067,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       form: {
         title: '',
-        listDescription: ''
+        listDescription: '',
+        list_id: ''
       },
+      formLabel: 'Create',
       successMsg: '',
       errorMsg: '',
       loading: true,
@@ -2086,22 +2091,93 @@ __webpack_require__.r(__webpack_exports__);
     showListSubscribers: function showListSubscribers(listId) {
       window.location.href = '#/lists/getListContacts/' + listId;
     },
-    loadPaginatedData: function loadPaginatedData() {
+    displayForm: function displayForm(lbl) {
+      if (lbl == 'Create') {
+        this.form = {};
+      }
+
+      this.formLabel = lbl;
+      document.querySelector('.js-list-slidebox').click();
+    },
+    prepareListUpdate: function prepareListUpdate(listId) {
+      this.getListInfo(listId);
+    },
+    getListInfo: function getListInfo(listId) {
       var _this = this;
+
+      axios.post('/admin/lists/getList', {
+        list_id: listId,
+        moduleName: this.moduleName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          //Fill up the form fields
+          var formData = response.data;
+          _this.form.title = formData.title;
+          _this.form.listDescription = formData.description;
+          _this.form.list_id = formData.list_id;
+          _this.formLabel = 'Update';
+
+          _this.displayForm(_this.formLabel);
+        }
+      });
+    },
+    processForm: function processForm() {
+      var _this2 = this;
+
+      this.loading = true;
+      var formActionSrc = '';
+      this.form.module_name = this.moduleName;
+
+      if (this.form.list_id > 0) {
+        formActionSrc = '/admin/lists/updatePeopleList';
+      } else {
+        formActionSrc = '/admin/lists/addList';
+        this.form.module_account_id = this.moduleAccountID;
+      }
+
+      axios.post(formActionSrc, this.form).then(function (response) {
+        if (response.data.status == 'success') {
+          _this2.loading = false; //this.form = {};
+
+          _this2.form.list_id = '';
+          document.querySelector('.js-list-slidebox').click();
+          _this2.successMsg = 'Action completed successfully.';
+          var elem = _this2;
+          setTimeout(function () {
+            elem.loadPaginatedData();
+          }, 500);
+          syncContactSelectionSources();
+        } else if (response.data.status == 'error') {
+          if (response.data.type == 'duplicate') {
+            alert('Error: List already exists.');
+          } else {
+            alert('Error: Something went wrong.');
+          }
+        }
+      })["catch"](function (error) {
+        _this2.loading = false;
+        console.log(error); //error.response.data
+
+        alert('All form fields are required');
+      });
+    },
+    loadPaginatedData: function loadPaginatedData() {
+      var _this3 = this;
 
       //getData
       axios.get('/admin/lists/?page=' + this.current_page).then(function (response) {
         //console.log(response.data);
-        _this.breadcrumb = response.data.breadcrumb;
+        _this3.breadcrumb = response.data.breadcrumb;
 
-        _this.makeBreadcrumb(_this.breadcrumb);
+        _this3.makeBreadcrumb(_this3.breadcrumb);
 
-        _this.moduleName = response.data.moduleName;
-        _this.moduleUnitID = response.data.moduleUnitID;
-        _this.moduleAccountID = response.data.moduleAccountID;
-        _this.loading = false;
-        _this.lists = response.data.oLists;
-        _this.allData = response.data.allData;
+        _this3.moduleName = response.data.moduleName;
+        _this3.moduleUnitID = response.data.moduleUnitID;
+        _this3.moduleAccountID = response.data.moduleAccountID;
+        _this3.loading = false;
+        _this3.lists = response.data.oLists;
+        _this3.allData = response.data.allData;
       });
     },
     showPaginationData: function showPaginationData(current_page) {
@@ -2113,7 +2189,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadPaginatedData();
     },
     changeStatus: function changeStatus(listID, status) {
-      var _this2 = this;
+      var _this4 = this;
 
       if (confirm('Are you sure you want to change the status of this list?')) {
         //Do axios
@@ -2127,13 +2203,13 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data.status == 'success') {
             syncContactSelectionSources();
 
-            _this2.showPaginationData(_this2.current_page);
+            _this4.showPaginationData(_this4.current_page);
           }
         });
       }
     },
     deleteList: function deleteList(listID) {
-      var _this3 = this;
+      var _this5 = this;
 
       if (confirm('Are you sure you want to delete this list?')) {
         //Do axios
@@ -2146,25 +2222,25 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data.status == 'success') {
             syncContactSelectionSources();
 
-            _this3.showPaginationData(_this3.current_page);
+            _this5.showPaginationData(_this5.current_page);
           }
         });
       }
     },
     submitAddList: function submitAddList() {
-      var _this4 = this;
+      var _this6 = this;
 
       this.loading = true;
       axios.post('/admin/lists/addList', this.form).then(function (response) {
         if (response.data.status == 'success') {
-          _this4.loading = false;
-          _this4.successMsg = 'New List Added successfully';
-          _this4.form = {};
+          _this6.loading = false;
+          _this6.successMsg = 'New List Added successfully';
+          _this6.form = {};
 
-          _this4.showPaginationData(_this4.current_page);
+          _this6.showPaginationData(_this6.current_page);
         }
       })["catch"](function (error) {
-        _this4.loading = false; //error.response.data
+        _this6.loading = false; //error.response.data
 
         alert('All form fields are required');
       });
@@ -2172,7 +2248,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 $(document).ready(function () {
-  $(".js-list-slidebox").click(function () {
+  $(document).on('click', '.js-list-slidebox', function () {
     $(".box").animate({
       width: "toggle"
     });
@@ -10887,6 +10963,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['pageColor'],
@@ -17105,6 +17188,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   title: 'Insight Tags - Brand Boost',
@@ -17197,7 +17281,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 $(document).ready(function () {
-  $(document).on('click', '.slidebox', function () {
+  $(document).on('click', '.js-tag-slidebox', function () {
     $(".box").animate({
       width: "toggle"
     });
@@ -21360,14 +21444,26 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.submitAddList($event)
+                        return _vm.processForm($event)
                       }
                     }
                   },
                   [
                     _c("div", { staticClass: "p40" }, [
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(8),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("img", {
+                            attrs: { src: "assets/images/list-icon.svg" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "h3",
+                            { staticClass: "htxt_medium_24 dark_800 mt20" },
+                            [_vm._v(_vm._s(_vm.formLabel) + " List ")]
+                          ),
+                          _vm._v(" "),
+                          _c("hr")
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
                           _c("div", { staticClass: "form-group" }, [
@@ -21407,7 +21503,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(9),
+                          _vm._m(8),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", { attrs: { for: "desc" } }, [
@@ -21447,7 +21543,47 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(10)
+                      _c("div", { staticClass: "row bottom-position" }, [
+                        _vm._m(9),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("input", {
+                            attrs: {
+                              type: "hidden",
+                              name: "module_name",
+                              id: "active_module_name"
+                            },
+                            domProps: { value: _vm.moduleName }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: {
+                              type: "hidden",
+                              name: "module_account_id",
+                              id: "module_account_id"
+                            },
+                            domProps: { value: _vm.moduleAccountID }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                            },
+                            [_vm._v(_vm._s(_vm.formLabel))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "blue_300 fsize16 fw600 ml20",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("Close")]
+                          )
+                        ])
+                      ])
                     ])
                   ]
                 )
@@ -21650,24 +21786,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 text-center js-list-slidebox" }, [
-      _c(
-        "div",
-        { staticClass: "card p30 bkg_light_200 shadow_none h235 animate_top" },
-        [
-          _c("img", {
-            staticClass: "mt20 mb30",
-            attrs: { src: "assets/images/plus_icon_circle_64.svg" }
-          }),
-          _vm._v(" "),
-          _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
-            _vm._v("Create"),
-            _c("br"),
-            _vm._v("contacts list")
-          ])
-        ]
-      )
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "col-md-3 text-center js-list-slidebox",
+        staticStyle: { cursor: "pointer" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card p30 bkg_light_200 shadow_none h235 animate_top"
+          },
+          [
+            _c("img", {
+              staticClass: "mt20 mb30",
+              attrs: { src: "assets/images/plus_icon_circle_64.svg" }
+            }),
+            _vm._v(" "),
+            _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
+              _vm._v("Create"),
+              _c("br"),
+              _vm._v("contacts list")
+            ])
+          ]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -21773,20 +21918,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("img", { attrs: { src: "assets/images/list-icon.svg" } }),
-      _vm._v(" "),
-      _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
-        _vm._v("Create List ")
-      ]),
-      _vm._v(" "),
-      _c("hr")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "phonenumber" } }, [_vm._v("Color")]),
       _vm._v(" "),
@@ -21829,26 +21960,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row bottom-position" }, [
-      _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
-          },
-          [_vm._v("Create")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "blue_300 fsize16 fw600 ml20", attrs: { href: "#" } },
-          [_vm._v("Close")]
-        )
-      ])
-    ])
+    return _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")])
   }
 ]
 render._withStripped = true
@@ -40375,168 +40487,180 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "row" },
-                    _vm._l(_vm.segments, function(segment) {
-                      return _c(
-                        "div",
-                        { staticClass: "col-md-3 text-center" },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "card p30 h235 animate_top" },
-                            [
-                              _c("div", { staticClass: "dot_dropdown" }, [
-                                _vm._m(3, true),
+                    [
+                      _vm._l(_vm.segments, function(segment) {
+                        return _c(
+                          "div",
+                          { staticClass: "col-md-3 text-center" },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "card p30 h235 animate_top" },
+                              [
+                                _c("div", { staticClass: "dot_dropdown" }, [
+                                  _vm._m(3, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "dropdown-menu dropdown-menu-right"
+                                    },
+                                    [
+                                      segment.status != "2"
+                                        ? _c(
+                                            "a",
+                                            {
+                                              staticClass: "dropdown-item",
+                                              attrs: {
+                                                href: "javascript:void(0);"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.moveArchive(
+                                                    segment.id
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "dripicons-user text-muted mr-2"
+                                              }),
+                                              _vm._v(" Move To Archive")
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "dropdown-item",
+                                          attrs: {
+                                            href: "javascript:void(0);"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.prepareSegmentUpdate(
+                                                segment.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "dripicons-user text-muted mr-2"
+                                          }),
+                                          _vm._v(" Edit")
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "dropdown-item",
+                                          attrs: {
+                                            href: "javascript:void(0);"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteSegment(
+                                                segment.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "dripicons-user text-muted mr-2"
+                                          }),
+                                          _vm._v(" Delete")
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]),
                                 _vm._v(" "),
                                 _c(
                                   "div",
                                   {
-                                    staticClass:
-                                      "dropdown-menu dropdown-menu-right"
+                                    staticStyle: { cursor: "pointer" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showSegmentSubscribers(
+                                          segment.id
+                                        )
+                                      }
+                                    }
                                   },
                                   [
-                                    segment.status != "2"
-                                      ? _c(
-                                          "a",
-                                          {
-                                            staticClass: "dropdown-item",
-                                            attrs: {
-                                              href: "javascript:void(0);"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.moveArchive(
-                                                  segment.id
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "dripicons-user text-muted mr-2"
-                                            }),
-                                            _vm._v(" Move To Archive")
-                                          ]
-                                        )
-                                      : _vm._e(),
+                                    _c("img", {
+                                      staticClass: "mt20",
+                                      attrs: {
+                                        src: "/assets/images/subs-icon_big.svg"
+                                      }
+                                    }),
                                     _vm._v(" "),
                                     _c(
-                                      "a",
+                                      "h3",
                                       {
-                                        staticClass: "dropdown-item",
-                                        attrs: { href: "javascript:void(0);" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.prepareSegmentUpdate(
-                                              segment.id
-                                            )
-                                          }
-                                        }
+                                        staticClass:
+                                          "htxt_bold_16 dark_700 mt25 mb15"
                                       },
                                       [
-                                        _c("i", {
-                                          staticClass:
-                                            "dripicons-user text-muted mr-2"
-                                        }),
-                                        _vm._v(" Edit")
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(
+                                              _vm.capitalizeFirstLetter(
+                                                _vm.setStringLimit(
+                                                  segment.segment_name,
+                                                  20
+                                                )
+                                              )
+                                            )
+                                        )
                                       ]
                                     ),
                                     _vm._v(" "),
+                                    segment.status == "2"
+                                      ? _c("p", [
+                                          _c("em", [_vm._v("(Archived)")])
+                                        ])
+                                      : _c("p", [
+                                          _c("em", [_vm._v("(Active)")])
+                                        ]),
+                                    _vm._v(" "),
                                     _c(
-                                      "a",
+                                      "p",
                                       {
-                                        staticClass: "dropdown-item",
-                                        attrs: { href: "javascript:void(0);" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteSegment(segment.id)
-                                          }
-                                        }
+                                        staticClass:
+                                          "htxt_regular_12 dark_300 mb15"
                                       },
                                       [
-                                        _c("i", {
-                                          staticClass:
-                                            "dripicons-user text-muted mr-2"
-                                        }),
-                                        _vm._v(" Delete")
+                                        _vm._m(4, true),
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(
+                                              segment.segmentSubscribers.data
+                                                .length
+                                            )
+                                        )
                                       ]
                                     )
                                   ]
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticStyle: { cursor: "pointer" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.showSegmentSubscribers(
-                                        segment.id
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("img", {
-                                    staticClass: "mt20",
-                                    attrs: {
-                                      src: "/assets/images/subs-icon_big.svg"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "h3",
-                                    {
-                                      staticClass:
-                                        "htxt_bold_16 dark_700 mt25 mb15"
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(
-                                            _vm.capitalizeFirstLetter(
-                                              _vm.setStringLimit(
-                                                segment.segment_name,
-                                                20
-                                              )
-                                            )
-                                          )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  segment.status == "2"
-                                    ? _c("p", [
-                                        _c("em", [_vm._v("(Archived)")])
-                                      ])
-                                    : _c("p", [_c("em", [_vm._v("(Active)")])]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "p",
-                                    {
-                                      staticClass:
-                                        "htxt_regular_12 dark_300 mb15"
-                                    },
-                                    [
-                                      _vm._m(4, true),
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(
-                                            segment.segmentSubscribers.data
-                                              .length
-                                          )
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    }),
-                    0
+                              ]
+                            )
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _vm._m(5)
+                    ],
+                    2
                   ),
                   _vm._v(" "),
                   _c("pagination", {
@@ -40566,7 +40690,7 @@ var render = function() {
               }
             },
             [
-              _vm._m(5),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "form",
@@ -40632,7 +40756,7 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _vm._m(6),
+                        _vm._m(7),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "desc" } }, [
@@ -40673,7 +40797,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row bottom-position" }, [
-                      _vm._m(7),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12" }, [
                         _c("input", {
@@ -40994,6 +41118,38 @@ var staticRenderFns = [
     return _c("i", [
       _c("img", { attrs: { src: "/assets/images/user_16_grey.svg" } })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "col-md-3 text-center js-segment-slidebox",
+        staticStyle: { cursor: "pointer" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card p30 bkg_light_200 shadow_none h235 animate_top"
+          },
+          [
+            _c("img", {
+              staticClass: "mt20 mb30",
+              attrs: { src: "assets/images/plus_icon_circle_64.svg" }
+            }),
+            _vm._v(" "),
+            _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
+              _vm._v("Create"),
+              _c("br"),
+              _vm._v("Segment")
+            ])
+          ]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -54885,66 +55041,118 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "row" },
-                      _vm._l(_vm.oTags, function(oTag) {
-                        return _c(
-                          "div",
-                          { staticClass: "col-md-3 text-center" },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "card p30 h235 animate_top" },
-                              [
-                                _c("div", { staticClass: "dot_dropdown" }, [
-                                  _vm._m(3, true),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "dropdown-menu dropdown-menu-right"
-                                    },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "dropdown-item",
-                                          attrs: {
-                                            href: "javascript:void(0);"
+                      [
+                        _vm._l(_vm.oTags, function(oTag) {
+                          return _c(
+                            "div",
+                            { staticClass: "col-md-3 text-center" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "card p30 h235 animate_top" },
+                                [
+                                  _c("div", { staticClass: "dot_dropdown" }, [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "dropdown-menu dropdown-menu-right"
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            attrs: {
+                                              href: "javascript:void(0);"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.deleteTagGroupEntity(
+                                                  oTag.tagid
+                                                )
+                                              }
+                                            }
                                           },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "dripicons-user text-muted mr-2"
+                                            }),
+                                            _vm._v(" Delete")
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm.oTagSubscribers[oTag.tagid] > 0
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticStyle: { cursor: "pointer" },
                                           on: {
                                             click: function($event) {
-                                              return _vm.deleteTagGroupEntity(
+                                              return _vm.showTagSubscribers(
                                                 oTag.tagid
                                               )
                                             }
                                           }
                                         },
                                         [
-                                          _c("i", {
-                                            staticClass:
-                                              "dripicons-user text-muted mr-2"
+                                          _c("img", {
+                                            staticClass: "mt20",
+                                            attrs: {
+                                              src:
+                                                "assets/images/tag_icon_circle.svg"
+                                            }
                                           }),
-                                          _vm._v(" Delete")
+                                          _vm._v(" "),
+                                          _c(
+                                            "h3",
+                                            {
+                                              staticClass:
+                                                "htxt_bold_16 dark_700 mt25 mb15"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                " +
+                                                  _vm._s(
+                                                    _vm.capitalizeFirstLetter(
+                                                      _vm.setStringLimit(
+                                                        oTag.tag_name,
+                                                        20
+                                                      )
+                                                    )
+                                                  ) +
+                                                  "\n                            "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "htxt_regular_12 dark_300 mb15"
+                                            },
+                                            [
+                                              _vm._m(4, true),
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(
+                                                    _vm.oTagSubscribers[
+                                                      oTag.tagid
+                                                    ]
+                                                  )
+                                              )
+                                            ]
+                                          )
                                         ]
                                       )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _vm.oTagSubscribers[oTag.tagid] > 0
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticStyle: { cursor: "pointer" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showTagSubscribers(
-                                              oTag.tagid
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
+                                    : _c("div", [
                                         _c("img", {
                                           staticClass: "mt20",
                                           attrs: {
@@ -54982,7 +55190,7 @@ var render = function() {
                                               "htxt_regular_12 dark_300 mb15"
                                           },
                                           [
-                                            _vm._m(4, true),
+                                            _vm._m(5, true),
                                             _vm._v(
                                               " " +
                                                 _vm._s(
@@ -54993,62 +55201,16 @@ var render = function() {
                                             )
                                           ]
                                         )
-                                      ]
-                                    )
-                                  : _c("div", [
-                                      _c("img", {
-                                        staticClass: "mt20",
-                                        attrs: {
-                                          src:
-                                            "assets/images/tag_icon_circle.svg"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "h3",
-                                        {
-                                          staticClass:
-                                            "htxt_bold_16 dark_700 mt25 mb15"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                " +
-                                              _vm._s(
-                                                _vm.capitalizeFirstLetter(
-                                                  _vm.setStringLimit(
-                                                    oTag.tag_name,
-                                                    20
-                                                  )
-                                                )
-                                              ) +
-                                              "\n                            "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass:
-                                            "htxt_regular_12 dark_300 mb15"
-                                        },
-                                        [
-                                          _vm._m(5, true),
-                                          _vm._v(
-                                            " " +
-                                              _vm._s(
-                                                _vm.oTagSubscribers[oTag.tagid]
-                                              )
-                                          )
-                                        ]
-                                      )
-                                    ])
-                              ]
-                            )
-                          ]
-                        )
-                      }),
-                      0
+                                      ])
+                                ]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _vm._m(6)
+                      ],
+                      2
                     ),
                     _vm._v(" "),
                     _c("pagination", {
@@ -55080,7 +55242,7 @@ var render = function() {
                 }
               },
               [
-                _vm._m(6),
+                _vm._m(7),
                 _vm._v(" "),
                 _c(
                   "form",
@@ -55096,7 +55258,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "p40" }, [
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(7),
+                        _vm._m(8),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
                           _c("div", { staticClass: "form-group" }, [
@@ -55243,7 +55405,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(8)
+                      _vm._m(9)
                     ])
                   ]
                 )
@@ -55286,7 +55448,9 @@ var staticRenderFns = [
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-md bkg_blue_200 light_000 slidebox" },
+              {
+                staticClass: "btn btn-md bkg_blue_200 light_000 js-tag-slidebox"
+              },
               [
                 _vm._v("New Tag "),
                 _c("span", [
@@ -55379,7 +55543,10 @@ var staticRenderFns = [
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-sm bkg_blue_000 pr20 blue_300 slidebox" },
+              {
+                staticClass:
+                  "btn btn-sm bkg_blue_000 pr20 blue_300 js-tag-slidebox"
+              },
               [_vm._v("Add New Tag")]
             )
           ])
@@ -55476,7 +55643,7 @@ var staticRenderFns = [
             _c("div", { staticClass: "float-right" }, [
               _c("input", {
                 staticClass: "table_search",
-                attrs: { type: "text", placeholder: "Serch" }
+                attrs: { type: "text", placeholder: "Search" }
               })
             ])
           ])
@@ -55527,7 +55694,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "cross_icon slidebox" }, [
+    return _c(
+      "div",
+      {
+        staticClass: "col-md-3 text-center js-tag-slidebox",
+        staticStyle: { cursor: "pointer" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "card p30 bkg_none border_dashed shadow_none h235 animate_top"
+          },
+          [
+            _c("img", {
+              staticClass: "mt20 mb30",
+              attrs: { src: "assets/images/plus_icon_circle_64.svg" }
+            }),
+            _vm._v(" "),
+            _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
+              _vm._v("Create"),
+              _c("br"),
+              _vm._v("Tag list")
+            ])
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "cross_icon js-tag-slidebox" }, [
       _c("i", {}, [_c("img", { attrs: { src: "assets/images/cross.svg" } })])
     ])
   },

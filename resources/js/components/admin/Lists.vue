@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 text-center js-list-slidebox">
+                    <div class="col-md-3 text-center js-list-slidebox" style="cursor: pointer;">
                         <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>contacts list</p>
@@ -272,11 +272,11 @@
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-list-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
-                    <form method="post" @submit.prevent="submitAddList">
+                    <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                <h3 class="htxt_medium_24 dark_800 mt20">Create List </h3>
+                                <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} List </h3>
                                 <hr>
                             </div>
                             <div class="col-md-12">
@@ -316,7 +316,10 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Create</button>
+                                <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                <input type="hidden" name="module_account_id" id="module_account_id"
+                                       :value="moduleAccountID">
+                                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
                                 <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
                         </div>
                     </div>
@@ -341,8 +344,10 @@
             return {
                 form: {
                     title: '',
-                    listDescription: ''
+                    listDescription: '',
+                    list_id: ''
                 },
+                formLabel: 'Create',
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
@@ -363,6 +368,76 @@
         methods: {
             showListSubscribers: function(listId){
                 window.location.href='#/lists/getListContacts/'+listId;
+            },
+            displayForm : function(lbl){
+                if(lbl == 'Create'){
+                    this.form={};
+                }
+                this.formLabel = lbl;
+                document.querySelector('.js-list-slidebox').click();
+            },
+            prepareListUpdate: function(listId) {
+                this.getListInfo(listId);
+            },
+            getListInfo: function(listId){
+                axios.post('/admin/lists/getList', {
+                    list_id:listId,
+                    moduleName: this.moduleName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            //Fill up the form fields
+                            let formData = response.data;
+                            this.form.title = formData.title;
+                            this.form.listDescription = formData.description;
+                            this.form.list_id = formData.list_id;
+                            this.formLabel = 'Update';
+                            this.displayForm(this.formLabel);
+                        }
+
+                    });
+            },
+            processForm : function(){
+                this.loading = true;
+                let formActionSrc = '';
+                this.form.module_name = this.moduleName;
+                if(this.form.list_id>0){
+                    formActionSrc = '/admin/lists/updatePeopleList';
+                }else{
+                    formActionSrc = '/admin/lists/addList';
+                    this.form.module_account_id = this.moduleAccountID;
+                }
+                axios.post(formActionSrc , this.form)
+                    .then(response => {
+                        if (response.data.status == 'success') {
+                            this.loading = false;
+                            //this.form = {};
+                            this.form.list_id ='';
+                            document.querySelector('.js-list-slidebox').click();
+                            this.successMsg = 'Action completed successfully.';
+                            var elem = this;
+                            setTimeout(function () {
+                                elem.loadPaginatedData();
+                            }, 500);
+
+                            syncContactSelectionSources();
+                        }
+                        else if (response.data.status == 'error') {
+                            if (response.data.type == 'duplicate') {
+                                alert('Error: List already exists.');
+                            }
+                            else {
+                                alert('Error: Something went wrong.');
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        console.log(error);
+                        //error.response.data
+                        alert('All form fields are required');
+                    });
             },
             loadPaginatedData: function () {
                 //getData
@@ -446,8 +521,7 @@
 
 
     $(document).ready(function () {
-
-        $(".js-list-slidebox").click(function(){
+        $(document).on('click', '.js-list-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });
