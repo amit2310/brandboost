@@ -120,8 +120,7 @@
      		<hr>
      		<ul>
      			<li><a target="_blank" href="email_dashboard.php">Email Dashboard</a></li>
-     			<li><a target="_blank" href="email_campaign1.php">Email Camapaign 1</a></li>
-     			<li><a target="_blank" href="email_campaign2.php">Email Camapaign 2</a></li>
+     			
      			<li><a target="_blank" href="email_subscribers.php">Email Subscribers</a></li>
      			<li><a target="_blank" href="email_subscribers2.php">Email Subscribers 2</a></li>
      			<li><a target="_blank" href="email_subscribers3.php">Email Subscribers 3</a></li>
@@ -129,15 +128,23 @@
      			<li><a target="_blank" href="email_template2.php">Email Template 2</a></li>
      			<li><a target="_blank" href="email_forms1.php">Email Forms 1</a></li>
      			<li><a target="_blank" href="email_forms2.php">Email Forms 2</a></li>
-     			
-     			
      			<li><a target="_blank" href="email_workflow1.php">Email Workflow 1</a></li>
      			<li><a target="_blank" href="email_workflow2.php">Email Workflow 2</a></li>
+     			<hr>
      			
-     			
+     			<li><a target="_blank" href="email_campaign1.php">Email Camapaign 1</a></li>
+     			<li><a target="_blank" href="email_campaign2.php">Email Camapaign 2</a></li>
      			<li><a target="_blank" href="email_campaign3.php">Email Camapaign 3</a></li>
      			<li><a target="_blank" href="email_campaign4.php">Email Camapaign 4</a></li>
-     			<li><a target="_blank" href="email_campaign5.php">Email Camapaign 5</a></li>
+     			<li><a target="_blank" href="email_campaign5.php">Email Camapaign 5 <span class="green_400"> Chart </span></a></li>
+     			
+     			<hr>
+     			<li><a target="_blank" href="email_config1.php">Email Config 1</a></li>
+     			<li><a target="_blank" href="email_config2.php">Email Config 2</a></li>
+     			<li><a target="_blank" href="email_config3.php">Email Config 3</a></li>
+     			<li><a target="_blank" href="email_config4.php">Email Config 4</a></li>
+     			<li><a target="_blank" href="email_config5.php">Email Config 5</a></li>
+     			
      		</ul>
      		</div>
      	</div>

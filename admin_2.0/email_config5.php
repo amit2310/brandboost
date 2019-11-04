@@ -65,13 +65,82 @@
     	<div class="col-md-12">
     		<ul class="email_config_list">
     			<li><a class="done" href="#"><span class="num_circle"><span class="num">1</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Basic campaign info</a></li>
-    			<li><a class="active" href="#"><span class="num_circle"><span class="num">2</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Content & Design</a></li>
-    			<li><a href="#"><span class="num_circle"><span class="num">3</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Recipients</a></li>
-    			<li><a href="#"><span class="num_circle"><span class="num">4</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Review & confirm</a></li>
+    			<li><a class="done" href="#"><span class="num_circle"><span class="num">2</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Content & Design</a></li>
+    			<li><a class="done" href="#"><span class="num_circle"><span class="num">3</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Recipients</a></li>
+    			<li><a class="done" href="#"><span class="num_circle"><span class="num">4</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Review & confirm</a></li>
     		</ul>
     	</div>
     </div>
     </div>
+    
+    
+    <div class="row">
+    	<div class="col-md-12 text-center">
+    		<h3 class="htxt_bold_20 dark_700 mb20 mt40">Are you ready to send this email to 1,389 subscribers?</h3>
+    		<p class="htxt_normal_14 dark_200 mb40 mt20">It’s very easy to create or import!</p>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-md-6 text-center animate_top">
+    	<label for="opt1" class="d-block mylablel">
+    		<div class="card br8 p0 m-0">
+    		
+    								<label class="custmo_checkbox email_config">
+									<input id="opt1" type="checkbox">
+									<span class="custmo_checkmark"></span>
+									
+									</label>
+									
+									
+    			<div class="p40 pb20">
+    				<img class="mt20" src="assets/images/send-right-now.svg"/>
+    				<h3 class="htxt_medium_16 dark_700 mb30 mt30">Send right now</h3>
+    			</div>
+    			<div class="p20 btop">
+    				<a class="fsize14 fw500 email_500" href="#">Send email immediately</a>
+    			</div>
+    		</div>
+    		</label>
+    	</div>
+    	<div class="col-md-6 text-center animate_top">
+    	<label for="opt2" class="d-block mylablel active">
+    		<div class="card br8 p0 m-0">
+    								<label class="custmo_checkbox email_config">
+									<input id="opt2" type="checkbox" checked>
+									<span class="custmo_checkmark"></span>
+									</label>
+    			<div class="p40 pb20">
+    				<img class="mt20" src="assets/images/schedule.svg"/>
+    				<h3 class="htxt_medium_16 dark_700 mb30 mt30">Send specific time</h3>
+    			</div>
+    			<div class="p20 btop">
+    				<a class="fsize14 fw500 email_500" href="#">Schedule email on time or date</a>
+    			</div>
+    		</div>
+    		</label>
+    		
+    		
+    	</div>
+    	
+    </div>
+    
+    
+    
+   
+    
+    
+    
+    
+    <div class="row mt40">
+    	<div class="col-md-12"><hr class="mb25"></div>
+    	<div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
+    	<div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
+    </div>
+    
+    
+    
+    
     
 
     
@@ -112,6 +181,14 @@
 	$(".nav-link.people").removeClass("active");
 	$(".main-icon-menu-pane.email").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
+	
+	
+	
+	
+	
 </script>
+
+
+
 </body>
 </html>
