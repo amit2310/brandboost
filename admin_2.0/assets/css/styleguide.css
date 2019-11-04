@@ -53,6 +53,12 @@ Misc
 .badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
 .ls4{letter-spacing: 0.4px}
 .h-100-vh{height: 100vh}
+.bottom_positiom{position: absolute; width: 100%; bottom: 0}
+
+
+
+
+
 
 /******************************
 FORMS GROUP
@@ -76,6 +82,7 @@ FORMS GROUP
 .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 4px; background:url(../../assets/images/no_image.png) 20px 17px no-repeat #fff; border: 1px solid #dfe5f0;}
 
 
+
 .custmo_checkbox {	display: block;	position: relative;	padding-left: 18px;	margin-bottom: 0px;	cursor: pointer;	font-size: 13px;	-webkit-user-select: none;	-moz-user-select: none;	-ms-user-select: none;	user-select: none; line-height: 17px; height: 17px;  }
 .custmo_checkbox.nolabel{width: 17px; height: 17px;}
 .custmo_checkbox input {	position: absolute;	opacity: 0;	cursor: pointer;}
@@ -93,14 +100,19 @@ FORMS GROUP
 
 
 
+.custmo_checkbox.email_config{position: absolute; right: -1px; top: 0;}
+.custmo_checkbox.email_config .custmo_checkmark {	position: absolute;	top: 0;	left: 0;	height: 17px;	width: 17px;	 background: #fff;	border-radius:0 6px 0 6px; border:1px solid #fff;}
+.custmo_checkbox.email_config input:checked ~ .custmo_checkmark {	background-color: #67bae4; border:1px solid #67bae4;}
+
+.mylablel.active{border: 2px solid #67bae4; border-radius: 8px}
 
 
 .custom-control-inline{position: absolute; width: 20px; height: 20px; top: 10px; right: -10px;}
-.custom-control-input:checked ~ .custom-control-label::before {
-	color: #fff;
-	border-color: #56acd8;
-	background-color: #56acd8;
-}
+.custom-control-input:checked ~ .custom-control-label::before {	color: #fff;border-color: #56acd8;background-color: #56acd8;}
+
+
+
+
 /*******************************
 CUSTOM SWITCH STYLES
 **********/
@@ -238,7 +250,9 @@ Button CLASSES
 .btn:hover{/*color: #ffffff;*/ /*background: #5d96f8*/ color:inherit}
 .btn-lg{height: 52px; line-height: 26px;}
 .btn-md{height: 40px; line-height: 26px;}
+.btn-md-44{height: 44px; line-height: 26px;}
 .btn-sm{height: 36px; line-height: 26px;}
+.btn-sm-32{height: 32px; line-height: 17px;}
 
 
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
@@ -249,6 +263,13 @@ Button CLASSES
 .link_button{background: #FFFFFF;box-shadow: 0px 1px 1px rgba(1, 21, 64, 0.08);border-radius: 44px; height: 40px; line-height: 40px; display: inline-block; padding: 0 5px;}
 .link_button a{display: inline-block; margin: 0 7px;}
 
+
+.tag_btn{background: #f0f2f6; border: none; box-shadow: none; padding:0 15px;height: 32px;line-height: 32px; border-radius: 50px; font-size: 14px; font-weight: 400; color: #56627F; margin: 0 7px 12px 0}
+.tag_btn:hover{background: #dfe5f1; }
+.tag_btn img{float: left; margin:9px 10px 0 0;}
+
+
+.btn img.btn_pencil{float: left; margin: 2px 2px 0 0}
 
 /******************************
 Animate Btn CLASSES
@@ -264,6 +285,7 @@ Animate Btn CLASSES
 BORDER CLASSES
 ******************************/
 .border{border: 1px solid #e9eff8!important;}
+.border2{border: 1px solid #D5DFEF!important;}
 .border.active{border: 1px solid #67BAE4!important;}
 .bbot{border-bottom: 1px solid #e9eff8;}
 .btop{border-top: 1px solid #e9eff8;}

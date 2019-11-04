@@ -18,7 +18,7 @@
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
 	color: #687693!important;
-		font-size: 10px!important
+	font-size: 10px!important
 	
 }
 	
