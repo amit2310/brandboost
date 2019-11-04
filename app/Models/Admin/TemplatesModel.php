@@ -27,7 +27,7 @@ class TemplatesModel extends Model
             ->when(!empty($userID), function ($query) use ($userID) {
                 return $query->where('tbl_common_templates.user_id', $userID);
             }, function ($query) {
-                return $query->where('tbl_common_templates.user_id', 0);
+                //return $query->where('tbl_common_templates.user_id', 0);
             })
             ->when(($categoryID > 0), function ($query) use ($categoryID) {
                 return $query->where('tbl_common_templates.category_id', $categoryID);
@@ -42,8 +42,8 @@ class TemplatesModel extends Model
             })
             ->where('tbl_common_templates.status', 1)
             ->orderBy('tbl_common_templates.id', 'desc')
-            ->paginate(10);
-        //->get();
+            ->paginate();
+            //->get();
         return $oData;
     }
 
