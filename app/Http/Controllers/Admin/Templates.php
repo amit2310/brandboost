@@ -114,6 +114,12 @@ class Templates extends Controller
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $validatedData = $request->validate([
+            'templateName' => ['required'],
+            'templateCategory' => ['required'],
+            'templateDescription' => ['required']
+        ]);
+
         //Instantiate Templates model to get its methods and properties
         $mTemplates = new TemplatesModel();
 
@@ -122,11 +128,13 @@ class Templates extends Controller
         $templateName = strip_tags($request->templateName);
         $category = strip_tags($request->templateCategory);
         $templateType = strip_tags($request->templateType);
+        $templateDescription = (!empty($request->templateDescription) ? strip_tags($request->templateDescription) : '');
         $dateTime = date("Y-m-d H:i:s");
         $aData = array(
             'category_id' => $category,
             'template_name' => $templateName,
             'template_type' => $templateType,
+            'template_description' => $templateDescription,
             'user_id' => $userID,
             'created' => $dateTime
         );
@@ -299,6 +307,45 @@ class Templates extends Controller
         exit;
     }
 
+    /**
+     * Used to fetch template info
+     */
+    public function getTemplateInfo(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+
+        //Instantiate Templates model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+
+        $templateID = strip_tags($request->templateId);
+
+        if ($userRole != '1') {
+            $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
+        } else {
+            $userID = '';
+            $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
+        }
+
+
+        if (!empty($oTemplate)) {
+            $response = array('status' => 'success', 'templateId' => $templateID, 'templateName' => $oTemplate->template_name, 'templateCategory' => $oTemplate->category_id, 'templateDescription' => $oTemplate->template_description);
+        } else {
+            $response = array('status' => 'error', 'msg' => 'Not found');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
 
     /**
      * This function used to load the content of selected email template
@@ -450,6 +497,7 @@ class Templates extends Controller
         $source = strip_tags($request->source);
         $isDraft = ($source == 'draft') ? true : false;
         $templateTags = $mTemplates->getTemplateTags();
+
         if (!empty($tempID)) {
             $bURLPreview = true;
             $templateID = $tempID;
@@ -473,8 +521,8 @@ class Templates extends Controller
         $aData = array(
             'templateID' => $templateID,
             'subject' => $subject,
-            'greeting' => $oResponse[0]->greeting,
-            'introduction' => $oResponse[0]->introduction,
+            'greeting' => (!empty($oResponse[0]->greeting) ? $oResponse[0]->greeting : ''),
+            'introduction' => (!empty($oResponse[0]->introduction) ? $oResponse[0]->introduction : ''),
             'tags' => $templateTags,
             'campaign_type' => isset($oResponse[0]->campaign_type) ? $oResponse[0]->campaign_type : ''
         );

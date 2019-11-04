@@ -16246,6 +16246,44 @@ function loadLiveGraphs() {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'email-template-popups'
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modules/emails/Campaigns.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modules/emails/Campaigns.vue?vue&type=script&lang=js& ***!
@@ -18376,34 +18414,8 @@ $(document).ready(function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_Pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Pagination */ "./resources/js/components/helpers/Pagination.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _modals_templates_EmailTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modals/templates/EmailTemplatesPopup.vue */ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue");
+/* harmony import */ var _helpers_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/Pagination */ "./resources/js/components/helpers/Pagination.vue");
 //
 //
 //
@@ -18618,13 +18630,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title', 'type'],
   components: {
-    Pagination: _helpers_Pagination__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Pagination: _helpers_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"],
+    'email-template-popups': _modals_templates_EmailTemplatesPopup_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
+      form: {
+        templateName: '',
+        templateCategory: '',
+        templateType: 'email',
+        templateDescription: '',
+        templateId: ''
+      },
+      formLabel: 'Create',
       successMsg: '',
       errorMsg: '',
       loading: true,
@@ -18645,24 +18667,97 @@ __webpack_require__.r(__webpack_exports__);
     this.loadPaginatedData();
   },
   methods: {
-    loadPaginatedData: function loadPaginatedData() {
+    displayForm: function displayForm(lbl) {
+      if (lbl == 'Create') {
+        this.form = {};
+      }
+
+      this.formLabel = lbl;
+      document.querySelector('.js-email-templates-slidebox').click();
+    },
+    prepareTemplateUpdate: function prepareTemplateUpdate(templateId) {
+      this.getTemplateInfo(templateId);
+    },
+    getTemplateInfo: function getTemplateInfo(templateId) {
       var _this = this;
+
+      axios.post('/admin/templates/getTemplateInfo', {
+        templateId: templateId,
+        moduleName: this.moduleName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        if (response.data.status == 'success') {
+          //Fill up the form fields
+          var formData = response.data;
+          _this.form.templateName = formData.templateName;
+          _this.form.templateCategory = formData.templateCategory;
+          _this.form.templateDescription = formData.templateDescription;
+          _this.form.templateId = formData.templateId;
+          _this.formLabel = 'Update';
+
+          _this.displayForm(_this.formLabel);
+        }
+      });
+    },
+    processForm: function processForm() {
+      var _this2 = this;
+
+      this.loading = true;
+      var formActionSrc = '';
+      this.form.module_name = this.moduleName;
+
+      if (this.form.templateId > 0) {
+        formActionSrc = '/admin/templates/editUserTemplate';
+      } else {
+        formActionSrc = '/admin/templates/addUserTemplate';
+        this.form.module_account_id = this.moduleAccountID;
+      }
+
+      axios.post(formActionSrc, this.form).then(function (response) {
+        if (response.data.status == 'success') {
+          _this2.loading = false; //window.location.href='#/templates/edit/'+this.form.templateId;
+          //this.form = {};
+
+          _this2.form.templateId = '';
+          document.querySelector('.js-email-templates-slidebox').click();
+          _this2.successMsg = 'Action completed successfully.';
+          var elem = _this2;
+          setTimeout(function () {
+            elem.loadPaginatedData();
+          }, 500);
+          syncContactSelectionSources();
+        } else if (response.data.status == 'error') {
+          if (response.data.type == 'duplicate') {
+            alert('Error: Template already exists.');
+          } else {
+            alert('Error: Something went wrong.');
+          }
+        }
+      })["catch"](function (error) {
+        _this2.loading = false;
+        console.log(error); //error.response.data
+
+        alert('All form fields are required');
+      });
+    },
+    loadPaginatedData: function loadPaginatedData() {
+      var _this3 = this;
 
       axios.post('/admin/templates/getCategorizedTemplates?page=' + this.current_page, {
         'action': 'my',
         'campaign_type': 'email',
         'method': 'manage'
       }).then(function (response) {
-        _this.breadcrumb = response.data.breadcrumb;
+        _this3.breadcrumb = response.data.breadcrumb;
 
-        _this.makeBreadcrumb(_this.breadcrumb);
+        _this3.makeBreadcrumb(_this3.breadcrumb);
 
-        _this.templates = response.data.oTemplates;
-        _this.categories = response.data.oCategories;
-        _this.method = response.data.method;
-        _this.userid = response.data.userID;
-        _this.allData = response.data.allData;
-        _this.loading = false;
+        _this3.templates = response.data.oTemplates;
+        _this3.categories = response.data.oCategories;
+        _this3.method = response.data.method;
+        _this3.userid = response.data.userID;
+        _this3.allData = response.data.allData;
+        _this3.loading = false;
       });
     },
     showPaginationData: function showPaginationData(current_page) {
@@ -18672,6 +18767,48 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       this.current_page = p;
       this.loadPaginatedData();
+    },
+    deleteTemplate: function deleteTemplate(templateId) {
+      var _this4 = this;
+
+      if (confirm('Are you sure you want to delete this template?')) {
+        //Do axios
+        axios.post('/admin/templates/deleteTemplate', {
+          templateId: templateId,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            syncContactSelectionSources();
+
+            _this4.showPaginationData(_this4.current_page);
+          }
+        });
+      }
+    },
+    cloneTemplate: function cloneTemplate(templateId, templateType) {
+      var _this5 = this;
+
+      if (confirm('Are you sure you want to clone this template?')) {
+        this.loading = true; //Do axios
+
+        axios.post('/admin/templates/cloneTemplate', {
+          templateId: templateId,
+          templateType: templateType,
+          moduleName: this.moduleName,
+          moduleUnitId: this.moduleUnitId,
+          _token: this.csrf_token()
+        }).then(function (response) {
+          if (response.data.status == 'success') {
+            _this5.loading = false;
+            _this5.successMsg = 'Template cloned and saved into your templates!';
+            syncContactSelectionSources();
+
+            _this5.showPaginationData(_this5.current_page);
+          }
+        });
+      }
     }
   }
 });
@@ -18680,6 +18817,39 @@ $(document).ready(function () {
     $(".box").animate({
       width: "toggle"
     });
+  });
+  var tkn = $('meta[name="_token"]').attr('content');
+  var elem = this;
+  $(document).on("click", ".previewEmailTemplate", function (e) {
+    var templateID = $(this).attr('template_id');
+    var source = $(this).attr('source');
+    var moduleName = '{{ $moduleName }}';
+    var moduleUnitId = '{{ $moduleUnitID }}';
+
+    if (templateID != '') {
+      $('.overlaynew').show();
+      $.ajax({
+        url: "/admin/templates/loadTemplatePreview",
+        type: "POST",
+        data: {
+          _token: tkn,
+          template_id: templateID,
+          source: source,
+          moduleName: moduleName,
+          moduleUnitId: moduleUnitId
+        },
+        dataType: "json",
+        success: function success(data) {
+          if (data.status == 'success') {
+            $('.overlaynew').hide();
+            $("#emailPreviewContainer").html(data.content);
+            $("#email_template_preview_modal").modal();
+          } else if (data.status == 'error') {
+            $('.overlaynew').hide();
+          }
+        }
+      });
+    }
   });
 });
 
@@ -53568,6 +53738,82 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { "z-index": "9999999" },
+        attrs: { id: "email_template_preview_modal" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h5", { staticClass: "modal-title" }, [
+                _c("i", { staticClass: "fa fa-tags" }),
+                _vm._v("  Preview Template")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body template_edit" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-horizontal",
+                  attrs: { method: "post", action: "javascript:void();" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { attrs: { id: "emailPreviewContainer" } })
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modules/emails/Campaigns.vue?vue&type=template&id=41c7155e&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/modules/emails/Campaigns.vue?vue&type=template&id=41c7155e& ***!
@@ -57932,180 +58178,436 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "content-area" },
-      [
-        _c("system-messages", {
-          attrs: { successMsg: _vm.successMsg, errorMsg: _vm.errorMsg }
-        }),
-        _vm._v(" "),
-        _c("loading", { attrs: { isLoading: _vm.loading } }),
-        _vm._v(" "),
-        !_vm.hasData
-          ? _c("div", { staticClass: "container-fluid" }, [_vm._m(1)])
-          : _c(
-              "div",
-              { staticClass: "container-fluid" },
-              [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "row" },
-                  [
-                    _vm._l(_vm.templates, function(template) {
-                      return _c("div", { staticClass: "col-md-3 d-flex" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "card p-1 text-center pb0 animate_top col"
-                          },
-                          [
-                            _vm._m(3, true),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "email_temp_img_box" }, [
-                              _c("img", {
-                                staticStyle: {
-                                  width: "256px",
-                                  height: "220px"
-                                },
-                                attrs: {
-                                  src: template.thumbnail
-                                    ? template.thumbnail
-                                    : "/assets/images/temp_prev9.png"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "email_temp_txt p-3" }, [
-                              _c(
-                                "p",
-                                {
-                                  staticClass: "htxt_regular_14 dark_800 mb-2"
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.capitalizeFirstLetter(
-                                        template.template_name
-                                      )
-                                    )
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                {
-                                  staticClass:
-                                    "dark_200 fsize11 fw500 text-uppercase m-0"
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      template.category_name
-                                        ? template.category_name
-                                        : "Uncategorized"
-                                    )
-                                  )
-                                ]
-                              )
-                            ])
-                          ]
-                        )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _vm._m(4)
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _c("pagination", {
-                  attrs: { pagination: _vm.allData, offset: 4 },
-                  on: { paginate: _vm.showPaginationData }
-                })
-              ],
-              1
-            )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+  return _c(
+    "div",
+    [
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "div",
-        { staticStyle: { width: "424px", overflow: "hidden", height: "100%" } },
+        { staticClass: "content-area" },
         [
-          _c(
-            "div",
-            {
-              staticStyle: {
-                height: "100%",
-                "overflow-y": "auto",
-                "overflow-x": "hidden"
-              }
-            },
-            [
-              _vm._m(5),
-              _vm._v(" "),
-              _c("div", { staticClass: "p40" }, [
-                _c("div", { staticClass: "row" }, [
-                  _vm._m(6),
+          _c("system-messages", {
+            attrs: { successMsg: _vm.successMsg, errorMsg: _vm.errorMsg }
+          }),
+          _vm._v(" "),
+          _c("loading", { attrs: { isLoading: _vm.loading } }),
+          _vm._v(" "),
+          !_vm.hasData
+            ? _c("div", { staticClass: "container-fluid" }, [_vm._m(1)])
+            : _c(
+                "div",
+                { staticClass: "container-fluid" },
+                [
+                  _vm._m(2),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("form", { attrs: { action: "/action_page.php" } }, [
-                      _vm._m(7),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "desc" } }, [
-                          _vm._v("Categories")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          { staticClass: "form-control h56" },
-                          [
-                            _c("option", [_vm._v("--Select--")]),
-                            _vm._v(" "),
-                            _vm._l(_vm.categories, function(category) {
-                              return [
-                                (category.status = 1)
-                                  ? _c(
-                                      "option",
-                                      { domProps: { value: category.id } },
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    [
+                      _vm._l(_vm.templates, function(template) {
+                        return _c("div", { staticClass: "col-md-3 d-flex" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "card p-1 text-center pb0 animate_top col"
+                            },
+                            [
+                              _c("div", { staticClass: "dot_dropdown" }, [
+                                _vm._m(3, true),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "dropdown-menu dropdown-menu-right"
+                                  },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.cloneTemplate(
+                                              template.id,
+                                              "email"
+                                            )
+                                          }
+                                        }
+                                      },
                                       [
-                                        _vm._v(
-                                          " " + _vm._s(category.category_name)
-                                        )
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-user text-muted mr-2"
+                                        }),
+                                        _vm._v(" Clone")
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "dropdown-item previewEmailTemplate",
+                                        attrs: {
+                                          href: "javascript:void(0);",
+                                          template_id: template.id
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-wallet text-muted mr-2"
+                                        }),
+                                        _vm._v(" Preview")
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._m(4, true),
+                                    _vm._v(" "),
+                                    _c("div", {
+                                      staticClass: "dropdown-divider"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteTemplate(
+                                              template.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-exit text-muted mr-2"
+                                        }),
+                                        _vm._v(" Delete")
                                       ]
                                     )
-                                  : _vm._e()
-                              ]
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "email_temp_img_box" }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    width: "256px",
+                                    height: "220px"
+                                  },
+                                  attrs: {
+                                    src: template.thumbnail
+                                      ? template.thumbnail
+                                      : "/assets/images/temp_prev9.png"
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "email_temp_txt p-3" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass: "htxt_regular_14 dark_800 mb-2"
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.capitalizeFirstLetter(
+                                          template.template_name
+                                        )
+                                      )
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "dark_200 fsize11 fw500 text-uppercase m-0"
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        template.category_name
+                                          ? template.category_name
+                                          : "Uncategorized"
+                                      )
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _vm._m(5)
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("pagination", {
+                    attrs: { pagination: _vm.allData, offset: 4 },
+                    on: { paginate: _vm.showPaginationData }
+                  })
+                ],
+                1
+              )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("email-template-popups"),
+      _vm._v(" "),
+      _c("div", { staticClass: "box", staticStyle: { width: "424px" } }, [
+        _c(
+          "div",
+          {
+            staticStyle: { width: "424px", overflow: "hidden", height: "100%" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticStyle: {
+                  height: "100%",
+                  "overflow-y": "auto",
+                  "overflow-x": "hidden"
+                }
+              },
+              [
+                _vm._m(6),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "post" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.processForm($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "p40" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("img", {
+                            attrs: {
+                              src: "/assets/images/email_temp_icons.svg"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "h3",
+                            { staticClass: "htxt_medium_24 dark_800 mt20" },
+                            [_vm._v(_vm._s(_vm.formLabel) + " Email Template ")]
+                          ),
+                          _vm._v(" "),
+                          _c("hr")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "fname" } }, [
+                              _vm._v("Template name")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.templateName,
+                                  expression: "form.templateName"
+                                }
+                              ],
+                              staticClass: "form-control h56",
+                              attrs: {
+                                type: "text",
+                                id: "fname",
+                                placeholder: "Enter name",
+                                name: "templateName"
+                              },
+                              domProps: { value: _vm.form.templateName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "templateName",
+                                    $event.target.value
+                                  )
+                                }
+                              }
                             })
-                          ],
-                          2
-                        )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "desc" } }, [
+                              _vm._v("Categories")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.templateCategory,
+                                    expression: "form.templateCategory"
+                                  }
+                                ],
+                                staticClass: "form-control h56",
+                                attrs: { name: "templateCategory" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "templateCategory",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", [_vm._v("--Select--")]),
+                                _vm._v(" "),
+                                _vm._l(_vm.categories, function(category) {
+                                  return [
+                                    (category.status = 1)
+                                      ? _c(
+                                          "option",
+                                          { domProps: { value: category.id } },
+                                          [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(category.category_name)
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                })
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "desc" } }, [
+                              _vm._v("Description")
+                            ]),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.templateDescription,
+                                  expression: "form.templateDescription"
+                                }
+                              ],
+                              staticClass: "form-control min_h_185 p20 pt10",
+                              attrs: {
+                                id: "desc",
+                                placeholder: "Template description",
+                                name: "templateDescription"
+                              },
+                              domProps: { value: _vm.form.templateDescription },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "templateDescription",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(8)
+                      _c("div", { staticClass: "row bottom-position" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("input", {
+                            attrs: {
+                              type: "hidden",
+                              name: "module_name",
+                              id: "active_module_name"
+                            },
+                            domProps: { value: _vm.moduleName }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: {
+                              type: "hidden",
+                              name: "module_account_id",
+                              id: "module_account_id"
+                            },
+                            domProps: { value: _vm.moduleAccountID }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600"
+                            },
+                            [_vm._v(_vm._s(_vm.formLabel))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dark_300 fsize16 fw400 ml20",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("Close")]
+                          )
+                        ])
+                      ])
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(9)
-              ])
-            ]
-          )
-        ]
-      )
-    ])
-  ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -58348,69 +58850,63 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dot_dropdown" }, [
-      _c(
-        "a",
-        {
-          staticClass: "dropdown-toggle",
-          attrs: {
-            "data-toggle": "dropdown",
-            href: "#",
-            role: "button",
-            "aria-haspopup": "false",
-            "aria-expanded": "false"
-          }
-        },
-        [
-          _c("img", {
-            attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-user text-muted mr-2" }),
-          _vm._v(" Clone")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-wallet text-muted mr-2" }),
-          _vm._v(" Preview")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-gear text-muted mr-2" }),
-          _vm._v(" Edit")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "dropdown-divider" }),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "dripicons-exit text-muted mr-2" }),
-          _vm._v(" Delete")
-        ])
-      ])
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          "data-toggle": "dropdown",
+          href: "#",
+          role: "button",
+          "aria-haspopup": "false",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 text-center d-flex" }, [
-      _c("div", { staticClass: "card p30 animate_top col" }, [
-        _c("img", {
-          staticClass: "mt20 mb30",
-          attrs: { src: "/assets/images/plus_icon_circle_64.svg" }
-        }),
-        _vm._v(" "),
-        _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
-          _vm._v("Create"),
-          _c("br"),
-          _vm._v("new template")
+    return _c(
+      "a",
+      { staticClass: "dropdown-item", attrs: { href: "javascript:void(0);" } },
+      [
+        _c("i", { staticClass: "dripicons-gear text-muted mr-2" }),
+        _vm._v(" Edit")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "col-md-3 text-center d-flex js-email-templates-slidebox",
+        staticStyle: { cursor: "pointer" }
+      },
+      [
+        _c("div", { staticClass: "card p30 animate_top col" }, [
+          _c("img", {
+            staticClass: "mt20 mb30",
+            attrs: { src: "/assets/images/plus_icon_circle_64.svg" }
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "htxt_regular_16 dark_100 mb15" }, [
+            _vm._v("Create"),
+            _c("br"),
+            _vm._v("new template")
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -58424,71 +58920,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("img", { attrs: { src: "/assets/images/email_temp_icons.svg" } }),
-      _vm._v(" "),
-      _c("h3", { staticClass: "htxt_medium_24 dark_800 mt20" }, [
-        _vm._v("Create Email Template ")
-      ]),
-      _vm._v(" "),
-      _c("hr")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "fname" } }, [_vm._v("Form name")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control h56",
-        attrs: {
-          type: "text",
-          id: "fname",
-          placeholder: "Enter name",
-          name: "fname"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "desc" } }, [_vm._v("Description")]),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control min_h_185 p20 pt10",
-        attrs: { id: "desc", placeholder: "Template description" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row bottom-position" }, [
-      _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600"
-          },
-          [_vm._v("Create")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "dark_300 fsize16 fw400 ml20", attrs: { href: "#" } },
-          [_vm._v("Close")]
-        )
-      ])
-    ])
+    return _c("div", { staticClass: "col-md-12 mb15" }, [_c("hr")])
   }
 ]
 render._withStripped = true
@@ -77087,6 +77519,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_d696b90c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_d696b90c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& */ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&");
+/* harmony import */ var _EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailTemplatesPopup.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplatesPopup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& ***!
+  \***************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/modals/templates/EmailTemplatesPopup.vue?vue&type=template&id=78ec0bca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailTemplatesPopup_vue_vue_type_template_id_78ec0bca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

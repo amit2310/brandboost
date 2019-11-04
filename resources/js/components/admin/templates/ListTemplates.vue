@@ -112,11 +112,11 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Edit</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="cloneTemplate(template.id, 'email')"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
+                                    <a class="dropdown-item previewEmailTemplate" href="javascript:void(0);" :template_id="template.id"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                                    <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-gear text-muted mr-2"></i> Edit</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteTemplate(template.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
                             <div class="email_temp_img_box">
                                 <img style="width:256px;height:220px;" :src="template.thumbnail ? template.thumbnail : '/assets/images/temp_prev9.png'"/>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 text-center d-flex">
+                    <div class="col-md-3 text-center d-flex js-email-templates-slidebox" style="cursor:pointer;">
                         <div class="card p30 animate_top col">
                             <img class="mt20 mb30" src="/assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>new template</p>
@@ -148,44 +148,43 @@
 
         </div>
 
-
+        <email-template-popups></email-template-popups>
 
         <!--Smart Popup-->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-email-templates-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
+                    <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"> <img src="/assets/images/email_temp_icons.svg"/>
-                                <h3 class="htxt_medium_24 dark_800 mt20">Create Email Template </h3>
+                                <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Email Template </h3>
                                 <hr>
                             </div>
                             <div class="col-md-12">
-                                <form action="/action_page.php">
-                                    <div class="form-group">
-                                        <label for="fname">Form name</label>
-                                        <input type="text" class="form-control h56" id="fname" placeholder="Enter name" name="fname">
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="desc">Categories</label>
-                                        <select class="form-control h56">
-                                            <option>--Select--</option>
-                                            <template v-for="category in categories">
-                                                <option v-if="category.status=1"  :value="category.id"> {{category.category_name}}</option>
-                                            </template>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="fname">Template name</label>
+                                    <input type="text" class="form-control h56" id="fname" placeholder="Enter name" name="templateName"
+                                           v-model="form.templateName">
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="desc">Categories</label>
+                                    <select class="form-control h56" name="templateCategory" v-model="form.templateCategory">
+                                        <option>--Select--</option>
+                                        <template v-for="category in categories">
+                                            <option v-if="category.status=1"  :value="category.id"> {{category.category_name}}</option>
+                                        </template>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="desc">Description</label>
-                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Template description"></textarea>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="desc">Description</label>
+                                    <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Template description" name="templateDescription"
+                                        v-model="form.templateDescription"></textarea>
+                                </div>
 
-
-
-                                </form>
                             </div>
                         </div>
 
@@ -194,10 +193,14 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">Create</button>
+                                <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                <input type="hidden" name="module_account_id" id="module_account_id"
+                                       :value="moduleAccountID">
+                                <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
                                 <a class="dark_300 fsize16 fw400 ml20" href="#">Close</a> </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -207,45 +210,24 @@
 
 </template>
 
-<!--<template>
-        <div class="content">
-
-            &lt;!&ndash;&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&&ndash;&gt;
-            <div class="page_header">
-                <div class="row">
-                    &lt;!&ndash;=============Headings & Tabs menu==============&ndash;&gt;
-                    <div class="col-md-3 mt20">
-                        <h3><img src="/assets/images/people_sec_icon.png"> {{ title }}</h3>
-
-                    </div>
-                    &lt;!&ndash;=============Button Area Right Side==============&ndash;&gt;
-                    <div class="col-md-9 text-right btn_area">
-                        <button type="button" class="btn dark_btn dropdown-toggle ml10 addUserTemplate"
-                                :template-type="type"><i class="icon-plus3"></i><span> &nbsp;  Add Template</span>
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-            &lt;!&ndash;&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&&ndash;&gt;
-
-            <div class="tab-content">
-                <email-templates :pageColor="pageColor" v-if="type == 'email'"></email-templates>
-                <sms-templates :pageColor="pageColor" v-if="type == 'sms'"></sms-templates>
-            </div>
-        </div>
-
-
-</template>-->
 
 <script>
+    import EmailPopup from '../modals/templates/EmailTemplatesPopup.vue';
     import Pagination from '../../helpers/Pagination';
 
     export default {
         props: ['title', 'type'],
-        components: {Pagination},
+        components: {Pagination, 'email-template-popups': EmailPopup},
         data(){
             return {
+                form: {
+                    templateName: '',
+                    templateCategory: '',
+                    templateType: 'email',
+                    templateDescription: '',
+                    templateId: ''
+                },
+                formLabel: 'Create',
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
@@ -266,6 +248,80 @@
             this.loadPaginatedData();
         },
         methods: {
+            displayForm : function(lbl){
+                if(lbl == 'Create'){
+                    this.form={};
+                }
+                this.formLabel = lbl;
+                document.querySelector('.js-email-templates-slidebox').click();
+            },
+            prepareTemplateUpdate: function(templateId) {
+                this.getTemplateInfo(templateId);
+            },
+            getTemplateInfo: function(templateId){
+                axios.post('/admin/templates/getTemplateInfo', {
+                    templateId:templateId,
+                    moduleName: this.moduleName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            //Fill up the form fields
+                            let formData = response.data;
+                            this.form.templateName = formData.templateName;
+                            this.form.templateCategory = formData.templateCategory;
+                            this.form.templateDescription = formData.templateDescription;
+                            this.form.templateId = formData.templateId;
+                            this.formLabel = 'Update';
+                            this.displayForm(this.formLabel);
+                        }
+
+                    });
+            },
+            processForm : function(){
+                this.loading = true;
+                let formActionSrc = '';
+                this.form.module_name = this.moduleName;
+                if(this.form.templateId>0){
+                    formActionSrc = '/admin/templates/editUserTemplate';
+                }else{
+                    formActionSrc = '/admin/templates/addUserTemplate';
+                    this.form.module_account_id = this.moduleAccountID;
+                }
+                axios.post(formActionSrc , this.form)
+                    .then(response => {
+                        if (response.data.status == 'success') {
+                            this.loading = false;
+
+                            //window.location.href='#/templates/edit/'+this.form.templateId;
+
+                            //this.form = {};
+                            this.form.templateId ='';
+                            document.querySelector('.js-email-templates-slidebox').click();
+                            this.successMsg = 'Action completed successfully.';
+                            var elem = this;
+                            setTimeout(function () {
+                                elem.loadPaginatedData();
+                            }, 500);
+
+                            syncContactSelectionSources();
+                        }
+                        else if (response.data.status == 'error') {
+                            if (response.data.type == 'duplicate') {
+                                alert('Error: Template already exists.');
+                            }
+                            else {
+                                alert('Error: Something went wrong.');
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        console.log(error);
+                        //error.response.data
+                        alert('All form fields are required');
+                    });
+            },
             loadPaginatedData: function () {
                 axios.post('/admin/templates/getCategorizedTemplates?page=' + this.current_page, {'action':'my', 'campaign_type':'email', 'method': 'manage'})
                     .then(response => {
@@ -287,6 +343,46 @@
                 this.current_page = p;
                 this.loadPaginatedData();
             },
+            deleteTemplate: function(templateId) {
+                if(confirm('Are you sure you want to delete this template?')){
+                    //Do axios
+                    axios.post('/admin/templates/deleteTemplate', {
+                        templateId:templateId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            },
+            cloneTemplate: function(templateId,templateType) {
+                if(confirm('Are you sure you want to clone this template?')){
+                    this.loading = true;
+                    //Do axios
+                    axios.post('/admin/templates/cloneTemplate', {
+                        templateId:templateId,
+                        templateType:templateType,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                this.loading = false;
+                                this.successMsg = 'Template cloned and saved into your templates!';
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            }
         }
     };
 
@@ -295,6 +391,43 @@
             $(".box").animate({
                 width: "toggle"
             });
+        });
+
+        let tkn = $('meta[name="_token"]').attr('content');
+        var elem = this;
+        $(document).on("click", ".previewEmailTemplate", function (e) {
+            var templateID = $(this).attr('template_id');
+            var source = $(this).attr('source');
+            var moduleName = '{{ $moduleName }}';
+            var moduleUnitId = '{{ $moduleUnitID }}';
+
+            if (templateID != '') {
+                $('.overlaynew').show();
+                $.ajax({
+                    url: "/admin/templates/loadTemplatePreview",
+                    type: "POST",
+                    data: {
+                        _token: tkn,
+                        template_id: templateID,
+                        source: source,
+                        moduleName: moduleName,
+                        moduleUnitId: moduleUnitId
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            $('.overlaynew').hide();
+                            $("#emailPreviewContainer").html(data.content);
+                            $("#email_template_preview_modal").modal();
+                        } else if (data.status == 'error') {
+                            $('.overlaynew').hide();
+
+                        }
+
+                    }
+                });
+
+            }
         });
 
     });
