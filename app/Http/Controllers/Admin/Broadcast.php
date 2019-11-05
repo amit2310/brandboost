@@ -290,6 +290,63 @@ class Broadcast extends Controller {
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public function setup(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $twillioData = $mBroadcast->getTwillioData($userID);
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/email/dashboard',
+            'Email Campaigns' => '#/modules/emails/index',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'twillioData' => $twillioData[0],
+            'campaignType' => $campaignType
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    /**
      * Used to edit email/sms broadcast campaign
      * @param type $id
      */
