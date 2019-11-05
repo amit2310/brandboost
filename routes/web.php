@@ -500,6 +500,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/templates/addUserTemplate', 'Admin\Templates@addUserTemplate');
     Route::get('admin/templates/editTemplate', 'Admin\Templates@editTemplate');
     Route::post('admin/templates/getTemplateInfo', 'Admin\Templates@getTemplateInfo');
+    Route::post('admin/templates/editUserTemplate', 'Admin\Templates@editUserTemplate');
     Route::post('admin/templates/updateUserTemplate', 'Admin\Templates@updateUserTemplate');
     Route::post('admin/templates/updateUserTemplateName', 'Admin\Templates@updateUserTemplateName');
     Route::get('admin/templates/loadEmailTemplate/{id}', 'Admin\Templates@loadEmailTemplate');

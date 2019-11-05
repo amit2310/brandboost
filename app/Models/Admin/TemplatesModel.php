@@ -42,7 +42,7 @@ class TemplatesModel extends Model
             })
             ->where('tbl_common_templates.status', 1)
             ->orderBy('tbl_common_templates.id', 'desc')
-            ->paginate();
+            ->paginate(10);
             //->get();
         return $oData;
     }
