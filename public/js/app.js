@@ -59005,7 +59005,27 @@ var render = function() {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _vm._m(4, true),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "javascript:void(0);" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.prepareTemplateUpdate(
+                                              template.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "dripicons-gear text-muted mr-2"
+                                        }),
+                                        _vm._v(" Edit")
+                                      ]
+                                    ),
                                     _vm._v(" "),
                                     _c("div", {
                                       staticClass: "dropdown-divider"
@@ -59089,7 +59109,7 @@ var render = function() {
                         ])
                       }),
                       _vm._v(" "),
-                      _vm._m(5)
+                      _vm._m(4)
                     ],
                     2
                   ),
@@ -59124,7 +59144,7 @@ var render = function() {
                 }
               },
               [
-                _vm._m(6),
+                _vm._m(5),
                 _vm._v(" "),
                 _c(
                   "form",
@@ -59296,7 +59316,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row bottom-position" }, [
-                        _vm._m(7),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
                           _c("input", {
@@ -59605,19 +59625,6 @@ var staticRenderFns = [
         _c("img", {
           attrs: { src: "assets/images/dots.svg", alt: "profile-user" }
         })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "dropdown-item", attrs: { href: "javascript:void(0);" } },
-      [
-        _c("i", { staticClass: "dripicons-gear text-muted mr-2" }),
-        _vm._v(" Edit")
       ]
     )
   },

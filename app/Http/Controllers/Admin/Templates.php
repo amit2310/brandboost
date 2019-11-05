@@ -346,6 +346,67 @@ class Templates extends Controller
         exit;
     }
 
+    /**
+     * Used to update user template
+     */
+
+    public function editUserTemplate(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+
+        $validatedData = $request->validate([
+            'templateName' => ['required'],
+            'templateCategory' => ['required'],
+            'templateDescription' => ['required']
+        ]);
+
+        //Instantiate Templates model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+        $templateID = strip_tags($request->templateId);
+
+        $templateName = strip_tags($request->templateName);
+        $category = strip_tags($request->templateCategory);
+        $templateType = strip_tags($request->templateType);
+        $templateDescription = (!empty($request->templateDescription) ? strip_tags($request->templateDescription) : '');
+        $dateTime = date("Y-m-d H:i:s");
+        $aData = array(
+            'category_id' => $category,
+            'template_name' => $templateName,
+            'template_type' => $templateType,
+            'template_description' => $templateDescription
+        );
+
+        $bAlreadyExists = $mTemplates->checkIfTemplateNameExists($templateName, $userID);
+        if ($bAlreadyExists == true) {
+            $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Template name already exists');
+            echo json_encode($response);
+            exit;
+        }
+
+        if ($userRole != '1') {
+            $bUpdated = $mTemplates->updateCommonTemplate($aData, $templateID, $userID);
+        } else {
+            $userID = '';
+            $bUpdated = $mTemplates->updateCommonTemplate($aData, $templateID, $userID);
+        }
+
+        if ($bUpdated) {
+            $response = array('status' => 'success', 'msg' => "Template added successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
 
     /**
      * This function used to load the content of selected email template

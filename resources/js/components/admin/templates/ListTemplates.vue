@@ -114,7 +114,7 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="cloneTemplate(template.id, 'email')"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
                                     <a class="dropdown-item previewEmailTemplate" href="javascript:void(0);" :template_id="template.id"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
-                                    <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-gear text-muted mr-2"></i> Edit</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareTemplateUpdate(template.id)"><i class="dripicons-gear text-muted mr-2"></i> Edit</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteTemplate(template.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
