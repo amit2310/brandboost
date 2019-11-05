@@ -125,11 +125,11 @@
     
     <div class="row mt40">
     	<div class="col-md-12"><hr class="mb25"></div>
-    	<div class="col-8">
+    	<div class="col-md-8">
     		<h3 class="htxt_medium_16 dark_700 mb10 mt20">Import custom HTML template</h3>
     		<p class="htxt_normal_14 dark_200 mb20 mt10">Perfect for experts! Write or import your own HTML to build and send custom email.</p>
     	</div>
-    	<div class="col-4"><button class="btn btn-md-44 bkg_none border2 dark_200 pl20 pr20 float-right fw500 fsize14 mt20"> <span class="ml0 mr10"><img src="assets/images/download-cloud-line.svg"></span>Import HTML template</button></div>
+    	<div class="col-md-4"><button class="btn btn-md-44 bkg_none border2 dark_200 pl20 pr20 float-right fw500 fsize14 mt20"> <span class="ml0 mr10"><img src="assets/images/download-cloud-line.svg"></span>Import HTML template</button></div>
     </div>
     
     

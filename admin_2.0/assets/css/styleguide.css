@@ -762,13 +762,15 @@ VISIBLE CLASSES
 	.topbar-nav.top-breadcrumb{display: none;}
 	.top-bar-top-section .circle-icon-40{display: none}
 	.content-area{padding: 15px 3px}
-	.top-bar-top-section {padding: 10px 3px !important; min-height: 58px;}
+	.top-bar-top-section {padding: 10px 3px !important; min-height: 58px; height: auto}
 	.content-area {	padding: 32px 15px !important;}
 	.table_action{display: none;}
 	.mobile-menu-control{display: block;}
 	.table{min-width: 1200px;}
 	.hide_993{display: none;}
 	.visible_993{display: block;}
+	
+	.email_config_list li{display: block; width: 100%; margin: 10px 0}
 
 
 }
@@ -779,7 +781,8 @@ VISIBLE CLASSES
 
 
 @media only screen and (max-width:480px){
-	.top-bar-top-section .htxt_medium_24{font-size: 16px; line-height: 30px; margin-top: 5px;}	
+	.top-bar-top-section .htxt_medium_24{font-size: 16px; line-height: 30px; margin-top: 5px; margin-bottom: 10px;}	
 	.top-bar-top-section img.back_img_icon{margin: 5px 0 0 0}
+	.top-bar-top-section span.float-left img{margin: 5px 0 0 0}
 }
 /***************/
