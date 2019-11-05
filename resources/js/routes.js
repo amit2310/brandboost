@@ -27,6 +27,7 @@ import ListSubscribers from './components/admin/contact/ListSubscribers';
 /*Email Module*/
 import EmailDashboard from './components/admin/modules/emails/Dashboard';
 import EmailCampaigns from './components/admin/modules/emails/Campaigns';
+import broadcastCampaignSetup from './components/admin/broadcast/Setup';
 
 import Companies from './components/admin/companies/Companies';
 import Configurations from './components/admin/contact/Configurations';
@@ -84,6 +85,11 @@ const routes = [
     { path: '/modules/emails/dashboard', component: EmailDashboard, meta: { title: 'Email Dashboard'} },
     { path: '/modules/emails/index', component: EmailCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/templates', component: ListTemplates, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/1', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/2', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/3', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
 
 
 
