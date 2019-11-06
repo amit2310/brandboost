@@ -30,7 +30,13 @@ import ListSubscribers from './components/admin/contact/ListSubscribers';
 /*Email Module*/
 import EmailDashboard from './components/admin/modules/emails/Dashboard';
 import EmailCampaigns from './components/admin/modules/emails/Campaigns';
-import broadcastCampaignSetup from './components/admin/broadcast/Setup';
+
+/*Broadcast Setup*/
+import broadcastStep1 from './components/admin/broadcast/Setup';
+import broadcastStep2 from './components/admin/broadcast/Setup2';
+import broadcastStep3 from './components/admin/broadcast/Setup3';
+import broadcastStep4 from './components/admin/broadcast/Setup4';
+import broadcastStep5 from './components/admin/broadcast/Setup5';
 
 import Companies from './components/admin/companies/Companies';
 import Configurations from './components/admin/contact/Configurations';
@@ -91,11 +97,11 @@ const routes = [
     { path: '/modules/emails/dashboard', component: EmailDashboard, meta: { title: 'Email Dashboard'} },
     { path: '/modules/emails/index', component: EmailCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/templates', component: ListTemplates, props : {title : 'Email Templates', type : 'email' } },
-    { path: '/modules/emails/broadcast/setup/:id/1', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
-    { path: '/modules/emails/broadcast/setup/:id/2', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
-    { path: '/modules/emails/broadcast/setup/:id/3', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
-    { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
-    { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastCampaignSetup, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/1', component: broadcastStep1, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/2', component: broadcastStep2, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/3', component: broadcastStep3, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastStep4, props : {title : 'Email Templates', type : 'email' } },
+    { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastStep5, props : {title : 'Email Templates', type : 'email' } },
 
 
 

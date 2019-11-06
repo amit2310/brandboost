@@ -1,6 +1,6 @@
 @if (!empty($oCampaignLists))
     @foreach ($oCampaignLists as $oRec)
-        <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/red_list.png"> {{ $oRec->list_name }}</button>
+        <button class="tag_btn"><i class=""><img src="/assets/images/list-check.svg"/></i> {{ $oRec->list_name }}</button>
     @endforeach
 @endif
 
@@ -15,7 +15,7 @@ if (!empty($oCampaignTags)) {
     foreach ($aTags as $oTag) {
         if (in_array($oTag->tagid, $aSelectedTags)){
             @endphp
-            <button class="btn btn-xs btn_white_table remove"><img alt="" src="{{ base_url() }}assets/images/red_hash.png"> {{ $oTag->tag_name }} </button>
+            <button class="tag_btn"><i class=""><img src="/assets/images/price-tag-3-fill.svg"/></i> {{ $oTag->tag_name }}</button>
             @php
         }
     }
@@ -24,13 +24,13 @@ if (!empty($oCampaignTags)) {
 
 @if (!empty($oCampaignSegments))
     @foreach ($oCampaignSegments as $oRec)
-        <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }} assets/images/filter_red_10.png"> {{ $oRec->segment_name }}</button>
+        <button class="tag_btn"><i class=""><img src="/assets/images/blue_filter.png"/></i> {{ $oRec->segment_name }}</button>
     @endforeach
 @endif
 
 
 @if (!empty($oCampaignContacts))
-    <button class="btn btn-xs btn_white_table remove"><img src="{{ base_url() }}assets/images/user_red_10.png"> {{ count($oCampaignContacts) }} Contacts</button>
+    <button class="tag_btn"><i class=""><img src="/assets/images/user_icon_10.png"/></i> {{ count($oCampaignContacts) }} Contacts</button>
 @endif
 
 @if ($bSummaryExclude != true)

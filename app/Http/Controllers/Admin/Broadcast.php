@@ -346,6 +346,227 @@ class Broadcast extends Controller {
         //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
     }
 
+    public function setupTargetAudience(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instantiate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
+
+
+        //loaded broadcast properties tags
+        $broadcastID = strip_tags($request->broadcastId);
+        $oAutomationLists = $mLists->getAutomationLists($id);
+        $oCampaignContacts = $mBroadcast->getBroadcastContacts($id);
+        $aTags = $mTag->getClientTags($userID);
+        $oCampaignTags = $mBroadcast->getBroadcastTags($id);
+        $oCampaignLists = $oAutomationLists;
+        $oCampaignSegments = $mBroadcast->getBroadcastSegments($id);
+        $aDataImportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignLists,
+            'oCampaignContacts' => $oCampaignContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignTags,
+            'oCampaignSegments' => $oCampaignSegments
+        );
+        $sImportButtons = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+        $aDataImportButtons['bSummary'] = true;
+        $sImportButtonsSummary = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+
+
+
+        //loaded broadcast properties tags
+
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($id);
+        $oCampaignExcludedContacts = $mBroadcast->getBroadcastExcludedContacts($id);
+        $oCampaignExcludedTags = $mBroadcast->getBroadcastExcludedTags($id);
+        $oCampaignExcludedSegments = $mBroadcast->getBroadcastExcludedSegments($id);
+        $aDataExportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignExcludedLists,
+            'oCampaignContacts' => $oCampaignExcludedContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignExcludedTags,
+            'oCampaignSegments' => $oCampaignExcludedSegments
+        );
+        $sExcludButtons = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aDataExportButtons['bSummaryExclude'] = true;
+        $sExcludButtonsSummary = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aAudienceCount = $this->importExcludeAudienceCount($id);
+        $importedCount = count($aAudienceCount['imported']);
+        $exportedCount = count($aAudienceCount['excluded']);
+
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/email/dashboard',
+            'Email Campaigns' => '#/modules/emails/index',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'campaignType' => $campaignType,
+            'sImportButtons' => $sImportButtons,
+            'sImportButtonsSummary' => $sImportButtonsSummary,
+            'sExcludButtons' => $sExcludButtons,
+            'sExcludButtonsSummary' => $sExcludButtonsSummary,
+            'importedCount' => $importedCount,
+            'exportedCount' => $exportedCount,
+            'oBroadcastSubscriber' => $oBroadcastSubscriber->items(),
+            'allDataSubscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    public function setupViewSummary(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instantiate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
+
+
+        //loaded broadcast properties tags
+        $broadcastID = strip_tags($request->broadcastId);
+        $oAutomationLists = $mLists->getAutomationLists($id);
+        $oCampaignContacts = $mBroadcast->getBroadcastContacts($id);
+        $aTags = $mTag->getClientTags($userID);
+        $oCampaignTags = $mBroadcast->getBroadcastTags($id);
+        $oCampaignLists = $oAutomationLists;
+        $oCampaignSegments = $mBroadcast->getBroadcastSegments($id);
+        $aDataImportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignLists,
+            'oCampaignContacts' => $oCampaignContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignTags,
+            'oCampaignSegments' => $oCampaignSegments
+        );
+        $sImportButtons = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+        $aDataImportButtons['bSummary'] = true;
+        $sImportButtonsSummary = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+
+
+
+        //loaded broadcast properties tags
+
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($id);
+        $oCampaignExcludedContacts = $mBroadcast->getBroadcastExcludedContacts($id);
+        $oCampaignExcludedTags = $mBroadcast->getBroadcastExcludedTags($id);
+        $oCampaignExcludedSegments = $mBroadcast->getBroadcastExcludedSegments($id);
+        $aDataExportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignExcludedLists,
+            'oCampaignContacts' => $oCampaignExcludedContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignExcludedTags,
+            'oCampaignSegments' => $oCampaignExcludedSegments
+        );
+        $sExcludButtons = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aDataExportButtons['bSummaryExclude'] = true;
+        $sExcludButtonsSummary = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aAudienceCount = $this->importExcludeAudienceCount($id);
+        $importedCount = count($aAudienceCount['imported']);
+        $exportedCount = count($aAudienceCount['excluded']);
+
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/email/dashboard',
+            'Email Campaigns' => '#/modules/emails/index',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'campaignType' => $campaignType,
+            'sImportButtons' => $sImportButtons,
+            'sImportButtonsSummary' => $sImportButtonsSummary,
+            'sExcludButtons' => $sExcludButtons,
+            'sExcludButtonsSummary' => $sExcludButtonsSummary,
+            'importedCount' => $importedCount,
+            'exportedCount' => $exportedCount,
+            'oBroadcastSubscriber' => $oBroadcastSubscriber->items(),
+            'allDataSubscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+
     /**
      * Used to edit email/sms broadcast campaign
      * @param type $id
