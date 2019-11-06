@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
 
-        <div class="table_head_action">
+        <div class="table_head_action" v-if="showHeader !== false">
             <div class="row">
                 <div class="col-md-6">
                     <h3 class="htxt_medium_16 dark_400">Contact Lists</h3>
@@ -50,27 +50,6 @@
                             <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
                         </tr>
 
-                        <!--<tr>
-                            <td><span class="table-img mr15"><img src="/assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
-                            <td class="text-right">nina.hernandez@example.com</td>
-                            <td># lead, subscriber <span style="margin-left:15px;" class="badge badge-dark">+4</span></td>
-                            <td>Customer</td>
-                            <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
-                            <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
-                            </td>
-                            <td>
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-                                        <span><img src="assets/images/more-vertical.svg"/></span>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>-->
                         <tr v-for="contact in activeUsers" v-if="activeUsers.length>0">
                             <td>
                                 <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
@@ -154,11 +133,11 @@
     import ContactTags from '../contact/ContactTags';
 
     export default {
-        props: ['showArchived', 'subscribersData', 'allData', 'activeCount', 'archiveCount', 'moduleName', 'moduleUnitID'],
+        props: ['showArchived', 'subscribersData', 'allData', 'activeCount', 'archiveCount', 'showHeader', 'moduleName', 'moduleUnitID'],
         components: {UserAvatar, ContactTags, Pagination},
         data() {
             return {
-                current_page: 1
+                current_page: 1,
                 //alert(subscribersData)
             }
         },

@@ -778,7 +778,9 @@ class BroadcastModel extends Model {
                 ->select('tbl_broadcast_users.id as local_user_id', 'tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.id AS global_user_id')
                 ->where('tbl_broadcast_users.broadcast_id', $broadcastID)
                 ->orderBy('tbl_broadcast_users.id', 'desc')
-                ->get();
+                ->paginate(5);
+                //->get();
+
         return $oData;
     }
 
