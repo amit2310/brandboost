@@ -200,6 +200,11 @@ List Styles Classes
 .templates_list li a strong{font-size: 14px; color: #333D54; font-weight: 400!important; float: left}
 .templates_list li a strong img{float: left; margin: 3px 10px 0 0}
 .templates_list li a span{text-align: right; float: right; color: #7B89A6}
+
+.templates_list li a.active strong{color: #4F8AF4; }
+.templates_list li a.active span{color: #4F8AF4}
+
+
 @media only screen and (max-width:1400px){
 	.templates_list{max-width: 210px;}
 }

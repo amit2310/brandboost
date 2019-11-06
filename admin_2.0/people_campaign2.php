@@ -79,7 +79,7 @@
       	<div class="col-md-3">
       	<h4 class="fsize12 fw500 dark_200 ls4 mb20">TEMPLATES</h4>
       	<ul class="templates_list">
-      		<li><a href="#"><strong><img src="assets/images/menu-2-line.svg"/> All</strong> <span>345</span></a></li>
+      		<li><a class="active" href="#"><strong><img src="assets/images/menu-2-line.svg"/> All</strong> <span>345</span></a></li>
       		<li><a href="#"><strong><img src="assets/images/heart-line.svg"/> My Templates</strong> <span>128</span></a></li>
       		<li><a href="#"><strong><img src="assets/images/folder-3-line.svg"/> Events</strong> <span>62</span></a></li>
       		<li><a href="#"><strong><img src="assets/images/folder-3-line.svg"/> General</strong> <span>26</span></a></li>
