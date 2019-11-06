@@ -7,11 +7,17 @@
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6 col-6">
+                    <div class="col-md-7 col-7">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">People Contact List</h3>
                     </div>
-                    <div class="col-md-6 col-6 text-right">
+                    <div class="col-md-2 col-2 text-left">
+                        <a class="lh_32 blue_400 htxt_bold_14" href="#/contacts/import">
+                            <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="/assets/images/download-fill.svg"/></span>
+                            Import contacts
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-3 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
                         <button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">Main Action <span><img
                             src="/assets/images/blue-plus.svg"/></span></button>
