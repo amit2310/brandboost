@@ -3,6 +3,9 @@ import Live from './components/admin/live/';
 import Contact from './components/admin/contact/Contacts.vue';
 import ContactProfile from './components/admin/contact/ContactProfile';
 import ContactDashboard from './components/admin/contact/Dashboard';
+import PeopleContactsImport from './components/admin/contact/PeopleContactsImport.vue';
+import PeopleContactsUploadFile from './components/admin/contact/PeopleContactsUploadFile.vue';
+import PeopleContactsListMapping from './components/admin/contact/PeopleContactsListMapping.vue';
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
 import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
@@ -43,6 +46,9 @@ const routes = [
     /*Contacts*/
     { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
     { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },
+    { path: '/contacts/import', component: PeopleContactsImport, props : {title : 'People Contacts Import', pageColor: 'people_sec' } },
+    { path: '/contacts/uploadfile', component: PeopleContactsUploadFile, props : {title : 'People Contacts Upload File', pageColor: 'people_sec' } },
+    { path: '/contacts/listmapping', component: PeopleContactsListMapping, props : {title : 'People Contacts List Mapping', pageColor: 'people_sec' } },
     { path: '/contacts/profile/:id', component: ContactProfile, props:{ pageColor: 'people_sec'} },
     { path: '/contacts/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
     { path: '/contacts/segments', component: Segments, meta: { title: 'My Segments'} },
