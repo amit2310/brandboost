@@ -1,5 +1,7 @@
 @import url('https://rsms.me/inter/inter.css');
 
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700&display=swap');
+
 
 
 html {
@@ -7,6 +9,7 @@ html {
 	min-height: 100%;
 	background-color: #f6f9fe;
 	font-family: 'Inter', sans-serif; 
+	/*font-family: 'Rubik', sans-serif;*/
 }
 body {
 	margin: 0;
@@ -14,6 +17,7 @@ body {
 	font-size: 13px;
 	background-color: #f6f9fe;
 	font-family: 'Inter', sans-serif; 
+	/*font-family: 'Rubik', sans-serif;*/
 	color: #50649c;
 	font-weight: 400;
 }
@@ -2761,8 +2765,11 @@ APEX CHART
 .apexcharts-legend, .apexcharts-pie-label{visibility: hidden; display: none}
 
 
+/*.apexcharts-gridline, .apexcharts-text{display: none}*/
+.apexcharts-yaxis-label{color: #cccccc!important}
 
-
+.apexcharts-xaxis {	pointer-events: none;display: none;}
+.apexcharts-xaxis-tick{display: none}
 
 
 
