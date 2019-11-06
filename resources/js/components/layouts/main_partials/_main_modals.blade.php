@@ -42,7 +42,7 @@
             <div class="modal-header mb-20 text-center">
                 <button style="top: 20px;" type="button" class="close" data-dismiss="modal">&times;</button>
                 <h1 style="font-size: 35px;  font-style: italic; margin:30px 0 0;">
-                    <strong>Upgrade to 
+                    <strong>Upgrade to
                         @if (isset($oUpgradePlanData->level_name))
                             {{ $oUpgradePlanData->level_name }}
                         @endif
@@ -130,7 +130,7 @@
                         </p>
                     </div>
                     <div class="col-md-3 pt-20 text-center">
-                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade" 
+                        <button type="button" class="btn btn-primary mb-10" id="btnLevelUpgrade"
                                 plan_name="
                                 @if (isset($oUpgradePlanData->level_name))
                                     {{ $oUpgradePlanData->level_name }}
@@ -212,7 +212,7 @@
                                             <li>Other Social Invites-@if (strpos($data->social_invite_sources, 'others') !== false) Yes @else No @endif></li>
                                         </ul>
                                         <div class="pricing-footer">
-                                            <a href="javascript:;" class="btn yellow-crusta"> Sign Up </a> 
+                                            <a href="javascript:;" class="btn yellow-crusta"> Sign Up </a>
                                         </div>
                                     </div>
                                 </label>
@@ -241,7 +241,7 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 <!-- Upgrade plan Modal Confirm -->
 <div id="confirm_level_upgrade" class="modal fade" style="z-index:99999;">
@@ -270,7 +270,7 @@
                             <tr>
                                 <td>Email :</td>
                                 <td>
-                                    @if (isset($aUInfo->email)) 
+                                    @if (isset($aUInfo->email))
                                        {{ $aUInfo->email }}
                                     @endif
                                 </td>
@@ -286,7 +286,7 @@
                             <tr>
                                 <td>Current Plan :</td>
                                 <td>
-                                    @if (isset($oCurrentPlanData->level_name)) 
+                                    @if (isset($oCurrentPlanData->level_name))
                                         {{ $oCurrentPlanData->level_name }}
                                     @endif
                                 </td>
@@ -295,7 +295,7 @@
                                 <td>Upgrade to :</td>
                                 <td>
                                     <span id="upgradedPlanTitle">
-                                        @if (isset($oUpgradePlanData->level_name)) 
+                                        @if (isset($oUpgradePlanData->level_name))
                                             {{ $oUpgradePlanData->level_name }}
                                         @endif
                                     </span>
@@ -304,7 +304,7 @@
                         </table>
 
                     </div>
-                </div>    
+                </div>
 
 
                 <div class="checkbox">
@@ -1166,7 +1166,7 @@
 </div>
 <!-- End Add/Edit Contacts, Import, Export Popup -->
 
-<!--=====================================Delete Popup================================-->    
+<!--=====================================Delete Popup================================-->
 <div id="Deletepopup" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1188,7 +1188,7 @@
                 <!--<div class="modal-footer text-center">
                     <button data-toggle="modal" id="nextpopup" type="button" class="btn dark_btn bkg_sblue fsize14 h52"> Delete</button>
                     <button data-toggle="modal" id="nextpopup" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
-                    
+
                 </div>-->
             </form>
         </div>
@@ -1197,7 +1197,7 @@
 <!--=====================================Delete Popup================================-->
 
 
-<!--=====================================Archive================================-->  
+<!--=====================================Archive================================-->
 
 <div id="archiveModalPopup" class="modal fade">
     <div class="modal-dialog modal-sm">
@@ -1223,45 +1223,13 @@
 <!--=====================================Archive================================-->
 
 
-
-
-
-<!--=====================================Form notice================================-->
-<div id="success_notice" class="hide">
-    <div class="flag_notifications">
-        <a style="cursor: pointer;" class="fn_close" name="cancel"><i class="icon-cross2 txt_green"></i></a>
-        <div class="row">
-            <div class="col-xs-2"><img width="40" src="{{ URL::asset('assets/images/notification_green.png') }}"/></div>
-            <div class="col-xs-10">
-                <p class="notification_success_msg_heading" style="font-weight:600;">Success!</p>
-                <p class="mb-15 notification_success_msg_des">Your data have been updated successfully!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="error_notice" class="hide">
-    <div class="flag_notifications">
-        <a style="cursor: pointer;" class="fn_close" name="cancel"><i class="icon-cross2 txt_red"></i></a>
-        <div class="row">
-            <div class="col-xs-2"><img width="40" src="{{ URL::asset('assets/images/notification_red.png') }}"/></div>
-            <div class="col-xs-10">
-                <p class="notification_success_msg_heading" style="font-weight:600;">OOPS!</p>
-                <p class="mb-15 notification_success_msg_des">Your changes has been not updated. Please try again!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--=====================================Form notice================================-->
-
 <!--=====================================Log out================================-->
 <div id="logoutpopup" class="modal fade">
     <div style="width: 337px;" class="modal-dialog">
         <div class="">
             <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
             <div class="logout_notifications p25" id="logout1">
-                <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
+                <a style="cursor: pointer" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a>
                 <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon1.png') }}"/></div>
                 <div class="media-left pr0">
                     <p class="txt_dark fw400">No Activity For {{ $inactivity_length }} Minutes</p>
@@ -1280,7 +1248,7 @@
         <div class="">
             <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
             <div class="logout_notifications p25" id="logout2">
-                <a style="cursor: pointer" id="close2" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a> 
+                <a style="cursor: pointer" id="close2" class="close_no close" data-dismiss="modal"><img src="{{ URL::asset('assets/images/cross_icon_10.png') }}"/></a>
                 <div class="media-left pr-15"><img src="{{ URL::asset('assets/images/logout_icon2.png') }}"/></div>
                 <div class="media-left pr0">
                     <p class="txt_dark fw400">Are you still there?</p>
@@ -1294,7 +1262,7 @@
 </div>
 <!--=====================================Log out================================-->
 
-<!--=====================================Add Chat Shortcut Modal Popup================================-->    
+<!--=====================================Add Chat Shortcut Modal Popup================================-->
 <div id="addChatShortcutList" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1303,7 +1271,7 @@
                 <div class="modal-header">
                     <button type="button" class="close BoxClose" data-dismiss="modal">×</button>
                     <h5 class="modal-title"><img src="{{ URL::asset('assets/images/menu_icons/Chat_Color.svg') }}"> Add new shortcut &nbsp; <!--<i class="icon-info22 fsize12 txt_grey"></i>--></h5>
-                    <p class="fsize12 txt_grey mt10 mb10" style="max-width: 370px;">Create a new shortcut. Give it a ! symbol, and write a message for this shortcut. Then, use conversations to quickly answer 
+                    <p class="fsize12 txt_grey mt10 mb10" style="max-width: 370px;">Create a new shortcut. Give it a ! symbol, and write a message for this shortcut. Then, use conversations to quickly answer
                         to visitors using the shortcut ! symbol. </p>
                 </div>
                 <div class="modal-body">
