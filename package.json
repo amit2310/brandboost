@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "javascript-time-ago": "^2.0.2",
-        "vue-upload-component": "^2.8.20"
+        "papaparse": "^5.1.0",
+        "vue-upload-component": "^2.8.20",
+        "xlsx": "^0.15.1"
     }
 }
