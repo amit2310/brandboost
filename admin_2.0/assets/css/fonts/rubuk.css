@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'rubik';
+    src: url('rubik-regular-webfont.woff2') format('woff2'),
+         url('rubik-regular-webfont.woff') format('woff');
+    font-style: normal;
+	font-weight: 400;
+}
+@font-face {
+    font-family: 'rubik';
+    src: url('rubik-regular-webfont.woff2') format('woff2'),
+         url('rubik-regular-webfont.woff') format('woff');
+    font-style: normal;
+	font-weight: 500;
+}
+
+
+
+@font-face {
+    font-family: 'rubik';
+    src: url('rubik-medium-webfont.woff2') format('woff2'),
+         url('rubik-medium-webfont.woff') format('woff');
+    font-style: normal;
+	font-weight: 600;
+}
+@font-face {
+    font-family: 'rubik';
+    src: url('rubik-medium-webfont.woff2') format('woff2'),
+         url('rubik-medium-webfont.woff') format('woff');
+    font-style: normal;
+	font-weight: 700;
+}
+
+
+
