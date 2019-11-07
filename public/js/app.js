@@ -14221,83 +14221,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var tkn = $('meta[name="_token"]').attr('content');
-var el = $("#app");
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'upload-file',
   title: 'People Contacts Upload File - Brand Boost',
   data: function data() {
-    return {
-      uploadedFiles: []
-    };
+    return {};
   },
   mounted: function mounted() {
-    var self = this;
-    window.addEventListener("dragenter", function (e) {
-      document.querySelector("#dropzone").style.visibility = "";
-      document.querySelector("#dropzone").style.opacity = 1;
-      document.querySelector("#textnode").style.fontSize = "48px";
-    });
-    window.addEventListener("dragleave", function (e) {
-      e.preventDefault();
-      document.querySelector("#dropzone").style.visibility = "hidden";
-      document.querySelector("#dropzone").style.opacity = 0;
-      document.querySelector("#textnode").style.fontSize = "42px";
-    });
-    window.addEventListener("dragover", function (e) {
-      e.preventDefault();
-      document.querySelector("#dropzone").style.visibility = "";
-      document.querySelector("#dropzone").style.opacity = 1;
-      document.querySelector("#textnode").style.fontSize = "48px";
-    });
-    window.addEventListener("drop", function (e) {
-      e.preventDefault();
-      document.querySelector("#dropzone").style.visibility = "hidden";
-      document.querySelector("#dropzone").style.opacity = 0;
-      document.querySelector("#textnode").style.fontSize = "42px";
-      var files = e.dataTransfer.files;
-      this.uploadedFiles = files[0];
-      console.log("Drop files:", this.uploadedFiles); //this.uploadFile(files);
-
-      self.uploadFiles(files);
-    });
-    console.log('Component mounted.');
+    console.log('Component mounted....');
   },
   methods: {
     goToPrevious: function goToPrevious() {
@@ -14305,40 +14236,6 @@ var el = $("#app");
     },
     listMappingPage: function listMappingPage() {
       window.location.href = '#/contacts/listmapping';
-    },
-    uploadFiles: function uploadFiles(f) {
-      var self = this;
-
-      function loadFiles(file) {
-        // Pull the file name and remove the ".txt" extension
-        var name = file.name.substr(0, file.name.lastIndexOf(".txt")) || file.name;
-      }
-
-      for (var i = 0; i < f.length; i++) {
-        if (f[i].type !== "text/plain") {
-          //if text file is not submitted alert and skip over it
-          alert("Sorry, " + f[i].type + " is not an accepted file type.");
-          continue;
-        } else {
-          if (this.uploadedFiles.length > 0) {
-            if (!this.checkDuplicateFile(f[i].name.substr(0, f[i].name.lastIndexOf(".txt")))) {
-              loadFiles(f[i]);
-            }
-          } else {
-            loadFiles(f[i]);
-          }
-        }
-      }
-    },
-    checkDuplicateFile: function checkDuplicateFile(filename) {
-      if (this.uploadedFiles.find(function (el) {
-        return el.fileName === filename;
-      })) {
-        alert("Duplicate file: " + filename);
-        return true;
-      } else {
-        return false;
-      }
     }
   }
 });
@@ -21419,25 +21316,6 @@ exports.push([module.i, "\n.createSegment{\n    cursor:pointer!important;\n}\n",
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css&":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n#file-panel {\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    height: auto;\n}\n.panel-body {\n    height: auto;\n}\n#upload-list {\n    height: auto;\n    padding: 0px;\n}\nul {\n    list-style-type: none;\n}\ndiv#dropzone {\n    position: fixed;\n    top: 0;\n    left: 0;\n    z-index: 9999999999;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    transition: visibility 175ms, opacity 175ms;\n    display: table;\n    text-shadow: 1px 1px 2px #000;\n    color: #fff;\n    background: rgba(0, 0, 0, 0.45);\n    font: bold 42px Oswald, DejaVu Sans, Tahoma, sans-serif;\n}\ndiv#textnode {\n    display: table-cell;\n    text-align: center;\n    vertical-align: middle;\n    transition: font-size 175ms;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/dashboard/index.vue?vue&type=style&index=0&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/dashboard/index.vue?vue&type=style&index=0&lang=css& ***!
@@ -22254,36 +22132,6 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Email.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/broadcast/Email.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css&":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css& ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -49434,44 +49282,10 @@ var render = function() {
           _vm._v(" "),
           _vm._m(2),
           _vm._v(" "),
-          _c("div", { staticClass: "row mt30" }, [
-            _c("div", { staticClass: "col-md-9 text-center" }, [
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { attrs: { id: "app" } }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-4", attrs: { id: "file-panel" } },
-                  [
-                    _c("div", { staticClass: "panel panel-success" }, [
-                      _c("div", { staticClass: "panel-heading" }, [
-                        _vm._v(
-                          "\n                                    Uploaded Files " +
-                            _vm._s(_vm.uploadedFiles.length) +
-                            " 111\n                                    "
-                        ),
-                        _c(
-                          "ul",
-                          { attrs: { id: "upload-list" } },
-                          _vm._l(_vm.uploadedFiles, function(file) {
-                            return _c("li", [_vm._v(_vm._s(file.fileName))])
-                          }),
-                          0
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(5)
-          ]),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "row mt40" }, [
-            _vm._m(6),
+            _vm._m(4),
             _vm._v(" "),
             _c(
               "div",
@@ -49484,7 +49298,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._m(7)]
+              [_vm._m(5)]
             ),
             _vm._v(" "),
             _c(
@@ -49498,7 +49312,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._m(8)]
+              [_vm._m(6)]
             )
           ])
         ])
@@ -49600,53 +49414,43 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card p20 min_h_240" }, [
-      _c(
-        "label",
-        { staticClass: "display-block m0", attrs: { for: "companylogo" } },
-        [
-          _c("div", { staticClass: "img_vid_upload" }, [
-            _c("input", {
-              staticClass: "d-none",
-              attrs: { type: "file", name: "", value: "", id: "companylogo" }
-            })
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticStyle: { visibility: "hidden", opacity: "0" },
-        attrs: { id: "dropzone" }
-      },
-      [
-        _c("div", { attrs: { id: "textnode" } }, [
-          _vm._v("Drop files to add data.")
+    return _c("div", { staticClass: "row mt30" }, [
+      _c("div", { staticClass: "col-md-9 text-center" }, [
+        _c("div", { staticClass: "card p20 min_h_240" }, [
+          _c(
+            "label",
+            { staticClass: "display-block m0", attrs: { for: "companylogo" } },
+            [
+              _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+                _c("div", { staticClass: "img_vid_upload" }, [
+                  _c("input", {
+                    staticClass: "d-none",
+                    attrs: {
+                      type: "file",
+                      name: "",
+                      value: "",
+                      id: "companylogo"
+                    }
+                  })
+                ])
+              ])
+            ]
+          )
         ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("img", { attrs: { src: "assets/images/information-line.svg" } }),
-      _vm._v(" "),
-      _c("h3", { staticClass: "fsize14 fw600 dark_700 mb10 mt10" }, [
-        _vm._v("Import Disclaimer")
       ]),
       _vm._v(" "),
-      _c("p", { staticClass: "fsize12 fw300 dark_300" }, [
-        _vm._v(
-          "Each subscriber should be on a new line. You can include any extra details such as name and age, and we'll match them up with your custom fields in the next step. Before you import your list, make sure it meets our permission policies."
-        )
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("img", { attrs: { src: "assets/images/information-line.svg" } }),
+        _vm._v(" "),
+        _c("h3", { staticClass: "fsize14 fw600 dark_700 mb10 mt10" }, [
+          _vm._v("Import Disclaimer")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "fsize12 fw300 dark_300" }, [
+          _vm._v(
+            "Each subscriber should be on a new line. You can include any extra details such as name and age, and we'll match them up with your custom fields in the next step. Before you import your list, make sure it meets our permission policies."
+          )
+        ])
       ])
     ])
   },
@@ -82596,9 +82400,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PeopleContactsUploadFile_vue_vue_type_template_id_3fff75b9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PeopleContactsUploadFile.vue?vue&type=template&id=3fff75b9& */ "./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=template&id=3fff75b9&");
 /* harmony import */ var _PeopleContactsUploadFile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PeopleContactsUploadFile.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -82606,7 +82408,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _PeopleContactsUploadFile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _PeopleContactsUploadFile_vue_vue_type_template_id_3fff75b9___WEBPACK_IMPORTED_MODULE_0__["render"],
   _PeopleContactsUploadFile_vue_vue_type_template_id_3fff75b9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -82635,22 +82437,6 @@ component.options.__file = "resources/js/components/admin/contact/PeopleContacts
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PeopleContactsUploadFile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css&":
-/*!*************************************************************************************************************!*\
-  !*** ./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css& ***!
-  \*************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--5-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--5-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/contact/PeopleContactsUploadFile.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PeopleContactsUploadFile_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
