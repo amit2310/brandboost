@@ -25,6 +25,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "javascript-time-ago": "^2.0.2"
+        "javascript-time-ago": "^2.0.2",
+        "papaparse": "^5.1.0",
+        "vue-upload-component": "^2.8.20",
+        "xlsx": "^0.15.1"
     }
 }
