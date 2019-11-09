@@ -48,39 +48,51 @@ class Broadcast extends Controller {
      */
     public function email() {
         $campaignType = 'Email';
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+        /*$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs">Email </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Broadcast" class="sidebar-control active hidden-xs ">Broadcast</a></li>
-                    </ul>';
+                    </ul>';*/
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/emails/dashboard',
+            'Campaigns' => ''
+        );
+
+
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        $activeTab = Session::put("setTab", "");
+        /*$activeTab = Session::put("setTab", "");*/
         $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
-        $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
+        /*$campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);*/
         $moduleName = 'broadcast';
-        Session::put("setTab", '');
-
-        $aData = array(
-            'title' => 'Brand Boost Broadcast',
-            'oBroadcast' => $oBroadcast,
-            'campaignTemplates' => $campaignTemplates,
-            'pagename' => $breadcrumb,
-            'campaignType' => $campaignType,
-            'moduleName' => $moduleName
-        );
+        /*Session::put("setTab", '');*/
 
         /* Calculation to render HTML in view template */
 
         if(count($oBroadcast) > 0) {
             foreach ($oBroadcast as $broadCastData) {
+                $aDeliveryParam = json_decode($broadCastData->data);
+                $deliveryDate = $aDeliveryParam->delivery_date;
+                $deliveryTime = $aDeliveryParam->delivery_time;
+                $timeString = $deliveryDate . ' ' . $deliveryTime;
+                $deliverAt = strtotime($timeString);
+
+                $gmt_date = strtotime(gmdate('Y-m-d H:i:s', time()));
+                $estTime = date("Y-m-d H:i:s", ($gmt_date - 14400));
+                $timeNow = strtotime($estTime);
+                $bExpired = false;
+                if ($timeNow > $deliverAt) {
+                    $bExpired = true;
+                }
+                $broadCastData->isExpired = $bExpired;
                 $totalSentGraph = 0;
                 $totalOpenGraph = 0;
                 $totalClickGraph = 0;
@@ -199,6 +211,17 @@ class Broadcast extends Controller {
                 $broadCastData->iArchiveCount = $iArchiveCount;
             }
         }
+
+        $aData = array(
+            'title' => 'Brand Boost Broadcast',
+            'oBroadcast' => $oBroadcast->items(),
+            'allData' => $oBroadcast,
+            'breadcrumb' => $aBreadcrumb,
+            /*'campaignTemplates' => $campaignTemplates,
+            'pagename' => $breadcrumb,*/
+            'campaignType' => $campaignType,
+            'moduleName' => $moduleName
+        );
 
         /* Calculation to render HTML in view template */
 
@@ -328,7 +351,7 @@ class Broadcast extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'Email' => '#/modules/email/dashboard',
-            'Email Campaigns' => '#/modules/emails/index',
+            'Email Campaigns' => '#/modules/emails/broadcast',
             'Setup' => '',
         );
 
@@ -431,7 +454,7 @@ class Broadcast extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'Email' => '#/modules/email/dashboard',
-            'Email Campaigns' => '#/modules/emails/index',
+            'Email Campaigns' => '#/modules/emails/broadcast',
             'Setup' => '',
         );
 
@@ -450,6 +473,69 @@ class Broadcast extends Controller {
             'exportedCount' => $exportedCount,
             'oBroadcastSubscriber' => $oBroadcastSubscriber->items(),
             'allDataSubscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    public function setupLoadTemplates(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Templates model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+
+        $oDefaultTemplates = $mTemplates->getCommonTemplates('', '', '', strtolower($oBroadcast[0]->campaign_type), true);
+        $oTemplates = $oDefaultTemplates;
+        $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', strtolower($oBroadcast[0]->campaign_type));
+        $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
+        $oCategories = $mWorkflow->getWorkflowTemplateCategories($moduleName);
+
+        if(!empty($oCategories)){
+            foreach($oCategories as $oCategory){
+                $categoryID = $oCategory->id;
+                $totalTemplates = $mTemplates->countCategoryTemplates($categoryID);
+                $oCategory->totalCount = $totalTemplates;
+            }
+        }
+
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/email/dashboard',
+            'Email Campaigns' => '#/modules/emails/broadcast',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'oTemplates' => $oTemplates->items(),
+            'myTemplates' => $oUserTemplates,
+            'allData' => $oTemplates,
+            'draftTemplates' => $oDraftTemplates,
+            'oCategories' => $oCategories
+
         );
         echo json_encode($aData);
         exit;
@@ -541,7 +627,7 @@ class Broadcast extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'Email' => '#/modules/email/dashboard',
-            'Email Campaigns' => '#/modules/emails/index',
+            'Email Campaigns' => '#/modules/emails/broadcast',
             'Setup' => '',
         );
 

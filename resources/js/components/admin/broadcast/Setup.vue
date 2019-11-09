@@ -159,7 +159,7 @@
                         <hr class="mb25">
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" v-show="true"><span class="ml0 mr10"><img
+                        <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" v-show="true" @click="displayStep(0)"><span class="ml0 mr10"><img
                             src="/assets/images/arrow-left-line.svg"></span>Back
                         </button>
                     </div>
@@ -205,7 +205,13 @@
         },
         methods: {
             displayStep: function(step){
-                let path = '/admin#/modules/emails/broadcast/setup/'+this.campaignId+'/'+step;
+                let path = '';
+                if(!step){
+                    path = '/admin#/modules/emails/broadcast';
+                }else{
+                    path = '/admin#/modules/emails/broadcast/setup/'+this.campaignId+'/'+step;
+                }
+
                 window.location.href = path;
             },
             applyDefaultInfo: function (e) {

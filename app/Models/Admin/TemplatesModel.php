@@ -27,7 +27,7 @@ class TemplatesModel extends Model
             ->when(!empty($userID), function ($query) use ($userID) {
                 return $query->where('tbl_common_templates.user_id', $userID);
             }, function ($query) {
-                //return $query->where('tbl_common_templates.user_id', 0);
+                return $query->where('tbl_common_templates.user_id', 0);
             })
             ->when(($categoryID > 0), function ($query) use ($categoryID) {
                 return $query->where('tbl_common_templates.category_id', $categoryID);
@@ -45,6 +45,26 @@ class TemplatesModel extends Model
             ->paginate(10);
             //->get();
         return $oData;
+    }
+
+    /**
+     * This method used to fetch template count in provided category id
+     * @param $categoryID
+     * @param string $templateType
+     * @return mixed
+     */
+    public function countCategoryTemplates($categoryID, $templateType='email'){
+        $oData = DB::table('tbl_common_templates')
+            ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
+            ->select('tbl_common_templates.id')
+            ->where('tbl_common_templates.user_id', 0)
+            ->where('tbl_common_templates.category_id', $categoryID)
+            ->where('tbl_common_templates.template_type', $templateType)
+            ->where('tbl_common_templates.status', 1)
+            ->count();
+        //->get();
+        return $oData;
+
     }
 
     /**

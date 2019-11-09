@@ -90,14 +90,14 @@
 
                                 <div class="col-md-3">
                                     <div class="p-2 border br4 d-inline-block">
-                                        <img src="/assets/images/preview_design.png" width="160" height="113">
+                                        <img :src="campaign.thumbnail ? campaign.thumbnail : `/assets/images/preview_design.png`" width="160" height="113">
                                     </div>
 
                                 </div>
                                 <div class="col-md-4">
                                     <p class="fsize14 fw500 dark_700 mb-3">Preview:</p>
-                                    <button class="btn btn-sm-32 bkg_email_000 email_400 pr20 pl10 shadow-none fw500"><i class=""><img class="btn_pencil" src="/assets/images/pencil-fill.svg"/></i> &nbsp; Preview</button><br>
-                                    <button class="btn btn-sm-32 bkg_email_000 email_400 pr20 pl10 shadow-none mt10 fw500"><i class=""><img class="btn_pencil" src="/assets/images/pencil-fill.svg"/></i> &nbsp; Send test email</button>
+                                    <button class="btn btn-sm-32 bkg_email_000 email_400 pr20 pl10 shadow-none fw500 endPreviewTemplate"><i class=""><img class="btn_pencil" src="/assets/images/pencil-fill.svg"/></i> &nbsp; Preview</button><br>
+                                    <button class="btn btn-sm-32 bkg_email_000 email_400 pr20 pl10 shadow-none mt10 fw500 fa-paper-plane" :campaign_id="campaign.id"><i class=""><img class="btn_pencil" src="/assets/images/pencil-fill.svg"/></i> &nbsp; Send test email</button>
                                 </div>
                                 <div class="col-md-5">
                                     <p class="fsize14 fw500 dark_700 mb-3">Content details:</p>
@@ -160,6 +160,30 @@
             </div>
         </div>
         <!--Content Area End-->
+        <div class="box endPreviewTemplatePopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon endPreviewTemplate"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+                    <div class="p40">
+                        <div class="row" v-html="previewTemplate"></div>
+                        <div class="row bottom-position">
+                            <div class="col-md-12 mb15">
+                                <hr>
+                            </div>
+                            <div class="col-md-12"><input type="hidden" name="module_name" id="active_module_name"
+                                                          value="people"> <input type="hidden"
+                                                                                 name="module_account_id"
+                                                                                 id="module_account_id" :value="user.id">
+                                <button type="button"
+                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 endPreviewTemplate fa-paper-plane" :campaign_id="campaign.id"
+                                        >Send Test Email
+                                </button>
+                                <a href="#" class="blue_300 fsize16 fw600 ml20 endPreviewTemplate">Close</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -180,6 +204,7 @@
                 subscribers: '',
                 user: {},
                 breadcrumb: '',
+                previewTemplate: ''
             }
         },
         mounted() {
@@ -193,6 +218,7 @@
                     this.exportButtons = response.data.sExcludButtonsSummary;
                     this.subscribers = response.data.allDataSubscribers;
                     this.user = response.data.userData;
+                    this.previewTemplate = atob(this.campaign.stripo_compiled_html);
                     this.loading = false;
                 });
         },
@@ -229,6 +255,21 @@
         }
 
     };
+
+    $(document).ready(function () {
+        $(document).on('click', '.endPreviewTemplate', function () {
+            $(".endPreviewTemplatePopup").animate({
+                width: "toggle"
+            });
+        });
+
+        $(".fa-paper-plane").click(function(){
+            var campaignId = $(this).attr('campaign_id');
+            $("#wf_test_email_campaign_id").val(campaignId);
+            $("#wfSendTestEmail").modal('show');
+        });
+
+    });
 
 </script>
 

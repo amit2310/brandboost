@@ -31,16 +31,7 @@
 <script>
     export default {
         name: 'pagination',
-        props: {
-            pagination: {
-                type: Object,
-                required: true
-            },
-            offset: {
-                type: Number,
-                default: 4
-            }
-        },
+        props: ['pagination', 'offset'],
         computed: {
             pagesNumber() {
                 if (!this.pagination.to) {

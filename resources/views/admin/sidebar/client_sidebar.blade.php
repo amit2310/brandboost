@@ -211,11 +211,11 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item"><a class="nav-link active" href="{{ url('#/modules/emails/dashboard') }}"><i><img src="assets/images/Email_home08.svg"/></i>Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/emails/index') }}"><i><img src="assets/images/email_campaign-icon.svg"/></i>Email Campaigns</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/emails/broadcast') }}"><i><img src="assets/images/email_campaign-icon.svg"/></i>Email Campaigns</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/emails/subscribers') }}"><i><img src="assets/images/account-circle-line.svg"/></i>Subscribers</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/emails/templates') }}"><i><img src="assets/images/email-temp-icon.svg"/></i>Email Templates</a></li>
                     <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/forms-icon.svg"/></i>Forms</a></li>
-                    <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/workflow-icon.svg"/></i>Workflows</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/emails/workflow') }}"><i><img src="assets/images/workflow-icon.svg"/></i>Workflows</a></li>
                     <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/analytics-icon.svg"/></i>Analytics</a></li>
                     <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/config-icon.svg"/></i>Configuration</a></li>
                 </ul>

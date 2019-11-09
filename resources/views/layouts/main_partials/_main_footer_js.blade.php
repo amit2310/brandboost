@@ -8,6 +8,7 @@
 <script src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/jQuery.tagify.js') }}"></script>
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/datatables_basic.js') }}"></script>
 <script src="{{ URL::asset('assets/js/custom_datatable.js') }}"></script>
@@ -18,6 +19,7 @@
 
 <script>
     function displayMessagePopup(msgType = '', msgHeading = '', msgDescription = '') {
+        alert(msgDescription);
         var msgBoxId = 'success_notice';
         if (msgHeading != '') {
             $('.notification_success_msg_heading').text(msgHeading);
