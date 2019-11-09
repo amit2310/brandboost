@@ -310,7 +310,8 @@ class Templates extends Controller
     /**
      * Used to fetch template info
      */
-    public function getTemplateInfo(Request $request) {
+    public function getTemplateInfo(Request $request)
+    {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         if (empty($request)) {
@@ -350,7 +351,8 @@ class Templates extends Controller
      * Used to update user template
      */
 
-    public function editUserTemplate(Request $request) {
+    public function editUserTemplate(Request $request)
+    {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         if (empty($request)) {
@@ -478,9 +480,7 @@ class Templates extends Controller
         $moduleName = 'broadcast';
         $source = '';
 
-        if ($actionName == 'category') {
-            $oCategorizedTemplates = $mTemplates->getCommonTemplates('', $categoryID, '', $campaignType);
-        } else if ($actionName == 'my') {
+        if ($actionName == 'my') {
             $oCategorizedTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType);
             $source = 'my';
         } else if ($actionName == 'draft') {
@@ -489,6 +489,10 @@ class Templates extends Controller
         } else if ($actionName == 'all') {
             //echo "Campaign Type is". $campaignType;
             $oCategorizedTemplates = $mTemplates->getCommonTemplates('', '', '', $campaignType, $bHideStaticTemplate = true);
+        } else {
+            //Or pick actionName = 'category'
+            $categoryID = ($categoryID) ? $categoryID : $actionName; //Now we are passing category id instead of the "category"
+            $oCategorizedTemplates = $mTemplates->getCommonTemplates('', $categoryID, '', $campaignType);
         }
 
         //pre($oCategorizedTemplates);

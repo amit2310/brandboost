@@ -9,8 +9,9 @@
                         <h3 class="htxt_medium_24 dark_700">{{this.campaign.title}}</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"> Save as draft </button>
-                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(3)"> Next <span style="opacity: 1"><img src="/assets/images/arrow-right-line-white.svg"/></span></button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"> Save as draft</button>
+                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(3)"> Next <span
+                            style="opacity: 1"><img src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -27,10 +28,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="email_config_list">
-                                <li><a class="done" href="#"><span class="num_circle"><span class="num">1</span><span class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Basic campaign info</a></li>
-                                <li><a class="active" href="#"><span class="num_circle"><span class="num">2</span><span class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Content & Design</a></li>
-                                <li><a href="#"><span class="num_circle"><span class="num">3</span><span class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a></li>
-                                <li><a href="#"><span class="num_circle"><span class="num">4</span><span class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Review & confirm</a></li>
+                                <li><a class="done" href="#"><span class="num_circle"><span class="num">1</span><span
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Basic
+                                    campaign info</a></li>
+                                <li><a class="active" href="#"><span class="num_circle"><span class="num">2</span><span
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Content &
+                                    Design</a></li>
+                                <li><a href="#"><span class="num_circle"><span class="num">3</span><span
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
+                                </li>
+                                <li><a href="#"><span class="num_circle"><span class="num">4</span><span
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Review &
+                                    confirm</a></li>
                             </ul>
                         </div>
                     </div>
@@ -40,7 +49,8 @@
                 <div v-show="chooseTemplateSection">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <h3 class="htxt_bold_20 dark_700 mb20 mt40">Select pre-made email template or create your own</h3>
+                            <h3 class="htxt_bold_20 dark_700 mb20 mt40">Select pre-made email template or create your
+                                own</h3>
                             <p class="htxt_normal_14 dark_200 mb40 mt20">It’s very easy to create or import!</p>
                         </div>
                     </div>
@@ -51,11 +61,13 @@
                                 <div class="p40 pb20 col">
                                     <img src="/assets/images/networkoptimization.svg"/>
                                     <h3 class="htxt_medium_16 dark_700 mb10 mt20">Select template</h3>
-                                    <p class="htxt_normal_14 dark_200 mb20 mt10">This text will be displayed in the ‘Subject’ field in your recepient’s email client.</p>
+                                    <p class="htxt_normal_14 dark_200 mb20 mt10">This text will be displayed in the
+                                        ‘Subject’ field in your recepient’s email client.</p>
 
                                 </div>
                                 <div class="p20 btop">
-                                    <a class="fsize14 fw500 email_500" href="javascript:void(0);" @click="displayTemplateList">View template library</a>
+                                    <a class="fsize14 fw500 email_500" href="javascript:void(0);"
+                                       @click="displayTemplateList">View template library</a>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +76,8 @@
                                 <div class="p40 pb20 col">
                                     <img src="/assets/images/networkoptimization2.svg"/>
                                     <h3 class="htxt_medium_16 dark_700 mb10 mt20">Drag & drop editor</h3>
-                                    <p class="htxt_normal_14 dark_200 mb20 mt10">This text will be displayed in the ‘Subject’ field in your recepient’s email client.</p>
+                                    <p class="htxt_normal_14 dark_200 mb20 mt10">This text will be displayed in the
+                                        ‘Subject’ field in your recepient’s email client.</p>
                                 </div>
                                 <div class="p20 btop">
                                     <a class="fsize14 fw500 email_500" href="#">Create new email template</a>
@@ -76,7 +89,8 @@
                                 <div class="p40 pb20 col">
                                     <img src="/assets/images/scrollingstatementtext.svg"/>
                                     <h3 class="htxt_medium_16 dark_700 mb10 mt20">Plain text</h3>
-                                    <p class="htxt_normal_14 dark_200 mb20 mt10">This text will be displayed in the ‘Subject’ field in your recepient’s email client.</p>
+                                    <p class="htxt_normal_14 dark_200 mb20 mt10">This text will be displayed in the
+                                        ‘Subject’ field in your recepient’s email client.</p>
                                 </div>
                                 <div class="p20 btop">
                                     <a class="fsize14 fw500 email_500" href="#">Use plain text editor</a>
@@ -86,12 +100,21 @@
                     </div>
 
                     <div class="row mt40">
-                        <div class="col-md-12"><hr class="mb25"></div>
+                        <div class="col-md-12">
+                            <hr class="mb25">
+                        </div>
                         <div class="col-8">
                             <h3 class="htxt_medium_16 dark_700 mb10 mt20">Import custom HTML template</h3>
-                            <p class="htxt_normal_14 dark_200 mb20 mt10">Perfect for experts! Write or import your own HTML to build and send custom email.</p>
+                            <p class="htxt_normal_14 dark_200 mb20 mt10">Perfect for experts! Write or import your own
+                                HTML to build and send custom email.</p>
                         </div>
-                        <div class="col-4"><button class="btn btn-md-44 bkg_none border2 dark_200 pl20 pr20 float-right fw500 fsize14 mt20"> <span class="ml0 mr10"><img src="/assets/images/download-cloud-line.svg"></span>Import HTML template</button></div>
+                        <div class="col-4">
+                            <button
+                                class="btn btn-md-44 bkg_none border2 dark_200 pl20 pr20 float-right fw500 fsize14 mt20">
+                                <span class="ml0 mr10"><img src="/assets/images/download-cloud-line.svg"></span>Import
+                                HTML template
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -100,103 +123,128 @@
                         <div class="col-md-3">
                             <h4 class="fsize12 fw500 dark_200 ls4 mb20">TEMPLATES</h4>
                             <ul class="templates_list">
-                                <li><a href="#"><strong><img src="/assets/images/menu-2-line.svg"/> All</strong> <span>345</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/heart-line.svg"/> My Templates</strong> <span>128</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Events</strong> <span>62</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> General</strong> <span>26</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Holiday</strong> <span>98</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Layouts</strong> <span>38</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Newsletter</strong> <span>56</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Non-profit</strong> <span>13</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Photography</strong> <span>86</span></a></li>
-                                <li><a href="#"><strong><img src="/assets/images/folder-3-line.svg"/> Product / Service</strong> <span>31</span></a></li>
+
+                                <li>
+                                    <a href="javascript:void(0);" :class="{ 'active': activeIndex === -2 }" :key="-2"
+                                       @click="loadCategoriedTemplates('all', -2)">
+                                        <strong><img src="/assets/images/menu-2-line.svg"/> All</strong>
+                                        <span>{{totalTemplates}}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" :class="{ 'active': activeIndex === -1 }" :key="-1"
+                                       @click="loadCategoriedTemplates('my', -1)">
+                                        <strong><img src="/assets/images/heart-line.svg"/> My Templates</strong>
+                                        <span>{{mytemplates.total}}</span>
+                                    </a>
+                                </li>
+                                <li v-for="(category, index) in categories">
+                                    <a href="javascript:void(0);" :class="{ 'active': activeIndex === index }"
+                                       @click="loadCategoriedTemplates(category.id, index)">
+                                        <strong><img src="/assets/images/folder-3-line.svg"/>
+                                            {{capitalizeFirstLetter(category.category_name)}}</strong>
+                                        <span>{{category.totalCount}}</span>
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
                         <div class="col-md-9">
+
                             <div class="row">
-                                <div class="col-md-4">
+                                <!--<div class="col-md-4">
                                     <div class="card p12 text-center">
                                         <div class="temp_design_box bkg_light_000">
                                             <img class="mt-5" src="/assets/images/circle-plus-90.png"/>
                                         </div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">Create new</h3>
+                                        <h3 class="htxt_bold_16 dark_700 mb10">Create New</h3>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
+                                </div>-->
+                                <div class="col-md-4 previewTemplate" v-for="template in templates"
+                                     style="cursor:pointer;"
+                                     @click="displayPreview(template)">
                                     <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">3 column</h3>
+                                        <div class="temp_design_box"><img style="width:240px;height:172px;"
+                                                                          :src="template.thumbnail ? template.thumbnail : `/assets/images/temp_prev9.png`"/>
+                                        </div>
+                                        <h3 class="htxt_bold_16 dark_700 mb10">
+                                            {{capitalizeFirstLetter(template.template_name)}}</h3>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">Masongry Grid</h3>
-                                    </div>
-                                </div>
+
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">Create new</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">3 column</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">Masongry Grid</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">Create new</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">3 column</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card p12 text-center">
-                                        <div class="temp_design_box"></div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">Masongry Grid</h3>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        <pagination
+                            :pagination="allData"
+                            @paginate="showPaginationData"
+                            :offset="4">
+                        </pagination>
+                    </div>
+                </div>
+                <div v-show="editTemplateSection">
+                    <div class="row">
+                        <iframe id="loadstripotemplate" scrolling="no" :src="stripoEditorSrc" width="100%" height="1500"
+                                style="overflow:hidden; border:none!important;"></iframe>
                     </div>
                 </div>
 
 
                 <div class="row mt40">
-                    <div class="col-md-12"><hr class="mb25"></div>
-                    <div class="col-6" v-show="chooseTemplateSection"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="displayStep(1)"> <span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button></div>
-                    <div class="col-6" v-show="chooseTemplateSection == false"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="displayChooseTemplateSection"> <span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button></div>
-                    <div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(3)">Save and continue <span><img src="/assets/images/arrow-right-line.svg"></span></button></div>
+                    <div class="col-md-12">
+                        <hr class="mb25">
+                    </div>
+                    <div class="col-6" v-show="chooseTemplateSection">
+                        <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="displayStep(1)"><span
+                            class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back
+                        </button>
+                    </div>
+                    <div class="col-6" v-show="chooseTemplateSection == false">
+                        <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"
+                                @click="displayChooseTemplateSection"><span class="ml0 mr10"><img
+                            src="/assets/images/arrow-left-line.svg"></span>Back
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(3)">Save and
+                            continue <span><img src="/assets/images/arrow-right-line.svg"></span></button>
+                    </div>
                 </div>
 
             </div>
         </div>
         <!--Content Area End-->
+        <div class="box previewTemplatePopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon previewTemplate"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+                    <div class="p40">
+                        <div class="row" v-html="previewTemplate"></div>
+                        <div class="row bottom-position">
+                            <div class="col-md-12 mb15">
+                                <hr>
+                            </div>
+                            <div class="col-md-12"><input type="hidden" name="module_name" id="active_module_name"
+                                                          value="people"> <input type="hidden"
+                                                                                 name="module_account_id"
+                                                                                 id="module_account_id" :value="user.id">
+                                <button type="submit"
+                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 previewTemplate"
+                                        @click="saveSelectedTemplate">Select & Continue
+                                </button>
+                                <a href="#" class="blue_300 fsize16 fw600 ml20 previewTemplate">Close</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 <script>
-
+    import Pagination from '../../helpers/Pagination';
     export default {
+        components: {Pagination},
         data() {
             return {
                 successMsg: '',
@@ -209,32 +257,107 @@
                 campaign: {},
                 chooseTemplateSection: true,
                 listTemplateSection: false,
+                editTemplateSection: false,
+                templates: {},
+                mytemplates: {},
+                categories: {},
+                current_page: 1,
+                allData: '',
+                totalTemplates: 0,
                 user: {},
                 breadcrumb: '',
+                activeIndex: '',
+                previewTemplate: '',
+                selectedTemplate: '',
+                stripoEditorSrc: ''
             }
         },
         mounted() {
-            axios.get('/admin/broadcast/setup/' + this.campaignId)
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.moduleName = response.data.moduleName;
-                    this.campaign = response.data.oBroadcast;
-                    this.user = response.data.userData;
-                    this.loading = false;
-                });
+            this.loadPaginatedData();
         },
         methods: {
-            displayTemplateList: function(){
+            loadPaginatedData: function () {
+                axios.get('/admin/broadcast/setupLoadTemplates/'+this.campaignId+'?page=' + this.current_page)
+                    .then(response => {
+                        this.activeIndex = -2;
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.campaign = response.data.oBroadcast;
+                        this.categories = response.data.oCategories;
+                        this.templates = response.data.oTemplates;
+                        this.mytemplates = response.data.myTemplates;
+                        this.user = response.data.userData;
+                        this.loading = false;
+                        this.allData = response.data.allData;
+                        this.totalTemplates = this.allData.total;
+                        this.loading = false;
+                    });
+            },
+            showPaginationData: function (current_page) {
+                this.navigatePagination(current_page);
+            },
+            navigatePagination: function (p) {
+                this.loading = true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            displayPreview: function (data) {
+                this.selectedTemplate = data.id;
+                this.previewTemplate = atob(data.stripo_compiled_html);
+            },
+            saveSelectedTemplate: function () {
+                this.loading = true;
+                let templateId = this.selectedTemplate;
+                //Save Template into the database
+                axios.post('/admin/broadcast/addCampaignToBroadcast', {
+                    broadcast_id: this.campaignId,
+                    template_id: templateId,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.stripoEditorSrc = '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.campaign.id + '/' + this.campaign.broadcast_id;
+                        this.chooseTemplateSection = false;
+                        this.listTemplateSection = false;
+                        let elem = this;
+                        setTimeout(function () {
+                            elem.loading = false;
+                            elem.editTemplateSection = true;
+                        }, 2000);
+                    });
+
+
+            },
+            loadCategoriedTemplates: function (actionName, ix) {
+                this.activeIndex = ix;
+                this.loading = true;
+                this.current_page = 1;
+                axios.post('/admin/templates/getCategorizedTemplates?page=' + this.current_page, {
+                    action: actionName,
+                    campaign_type: 'email',
+                    method: 'manage',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+
+                        this.templates = response.data.oTemplates;
+                        this.loading = false;
+                        this.allData = response.data.allData;
+                        this.loading = false;
+                    });
+            },
+            displayTemplateList: function () {
                 this.chooseTemplateSection = false;
+                this.editTemplateSection = false;
                 this.listTemplateSection = true;
             },
-            displayChooseTemplateSection: function(){
+            displayChooseTemplateSection: function () {
                 this.chooseTemplateSection = true;
                 this.listTemplateSection = false;
+                this.editTemplateSection = false;
             },
-            displayStep: function(step){
-                let path = '/admin#/modules/emails/broadcast/setup/'+this.campaignId+'/'+step;
+            displayStep: function (step) {
+                let path = '/admin#/modules/emails/broadcast/setup/' + this.campaignId + '/' + step;
                 window.location.href = path;
             },
             applyDefaultInfo: function (e) {
@@ -261,10 +384,43 @@
                     this.loading = false;
                 });
 
-            }
+            },
         }
 
     };
+
+    let tkn = $('meta[name="_token"]').attr('content');
+    $(document).ready(function () {
+        $(document).on('click', '.previewTemplate', function () {
+            $(".previewTemplatePopup").animate({
+                width: "toggle"
+            });
+        });
+
+        $(document).on("click", "#wfBtnPopupSendTestEmail", function () {
+            var email = $("#wfTextPopupSendTestEmail").val();
+            var campaignId = $("#wf_test_email_campaign_id").val();
+            var moduleName = 'broadcast';
+            if(email == ''){
+                alert('Please enter email address');
+                return;
+            }
+            $.ajax({
+                url: '/admin/workflow/sendTestEmailworkflowCampaign',
+                type: "POST",
+                data: {_token: tkn, 'moduleName': moduleName, campaignId: campaignId, email: email},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 'success') {
+                        /*displayMessagePopup('success', 'Success', 'Test email sent successfully'); //javascript notification msg (edited)*/
+                        alert('Test email sent successfully');
+                        $("#wfSendTestEmail").modal("hide");
+                    }
+                }
+            });
+        });
+
+    });
 
 </script>
 

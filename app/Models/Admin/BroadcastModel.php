@@ -21,7 +21,10 @@ class BroadcastModel extends Model {
         $oData = DB::table('tbl_automations_emails')
                 ->leftJoin('tbl_automations_emails_events', 'tbl_automations_emails_events.automation_id', '=', 'tbl_automations_emails.id')
                 ->leftJoin('tbl_automations_emails_campaigns', 'tbl_automations_emails_campaigns.event_id', '=', 'tbl_automations_emails_events.id')
-                ->select('tbl_automations_emails_campaigns.*', 'tbl_automations_emails.id as broadcast_id', 'tbl_automations_emails.user_id', 'tbl_automations_emails.title', 'tbl_automations_emails.description', 'tbl_automations_emails.email_type', 'tbl_automations_emails.status as bc_status', 'tbl_automations_emails.created', 'tbl_automations_emails.sending_method', 'tbl_automations_emails_events.event_type', 'tbl_automations_emails_events.data')
+                ->select('tbl_automations_emails_campaigns.*', 'tbl_automations_emails.id as broadcast_id',
+                    'tbl_automations_emails.user_id', 'tbl_automations_emails.title', 'tbl_automations_emails.description',
+                    'tbl_automations_emails.email_type', 'tbl_automations_emails.status as bc_status', 'tbl_automations_emails.created',
+                    'tbl_automations_emails.sending_method', 'tbl_automations_emails_events.event_type', 'tbl_automations_emails_events.data')
                 ->where('tbl_automations_emails.deleted', 0)
                 ->where('tbl_automations_emails.email_type', 'broadcast')
                 ->when(($userID > 0), function ($query) use ($userID) {
@@ -33,8 +36,9 @@ class BroadcastModel extends Model {
                 ->when(!empty($campaign_type), function ($query) use ($campaign_type) {
                     return $query->where('tbl_automations_emails_campaigns.campaign_type', $campaign_type);
                 })
-                ->orderBy('tbl_automations_emails.id', 'asc')
-                ->get();
+                ->orderBy('tbl_automations_emails.id', 'desc')
+                ->paginate(10);
+                //->get();
 
         return $oData;
     }
