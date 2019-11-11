@@ -11672,6 +11672,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -11687,7 +11700,8 @@ __webpack_require__.r(__webpack_exports__);
       moduleAccountID: '',
       campaignId: this.$route.params.id,
       campaign: {},
-      chooseTemplateSection: true,
+      chooseTemplateSection: false,
+      chooseOtherTemplateSection: false,
       listTemplateSection: false,
       editTemplateSection: false,
       templates: {},
@@ -11723,10 +11737,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.templates = response.data.oTemplates;
         _this.mytemplates = response.data.myTemplates;
         _this.user = response.data.userData;
-        _this.loading = false;
         _this.allData = response.data.allData;
         _this.totalTemplates = _this.allData.total;
+        _this.stripoEditorSrc = '/admin/workflow/loadStripoCampaign/' + _this.moduleName + '/' + _this.campaign.id + '/' + _this.campaign.broadcast_id;
         _this.loading = false;
+        _this.chooseTemplateSection = true;
+
+        if (_this.campaign.template_source > 0) {
+          _this.displayEditTemplateSection();
+        }
       });
     },
     showPaginationData: function showPaginationData(current_page) {
@@ -11758,7 +11777,7 @@ __webpack_require__.r(__webpack_exports__);
         var elem = _this2;
         setTimeout(function () {
           elem.loading = false;
-          elem.editTemplateSection = true;
+          elem.displayEditTemplateSection();
         }, 2000);
       });
     },
@@ -11781,18 +11800,42 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     displayTemplateList: function displayTemplateList() {
+      document.querySelector('body').classList.remove("enlarge-menu");
       this.chooseTemplateSection = false;
       this.editTemplateSection = false;
       this.listTemplateSection = true;
     },
     displayChooseTemplateSection: function displayChooseTemplateSection() {
+      document.querySelector('body').classList.remove("enlarge-menu");
       this.chooseTemplateSection = true;
+      this.chooseOtherTemplateSection = false;
       this.listTemplateSection = false;
       this.editTemplateSection = false;
+    },
+    displayEditTemplateSection: function displayEditTemplateSection() {
+      this.loading = true;
+      var elem = this;
+      elem.chooseTemplateSection = false;
+      elem.listTemplateSection = false;
+      setTimeout(function () {
+        elem.chooseOtherTemplateSection = true;
+        elem.editTemplateSection = true;
+        document.querySelector('body').classList.add("enlarge-menu");
+        elem.loading = false;
+      }, 1000);
     },
     displayStep: function displayStep(step) {
       var path = '/admin#/modules/emails/broadcast/setup/' + this.campaignId + '/' + step;
       window.location.href = path;
+    },
+    saveTemplateContinue: function saveTemplateContinue(step) {
+      this.loading = true;
+      document.querySelector('#loadstripotemplate').contentWindow.document.querySelector('.fa-save').click();
+      var elem = this;
+      setTimeout(function () {
+        elem.loading = false;
+        elem.displayStep(step);
+      }, 2000); //this.displayStep(step);
     },
     applyDefaultInfo: function applyDefaultInfo(e) {
       if (e.target.checked) {
@@ -44732,8 +44775,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.chooseTemplateSection,
-                  expression: "chooseTemplateSection"
+                  value: _vm.chooseTemplateSection && !_vm.editTemplateSection,
+                  expression: "chooseTemplateSection && !editTemplateSection"
                 }
               ]
             },
@@ -44931,13 +44974,23 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "h3",
-                                { staticClass: "htxt_bold_16 dark_700 mb10" },
+                                {
+                                  staticClass: "htxt_bold_16 dark_700 mb10",
+                                  attrs: {
+                                    title: _vm.capitalizeFirstLetter(
+                                      template.template_name
+                                    )
+                                  }
+                                },
                                 [
                                   _vm._v(
                                     "\n                                        " +
                                       _vm._s(
-                                        _vm.capitalizeFirstLetter(
-                                          template.template_name
+                                        _vm.setStringLimit(
+                                          _vm.capitalizeFirstLetter(
+                                            template.template_name
+                                          ),
+                                          15
                                         )
                                       )
                                   )
@@ -45029,8 +45082,11 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.chooseTemplateSection == false,
-                    expression: "chooseTemplateSection == false"
+                    value:
+                      _vm.chooseTemplateSection == false &&
+                      !_vm.chooseOtherTemplateSection,
+                    expression:
+                      "chooseTemplateSection == false && !chooseOtherTemplateSection"
                   }
                 ],
                 staticClass: "col-6"
@@ -45048,22 +45104,69 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-6" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm bkg_email_300 light_000 float-right",
-                  on: {
-                    click: function($event) {
-                      return _vm.displayStep(3)
-                    }
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.chooseOtherTemplateSection,
+                    expression: "chooseOtherTemplateSection"
                   }
-                },
-                [
-                  _vm._v("Save and\n                        continue "),
-                  _vm._m(13)
-                ]
-              )
+                ],
+                staticClass: "col-6"
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-sm bkg_none border dark_200 pl10 min_w_96",
+                    on: { click: _vm.displayChooseTemplateSection }
+                  },
+                  [
+                    _vm._m(13),
+                    _vm._v("Choose Other Template\n                    ")
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-6" }, [
+              _vm.editTemplateSection
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-sm bkg_email_300 light_000 float-right",
+                      on: {
+                        click: function($event) {
+                          return _vm.saveTemplateContinue(3)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("Save and\n                        continue "),
+                      _vm._m(14)
+                    ]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-sm bkg_email_300 light_000 float-right",
+                      on: {
+                        click: function($event) {
+                          return _vm.displayStep(3)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("Save and\n                        continue "),
+                      _vm._m(15)
+                    ]
+                  )
             ])
           ])
         ])
@@ -45086,7 +45189,7 @@ var render = function() {
               "div",
               { staticStyle: { height: "100%", overflow: "hidden auto" } },
               [
-                _vm._m(14),
+                _vm._m(16),
                 _vm._v(" "),
                 _c("div", { staticClass: "p40" }, [
                   _c("div", {
@@ -45095,7 +45198,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "row bottom-position" }, [
-                    _vm._m(15),
+                    _vm._m(17),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("input", {
@@ -45426,6 +45529,22 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "ml0 mr10" }, [
       _c("img", { attrs: { src: "/assets/images/arrow-left-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "ml0 mr10" }, [
+      _c("img", { attrs: { src: "/assets/images/arrow-left-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("img", { attrs: { src: "/assets/images/arrow-right-line.svg" } })
     ])
   },
   function() {
@@ -60423,7 +60542,13 @@ var render = function() {
                                     [
                                       _c("em", [
                                         _vm._v(
-                                          "(" + _vm._s(campaign.bc_status) + ")"
+                                          "(" +
+                                            _vm._s(
+                                              _vm.capitalizeFirstLetter(
+                                                campaign.bc_status
+                                              )
+                                            ) +
+                                            ")"
                                         )
                                       ])
                                     ]

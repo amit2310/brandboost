@@ -132,7 +132,7 @@
                                 class="fsize11 fw500 dark_200"
                                 v-else
                             >
-                                <em>({{ campaign.bc_status }})</em>
+                                <em>({{ capitalizeFirstLetter(campaign.bc_status) }})</em>
                             </p>
                             <div style="min-height: 40px; margin: 4px 0;" class="img_box">
                                 <img src="assets/images/email_campaign_graph.png"/>

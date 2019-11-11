@@ -46,7 +46,7 @@
                 </div>
 
 
-                <div v-show="chooseTemplateSection">
+                <div v-show="chooseTemplateSection && !editTemplateSection">
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <h3 class="htxt_bold_20 dark_700 mb20 mt40">Select pre-made email template or create your
@@ -167,8 +167,8 @@
                                         <div class="temp_design_box"><img style="width:240px;height:172px;"
                                                                           :src="template.thumbnail ? template.thumbnail : `/assets/images/temp_prev9.png`"/>
                                         </div>
-                                        <h3 class="htxt_bold_16 dark_700 mb10">
-                                            {{capitalizeFirstLetter(template.template_name)}}</h3>
+                                        <h3 class="htxt_bold_16 dark_700 mb10" :title="capitalizeFirstLetter(template.template_name)">
+                                            {{setStringLimit(capitalizeFirstLetter(template.template_name), 15)}}</h3>
                                     </div>
                                 </div>
 
@@ -199,14 +199,27 @@
                             class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back
                         </button>
                     </div>
-                    <div class="col-6" v-show="chooseTemplateSection == false">
+                    <div class="col-6" v-show="chooseTemplateSection == false && !chooseOtherTemplateSection">
                         <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"
                                 @click="displayChooseTemplateSection"><span class="ml0 mr10"><img
                             src="/assets/images/arrow-left-line.svg"></span>Back
                         </button>
                     </div>
+                    <div class="col-6" v-show="chooseOtherTemplateSection">
+                        <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"
+                                @click="displayChooseTemplateSection"><span class="ml0 mr10"><img
+                            src="/assets/images/arrow-left-line.svg"></span>Choose Other Template
+                        </button>
+                    </div>
                     <div class="col-6">
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(3)">Save and
+                        <button
+                            class="btn btn-sm bkg_email_300 light_000 float-right"
+                            v-if="editTemplateSection"
+                            @click="saveTemplateContinue(3)"
+                        >Save and
+                            continue <span><img src="/assets/images/arrow-right-line.svg"></span>
+                        </button>
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(3)" v-else>Save and
                             continue <span><img src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
@@ -255,7 +268,8 @@
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
                 campaign: {},
-                chooseTemplateSection: true,
+                chooseTemplateSection: false,
+                chooseOtherTemplateSection: false,
                 listTemplateSection: false,
                 editTemplateSection: false,
                 templates: {},
@@ -288,10 +302,15 @@
                         this.templates = response.data.oTemplates;
                         this.mytemplates = response.data.myTemplates;
                         this.user = response.data.userData;
-                        this.loading = false;
                         this.allData = response.data.allData;
                         this.totalTemplates = this.allData.total;
+                        this.stripoEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.campaign.id + '/' + this.campaign.broadcast_id;
                         this.loading = false;
+                        this.chooseTemplateSection = true;
+                        if(this.campaign.template_source>0){
+                            this.displayEditTemplateSection();
+                        }
+
                     });
             },
             showPaginationData: function (current_page) {
@@ -322,7 +341,7 @@
                         let elem = this;
                         setTimeout(function () {
                             elem.loading = false;
-                            elem.editTemplateSection = true;
+                            elem.displayEditTemplateSection();
                         }, 2000);
                     });
 
@@ -347,18 +366,44 @@
                     });
             },
             displayTemplateList: function () {
+                document.querySelector('body').classList.remove("enlarge-menu");
                 this.chooseTemplateSection = false;
                 this.editTemplateSection = false;
                 this.listTemplateSection = true;
             },
             displayChooseTemplateSection: function () {
+                document.querySelector('body').classList.remove("enlarge-menu");
                 this.chooseTemplateSection = true;
+                this.chooseOtherTemplateSection = false;
                 this.listTemplateSection = false;
                 this.editTemplateSection = false;
+            },
+            displayEditTemplateSection: function(){
+                this.loading = true;
+                let elem = this;
+                elem.chooseTemplateSection = false;
+                elem.listTemplateSection = false;
+                setTimeout(function(){
+                    elem.chooseOtherTemplateSection = true;
+                    elem.editTemplateSection = true;
+                    document.querySelector('body').classList.add("enlarge-menu");
+                    elem.loading = false;
+                }, 1000);
+
             },
             displayStep: function (step) {
                 let path = '/admin#/modules/emails/broadcast/setup/' + this.campaignId + '/' + step;
                 window.location.href = path;
+            },
+            saveTemplateContinue: function(step){
+                this.loading = true;
+                document.querySelector('#loadstripotemplate').contentWindow.document.querySelector('.fa-save').click();
+                let elem= this;
+                setTimeout(function(){
+                    elem.loading = false;
+                    elem.displayStep(step);
+                }, 2000)
+                //this.displayStep(step);
             },
             applyDefaultInfo: function (e) {
                 if (e.target.checked) {
