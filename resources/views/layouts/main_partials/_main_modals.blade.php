@@ -1,3 +1,8 @@
+<style>
+    .hide {
+        display:none !important;
+    }
+</style>
 @php $countriesList = getCountriesList(); @endphp
 
 <div id="alertMessagePopup" style="z-index: 9999999999" class="modal fade">
