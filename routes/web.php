@@ -530,6 +530,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/broadcast/setup/{id?}', 'Admin\Broadcast@setup');
     Route::get('admin/broadcast/setupTargetAudience/{id?}', 'Admin\Broadcast@setupTargetAudience');
     Route::get('admin/broadcast/setupViewSummary/{id?}', 'Admin\Broadcast@setupViewSummary');
+    Route::get('admin/broadcast/setupLoadTemplates/{id?}', 'Admin\Broadcast@setupLoadTemplates');
     Route::post('admin/broadcast/addVariation', 'Admin\Broadcast@addVariation');
     Route::post('admin/broadcast/updateSplitTest', 'Admin\Broadcast@updateSplitTest');
     Route::post('admin/broadcast/updateBroadcastSettingUnit', 'Admin\Broadcast@updateBroadcastSettingUnit');

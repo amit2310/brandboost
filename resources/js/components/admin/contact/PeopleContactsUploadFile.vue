@@ -44,6 +44,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <h3 class="htxt_bold_20 dark_700 mt30 mb30">Import contacts from a file</h3>
+                        <p><a href="/assets/demo_data/subscribers.csv" target="_blank"> Click here to view sample csv file</a></p>
                     </div>
                 </div>
                 <!--<form method="post" action="/admin/subscriber/importSubscriberCSV" enctype="multipart/form-data" @submit.prevent="processForm">-->
@@ -55,7 +56,7 @@
                                 <!--<div class="img_vid_upload">
                                     <input class="d-none" type="file" name="" value="" id="companylogo">
                                 </div>-->
-                                File
+                                Files
                                 <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" required/>
 
                             </label>

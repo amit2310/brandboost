@@ -75,7 +75,7 @@ class Emails extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'Email' => '#/modules/emails/dashboard',
-            'Campaigns' => ''
+            'Workflows' => ''
         );
 
         if(!empty($oAutomations->items())){
@@ -135,6 +135,7 @@ class Emails extends Controller {
         $aData = array(
             'title' => 'Email Automations',
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'oAutomations' => $oAutomations->items(),
             'allData' => $oAutomations,
             'bActiveSubsription' => $bActiveSubsription,

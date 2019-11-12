@@ -5,11 +5,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Email Campaigns</h3>
+                        <h3 class="htxt_medium_24 dark_700">Email Workflows</h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/emailfilter.svg"/></button>
-                        <button class="btn btn-md bkg_email_300 light_000 js-email-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_email_300 light_000 js-email-workflow-slidebox"> New workflow <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -26,15 +26,15 @@
 
                             <div class="row mb65">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 email_400 htxt_bold_14" href="#">
-                                        <span class="circle-icon-32 float-left bkg_email_000 mr10"><img src="/assets/images/download-fill-email.svg"/></span>
-                                        Import campaign
+                                    <a class="lh_32 email_400 htxt_bold_14" href="javascript:void(0)">
+                                        <span class="circle-icon-32 float-left bkg_email_000 mr10"><img src="assets/images/download-fill-email.svg"/></span>
+                                        Import workflow
                                     </a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="/assets/images/question-line.svg"/></span>
-                                        Learn how to use segments
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0)">
+                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+                                        Learn how to use workflow
                                     </a>
                                 </div>
                             </div>
@@ -42,10 +42,10 @@
 
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 225px; " src="/assets/images/email_illustration.png">
-                                    <h3 class="htxt_bold_18 dark_700 mt30">No campaigns yet. Create a first one!</h3>
-                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or create email campaign!</h3>
-                                    <button class="btn btn-sm bkg_email_000 pr20 email_400 js-email-campaign-slidebox">Create email campaign</button>
+                                    <img class="mt40" style="max-width: 255px; " src="assets/images/email-workflow-image.png">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">No workflows so far. But you can change it!</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import workflows!</h3>
+                                    <button class="btn btn-sm bkg_email_000 pr20 email_400 js-email-workflow-slidebox">Create workflow</button>
                                 </div>
                             </div>
 
@@ -57,12 +57,14 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
             <div class="container-fluid" v-else>
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">Email Campaigns</h3>
+                            <h3 class="htxt_medium_16 dark_400">Email Workflows</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="table_action">
@@ -71,9 +73,9 @@
                                         <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Link 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Link 2</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Link 3</a>
                                     </div>
                                 </div>
                                 <div class="float-right ml10 mr10">
@@ -81,9 +83,9 @@
                                         <span><img src="assets/images/list_view.svg"></span>&nbsp; Cards
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Link 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Link 2</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Link 3</a>
                                     </div>
                                 </div>
                                 <div class="float-right">
@@ -96,10 +98,10 @@
 
 
                 <div class="row">
-                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id">
+                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id" @click="setupWorkflow(campaign.id)" style="cursor:pointer;">
                         <div class="card p0 pt30 min_h_275 text-center animate_top">
                             <div class="dot_dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareCampaignUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
@@ -111,8 +113,8 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
 
-                            <a href="#" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/send-plane-fill-email_blue.svg"/> </a>
-                            <a href="#" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/send-plane-fill-grey.svg"> </a>
+                            <a href="javascript:void(0)" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/flashlight-fill.svg"/> </a>
+                            <a href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/flashlight-fill-grey.svg"> </a>
                             <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
                             <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
                             <p class="fsize11 fw500 dark_200"><em>({{ campaign.status }})</em></p>
@@ -123,15 +125,15 @@
                             <div class="p15 pt15 btop">
                                 <ul class="workflow_list">
                                     <li><a href="javascript:void(0);" @click="setupAutomation(campaign.id)"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.stats.sent_total>999 ? (campaign.stats.sent_total/100)+'k' : campaign.stats.sent_total}}</a></li>
-                                    <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.stats.open_rate}}%</a></li>
-                                    <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.stats.click_rate}}%</a></li>
+                                    <li><a href="javascript:void(0)"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.stats.open_rate}}%</a></li>
+                                    <li><a href="javascript:void(0)"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.stats.click_rate}}%</a></li>
                                 </ul>
                             </div>
 
                         </div>
                     </div>
 
-                    <div class="col-md-3 text-center js-email-campaign-slidebox" style="cursor: pointer;">
+                    <div class="col-md-3 text-center js-email-workflow-slidebox" style="cursor: pointer;">
                         <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>Email Campaign</p>
@@ -154,25 +156,25 @@
 
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-email-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-email-workflow-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
                             <div class="col-md-12"> <img src="/assets/images/email_campaign_icon.svg"/>
-                                <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Email Campaign </h3>
+                                <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Workflow </h3>
                                 <hr class="mt30 mb30">
                             </div>
                             <div class="col-md-12">
 
                                     <div class="form-group">
-                                        <label for="title">Campaign name</label>
-                                        <input type="text" class="form-control h56" id="title" placeholder="Enter campaign name" name="title"
+                                        <label for="title">Workflow name</label>
+                                        <input type="text" class="form-control h56" id="title" placeholder="Enter workflow name" name="title"
                                                v-model="form.title">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="desc">Description</label>
-                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Campaign description"
+                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Workflow description"
                                                   name="description"
                                                   v-model="form.description"></textarea>
                                     </div>
@@ -180,8 +182,8 @@
                                     <hr class="mt30 mb30"/>
 
 
-                                    <div class="form-group">
-                                        <label class="mb10">Campaign type</label>
+                                    <div class="form-group" style="display:none;">
+                                        <label class="mb10">Workflow type</label>
                                         <div class="clearfix"></div>
 
 
@@ -255,7 +257,7 @@
                                 <input type="hidden" name="module_account_id" id="module_account_id"
                                        :value="moduleAccountID">
                                 <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                <a class="dark_200 fsize16 fw400 ml20" href="#">Close</a> </div>
+                                <a class="dark_200 fsize16 fw400 ml20 js-email-workflow-slidebox" href="javascript:void(0);">Close</a> </div>
                         </div>
                     </div>
                     </form>
@@ -276,7 +278,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                campaigns: {},
+                campaigns: '',
                 allData: {},
                 current_page: 1,
                 breadcrumb: '',
@@ -293,15 +295,15 @@
             this.loadPaginatedData();
         },
         methods: {
-            setupAutomation: function(campaignID){
-                window.location.href='#/modules/emails/setupAutomation/'+campaignID;
+            setupWorkflow: function(id){
+                window.location.href='#/modules/emails/workflow/setup/'+id;
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-email-campaign-slidebox').click();
+                document.querySelector('.js-email-workflow-slidebox').click();
             },
             prepareCampaignUpdate: function(campaignId) {
                 this.getCampaignInfo(campaignId);
@@ -347,7 +349,7 @@
                             this.loading = false;
                             //this.form = {};
                             this.form.automation_id ='';
-                            document.querySelector('.js-email-campaign-slidebox').click();
+                            document.querySelector('.js-email-workflow-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
                             var elem = this;
                             setTimeout(function () {
@@ -435,7 +437,7 @@
     };
 
     $(document).ready(function () {
-        $(document).on('click', '.js-email-campaign-slidebox', function(){
+        $(document).on('click', '.js-email-workflow-slidebox', function(){
             $(".box").animate({
                 width: "toggle"
             });
