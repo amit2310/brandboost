@@ -1012,4 +1012,209 @@ class Subscribers extends Controller
         }
     }
 
+
+    /**
+     * Used to import subscribers through csv file
+     */
+    public function readSubscriberCSV(Request $request)
+    {
+
+        $csvimport = new Csvimport();
+        $mSubscriber = new SubscriberModel();
+        $mSettings = new SettingsModel();
+        $mWorkflow = new WorkflowModel();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $someoneadded = false;
+
+        $file_path     = $request->file('file');
+        //$fileName = $file->getClientOriginalName();
+        //$contents = file_get_contents($file_path);
+        //echo $contents;
+
+        //$file_path = $request->file('userfile')->getRealPath();
+
+        //$aData['file_path'] = $file_path;
+        if ($csvimport->get_array($file_path)) {
+            $csv_array = $csvimport->get_array($file_path);
+            $aData = $csv_array;
+
+            $response = array('status' => 'success', 'aSubscribers' => $aData, 'file_path' => $file_path->getPathName());
+        } else {
+            $response = array('status' => 'error', 'msg' => 'Not found');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+
+    /**
+     * Used to import subscribers through csv file
+     */
+    public function importSubscriberList(Request $request)
+    {
+        $csvimport = new Csvimport();
+        $mSubscriber = new SubscriberModel();
+        $mSettings = new SettingsModel();
+        $mWorkflow = new WorkflowModel();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $someoneadded = false;
+
+
+        $moduleName = 'list';//$request->module_name;
+        $moduleAccountID = '';//$request->module_account_id;
+        $redirectURL = '#/contacts/mycontacts';//$request->redirect_url;
+
+        $dataSubscribers     = $request->dataSubscribers;
+
+        if (!empty($dataSubscribers)) {
+            $csv_array = json_decode($dataSubscribers);
+
+            $aSuppressionList = $mSubscriber->getSuppressionList();
+            $imported = 0;
+
+            foreach ($csv_array as $row) {
+
+                $firstName = $row->FIRST_NAME;
+                $lastName = $row->LAST_NAME;
+                $email = $row->EMAIL;
+                $phone = $row->PHONE;
+                $gender = $row->GENDER; //male/female
+                $countryCode = $row->COUNTRY; //Contry code
+                $cityName = $row->CITY;
+                $stateName = $row->STATE;
+                $zipCode = $row->ZIP;
+                $twitterProfile = $row->TWITTER_PROFILE != '' ? $row->TWITTER_PROFILE : '';
+                $facebookProfile = $row->FACEBOOK_PROFILE != '' ? $row->FACEBOOK_PROFILE : '';
+                //$linkedinProfile = $row->LINKEDIN_PROFILE'];
+                $instagramProfile = $row->INSTAGRAM_PROFILE != '' ? $row->INSTAGRAM_PROFILE : '';
+                $socialProfile = $row->OTHER_SOCIAL_PROFILE != '' ? $row->OTHER_SOCIAL_PROFILE : '';
+                $emailUserId = 0;
+
+                if (!in_array(strtolower($email), $aSuppressionList)) {
+                    $imported++;
+                    $emailUser = UsersModel::checkEmailExist($email);
+                    if (!empty($emailUser)) {
+                        if (!empty($emailUser[0])) {
+                            $emailUserId = $emailUser[0]->id;
+                        }
+
+                    }
+
+                    $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
+                    if (!empty($oGlobalUser)) {
+                        $iSubscriberID = $oGlobalUser->id;
+                    } else {
+                        //Add global subscriber
+                        $aSubscriberData = array(
+                            'owner_id' => $userID,
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
+                            'email' => $email,
+                            'phone' => $phone,
+                            'gender' => $gender,
+                            'country_code' => $countryCode,
+                            'cityName' => $cityName,
+                            'stateName' => $stateName,
+                            'zipCode' => $zipCode,
+                            'facebook_profile' => $facebookProfile,
+                            'twitter_profile' => $twitterProfile,
+                            //'linkedin_profile' => $linkedinProfile,
+                            'instagram_profile' => $instagramProfile,
+                            'socialProfile' => $socialProfile,
+                            'created' => date("Y-m-d H:i:s")
+                        );
+                        if (!empty($emailUserId)) {
+                            $aSubscriberData['user_id'] = $emailUserId;
+                        }
+
+                        $iSubscriberID = SubscriberModel::addGlobalSubscriber($aSubscriberData);
+                    }
+
+                    if (!empty($moduleName)) {
+                        $aData = array(
+                            'user_id' => $emailUserId,
+                            'subscriber_id' => $iSubscriberID,
+                            'created' => date("Y-m-d H:i:s")
+                        );
+
+                        if ($moduleName == 'list') {
+                            $aData['list_id'] = $moduleAccountID;
+                            $tableName = 'tbl_automation_users';
+                        } else if ($moduleName == 'brandboost') {
+                            $aData['brandboost_id'] = $moduleAccountID;
+                            $tableName = 'tbl_brandboost_users';
+                        } else if ($moduleName == 'referral') {
+                            $aData['account_id'] = $moduleAccountID;
+                            $tableName = 'tbl_referral_users';
+                        } else if ($moduleName == 'nps') {
+                            $aData['account_id'] = $moduleAccountID;
+                            $tableName = 'tbl_nps_users';
+                        }
+
+                        if (!empty($tableName)) {
+                            $result = $mSubscriber->addModuleSubscriber($aData, $moduleName, $tableName);
+                            $someoneadded = true;
+                        }
+                    }
+                }
+            }
+
+
+            //Log Import History
+            if ($imported > 0) {
+                $aHistoryData = array(
+                    'user_id' => $userID,
+                    'import_name' => 'Contacts',
+                    'item_count' => $imported,
+                    'created' => date("Y-m-d H:i:s")
+                );
+                $mSettings->logImportHistory($aHistoryData);
+            }
+
+
+            if ($someoneadded == true) {
+                //Add Useractivity log
+                $aActivityData = array(
+                    'user_id' => $userID,
+                    'module_name' => $moduleName,
+                    'module_account_id' => $moduleAccountID,
+                    'event_type' => 'import_subscribers',
+                    'action_name' => 'imported_contact',
+                    'list_id' => '',
+                    'brandboost_id' => '',
+                    'campaign_id' => '',
+                    'inviter_id' => '',
+                    'subscriber_id' => '',
+                    'feedback_id' => '',
+                    'activity_message' => 'Imported subscribers',
+                    'activity_created' => date("Y-m-d H:i:s")
+                );
+                logUserActivity($aActivityData);
+            }
+            $mWorkflow->syncWorkflowAudienceGlobalModel();
+
+            $response = array('status' => 'success', 'redirectURL' => $redirectURL);
+        } else {
+            $response = array('status' => 'error', 'msg' => 'Error occured');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+
+    public function store(Request $request)
+    {
+        $file     = request()->file('file');
+        $fileName = rand(1, 999) . $file->getClientOriginalName();
+        $filePath = "/uploads/" . date("Y") . '/' . date("m") . "/" . $fileName;
+
+        $file->storeAs('uploads/'. date("Y") . '/' . date("m") . '/', $fileName, 'uploads');
+
+        return File::create(['file_name' => $fileName, 'path' => $filePath, 'file_extension' => $file->getClientOriginalExtension()]);
+    }
+
 }

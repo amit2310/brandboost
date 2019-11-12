@@ -599,9 +599,12 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/subscriber/update_contact', 'Admin\Subscribers@update_contact');
     Route::get('admin/subscriber/exportSubscriberCSV', 'Admin\Subscribers@exportSubscriberCSV');
     Route::post('admin/subscriber/importSubscriberCSV', 'Admin\Subscribers@importSubscriberCSV');
+    Route::post('admin/subscriber/importSubscriberList', 'Admin\Subscribers@importSubscriberList');
+    Route::post('admin/subscriber/readSubscriberCSV', 'Admin\Subscribers@readSubscriberCSV');
     Route::post('admin/subscriber/moveToArchiveModuleContact', 'Admin\Subscribers@moveToArchiveModuleContact');
     Route::post('admin/subscriber/changeModuleContactStatus', 'Admin\Subscribers@changeModuleContactStatus');
     Route::post('admin/subscriber/getSubscriberDetail', 'Admin\Subscribers@getSubscriberDetail');
+    Route::post('admin/subscriber/getSubscriberDetailFile', 'Admin\Subscribers@getSubscriberDetailFile');
     Route::post('admin/subscriber/updateSubscriberDetails', 'Admin\Subscribers@updateSubscriberDetails');
     Route::post('admin/subscriber/deleteModuleSubscriber', 'Admin\Subscribers@deleteModuleSubscriber');
     Route::post('admin/subscriber/deleteBulkModuleContacts', 'Admin\Subscribers@deleteBulkModuleContacts');
