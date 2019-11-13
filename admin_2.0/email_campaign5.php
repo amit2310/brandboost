@@ -14,27 +14,13 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
-<!--<style>
-	.apexcharts-xaxis, .apexcharts-yaxis {
-	pointer-events: none;
-	display: none;
-}
-	.apexcharts-xaxis-tick{display: none}
-	
-	</style>-->
-	
+
 <style>
 	.card{overflow: hidden}
-	#chart3 .apexcharts-legend {
-	visibility:visible;
-	display: block;
-		top: 60px!important;
-}
+	#chart3 .apexcharts-legend {visibility:visible;	display: block;	top: 60px!important;}
 	.apexcharts-xaxis, .apexcharts-xaxis-tick{display: none;}
-	
 	.apexcharts-gridlines-horizontal, .apexcharts-gridRow{display: none;}
-	
-	</style>
+</style>
 
 </head>
 <body id="EmailSection">
@@ -84,7 +70,7 @@
     
     
     <div class="row">
-    	<div class="col-md-4 d-flex">
+    	<div class="col-md-3 d-flex">
     		<div class="card p0 pt0 pb0 text-center animate_top col">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
@@ -100,7 +86,7 @@
     		</div>
     	</div>
     	
-    	<div class="col-md-4 d-flex">
+    	<div class="col-md-3 d-flex">
     		<div class="card p0 pt0 pb0 text-center animate_top col">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
@@ -116,7 +102,7 @@
     		</div>
     	</div>
     	
-    	<div class="col-md-4 d-flex">
+    	<div class="col-md-3 d-flex">
     		<div class="card p0 pt0 pb0 text-center animate_top col">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
@@ -135,7 +121,7 @@
     	
     </div>
     <div class="row">
-    	<div class="col-md-4 d-flex">
+    	<div class="col-md-3 d-flex">
     		<div class="card p0 pt0 pb0 text-center animate_top col">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
@@ -151,7 +137,7 @@
     		</div>
     	</div>
     	
-    	<div class="col-md-4 d-flex">
+    	<div class="col-md-3 d-flex">
     		<div class="card p0 pt0 pb0 text-center animate_top col">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
@@ -167,7 +153,7 @@
     		</div>
     	</div>
     	
-    	<div class="col-md-4 d-flex">
+    	<div class="col-md-3 d-flex">
     		<div class="card p0 pt0 pb0 text-center animate_top col">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
