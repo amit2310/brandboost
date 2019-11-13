@@ -43,23 +43,20 @@
 
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="htxt_bold_20 dark_700 mt30 mb30">Import contacts from a file</h3>
+                        <h3 class="htxt_bold_20 dark_700 mt30 mb30">Import contacts using copy & paste</h3>
                         <p><a href="/assets/demo_data/subscribers.csv" target="_blank"> Click here to view sample csv file</a></p>
                     </div>
                 </div>
-                <!--<form method="post" action="/admin/subscriber/importSubscriberCSV" enctype="multipart/form-data" @submit.prevent="processForm">-->
+                <form method="post" @submit.prevent="processForm">
                 <div class="row mt30">
                     <div class="col-md-9 text-center">
                         <div class="card p20 min_h_240">
-                            <label class="display-block m0" for="companylogo" style="padding-top:80px;">
 
-                                <!--<div class="img_vid_upload">
-                                    <input class="d-none" type="file" name="" value="" id="companylogo">
-                                </div>-->
-                                Files
-                                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" required/>
-                                <p> Only .csv files are allowed to upload and import into the database.</p>
-                            </label>
+                            <p> Subscribers lists with details, please copy the sample data and paste in the below input area</p>
+                                <label for="desc">Subscribers Details</label>
+                                <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Subscribers details"
+                                          name="fileContent"
+                                          v-model="form.fileContent" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -72,10 +69,9 @@
                 <div class="row mt40">
                     <div class="col-md-12"><hr class="mb25"></div>
                     <div class="col-6" @click="goToPrevious()" style="cursor: pointer;"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
-                    <!--<div class="col-6" @click="listMappingPage()" style="cursor: pointer;"><button class="btn btn-sm bkg_blue_200 light_000 float-right">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>-->
-                    <div class="col-6" style="cursor: pointer;"><button class="btn btn-sm bkg_blue_200 light_000 float-right" @click="submitFile()">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
+                    <div class="col-6" style="cursor: pointer;"><button class="btn btn-sm bkg_blue_200 light_000 float-right">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
                 </div>
-                <!--</form>-->
+                </form>
             </div>
         </div>
 
@@ -178,7 +174,9 @@
         title: 'People Contacts Upload File - Brand Boost',
         data() {
             return {
-                file: '',
+                form: {
+                    fileContent: ''
+                },
                 oSubscribers: '',
                 dataSubscribers: ''
             }
@@ -190,43 +188,23 @@
             goToPrevious: function() {
                 this.$router.go()
             },
-            listMappingPage: function() {
-                window.location.href = '#/contacts/listmapping';
-            },
-            submitFile(){
-                let formData = new FormData();
-
-                /*
-                    Add the form data we need to submit
-                */
-                formData.append('file', this.file);
-
-                axios.post( '/admin/subscriber/readSubscriberCSV',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                )
+            processForm : function(){
+                let formActionSrc = '';
+                formActionSrc = '/admin/subscriber/readSubscriberCSV';
+                axios.post(formActionSrc , this.form)
                     .then(response => {
-                        //console.log(response.data);
+                        console.log(response.data)
                         if (response.data.status == 'success') {
-
                             this.oSubscribers = response.data.aSubscribers;
                             this.dataSubscribers = JSON.stringify(this.oSubscribers);
-                            //console.log(JSON.stringify(this.oSubscribers));
                         }
                         else if (response.data.status == 'error') {
                             alert('Error: Something went wrong.');
                         }
-                })
-                    .catch(function(){
-                        console.log('FAILURE!!');
+                    })
+                    .catch(error => {
+                        console.log(error);
                     });
-            },
-            handleFileUpload(){
-                this.file = this.$refs.file.files[0];
             },
             importSubscribers(dataSubscribers) {
                 axios.post( '/admin/subscriber/importSubscriberList', {
@@ -234,7 +212,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        console.log(response.data);
+                        //console.log(response.data);
                         if (response.data.status == 'success') {
                             window.location.href = response.data.redirectURL;
                         }

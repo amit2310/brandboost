@@ -31,10 +31,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="import_list">
-                                    <li><a class="active" href="#">Select import type</a></li>
-                                    <li><a class="" href="#">Upload contacts</a></li>
-                                    <li><a href="#">Match fields</a></li>
-                                    <li><a href="#">Confirm Import</a></li>
+                                    <li><a class="active" href="#/contacts/import">Select import type</a></li>
+                                    <li><a class="" href="javascript:void(0);">Upload contacts</a></li>
+                                    <li><a href="javascript:void(0);">Match fields</a></li>
+                                    <li><a href="javascript:void(0);">Confirm Import</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 <p class="htxt_regular_12 dark_300 mb10">Upload .csv or .txt files from your computer</p>
                             </div>
                         </div>
-                        <div class="col-md-3 text-center">
+                        <div class="col-md-3 text-center" @click="copyPaste()" style="cursor: pointer;">
                             <div class="card p30 min_h_240">
                                 <img src="assets/images/edit_new_write.svg">
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">Copy & paste <br>contacts</h3>
@@ -224,6 +224,9 @@
                 //$('#upload-file-step-1').hide();
                 //$('#upload-file-step-2').show();
                 window.location.href='#/contacts/uploadfile';
+            },
+            copyPaste: function() {
+                window.location.href='#/contacts/copypaste';
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){

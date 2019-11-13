@@ -1027,21 +1027,43 @@ class Subscribers extends Controller
         $userID = $oUser->id;
         $someoneadded = false;
 
-        $file_path     = $request->file('file');
-        //$fileName = $file->getClientOriginalName();
-        //$contents = file_get_contents($file_path);
-        //echo $contents;
+        if(!empty($request->fileContent)) {
+            $fileContent = $request->fileContent;
 
-        //$file_path = $request->file('userfile')->getRealPath();
+            if (!empty($fileContent)) {
+                $fileContentArr = explode("\n",$fileContent);
 
-        //$aData['file_path'] = $file_path;
-        if ($csvimport->get_array($file_path)) {
-            $csv_array = $csvimport->get_array($file_path);
-            $aData = $csv_array;
+                $headersArr = explode(",",$fileContentArr[0]);
+                unset($fileContentArr[0]);
+//pre($headersArr);
+                $newArr = [];
+                foreach($fileContentArr as $ind => $row) {
+                    $rowArr = explode(",",$row);
 
-            $response = array('status' => 'success', 'aSubscribers' => $aData, 'file_path' => $file_path->getPathName());
+                    $newArr[] = array_combine($headersArr, $rowArr);
+                }
+
+                $aData = $newArr;
+
+                $response = array('status' => 'success', 'aSubscribers' => $aData);
+            } else {
+                $response = array('status' => 'error', 'msg' => 'Not found');
+            }
         } else {
-            $response = array('status' => 'error', 'msg' => 'Not found');
+            $file_path     = $request->file('file');
+            //$fileName = $file->getClientOriginalName();
+            //$contents = file_get_contents($file_path);
+            //echo $contents;
+
+            if ($csvimport->get_array($file_path)) {
+                $csv_array = $csvimport->get_array($file_path);
+                $aData = $csv_array;
+
+                //$response = array('status' => 'success', 'aSubscribers' => $aData, 'file_path' => $file_path->getPathName());
+                $response = array('status' => 'success', 'aSubscribers' => $aData);
+            } else {
+                $response = array('status' => 'error', 'msg' => 'Not found');
+            }
         }
 
         echo json_encode($response);
