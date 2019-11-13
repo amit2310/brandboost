@@ -54,7 +54,9 @@ Misc
 .ls4{letter-spacing: 0.4px}
 .h-100-vh{height: 100vh}
 .bottom_positiom{position: absolute; width: 100%; bottom: 0}
-
+.max_h_230{max-height: 230px!important}
+.max_h_300{max-height: 300px!important}
+.max_h_260{max-height: 260px!important}
 
 
 
