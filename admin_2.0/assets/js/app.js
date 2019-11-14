@@ -58,7 +58,7 @@
 
 
 
-
+$(".slimScrollBar").hide();
 
 
 
