@@ -15156,6 +15156,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       file: '',
       oSubscribers: '',
+      file_path: '',
       dataSubscribers: ''
     };
   },
@@ -15187,6 +15188,8 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data.status == 'success') {
           _this.oSubscribers = response.data.aSubscribers;
           _this.dataSubscribers = JSON.stringify(_this.oSubscribers); //console.log(JSON.stringify(this.oSubscribers));
+
+          _this.file_path = JSON.stringify(_this.oSubscribers);
         } else if (response.data.status == 'error') {
           alert('Error: Something went wrong.');
         }
@@ -68844,7 +68847,8 @@ var render = function() {
                           attrs: {
                             id: "desc",
                             placeholder: "Subscribers details",
-                            name: "fileContent"
+                            name: "fileContent",
+                            required: ""
                           },
                           domProps: { value: _vm.form.fileContent },
                           on: {
@@ -70515,13 +70519,7 @@ var render = function() {
                               return _vm.handleFileUpload()
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            " Only .csv files are allowed to upload and import into the database."
-                          )
-                        ])
+                        })
                       ]
                     )
                   ])
@@ -70771,34 +70769,23 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-12" }, [
           _c("ul", { staticClass: "import_list" }, [
             _c("li", [
-              _c(
-                "a",
-                { staticClass: "done", attrs: { href: "#/contacts/import" } },
-                [_vm._v("Select import type")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  staticClass: "active",
-                  attrs: { href: "javascript:void(0);" }
-                },
-                [_vm._v("Upload contacts")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "javascript:void(0);" } }, [
-                _vm._v("Match fields")
+              _c("a", { staticClass: "done", attrs: { href: "#" } }, [
+                _vm._v("Select import type")
               ])
             ]),
             _vm._v(" "),
             _c("li", [
-              _c("a", { attrs: { href: "javascript:void(0);" } }, [
-                _vm._v("Confirm Import")
+              _c("a", { staticClass: "active", attrs: { href: "#" } }, [
+                _vm._v("Upload contacts")
               ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Match fields")])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Confirm Import")])
             ])
           ])
         ])
@@ -70888,36 +70875,25 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-12" }, [
           _c("ul", { staticClass: "import_list" }, [
             _c("li", [
-              _c(
-                "a",
-                { staticClass: "done", attrs: { href: "#/contacts/import" } },
-                [_vm._v("Select import type")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                { staticClass: "done", attrs: { href: "javascript:void(0);" } },
-                [_vm._v("Upload contacts")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  staticClass: "active",
-                  attrs: { href: "javascript:void(0);" }
-                },
-                [_vm._v("Match fields")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "javascript:void(0);" } }, [
-                _vm._v("Confirm Import")
+              _c("a", { staticClass: "done", attrs: { href: "#" } }, [
+                _vm._v("Select import type")
               ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { staticClass: "done", attrs: { href: "#" } }, [
+                _vm._v("Upload contacts")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { staticClass: "active", attrs: { href: "#" } }, [
+                _vm._v("Match fields")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Confirm Import")])
             ])
           ])
         ])

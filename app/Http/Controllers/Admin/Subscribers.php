@@ -1014,6 +1014,75 @@ class Subscribers extends Controller
 
 
     /**
+     * Used to import subscribers through csv file and mapping
+     */
+    public function readSubscriberCSVToMap(Request $request)
+    {
+        $csvimport = new Csvimport();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if(!empty($request->fileContent)) {
+            $fileContent = $request->fileContent;
+
+            if (!empty($fileContent)) {
+                $fileContentArr = explode("\n",$fileContent);
+
+                $headersArr = explode(",",$fileContentArr[0]);
+                unset($fileContentArr[0]);
+//pre($headersArr);
+                $newArr = [];
+                foreach($fileContentArr as $ind => $row) {
+                    $rowArr = explode(",",$row);
+
+                    $newArr[] = array_combine($headersArr, $rowArr);
+                }
+
+                $aData = $newArr;
+
+                $response = array('status' => 'success', 'aSubscribers' => $aData);
+            } else {
+                $response = array('status' => 'error', 'msg' => 'Not found');
+            }
+        } else {
+            $file_path     = $request->file('file');
+            //$fileName = $file->getClientOriginalName();
+            //$contents = file_get_contents($file_path);
+            //echo $contents;
+
+            if ($csvimport->get_array($file_path)) {
+                $csv_array = $csvimport->get_array($file_path);
+
+                $arr = [];
+                foreach($csv_array[0] as $k=>$v) {
+                    $csv_array_sample['ind'] = $k;
+                    $csv_array_sample['val'] = $v;
+                    $arr[] = $csv_array_sample;
+                }
+
+                $aData = $arr;
+
+                $response = array('status' => 'success', 'aSubscribers' => $csv_array, 'aSubscribersToMap' => $aData);
+            } else {
+                $response = array('status' => 'error', 'msg' => 'Not found');
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Used to map the file fields with the database
+     */
+    public function mapSubscriberCSV(Request $request)
+    {
+        echo "-----------".json_encode($request->selected);
+        echo "-----------".$dataSubscribers     = $request->dataSubscribers;
+        exit;
+    }
+
+    /**
      * Used to import subscribers through csv file
      */
     public function readSubscriberCSV(Request $request)

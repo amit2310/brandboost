@@ -602,6 +602,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/subscriber/importSubscriberCSV', 'Admin\Subscribers@importSubscriberCSV');
     Route::post('admin/subscriber/importSubscriberList', 'Admin\Subscribers@importSubscriberList');
     Route::post('admin/subscriber/readSubscriberCSV', 'Admin\Subscribers@readSubscriberCSV');
+    Route::post('admin/subscriber/mapSubscriberCSV', 'Admin\Subscribers@mapSubscriberCSV');
+    Route::post('admin/subscriber/readSubscriberCSVToMap', 'Admin\Subscribers@readSubscriberCSVToMap');
     Route::post('admin/subscriber/moveToArchiveModuleContact', 'Admin\Subscribers@moveToArchiveModuleContact');
     Route::post('admin/subscriber/changeModuleContactStatus', 'Admin\Subscribers@changeModuleContactStatus');
     Route::post('admin/subscriber/getSubscriberDetail', 'Admin\Subscribers@getSubscriberDetail');

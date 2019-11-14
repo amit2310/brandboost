@@ -212,7 +212,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        //console.log(response.data);
+                        console.log(response.data);
                         if (response.data.status == 'success') {
                             window.location.href = response.data.redirectURL;
                         }

@@ -31,10 +31,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="import_list">
-                                <li><a class="done" href="#/contacts/import">Select import type</a></li>
-                                <li><a class="active" href="javascript:void(0);">Upload contacts</a></li>
-                                <li><a href="javascript:void(0);">Match fields</a></li>
-                                <li><a href="javascript:void(0);">Confirm Import</a></li>
+                                <li><a class="done" href="#">Select import type</a></li>
+                                <li><a class="active" href="#">Upload contacts</a></li>
+                                <li><a href="#">Match fields</a></li>
+                                <li><a href="#">Confirm Import</a></li>
                             </ul>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 </div>-->
                                 Files
                                 <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" required/>
-                                <p> Only .csv files are allowed to upload and import into the database.</p>
+
                             </label>
                         </div>
                     </div>
@@ -88,10 +88,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="import_list">
-                                <li><a class="done" href="#/contacts/import">Select import type</a></li>
-                                <li><a class="done" href="javascript:void(0);">Upload contacts</a></li>
-                                <li><a class="active" href="javascript:void(0);">Match fields</a></li>
-                                <li><a href="javascript:void(0);">Confirm Import</a></li>
+                                <li><a class="done" href="#">Select import type</a></li>
+                                <li><a class="done" href="#">Upload contacts</a></li>
+                                <li><a class="active" href="#">Match fields</a></li>
+                                <li><a href="#">Confirm Import</a></li>
                             </ul>
                         </div>
                     </div>
@@ -180,6 +180,7 @@
             return {
                 file: '',
                 oSubscribers: '',
+                file_path: '',
                 dataSubscribers: ''
             }
         },
@@ -216,11 +217,12 @@
                             this.oSubscribers = response.data.aSubscribers;
                             this.dataSubscribers = JSON.stringify(this.oSubscribers);
                             //console.log(JSON.stringify(this.oSubscribers));
+                            this.file_path = JSON.stringify(this.oSubscribers);
                         }
                         else if (response.data.status == 'error') {
                             alert('Error: Something went wrong.');
                         }
-                })
+                    })
                     .catch(function(){
                         console.log('FAILURE!!');
                     });
