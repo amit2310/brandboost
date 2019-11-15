@@ -12,9 +12,7 @@
                     <div class="p0 bkg_white bbot">
                         <table class="table">
                             <thead>
-                            <tr style="display: block;">
-                                <th style="display: none;"></th>
-                                <th style="display: none;"></th>
+                            <tr>
                                 <th></th>
                                 <th><i class=""></i> List Name</th>
                                 <th><i class=""></i> Contacts</th>
@@ -29,11 +27,9 @@
                             </tr>-->
 
                             <tr v-for="(list, idx) in lists">
-                                <td style="display: none;">{{ displayDateFormat('m/d/Y', list[0].list_created) }}</td>
-                                <td style="display: none;">{{ list[0].id }}</td>
                                 <td>
                                     <label class="custmo_checkbox ">
-                                        <input type="checkbox" name="checkRows[]" class="addToCampaign"
+                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="excludeToList($event, list[0].id)"
                                                :value="list[0].id" :checked="selected_lists.includes(list[0].id)" />
                                         <span class="custmo_checkmark sblue"></span>
                                     </label>
@@ -46,7 +42,7 @@
                                         <div class=""><a href="javascript:void(0);" class="text-default text-semibold">{{ list[0].list_name }}</a> </div>
                                     </div>
                                 </td>
-                                <td class="text-right">{{list.length}}</td>
+                                <td>{{list.length}}</td>
                                 <td class="text-right">
                                     <div class="media-left text-right pull-right">
                                         <div class=""><a href="#" class="txt_grey">{{ displayDateFormat('m d, Y', list[0].list_created) }}
@@ -135,6 +131,10 @@
             },
             backtoOption: function(){
                 this.$emit('backToMain');
+            },
+            excludeToList: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                this.$emit('excludeContact', id, actionName);
             }
         }
 

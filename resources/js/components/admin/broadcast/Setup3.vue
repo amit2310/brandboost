@@ -123,7 +123,7 @@
             <div style="width: 80%;overflow: hidden;height: 100%;">
                 <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon includeAudience"><i><img
                     src="/assets/images/cross.svg"></i></a>
-                    <target-audience-include :campaignId="campaignId"></target-audience-include>
+                    <target-audience-include :campaignId="campaignId" @loadFreshData="refreshBroadcastData"></target-audience-include>
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
             <div style="width: 80%;overflow: hidden;height: 100%;">
                 <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon excludeAudience"><i><img
                     src="/assets/images/cross.svg"></i></a>
-                    <target-audience-exclude :campaignId="campaignId"></target-audience-exclude>
+                    <target-audience-exclude :campaignId="campaignId" @loadFreshData="refreshBroadcastData"></target-audience-exclude>
                 </div>
             </div>
         </div>
@@ -222,7 +222,11 @@
                 this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            refreshBroadcastData: function(){
+                this.loadPaginatedData();
             }
+
         }
 
     };

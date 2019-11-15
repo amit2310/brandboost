@@ -30,7 +30,7 @@
                                 <td style="display: none;">{{ segment.id }}</td>
                                 <td>
                                     <label class="custmo_checkbox ">
-                                        <input type="checkbox" name="checkRows[]" class="addToCampaign"
+                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="excludeToSegments($event,segment.id)"
                                                :value="segment.id" :checked="selected_segments.includes(segment.id)" />
                                         <span class="custmo_checkmark sblue"></span>
                                     </label>
@@ -124,6 +124,10 @@
             },
             backtoOption: function(){
                 this.$emit('backToMain');
+            },
+            excludeToSegments: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                this.$emit('excludeContact', id, actionName);
             }
         }
 

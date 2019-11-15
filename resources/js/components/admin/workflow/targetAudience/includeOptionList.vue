@@ -65,18 +65,22 @@
 
         </div>
         <div>
-            <target-audience-contacts :campaignId="campaignId" v-show="displayContacts" @includeContact="addContact" @backToMain="backToMainMenu"></target-audience-contacts>
-            <target-audience-lists :campaignId="campaignId" v-show="displayLists" @includeContact="addList" @backToMain="backToMainMenu"></target-audience-lists>
-            <target-audience-segments :campaignId="campaignId" v-show="displaySegments" @includeContact="addSegment" @backToMain="backToMainMenu"></target-audience-segments>
-            <target-audience-tags :campaignId="campaignId" v-show="displayTags" @includeContact="addTags" @backToMain="backToMainMenu"></target-audience-tags>
+            <target-audience-contacts :campaignId="campaignId" v-show="displayContacts" @includeContact="addContact"
+                                      @backToMain="backToMainMenu"></target-audience-contacts>
+            <target-audience-lists :campaignId="campaignId" v-show="displayLists" @includeContact="addList"
+                                   @backToMain="backToMainMenu"></target-audience-lists>
+            <target-audience-segments :campaignId="campaignId" v-show="displaySegments" @includeContact="addSegment"
+                                      @backToMain="backToMainMenu"></target-audience-segments>
+            <target-audience-tags :campaignId="campaignId" v-show="displayTags" @includeContact="addTag"
+                                  @backToMain="backToMainMenu"></target-audience-tags>
         </div>
     </div>
 </template>
 <script>
     import TargetAudienceContacts from './Partials/Import/Im-Contacts';
     import TargetAudienceImportLists from './Partials/Import/Im-Lists';
-   import TargetAudienceImportSegments from './Partials/Import/Im-Segments';
-     import TargetAudienceImportTags from './Partials/Import/Im-Tags';
+    import TargetAudienceImportSegments from './Partials/Import/Im-Segments';
+    import TargetAudienceImportTags from './Partials/Import/Im-Tags';
 
     export default {
         components: {
@@ -123,21 +127,53 @@
                 this.displaySegments = false;
                 this.displayTags = false;
             },
-            backToMainMenu: function(){
+            backToMainMenu: function () {
                 this.resetAllOptions();
                 this.displayImportOptions = true;
             },
-            addContact: function(){
-                alert('Adding Contact');
+            addContact: function (id, actionName) {
+                axios.post('/admin/broadcast/addContactToCampaign', {
+                    contactId: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
             },
-            addList: function(){
-                alert('Adding List');
+            addList: function (id, actionName) {
+                axios.post('/admin/broadcast/updateAutomationListsRecord', {
+                    selectedLists: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
             },
-            addSegment: function(){
-                alert('Adding Segment');
+            addSegment: function (id, actionName) {
+                axios.post('/admin/broadcast/addSegmentToCampaign', {
+                    segmentId: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
             },
-            addTag: function(){
-                alert('Adding Tag');
+            addTag: function (id, actionName) {
+                axios.post('/admin/broadcast/addTagToCampaign', {
+                    tagId: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
             },
 
         },

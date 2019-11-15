@@ -31,7 +31,7 @@
                                 <td style="display: none;">{{ tag.tagid }}</td>
                                 <td>
                                     <label class="custmo_checkbox ">
-                                        <input type="checkbox" name="checkRows[]" class="addToCampaign"
+                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="addToTags($event,tag.tagid)"
                                                :value="tag.tagid" :checked="selected_tags.includes(tag.tagid)" />
                                         <span class="custmo_checkmark sblue"></span>
                                     </label>
@@ -128,6 +128,10 @@
             },
             backtoOption: function(){
                 this.$emit('backToMain');
+            },
+            addToTags: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                this.$emit('includeContact', id, actionName);
             }
         }
 

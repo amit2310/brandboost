@@ -65,13 +65,13 @@
 
         </div>
         <div>
-            <target-audience-contacts :campaignId="campaignId" v-show="displayContacts"
+            <target-audience-contacts :campaignId="campaignId" v-show="displayContacts" @excludeContact="excludeContact"
                                       @backToMain="backToMainMenu"></target-audience-contacts>
-            <target-audience-lists :campaignId="campaignId" v-show="displayLists"
+            <target-audience-lists :campaignId="campaignId" v-show="displayLists" @excludeContact="excludeList"
                                    @backToMain="backToMainMenu"></target-audience-lists>
-            <target-audience-segments :campaignId="campaignId" v-show="displaySegments"
+            <target-audience-segments :campaignId="campaignId" v-show="displaySegments" @excludeContact="excludeSegment"
                                       @backToMain="backToMainMenu"></target-audience-segments>
-            <target-audience-tags :campaignId="campaignId" v-show="displayTags"
+            <target-audience-tags :campaignId="campaignId" v-show="displayTags" @excludeContact="excludeTag"
                                   @backToMain="backToMainMenu"></target-audience-tags>
         </div>
     </div>
@@ -130,7 +130,51 @@
             backToMainMenu: function () {
                 this.resetAllOptions();
                 this.displayImportOptions = true;
-            }
+            },
+            excludeContact: function (id, actionName) {
+                axios.post('/admin/broadcast/addContactToExcludeCampaign', {
+                    contactId: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
+            },
+            excludeList: function (id, actionName) {
+                axios.post('/admin/broadcast/updateAutomationListsExcludedRecord', {
+                    selectedLists: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
+            },
+            excludeSegment: function (id, actionName) {
+                axios.post('/admin/broadcast/addExcludeSegmentToCampaign', {
+                    segmentId: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
+            },
+            excludeTag: function (id, actionName) {
+                axios.post('/admin/broadcast/addExcludedTagToCampaign', {
+                    tagId: id,
+                    automation_id: this.campaignId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.$emit('loadFreshData');
+                    });
+            },
 
         },
         mounted() {

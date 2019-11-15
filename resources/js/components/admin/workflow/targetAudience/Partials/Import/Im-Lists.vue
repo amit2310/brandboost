@@ -12,7 +12,7 @@
                     <div class="p0 bkg_white bbot">
                         <table class="table">
                             <thead>
-                            <tr style="display: block;">
+                            <tr>
                                 <th style="display: none;"></th>
                                 <th style="display: none;"></th>
                                 <th></th>
@@ -29,11 +29,9 @@
                             </tr>-->
 
                             <tr v-for="(list, idx) in lists">
-                                <td style="display: none;">{{ displayDateFormat('m/d/Y', list[0].list_created) }}</td>
-                                <td style="display: none;">{{ list[0].id }}</td>
                                 <td>
                                     <label class="custmo_checkbox ">
-                                        <input type="checkbox" name="checkRows[]" class="addToCampaign"
+                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="addToList($event, list[0].id)"
                                                :value="list[0].id" :checked="selected_lists.includes(list[0].id)" />
                                         <span class="custmo_checkmark sblue"></span>
                                     </label>
@@ -135,6 +133,10 @@
             },
             backtoOption: function(){
                 this.$emit('backToMain');
+            },
+            addToList: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                this.$emit('includeContact', id, actionName);
             }
         }
 

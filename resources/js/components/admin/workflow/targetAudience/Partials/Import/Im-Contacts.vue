@@ -33,7 +33,7 @@
                                 <td style="display: none;">{{ contact.id }}</td>
                                 <td>
                                     <label class="custmo_checkbox ">
-                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="addToContact(contact.subscriber_id)"
+                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="addToContact($event, contact.subscriber_id)"
                                                :value="contact.subscriber_id" :checked="selected_contacts.indexOf(contact.subscriber_id)>-1" />
                                         <span class="custmo_checkmark sblue"></span>
                                     </label>
@@ -146,8 +146,9 @@
             backtoOption: function(){
                 this.$emit('backToMain');
             },
-            addToContact: function(id){
-                this.$emit('includeContact');
+            addToContact: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                this.$emit('includeContact', id, actionName);
             }
         }
 

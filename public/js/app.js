@@ -12142,6 +12142,9 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       this.current_page = p;
       this.loadPaginatedData();
+    },
+    refreshBroadcastData: function refreshBroadcastData() {
+      this.loadPaginatedData();
     }
   }
 });
@@ -21959,6 +21962,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    excludeToContact: function excludeToContact(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('excludeContact', id, actionName);
     }
   }
 });
@@ -21976,10 +21983,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
 /* harmony import */ var _helpers_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../helpers/Pagination */ "./resources/js/components/helpers/Pagination.vue");
-//
-//
-//
-//
 //
 //
 //
@@ -22114,6 +22117,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    excludeToList: function excludeToList(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('excludeContact', id, actionName);
     }
   }
 });
@@ -22261,6 +22268,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    excludeToSegments: function excludeToSegments(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('excludeContact', id, actionName);
     }
   }
 });
@@ -22412,6 +22423,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    excludeToTags: function excludeToTags(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('excludeContact', id, actionName);
     }
   }
 });
@@ -22581,9 +22596,9 @@ __webpack_require__.r(__webpack_exports__);
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
     },
-    addToContact: function addToContact(id) {
-      alert('Firing' + id);
-      this.$emit('includeContact');
+    addToContact: function addToContact(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('includeContact', id, actionName);
     }
   }
 });
@@ -22601,8 +22616,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_UserAvatar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../helpers/UserAvatar */ "./resources/js/components/helpers/UserAvatar.vue");
 /* harmony import */ var _helpers_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../helpers/Pagination */ "./resources/js/components/helpers/Pagination.vue");
-//
-//
 //
 //
 //
@@ -22739,6 +22752,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    addToList: function addToList(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('includeContact', id, actionName);
     }
   }
 });
@@ -22886,6 +22903,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    addToSegments: function addToSegments(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('includeContact', id, actionName);
     }
   }
 });
@@ -23037,6 +23058,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     backtoOption: function backtoOption() {
       this.$emit('backToMain');
+    },
+    addToTags: function addToTags(e, id) {
+      var actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+      this.$emit('includeContact', id, actionName);
     }
   }
 });
@@ -23185,6 +23210,54 @@ __webpack_require__.r(__webpack_exports__);
     backToMainMenu: function backToMainMenu() {
       this.resetAllOptions();
       this.displayImportOptions = true;
+    },
+    excludeContact: function excludeContact(id, actionName) {
+      var _this = this;
+
+      axios.post('/admin/broadcast/addContactToExcludeCampaign', {
+        contactId: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this.$emit('loadFreshData');
+      });
+    },
+    excludeList: function excludeList(id, actionName) {
+      var _this2 = this;
+
+      axios.post('/admin/broadcast/updateAutomationListsExcludedRecord', {
+        selectedLists: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this2.$emit('loadFreshData');
+      });
+    },
+    excludeSegment: function excludeSegment(id, actionName) {
+      var _this3 = this;
+
+      axios.post('/admin/broadcast/addExcludeSegmentToCampaign', {
+        segmentId: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this3.$emit('loadFreshData');
+      });
+    },
+    excludeTag: function excludeTag(id, actionName) {
+      var _this4 = this;
+
+      axios.post('/admin/broadcast/addExcludedTagToCampaign', {
+        tagId: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this4.$emit('loadFreshData');
+      });
     }
   },
   mounted: function mounted() {
@@ -23215,6 +23288,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Partials_Import_Im_Lists__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Partials/Import/Im-Lists */ "./resources/js/components/admin/workflow/targetAudience/Partials/Import/Im-Lists.vue");
 /* harmony import */ var _Partials_Import_Im_Segments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Partials/Import/Im-Segments */ "./resources/js/components/admin/workflow/targetAudience/Partials/Import/Im-Segments.vue");
 /* harmony import */ var _Partials_Import_Im_Tags__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Partials/Import/Im-Tags */ "./resources/js/components/admin/workflow/targetAudience/Partials/Import/Im-Tags.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -23341,17 +23418,53 @@ __webpack_require__.r(__webpack_exports__);
       this.resetAllOptions();
       this.displayImportOptions = true;
     },
-    addContact: function addContact() {
-      alert('Adding Contact');
+    addContact: function addContact(id, actionName) {
+      var _this = this;
+
+      axios.post('/admin/broadcast/addContactToCampaign', {
+        contactId: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this.$emit('loadFreshData');
+      });
     },
-    addList: function addList() {
-      alert('Adding List');
+    addList: function addList(id, actionName) {
+      var _this2 = this;
+
+      axios.post('/admin/broadcast/updateAutomationListsRecord', {
+        selectedLists: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this2.$emit('loadFreshData');
+      });
     },
-    addSegment: function addSegment() {
-      alert('Adding Segment');
+    addSegment: function addSegment(id, actionName) {
+      var _this3 = this;
+
+      axios.post('/admin/broadcast/addSegmentToCampaign', {
+        segmentId: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this3.$emit('loadFreshData');
+      });
     },
-    addTag: function addTag() {
-      alert('Adding Tag');
+    addTag: function addTag(id, actionName) {
+      var _this4 = this;
+
+      axios.post('/admin/broadcast/addTagToCampaign', {
+        tagId: id,
+        automation_id: this.campaignId,
+        actionValue: actionName,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this4.$emit('loadFreshData');
+      });
     }
   },
   mounted: function mounted() {
@@ -47466,7 +47579,8 @@ var render = function() {
                 _vm._m(8),
                 _vm._v(" "),
                 _c("target-audience-include", {
-                  attrs: { campaignId: _vm.campaignId }
+                  attrs: { campaignId: _vm.campaignId },
+                  on: { loadFreshData: _vm.refreshBroadcastData }
                 })
               ],
               1
@@ -47494,7 +47608,8 @@ var render = function() {
                 _vm._m(9),
                 _vm._v(" "),
                 _c("target-audience-exclude", {
-                  attrs: { campaignId: _vm.campaignId }
+                  attrs: { campaignId: _vm.campaignId },
+                  on: { loadFreshData: _vm.refreshBroadcastData }
                 })
               ],
               1
@@ -69357,6 +69472,14 @@ var render = function() {
                                   _vm.selected_contacts.indexOf(
                                     contact.subscriber_id
                                   ) > -1
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.excludeToContact(
+                                    $event,
+                                    contact.subscriber_id
+                                  )
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -69619,18 +69742,6 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.lists, function(list, idx) {
                     return _c("tr", [
-                      _c("td", { staticStyle: { display: "none" } }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.displayDateFormat("m/d/Y", list[0].list_created)
-                          )
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { display: "none" } }, [
-                        _vm._v(_vm._s(list[0].id))
-                      ]),
-                      _vm._v(" "),
                       _c("td", [
                         _c("label", { staticClass: "custmo_checkbox " }, [
                           _c("input", {
@@ -69639,6 +69750,11 @@ var render = function() {
                             domProps: {
                               value: list[0].id,
                               checked: _vm.selected_lists.includes(list[0].id)
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.excludeToList($event, list[0].id)
+                              }
                             }
                           }),
                           _vm._v(" "),
@@ -69663,9 +69779,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("td", { staticClass: "text-right" }, [
-                        _vm._v(_vm._s(list.length))
-                      ]),
+                      _c("td", [_vm._v(_vm._s(list.length))]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-right" }, [
                         _c(
@@ -69732,11 +69846,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", { staticStyle: { display: "block" } }, [
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
-        _c("th", { staticStyle: { display: "none" } }),
-        _vm._v(" "),
+      _c("tr", [
         _c("th"),
         _vm._v(" "),
         _c("th", [_c("i", {}), _vm._v(" List Name")]),
@@ -69845,6 +69955,14 @@ var render = function() {
                                 checked: _vm.selected_segments.includes(
                                   segment.id
                                 )
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.excludeToSegments(
+                                    $event,
+                                    segment.id
+                                  )
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -70041,6 +70159,11 @@ var render = function() {
                               domProps: {
                                 value: tag.tagid,
                                 checked: _vm.selected_tags.includes(tag.tagid)
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.excludeToTags($event, tag.tagid)
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -70252,7 +70375,10 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.addToContact(contact.subscriber_id)
+                                  return _vm.addToContact(
+                                    $event,
+                                    contact.subscriber_id
+                                  )
                                 }
                               }
                             }),
@@ -70516,18 +70642,6 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.lists, function(list, idx) {
                     return _c("tr", [
-                      _c("td", { staticStyle: { display: "none" } }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.displayDateFormat("m/d/Y", list[0].list_created)
-                          )
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { display: "none" } }, [
-                        _vm._v(_vm._s(list[0].id))
-                      ]),
-                      _vm._v(" "),
                       _c("td", [
                         _c("label", { staticClass: "custmo_checkbox " }, [
                           _c("input", {
@@ -70536,6 +70650,11 @@ var render = function() {
                             domProps: {
                               value: list[0].id,
                               checked: _vm.selected_lists.includes(list[0].id)
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.addToList($event, list[0].id)
+                              }
                             }
                           }),
                           _vm._v(" "),
@@ -70629,7 +70748,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", { staticStyle: { display: "block" } }, [
+      _c("tr", [
         _c("th", { staticStyle: { display: "none" } }),
         _vm._v(" "),
         _c("th", { staticStyle: { display: "none" } }),
@@ -70742,6 +70861,11 @@ var render = function() {
                                 checked: _vm.selected_segments.includes(
                                   segment.id
                                 )
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.addToSegments($event, segment.id)
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -70938,6 +71062,11 @@ var render = function() {
                               domProps: {
                                 value: tag.tagid,
                                 checked: _vm.selected_tags.includes(tag.tagid)
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.addToTags($event, tag.tagid)
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -71193,7 +71322,10 @@ var render = function() {
             }
           ],
           attrs: { campaignId: _vm.campaignId },
-          on: { backToMain: _vm.backToMainMenu }
+          on: {
+            excludeContact: _vm.excludeContact,
+            backToMain: _vm.backToMainMenu
+          }
         }),
         _vm._v(" "),
         _c("target-audience-lists", {
@@ -71206,7 +71338,10 @@ var render = function() {
             }
           ],
           attrs: { campaignId: _vm.campaignId },
-          on: { backToMain: _vm.backToMainMenu }
+          on: {
+            excludeContact: _vm.excludeList,
+            backToMain: _vm.backToMainMenu
+          }
         }),
         _vm._v(" "),
         _c("target-audience-segments", {
@@ -71219,7 +71354,10 @@ var render = function() {
             }
           ],
           attrs: { campaignId: _vm.campaignId },
-          on: { backToMain: _vm.backToMainMenu }
+          on: {
+            excludeContact: _vm.excludeSegment,
+            backToMain: _vm.backToMainMenu
+          }
         }),
         _vm._v(" "),
         _c("target-audience-tags", {
@@ -71232,7 +71370,7 @@ var render = function() {
             }
           ],
           attrs: { campaignId: _vm.campaignId },
-          on: { backToMain: _vm.backToMainMenu }
+          on: { excludeContact: _vm.excludeTag, backToMain: _vm.backToMainMenu }
         })
       ],
       1
@@ -71625,7 +71763,7 @@ var render = function() {
             }
           ],
           attrs: { campaignId: _vm.campaignId },
-          on: { includeContact: _vm.addTags, backToMain: _vm.backToMainMenu }
+          on: { includeContact: _vm.addTag, backToMain: _vm.backToMainMenu }
         })
       ],
       1
