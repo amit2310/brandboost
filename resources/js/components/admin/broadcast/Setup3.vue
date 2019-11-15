@@ -118,12 +118,35 @@
             </div>
         </div>
         <!--Content Area End-->
+        <!--Include Popup-->
+        <div class="box includeAudiencePopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon includeAudience"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+                    <target-audience-include :campaignId="campaignId"></target-audience-include>
+                </div>
+            </div>
+        </div>
+
+        <!--Exclude Popup-->
+        <div class="box excludeAudiencePopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon excludeAudience"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+                    <target-audience-exclude :campaignId="campaignId"></target-audience-exclude>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 <script>
     import WorkflowSubscribers from '../workflow/WorkflowSubscribers.vue';
+    import TargetAudienceInclude from '../workflow/targetAudience/includeOptionList';
+    import TargetAudienceExclude from '../workflow/targetAudience/excludeOptionList';
     export default {
-        components: {'workflow-subscribers': WorkflowSubscribers},
+        components: {'workflow-subscribers':WorkflowSubscribers, 'target-audience-include': TargetAudienceInclude, 'target-audience-exclude': TargetAudienceExclude},
         data() {
             return {
                 successMsg: '',
@@ -203,6 +226,20 @@
         }
 
     };
+
+    $(document).ready(function(){
+        $(document).on('click', '.viewBroadcastImportOptionSmartPopup, .includeAudience', function () {
+            $(".includeAudiencePopup").animate({
+                width: "toggle"
+            });
+        });
+
+        $(document).on('click', '.viewBroadcastExcludeOptionSmartPopup, .excludeAudience', function () {
+            $(".excludeAudiencePopup").animate({
+                width: "toggle"
+            });
+        });
+    });
 
 </script>
 

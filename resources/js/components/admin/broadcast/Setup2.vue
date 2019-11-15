@@ -366,13 +366,13 @@
                     });
             },
             displayTemplateList: function () {
-                document.querySelector('body').classList.remove("enlarge-menu");
+                //document.querySelector('body').classList.remove("enlarge-menu");
                 this.chooseTemplateSection = false;
                 this.editTemplateSection = false;
                 this.listTemplateSection = true;
             },
             displayChooseTemplateSection: function () {
-                document.querySelector('body').classList.remove("enlarge-menu");
+                //document.querySelector('body').classList.remove("enlarge-menu");
                 this.chooseTemplateSection = true;
                 this.chooseOtherTemplateSection = false;
                 this.listTemplateSection = false;
@@ -386,7 +386,7 @@
                 setTimeout(function(){
                     elem.chooseOtherTemplateSection = true;
                     elem.editTemplateSection = true;
-                    document.querySelector('body').classList.add("enlarge-menu");
+                    //document.querySelector('body').classList.add("enlarge-menu");
                     elem.loading = false;
                 }, 1000);
 
