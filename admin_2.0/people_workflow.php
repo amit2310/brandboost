@@ -15,13 +15,16 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 	<style>
-		.navbar-custom{background: #ffffff!important}
+		.navbar-custom{background: #ffffff!important; padding-left: 320px}
+		.top-bar-top-section{padding-left: 310px}
+		.content-area{padding-left: 320px;}
 	</style>
 </head>
 
 
 
-<body id="PeopleSection" class="enlarge-menu">
+<body id="PeopleSection">
+<!--<body id="PeopleSection" class="enlarge-menu">-->
 
 <div class="page-wrapper ">
  <!--******************
@@ -36,7 +39,7 @@
 
   
   
-  <div class="main_page_area left_area_360 h-100 workflow_dots_bkg">
+  <div class="h-100 workflow_dots_bkg">
  <!--******************
   TOPBAR
  **********************-->
@@ -176,22 +179,10 @@
   </div>
   
   
-  
-  
-   </div>
-      
-<!--******************
-  Content Area End
- **********************-->
- 
- </div>
- 
- 
- 
-<!--******************
+  <!--******************
  PAGE SIDEBAR
  **********************-->
-<div class="page_sidebar width_360 bkg_light_000">
+	<div class="page_sidebar bkg_light_000 absl">
 	 	<div class="inner2 pb0">
 			<div class="title-box">
 			  <h6 class="menu-title" style="line-height: 36px;"><span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; Open Menu</h6>
@@ -324,6 +315,19 @@
 <!--******************
  END PAGE SIDEBAR
  **********************-->
+  
+  
+   </div>
+      
+<!--******************
+  Content Area End
+ **********************-->
+ 
+ </div>
+ 
+ 
+ 
+
  
   </div>
   </div>
@@ -333,9 +337,6 @@
  
  
 
- 
- 
- 
  
  
  <!--******************
@@ -353,11 +354,11 @@
 
 
 <script>	
-	$(document.body).addClass('enlarge-menu');
-	$(".button-menu-mobile_sidebar").click(function(){
-	  $("body").toggleClass("enlarge-menu");
-	  //$(".menu-title").text("Hello world!");
-	});
+//	$(document.body).addClass('enlarge-menu');
+//	$(".button-menu-mobile_sidebar").click(function(){
+//	  $("body").toggleClass("enlarge-menu");
+//	  //$(".menu-title").text("Hello world!");
+//	});
 </script>
 
 <script>
@@ -365,18 +366,10 @@ $("#fullscreen").click(function(){
   $(".content-area").toggleClass("fullscreen");
 });
 	
-	
-	
-	
-	$(".touchspin-step").TouchSpin({
-        step: 10
-    });
-
-	
-	
-	
+$(".touchspin-step").TouchSpin({
+	step: 10
+});
 </script>
-
 
 
 

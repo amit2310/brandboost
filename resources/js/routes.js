@@ -5,6 +5,9 @@ import ContactProfile from './components/admin/contact/ContactProfile';
 import ContactDashboard from './components/admin/contact/Dashboard';
 import PeopleContactsImport from './components/admin/contact/PeopleContactsImport.vue';
 import PeopleContactsUploadFile from './components/admin/contact/PeopleContactsUploadFile.vue';
+import PeopleContactsCopyPaste from './components/admin/contact/PeopleContactsCopyPaste.vue';
+import VueCsvImport from './components/admin/contact/VueCsvImport.vue';
+import AppImport from './components/admin/contact/App.vue';
 import PeopleContactsListMapping from './components/admin/contact/PeopleContactsListMapping.vue';
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
 import Service from './components/Services.vue';
@@ -57,6 +60,9 @@ const routes = [
     { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },
     { path: '/contacts/import', component: PeopleContactsImport, props : {title : 'People Contacts Import', pageColor: 'people_sec' } },
     { path: '/contacts/uploadfile', component: PeopleContactsUploadFile, props : {title : 'People Contacts Upload File', pageColor: 'people_sec' } },
+    { path: '/contacts/copypaste', component: PeopleContactsCopyPaste, props : {title : 'People Contacts Copy & Paste', pageColor: 'people_sec' } },
+    { path: '/contacts/csvimport', component: VueCsvImport, props : {title : 'People Contacts Upload File', pageColor: 'people_sec' } },
+    { path: '/contacts/appimport', component: AppImport, props : {title : 'People Contacts Upload File', pageColor: 'people_sec' } },
     { path: '/contacts/listmapping', component: PeopleContactsListMapping, props : {title : 'People Contacts List Mapping', pageColor: 'people_sec' } },
     { path: '/contacts/profile/:id', component: ContactProfile, props:{ pageColor: 'people_sec'} },
     { path: '/contacts/lists', component: EmailLists, meta: { title: 'Email Lists - Brand Boost'} },
