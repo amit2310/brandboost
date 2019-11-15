@@ -719,7 +719,8 @@ class SubscriberModel extends Model {
         ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.status AS globalStatus', 'tbl_subscribers.id AS global_user_id')
         ->where('tbl_subscriber_tags.tag_id', $tagID)
         ->orderBy('tbl_subscriber_tags.id', 'desc')
-        ->get();
+        ->paginate(10);
+        //->get();
         return $oData;
 
     }

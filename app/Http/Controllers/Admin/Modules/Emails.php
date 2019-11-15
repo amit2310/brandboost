@@ -135,7 +135,7 @@ class Emails extends Controller {
         $aData = array(
             'title' => 'Email Automations',
             'pagename' => $breadcrumb,
-            'breadcrumb' => $aBreadcrumb,
+            'setupAutomation' => $aBreadcrumb,
             'oAutomations' => $oAutomations->items(),
             'allData' => $oAutomations,
             'bActiveSubsription' => $bActiveSubsription,

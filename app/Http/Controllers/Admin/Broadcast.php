@@ -3922,32 +3922,96 @@ class Broadcast extends Controller {
                     $oCampaignSegments = $mBroadcast->getBroadcastExcludedSegments($broadcastID);
                 }
 
+                //Do some more calculations for vue
+                //For Contacts
+                if($oCampaignContacts->isNotEmpty()){
+                    $aSelectedContacts = array();
+                    foreach ($oCampaignContacts as $oRec) {
+                        $aSelectedContacts[] = $oRec->subscriber_id;
+                    }
+                }
+
+                //For Lists
+                $aSelectedListIDs = array();
+                if($oAutomationLists->isNotEmpty()){
+                    foreach ($oAutomationLists as $oAutomationList) {
+                        $aSelectedListIDs[] = $oAutomationList->list_id;
+                    }
+                }
+
+                $newolists = array();
+
+                foreach ($oLists as $key => $value) {
+                    $newolists[$value->id][] = $value;
+                }
+
+                //For Segments
+                $aSelectedSegments = array();
+                if ($oCampaignSegments->isNotEmpty()) {
+                    foreach ($oCampaignSegments as $oRec) {
+                        $aSelectedSegments[] = $oRec->segment_id;
+                    }
+                }
+
+                if($oSegments->isNotEmpty()){
+                    foreach($oSegments->items() as $oSegment){
+                        $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
+                        $oSegment->subscribersData = $oSubscribers;
+                    }
+                }
+
+                //For Tags
+                $aSelectedTags = array();
+                if ($oCampaignTags->isNotEmpty()) {
+                    foreach ($oCampaignTags as $oRec) {
+                        $aSelectedTags[] = $oRec->tag_id;
+                    }
+                }
+
+                if($aTags->isNotEmpty()){
+                    foreach ($aTags->items() as $aTag){
+                        $tagID = $aTag->tagid;
+                        $oTagSubscribers = SubscriberModel::getTagSubscribers($tagID);
+                        $aTag->subscribersData = $oTagSubscribers;
+                    }
+
+                }
+
                 $aData = array(
                     'oBroadcast' => $oBroadcast[0],
                     'oDefaultTemplates' => $oDefaultTemplates,
                     'oDraftTemplates' => $oDraftTemplates,
                     'oCategories' => $oCategories,
+                    'oAutomationLists' => $oAutomationLists,
                     'oLists' => $oLists,
-                    'subscribersData' => $subscribersData,
+                    'newolists' => $newolists,
+                    'aSelectedListIDs' => $aSelectedListIDs,
+                    'subscribersData' => $subscribersData->items(),
+                    'allDataContacts' => $subscribersData,
+                    'aSelectedContacts' => $aSelectedContacts,
                     'oCampaignContacts' => $oCampaignContacts,
                     'oCampaignTags' => $oCampaignTags,
+                    'oSegments' => $oSegments->items(),
+                    'allDataSegments' => $oSegments,
                     'oCampaignSegments' => $oCampaignSegments,
+                    'aSelectedSegments' => $aSelectedSegments,
                     'totalSubscribers' => $totalSubscribers,
                     'duplicateSubscriber' => $duplicateCount,
-                    'aTags' => $aTags,
-                    'oSegments' => $oSegments,
-                    'oAutomationLists' => $oAutomationLists,
+                    'aTags' => $aTags->items(),
+                    'allDataTags' => $aTags,
+                    'aSelectedTags' => $aSelectedTags,
                     'broadcast_id' => $broadcastID,
                     'moduleName' => 'broadcast',
                     'moduleUnitID' => $broadcastID,
                     'broadcastSettings' => !empty($broadcastSettings[0]) ? $broadcastSettings[0] : array(),
                     'userData' => $aUser,
                     'twillioData' => $twillioData[0],
-                    'oCampaign' => $oCampaign
+                    'oCampaign' => $oCampaign,
+
                 );
             }
 
-            if ($actionType == 'import' && $audienceType == 'lists') {
+            /*if ($actionType == 'import' && $audienceType == 'lists') {
 
                 $content = view('admin.components.smart-popup.broadcast-import-lists', $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'import' && $audienceType == 'contacts') {
@@ -3967,9 +4031,9 @@ class Broadcast extends Controller {
             }
 
             $response['status'] = 'success';
-            $response['content'] = $content;
+            $response['content'] = $content;*/
         }
-        echo json_encode($response);
+        echo json_encode($aData);
         exit;
     }
 
