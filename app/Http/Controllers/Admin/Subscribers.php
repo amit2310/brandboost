@@ -1022,6 +1022,8 @@ class Subscribers extends Controller
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
+        $dbFieldArr = ["firstname","lastname","email","phone","gender","country_code","cityName","stateName","zipCode"];
+
         if(!empty($request->fileContent)) {
             $fileContent = $request->fileContent;
 
@@ -1057,6 +1059,17 @@ class Subscribers extends Controller
                 foreach($csv_array[0] as $k=>$v) {
                     $csv_array_sample['ind'] = $k;
                     $csv_array_sample['val'] = $v;
+
+                    if($k == 'FIRST_NAME') { $csv_array_sample['dbField'] = 'firstname'; }
+                    else if($k == 'LAST_NAME') { $csv_array_sample['dbField'] = 'lastname'; }
+                    else if($k == 'EMAIL') { $csv_array_sample['dbField'] = 'email'; }
+                    else if($k == 'PHONE') { $csv_array_sample['dbField'] = 'phone'; }
+                    else if($k == 'GENDER') { $csv_array_sample['dbField'] = 'gender'; }
+                    else if($k == 'COUNTRY') { $csv_array_sample['dbField'] = 'country_code'; }
+                    else if($k == 'CITY') { $csv_array_sample['dbField'] = 'cityName'; }
+                    else if($k == 'STATE') { $csv_array_sample['dbField'] = 'stateName'; }
+                    else if($k == 'ZIP') { $csv_array_sample['dbField'] = 'zipCode'; }
+
                     $arr[] = $csv_array_sample;
                 }
 
@@ -1077,8 +1090,10 @@ class Subscribers extends Controller
      */
     public function mapSubscriberCSV(Request $request)
     {
-        echo "-----------".json_encode($request->selected);
-        echo "-----------".$dataSubscribers     = $request->dataSubscribers;
+        echo "-----------".$selectedFields = $request->selectedFields;
+        echo "===========".$dataSubscribers     = $request->dataSubscribers;
+
+        pre(json_decode($selectedFields));
         exit;
     }
 

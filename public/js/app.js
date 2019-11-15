@@ -15149,6 +15149,88 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'upload-file',
   title: 'People Contacts Upload File - Brand Boost',
@@ -15156,8 +15238,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       file: '',
       oSubscribers: '',
-      file_path: '',
-      dataSubscribers: ''
+      dataSubscribers: '',
+      oSubscribersToMap: {},
+      isCheckAll: false,
+      checkFields: [],
+      selectedFields: ''
     };
   },
   mounted: function mounted() {
@@ -15170,13 +15255,36 @@ __webpack_require__.r(__webpack_exports__);
     listMappingPage: function listMappingPage() {
       window.location.href = '#/contacts/listmapping';
     },
-    submitFile: function submitFile() {
+    submitFileToMap: function submitFileToMap() {
       var _this = this;
 
       var formData = new FormData();
-      /*
-          Add the form data we need to submit
-      */
+      /* Add the form data we need to submit */
+
+      formData.append('file', this.file);
+      axios.post('/admin/subscriber/readSubscriberCSVToMap', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        console.log(response.data);
+
+        if (response.data.status == 'success') {
+          _this.oSubscribers = response.data.aSubscribers;
+          _this.oSubscribersToMap = response.data.aSubscribersToMap;
+          _this.dataSubscribers = JSON.stringify(_this.oSubscribers); //console.log("-------------"+this.dataSubscribers);
+        } else if (response.data.status == 'error') {
+          alert('Error: Something went wrong, seems not a valid file.');
+        }
+      })["catch"](function () {
+        console.log('FAILURE!!');
+      });
+    },
+    submitFile: function submitFile() {
+      var _this2 = this;
+
+      var formData = new FormData();
+      /* Add the form data we need to submit */
 
       formData.append('file', this.file);
       axios.post('/admin/subscriber/readSubscriberCSV', formData, {
@@ -15186,10 +15294,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //console.log(response.data);
         if (response.data.status == 'success') {
-          _this.oSubscribers = response.data.aSubscribers;
-          _this.dataSubscribers = JSON.stringify(_this.oSubscribers); //console.log(JSON.stringify(this.oSubscribers));
-
-          _this.file_path = JSON.stringify(_this.oSubscribers);
+          _this2.oSubscribers = response.data.aSubscribers;
+          _this2.dataSubscribers = JSON.stringify(_this2.oSubscribers);
         } else if (response.data.status == 'error') {
           alert('Error: Something went wrong.');
         }
@@ -15215,6 +15321,46 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function () {
         console.log('FAILURE!!');
       });
+    },
+    processMapForm: function processMapForm(dataSubscribers) {
+      this.selectedFields = ""; // Read Checked checkboxes value
+
+      for (var key in this.checkFields) {
+        this.selectedFields += JSON.stringify(this.checkFields[key]) + ","; //console.log(this.selectedFields)
+      } //console.log(this.selectedFields)
+
+
+      axios.post('/admin/subscriber/mapSubscriberCSV', {
+        selectedFields: '[' + this.selectedFields.replace(/,\s*$/, "") + ']',
+        dataSubscribers: dataSubscribers,
+        _token: this.csrf_token()
+      }).then(function (response) {
+        console.log(response.data);
+
+        if (response.data.status == 'success') {} else if (response.data.status == 'error') {
+          alert('Error: Something went wrong.');
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    checkAll: function checkAll() {
+      this.isCheckAll = !this.isCheckAll;
+      this.checkFields = [];
+
+      if (this.isCheckAll) {
+        // Check all
+        for (var key in this.oSubscribersToMap) {
+          this.checkFields.push(this.oSubscribersToMap[key]);
+        }
+      }
+    },
+    updateCheckall: function updateCheckall() {
+      if (this.checkFields.length == this.oSubscribersToMap.length) {
+        this.isCheckAll = true;
+      } else {
+        this.isCheckAll = false;
+      }
     }
   }
 });
@@ -70556,7 +70702,7 @@ var render = function() {
                           "btn btn-sm bkg_blue_200 light_000 float-right",
                         on: {
                           click: function($event) {
-                            return _vm.submitFile()
+                            return _vm.submitFileToMap()
                           }
                         }
                       },
@@ -70580,85 +70726,196 @@ var render = function() {
                       _c(
                         "tbody",
                         [
-                          _vm._m(9),
-                          _vm._v(" "),
-                          _vm._l(_vm.oSubscribers, function(
-                            oSubscriber,
-                            name,
-                            index
-                          ) {
-                            return _c("tr", { key: index }, [
-                              _c("td", [
+                          _c("tr", [
+                            _c("td", [
+                              _c("span", [
                                 _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.FIRST_NAME))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.LAST_NAME))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.EMAIL))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.PHONE))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.GENDER))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.COUNTRY))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.STATE))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.CITY))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "span",
-                                  { staticClass: "htxt_medium_14 dark_900" },
-                                  [_vm._v(_vm._s(oSubscriber.ZIP))]
+                                  "label",
+                                  { staticClass: "custmo_checkbox pull-left" },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.isCheckAll,
+                                          expression: "isCheckAll"
+                                        }
+                                      ],
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(_vm.isCheckAll)
+                                          ? _vm._i(_vm.isCheckAll, null) > -1
+                                          : _vm.isCheckAll
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.checkAll()
+                                        },
+                                        change: function($event) {
+                                          var $$a = _vm.isCheckAll,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                (_vm.isCheckAll = $$a.concat([
+                                                  $$v
+                                                ]))
+                                            } else {
+                                              $$i > -1 &&
+                                                (_vm.isCheckAll = $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1)))
+                                            }
+                                          } else {
+                                            _vm.isCheckAll = $$c
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("span", {
+                                      staticClass: "custmo_checkmark blue"
+                                    })
+                                  ]
                                 )
                               ])
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(9),
+                            _vm._v(" "),
+                            _vm._m(10),
+                            _vm._v(" "),
+                            _vm._m(11),
+                            _vm._v(" "),
+                            _vm._m(12)
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.oSubscribersToMap, function(
+                            oSubscriberToMap
+                          ) {
+                            return _c("tr", [
+                              _c("td", [
+                                _c("span", [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "custmo_checkbox pull-left"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.checkFields,
+                                            expression: "checkFields"
+                                          }
+                                        ],
+                                        attrs: { type: "checkbox" },
+                                        domProps: {
+                                          value: oSubscriberToMap,
+                                          checked: Array.isArray(
+                                            _vm.checkFields
+                                          )
+                                            ? _vm._i(
+                                                _vm.checkFields,
+                                                oSubscriberToMap
+                                              ) > -1
+                                            : _vm.checkFields
+                                        },
+                                        on: {
+                                          change: [
+                                            function($event) {
+                                              var $$a = _vm.checkFields,
+                                                $$el = $event.target,
+                                                $$c = $$el.checked
+                                                  ? true
+                                                  : false
+                                              if (Array.isArray($$a)) {
+                                                var $$v = oSubscriberToMap,
+                                                  $$i = _vm._i($$a, $$v)
+                                                if ($$el.checked) {
+                                                  $$i < 0 &&
+                                                    (_vm.checkFields = $$a.concat(
+                                                      [$$v]
+                                                    ))
+                                                } else {
+                                                  $$i > -1 &&
+                                                    (_vm.checkFields = $$a
+                                                      .slice(0, $$i)
+                                                      .concat(
+                                                        $$a.slice($$i + 1)
+                                                      ))
+                                                }
+                                              } else {
+                                                _vm.checkFields = $$c
+                                              }
+                                            },
+                                            function($event) {
+                                              return _vm.updateCheckall()
+                                            }
+                                          ]
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("span", {
+                                        staticClass: "custmo_checkmark blue"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "htxt_medium_14 dark_900" },
+                                  [_vm._v(_vm._s(oSubscriberToMap.ind))]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "htxt_medium_14 dark_900" },
+                                  [_vm._v(_vm._s(oSubscriberToMap.val))]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                oSubscriberToMap.dbField != ""
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "htxt_medium_14 dark_400 fw300"
+                                      },
+                                      [
+                                        _vm._m(13, true),
+                                        _vm._v(
+                                          "   " +
+                                            _vm._s(oSubscriberToMap.dbField)
+                                        )
+                                      ]
+                                    )
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "htxt_medium_14 dark_400 fw300"
+                                      },
+                                      [
+                                        _vm._m(14, true),
+                                        _vm._v("   Select field")
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(15, true)
                             ])
                           })
                         ],
@@ -70670,7 +70927,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row mt40" }, [
-                _vm._m(10),
+                _vm._m(16),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-6" }, [
                   _c(
@@ -70685,7 +70942,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._m(11), _vm._v("Back")]
+                    [_vm._m(17), _vm._v("Back")]
                   )
                 ]),
                 _vm._v(" "),
@@ -70698,16 +70955,162 @@ var render = function() {
                       staticStyle: { cursor: "pointer" },
                       on: {
                         click: function($event) {
-                          return _vm.importSubscribers(_vm.dataSubscribers)
+                          return _vm.processMapForm(_vm.dataSubscribers)
                         }
                       }
                     },
-                    [_vm._v("Save and continue "), _vm._m(12)]
+                    [_vm._v("Save and continue "), _vm._m(18)]
                   )
                 ])
               ])
             ])
+          ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "content-area", staticStyle: { display: "none" } },
+        [
+          _c("div", { staticClass: "container-fluid" }, [
+            _vm._m(19),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _vm._m(20),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-borderless" }, [
+                    _c(
+                      "tbody",
+                      [
+                        _vm._m(21),
+                        _vm._v(" "),
+                        _vm._l(_vm.oSubscribers, function(
+                          oSubscriber,
+                          name,
+                          index
+                        ) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.FIRST_NAME))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.LAST_NAME))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.EMAIL))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.PHONE))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.GENDER))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.COUNTRY))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.STATE))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.CITY))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "htxt_medium_14 dark_900" },
+                                [_vm._v(_vm._s(oSubscriber.ZIP))]
+                              )
+                            ])
+                          ])
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mt40" }, [
+              _vm._m(22),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-sm bkg_none border dark_200 pl10 min_w_96",
+                    staticStyle: { cursor: "pointer" },
+                    on: {
+                      click: function($event) {
+                        return _vm.goToPrevious()
+                      }
+                    }
+                  },
+                  [_vm._m(23), _vm._v("Back")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-sm bkg_blue_200 light_000 float-right",
+                    staticStyle: { cursor: "pointer" },
+                    on: {
+                      click: function($event) {
+                        return _vm.importSubscribers(_vm.dataSubscribers)
+                      }
+                    }
+                  },
+                  [_vm._v("Save and continue "), _vm._m(24)]
+                )
+              ])
+            ])
           ])
+        ]
+      )
     ]
   )
 }
@@ -70857,6 +71260,140 @@ var staticRenderFns = [
         _vm._v("Back")
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("img", { attrs: { src: "assets/images/arrow-right-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "table_head_action bbot pb30" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("ul", { staticClass: "import_list" }, [
+            _c("li", [
+              _c("a", { staticClass: "done", attrs: { href: "#" } }, [
+                _vm._v("Select import type")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { staticClass: "done", attrs: { href: "#" } }, [
+                _vm._v("Upload contacts")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { staticClass: "active", attrs: { href: "#" } }, [
+                _vm._v("Match fields")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Confirm Import")])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 text-center" }, [
+      _c("h3", { staticClass: "htxt_bold_20 dark_700 mt30 mb10" }, [
+        _vm._v("Match the file columns with your list fields")
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "fsize14 dark_200 fw300 mb50" }, [
+        _vm._v(
+          "For each column of your data, select field that it corresponds to or create new field."
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "fsize12 fw300" }, [
+        _vm._v("Column label from file")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "fsize12 fw300" }, [_vm._v("Preview data")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "fsize12 fw300" }, [_vm._v("List fields")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "fsize12 fw300" }, [_vm._v(" ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "assets/images/user-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("i", [
+      _c("img", { attrs: { src: "assets/images/question-line.svg" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-right" }, [
+      _c("span", {}, [
+        _c("img", { attrs: { src: "assets/images/chevronbottom.svg" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("hr", { staticClass: "mb25" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "ml0 mr10" }, [
+      _c("img", { attrs: { src: "assets/images/arrow-left-line.svg" } })
+    ])
   },
   function() {
     var _vm = this
@@ -108334,8 +108871,38 @@ __webpack_require__.r(__webpack_exports__);
         custom_data_table(tableId);
       }, time);
     },
-    mobileNoFormat: function mobileNoFormat(phoneNumber) {
-      return phoneNumber;
+    mobileNoFormat: function mobileNoFormat(mobileNo) {
+      if (mobileNo.length <= 3) {
+        return '';
+      }
+
+      mobileNo = mobileNo.replace(/\D/g, '');
+      var len = mobileNo.length;
+
+      switch (len) {
+        case 7:
+          mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{4})/, '$1-$2');
+          break;
+
+        case 10:
+          mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+          break;
+
+        case 11:
+          mobileNo = mobileNo.substr(1);
+          mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+          break;
+
+        case 12:
+          mobileNo = mobileNo.substr(2);
+          mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+          break;
+
+        default:
+          break;
+      }
+
+      return mobileNo;
     },
     csrf_token: function csrf_token() {
       var tkn = $('meta[name="_token"]').attr('content');

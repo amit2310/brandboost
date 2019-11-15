@@ -9,8 +9,32 @@ export default {
                 custom_data_table(tableId);
             }, time);
         },
-        mobileNoFormat(phoneNumber) {
-            return phoneNumber;
+        mobileNoFormat(mobileNo) {
+            if (mobileNo.length <= 3) {
+                return '';
+            }
+            mobileNo = mobileNo.replace(/\D/g,'');
+            var len = mobileNo.length;
+            switch (len) {
+                case 7:
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{4})/, '$1-$2');
+                    break;
+                case 10:
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    break;
+                case 11:
+                    mobileNo = mobileNo.substr(1);
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    break;
+                case 12:
+                    mobileNo = mobileNo.substr(2);
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    break;
+                default:
+                    break;
+            }
+
+            return mobileNo;
         },
         csrf_token() {
             let tkn = $('meta[name="_token"]').attr('content');
