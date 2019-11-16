@@ -87,10 +87,7 @@
      			<li><a target="_blank" href="people_deals1.php">People Deals 1</a></li>
      			<li><a target="_blank" href="people_deals2.php">People Deals 2</a></li>
      			
-     			
      			<hr>
-     			
-     			
      			
      			<li><a target="_blank" href="people_contact_import1.php">People Import step 1 </a></li>
      			<li><a target="_blank" href="people_contact_import2.php">People Import step 2 </a></li>
@@ -99,8 +96,11 @@
      			<li><a target="_blank" href="people_campaign2.php">People Camapign 2 </a></li>
      			<li><a target="_blank" href="people_editor.php">People Editor </a></li>
      			<li><a target="_blank" href="people_workflow.php">People Workflow </a></li>
+     			<li><a target="_blank" href="people_workflow2.php">People Workflow 2 </a></li>
      			<li><a target="_blank" href="people_activity.php">People Activity </a></li>
      			<li><a target="_blank" href="calendar.php">Calendar </a></li>
+     			<li><a target="_blank" href="charts.php">Charts </a></li>
+     			<li><a target="_blank" href="avatars.php">Avatars </a></li>
      			
      			<hr>
      			
@@ -147,6 +147,21 @@
      			
      		</ul>
      		</div>
+     		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 chat_500">Live Chat Messenger</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="live_dashboard.php">Live Dashboard</a></li>
+     			<li><a target="_blank" href="live_messenger.php">Live Messenger</a></li>
+     			<li><a target="_blank" href="live_visitors.php">Live Visitors</a></li>
+     			<li><a target="_blank" href="live_visitors2.php">Live Visitors 2</a></li>
+     		
+     			
+     		</ul>
+     		</div>
+     		
+     		
      	</div>
      </div>
      
