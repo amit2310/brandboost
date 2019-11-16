@@ -11413,6 +11413,25 @@ __webpack_require__.r(__webpack_exports__);
         _this2.successMsg = 'Updated the changes successfully!!';
         _this2.loading = false;
       });
+    },
+    saveDraft: function saveDraft() {
+      var _this3 = this;
+
+      this.loading = true;
+      axios.post('/admin/broadcast/updateBroadcast', {
+        broadcastId: this.campaignId,
+        status: 'draft',
+        current_state: '',
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this3.loading = false;
+
+        if (response.data.status == 'success') {
+          _this3.successMsg = 'Campaign saved as a draft successfully';
+        } else {
+          _this3.errorMsg = 'Something went wrong';
+        }
+      });
     }
   }
 });
@@ -11860,6 +11879,25 @@ __webpack_require__.r(__webpack_exports__);
         _this4.successMsg = 'Updated the changes successfully!!';
         _this4.loading = false;
       });
+    },
+    saveDraft: function saveDraft() {
+      var _this5 = this;
+
+      this.loading = true;
+      axios.post('/admin/broadcast/updateBroadcast', {
+        broadcastId: this.campaignId,
+        status: 'draft',
+        current_state: '',
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this5.loading = false;
+
+        if (response.data.status == 'success') {
+          _this5.successMsg = 'Campaign saved as a draft successfully';
+        } else {
+          _this5.errorMsg = 'Something went wrong';
+        }
+      });
     }
   }
 });
@@ -12145,6 +12183,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     refreshBroadcastData: function refreshBroadcastData() {
       this.loadPaginatedData();
+    },
+    saveDraft: function saveDraft() {
+      var _this3 = this;
+
+      this.loading = true;
+      axios.post('/admin/broadcast/updateBroadcast', {
+        broadcastId: this.campaignId,
+        status: 'draft',
+        current_state: '',
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this3.loading = false;
+
+        if (response.data.status == 'success') {
+          _this3.successMsg = 'Campaign saved as a draft successfully';
+        } else {
+          _this3.errorMsg = 'Something went wrong';
+        }
+      });
     }
   }
 });
@@ -12425,6 +12482,25 @@ __webpack_require__.r(__webpack_exports__);
         _this2.successMsg = 'Updated the changes successfully!!';
         _this2.loading = false;
       });
+    },
+    saveDraft: function saveDraft() {
+      var _this3 = this;
+
+      this.loading = true;
+      axios.post('/admin/broadcast/updateBroadcast', {
+        broadcastId: this.campaignId,
+        status: 'draft',
+        current_state: '',
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this3.loading = false;
+
+        if (response.data.status == 'success') {
+          _this3.successMsg = 'Campaign saved as a draft successfully';
+        } else {
+          _this3.errorMsg = 'Something went wrong';
+        }
+      });
     }
   }
 });
@@ -12610,6 +12686,46 @@ __webpack_require__.r(__webpack_exports__);
         _this2.successMsg = 'Updated the changes successfully!!';
         _this2.loading = false;
       });
+    },
+    saveDraft: function saveDraft() {
+      var _this3 = this;
+
+      this.loading = true;
+      axios.post('/admin/broadcast/updateBroadcast', {
+        broadcastId: this.campaignId,
+        status: 'draft',
+        current_state: '',
+        _token: this.csrf_token()
+      }).then(function (response) {
+        _this3.loading = false;
+
+        if (response.data.status == 'success') {
+          _this3.successMsg = 'Campaign saved as a draft successfully';
+        } else {
+          _this3.errorMsg = 'Something went wrong';
+        }
+      });
+    },
+    launchCampaign: function launchCampaign() {
+      var _this4 = this;
+
+      if (confirm('Are you sure? This will make your campaign active')) {
+        this.loading = true;
+        axios.post('/admin/broadcast/updateBroadcast', {
+          broadcastId: this.campaignId,
+          status: 'active',
+          current_state: '',
+          _token: this.csrf_token()
+        }).then(function (response) {
+          _this4.loading = false;
+
+          if (response.data.status == 'success') {
+            _this4.successMsg = 'Campaign has been launched successfully';
+          } else {
+            _this4.errorMsg = 'Something went wrong';
+          }
+        });
+      }
     }
   }
 });
@@ -64731,14 +64847,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 text-right" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"
-              },
-              [_vm._v(" Save as draft")]
-            ),
+            this.campaign.bc_status != "archive"
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20",
+                    on: { click: _vm.saveDraft }
+                  },
+                  [_vm._v(" Save as draft")]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
@@ -65310,14 +65429,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 text-right" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"
-              },
-              [_vm._v(" Save as draft")]
-            ),
+            this.campaign.bc_status != "archive"
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20",
+                    on: { click: _vm.saveDraft }
+                  },
+                  [_vm._v(" Save as draft")]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
@@ -66187,14 +66309,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 text-right" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"
-              },
-              [_vm._v(" Save as draft ")]
-            ),
+            this.campaign.bc_status != "archive"
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20",
+                    on: { click: _vm.saveDraft }
+                  },
+                  [_vm._v(" Save as draft ")]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
@@ -66636,14 +66761,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 text-right" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"
-              },
-              [_vm._v(" Save as draft ")]
-            ),
+            this.campaign.bc_status != "archive"
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20",
+                    on: { click: _vm.saveDraft }
+                  },
+                  [_vm._v(" Save as draft ")]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "button",
@@ -67265,7 +67393,21 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "col-md-6 text-right" }, [
+            this.campaign.bc_status != "archive"
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20",
+                    on: { click: _vm.saveDraft }
+                  },
+                  [_vm._v(" Save as draft ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -67308,7 +67450,16 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(7)
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm bkg_email_300 light_000 float-right",
+                  on: { click: _vm.launchCampaign }
+                },
+                [_vm._v("Launch Campaign "), _vm._m(7)]
+              )
+            ])
           ])
         ])
       ],
@@ -67329,26 +67480,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 text-right" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" },
-        [_vm._v(" Save as draft ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-md bkg_email_300 light_000 slidebox" },
-        [
-          _vm._v(" Next "),
-          _c("span", { staticStyle: { opacity: "1" } }, [
-            _c("img", {
-              attrs: { src: "/assets/images/arrow-right-line-white.svg" }
-            })
-          ])
-        ]
-      )
-    ])
+    return _c(
+      "button",
+      { staticClass: "btn btn-md bkg_email_300 light_000 slidebox" },
+      [
+        _vm._v(" Next "),
+        _c("span", { staticStyle: { opacity: "1" } }, [
+          _c("img", {
+            attrs: { src: "/assets/images/arrow-right-line-white.svg" }
+          })
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -67538,17 +67681,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-sm bkg_email_300 light_000 float-right" },
-        [
-          _vm._v("Save and continue "),
-          _c("span", [
-            _c("img", { attrs: { src: "/assets/images/arrow-right-line.svg" } })
-          ])
-        ]
-      )
+    return _c("span", [
+      _c("img", { attrs: { src: "/assets/images/arrow-right-line.svg" } })
     ])
   }
 ]
