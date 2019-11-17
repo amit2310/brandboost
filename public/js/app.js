@@ -12629,6 +12629,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12641,12 +12662,14 @@ __webpack_require__.r(__webpack_exports__);
       campaignId: this.$route.params.id,
       campaign: {},
       user: {},
-      breadcrumb: ''
+      breadcrumb: '',
+      set_scheduler: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    this.set_scheduler = 'schedule';
     axios.get('/admin/broadcast/setup/' + this.campaignId).then(function (response) {
       _this.breadcrumb = response.data.breadcrumb;
 
@@ -12706,6 +12729,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    setScheduler: function setScheduler(method) {
+      this.set_scheduler = method;
+      alert('hello');
+    },
     launchCampaign: function launchCampaign() {
       var _this4 = this;
 
@@ -12728,6 +12755,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   }
+});
+$(document).ready(function () {
+  $(document).on('click', '.js-broadcast-schedule-slidebox', function () {
+    $(".broadcastSchedulerPopup").animate({
+      width: "toggle"
+    });
+  });
 });
 
 /***/ }),
@@ -67429,10 +67463,45 @@ var render = function() {
           _vm._v(" "),
           _vm._m(3),
           _vm._v(" "),
-          _vm._m(4),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6 text-center animate_top" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "d-block mylablel",
+                  class: { active: _vm.set_scheduler == "now" },
+                  attrs: { for: "opt1" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setScheduler("now")
+                    }
+                  }
+                },
+                [_vm._m(4)]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6 text-center animate_top" }, [
+              _c(
+                "label",
+                {
+                  staticClass:
+                    "d-block mylablel js-broadcast-schedule-slidebox",
+                  class: { active: _vm.set_scheduler == "schedule" },
+                  attrs: { for: "opt2" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setScheduler("schedule")
+                    }
+                  }
+                },
+                [_vm._m(5)]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "row mt40" }, [
-            _vm._m(5),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "col-6" }, [
               _c(
@@ -67446,7 +67515,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._m(6), _vm._v("Back")]
+                [_vm._m(7), _vm._v("Back")]
               )
             ]),
             _vm._v(" "),
@@ -67457,13 +67526,56 @@ var render = function() {
                   staticClass: "btn btn-sm bkg_email_300 light_000 float-right",
                   on: { click: _vm.launchCampaign }
                 },
-                [_vm._v("Launch Campaign "), _vm._m(7)]
+                [_vm._v("Launch Campaign "), _vm._m(8)]
               )
             ])
           ])
         ])
       ],
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "box broadcastSchedulerPopup",
+        staticStyle: { width: "80%", display: "none" }
+      },
+      [
+        _c(
+          "div",
+          { staticStyle: { width: "80%", overflow: "hidden", height: "100%" } },
+          [
+            _c(
+              "div",
+              { staticStyle: { height: "100%", overflow: "hidden auto" } },
+              [
+                _vm._m(9),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "post" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.processForm($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "p40" }, [
+                      _vm._v(
+                        "\n                            Scheduler will be display here\n                        "
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ]
     )
   ])
 }
@@ -67581,82 +67693,64 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6 text-center animate_top" }, [
-        _c(
-          "label",
-          { staticClass: "d-block mylablel", attrs: { for: "opt1" } },
-          [
-            _c("div", { staticClass: "card br8 p0 m-0" }, [
-              _c("label", { staticClass: "custmo_checkbox email_config" }, [
-                _c("input", { attrs: { id: "opt1", type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "custmo_checkmark" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p40 pb20" }, [
-                _c("img", {
-                  staticClass: "mt20",
-                  attrs: { src: "/assets/images/send-right-now.svg" }
-                }),
-                _vm._v(" "),
-                _c("h3", { staticClass: "htxt_medium_16 dark_700 mb30 mt30" }, [
-                  _vm._v("Send right now")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p20 btop" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "fsize14 fw500 email_500",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Send email immediately")]
-                )
-              ])
-            ])
-          ]
-        )
+    return _c("div", { staticClass: "card br8 p0 m-0" }, [
+      _c("label", { staticClass: "custmo_checkbox email_config" }, [
+        _c("input", {
+          attrs: { id: "opt1", type: "radio", name: "scheduler" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "custmo_checkmark" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-6 text-center animate_top" }, [
+      _c("div", { staticClass: "p40 pb20" }, [
+        _c("img", {
+          staticClass: "mt20",
+          attrs: { src: "/assets/images/send-right-now.svg" }
+        }),
+        _vm._v(" "),
+        _c("h3", { staticClass: "htxt_medium_16 dark_700 mb30 mt30" }, [
+          _vm._v("Send right now")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p20 btop" }, [
         _c(
-          "label",
-          { staticClass: "d-block mylablel active", attrs: { for: "opt2" } },
-          [
-            _c("div", { staticClass: "card br8 p0 m-0" }, [
-              _c("label", { staticClass: "custmo_checkbox email_config" }, [
-                _c("input", {
-                  attrs: { id: "opt2", type: "checkbox", checked: "" }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "custmo_checkmark" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p40 pb20" }, [
-                _c("img", {
-                  staticClass: "mt20",
-                  attrs: { src: "/assets/images/schedule.svg" }
-                }),
-                _vm._v(" "),
-                _c("h3", { staticClass: "htxt_medium_16 dark_700 mb30 mt30" }, [
-                  _vm._v("Send specific time")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p20 btop" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "fsize14 fw500 email_500",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Schedule email on time or date")]
-                )
-              ])
-            ])
-          ]
+          "a",
+          { staticClass: "fsize14 fw500 email_500", attrs: { href: "#" } },
+          [_vm._v("Send email immediately")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card br8 p0 m-0" }, [
+      _c("label", { staticClass: "custmo_checkbox email_config" }, [
+        _c("input", {
+          attrs: { id: "opt2", type: "radio", name: "scheduler", checked: "" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "custmo_checkmark" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p40 pb20" }, [
+        _c("img", {
+          staticClass: "mt20",
+          attrs: { src: "/assets/images/schedule.svg" }
+        }),
+        _vm._v(" "),
+        _c("h3", { staticClass: "htxt_medium_16 dark_700 mb30 mt30" }, [
+          _vm._v("Send specific time")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p20 btop" }, [
+        _c(
+          "a",
+          { staticClass: "fsize14 fw500 email_500", attrs: { href: "#" } },
+          [_vm._v("Schedule email on time or date")]
         )
       ])
     ])
@@ -67684,6 +67778,16 @@ var staticRenderFns = [
     return _c("span", [
       _c("img", { attrs: { src: "/assets/images/arrow-right-line.svg" } })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "cross_icon js-broadcast-schedule-slidebox" },
+      [_c("i", [_c("img", { attrs: { src: "/assets/images/cross.svg" } })])]
+    )
   }
 ]
 render._withStripped = true

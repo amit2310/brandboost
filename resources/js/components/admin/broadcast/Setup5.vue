@@ -46,11 +46,14 @@
 
                 <div class="row">
                     <div class="col-md-6 text-center animate_top">
-                        <label for="opt1" class="d-block mylablel">
+                        <label for="opt1" class="d-block mylablel"
+                               :class="{active: set_scheduler=='now'}"
+                               @click="setScheduler('now')"
+                        >
                             <div class="card br8 p0 m-0">
 
                                 <label class="custmo_checkbox email_config">
-                                    <input id="opt1" type="checkbox">
+                                    <input id="opt1" type="radio" name="scheduler">
                                     <span class="custmo_checkmark"></span>
 
                                 </label>
@@ -67,10 +70,13 @@
                         </label>
                     </div>
                     <div class="col-md-6 text-center animate_top">
-                        <label for="opt2" class="d-block mylablel active">
+                        <label for="opt2" class="d-block mylablel js-broadcast-schedule-slidebox"
+                               :class="{active: set_scheduler=='schedule'}"
+                               @click="setScheduler('schedule')"
+                        >
                             <div class="card br8 p0 m-0">
                                 <label class="custmo_checkbox email_config">
-                                    <input id="opt2" type="checkbox" checked>
+                                    <input id="opt2" type="radio" name="scheduler" checked>
                                     <span class="custmo_checkmark"></span>
                                 </label>
                                 <div class="p40 pb20">
@@ -97,6 +103,21 @@
             </div>
         </div>
         <!--Content Area End-->
+        <div class="box broadcastSchedulerPopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon js-broadcast-schedule-slidebox"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+
+                        <form method="post" @submit.prevent="processForm">
+                            <div class="p40">
+                                Scheduler will be display here
+                            </div>
+                        </form>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 <script>
@@ -114,9 +135,11 @@
                 campaign: {},
                 user: {},
                 breadcrumb: '',
+                set_scheduler: ''
             }
         },
         mounted() {
+            this.set_scheduler = 'schedule';
             axios.get('/admin/broadcast/setup/' + this.campaignId)
                 .then(response => {
                     this.breadcrumb = response.data.breadcrumb;
@@ -174,6 +197,10 @@
                         }
                     });
             },
+            setScheduler: function(method){
+                this.set_scheduler = method;
+                alert('hello');
+            },
             launchCampaign: function(){
                 if(confirm('Are you sure? This will make your campaign active')){
                     this.loading = true;
@@ -197,6 +224,15 @@
         }
 
     };
+
+    $(document).ready(function () {
+        $(document).on('click', '.js-broadcast-schedule-slidebox', function(){
+            $(".broadcastSchedulerPopup").animate({
+                width: "toggle"
+            });
+        });
+
+    });
 
 </script>
 
