@@ -1032,7 +1032,7 @@ class Subscribers extends Controller
 
                 $headersArr = explode(",",$fileContentArr[0]);
                 unset($fileContentArr[0]);
-//pre($headersArr);
+                //pre($headersArr); exit;
                 $newArr = [];
                 foreach($fileContentArr as $ind => $row) {
                     $rowArr = explode(",",$row);
@@ -1040,21 +1040,7 @@ class Subscribers extends Controller
                     $newArr[] = array_combine($headersArr, $rowArr);
                 }
 
-                $aData = $newArr;
-
-                $response = array('status' => 'success', 'aSubscribers' => $aData);
-            } else {
-                $response = array('status' => 'error', 'msg' => 'Not found');
-            }
-        } else {
-            $file_path     = $request->file('file');
-            //$fileName = $file->getClientOriginalName();
-            //$contents = file_get_contents($file_path);
-            //echo $contents;
-
-            if ($csvimport->get_array($file_path)) {
-                $csv_array = $csvimport->get_array($file_path);
-
+                $csv_array = $newArr;
                 $arr = [];
                 foreach($csv_array[0] as $k=>$v) {
                     $csv_array_sample['ind'] = $k;
@@ -1074,10 +1060,60 @@ class Subscribers extends Controller
                 }
 
                 $aData = $arr;
-
+                //pre($aData); exit;
                 $response = array('status' => 'success', 'aSubscribers' => $csv_array, 'aSubscribersToMap' => $aData);
             } else {
                 $response = array('status' => 'error', 'msg' => 'Not found');
+            }
+        } else {
+            //$allowedFileTypesArr = ["csv",".csv","xls",".xls","xlsx",".xlsx","txt",".txt"];
+            $allowedFileTypesArr = ["csv",".csv"];
+            $file_path     = $request->file('file');
+            $fileName = $file_path->getClientOriginalName();
+            $fileExt = $file_path->getClientOriginalExtension();
+            //$contents = file_get_contents($file_path);
+            //echo $contents;
+
+            if(in_array($fileExt,$allowedFileTypesArr)) {
+                if ($csvimport->get_array($file_path)) {
+                    $csv_array = $csvimport->get_array($file_path);
+
+                    $arr = [];
+                    foreach ($csv_array[0] as $k => $v) {
+                        $csv_array_sample['ind'] = $k;
+                        $csv_array_sample['val'] = $v;
+
+                        if ($k == 'FIRST_NAME') {
+                            $csv_array_sample['dbField'] = 'firstname';
+                        } else if ($k == 'LAST_NAME') {
+                            $csv_array_sample['dbField'] = 'lastname';
+                        } else if ($k == 'EMAIL') {
+                            $csv_array_sample['dbField'] = 'email';
+                        } else if ($k == 'PHONE') {
+                            $csv_array_sample['dbField'] = 'phone';
+                        } else if ($k == 'GENDER') {
+                            $csv_array_sample['dbField'] = 'gender';
+                        } else if ($k == 'COUNTRY') {
+                            $csv_array_sample['dbField'] = 'country_code';
+                        } else if ($k == 'CITY') {
+                            $csv_array_sample['dbField'] = 'cityName';
+                        } else if ($k == 'STATE') {
+                            $csv_array_sample['dbField'] = 'stateName';
+                        } else if ($k == 'ZIP') {
+                            $csv_array_sample['dbField'] = 'zipCode';
+                        }
+
+                        $arr[] = $csv_array_sample;
+                    }
+
+                    $aData = $arr;
+                    //pre($aData); exit;
+                    $response = array('status' => 'success', 'aSubscribers' => $csv_array, 'aSubscribersToMap' => $aData);
+                } else {
+                    $response = array('status' => 'error', 'msg' => 'Not found');
+                }
+            } else {
+                $response = array('status' => 'errorFileType', 'msg' => 'Please use file with extension with .csv only');
             }
         }
 
@@ -1090,10 +1126,34 @@ class Subscribers extends Controller
      */
     public function mapSubscriberCSV(Request $request)
     {
-        echo "-----------".$selectedFields = $request->selectedFields;
-        echo "===========".$dataSubscribers     = $request->dataSubscribers;
+        $selectedFields = $request->selectedFields;
+        $dataSubscribers     = $request->dataSubscribers;
 
-        pre(json_decode($selectedFields));
+        $selectedFieldsArr = json_decode($selectedFields, true);
+        $dataSubscribersArr = json_decode($dataSubscribers, true);
+        $finalMappedSubsArr = [];
+        if($selectedFieldsArr) {
+            foreach($selectedFieldsArr as $k => $v) {
+                foreach($dataSubscribersArr as $k2 => $v2) {
+                    $finalMappedSubsArr[$k2][$selectedFieldsArr[$k]['ind']] = $v2[$selectedFieldsArr[$k]['ind']]."====".$selectedFieldsArr[$k]['dbField'];
+                }
+            }
+            //pre($finalMappedSubsArr);
+            $newSubsArr = [];
+            foreach($finalMappedSubsArr as $k3 => $vArr3) {
+                //pre($vArr3);
+                foreach($vArr3 as $k4=>$v4) {
+                    //echo "<br>".$k4." --------------- ". $v4;
+                    $newSubsArr[$k4][] = $v4;
+                }
+            }
+
+            $response = array('status' => 'success', 'aSubscribers' => $dataSubscribersArr, 'aFinalMappedSubsArr' => $finalMappedSubsArr);
+        } else {
+            $response = array('status' => 'error', 'msg' => 'Not found');
+        }
+
+        echo json_encode($response);
         exit;
     }
 
@@ -1169,12 +1229,12 @@ class Subscribers extends Controller
         $someoneadded = false;
 
 
-        $moduleName = 'list';//$request->module_name;
-        $moduleAccountID = '';//$request->module_account_id;
-        $redirectURL = '#/contacts/mycontacts';//$request->redirect_url;
+        $moduleName = $request->module_name;
+        $moduleAccountID = $request->module_account_id;
+        $redirectURL = $request->redirect_url;
 
         $dataSubscribers     = $request->dataSubscribers;
-
+        $errorMsgStr = '';
         if (!empty($dataSubscribers)) {
             $csv_array = json_decode($dataSubscribers);
 
@@ -1182,16 +1242,97 @@ class Subscribers extends Controller
             $imported = 0;
 
             foreach ($csv_array as $row) {
+                if(isset($row->FIRST_NAME)) {
+                    if (stristr($row->FIRST_NAME, "====")) {
+                        $firstName = explode("====", $row->FIRST_NAME)[0];
+                        $firstNameDBField = explode("====", $row->FIRST_NAME)[1];
+                    } else {
+                        $firstName = $row->FIRST_NAME;
+                    }
+                } else {
+                    $errorMsgStr = 'Firstname is required.';
+                }
 
-                $firstName = $row->FIRST_NAME;
-                $lastName = $row->LAST_NAME;
-                $email = $row->EMAIL;
-                $phone = $row->PHONE;
-                $gender = $row->GENDER; //male/female
-                $countryCode = $row->COUNTRY; //Contry code
-                $cityName = $row->CITY;
-                $stateName = $row->STATE;
-                $zipCode = $row->ZIP;
+                if(isset($row->LAST_NAME)) {
+                    if (stristr($row->LAST_NAME, "====")) {
+                        $lastName = explode("====", $row->LAST_NAME)[0];
+                        $lastNameDBField = explode("====", $row->LAST_NAME)[1];
+                    } else {
+                        $lastName = $row->LAST_NAME;
+                    }
+                } else {
+                    $errorMsgStr = '\n Lastname is required.';
+                }
+
+                if(isset($row->EMAIL)) {
+                    if (stristr($row->EMAIL, "====")) {
+                        $email = explode("====", $row->EMAIL)[0];
+                        $emailDBField = explode("====", $row->EMAIL)[1];
+                    } else {
+                        $email = $row->EMAIL;
+                    }
+                } else {
+                    $errorMsgStr = '\n Email address is required.';
+                }
+
+                if(isset($row->PHONE)) {
+                    if (stristr($row->PHONE, "====")) {
+                        $phone = explode("====", $row->PHONE)[0];
+                        $phoneDBField = explode("====", $row->PHONE)[1];
+                    } else {
+                        $phone = $row->PHONE;
+                    }
+                }  else {
+                    //$errorMsgStr = '\n Phone number is required.';
+                }
+
+                if(isset($row->GENDER)) {
+                    if (stristr($row->GENDER, "====")) {
+                        $gender = explode("====", $row->GENDER)[0];
+                        $genderDBField = explode("====", $row->GENDER)[1];
+                    } else {
+                        $gender = $row->GENDER;  //male/female
+                    }
+                }
+
+                if(isset($row->COUNTRY)) {
+                    if (stristr($row->COUNTRY, "====")) {
+                        $countryCode = explode("====", $row->COUNTRY)[0];
+                        $countryCodeDBField = explode("====", $row->COUNTRY)[1];
+                    } else {
+                        $countryCode = $row->COUNTRY;  //Contry code
+                    }
+                } else {
+                    $errorMsgStr = '\n Country is required.';
+                }
+
+                if(isset($row->CITY)) {
+                    if (stristr($row->CITY, "====")) {
+                        $cityName = explode("====", $row->CITY)[0];
+                        $cityNameDBField = explode("====", $row->CITY)[1];
+                    } else {
+                        $cityName = $row->CITY;
+                    }
+                }
+
+                if(isset($row->STATE)) {
+                    if (stristr($row->STATE, "====")) {
+                        $stateName = explode("====", $row->STATE)[0];
+                        $stateNameDBField = explode("====", $row->STATE)[1];
+                    } else {
+                        $stateName = $row->STATE;
+                    }
+                }
+
+                if(isset($row->ZIP)) {
+                    if (stristr($row->ZIP, "====")) {
+                        $zipCode = explode("====", $row->ZIP)[0];
+                        $zipCodeDBField = explode("====", $row->ZIP)[1];
+                    } else {
+                        $zipCode = $row->ZIP;
+                    }
+                }
+
                 $twitterProfile = $row->TWITTER_PROFILE != '' ? $row->TWITTER_PROFILE : '';
                 $facebookProfile = $row->FACEBOOK_PROFILE != '' ? $row->FACEBOOK_PROFILE : '';
                 //$linkedinProfile = $row->LINKEDIN_PROFILE'];
@@ -1199,32 +1340,32 @@ class Subscribers extends Controller
                 $socialProfile = $row->OTHER_SOCIAL_PROFILE != '' ? $row->OTHER_SOCIAL_PROFILE : '';
                 $emailUserId = 0;
 
-                if (!in_array(strtolower($email), $aSuppressionList)) {
+                if (!in_array(strtolower($email), $aSuppressionList) && $errorMsgStr == '') {
                     $imported++;
                     $emailUser = UsersModel::checkEmailExist($email);
                     if (!empty($emailUser)) {
                         if (!empty($emailUser[0])) {
                             $emailUserId = $emailUser[0]->id;
                         }
-
                     }
 
                     $oGlobalUser = SubscriberModel::checkIfGlobalSubscriberExists($userID, 'email', $email);
+
                     if (!empty($oGlobalUser)) {
                         $iSubscriberID = $oGlobalUser->id;
                     } else {
                         //Add global subscriber
                         $aSubscriberData = array(
                             'owner_id' => $userID,
-                            'firstName' => $firstName,
-                            'lastName' => $lastName,
-                            'email' => $email,
-                            'phone' => $phone,
-                            'gender' => $gender,
-                            'country_code' => $countryCode,
-                            'cityName' => $cityName,
-                            'stateName' => $stateName,
-                            'zipCode' => $zipCode,
+                            (!empty($firstNameDBField) ? $firstNameDBField : 'firstName') => (!empty($firstName) ? $firstName : ''),
+                            (!empty($lastNameDBField) ? $lastNameDBField : 'lastName') => (!empty($lastName) ? $lastName : ''),
+                            (!empty($emailDBField) ? $emailDBField : 'email') => (!empty($email) ? $email : ''),
+                            (!empty($phoneDBField) ? $phoneDBField : 'phone') => (!empty($phone) ? $phone : ''),
+                            (!empty($genderDBField) ? $genderDBField : 'gender') => (!empty($gender) ? $gender : ''),
+                            (!empty($countryCodeDBField) ? $countryCodeDBField : 'country_code') => (!empty($countryCode) ? $countryCode : ''),
+                            (!empty($cityNameDBField) ? $cityNameDBField : 'cityName') => (!empty($cityName) ? $cityName : ''),
+                            (!empty($stateNameDBField) ? $stateNameDBField : 'stateName') => (!empty($stateName) ? $stateName : ''),
+                            (!empty($zipCodeDBField) ? $zipCodeDBField : 'zipCode') => (!empty($zipCode) ? $zipCode : ''),
                             'facebook_profile' => $facebookProfile,
                             'twitter_profile' => $twitterProfile,
                             //'linkedin_profile' => $linkedinProfile,
@@ -1280,7 +1421,6 @@ class Subscribers extends Controller
                 $mSettings->logImportHistory($aHistoryData);
             }
 
-
             if ($someoneadded == true) {
                 //Add Useractivity log
                 $aActivityData = array(
@@ -1302,7 +1442,11 @@ class Subscribers extends Controller
             }
             $mWorkflow->syncWorkflowAudienceGlobalModel();
 
-            $response = array('status' => 'success', 'redirectURL' => $redirectURL);
+            if(empty($errorMsgStr)) {
+                $response = array('status' => 'success', 'redirectURL' => $redirectURL);
+            } else {
+                $response = array('status' => 'errorMsg', 'msg' => $errorMsgStr);
+            }
         } else {
             $response = array('status' => 'error', 'msg' => 'Error occured');
         }

@@ -80,6 +80,81 @@
         </div>
 
 
+        <div v-else-if="finalMappedSubscribers" class="content-area">
+            <div class="container-fluid">
+
+                <div class="table_head_action bbot pb30">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="import_list">
+                                <li><a class="done" href="#">Select import type</a></li>
+                                <li><a class="done" href="#">Upload contacts</a></li>
+                                <li><a class="active" href="#">Match fields</a></li>
+                                <li><a href="#">Confirm Import</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3 class="htxt_bold_20 dark_700 mt30 mb10">Match the file columns with your list fields</h3>
+                        <p class="fsize14 dark_200 fw300 mb50">For each column of your data, select field that it corresponds to or create new field.</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+
+                                 <tr v-for="(finalMappedSubscriber, name, index) in finalMappedSubscribers.slice(0, 1)">
+                                    <td>
+                                         <span>
+                                         <label class="custmo_checkbox pull-left">
+                                             <input type="checkbox"
+                                                    :checked="true"
+                                                    v-model='isCheckAll_2'
+                                                    @click='checkAll_2()' />
+                                             <span class="custmo_checkmark blue"></span>
+                                         </label>
+                                     </span>
+                                     </td>
+                                    <td v-for="(mappedSubscriber, name1, index1) in finalMappedSubscriber"><span class="fsize12 fw300">{{ name1 }}</span></td>
+                                </tr>
+
+                                <tr v-for="(finalMappedSubscriber, name, index) in finalMappedSubscribers">
+                                    <td>
+                                        <span>
+                                        <label class="custmo_checkbox pull-left">
+                                            <input type="checkbox"
+                                                   :checked="true"
+                                                   :value="finalMappedSubscriber"
+                                                   v-model="checkFields_2"
+                                                   @change='updateCheckall_2()' />
+                                            <span class="custmo_checkmark blue"></span>
+                                        </label>
+                                        </span>
+                                    </td>
+                                    <td v-for="(mappedSubscriber, name1, index1) in finalMappedSubscriber"><span class="htxt_medium_14 dark_900">{{ finalMappedSubscriber[name1].split('====')[0] }}</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt40">
+                    <div class="col-md-12"><hr class="mb25"></div>
+                    <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="goToPrevious()" style="cursor: pointer;"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
+                    <div class="col-6"><button class="btn btn-sm bkg_blue_200 light_000 float-right" @click="importSubscribers(dataSubscribers)" style="cursor: pointer;">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div v-else class="content-area">
             <div class="container-fluid">
 
@@ -155,96 +230,11 @@
                 <div class="row mt40">
                     <div class="col-md-12"><hr class="mb25"></div>
                     <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="goToPrevious()" style="cursor: pointer;"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
-                    <div class="col-6"><button class="btn btn-sm bkg_blue_200 light_000 float-right" @click="processMapForm(dataSubscribers)" style="cursor: pointer;">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
+                    <div class="col-6"><button class="btn btn-sm bkg_blue_200 light_000 float-right" @click="FiledMapSubscriber(dataSubscribers)" style="cursor: pointer;">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
                 </div>
 
             </div>
 
-        </div>
-
-
-        <div style="display: none;" class="content-area">
-            <div class="container-fluid">
-
-                <div class="table_head_action bbot pb30">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ul class="import_list">
-                                <li><a class="done" href="#">Select import type</a></li>
-                                <li><a class="done" href="#">Upload contacts</a></li>
-                                <li><a class="active" href="#">Match fields</a></li>
-                                <li><a href="#">Confirm Import</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h3 class="htxt_bold_20 dark_700 mt30 mb10">Match the file columns with your list fields</h3>
-                        <p class="fsize14 dark_200 fw300 mb50">For each column of your data, select field that it corresponds to or create new field.</p>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
-                                <tbody>
-
-                                <tr>
-                                    <!--<td>
-                                        <span>
-                                        <label class="custmo_checkbox pull-left">
-                                            <input type="checkbox">
-                                            <span class="custmo_checkmark blue"></span>
-                                        </label>
-                                    </span>
-                                    </td>-->
-                                    <td><span class="fsize12 fw300">FIRST_NAME</span></td>
-                                    <td><span class="fsize12 fw300">LAST_NAME</span></td>
-                                    <td><span class="fsize12 fw300">EMAIL</span></td>
-                                    <td><span class="fsize12 fw300">&nbsp;PHONE</span></td>
-                                    <td><span class="fsize12 fw300">GENDER</span></td>
-                                    <td><span class="fsize12 fw300">COUNTRY</span></td>
-                                    <td><span class="fsize12 fw300">STATE</span></td>
-                                    <td><span class="fsize12 fw300">&nbsp;CITY</span></td>
-                                    <td><span class="fsize12 fw300">ZIP</span></td>
-                                </tr>
-
-                                <tr v-for="(oSubscriber, name, index) in oSubscribers" :key="index">
-                                    <!--<td>{{ index }} {{ name }}
-                                        <span>
-                                        <label class="custmo_checkbox pull-left">
-                                            <input type="checkbox" checked>
-                                            <span class="custmo_checkmark blue"></span>
-                                        </label>
-                                        </span>
-                                    </td>-->
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.FIRST_NAME }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.LAST_NAME }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.EMAIL }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.PHONE }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.GENDER }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.COUNTRY }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.STATE }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.CITY }}</span></td>
-                                    <td><span class="htxt_medium_14 dark_900">{{ oSubscriber.ZIP }}</span></td>
-                                    <!--<td><span class="htxt_medium_14 dark_900"><i><img src="assets/images/mail-open-line-16.svg"/> </i> &nbsp; Email</span></td>
-                                    <td class="text-right"><span class=""><img src="assets/images/chevronbottom.svg" /> </span></td>-->
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt40">
-                    <div class="col-md-12"><hr class="mb25"></div>
-                    <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="goToPrevious()" style="cursor: pointer;"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
-                    <div class="col-6"><button class="btn btn-sm bkg_blue_200 light_000 float-right" @click="importSubscribers(dataSubscribers)" style="cursor: pointer;">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
-                </div>
-            </div>
         </div>
         <!--******************
           Content Area End
@@ -260,13 +250,20 @@
         title: 'People Contacts Upload File - Brand Boost',
         data() {
             return {
+                module_name: 'list',
+                module_account_id: '0',
+                redirect_url: '#/contacts/mycontacts',
                 file: '',
                 oSubscribers: '',
                 dataSubscribers: '',
                 oSubscribersToMap: {},
+                finalMappedSubscribers: '',
                 isCheckAll: false,
                 checkFields: [],
-                selectedFields: ''
+                selectedFields: '',
+                isCheckAll_2: false,
+                checkFields_2: [],
+                selectedFields_2: ''
             }
         },
         mounted() {
@@ -293,12 +290,15 @@
                         }
                     )
                     .then(response => {
-                        console.log(response.data);
+                        //console.log(response.data);
                         if (response.data.status == 'success') {
                             this.oSubscribers = response.data.aSubscribers;
                             this.oSubscribersToMap = response.data.aSubscribersToMap;
                             this.dataSubscribers = JSON.stringify(this.oSubscribers);
                             //console.log("-------------"+this.dataSubscribers);
+                        }
+                        else if (response.data.status == 'errorFileType') {
+                            alert('Error: '+response.data.msg);
                         }
                         else if (response.data.status == 'error') {
                             alert('Error: Something went wrong, seems not a valid file.');
@@ -338,25 +338,7 @@
             handleFileUpload(){
                 this.file = this.$refs.file.files[0];
             },
-            importSubscribers(dataSubscribers) {
-                axios.post( '/admin/subscriber/importSubscriberList', {
-                    dataSubscribers:dataSubscribers,
-                    _token: this.csrf_token()
-                })
-                    .then(response => {
-                        console.log(response.data);
-                        if (response.data.status == 'success') {
-                            window.location.href = response.data.redirectURL;
-                        }
-                        else if (response.data.status == 'error') {
-                            alert('Error: Something went wrong.');
-                        }
-                    })
-                    .catch(function(){
-                        console.log('FAILURE!!');
-                    });
-            },
-            processMapForm : function(dataSubscribers){
+            FiledMapSubscriber : function(dataSubscribers){
 
                 this.selectedFields = "";
                 // Read Checked checkboxes value
@@ -372,9 +354,12 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        console.log(response.data);
+                        //console.log(response.data);
                         if (response.data.status == 'success') {
-
+                            this.oSubscribers = response.data.aSubscribers;
+                            this.finalMappedSubscribers = response.data.aFinalMappedSubsArr;
+                            //this.dataSubscribers = JSON.stringify(this.finalMappedSubscribers);
+                            //console.log(this.finalMappedSubscribers);
                         }
                         else if (response.data.status == 'error') {
                             alert('Error: Something went wrong.');
@@ -399,6 +384,46 @@
                 }else{
                     this.isCheckAll = false;
                 }
+            },
+            checkAll_2: function(){
+                this.isCheckAll_2 = !this.isCheckAll_2;
+                this.checkFields_2 = [];
+                if(this.isCheckAll_2){ // Check all
+                    for (var key in this.finalMappedSubscribers) {
+                        this.checkFields_2.push(this.finalMappedSubscribers[key]);
+                    }
+                }
+            },
+            updateCheckall_2: function(){
+                if(this.checkFields_2.length == this.finalMappedSubscribers.length){
+                    this.isCheckAll_2 = true;
+                }else{
+                    this.isCheckAll_2 = false;
+                }
+            },
+            importSubscribers(dataSubscribers) {
+                axios.post( '/admin/subscriber/importSubscriberList', {
+                    module_name: this.module_name,
+                    module_account_id: this.module_account_id,
+                    redirect_url: this.redirect_url,
+                    dataSubscribers:JSON.stringify(this.checkFields_2),
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //console.log(response.data);
+                        if (response.data.status == 'success') {
+                            window.location.href = response.data.redirectURL;
+                        }
+                        else if (response.data.status == 'errorMsg') {
+                            alert(response.data.msg);
+                        }
+                        else {
+                            alert('Error: Something went wrong.');
+                        }
+                    })
+                    .catch(function(){
+                        console.log('FAILURE!!');
+                    });
             }
         }
     }
