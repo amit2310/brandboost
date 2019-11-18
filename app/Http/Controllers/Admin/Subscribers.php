@@ -1108,6 +1108,7 @@ class Subscribers extends Controller
 
                     $aData = $arr;
                     //pre($aData); exit;
+
                     $response = array('status' => 'success', 'aSubscribers' => $csv_array, 'aSubscribersToMap' => $aData);
                 } else {
                     $response = array('status' => 'error', 'msg' => 'Not found');

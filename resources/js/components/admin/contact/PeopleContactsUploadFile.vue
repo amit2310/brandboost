@@ -153,8 +153,6 @@
         </div>
 
 
-
-
         <div v-else class="content-area">
             <div class="container-fluid">
 
