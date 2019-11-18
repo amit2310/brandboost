@@ -81,10 +81,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="import_list">
-                                <li><a class="done" href="#">Select import type</a></li>
-                                <li><a class="done" href="#">Upload contacts</a></li>
-                                <li><a class="active" href="#">Match fields</a></li>
-                                <li><a href="#">Confirm Import</a></li>
+                                <li><a class="done" href="#/contacts/import">Select import type</a></li>
+                                <li><a class="done" href="#/contacts/uploadfile">Upload contacts</a></li>
+                                <li><a class="done" href="javascript:void(0);">Match fields</a></li>
+                                <li><a href="javascript:void(0);">Confirm Import</a></li>
                             </ul>
                         </div>
                     </div>
@@ -154,10 +154,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="import_list">
-                                <li><a class="done" href="#">Select import type</a></li>
-                                <li><a class="done" href="#">Upload contacts</a></li>
-                                <li><a class="active" href="#">Match fields</a></li>
-                                <li><a href="#">Confirm Import</a></li>
+                                <li><a class="done" href="#/contacts/import">Select import type</a></li>
+                                <li><a class="done" href="#/contacts/uploadfile">Upload contacts</a></li>
+                                <li><a class="active" href="javascript:void(0);">Match fields</a></li>
+                                <li><a href="javascript:void(0);">Confirm Import</a></li>
                             </ul>
                         </div>
                     </div>
