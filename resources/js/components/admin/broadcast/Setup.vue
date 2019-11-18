@@ -9,7 +9,7 @@
                         <h3 class="htxt_medium_24 dark_700">{{this.campaign.title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"> Save as draft</button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(2)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
@@ -238,6 +238,23 @@
                     this.loading = false;
                 });
 
+            },
+            saveDraft: function(){
+                this.loading = true;
+                axios.post('/admin/broadcast/updateBroadcast', {
+                    broadcastId: this.campaignId,
+                    status: 'draft',
+                    current_state: '',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.loading = false;
+                        if(response.data.status == 'success'){
+                            this.successMsg = 'Campaign saved as a draft successfully';
+                        }else{
+                            this.errorMsg = 'Something went wrong';
+                        }
+                    });
             }
         }
 

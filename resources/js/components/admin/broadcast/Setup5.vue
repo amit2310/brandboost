@@ -9,7 +9,7 @@
                         <h3 class="htxt_medium_24 dark_700">{{this.campaign.title}}</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"> Save as draft </button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft </button>
                         <button class="btn btn-md bkg_email_300 light_000 slidebox"> Next <span style="opacity: 1"><img src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="row mt40">
                     <div class="col-md-12"><hr class="mb25"></div>
                     <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="displayStep(4)"> <span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button></div>
-                    <div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right">Save and continue <span><img src="/assets/images/arrow-right-line.svg"></span></button></div>
+                    <div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right" @click="launchCampaign">Launch Campaign <span><img src="/assets/images/arrow-right-line.svg"></span></button></div>
                 </div>
 
             </div>
@@ -155,6 +155,43 @@
                     this.successMsg = 'Updated the changes successfully!!'
                     this.loading = false;
                 });
+
+            },
+            saveDraft: function(){
+                this.loading = true;
+                axios.post('/admin/broadcast/updateBroadcast', {
+                    broadcastId: this.campaignId,
+                    status: 'draft',
+                    current_state: '',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.loading = false;
+                        if(response.data.status == 'success'){
+                            this.successMsg = 'Campaign saved as a draft successfully';
+                        }else{
+                            this.errorMsg = 'Something went wrong';
+                        }
+                    });
+            },
+            launchCampaign: function(){
+                if(confirm('Are you sure? This will make your campaign active')){
+                    this.loading = true;
+                    axios.post('/admin/broadcast/updateBroadcast', {
+                        broadcastId: this.campaignId,
+                        status: 'active',
+                        current_state: '',
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            this.loading = false;
+                            if(response.data.status == 'success'){
+                                this.successMsg = 'Campaign has been launched successfully';
+                            }else{
+                                this.errorMsg = 'Something went wrong';
+                            }
+                        });
+                }
 
             }
         }

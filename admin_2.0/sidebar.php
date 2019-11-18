@@ -2,9 +2,10 @@
   <div class="main-icon-menu">
     <nav class="nav"> 
     <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
+    
     <a href="#dashboard" class="nav-link"> <img src="assets/images/dashboard-fill.svg"/> </a> 
     <a href="#people" class="nav-link people active"> <img src="assets/images/account-circle-fill.svg"/></a> 
-    <a href="#live_messanger" class="nav-link"> <img src="assets/images/live_messanger.svg"/> </a> 
+    <a href="#live_messanger" class="nav-link livechat"> <img src="assets/images/live_messanger.svg"/> </a> 
     <a href="#Email_inbox" class="nav-link"> <img src="assets/images/mail-fill.svg"/> </a> 
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
     <a href="#BrandPage" class="nav-link"> <img src="assets/images/window-2-fill.svg"/> </a> 
@@ -101,15 +102,37 @@
       <!--************
        LIVE MESSANGER
      *************-->
-      <div id="live_messanger" class="main-icon-menu-pane">
+      <div id="live_messanger" class="main-icon-menu-pane livechat">
         <div class="title-box">
           <h6 class="menu-title">Live Messanger</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="people_dashboard.php"><i><img src="assets/images/people_dashboard.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_grey.svg"/></i><span class="menu-item-text">Chats</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_contact.svg"/></i><span class="menu-item-text">Visitors</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/live-chat-icon.svg"/></i><span class="menu-item-text">Live Chat</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_deals.svg"/></i><span class="menu-item-text">Auto Messages</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_tags.svg"/></i><span class="menu-item-text">Chat Bots</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_configuration.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+        </ul>
+        <hr>
+        <div class="title-box-mid">
+          <h6 class="menu-title">INBOXES</h6>
+        </div>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_blue.svg"/></i><span class="menu-item-text">Live Chat</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_red.svg"/></i><span class="menu-item-text">Email</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_email.svg"/></i><span class="menu-item-text">Telegram</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_green.svg"/></i><span class="menu-item-text">SMS</span></a></li>
+        </ul>
+        
+        <hr>
+        <div class="title-box-mid">
+          <h6 class="menu-title">CONTACTS</h6>
+        </div>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user1_20.png"/></i><span class="menu-item-text">Tanya Warren</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
         </ul>
       </div>
       
