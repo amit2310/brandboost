@@ -12650,6 +12650,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12731,7 +12732,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     setScheduler: function setScheduler(method) {
       this.set_scheduler = method;
-      alert('hello');
     },
     launchCampaign: function launchCampaign() {
       var _this4 = this;
@@ -67485,8 +67485,7 @@ var render = function() {
               _c(
                 "label",
                 {
-                  staticClass:
-                    "d-block mylablel js-broadcast-schedule-slidebox",
+                  staticClass: "d-block mylablel",
                   class: { active: _vm.set_scheduler == "schedule" },
                   attrs: { for: "opt2" },
                   on: {
@@ -67737,19 +67736,28 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "p40 pb20" }, [
         _c("img", {
-          staticClass: "mt20",
+          staticClass: "mt20 js-broadcast-schedule-slidebox",
           attrs: { src: "/assets/images/schedule.svg" }
         }),
         _vm._v(" "),
-        _c("h3", { staticClass: "htxt_medium_16 dark_700 mb30 mt30" }, [
-          _vm._v("Send specific time")
-        ])
+        _c(
+          "h3",
+          {
+            staticClass:
+              "htxt_medium_16 dark_700 mb30 mt30 js-broadcast-schedule-slidebox"
+          },
+          [_vm._v("Send specific time")]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p20 btop" }, [
         _c(
           "a",
-          { staticClass: "fsize14 fw500 email_500", attrs: { href: "#" } },
+          {
+            staticClass:
+              "fsize14 fw500 email_500 js-broadcast-schedule-slidebox",
+            attrs: { href: "#" }
+          },
           [_vm._v("Schedule email on time or date")]
         )
       ])

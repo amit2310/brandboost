@@ -70,7 +70,7 @@
                         </label>
                     </div>
                     <div class="col-md-6 text-center animate_top">
-                        <label for="opt2" class="d-block mylablel js-broadcast-schedule-slidebox"
+                        <label for="opt2" class="d-block mylablel"
                                :class="{active: set_scheduler=='schedule'}"
                                @click="setScheduler('schedule')"
                         >
@@ -80,11 +80,11 @@
                                     <span class="custmo_checkmark"></span>
                                 </label>
                                 <div class="p40 pb20">
-                                    <img class="mt20" src="/assets/images/schedule.svg"/>
-                                    <h3 class="htxt_medium_16 dark_700 mb30 mt30">Send specific time</h3>
+                                    <img class="mt20 js-broadcast-schedule-slidebox" src="/assets/images/schedule.svg"/>
+                                    <h3 class="htxt_medium_16 dark_700 mb30 mt30 js-broadcast-schedule-slidebox">Send specific time</h3>
                                 </div>
                                 <div class="p20 btop">
-                                    <a class="fsize14 fw500 email_500" href="#">Schedule email on time or date</a>
+                                    <a class="fsize14 fw500 email_500 js-broadcast-schedule-slidebox" href="#">Schedule email on time or date</a>
                                 </div>
                             </div>
                         </label>
@@ -98,6 +98,7 @@
                     <div class="col-md-12"><hr class="mb25"></div>
                     <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="displayStep(4)"> <span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button></div>
                     <div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right" @click="launchCampaign">Launch Campaign <span><img src="/assets/images/arrow-right-line.svg"></span></button></div>
+
                 </div>
 
             </div>
@@ -199,7 +200,6 @@
             },
             setScheduler: function(method){
                 this.set_scheduler = method;
-                alert('hello');
             },
             launchCampaign: function(){
                 if(confirm('Are you sure? This will make your campaign active')){
