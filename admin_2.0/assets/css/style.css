@@ -2798,17 +2798,31 @@ APEX CHART
 ***********************/
 .apexcharts-canvas{margin: 0 auto;}
 .apexcharts-legend, .apexcharts-pie-label{visibility: hidden; display: none}
-
-
 /*.apexcharts-gridline, .apexcharts-text{display: none}*/
 .apexcharts-yaxis-label{color: #cccccc!important}
-
 .apexcharts-xaxis {	pointer-events: none;display: none;}
 .apexcharts-xaxis-tick{display: none}
 
 
 
 .main-icon-menu .slimScrollBar{opacity: 0!important}
+
+/************************
+CHAT MESSANGERS
+***********************/
+.chat_messanger{box-shadow: 0px 3px 6px rgba(0, 47, 138, 0.1); background: #f9fbff; border-radius: 10px; max-width: 364px;  position: relative; margin: auto}
+.chat_messanger .upper_color_bkg{border-radius: 10px; padding: 25px 28px; text-align: center; position: relative;}
+.chat_messanger .upper_color_bkg .messanger_option{width: 16px; height: 16px; position: absolute; right: 20px; top: 20px;}
+.chat_messanger .upper_color_bkg .messanger_option .dropdown-menu{left: -144px!important; top: 5px!important;}
+.chat_messanger .upper_color_bkg:before{position: absolute; background: #3198F5; height: 272px; width: 100%; top: 0; left: 0; content: ''; border-radius: 10px 10px 0 0; z-index: 0 }
+.messanger_close{display: block; width: 60px; height: 60px; background: radial-gradient(100% 100% at 86.67% 0%, #55AEFF 0%, #2B97F8 100%);box-shadow: 0px 10px 10px rgba(27, 147, 255, 0.08); border-radius: 100px; text-align: center; line-height: 60px; position: absolute; bottom: -80px; right: 0;}
+
+.messanger_user_image { text-align: center;    position: absolute;   width: 100%;  height: 48px;  top: -24px; line-height: 48px;}
+.messanger_user_image a { display: inline-block; width: 33px; height: 33px; text-align: center; margin: 0 4px;}
+.messanger_user_image a.big {  width: 48px; height: 48px;}
+
+
+
 
 
 
