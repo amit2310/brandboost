@@ -14,7 +14,6 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-	
 </head>
 
 
@@ -60,7 +59,6 @@
 	  	</label>
 	  </h3>
    	</div>
-   	
    </div>
    </div>
     <div class="clearfix"></div>
@@ -97,16 +95,14 @@ they are currently viewing.</p>
      		
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
-    <!--<div class="panel-heading active" role="tab" id="headingOne">-->
-    <div class="panel-heading" role="tab" id="headingOne">
+    <div class="panel-heading active" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
           <i><img src="assets/images/hello1.svg"/></i>SAY HELLO
         </a>
       </h4>
     </div>
-    <!--<div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">-->
-    <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+    <div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
         <div class="row mb20">
         	<div class="col-md-6"><p class="htxt_medium_14 dark_700 mb-2">Auto Message</p>
@@ -218,8 +214,6 @@ they are currently viewing.</p>
       </div>
     </div>
   </div>
-  
-  
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingFive">
       <h4 class="panel-title">
@@ -234,7 +228,6 @@ they are currently viewing.</p>
       </div>
     </div>
   </div>
-  
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingSix">
       <h4 class="panel-title">
@@ -249,9 +242,6 @@ they are currently viewing.</p>
       </div>
     </div>
   </div>
-  
-  
-  
 </div>
      		
      		
@@ -259,7 +249,25 @@ they are currently viewing.</p>
     	</div>
     	
     	<div class="col-md-4">
-    	<div class="chat_messanger">
+    	<div class="card p0 pb80">
+    		<div class="p20 bbot">
+    			<div class="row">
+    				<div class="col">
+    					<p class="m0 fsize12 fw500 dark_200">LIVE CHAT</p>
+    				</div>
+    				<div class="col text-right">
+    					<div class="link_button_32 bkg_email2_light">
+							<a href="#"><img src="assets/images/mac-line1.svg"></a>
+						   </div>
+						   <div class="link_button_32 ">
+							<a href="#"><img src="assets/images/smartphone-line1.svg"></a>
+						   </div>
+    				</div>
+    			</div>
+    			
+    		</div>
+    		<div class="p30">
+    <div class="chat_messanger">
 		  <div class="upper_color_bkg">
 			
 		  
@@ -305,6 +313,9 @@ they are currently viewing.</p>
 		  </div>
 		  <a class="messanger_close" href="#"><img src="assets/images/close.svg"/></a> 
 		</div>
+    		</div>	
+    	</div>
+    	
 
 		</div>
     	
@@ -363,12 +374,12 @@ they are currently viewing.</p>
 //	  //$(".menu-title").text("Hello world!");
 //	});
 </script>
+
 <script>
 $(".close_x_icon").click(function(){
   $(".tipsbox").addClass("d-none");
 });
 </script>
-
 
 
 </body>
