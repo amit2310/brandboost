@@ -1,5 +1,6 @@
 <div class="left-sidenav">
   <div class="main-icon-menu">
+   <div class="slimscroll"> 
     <nav class="nav"> 
     <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
     
@@ -25,6 +26,7 @@
     <a href="#Analytics" class="nav-link"> <img src="assets/images/bar-chart-box-fill.svg"/> </a> 
     <a href="#Settings" class="nav-link"> <img src="assets/images/settings-3-fill-icon.svg"/> </a> 
     </nav>
+  </div>
   </div>
   
   
