@@ -50,11 +50,11 @@
    <div class="row">
    	<div class="col-md-3">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Auto Message</h3>
+   	<h3 class="htxt_medium_24 dark_700">Chat Bots</h3>
    	</div>
    	
    	<div class="col-md-9 col-9 text-right">
-   		<button class="btn btn-md bkg_chat_400 light_000 slidebox">New auto message <span><img src="assets/images/flashlight-fill1_live.svg"></span></button> 
+   		<button class="btn btn-md bkg_chat_400 light_000 slidebox">New chat bot <span><img src="assets/images/robot-fill.svg"></span></button> 
    	</div>
    </div>
    </div>
@@ -76,12 +76,12 @@
      		<div class="row">
      							<div class="col-md-7">
      								<p class="fsize12 fw500 dark_200 mt30 mb30"><i><img src="assets/images/lightbulb-fill.svg"/></i> &nbsp; TIPS</p>
-     								<h3 class="htxt_bold_18 dark_800">Pre-made messsages designed<br> to help you engage with leads<br> and customers.</h3>
-     								<p class="htxt_regular_14 dark_400 mt15 mb25 lh_20">Send targeted messages, qualify leads, instantly book meetings.</p>
+     								<h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
+     								<p class="htxt_regular_14 dark_400 mt15 mb25 lh_20">Conversational marketing platform that helps companies close more<br> deals by messaging with prospects in real-time & via intelligent<br> chatbots. Qualify leads, book meetings.</p>
      								
      							</div>
-     							<div class="col-md-5 text-center mt40">
-     								<img class="mt30" style="max-width: 272px;" src="assets/images/liveautomessage.png">
+     							<div class="col-md-5 text-center mt0">
+     								<img class="mt0" style="max-width: 288px;" src="assets/images/chatboat.svg">
      							</div>
      						</div>
      		</div>
@@ -94,7 +94,7 @@
    <div class="table_head_action">
     <div class="row">
     	<div class="col-md-6">
-    		<h3 class="htxt_medium_16 dark_400">All Messages (6)</h3>
+    		<h3 class="htxt_medium_16 dark_400">Chat Bots</h3>
     	</div>
     	<div class="col-md-6">
     	<div class="table_action">
