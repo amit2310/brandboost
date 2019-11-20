@@ -57,7 +57,7 @@ Misc
 .max_h_230{max-height: 230px!important}
 .max_h_300{max-height: 300px!important}
 .max_h_260{max-height: 260px!important}
-
+.close_x_icon{width: 24px; height: 24px; position: absolute; right: 20px; top: 20px;}
 
 
 
@@ -137,6 +137,7 @@ CUSTOM SWITCH STYLES
 .custom-form-switch .field:checked + .toggle.purple {  border-color: #9559ec;  background-color: #9559ec;}
 .custom-form-switch .field:checked + .toggle.yellow {  border-color: #ed8e8c;  background-color: #ed8e8c;}
 .custom-form-switch .field:checked + .toggle.greenl {  border-color: #9ecc78;  background-color: #9ecc78;}
+.custom-form-switch .field:checked + .toggle.green3 {  border-color: #7ECD99;  background-color: #7ECD99;}
 
 
 
@@ -281,6 +282,8 @@ Button CLASSES
 .link_button{background: #FFFFFF;box-shadow: 0px 1px 1px rgba(1, 21, 64, 0.08);border-radius: 44px; height: 40px; line-height: 40px; display: inline-block; padding: 0 5px;}
 .link_button a{display: inline-block; margin: 0 7px;}
 
+.link_button_32{background: #FFFFFF;border-radius: 44px; height: 32px; line-height: 32px; display: inline-block; padding: 0 0px; width: 32px;}
+.link_button_32 a{display: inline-block; margin: 0 7px;}
 
 .tag_btn{background: #f0f2f6; border: none; box-shadow: none; padding:0 15px;height: 32px;line-height: 32px; border-radius: 50px; font-size: 14px; font-weight: 400; color: #56627F; margin: 0 7px 12px 0}
 .tag_btn:hover{background: #dfe5f1; }
@@ -614,6 +617,8 @@ PADDING CLASSES
 .pb40{padding-bottom: 40px!important;}
 .pb50{padding-bottom: 50px!important;}
 .pb60{padding-bottom: 60px!important;}
+.pb80{padding-bottom: 80px!important;}
+.pb100{padding-bottom: 100px!important;}
 
 .pb-15 {padding-bottom: 15px !important;}
 .pt-15 {padding-top: 15px !important;}

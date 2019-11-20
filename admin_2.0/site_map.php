@@ -156,6 +156,14 @@
      			<li><a target="_blank" href="live_messenger.php">Live Messenger</a></li>
      			<li><a target="_blank" href="live_visitors.php">Live Visitors</a></li>
      			<li><a target="_blank" href="live_visitors2.php">Live Visitors 2</a></li>
+     			
+     			
+     			
+     			<li><a target="_blank" href="live_chat.php">Live Chat</a></li>
+     			<li><a target="_blank" href="live_messanger_configuration.php">Live Messanger Configuration</a></li>
+     			<li><a target="_blank" href="live_chat_boat.php">Live Chat Boat</a></li>
+     			<li><a target="_blank" href="live_auto_message.php">Live Auto Message</a></li>
+     			
      		
      			
      		</ul>

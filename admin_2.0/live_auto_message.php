@@ -134,98 +134,24 @@
 			  
 			     <tr>
 			     	
-					<td ><span class="fsize12 fw300">Visitor Name </span></td>
-					<td ><span class="fsize12 fw300">Device</span></td>
-					<td ><span class="fsize12 fw300">Page</span></td>
-					<td ><span class="fsize12 fw300">Online</span></td>
-					<td ><span class="fsize12 fw300">Location</span></td>
+					<td ><span class="fsize12 fw300">Message </span></td>
+					<td ><span class="fsize12 fw300">Sent</span></td>
+					<td ><span class="fsize12 fw300">Clicked</span></td>
+					<td ><span class="fsize12 fw300">Enaged</span></td>
+					<td ><span class="fsize12 fw300">From</span></td>
+					<td ><span class="fsize12 fw300">Status</span></td>
 					<td ><span class="fsize12 fw300">&nbsp;</span></td>
-					<td ><span class="fsize12 fw300">&nbsp;</span></td>
 				  </tr>
 				  
 				  
 				  
 				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name bkg_green_light green_300">am</span></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Homepage</td>
-					<td>2 min.</td>
-					<td>Salinas, Idaho</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
-							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
-				  </tr>
-				  
-				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/01.png"/></span></span> <span class="htxt_medium_14 dark_900">Site Visitor</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Services</td>
-					<td>20 min.</td>
-					<td>South Valley, Washington</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
-							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
-				  </tr>
-				  
-				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/02.png"/></span></span> <span class="htxt_medium_14 dark_900">Bessie Mccoy</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Homepage</td>
-					<td>7 min.</td>
-					<td>Fontana, Oklahoma</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
-							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
-				  </tr>
-				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/03.png"/></span></span> <span class="htxt_medium_14 dark_900">Morris Mckinney</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Company details</td>
-					<td>7 min.</td>
-					<td>South Valley, Washington</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
+					<td><span class="table-img mr15"><img src="assets/images/fire-fill.svg"/></span> <span class="htxt_medium_14 dark_700">Best Price Promo</span></td>
+					<td><span class="dark_500">1,392</span></td>
+					<td><span class="dark_500">763 </span><span class="dark_200 ml-2">64%</span></td>
+					<td><span class="dark_500">129</span><span class="dark_200 ml-2">23%</span></td>
+					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/01.png"></span></span> <span class="dark_500">Tanya Howard</span></td>
+					<td><span class="table-img mr15"><span class=""><img src="assets/images/live_green_icon.png"></span></span> <span class=" dark_500">Live</span></td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
@@ -242,15 +168,55 @@
 				  
 				  
 				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name bkg_red_light red_300">am</span></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
+					<td><span class="table-img mr15"><img src="assets/images/hello1.svg"/></span> <span class="htxt_medium_14 dark_700">1st Message</span></td>
+					<td><span class="dark_500">1,392</span></td>
+					<td><span class="dark_500">763 </span><span class="dark_200 ml-2">64%</span></td>
+					<td><span class="dark_500">129</span><span class="dark_200 ml-2">23%</span></td>
+					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/02.png"></span></span> <span class="dark_500">Floyd Russell</span></td>
+					<td><span class="table-img mr15"><span class=""><img src="assets/images/off_grey_icon.png"></span></span> <span class=" dark_500">Off</span></td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
+							  <span><img src="assets/images/more-vertical.svg"></span>
+							</button>
+							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
-					<td>Homepage</td>
-					<td>2 min.</td>
-					<td>Salinas, Idaho</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
+				  </tr>
+				  
+				   <tr>
+					<td><span class="table-img mr15"><img src="assets/images/star-fill-grey.svg"/></span> <span class="htxt_medium_14 dark_700">Review Request</span></td>
+					<td><span class="dark_500">1,392</span></td>
+					<td><span class="dark_500">763 </span><span class="dark_200 ml-2">64%</span></td>
+					<td><span class="dark_500">129</span><span class="dark_200 ml-2">23%</span></td>
+					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/03.png"></span></span> <span class="dark_500">Jorge Williamson</span></td>
+					<td><span class="table-img mr15"><span class=""><img src="assets/images/live_green_icon.png"></span></span> <span class=" dark_500">Live</span></td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
+							  <span><img src="assets/images/more-vertical.svg"></span>
+							</button>
+							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
+				  </tr>
+				  
+				  
+				  <tr>
+					<td><span class="table-img mr15"><img src="assets/images/hello1.svg"/></span> <span class="htxt_medium_14 dark_700">Hello Message</span></td>
+					<td><span class="dark_500">1,392</span></td>
+					<td><span class="dark_500">763 </span><span class="dark_200 ml-2">64%</span></td>
+					<td><span class="dark_500">129</span><span class="dark_200 ml-2">23%</span></td>
+					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/04.png"></span></span> <span class="dark_500">Tanya Howard</span></td>
+					<td><span class="table-img mr15"><span class=""><img src="assets/images/off_grey_icon.png"></span></span> <span class=" dark_500">Off</span></td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
@@ -266,15 +232,12 @@
 				  </tr>
 				  
 				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/06.png"/></span></span> <span class="htxt_medium_14 dark_900">Site Visitor</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Services</td>
-					<td>20 min.</td>
-					<td>South Valley, Washington</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
+					<td><span class="table-img mr15"><img src="assets/images/star-fill-grey.svg"/></span> <span class="htxt_medium_14 dark_700">Recommend</span></td>
+					<td><span class="dark_500">1,392</span></td>
+					<td><span class="dark_500">763 </span><span class="dark_200 ml-2">64%</span></td>
+					<td><span class="dark_500">129</span><span class="dark_200 ml-2">23%</span></td>
+					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/05.png"></span></span> <span class="dark_500">Arlene Simmmons</span></td>
+					<td><span class="table-img mr15"><span class=""><img src="assets/images/off_grey_icon.png"></span></span> <span class=" dark_500">Off</span></td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
@@ -290,15 +253,12 @@
 				  </tr>
 				  
 				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/05.png"/></span></span> <span class="htxt_medium_14 dark_900">Bessie Mccoy</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Services</td>
-					<td>3 min.</td>
-					<td>Kent, New Hampshire</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
+					<td><span class="table-img mr15"><img src="assets/images/hello1.svg"/></span> <span class="htxt_medium_14 dark_700">Website Onboarding</span></td>
+					<td><span class="dark_500">1,392</span></td>
+					<td><span class="dark_500">763 </span><span class="dark_200 ml-2">64%</span></td>
+					<td><span class="dark_500">129</span><span class="dark_200 ml-2">23%</span></td>
+					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/05.png"></span></span> <span class="dark_500">Tanya Howard</span></td>
+					<td><span class="table-img mr15"><span class=""><img src="assets/images/live_green_icon.png"></span></span> <span class=" dark_500">Live</span></td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
@@ -312,29 +272,8 @@
 						  </div>
 					</td>
 				  </tr>
-				  <tr>
-					<td><span class="table-img mr15"><span class="fl_name"><img src="assets/images/avatar/04.png"/></span></span> <span class="htxt_medium_14 dark_900">Morris Mckinney</span></td>
-					<td><span class="icons"><img src="assets/images/chrome-fill.svg"></span> <span class="icons"><img src="assets/images/android-fill.svg"></span> <span class="icons"><img src="assets/images/smartphone-fill.svg"></span> 
-					</td>
-					<td>Our new product</td>
-					<td>47 min.</td>
-					<td>Syracuse, Connecticut</td>
-					
-					<td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"></span> <span class="icons"><img src="assets/images/star-line.svg"></span> 
-					</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
-							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
-				  </tr>
+				  
+				  
 				  
 				  
 				  
