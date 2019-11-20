@@ -65,16 +65,11 @@
     
     <div class="row">
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_300">
-						<div class="p15 pt15 bbot text-center">
+    		<div class="card p0 animate_top col max_h_230">
+						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_600" href="#">Email OPENS</a></li>
+								<li><a class="text-uppercase fw500 dark_200" href="#">Email OPENS</a></li>
 							</ul>
-						</div>
-						
-						<div class="pt20 pb0 text-center">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"/></i>33,87%</span>last week</p>
 						</div>
 				
    				<div class="p20 pt0 pb0">
@@ -87,15 +82,11 @@
     	</div>
     	
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_300">
-						<div class="p15 pt15 bbot text-center">
+    		<div class="card p0 animate_top col max_h_230">
+						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_600" href="#">OPEN RATE</a></li>
+								<li><a class="text-uppercase fw500 dark_200" href="#">OPEN RATE</a></li>
 							</ul>
-						</div>
-						<div class="pt20 pb0 text-center">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"/></i>33,87%</span>last week</p>
 						</div>
 				
    				<div class="p20 pb0 pt0">
@@ -108,41 +99,15 @@
     	</div>
     	
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_300">
-						<div class="p15 pt15 bbot text-center">
+    		<div class="card p0 animate_top col max_h_230">
+						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_600" href="#">CLICK RATE</a></li>
+								<li><a class="text-uppercase fw500 dark_200" href="#">CLICK RATE</a></li>
 							</ul>
-						</div>
-						<div class="pt20 pb0 text-center">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"/></i>33,87%</span>last week</p>
 						</div>
 				
    				<div class="p20 pt0 pb0">
    					<div style="margin-left: -20px" id="chart_03">
-						<apexchart type=line height=180 :options="chartOptions" :series="series" />
-					  </div>
-   				</div>
-   				
-    		</div>
-    	</div>
-    	
-    	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_300">
-						<div class="p15 pt15 bbot text-center">
-							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_600" href="#">Email Activity</a></li>
-							</ul>
-						</div>
-						
-						<div class="pt20 pb0 text-center">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"/></i>33,87%</span>last week</p>
-						</div>
-				
-   				<div class="p20 pt0 pb0">
-   					<div style="margin-left: -20px;" id="chart_04">
 						<apexchart type=line height=200 :options="chartOptions" :series="series" />
 					  </div>
    				</div>
@@ -150,21 +115,49 @@
     		</div>
     	</div>
     	
-    	
-    	
-    	
-    </div>
-    <div class="row">
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_330">
+    		<div class="card p0 animate_top col max_h_230">
+						<div class="p15 pt15 bbot">
+							<ul class="workflow_list">
+								<li><a class="text-uppercase fw500 dark_200" href="#">CLICK RATE</a></li>
+							</ul>
+						</div>
+				
+   				<div class="p20 pt0 pb0">
+   					<div style="margin-left: -20px;" id="chart_04">
+						<apexchart type=line height=220 :options="chartOptions" :series="series" />
+					  </div>
+   				</div>
+   				
+    		</div>
+    	</div>
+    	
+    	
+    	<div class="col-md-6 d-flex">
+    		<div class="card p0 animate_top col ">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
 								<li><a class="text-uppercase fw500 dark_200" href="#">Email OPENS</a></li>
 							</ul>
 						</div>
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"/></i>33,87%</span>last week</p>
+				
+   				<div class="p20 pb0 pt0">
+					  <div id="chart_10">
+						<apexchart type=scatter height=300 :options="chartOptions" :series="series" />
+					  </div>
+   				</div>
+   				
+    		</div>
+    	</div>
+    	
+    </div>
+    <div class="row">
+    	<div class="col-md-3 d-flex">
+    		<div class="card p0 animate_top col max_h_260">
+						<div class="p15 pt15 bbot">
+							<ul class="workflow_list">
+								<li><a class="text-uppercase fw500 dark_200" href="#">Email OPENS</a></li>
+							</ul>
 						</div>
 				
    				<div class="p20">
@@ -177,15 +170,11 @@
     	</div>
     	
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_330">
+    		<div class="card p0 animate_top col max_h_260">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
 								<li><a class="text-uppercase fw500 dark_200" href="#">OPEN RATE</a></li>
 							</ul>
-						</div>
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"/></i>33,87%</span>last week</p>
 						</div>
 				
    				<div class="p20">
@@ -198,15 +187,11 @@
     	</div>
     	
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_330">
+    		<div class="card p0 animate_top col max_h_260">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
 								<li><a class="text-uppercase fw500 dark_200" href="#">CLICK RATE</a></li>
 							</ul>
-						</div>
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"/></i>33,87%</span>last week</p>
 						</div>
 				
    				<div class="p20">
@@ -218,19 +203,12 @@
     		</div>
     	</div>
     	<div class="col-md-3 d-flex">
-    		<div class="card p0 animate_top col max_h_330">
+    		<div class="card p0 animate_top col max_h_260">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
 								<li><a class="text-uppercase fw500 dark_200" href="#">CLICK RATE</a></li>
 							</ul>
 						</div>
-						
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"/></i>33,87%</span>last week</p>
-						</div>
-						
-						
 						<div class="p20">
 							<div id="chart_08">
     <apexchart type=radialBar height=220 :options="chartOptions" :series="series" />
@@ -249,28 +227,12 @@
     	
     	
     	
-    	
-    	
-    	
-    </div>
-    
-    
-  
-
-  
-  
-  <div class="row">
-    	
-    	<div class="col-md-4 d-flex">
-    		<div class="card p0 animate_top col">
+    	<div class="col-md-3 d-flex">
+    		<div class="card p0 animate_top col max_h_260">
 						<div class="p15 pt15 bbot">
 							<ul class="workflow_list">
 								<li><a class="text-uppercase fw500 dark_200" href="#">CLICK RATE</a></li>
 							</ul>
-						</div>
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"/></i>33,87%</span>last week</p>
 						</div>
 						<div class="p20">
 							<div id="chart_09">
@@ -282,102 +244,14 @@
     		</div>
     	</div>
     	
-     	<div class="col-md-4 d-flex">
-     		<div class="card min-h-280 p0 animate_top col">
-     		
-     		<div class="p15 pt15 bbot">
-							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_200" href="#">EMAILS SENT</a></li>
-							</ul>
-						</div>
-						
-						
-     		<div class="p0">
-     			<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>last week</p>
-						</div>
-     			
-     			<div class="p30 pb0">
-     				<div id="basiclinechart" style="margin-left: -20px">
-    				<apexchart type=line height=200 :options="chartOptions2" :series="series" />
-  				</div>
-     			</div>
-     			
-    		
-    		
-    		
-     		</div>
-     		</div>
-     	</div>
-     	<div class="col-md-4 d-flex">
-     		<div class="card col pb0 animate_top">
-     			<h3 class="htxt_medium_32 dark_700">139</h3>
-     			<p class="grey-sub-headings">Subscriptions</p>
-     			<!--<img class="mt-5" src="assets/images/email_graph.png"/>-->
-     			
-     			
-     			 <div id="chartSubscriptions" style="margin-left: -20px">
-					<apexchart type=bar height=240 :options="chartOptions" :series="series" />
-				  </div>
-     			
-     		</div>
-     	</div>
-     </div>
-   
-    
-    
-    <div class="row">
-    	<div class="col-md-6 d-flex">
-    		<div class="card p0 animate_top col ">
-						<div class="p15 pt15 bbot">
-							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_200" href="#">Email OPENS</a></li>
-							</ul>
-						</div>
-						
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>33,87%</span>last week</p>
-						</div>
-						
-						
-				
-   				<div class="p20 pb0 pt0">
-					  <div id="chart_10">
-						<apexchart type=scatter height=300 :options="chartOptions" :series="series" />
-					  </div>
-   				</div>
-   				
-    		</div>
-    	</div>
-    	
-    	<div class="col-md-6 d-flex">
-    		<div class="card p0 animate_top col ">
-						<div class="p15 pt15 bbot">
-							<ul class="workflow_list">
-								<li><a class="text-uppercase fw500 dark_200" href="#">Email OPENS</a></li>
-							</ul>
-						</div>
-						<div class="pt20 pb0 pl20 text-left">
-							<h3 class="htxt_regular_28 dark_700">1,468</h3>
-							<p class="m-0"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>last week</p>
-						</div>
-				
-   				<div class="p20 pb0 pt0">
-					  <!--<div id="chart_10">
-						<apexchart type=scatter height=300 :options="chartOptions" :series="series" />
-					  </div>-->
-					  <div id="chart112">
-    						<apexchart type=heatmap height=275 :options="chartOptions" :series="series" />
-  						</div>	
-   				</div>
-   				
-    		</div>
-    	</div>
-    	
     	
     </div>
+    
+    
+  
+
+   
+    
     
     
     
@@ -1036,290 +910,6 @@ $(document).ready(function(){
   </script>
   
   
-  
-  
-  <script>
-    var colors = ['#a3d6ee'];
-    var colors2 = ['#59b3e1'];
-    
-    new Vue({
-      el: '#chartSubscriptions',
-      components: {
-        apexchart: VueApexCharts,
-      },
-      data: {
-        series: [{
-          data: [21, 22, 10, 28, 16, 21, 13, 30, 21, 22, 10, 28, 16, /*21, 13, 30, 16, 21, 13, 30, 21*/]
-        }],
-        chartOptions: {
-          chart: {
-            height: 100,
-            type: 'bar',
-            events: {
-              click: function (chart, w, e) {
-                console.log(chart, w, e)
-              }
-            },
-			  
-			  toolbar: {
-                show: false
-              }
-			  
-			  
-          },
-			
-			grid: {
-			  borderColor: '#ddd',
-			  strokeDashArray: 5,
-			},
-			
-          colors: colors,
-          plotOptions: {
-            bar: {
-              columnWidth: '60%',
-              distributed: true,
-				//endingShape: 'rounded'
-            }
-          },
-          dataLabels: {
-            enabled: false,
-          },
-
-          xaxis: {
-            categories: ['Amit', 'Alen', 'Umair', 'Max', 'Andrew', 'Amit', 'Alen', 'Umair', 'Max', 'Andrew', 'Amit', 'Alen', 'Umair', 'Max', 'Max', 'Andrew', 'Amit', 'Alen', 'Umair', 'Max', 'Andrew'],
-            labels: {
-              style: {
-                colors: colors,
-                fontSize: '14px'
-              },
-				 show: false
-            }
-          },
-			
-			yaxis: {
-            labels: {
-				 show: false
-            }
-          }
-			
-			
-			
-			
-        }
-      }
-    })
-	
-	
-
-    new Vue({
-      el: '#basiclinechart',
-      components: {
-        apexchart: VueApexCharts,
-      },
-      data: {
-        series: [{
-            name: "Desktops",
-            data: [4, 3, 4, 6, 3, 4, 7, 2, 3, 5, 3, 7, 8, 4, 4, /*3, 5, 7, 3, 5, 3, 7, 8, 4*/ ]
-        }],
-        chartOptions2: {
-          chart: {
-                height: 350,
-                zoom: {
-                    enabled: false
-                },
-			  
-			  toolbar: {
-                show: false
-              }
-            },
-			colors: colors2,
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'straight',
-				 width: 4
-            },
-			
-           
-            grid: {
-                row: {
-                    colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                    opacity: 0.1
-                },
-				borderColor: '#ddd',
-			    strokeDashArray: 5
-            },
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-				labels: {
-              style: {
-                colors: colors2,
-                fontSize: '14px',
-				  fill: '#cccccc'
-              },
-				 show: false
-            }
-            },
-			
-			
-			yaxis: {
-			labels: {
-              style: {
-                colors: colors,
-                fontSize: '16px'
-              }
-            }
-            },
-			
-			
-			
-			
-        }
-      },
-      
-    })
-  </script>
-  
-  
-  <script>
-	  var colors4 = ['#a3d6ee'];
-    new Vue({
-      el: '#credit_chart',
-      components: {
-        apexchart: VueApexCharts,
-      },
-      data: {
-        series: [67],
-        chartOptions3: {
-          plotOptions: {
-            radialBar: {
-              startAngle: -105,
-              endAngle: 105,
-              dataLabels: {
-                name: {
-                  fontSize: '12px',
-                  color: '#a0adbb',
-                  offsetY: 45
-                },
-                value: {
-                  offsetY: -15,
-                  fontSize: '22px',
-                  color: undefined,
-                  formatter: function (val) {
-                    return val + "";
-                  }
-                }
-              }
-            }
-          },
-			colors: colors4,
-          fill: {
-            type: 'gradient',
-            gradient: {
-              shade: 'dark',
-              shadeIntensity: 0.15,
-              inverseColors: false,
-              opacityFrom: 1,
-              opacityTo: 1,
-              stops: [0, 50, 65, 91]
-            },
-          },
-          stroke: {
-            dashArray: 2.5
-          },
-          labels: ['CREDITS BALANCE']
-        }
-      },
-
-    })
-  </script>
-
-  <script>
-    function generateData(count, yrange) {
-      var i = 0;
-      var series = [];
-      while (i < count) {
-        var x = 'w' + (i + 1).toString();
-        var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-        series.push({
-          x: x,
-          y: y
-        });
-        i++;
-      }
-      return series;
-    }
-
-    new Vue({
-      el: '#chart112',
-      components: {
-        apexchart: VueApexCharts,
-      },
-      data: {
-        series: [{
-            name: 'SUN',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          },
-          {
-            name: 'MON',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          },
-          {
-            name: 'TUE',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          },
-          {
-            name: 'WED',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          },
-          {
-            name: 'THU',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          },
-          {
-            name: 'FRI',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          },
-          {
-            name: 'SAT',
-            data: generateData(18, {
-              min: 0,
-              max: 90
-            })
-          }
-        ],
-        chartOptions: {
-          dataLabels: {
-            enabled: false
-          },
-          colors: ["#008FFB"],
-
-         
-        }
-      },
-
-    })
-  </script>
   
 </body>
 </html>
