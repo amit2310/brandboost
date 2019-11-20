@@ -1,37 +1,38 @@
 <template>
     <div>
 
-        <div class="top-bar-top-section shadow2 bkg_light_000">
+        <div class="top-bar-top-section shadow2 bkg_light_000" style="padding-left: 310px;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
-                        <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Flow Title</h3>
+                        <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
+                        <h3 class="htxt_medium_24 dark_700">{{setStringLimit(this.title, 15)}}</h3>
                     </div>
                     <div class="col-md-4">
                         <ul class="nav nav-pills top_tab mt-1" role="tablist">
                             <li class="mr40">
-                                <a class="htxt_bold_14 active" data-toggle="pill" href="#Visual"><img src="assets/images/git-merge-fill.svg" /> &nbsp; Visual Canvas</a>
+                                <a class="htxt_bold_14 active" data-toggle="pill" href="#Visual"><img src="/assets/images/git-merge-fill.svg" /> &nbsp; Visual Canvas</a>
                             </li>
                             <li class="">
-                                <a class="htxt_bold_14" data-toggle="pill" href="#ListView"><img src="assets/images/list-settings-line.svg" /> &nbsp; List View</a>
+                                <a class="htxt_bold_14" data-toggle="pill" href="#ListView"><img src="/assets/images/list-settings-line.svg" /> &nbsp; List View</a>
                             </li>
                         </ul>
 
                     </div>
                     <div class="col-md-5 col-5 text-right">
-                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/settings-3-fill.svg"/></button>
-                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/play-fill.svg"/></button>
-                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/checkbox-circle-fill.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="/assets/images/settings-3-fill.svg"/></button>
+                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="/assets/images/play-fill.svg"/></button>
+                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="/assets/images/checkbox-circle-fill.svg"/></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
         <!--Content Area-->
-        <div class="content-area">
-
+        <div class="content-area" style="padding-left: 310px;">
+            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+            <loading :isLoading="loading"></loading>
 
 
             <div class="tab-content">
@@ -42,14 +43,14 @@
                         <div class="row">
                             <div class="col-md-6 mb20">
                                 <div class="link_button">
-                                    <a href="#"><img src="assets/images/arrow-right-line_grey.svg"/></a>
-                                    <a href="#"><img src="assets/images/arrow-left-line_grey.svg"/></a>
+                                    <a href="#"><img src="/assets/images/arrow-right-line_grey.svg"/></a>
+                                    <a href="#"><img src="/assets/images/arrow-left-line_grey.svg"/></a>
                                 </div>
                             </div>
 
                             <div class="col-md-6 mb20 text-right">
                                 <div class="link_button mr20">
-                                    <a id="fullscreen" href="#"><img src="assets/images/share-box-fill.svg"/></a>
+                                    <a id="fullscreen" href="#"><img src="/assets/images/share-box-fill.svg"/></a>
                                 </div>
 
                                 <div class="link_button" style="line-height: 35px;">
@@ -67,7 +68,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="workflow_card">
-                                                <div class="wf_icons br8 bkg_blue_300"><img class="rotate-45" src="assets/images/peopleLight.svg"/></div>
+                                                <div class="wf_icons br8 bkg_blue_300"><img class="rotate-45" src="/assets/images/peopleLight.svg"/></div>
                                                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
                                                 <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
                                                 <div class="p15 btop">
@@ -75,37 +76,77 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12"><img src="assets/images/wfline.png"/></div>
+                                        <div class="col-md-12"><img src="/assets/images/wfline.png"/></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="workflow_card">
-                                                <div class="wf_icons bkg_email_400"><img src="assets/images/send-plane-fill-24.svg"/></div>
+                                                <div class="wf_icons bkg_email_400"><img src="/assets/images/send-plane-fill-24.svg"/></div>
                                                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
                                                 <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
                                                 <div class="p15 pt10 btop">
                                                     <ul class="workflow_list">
-                                                        <li><a href="#"><span><img src="assets/images/send-plane-line.svg"/></span> 3k</a></li>
-                                                        <li><a href="#"><span><img src="assets/images/mail-open-line.svg"/></span> 28%</a></li>
-                                                        <li><a href="#"><span><img src="assets/images/cursor-line.svg"/></span> 67%</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> 3k</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/mail-open-line.svg"/></span> 28%</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/cursor-line.svg"/></span> 67%</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+                                            <button class="btn btn-xs btn_white_table smallbtn rounded dropdown-toggle" style="border:1px solid #cccccc;"
+                                            >+
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="workflow_card">
+                                                <div class="wf_icons bkg_reviews_500"><img src="/assets/images/star-s-fill.png"/></div>
+                                                <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
+                                                <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
+                                                <div class="p15 pt10 btop">
+                                                    <ul class="workflow_list">
+                                                        <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> 3k</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/mail-open-line.svg"/></span> 28%</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/cursor-line.svg"/></span> 67%</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="workflow_card">
+                                                <div class="wf_icons bkg_email_400"><img src="/assets/images/send-plane-fill-24.svg"/></div>
+                                                <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
+                                                <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
+                                                <div class="p15 pt10 btop">
+                                                    <ul class="workflow_list">
+                                                        <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> 3k</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/mail-open-line.svg"/></span> 28%</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/cursor-line.svg"/></span> 67%</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="workflow_card">
-                                                <div class="wf_icons bkg_reviews_500"><img src="assets/images/star-s-fill.png"/></div>
+                                                <div class="wf_icons bkg_reviews_500"><img src="/assets/images/star-s-fill.png"/></div>
                                                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
                                                 <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
                                                 <div class="p15 pt10 btop">
                                                     <ul class="workflow_list">
-                                                        <li><a href="#"><span><img src="assets/images/send-plane-line.svg"/></span> 3k</a></li>
-                                                        <li><a href="#"><span><img src="assets/images/mail-open-line.svg"/></span> 28%</a></li>
-                                                        <li><a href="#"><span><img src="assets/images/cursor-line.svg"/></span> 67%</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> 3k</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/mail-open-line.svg"/></span> 28%</a></li>
+                                                        <li><a href="#"><span><img src="/assets/images/cursor-line.svg"/></span> 67%</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="row" v-for="oEvent in oEvents">
+                                        <workflow-node :oEvent="oEvent" :wfData="wfData"></workflow-node>
                                     </div>
 
                                 </div>
@@ -125,149 +166,187 @@
             </div>
 
 
+            <!--******************
+           PAGE SIDEBAR
+           **********************-->
+            <div class="page_sidebar bkg_light_000 absl">
+                <div class="inner2 pb0">
+                    <div class="title-box">
+                        <h6 class="menu-title" style="line-height: 36px;"><span class="button-menu-mobile_sidebar"><img src="/assets/images/close_menu_circle.svg"></span> &nbsp; Open Menu</h6>
+                    </div>
+                    <h3 class="htxt_medium_20 dark_800" >Nodes </h3>
+                    <hr />
+
+                    <div class="sidebar_search_big">
+                        <input type="text" name="" value="" placeholder="Search">
+                        <button class="sidebar_search_submit"><img src="/assets/images/submit_grey.svg"></button>
+                    </div>
+                </div>
+
+                <div class="sidebar_headings">
+                    <span class="float-left">TRIGGERS</span>
+                    <i class="float-right"><img src="/assets/images/arrow-down-s-line.svg"/></i>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="p20 pt0 pb0">
+                    <ul class="list_with_icons">
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_blue_400"><img src="/assets/images/user-3-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">Contact</p>
+                                <p class="dark_300 fw300 fsize12">Eu maecenas nisl interdum.</p>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_reviews_300"><img src="/assets/images/file-list-2-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">Form</p>
+                                <p class="dark_300 fw300 fsize12">Tellus lectus platea.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_dark_300"><img src="/assets/images/time-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">Timer</p>
+                                <p class="dark_300 fw300 fsize12">Arcu blandit duis phasellus.</p>
+                            </div>
+                        </li>
+
+
+
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+
+
+                <div class="sidebar_headings">
+                    <span class="float-left">ACTIONS</span>
+                    <i class="float-right"><img src="/assets/images/arrow-down-s-line.svg"/></i>
+                    <div class="clearfix"></div>
+                </div>
+
+
+
+
+
+                <div class="p20 pt0 pb0">
+                    <ul class="list_with_icons">
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_brand_300"><img src="/assets/images/send-plane-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">Email</p>
+                                <p class="dark_300 fw300 fsize12">Semper aliquet viverra libero.</p>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">SMS</p>
+                                <p class="dark_300 fw300 fsize12">Amet nec euismod.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_reviews_400"><img src="/assets/images/star-s-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">Review</p>
+                                <p class="dark_300 fw300 fsize12">Cras aenean vitae duis amet.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="media_left">
+                                <span class="circle_32 img bkg_red_400"><img src="/assets/images/notification-badge-fill.svg"/></span>
+                            </div>
+                            <div class="media_left">
+                                <p class="htxt_bold_14 dark_600">Notification</p>
+                                <p class="dark_300 fw300 fsize12">Mi vitae tortor, eget. </p>
+                            </div>
+                        </li>
+
+
+
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+
+
+
+
+                <div class="clearfix"></div>
+            </div>
+
+            <!--******************
+             END PAGE SIDEBAR
+             **********************-->
 
 
         </div>
         <!--Content Area End-->
-        <!--Workflow Sidebar-->
-        <div class="page_sidebar width_360 bkg_light_000">
-            <div class="inner2 pb0">
-                <div class="title-box">
-                    <h6 class="menu-title" style="line-height: 36px;"><span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; Open Menu</h6>
-                </div>
-                <h3 class="htxt_medium_20 dark_800" >Nodes </h3>
-                <hr />
 
-                <div class="sidebar_search_big">
-                    <input type="text" name="" value="" placeholder="Search">
-                    <button class="sidebar_search_submit"><img src="assets/images/submit_grey.svg"></button>
-                </div>
-            </div>
-
-            <div class="sidebar_headings">
-                <span class="float-left">TRIGGERS</span>
-                <i class="float-right"><img src="assets/images/arrow-down-s-line.svg"/></i>
-                <div class="clearfix"></div>
-            </div>
-
-
-            <div class="p20 pt0 pb0">
-                <ul class="list_with_icons">
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_blue_400"><img src="assets/images/user-3-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">Contact</p>
-                            <p class="dark_300 fw300 fsize12">Eu maecenas nisl interdum.</p>
-                        </div>
-                    </li>
-
-
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_reviews_300"><img src="assets/images/file-list-2-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">Form</p>
-                            <p class="dark_300 fw300 fsize12">Tellus lectus platea.</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_dark_300"><img src="assets/images/time-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">Timer</p>
-                            <p class="dark_300 fw300 fsize12">Arcu blandit duis phasellus.</p>
-                        </div>
-                    </li>
-
-
-
-
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-
-
-
-            <div class="sidebar_headings">
-                <span class="float-left">ACTIONS</span>
-                <i class="float-right"><img src="assets/images/arrow-down-s-line.svg"/></i>
-                <div class="clearfix"></div>
-            </div>
-
-
-
-
-
-            <div class="p20 pt0 pb0">
-                <ul class="list_with_icons">
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_brand_300"><img src="assets/images/send-plane-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">Email</p>
-                            <p class="dark_300 fw300 fsize12">Semper aliquet viverra libero.</p>
-                        </div>
-                    </li>
-
-
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_sms_400"><img src="assets/images/message-2-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">SMS</p>
-                            <p class="dark_300 fw300 fsize12">Amet nec euismod.</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_reviews_400"><img src="assets/images/star-s-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">Review</p>
-                            <p class="dark_300 fw300 fsize12">Cras aenean vitae duis amet.</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="media_left">
-                            <span class="circle_32 img bkg_red_400"><img src="assets/images/notification-badge-fill.svg"/></span>
-                        </div>
-                        <div class="media_left">
-                            <p class="htxt_bold_14 dark_600">Notification</p>
-                            <p class="dark_300 fw300 fsize12">Mi vitae tortor, eget. </p>
-                        </div>
-                    </li>
-
-
-
-
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-
-
-
-
-
-            <div class="clearfix"></div>
-        </div>
     </div>
 </template>
 <script>
-    export default {}
-    /*$(document.body).addClass('enlarge-menu');*/
-    $(".button-menu-mobile_sidebar").click(function(){
-        $("body").toggleClass("enlarge-menu");
-        //$(".menu-title").text("Hello world!");
-    });
+    import workflowNode from './workflowComponents/Node';
+    export default {
+        props: ['workflowData'],
+        components: {workflowNode},
+        data(){
+          return {
+              successMsg: '',
+              errorMsg: '',
+              loading: true,
+              moduleName: '',
+              moduleUnitID: '',
+              moduleAccountID: '',
+              title: '',
+              oEvents: '',
+              wfData: ''
+
+          }
+        },
+        mounted() {
+            this.makeBreadcrumb(this.workflowData.breadcrumb);
+        },
+        watch: {
+            workflowData: function(){
+                this.loading = false;
+                this.makeBreadcrumb(this.workflowData.breadcrumb);
+                this.wfData = this.workflowData;
+                this.title = this.workflowData.oAutomations[0].title;
+                this.moduleName = this.workflowData.moduleName;
+                this.moduleUnitID = this.workflowData.moduleUnitID;
+                this.oEvents = this.workflowData.oEvents;
+            }
+        },
+        methods: {
+
+        }
+    }
+
     $("#fullscreen").click(function(){
         $(".content-area").toggleClass("fullscreen");
     });
@@ -275,9 +354,8 @@
         step: 10
     });*/
 </script>
-<style scoped>
-    .navbar-custom { background:#FFFFFF!important; }
-</style>
+
+
 
 
 
