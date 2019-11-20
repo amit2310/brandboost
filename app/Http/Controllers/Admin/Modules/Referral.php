@@ -19,6 +19,41 @@ class Referral extends Controller {
     public function index() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/modules/referral/',
+            'Dashboard' => ''
+        );
+
+        //Instantiate Referral model to get its methods and properties
+        $mReferral = new ReferralModel();
+
+        $oPrograms = $mReferral->getReferralLists($userID);
+        $moduleName = 'referral';
+
+        $aPageData = array(
+            'title' => 'Referral Module',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oPrograms,
+            'oPrograms' => $oPrograms->items(),
+            'bActiveSubsription' => $bActiveSubsription,
+            'moduleName' => $moduleName
+        );
+
+        echo json_encode($aPageData);
+        exit();
+    }
+
+    /*
+     * Function is kept for the reference for the old one before Vue JS
+     */
+    public function indexOld() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
         $bActiveSubsription = UsersModel::isActiveSubscription();
         $oPrograms = ReferralModel::getReferralLists($userID);
         $moduleName = 'referral';
@@ -37,11 +72,10 @@ class Referral extends Controller {
             'moduleName' => $moduleName
         );
 
-		return view('admin.modules.referral.list', $aPageData);
+        return view('admin.modules.referral.list', $aPageData);
     }
 
-
-	public function overview() {
+    public function overview() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -65,9 +99,8 @@ class Referral extends Controller {
             'oEmail' => $oEmail,
             'oClick' => $oClick
         );
-		return view('admin.modules.referral.overview', $aPageData);
+        return view('admin.modules.referral.overview', $aPageData);
     }
-
 
 	public function changeStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
@@ -116,12 +149,21 @@ class Referral extends Controller {
 
     public function deleteReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->ref_id;
+
+        $mReferral = new ReferralModel();
+
         if ($referralID > 0) {
-            $bDeleted = ReferralModel::deleteReferral($userID, $referralID);
+            $bDeleted = $mReferral->deleteReferral($userID, $referralID);
             if ($bDeleted) {
                 $response = array('status' => 'success', 'msg' => "Success");
             }
@@ -134,10 +176,26 @@ class Referral extends Controller {
 
 	public function addReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = $request->title;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'source_type' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $title = strip_tags($request->title);
+        $source_type = strip_tags($request->source_type);
+        $description = strip_tags($request->description);
+
+        $mReferral = new ReferralModel();
 
         /*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
@@ -154,10 +212,12 @@ class Referral extends Controller {
             'hashcode' => $hashcode,
             'user_id' => $userID,
             'title' => $title,
+            'source_type' => $source_type,
+            'description' => $description,
             'status' => 'draft',
             'created' => date("Y-m-d H:i:s")
         );
-        $insertID = ReferralModel::addReferral($aData);
+        $insertID = $mReferral->addReferral($aData);
 
         if ($insertID) {
             //Update in automation table to take effect in email/sms settings
@@ -179,22 +239,24 @@ class Referral extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $bUpdated = ReferralModel::updateStoreSettings($aDefaultSettings, $insertID);
+            $bUpdated = $mReferral->updateStoreSettings($aDefaultSettings, $insertID);
 
-            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
+            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Program added successfully!");
 
             $notificationData = array(
                 'event_type' => 'added_referral_program',
-                'event_id' => 0,
+                'event_id' => '0',
                 'link' => base_url() . 'admin/modules/referral/setup/' . $insertID,
                 'message' => 'Created new referral.',
                 'user_id' => $userID,
                 'status' => 1,
                 'created' => date("Y-m-d H:i:s")
             );
+
             $eventName = 'sys_referral_added';
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
+
         echo json_encode($response);
         exit;
     }
@@ -303,13 +365,23 @@ class Referral extends Controller {
 
 	public function getReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->ref_id;
-        $oReferral = ReferralModel::getReferral($userID, $referralID);
+
+        $mReferral = new ReferralModel();
+
+        $oReferral = $mReferral->getReferral($userID, $referralID);
+
         if (!empty($oReferral)) {
-            $response = array('status' => 'success', 'id' => $oReferral->id, 'title' => $oReferral->title);
+            $response = array('status' => 'success', 'id' => $oReferral->id, 'title' => $oReferral->title, 'source_type' => $oReferral->source_type, 'description' => $oReferral->description);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
@@ -321,17 +393,30 @@ class Referral extends Controller {
 
 	public function updateReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->ref_id;
         $title = $request->title;
+        $source_type = $request->source_type;
+        $description = $request->description;
+
+        $mReferral = new ReferralModel();
+
         $aData = array(
             'title' => $title,
+            'source_type' => $source_type,
+            'description' => $description,
             'updated' => date("Y-m-d H:i:s")
         );
         if ($referralID > 0) {
-            $bUpdateID = ReferralModel::updateReferral($aData, $userID, $referralID);
+            $bUpdateID = $mReferral->updateReferral($aData, $userID, $referralID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }

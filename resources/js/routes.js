@@ -34,6 +34,9 @@ import ListSubscribers from './components/admin/contact/ListSubscribers';
 import EmailDashboard from './components/admin/modules/emails/Dashboard';
 import BroadcastCampaigns from './components/admin/modules/emails/Broadcast';
 
+/*Referral Module*/
+import ReferralOverview from './components/admin/modules/referral/Overview';
+
 import AutomationCampaigns from './components/admin/modules/emails/Workflow';
 import WorkflowSetup from './components/admin/workflow/MasterWorkflow';
 
@@ -111,6 +114,9 @@ const routes = [
     { path: '/modules/emails/broadcast/setup/:id/3', component: broadcastStep3, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastStep4, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastStep5, props : {title : 'Email Templates', type : 'email' } },
+
+    /*Referral Module*/
+    { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
 
     /*Workflow Module*/
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },
