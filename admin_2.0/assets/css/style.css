@@ -98,6 +98,11 @@ img{max-width: 100%;}
 .slimScrollDiv {
 	height: auto!important
 }
+.main-icon-menu .slimScrollDiv {
+	height: auto!important;
+	width: 64px!important;
+}
+
 .m-b-30 {
 	margin-bottom: 30px
 }
@@ -370,12 +375,22 @@ code {
 	color: #4d79f6
 }
 .tooltip.tooltip-custom .tooltip-inner, .tooltip.tooltip-sky .tooltip-inner {
-	background: #eaf0f7;
-	color: #435177
+	/*background: #eaf0f7;*/
+	background: #000000;
+	/*color: #435177*/
+	color: #ffffff
 }
 .tooltip.tooltip-custom.bs-tooltip-top .arrow::before, .tooltip.tooltip-sky.bs-tooltip-top .arrow::before {
-	border-top-color: #f1f5fa
+	/*border-top-color: #f1f5fa*/
+	border-top-color: #000000
 }
+
+.tooltip.tooltip-custom.bs-tooltip-right .arrow::before, .tooltip.tooltip-sky.bs-tooltip-right .arrow::before {
+	/*border-right-color: #f1f5fa;*/
+	border-right-color: #000000
+}
+
+
 .bs-example-modal {
 	position: relative;
 	top: auto;
@@ -596,7 +611,7 @@ code {
 .main-menu-inner .menu-body .nav-link i img{width: 16px!important}
 
 .main-menu-inner:hover .menu-body .nav-link i img{width: 16px!important; max-width: 16px!important }
-.main-menu-inner:hover{width: 280px; }
+.main-menu-inner:hover{width: 280px; background: #fff; border: none!important; box-shadow: 12px 0px 24px rgba(36, 43, 61, 0.03)!important;}
 .main-menu-inner:hover .title-box-mid, .main-menu-inner:hover .title-box{ visibility:visible; }
 .main-menu-inner:hover .title-box{max-height: 46px!important; min-height: 46px!important}
 
@@ -1266,9 +1281,10 @@ PAGE WITH SIDEBAR CSS
 
 
 .sidebar_search_big{padding: 10px 0; margin-bottom: 15px;}
-.sidebar_search_big input[type="text"]{background: #f4f6f9;border-radius: 50px; height: 36px; border: none; max-width: 266px; padding: 0 15px; color: #B4C0D4; font-size: 14px;}
+.sidebar_search_big input[type="text"]{background: #f4f6f9;border-radius: 50px; height: 36px; border: none; max-width: 192px; padding: 0 15px; color: #B4C0D4; font-size: 14px;}
 .sidebar_search_big input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
 .sidebar_search_big .sidebar_search_submit{border: none; background: none; box-shadow: none; width: 36px; height: 36px; padding: 0; margin: 0 0 0 7px;}
+
 
 
 .sidebar_headings{background: rgba(196, 207, 225, 0.1); border-top: 1px solid #eef1f7; border-bottom: 1px solid #eef1f7; padding: 7px 24px; font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #687693; line-height: 23px;}
@@ -1288,6 +1304,8 @@ PAGE WITH SIDEBAR CSS
 .circle_32.red{background: #f5e7e5; color: #E4977F} 
 .circle_32 span.text{ opacity:1; }
 .circle_32.img{line-height: 30px;}
+
+
 
 .media_left{display: inline-block; margin-right: 13px; float: left;}
 
