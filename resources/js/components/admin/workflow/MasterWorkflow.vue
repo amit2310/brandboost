@@ -35,7 +35,7 @@
             <loading :isLoading="loading"></loading>
 
 
-            <div class="tab-content">
+            <div class="tab-content" v-show="wfRendered">
                 <!--======Tab 1====-->
                 <div id="Visual" class="tab-pane active">
                     <div class="container-fluid">
@@ -72,13 +72,18 @@
                                                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
                                                 <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
                                                 <div class="p15 btop">
-                                                    <p class="dark_200 htxt_regular_12 text-uppercase m0">1,394 Contacts </p>
+                                                    <p class="dark_200 htxt_regular_12 text-uppercase m0">{{subscribersData.length}} Contacts </p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12"><img src="/assets/images/wfline.png"/></div>
+                                        <!--<div class="col-md-12"><img src="/assets/images/wfline.png"/></div>-->
+
                                     </div>
-                                    <div class="row">
+
+
+
+
+                                    <!--<div class="row">
                                         <div class="col-md-6">
                                             <div class="workflow_card">
                                                 <div class="wf_icons bkg_email_400"><img src="/assets/images/send-plane-fill-24.svg"/></div>
@@ -143,11 +148,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
 
-                                    <div class="row" v-for="oEvent in oEvents">
-                                        <workflow-node :oEvent="oEvent" :wfData="wfData"></workflow-node>
-                                    </div>
+                                    <workflow-node v-for="oEvent in oEvents" :oEvent="oEvent" :wfData="wfData" :key="oEvent.id" ></workflow-node>
 
                                 </div>
                             </div>
@@ -324,7 +327,9 @@
               moduleAccountID: '',
               title: '',
               oEvents: '',
-              wfData: ''
+              wfData: '',
+              subscribersData: '',
+              wfRendered: false
 
           }
         },
@@ -333,16 +338,28 @@
         },
         watch: {
             workflowData: function(){
-                this.loading = false;
                 this.makeBreadcrumb(this.workflowData.breadcrumb);
                 this.wfData = this.workflowData;
                 this.title = this.workflowData.oAutomations[0].title;
                 this.moduleName = this.workflowData.moduleName;
                 this.moduleUnitID = this.workflowData.moduleUnitID;
                 this.oEvents = this.workflowData.oEvents;
+                this.getWorkflowSubscribers();
+                let elem = this;
+                setTimeout(function(){
+                    elem.wfRendered= true;
+                    elem.loading = false;
+                }, 1000);
             }
         },
         methods: {
+            getWorkflowSubscribers: function(){
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', {moduleName: this.moduleName, moduleUnitID:this.moduleUnitID})
+                    .then(response => {
+                        this.subscribersData = response.data.subscribersData;
+                    });
+
+            }
 
         }
     }

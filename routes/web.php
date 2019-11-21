@@ -842,6 +842,7 @@ Route::get('survey/{hashcode}', 'Survey@index');
 Route::post('admin/helperutility/getSubscriberTags', 'Admin\HelperUtility@getSubscriberTags');
 Route::post('admin/helperutility/getFeedbackTags', 'Admin\HelperUtility@getFeedbackTags');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/eventCampaigns', 'Admin\HelperUtility@eventCampaigns');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', 'Admin\HelperUtility@workflowSubscribers');
 
 
 
