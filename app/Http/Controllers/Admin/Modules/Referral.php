@@ -104,16 +104,25 @@ class Referral extends Controller {
 
 	public function changeStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->refID;
         $status = $request->status;
+
+        $mReferral = new ReferralModel();
+
         $aData = array(
             'status' => $status,
         );
         if ($referralID > 0) {
-            $bUpdateID = ReferralModel::updateReferral($aData, $userID, $referralID);
+            $bUpdateID = $mReferral->updateReferral($aData, $userID, $referralID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
