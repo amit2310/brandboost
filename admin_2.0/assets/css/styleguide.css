@@ -56,8 +56,9 @@ Misc
 .bottom_positiom{position: absolute; width: 100%; bottom: 0}
 .max_h_230{max-height: 230px!important}
 .max_h_300{max-height: 300px!important}
+.max_h_330{max-height: 330px!important}
 .max_h_260{max-height: 260px!important}
-
+.close_x_icon{width: 24px; height: 24px; position: absolute; right: 20px; top: 20px;}
 
 
 
@@ -137,6 +138,7 @@ CUSTOM SWITCH STYLES
 .custom-form-switch .field:checked + .toggle.purple {  border-color: #9559ec;  background-color: #9559ec;}
 .custom-form-switch .field:checked + .toggle.yellow {  border-color: #ed8e8c;  background-color: #ed8e8c;}
 .custom-form-switch .field:checked + .toggle.greenl {  border-color: #9ecc78;  background-color: #9ecc78;}
+.custom-form-switch .field:checked + .toggle.green3 {  border-color: #7ECD99;  background-color: #7ECD99;}
 
 
 
@@ -174,7 +176,7 @@ TABLES STYLES
 /******************************
 AVATAR FL NAME
 ******************************/
-span.fl_name{width: 32px; height: 32px; display: inline-block; border-radius: 100%; text-align: center; line-height: 32px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #ebedf2 }
+span.fl_name{width: 32px; height: 32px; display: inline-block; border-radius: 100%; text-align: center; line-height: 32px; font-size: 12px; font-weight: 500; text-transform: uppercase; background: #ebedf2 }
 
 
 
@@ -201,11 +203,11 @@ List Styles Classes
 .import_list li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 24px; display: inline-block; width: 24.5%}
 .import_list li a{margin: 0 ;padding: 0 0px 0 35px; font-weight: 500;font-size: 14px; color: #687693; background: url(../images/checkbox-blank-circle-line-24.svg) 0px 1px no-repeat; display: inline-block; position: relative;}
 .import_list li a:after{position: absolute; content: ''; bottom: -30px; left: 0; width: 100%; height: 2px; background: #73abff; display: none}
-.import_list li a.active{color: #333D54; font-weight: 600 }
+.import_list li a.active{color: #333D54; font-weight: 500 }
 .import_list li a.active:after{position: absolute; content: ''; bottom: -30px; left: 0; width: 100%; height: 2px; background: #73abff; display: block; }
 .import_list li a.done{background: url(../images/checkbox-circle-fill-24.svg) 0px 0px no-repeat ;  font-weight: 500; }
 .import_list li:hover a:after{ display: block;}
-.import_list li a:hover{color: #333D54; font-weight: 600}
+.import_list li a:hover{color: #333D54; font-weight: 500}
 
 .templates_list{margin: 0; padding: 0;}
 .templates_list li{margin: 0; padding: 0; list-style: none;}
@@ -232,13 +234,13 @@ List Styles Classes
 .email_config_list li a.active span.num_circle{color: #56ACD8}
 .email_config_list li a span.num_circle span.check_img{display: none}
 
-.email_config_list li a.active{color: #242B3D; font-weight: 600 }
+.email_config_list li a.active{color: #242B3D; font-weight: 500 }
 .email_config_list li a.done{ color: #687693; font-weight: 500  }
 .email_config_list li a.done span.num_circle span.check_img{display: block}
 .email_config_list li a.done span.num_circle span.num{display: none}
 
 
-.email_config_list li a:hover{color: #242B3D; font-weight: 600 }
+.email_config_list li a:hover{color: #242B3D; font-weight: 500 }
 
 
 
@@ -263,7 +265,7 @@ Accordion Panel
 /******************************
 Button CLASSES
 ******************************/
-.btn{font-size: 14px; font-weight: 600; line-height: 120%; box-shadow: 0px 2px 2px rgba(0, 121, 170, 0.05); border-radius: 50px; padding-left: 20px; padding-right: 10px }
+.btn{font-size: 14px; font-weight: 500; line-height: 120%; box-shadow: 0px 2px 2px rgba(0, 121, 170, 0.05); border-radius: 50px; padding-left: 20px; padding-right: 10px }
 .btn span{margin-left: 10px}
 .btn:hover{/*color: #ffffff;*/ /*background: #5d96f8*/ color:inherit}
 .btn-lg{height: 52px; line-height: 26px;}
@@ -281,6 +283,8 @@ Button CLASSES
 .link_button{background: #FFFFFF;box-shadow: 0px 1px 1px rgba(1, 21, 64, 0.08);border-radius: 44px; height: 40px; line-height: 40px; display: inline-block; padding: 0 5px;}
 .link_button a{display: inline-block; margin: 0 7px;}
 
+.link_button_32{background: #FFFFFF;border-radius: 44px; height: 32px; line-height: 32px; display: inline-block; padding: 0 0px; width: 32px;}
+.link_button_32 a{display: inline-block; margin: 0 7px;}
 
 .tag_btn{background: #f0f2f6; border: none; box-shadow: none; padding:0 15px;height: 32px;line-height: 32px; border-radius: 50px; font-size: 14px; font-weight: 400; color: #56627F; margin: 0 7px 12px 0}
 .tag_btn:hover{background: #dfe5f1; }
@@ -576,8 +580,10 @@ FONT WEIGHT CLASSES
 .fw300{font-weight: 300!important;}
 .fw400{font-weight: 400!important;}
 .fw500{font-weight: 500!important;}
-.fw600{font-weight: 600!important;}
-.fw700{font-weight: 700!important;}
+/*.fw600{font-weight: 600!important;}*/
+.fw600{font-weight: 500!important;}
+/*.fw700{font-weight: 700!important;}*/
+.fw700{font-weight: 600!important;}
 
 
 /*******************************
@@ -614,6 +620,8 @@ PADDING CLASSES
 .pb40{padding-bottom: 40px!important;}
 .pb50{padding-bottom: 50px!important;}
 .pb60{padding-bottom: 60px!important;}
+.pb80{padding-bottom: 80px!important;}
+.pb100{padding-bottom: 100px!important;}
 
 .pb-15 {padding-bottom: 15px !important;}
 .pt-15 {padding-top: 15px !important;}
@@ -694,7 +702,7 @@ MARGIN CLASSES
 /*******************************
 Body txt  10px to 18px
 **********/
-.htxt_bold_10{font-size: 10px; font-weight: 600; line-height: 120%;}
+/*.htxt_bold_10{font-size: 10px; font-weight: 600; line-height: 120%;}
 .htxt_bold_12{font-size: 12px; font-weight: 600; line-height: 120%;}
 .htxt_bold_14{font-size: 14px; font-weight: 600; line-height: 120%;}
 .htxt_bold_16{font-size: 16px; font-weight: 600; line-height: 120%;}
@@ -704,7 +712,22 @@ Body txt  10px to 18px
 .htxt_medium_12{font-size: 12px; font-weight: 500; line-height: 120%;}
 .htxt_medium_14{font-size: 14px; font-weight: 500; line-height: 120%;}
 .htxt_medium_16{font-size: 16px; font-weight: 500; line-height: 120%;}
+.htxt_medium_18{font-size: 18px; font-weight: 500; line-height: 120%;}*/
+
+
+.htxt_bold_10{font-size: 10px; font-weight: 500; line-height: 120%;}
+.htxt_bold_12{font-size: 12px; font-weight: 500; line-height: 120%;}
+.htxt_bold_14{font-size: 14px; font-weight: 500; line-height: 120%;}
+.htxt_bold_16{font-size: 16px; font-weight: 500; line-height: 120%;}
+.htxt_bold_18{font-size: 18px; font-weight: 500; line-height: 120%;}
+
+.htxt_medium_10{font-size: 10px; font-weight: 500; line-height: 120%;}
+.htxt_medium_12{font-size: 12px; font-weight: 500; line-height: 120%;}
+.htxt_medium_14{font-size: 14px; font-weight: 500; line-height: 120%;}
+.htxt_medium_16{font-size: 16px; font-weight: 500; line-height: 120%;}
 .htxt_medium_18{font-size: 18px; font-weight: 500; line-height: 120%;}
+
+
 
 .htxt_regular_10{font-size: 10px; font-weight: 400; line-height: 120%;}
 .htxt_regular_12{font-size: 12px; font-weight: 400; line-height: 120%;}
@@ -718,11 +741,23 @@ Body txt  10px to 18px
 /*******************************
 Headings  20px to 36px
 **********/
-.htxt_bold_20{font-size: 20px; font-weight: 600; line-height: 120%;}
+/*.htxt_bold_20{font-size: 20px; font-weight: 600; line-height: 120%;}
 .htxt_bold_24{font-size: 24px; font-weight: 600; line-height: 120%;}
 .htxt_bold_28{font-size: 28px; font-weight: 600; line-height: 120%;}
 .htxt_bold_32{font-size: 32px; font-weight: 600; line-height: 120%;}
 .htxt_bold_36{font-size: 36px; font-weight: 600; line-height: 120%;}
+
+.htxt_medium_20{font-size: 20px; font-weight: 500; line-height: 120%;}
+.htxt_medium_24{font-size: 24px; font-weight: 500; line-height: 120%;}
+.htxt_medium_28{font-size: 28px; font-weight: 500; line-height: 120%;}
+.htxt_medium_32{font-size: 32px; font-weight: 500; line-height: 120%;}
+.htxt_medium_36{font-size: 36px; font-weight: 500; line-height: 120%;}*/
+
+.htxt_bold_20{font-size: 20px; font-weight: 500; line-height: 120%;}
+.htxt_bold_24{font-size: 24px; font-weight: 500; line-height: 120%;}
+.htxt_bold_28{font-size: 28px; font-weight: 500; line-height: 120%;}
+.htxt_bold_32{font-size: 32px; font-weight: 500; line-height: 120%;}
+.htxt_bold_36{font-size: 36px; font-weight: 500; line-height: 120%;}
 
 .htxt_medium_20{font-size: 20px; font-weight: 500; line-height: 120%;}
 .htxt_medium_24{font-size: 24px; font-weight: 500; line-height: 120%;}

@@ -1,6 +1,6 @@
-@import url('https://rsms.me/inter/inter.css');
-@import url(fonts/rubuk.css);
-/*@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700&display=swap');*/
+/*@import url('https://rsms.me/inter/inter.css');*/
+/*@import url(fonts/rubuk.css);*/
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700&display=swap');
 
 html {
 	position: relative;
@@ -13,11 +13,13 @@ body {
 	overflow-x: hidden;
 	font-size: 13px;
 	background-color: #f6f9fe;
-	/*font-family: 'Inter', sans-serif; */
-	font-family: 'rubik';
-	/*font-family: 'Rubik', sans-serif;*/
+	/*font-family: 'rubik';*/
+	font-family: 'Rubik', sans-serif;
 	color: #50649c;
 	font-weight: 400;
+	font-smooth: always;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
 	margin: 0px 0
@@ -205,7 +207,7 @@ strong {
 .breadcrumb>li+li:before {
 	content: "\f105"!important;
 	font-family: 'Font Awesome 5 Free'!important;
-	font-weight: 600;
+	font-weight: 500;
 	padding: 0 5px;
 	color: #8997bd!important
 }
@@ -687,7 +689,7 @@ code {
 }
 
 .main-menu-inner:hover .menu-body .nav-link{padding: 0 15px;width:auto; text-align: left;}
-.main-menu-inner .menu-body .nav-link span{font-weight: 300; width: 100%}
+.main-menu-inner .menu-body .nav-link span{font-weight: 400; width: 100%}
 .main-menu-inner .menu-body .nav-link i {
 	color: #7c92a7;
 	font-size: 15px;
@@ -1349,7 +1351,11 @@ PAGE WITH SIDEBAR CSS
 .rotate-45{transform: rotate(-45deg);}
 .workflow_list{margin: 0; padding: 0;}
 .workflow_list li{margin: 0; padding: 0; list-style: none; display: inline-block;}
-.workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 300; letter-spacing: 0.04em;}
+.workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 400; letter-spacing: 0.04em;}
+
+
+.edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
+.edit_delete a{margin: 0 3px; display: inline-block}
 
 
 .activity_date{font-style: normal;font-weight: 500;font-size: 10px;line-height: 11px;letter-spacing: 0.06em;text-transform: uppercase;color: #98ADCF; margin: 25px 0 25px 30px}
@@ -1379,10 +1385,10 @@ PAGE WITH SIDEBAR CSS
 
 .info_list{margin: 0; padding: 0;}
 .info_list li{margin: 0; padding: 0; font-size: 14px; list-style: none; line-height: 30px;}
-.info_list li span{color: #56627F; font-weight: 300; }
+.info_list li span{color: #56627F; font-weight: 400; }
 .info_list li strong{ color: #151A25; font-weight: 400!important; float: right; text-align: right}
 .nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}
-.nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 600!important}
+.nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 500!important}
 
 
 
@@ -1390,7 +1396,7 @@ PAGE WITH SIDEBAR CSS
 .people_config_list li{ list-style: none; margin: 0; padding: 0; line-height: 40px;}
 .people_config_list li a{  margin: 0; padding: 0 0 0px; color: #687693; font-weight: 500; font-size: 14px; }
 .people_config_list li a img{margin-right: 10px;}
-.people_config_list li a:hover, .people_config_list li a.active{color: #5D82F1; font-weight: 600;}
+.people_config_list li a:hover, .people_config_list li a.active{color: #5D82F1; font-weight: 500;}
 
 
 /*.main-icon-menu:hover .enlarge-menu .main-menu-inner, .enlarge-menu .main-menu-inner.active {
@@ -2798,17 +2804,31 @@ APEX CHART
 ***********************/
 .apexcharts-canvas{margin: 0 auto;}
 .apexcharts-legend, .apexcharts-pie-label{visibility: hidden; display: none}
-
-
 /*.apexcharts-gridline, .apexcharts-text{display: none}*/
 .apexcharts-yaxis-label{color: #cccccc!important}
-
 .apexcharts-xaxis {	pointer-events: none;display: none;}
 .apexcharts-xaxis-tick{display: none}
 
 
 
 .main-icon-menu .slimScrollBar{opacity: 0!important}
+
+/************************
+CHAT MESSANGERS
+***********************/
+.chat_messanger{box-shadow: 0px 3px 6px rgba(0, 47, 138, 0.1); background: #f9fbff; border-radius: 10px; max-width: 364px;  position: relative; margin: auto}
+.chat_messanger .upper_color_bkg{border-radius: 10px; padding: 25px 28px; text-align: center; position: relative;}
+.chat_messanger .upper_color_bkg .messanger_option{width: 16px; height: 16px; position: absolute; right: 20px; top: 20px;}
+.chat_messanger .upper_color_bkg .messanger_option .dropdown-menu{left: -144px!important; top: 5px!important;}
+.chat_messanger .upper_color_bkg:before{position: absolute; background: #3198F5; height: 272px; width: 100%; top: 0; left: 0; content: ''; border-radius: 10px 10px 0 0; z-index: 0 }
+.messanger_close{display: block; width: 60px; height: 60px; background: radial-gradient(100% 100% at 86.67% 0%, #55AEFF 0%, #2B97F8 100%);box-shadow: 0px 10px 10px rgba(27, 147, 255, 0.08); border-radius: 100px; text-align: center; line-height: 60px; position: absolute; bottom: -80px; right: 0;}
+
+.messanger_user_image { text-align: center;    position: absolute;   width: 100%;  height: 48px;  top: -24px; line-height: 48px;}
+.messanger_user_image a { display: inline-block; width: 33px; height: 33px; text-align: center; margin: 0 4px;}
+.messanger_user_image a.big {  width: 48px; height: 48px;}
+
+
+
 
 
 

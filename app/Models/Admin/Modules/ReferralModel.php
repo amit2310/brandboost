@@ -56,7 +56,8 @@ class ReferralModel extends Model {
 			->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
 			->leftjoin('tbl_users', 'tbl_referral_rewards.user_id','=','tbl_users.id')
 			->where('tbl_referral_rewards.user_id', $userID)
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }
