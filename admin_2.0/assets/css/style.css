@@ -1354,6 +1354,10 @@ PAGE WITH SIDEBAR CSS
 .workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 400; letter-spacing: 0.04em;}
 
 
+.edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
+.edit_delete a{margin: 0 3px; display: inline-block}
+
+
 .activity_date{font-style: normal;font-weight: 500;font-size: 10px;line-height: 11px;letter-spacing: 0.06em;text-transform: uppercase;color: #98ADCF; margin: 25px 0 25px 30px}
 .activity_card{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 2px; min-height: 104px; max-height: 104px; padding: 32px; position: relative;}
 .activity_card.email{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06); background: #fff;border-radius: 4px; margin-bottom: 15px; min-height: 104px; max-height:100%; padding: 32px; position: relative;}
