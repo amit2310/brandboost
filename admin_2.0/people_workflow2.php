@@ -147,6 +147,11 @@
            		</div>
            		<div class="col-md-6">
            			<div class="workflow_card">
+           			<div class="edit_delete">
+           						<a href="#"><i class="icon-gear fsize12 dark_100"></i></a>
+								<a href="#"><i class="icon-bin2 fsize10 dark_100"></i></a>
+           			</div>
+           			
            			<div class="wf_icons bkg_reviews_500"><img src="assets/images/star-s-fill.png"/></div>
 						<p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
 						<p class="dark_800 htxt_bold_14 mb25">New Customer </p>
@@ -155,6 +160,7 @@
 								<li><a href="#"><span><img src="assets/images/send-plane-line.svg"/></span> 3k</a></li>
 								<li><a href="#"><span><img src="assets/images/mail-open-line.svg"/></span> 28%</a></li>
 								<li><a href="#"><span><img src="assets/images/cursor-line.svg"/></span> 67%</a></li>
+								
 							</ul>
 						</div>
 					</div>
