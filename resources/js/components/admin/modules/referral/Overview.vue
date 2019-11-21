@@ -71,16 +71,12 @@
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
-                                <!--<div class="dropdown-menu dropdown-menu-right">
-                                    <a v-if="list.countSubscribers > 0" class="dropdown-item" href="javascript:void(0);" @click="showReferralSetup(program.id)"><i class="dripicons-user text-muted mr-2"></i> View Contacts</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(program.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                    <a v-if="list.status == 'inactive' && list.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                    <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                    <a v-if="list.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(program.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
-                                </div>-->
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showReferralReports(program.id)"><i class="dripicons-user text-muted mr-2"></i> Reports</a>
+                                    <a v-if="program.status === 'inactive' && program.status !== 'archive' && program.status !== 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="program.status !== 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'draft')"><i class="dripicons-user text-muted mr-2"></i> Draft</a>
+                                    <a v-if="program.status !== 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(program.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(program.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showReferralStats(program.id)"><i class="dripicons-user text-muted mr-2"></i> Stats</a>
@@ -352,10 +348,10 @@
                 this.loadPaginatedData();
             },
             changeStatus: function(programId, status) {
-                if(confirm('Are you sure you want to change the status of this list?')){
+                if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/lists/changeListStatus', {
-                        ref_id:programId,
+                    axios.post('/admin/modules/referral/changeStatus', {
+                        refID:programId,
                         status:status,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
