@@ -178,6 +178,7 @@
 
 
 <script src="{{ base_url() }}assets/js/modules/people/subscribers.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/js/touchspin.min.js"></script>
 <script type="text/javascript" src="/public/js/app.js"></script>
 <script>
     $(document).ready(function(){

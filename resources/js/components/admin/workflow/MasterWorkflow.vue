@@ -50,11 +50,11 @@
 
                             <div class="col-md-6 mb20 text-right">
                                 <div class="link_button mr20">
-                                    <a id="fullscreen" href="#"><img src="/assets/images/share-box-fill.svg"/></a>
+                                    <a id="fullscreen" href="javascript:void(0);"><img src="/assets/images/share-box-fill.svg"/></a>
                                 </div>
 
                                 <div class="link_button" style="line-height: 35px;">
-                                    <input type="text" name="" value="10" class="touchspin-step" />
+                                    <input type="text" name="" value="100" class="touchspin-step" />
                                 </div>
                             </div>
 
@@ -65,7 +65,8 @@
                             <div class="col-md-12 mb-3">
 
                                 <div class="workflow_box">
-                                    <div class="row">
+                                    <div draggable="true">
+                                    <div class="row" >
                                         <div class="col-md-12">
                                             <div class="workflow_card">
                                                 <div class="wf_icons br8 bkg_blue_300"><img class="rotate-45" src="/assets/images/peopleLight.svg"/></div>
@@ -151,7 +152,7 @@
                                     </div>-->
 
                                     <workflow-node v-for="oEvent in oEvents" :oEvent="oEvent" :wfData="wfData" :key="oEvent.id" ></workflow-node>
-
+                                    </div>
                                 </div>
                             </div>
 
@@ -247,7 +248,7 @@
 
                 <div class="p20 pt0 pb0">
                     <ul class="list_with_icons">
-                        <li>
+                        <li draggable="true">
                             <div class="media_left">
                                 <span class="circle_32 img bkg_brand_300"><img src="/assets/images/send-plane-fill.svg"/></span>
                             </div>
@@ -258,7 +259,7 @@
                         </li>
 
 
-                        <li>
+                        <li draggable="true">
                             <div class="media_left">
                                 <span class="circle_32 img bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></span>
                             </div>
@@ -268,7 +269,7 @@
                             </div>
                         </li>
 
-                        <li>
+                        <li draggable="true">
                             <div class="media_left">
                                 <span class="circle_32 img bkg_reviews_400"><img src="/assets/images/star-s-fill.svg"/></span>
                             </div>
@@ -278,7 +279,7 @@
                             </div>
                         </li>
 
-                        <li>
+                        <li draggable="true">
                             <div class="media_left">
                                 <span class="circle_32 img bkg_red_400"><img src="/assets/images/notification-badge-fill.svg"/></span>
                             </div>
@@ -335,6 +336,8 @@
         },
         mounted() {
             this.makeBreadcrumb(this.workflowData.breadcrumb);
+            loadMasterWorkflowScripts();
+
         },
         watch: {
             workflowData: function(){
@@ -362,14 +365,40 @@
             }
 
         }
+    };
+
+    function zoom_page(step) {
+
+        var zoomscale = $(".touchspin-step").val();
+        $('.workflow_box').css('-moz-transform', 'scale(' + zoomscale / 10 + ',' + zoomscale / 10 + ')');
+        $('.workflow_box').css('zoom', zoomscale / 10);
+        $('.workflow_box').css('zoom', zoomscale + '%');
+
     }
 
-    $("#fullscreen").click(function(){
-        $(".content-area").toggleClass("fullscreen");
-    });
-    /*$(".touchspin-step").TouchSpin({
-        step: 10
-    });*/
+    function loadMasterWorkflowScripts(){
+
+        $("#fullscreen").click(function(){
+            $(".content-area").toggleClass("fullscreen");
+        });
+        $(".touchspin-step").TouchSpin({
+            step: 10,
+            min: 1,
+            max: 500
+        });
+        $(".bootstrap-touchspin-up, .bootstrap-touchspin-down").click(function () {
+            zoom_page();
+        });
+
+        $(".touchspin-step").change(function(){
+            zoom_page();
+        });
+
+    }
+
+
+
+
 </script>
 
 

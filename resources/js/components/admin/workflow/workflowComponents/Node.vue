@@ -33,7 +33,7 @@
                 </div>
                 <div class="wf_icons bkg_brand_300"><img src="/assets/images/send-plane-fill-24.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Email </p>
-                <p class="dark_800 htxt_bold_14 mb25">Email Campaign </p>
+                <p class="dark_800 htxt_bold_14 mb25">{{campaign.name}} </p>
                 <div class="p15 pt10 btop">
                     <ul class="workflow_list">
                         <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> {{campaign.stats.processed>999 ? (campaign.stats.processed/100)+'k' : campaign.stats.processed}}</a></li>
@@ -45,7 +45,7 @@
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'sms'">
                 <div class="wf_icons bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">SMS </p>
-                <p class="dark_800 htxt_bold_14 mb25">SMS Campaign </p>
+                <p class="dark_800 htxt_bold_14 mb25">{{campaign.name}}</p>
                 <div class="p15 pt10 btop">
                     <ul class="workflow_list">
                         <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> {{campaign.stats.sentSms>999 ? (campaign.stats.sentSms/100)+'k' : campaign.stats.sentSms}}</a></li>
@@ -85,7 +85,7 @@
              this.moduleName = this.wfData.moduleName;
              this.moduleUnitID = this.wfData.moduleUnitID;
              this.getWorkflowCampaign();
-            /*let d = JSON.parse(this.oEvent.data);
+             /*let d = JSON.parse(this.oEvent.data);
             alert(d.delivery_date);*/
 
         },
@@ -117,15 +117,14 @@
             }
 
         }
-    }
+    };
 
-    $("#fullscreen").click(function(){
-        $(".content-area").toggleClass("fullscreen");
-    });
-    /*$(".touchspin-step").TouchSpin({
-        step: 10
-    });*/
+
 </script>
+<style scoped>
+    .edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
+    .edit_delete a{margin: 0 3px; display: inline-block}
+</style>
 
 
 
