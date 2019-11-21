@@ -38,7 +38,8 @@ import BroadcastCampaigns from './components/admin/modules/emails/Broadcast';
 import ReferralOverview from './components/admin/modules/referral/Overview';
 
 import AutomationCampaigns from './components/admin/modules/emails/Workflow';
-import WorkflowSetup from './components/admin/workflow/MasterWorkflow';
+import WorkflowSetup from './components/admin/modules/emails/WorkflowSetup';
+//import WorkflowSetup from './components/admin/workflow/MasterWorkflow';
 
 /*Broadcast Setup*/
 import broadcastStep1 from './components/admin/broadcast/Setup';

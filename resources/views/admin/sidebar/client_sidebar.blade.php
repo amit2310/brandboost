@@ -50,6 +50,7 @@
 
 <div class="left-sidenav">
     <div class="main-icon-menu">
+        <div class="slimscroll">
         <nav class="nav">
             <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
             <a href="#dashboard" class="nav-link"> <img src="assets/images/dashboard-fill.svg"/> </a>
@@ -75,6 +76,7 @@
             <a href="#Settings" class="nav-link"> <img src="assets/images/settings-3-fill-icon.svg"/> </a>
         </nav>
         <!--end nav-->
+        </div>
 
     </div>
     <!--end main-icon-menu-->

@@ -167,7 +167,8 @@ class Emails extends Controller {
         $mTemplates = new TemplatesModel();
         $bActiveSubsription = UsersModel::isActiveSubscription();
         //get Automation Info
-        $oAutomations = $mEmails->getEmailAutomations($userID, $id);
+        $moduleInfo =  $mEmails->getEmailAutomations($userID, $id);
+        $oAutomations = $moduleInfo->items();
 
         if(empty($oAutomations)) {
             redirect("/admin/modules/emails");
@@ -179,43 +180,41 @@ class Emails extends Controller {
         $oLists = $mLists->getLists($userID, '', 'active');
 
         //get Automation Events
-        $oEvents = $mEmails->getAutomationEvents($id);
+        //$oEvents = $mEmails->getAutomationEvents($id);
+        $moduleName = 'automation';
+        $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
 
         //get Automation Lists
         $oAutomationLists = $mLists->getAutomationLists($id);
 
-        $moduleName = 'automation';
-        $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+
+        //Sort Events based on the correct order
+        $aEventCol = sortWorkflowEvents($oEvents);
+        $oEvents = $aEventCol['oEvents'];
+        $oMainEvent = $aEventCol['oMainEvent'];
         $oEventsType = array('main', 'followup');
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oTemplates = $mTemplates->getCommonTemplates();
         $oDraftTemplates = $mTemplates->getCommonDraftTemplates($userID, '');
         $oCategories = $mTemplates->getCommonTemplateCategories();
+        $type = ($automationType == 'email') ? 'emails' : 'sms';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/'.$type.'/dashboard',
+            'Workflow'=> '#/modules/'.$type.'/workflow',
+            'Setup' => ''
+        );
 
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>';
-
-		if ($automationType == 'email') {
-            $breadcrumb .= '<li><a href="' . base_url('admin/modules/emails/') . '" class="sidebar-control hidden-xs">Email Automations </a></li><li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>';
-        }
-
-        if ($automationType == 'sms') {
-            $breadcrumb .= '<li><a href="' . base_url('admin/modules/emails/sms') . '" class="sidebar-control hidden-xs">Sms Automations </a></li><li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>';
-        }
-
-        $breadcrumb .= '<li><a data-toggle="tooltip" data-placement="bottom" title="Setup Automation" class="sidebar-control active hidden-xs ">Setup Automation</a></li>
-                    </ul>';
 
         $pageData = array(
             'title' => 'Setup Email Automation',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'bActiveSubsription' => $bActiveSubsription,
             'oAutomations' => $oAutomations,
             'oLists' => $oLists,
             'oAutomationLists' => $oAutomationLists,
             'oEvents' => $oEvents,
+            'oMainEvent' => $oMainEvent,
             'moduleName' => $moduleName,
             'moduleUnitID' => $id,
             'oEventsType' => $oEventsType,
@@ -227,7 +226,9 @@ class Emails extends Controller {
             'automation_type' => $automationType
         );
 
-        return view('admin.modules.emails.email-workflow-beta', $pageData);
+        echo json_encode($pageData);
+        exit;
+        //return view('admin.modules.emails.email-workflow-beta', $pageData);
 
     }
 
