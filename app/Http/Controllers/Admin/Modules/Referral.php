@@ -24,7 +24,7 @@ class Referral extends Controller {
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Referral' => '#/modules/referral/',
+            'Referral' => '#/modules/referral/overview',
             'Dashboard' => ''
         );
 
