@@ -7,7 +7,7 @@
         >
     </span>
 
-    <span class="table-img mr15" v-else>
+    <span class="fl_name bkg_light_000" v-else>
         <span
             class="fl_name bkg_red_light red_300"
             :class="(firstname || lastname) ? 'fl_letters' : 'fl_letters_gray'"
