@@ -59,7 +59,7 @@ Misc
 .max_h_330{max-height: 330px!important}
 .max_h_260{max-height: 260px!important}
 .close_x_icon{width: 24px; height: 24px; position: absolute; right: 20px; top: 20px;}
-
+.max_w_225{max-width: 225px;}
 
 
 
@@ -275,8 +275,9 @@ Button CLASSES
 .btn-sm-32{height: 32px; line-height: 17px;}
 
 
-.circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
+.circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
+.circle-icon-52{width: 52px;height: 52px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 52px;  }
 .circle-icon-64{width: 64px;height: 64px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 64px;  }
 
 

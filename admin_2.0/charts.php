@@ -233,8 +233,8 @@
 						
 						<div class="p20">
 							<div id="chart_08">
-    <apexchart type=radialBar height=220 :options="chartOptions" :series="series" />
-  </div>
+							<apexchart type=radialBar height=220 :options="chartOptions" :series="series" />
+						  </div>
 						</div>
    				
    				
