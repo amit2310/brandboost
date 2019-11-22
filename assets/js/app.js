@@ -7,7 +7,7 @@
             position: "right",
             size: "7px",
             color: "#e0e5f1",
-            opacity: 1,
+            opacity: 0,
             wheelStep: 5,
             touchScrollStep: 50
         })
@@ -40,13 +40,11 @@
     Waves.init()
 }(jQuery);
 
-
-
-
-
-
-
-
+$(document).ready(function(){
+    $('[data-toggle="tooltip-custom"]').click(function () {
+        $('[data-toggle="tooltip-custom"]').tooltip("hide");
+    });
+});
 
 
 
