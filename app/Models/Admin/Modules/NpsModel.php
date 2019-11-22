@@ -38,7 +38,9 @@ class NpsModel extends Model {
                 ->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
                 ->join('tbl_users', 'tbl_nps_main.user_id', '=', 'tbl_users.id')
                 ->where('tbl_nps_main.user_id', $userID)
-                ->get();
+                ->orderBy('id', 'Desc')
+                //->get();
+                ->paginate();
 
         return $aData;
     }
@@ -558,7 +560,7 @@ class NpsModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $scoreID
      * @return typeused to get score details
      */
@@ -573,7 +575,7 @@ class NpsModel extends Model {
     }
 
     /**
-     * 
+     *
      */
     public function getNPSSubscribers($accountID) {
         $oNPS = $this->getSurveyInfoByRef($accountID);
@@ -606,7 +608,7 @@ class NpsModel extends Model {
     }
 
     /**
-     * 
+     *
      */
     public function getNPSNotes($id) {
         if (!empty($id)) {
@@ -697,7 +699,7 @@ class NpsModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aTagID
      * @param type $scoreID
      * @return type
@@ -725,7 +727,7 @@ class NpsModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $noteId
      * @return typeUsed to NPS Notes by note id
      */
@@ -770,7 +772,7 @@ class NpsModel extends Model {
                 })
                 ->orderBy('tbl_tag_groups.id', 'desc')
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
     /**
@@ -810,7 +812,7 @@ class NpsModel extends Model {
                 ->select('tbl_nps_users.*', 'tbl_subscribers.email', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.phone', 'tbl_subscribers.facebook_profile', 'tbl_subscribers.twitter_profile', 'tbl_subscribers.linkedin_profile','tbl_subscribers.instagram_profile', 'tbl_subscribers.socialProfile', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.user_id AS bb_user_id')
                 ->where('tbl_nps_users.id', $userID)
                 ->get();
-        return $oData;         
+        return $oData;
     }
 
     /**
@@ -904,10 +906,10 @@ class NpsModel extends Model {
         }
 
         $sql .= "ORDER BY tbl_nps_automations_tracking_sendgrid.id DESC";
-        
+
         $oData = DB::select(DB::raw($sql));
         return $oData;
-        
+
     }
 
     /**
@@ -1195,7 +1197,7 @@ class NpsModel extends Model {
         $queuedTotalCount = $queuedUniqueCount = $queuedDuplicateCount = array();
         $sendingTotalCount = $sendingUniqueCount = $sendingDuplicateCount = array();
         $otherTotalCount = $otherUniqueCount = $otherDuplicateCount = array();
-        
+
         if (!empty($oData)) {
 
             foreach ($oData as $oRow) {
@@ -1371,7 +1373,7 @@ class NpsModel extends Model {
                 ->select('tbl_nps_automations_campaigns.*')
                 ->where('tbl_nps_automations_events.nps_id', $npsId)
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
     /**
@@ -1388,7 +1390,7 @@ class NpsModel extends Model {
     }
 
     /**
-     * Used to update auto event 
+     * Used to update auto event
      * @param type $aData
      * @param type $id
      * @return boolean

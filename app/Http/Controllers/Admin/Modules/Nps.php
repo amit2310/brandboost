@@ -17,6 +17,54 @@ class Nps extends Controller {
      * Default NPS controller
      */
     public function index() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'NPS Surveys' => '#/modules/nps/',
+            'Dashboard' => ''
+        );
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
+        $oPrograms = $mNPS->getNpsLists($userID);
+
+        if (!empty($oPrograms)) {
+            foreach ($oPrograms as $oProgram) {
+                $hashCode = $oProgram->hashcode;
+                $aScore = $mNPS->getNPSScore($hashCode);
+                $oProgram->NPS = $aScore;
+                //pre($aScore);
+            }
+        }
+
+        //pre($oPrograms);
+
+        $moduleName = 'nps-feedback';
+
+        $aPageData = array(
+            'title' => 'NPS Module',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oPrograms,
+            'oPrograms' => $oPrograms->items(),
+            'bActiveSubsription' => $bActiveSubsription,
+            'moduleName' => $moduleName
+        );
+
+        echo json_encode($aPageData);
+        exit();
+    }
+
+    /*
+     * Function to have the reference for the old functionalities
+     */
+    public function indexOld() {
         // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
