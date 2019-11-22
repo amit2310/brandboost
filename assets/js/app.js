@@ -64,12 +64,6 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
-
 //! function(e) {
 //    "use strict";
 //
