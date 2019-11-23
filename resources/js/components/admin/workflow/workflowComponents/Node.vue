@@ -3,11 +3,7 @@
 
         <!--Main Event-->
         <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
-        <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;padding:28px 0 0 0 !important;">
-            <div class="wf_icons circle_32 img bkg_light_300" style="top:-33px !important;">
-                <img width="32" src="/assets/images/blue-plus.svg">
-            </div>
-        </div>
+        <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>
         <!--<template v-if="(oEvent && (oEvent.previous_event_id == '' || oEvent.previous_event_id ===null))">
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
             <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;">
@@ -43,6 +39,10 @@
                 </div>
             </div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'sms'">
+                <div class="edit_delete">
+                    <a href="#"><i class="icon-gear fsize12 dark_100"></i></a>
+                    <a href="#"><i class="icon-bin2 fsize10 dark_100"></i></a>
+                </div>
                 <div class="wf_icons bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">SMS </p>
                 <p class="dark_800 htxt_bold_14 mb25">{{campaign.name}}</p>
@@ -59,18 +59,15 @@
 
         <template v-if="lastNode">
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
-            <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;">
-                <div class="wf_icons circle_32 img bkg_light_300">
-                    <img width="32" src="/assets/images/blue-plus.svg">
-                </div>
-            </div>
+            <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>
         </template>
     </div>
 </template>
 <script>
-
+    import addMoreButton from './addMoreButton';
     export default {
         props: ['oEvent', 'wfData'],
+        components: {addMoreButton},
        data(){
           return {
               moduleName: '',
@@ -78,7 +75,8 @@
               moduleAccountID: '',
               campaigns: '',
               total_campaigns: 0,
-              column_index: 0
+              column_index: 0,
+
           }
         },
          mounted() {
@@ -114,17 +112,34 @@
                     .then(response => {
                         this.campaigns = response.data.oCampaigns;
                     });
+            },
+            initAction: function(action, currentId, previousId){
+                //alert('Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
+                if(previousId == null || previousId == ''){
+                    //alert('Main Event ' + 'Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
+                }else{
+                    //alert('Followup Event ' + 'Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
+                }
+                this.$emit('chooseTemplate');
             }
 
         }
+
     };
 
 
 </script>
-<style scoped>
-    .edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
-    .edit_delete a{margin: 0 3px; display: inline-block}
+<style>
+    .ddmtext{
+        margin-top:10px !important;
+    }
+    .ddmli li{
+        padding: 6px 0 !important;
+        cursor:pointer;
+
+    }
 </style>
+
 
 
 
