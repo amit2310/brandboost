@@ -992,8 +992,6 @@ class Nps extends Controller {
      * Used to add a new nps campaign
      */
     public function addNPS(Request $request) {
-        // Instantiate NPS model to get its properties and methods
-        $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
@@ -1004,20 +1002,37 @@ class Nps extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'platform' => ['required'],
+            'description' => ['required']
+        ]);
+
         $title = strip_tags($request->title);
+        $platform = strip_tags($request->platform);
+        $description = strip_tags($request->description);
+
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
         for ($i = 0; $i < 20; $i++) {
             $hashcode .= $characters[rand(0, strlen($characters))];
         }
         $hashcode = $hashcode . date('Ymdhis');
+
         $aData = array(
             'hashcode' => $hashcode,
             'user_id' => $userID,
             'title' => $title,
+            'platform' => $platform,
+            'description' => $description,
             'status' => 'draft',
             'created' => date("Y-m-d H:i:s")
         );
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
         $insertID = $mNPS->addNPS($aData);
 
         if ($insertID) {
@@ -1030,7 +1045,7 @@ class Nps extends Controller {
             );
             //$bSavedEvent = $mNPS->saveNPSEvents($aEvent, $insertID);
 
-            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
+            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "NPS Survey added successfully!");
 
             $notificationData = array(
                 'event_type' => 'added_nps_program',
@@ -1044,6 +1059,7 @@ class Nps extends Controller {
             $eventName = 'sys_nps_added';
             @add_notifications($notificationData, $eventName, $userID);
         }
+
         echo json_encode($response);
         exit;
     }
@@ -1318,8 +1334,6 @@ class Nps extends Controller {
      * Used to get NPS campaign Info
      */
     public function getNPS(Request $request) {
-        // Instantiate NPS model to get its properties and methods
-        $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
@@ -1328,12 +1342,19 @@ class Nps extends Controller {
             echo json_encode($response);
             exit;
         }
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $npsID = strip_tags($request->nps_id);
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
         $oNPS = $mNPS->getNps($userID, $npsID);
+
         if (!empty($oNPS)) {
-            $response = array('status' => 'success', 'id' => $oNPS->id, 'title' => $oNPS->title);
+            $response = array('status' => 'success', 'id' => $oNPS->id, 'title' => $oNPS->title, 'platform' => $oNPS->platform, 'description' => $oNPS->description);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
@@ -1441,8 +1462,6 @@ class Nps extends Controller {
      * Used to update NPS campaign
      */
     public function updateNPS(Request $request) {
-        // Instantiate NPS model to get its properties and methods
-        $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
@@ -1451,14 +1470,31 @@ class Nps extends Controller {
             echo json_encode($response);
             exit;
         }
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'platform' => ['required'],
+            'description' => ['required']
+        ]);
+
         $npsID = strip_tags($request->nps_id);
         $title = strip_tags($request->title);
+        $platform = strip_tags($request->platform);
+        $description = strip_tags($request->description);
+
         $aData = array(
             'title' => $title,
+            'platform' => $platform,
+            'description' => $description,
             'updated' => date("Y-m-d H:i:s")
         );
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
         if ($npsID > 0) {
             $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {

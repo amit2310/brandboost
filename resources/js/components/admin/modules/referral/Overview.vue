@@ -87,16 +87,16 @@
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">
                                     <span>{{capitalizeFirstLetter(setStringLimit(program.title, 20))}}</span>
                                 </h3>
-                                <p><em>(Source Type: {{ program.source_type }})</em></p>
-                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", program.created) }})</em></p>
+                                <p><em>( Source Type: {{ program.source_type }} / <strong>{{ program.status }}</strong> )</em></p>
+                                <p><em>[ Created On: {{ displayDateFormat("M d, Y h:i A", program.created) }} ]</em></p>
                             </div>
                             <div v-else>
                                 <img class="mt20" src="assets/images/subs-icon_big.svg">
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">
                                     <span>{{capitalizeFirstLetter(setStringLimit(program.title, 20))}}</span>
                                 </h3>
-                                <p><em>(Source Type: {{ program.source_type }})</em></p>
-                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", program.created) }})</em></p>
+                                <p><em>( Source Type: {{ program.source_type }}  / <strong>{{ program.status }}</strong> )</em></p>
+                                <p><em>[ Created On: {{ displayDateFormat("M d, Y h:i A", program.created) }} ]</em></p>
                             </div>
                         </div>
                     </div>

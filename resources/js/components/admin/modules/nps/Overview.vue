@@ -72,31 +72,31 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReferralReports(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Reports</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showNpsReports(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Reports</a>
                                     <a v-if="nps.status === 'inactive' && nps.status !== 'archive' && nps.status !== 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
                                     <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                     <a v-if="nps.status !== 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'draft')"><i class="dripicons-user text-muted mr-2"></i> Draft</a>
                                     <a v-if="nps.status !== 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReferralStats(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Stats</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showNpsStats(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Stats</a>
                                 </div>
                             </div>
-                            <div v-if="nps.id > 0" @click="showReferralSetup(nps.id)" style="cursor:pointer;">
+                            <div v-if="nps.id > 0" @click="showNpsSetup(nps.id)" style="cursor:pointer;">
                                 <img class="mt20" src="assets/images/subs-icon_big.svg">
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">
                                     <span>{{capitalizeFirstLetter(setStringLimit(nps.title, 20))}}</span>
                                 </h3>
-                                <p><em>(Source Type: {{ nps.source_type }})</em></p>
-                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", nps.created) }})</em></p>
+                                <p><em>( Platform : {{ nps.platform }} / <strong>{{ nps.status }}</strong> )</em></p>
+                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", nps.created) }} ]</em></p>
                             </div>
                             <div v-else>
                                 <img class="mt20" src="assets/images/subs-icon_big.svg">
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">
                                     <span>{{capitalizeFirstLetter(setStringLimit(nps.title, 20))}}</span>
                                 </h3>
-                                <p><em>(Source Type: {{ nps.source_type }})</em></p>
-                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", nps.created) }})</em></p>
+                                <p><em>( Platform : {{ nps.platform }} / <strong>{{ nps.status }}</strong> )</em></p>
+                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", nps.created) }} ]</em></p>
                             </div>
                         </div>
                     </div>
@@ -172,12 +172,13 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="fname">Source Type</label>
-                                        <select class="form-control" name="source_type" v-model="form.source_type" placeholder="Please Select">
+                                        <label for="fname">Platform</label>
+                                        <select class="form-control" name="platform" v-model="form.platform" placeholder="Please Select">
                                             <option value="">Please Select</option>
                                             <option value="email">email</option>
                                             <option value="sms">sms</option>
-                                            <option value="widget">widget</option>
+                                            <option value="web">web</option>
+                                            <option value="link">link</option>
                                         </select>
                                     </div>
 
@@ -220,9 +221,9 @@
             return {
                 form: {
                     title: '',
-                    source_type: '',
+                    platform: '',
                     description: '',
-                    ref_id: ''
+                    nps_id: ''
                 },
                 formLabel: 'Create',
                 bActiveSubsription: '',
@@ -242,13 +243,13 @@
             this.loadPaginatedData();
         },
         methods: {
-            showReferralSetup: function(npsId){
+            showNpsSetup: function(npsId){
                 window.location.href='#/modules/nps/setup/'+npsId;
             },
-            showReferralReports: function(npsId) {
+            showNpsReports: function(npsId) {
                 window.location.href='#/modules/nps/reports/'+npsId;
             },
-            showReferralStats: function(npsId) {
+            showNpsStats: function(npsId) {
                 window.location.href='#/modules/nps/stats/'+npsId;
             },
             displayForm : function(lbl){
@@ -262,8 +263,8 @@
                 this.getInfo(npsId);
             },
             getInfo: function(npsId){
-                axios.post('/admin/modules/nps/getReferral', {
-                    ref_id:npsId,
+                axios.post('/admin/modules/nps/getNPS', {
+                    nps_id:npsId,
                     moduleName: this.moduleName,
                     _token: this.csrf_token()
                 })
@@ -273,9 +274,9 @@
                             //Fill up the form fields
                             let formData = response.data;
                             this.form.title = formData.title;
-                            this.form.source_type = formData.source_type;
+                            this.form.platform = formData.platform;
                             this.form.description = formData.description;
-                            this.form.ref_id = formData.id;
+                            this.form.nps_id = formData.id;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
@@ -285,10 +286,10 @@
                 this.loading = true;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
-                if(this.form.ref_id > 0){
-                    formActionSrc = '/admin/modules/nps/updateReferral';
+                if(this.form.nps_id > 0){
+                    formActionSrc = '/admin/modules/nps/updateNPS';
                 }else{
-                    formActionSrc = '/admin/modules/nps/addReferral';
+                    formActionSrc = '/admin/modules/nps/addNPS';
                     this.form.module_account_id = this.moduleAccountID;
                 }
                 axios.post(formActionSrc , this.form)
@@ -297,7 +298,7 @@
                         if (response.data.status == 'success') {
                             this.loading = false;
                             //this.form = {};
-                            this.form.ref_id ='';
+                            this.form.nps_id ='';
 
                             document.querySelector('.js-nps-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
@@ -351,7 +352,7 @@
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
                     axios.post('/admin/modules/nps/changeStatus', {
-                        refID:npsId,
+                        npsId:npsId,
                         status:status,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
@@ -369,8 +370,8 @@
             deleteItem: function(npsId) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
-                    axios.post('/admin/modules/nps/deleteReferral', {
-                        ref_id:npsId,
+                    axios.post('/admin/modules/nps/deleteNPS', {
+                        nps_id:npsId,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
