@@ -485,7 +485,9 @@ class NpsModel extends Model {
                         ->when(!empty($userID), function($query) use ($userID) {
                             return $query->where('tbl_nps_main.user_id', $userID);
                         })
-                        ->orderBy('tbl_nps_score.id', 'DESC')->get();
+                        ->orderBy('tbl_nps_score.id', 'DESC')
+                        //->get();
+                        ->paginate();
 
         return $aData;
     }

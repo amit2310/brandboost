@@ -72,7 +72,7 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showNpsReports(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Reports</a>
+                                    <a class="dropdown-item" :href="'#/modules/nps/score/'+nps.hashcode" target="_blank"><i class="dripicons-user text-muted mr-2"></i> View Score</a>
                                     <a v-if="nps.status === 'inactive' && nps.status !== 'archive' && nps.status !== 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
                                     <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                     <a v-if="nps.status !== 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(nps.id, 'draft')"><i class="dripicons-user text-muted mr-2"></i> Draft</a>
@@ -246,8 +246,8 @@
             showNpsSetup: function(npsId){
                 window.location.href='#/modules/nps/setup/'+npsId;
             },
-            showNpsReports: function(npsId) {
-                window.location.href='#/modules/nps/reports/'+npsId;
+            showNpsViewScore: function(hashcode) {
+                window.location.href='#/modules/nps/score/'+hashcode;
             },
             showNpsStats: function(npsId) {
                 window.location.href='#/modules/nps/stats/'+npsId;
@@ -329,7 +329,7 @@
                 //getData
                 axios.get('/admin/modules/nps/?page='+this.current_page)
                     .then(response => {
-                        //console.log(response.data); return false;
+                        //console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -338,6 +338,7 @@
                         this.loading = false;
                         this.npsSurveys = response.data.oPrograms;
                         this.allData = response.data.allData;
+                        //console.log(this.npsSurveys);
                     });
             },
             showPaginationData: function (current_page) {
