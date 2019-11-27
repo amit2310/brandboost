@@ -106,9 +106,13 @@
                                                                                  id="module_account_id" :value="user.id">
                                 <button type="submit"
                                         class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 wfEmailPreviewTemplate"
-                                        @click="saveWfSelectedTemplate">Select & Continue
+                                        @click="saveWfSelectedTemplate('use')">Use Template
                                 </button>
-                                <a href="#" class="blue_300 fsize16 fw600 ml20 wfEmailPreviewTemplate">Close</a></div>
+                                <button type="submit"
+                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 wfEmailPreviewTemplate"
+                                        @click="saveWfSelectedTemplate('edit')">Use & Edit Template
+                                </button>
+                                <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20 wfEmailPreviewTemplate">Close</a></div>
                         </div>
                     </div>
                 </div>
@@ -209,8 +213,9 @@
                 this.selectedTemplate = data.id;
                 this.previewTemplate = atob(data.stripo_compiled_html);
             },
-            saveWfSelectedTemplate: function () {
-
+            saveWfSelectedTemplate: function (mode) {
+                this.loading = true;
+                this.$emit('addWorkflowNode', this.selectedTemplate, mode);
             }
         }
     };

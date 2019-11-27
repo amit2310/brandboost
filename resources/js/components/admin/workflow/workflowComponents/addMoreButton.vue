@@ -53,12 +53,14 @@
 <script>
 
     export default {
-        props: ['oEvent', 'wfData'],
+        props: ['oEvent', 'wfData', 'eventType'],
         methods: {
             addAction: function(actionName){
                 let currentEventId = this.oEvent.id;
                 let previousEventId = this.oEvent.previous_event_id;
-                this.$emit('addAction', actionName, currentEventId, previousEventId);
+                let eventType = this.eventType;
+                //alert('currentID='+ currentEventId + ' previousID='+previousEventId);
+                this.$emit('addAction', actionName, currentEventId, previousEventId,eventType);
             },
         }
     };

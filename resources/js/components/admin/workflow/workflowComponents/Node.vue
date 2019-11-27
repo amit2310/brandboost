@@ -2,8 +2,8 @@
     <div class="row">
 
         <!--Main Event-->
-        <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
-        <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>
+        <!--<div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+        <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>-->
         <!--<template v-if="(oEvent && (oEvent.previous_event_id == '' || oEvent.previous_event_id ===null))">
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
             <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;">
@@ -24,8 +24,8 @@
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'email'">
                 <div class="edit_delete">
-                    <a href="#"><i class="icon-gear fsize12 dark_100"></i></a>
-                    <a href="#"><i class="icon-bin2 fsize10 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="editNode(oEvent.id)"><i class="icon-gear fsize12 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="deleteNode(oEvent.id)"><i class="icon-bin2 fsize10 dark_100"></i></a>
                 </div>
                 <div class="wf_icons bkg_brand_300"><img src="/assets/images/send-plane-fill-24.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Email </p>
@@ -57,10 +57,12 @@
         </div>
 
 
-        <template v-if="lastNode">
+        <!--<template v-if="lastNode">
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
             <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>
-        </template>
+        </template>-->
+        <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+        <add-more-button :oEvent="oEvent" :wfData="wfData" eventType="followup" @addAction="initAction"></add-more-button>
     </div>
 </template>
 <script>
@@ -92,6 +94,7 @@
                 this.total_campaigns = this.campaigns.length;
                 this.column_index = Math.ceil(12/this.total_campaigns);
             }
+
         },
         computed: {
             delayTime: function(){
@@ -113,15 +116,22 @@
                         this.campaigns = response.data.oCampaigns;
                     });
             },
-            initAction: function(action, currentId, previousId){
+            initAction: function(action, currentId, previousId, eventType){
                 //alert('Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
                 if(previousId == null || previousId == ''){
                     //alert('Main Event ' + 'Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
                 }else{
                     //alert('Followup Event ' + 'Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
                 }
-                this.$emit('chooseTemplate');
+                this.$emit('chooseTemplate', action, currentId, previousId, eventType);
+            },
+            editNode: function(eventId){
+                this.$emit('editNode', eventId);
+            },
+            deleteNode: function(eventId){
+                this.$emit('deleteNode', eventId);
             }
+
 
         }
 

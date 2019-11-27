@@ -151,8 +151,28 @@
                                                         </div>
                                                     </div>
                                                 </div>-->
+                                                <div v-if="oEvents.length>0">
+                                                    <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+                                                    <add-default-more-button :oEvent="oEvents[0]" :wfData="{}" eventType="main" @addAction="initActionPrimary"></add-default-more-button>
+                                                </div>
+                                                <div v-else>
+                                                    <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+                                                    <add-default-more-button :oEvent="{}" :wfData="{}" eventType="main" @addAction="initActionPrimary"></add-default-more-button>
+                                                </div>
 
-                                                <workflow-node v-for="oEvent in oEvents" :oEvent="oEvent" :wfData="wfData" :key="oEvent.id" @chooseTemplate="displayTemplateInterface" ></workflow-node>
+                                                <workflow-node
+                                                    v-for="oEvent in oEvents"
+                                                    :oEvent="oEvent"
+                                                    :wfData="wfData"
+                                                    :key="oEvent.id"
+                                                    @chooseTemplate="displayTemplateInterface"
+                                                    @editNode="editNode"
+                                                    @deleteNode="deleteNode"
+                                                ></workflow-node>
+                                                <!--<div v-if="oEvents.length==0">
+                                                <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+                                                <add-default-more-button :oEvent="{}" :wfData="{}" @addAction="initActionPrimary"></add-default-more-button>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -307,7 +327,7 @@
                      **********************-->
                 </div>
                 <div class="templateSection" v-if="nodeType == 'email'">
-                    <email-template-list></email-template-list>
+                    <email-template-list @addWorkflowNode="addWorkflowNode"></email-template-list>
                     <div class="row">
                         <div  class="col-md-3"></div>
                         <div class="col-md-9">
@@ -317,6 +337,9 @@
                             </button>
                         </div>
                     </div>
+
+                </div>
+                <div class="editTemplateSection">
 
                 </div>
             </div>
@@ -329,9 +352,10 @@
 <script>
     import workflowNode from './workflowComponents/Node';
     import EmailTemplateList from "../templates/TemplateComponents/EmailTemplateList";
+    import addDefaultMoreButton from './workflowComponents/addMoreButton';
     export default {
         props: ['workflowData'],
-        components: {workflowNode, EmailTemplateList},
+        components: {workflowNode, EmailTemplateList, addDefaultMoreButton},
         data(){
           return {
               successMsg: '',
@@ -345,9 +369,13 @@
               wfData: '',
               subscribersData: '',
               wfRendered: false,
-              nodeType: '',
               displayWorkflowTree: true,
-              dynamo: ''
+              dynamo: '',
+              nodeType: '',
+              eventType:'',
+              currentId: '',
+              previousId: '',
+              currentTime: ''
 
           }
         },
@@ -381,18 +409,86 @@
 
             },
 
-            displayTemplateInterface: function(){
-                this.nodeType = 'email';
+            displayTemplateInterface: function(nodeType, currentId, previousId, eventType){
+                this.nodeType = nodeType; //'email';
+                this.eventType= eventType;
+                this.currentId = currentId;
+                this.previousId = previousId;
                 this.displayWorkflowTree = false;
                 this.dynamo='workflowTemplateArea';
+                //alert('currentID='+ currentId + ' previousID='+previousId);
             },
             displayWorkflowTreeInterface: function(){
                 this.nodeType = '';
                 this.displayWorkflowTree = true;
                 this.dynamo='';
+            },
+            addWorkflowNode: function(templateId, mode){
+                //Write all your code for adding node finally here
+                let delayVal = '10';
+                let delayUnit = 'minute';
+                axios.post('/admin/workflow/addWorkflowNode', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitID,
+                    previous_event_id: this.previousId,
+                    emailTemplateId: templateId,
+                    smsTemplateId: '',
+                    source: '',
+                    delayVal: delayVal,
+                    delayUnit: delayUnit,
+                    current_event_id: this.currentId,
+                    event_type: this.eventType,// (this.previousId == '' || this.previousId == null) ? 'main' : 'followup',
+                    node_type: this.eventType //(this.previousId == '' || this.previousId == null) ? 'main' : 'followup',
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            if(mode == 'edit'){
+                                //Open Template Editor
+                                alert('Success, Opening template editor');
+                                this.$emit('realoadTree');
+                            }else{
+                                this.processReloadTree();
+                            }
+
+
+                            //Reaload the Workflow grid behind the scene
+                        }
+                    });
+
+                //Once successfull hide all interface and Display Edit Template interface or editor and in the background relaod the tree
+
+                //If mode = edit then display edit template section  otherwise bypass this step
+            },
+            initActionPrimary: function(action, currentId, previousId, eventType){
+                this.displayTemplateInterface(action, currentId, previousId, eventType);
+            },
+            processReloadTree: function(){
+                let elem = this;
+                this.$emit('realoadTree');
+                setTimeout(function(){
+                    elem.displayWorkflowTreeInterface();
+                }, 500)
+            },
+            editNode: function(eventId){
+                alert('Editing '+ eventId);
+            },
+            deleteNode: function(eventId){
+                if(confirm('Are you sure you want to delete this action from the workflow grid?')){
+                    this.loading = true;
+                    axios.post('/admin/workflow/deleteWorkflowEvent', {_token:this.csrf_token(), moduleName: this.moduleName, event_id:eventId})
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                 this.processReloadTree();
+                            }
+                        });
+
+                }
             }
 
-        }
+        },
+
+
     };
 
     function zoom_page(step) {
@@ -423,10 +519,6 @@
         });
 
     }
-
-
-
-
 </script>
 <style>
     .workflowTemplateArea {
