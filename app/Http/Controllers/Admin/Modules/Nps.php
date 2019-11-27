@@ -1695,6 +1695,12 @@ class Nps extends Controller {
 
         $hashKey = $request->hashKey;
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'NPS Surveys' => '#/modules/nps/overview',
+            'Score' => '#/modules/nps/score/'.$hashKey
+        );
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($hashKey)) {
@@ -1715,12 +1721,17 @@ class Nps extends Controller {
 
         $aPageData = array(
             'title' => 'NPS Score',
-            'pagename' => $breadcrumb,
-            'oFeedbacks' => $oFeedback,
-            'aSummary' => $aScoreSummery
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oFeedback,
+            'oFeedbacks' => $oFeedback->items(),
+            'aSummary' => $aScoreSummery,
+            'mNPS'=>$mNPS
         );
 
-        return view('admin.modules.nps.list-scores', $aPageData)->with(['mNPS'=>$mNPS]);
+        //return view('admin.modules.nps.list-scores', $aPageData)->with(['mNPS'=>$mNPS]);
+
+        echo json_encode($aPageData);
+        exit();
     }
 
     /**
