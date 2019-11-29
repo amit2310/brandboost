@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-md-3 col-3 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">Main Action <span><img
+                        <button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">New Contact List <span><img
                             src="/assets/images/blue-plus.svg"/></span></button>
                         <button class="js-contact-slidebox" v-show="false">
                             Display Form

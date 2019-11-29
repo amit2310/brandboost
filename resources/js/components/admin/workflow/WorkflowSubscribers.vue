@@ -4,7 +4,7 @@
         <div class="table_head_action" v-if="showHeader !== false">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="htxt_medium_16 dark_400">Contact Lists</h3>
+                    <h3 class="htxt_medium_16 dark_400">{{ activeUsers.length }} Contact Lists</h3>
                 </div>
                 <div class="col-md-6">
                     <div class="table_action">
