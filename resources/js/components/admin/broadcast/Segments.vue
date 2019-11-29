@@ -66,7 +66,7 @@
                     <div class="table_head_action">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 class="htxt_medium_16 dark_400">Contact lists</h3>
+                                <h3 class="htxt_medium_16 dark_400">{{ segments.length }} Contact lists</h3>
                             </div>
                             <div class="col-md-6">
                                 <div class="table_action">
@@ -108,7 +108,7 @@
                                 <p class="htxt_regular_12 dark_300 mb15"><i><img src="/assets/images/user_16_grey.svg"/></i> 1,356</p>
                             </div>
                         </div>-->
-                        <div class="col-md-3 text-center" v-for="segment in segments">
+                        <div v-for="segment in segments" class="col-md-3 text-center">
                             <div class="card p30 h235 animate_top">
                                 <div class="dot_dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">

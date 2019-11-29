@@ -70,7 +70,7 @@
                     <div class="table_head_action">
                     <div class="row">
                     <div class="col-md-6">
-                        <h3 class="htxt_medium_16 dark_400">Tags</h3>
+                        <h3 class="htxt_medium_16 dark_400">{{ oTags.length }} Tags</h3>
                     </div>
                     <div class="col-md-6">
                         <div class="table_action">
