@@ -15,16 +15,17 @@
         <!--End Main Event-->
 
 
-        <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+        <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
         <div v-for="campaign in campaigns" :class="`col-md-${column_index}`">
-            <div class="workflow_card" style="height:75px;">
+            <div class="workflow_card" style="height:75px;cursor:pointer;" @click="editTimer">
                 <div class="wf_icons circle_32 img bkg_dark_300"><img width="32" src="/assets/images/time-fill.svg"/></div>
-                <p class="dark_800 htxt_bold_14 mb25"><span class="dark_200">Wait for</span> {{delayTime}}</p>
+                <p class="dark_800 htxt_bold_14 mb25"><span class="dark_200">Wait for</span> <span :id="`wf_event_${oEvent.id}`">{{delayTime}}</span></p>
             </div>
-            <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+
+            <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'email'">
                 <div class="edit_delete">
-                    <a href="javascript:void(0);" @click="editNode(oEvent.id)"><i class="icon-gear fsize12 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="editNode(campaign.id, 'email')"><i class="icon-gear fsize12 dark_100"></i></a>
                     <a href="javascript:void(0);" @click="deleteNode(oEvent.id)"><i class="icon-bin2 fsize10 dark_100"></i></a>
                 </div>
                 <div class="wf_icons bkg_brand_300"><img src="/assets/images/send-plane-fill-24.svg"/></div>
@@ -40,8 +41,8 @@
             </div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'sms'">
                 <div class="edit_delete">
-                    <a href="#"><i class="icon-gear fsize12 dark_100"></i></a>
-                    <a href="#"><i class="icon-bin2 fsize10 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="editNode(campaign.id, 'sms')"><i class="icon-gear fsize12 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="deleteNode(oEvent.id)"><i class="icon-bin2 fsize10 dark_100"></i></a>
                 </div>
                 <div class="wf_icons bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">SMS </p>
@@ -61,7 +62,7 @@
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
             <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>
         </template>-->
-        <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+        <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
         <add-more-button :oEvent="oEvent" :wfData="wfData" eventType="followup" @addAction="initAction"></add-more-button>
     </div>
 </template>
@@ -125,11 +126,14 @@
                 }
                 this.$emit('chooseTemplate', action, currentId, previousId, eventType);
             },
-            editNode: function(eventId){
-                this.$emit('editNode', eventId);
+            editNode: function(campaignId, nodeType){
+                this.$emit('editNode', campaignId, nodeType);
             },
             deleteNode: function(eventId){
                 this.$emit('deleteNode', eventId);
+            },
+            editTimer: function(){
+                this.$emit("updateTimer", this.oEvent)
             }
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="workflow_card" style="cursor:pointer;height:25px;background:transparent;border:none;box-shadow:none!important;padding:28px 0 0 0 !important;">
+    <div class="workflow_card droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;height:25px;background:transparent;border:none;box-shadow:none!important;padding:28px 0 0 0 !important;">
         <div class="wf_icons circle_32 img bkg_light_300" style="top:-33px !important;" data-toggle="dropdown">
             <img width="32" src="/assets/images/blue-plus.svg">
         </div>
@@ -62,6 +62,17 @@
                 //alert('currentID='+ currentEventId + ' previousID='+previousEventId);
                 this.$emit('addAction', actionName, currentEventId, previousEventId,eventType);
             },
+            onDrop: function(ev){
+                var nodetype = ev.dataTransfer.getData("nodetype");
+                if(nodetype == 'email' || nodetype == 'sms'){
+                    this.addAction(nodetype);
+                }
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.remove('droppable_highlight');
+                })
+
+            }
         }
     };
 </script>

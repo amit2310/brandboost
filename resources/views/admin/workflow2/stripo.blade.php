@@ -715,8 +715,8 @@
                     if (data.status == 'success') {
                         //alert('Saved changes successfully');
                         window.parent.$('.overlaynew').hide();
-                        /*if (silentMod != 'silent')
-                            window.parent.displayMessagePopup("success", "Success", "Campaign saved successfully!");*/
+                        if (silentMod != 'silent')
+                            window.parent.displayMessagePopup("success", "Success", "Campaign saved successfully!");
                     } else {
                         window.parent.displayMessagePopup("error", "error", "Some thing wrong!");
                     }

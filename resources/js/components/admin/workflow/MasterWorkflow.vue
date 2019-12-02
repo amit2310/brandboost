@@ -62,11 +62,11 @@
 
                                 </div>
 
-                                <div class="row">
+                                <div class="row" @click="initiateDragger">
                                     <div class="col-md-12 mb-3">
 
-                                        <div class="workflow_box">
-                                            <div draggable="true">
+                                        <div class="workflow_box" id="workflow_box" style="position:absolute;width:100%;">
+                                            <div draggable="true" id="workflow_box_tree">
                                                 <div class="row" >
                                                     <div class="col-md-12">
                                                         <div class="workflow_card">
@@ -152,11 +152,11 @@
                                                     </div>
                                                 </div>-->
                                                 <div v-if="oEvents.length>0">
-                                                    <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+                                                    <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
                                                     <add-default-more-button :oEvent="oEvents[0]" :wfData="{}" eventType="main" @addAction="initActionPrimary"></add-default-more-button>
                                                 </div>
                                                 <div v-else>
-                                                    <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+                                                    <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
                                                     <add-default-more-button :oEvent="{}" :wfData="{}" eventType="main" @addAction="initActionPrimary"></add-default-more-button>
                                                 </div>
 
@@ -168,6 +168,7 @@
                                                     @chooseTemplate="displayTemplateInterface"
                                                     @editNode="editNode"
                                                     @deleteNode="deleteNode"
+                                                    @updateTimer="updateTimer"
                                                 ></workflow-node>
                                                 <!--<div v-if="oEvents.length==0">
                                                 <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
@@ -268,7 +269,7 @@
 
                         <div class="p20 pt0 pb0">
                             <ul class="list_with_icons">
-                                <li draggable="true">
+                                <li id="email" draggable="true" @dragstart="onDrag($event)">
                                     <div class="media_left">
                                         <span class="circle_32 img bkg_brand_300"><img src="/assets/images/send-plane-fill.svg"/></span>
                                     </div>
@@ -279,7 +280,7 @@
                                 </li>
 
 
-                                <li draggable="true">
+                                <li id="sms" draggable="true" @dragstart="onDrag($event)">
                                     <div class="media_left">
                                         <span class="circle_32 img bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></span>
                                     </div>
@@ -289,7 +290,7 @@
                                     </div>
                                 </li>
 
-                                <li draggable="true">
+                                <li id="review" draggable="true" @dragstart="onDrag($event)">
                                     <div class="media_left">
                                         <span class="circle_32 img bkg_reviews_400"><img src="/assets/images/star-s-fill.svg"/></span>
                                     </div>
@@ -299,7 +300,7 @@
                                     </div>
                                 </li>
 
-                                <li draggable="true">
+                                <li id="notification" draggable="true" @dragstart="onDrag($event)">
                                     <div class="media_left">
                                         <span class="circle_32 img bkg_red_400"><img src="/assets/images/notification-badge-fill.svg"/></span>
                                     </div>
@@ -326,8 +327,9 @@
                      END PAGE SIDEBAR
                      **********************-->
                 </div>
-                <div class="templateSection" v-if="nodeType == 'email'">
-                    <email-template-list @addWorkflowNode="addWorkflowNode"></email-template-list>
+                <div class="templateSection" v-if="nodeType == 'email' || nodeType == 'sms'">
+                    <email-template-list v-if="nodeType == 'email'" @addWorkflowNode="addWorkflowNode"></email-template-list>
+                    <sms-template-list v-if="nodeType == 'sms'" @addWorkflowNode="addWorkflowNode"></sms-template-list>
                     <div class="row">
                         <div  class="col-md-3"></div>
                         <div class="col-md-9">
@@ -339,9 +341,57 @@
                     </div>
 
                 </div>
-                <div class="editTemplateSection">
+                <div class="editTemplateSection" v-show="displayEditTemplateSection">
+                    <div class="row">
+                        <iframe id="loadGraptemplate" scrolling="no" :class="editorIframe" :src="grapEditorSrc" width="100%"
+                                style="overflow:hidden; border:none!important;"></iframe>
+                    </div>
+                    <div class="row bottom-position">
+                        <div class="col-md-12 mb15">
+                            <hr>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"
+                                    @click="displayWorkflowTreeInterface"><span class="ml0 mr10"><img
+                                src="/assets/images/arrow-left-line.svg"></span>Back
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                                    @click="displayWorkflowTreeInterface">Save & Close
+                            </button>
+                        </div>
+
+                    </div>
 
                 </div>
+                <modal-popup v-if="showModal" @close="showModal = false" width="sm">
+                    <h3 slot="header">Delay Time</h3>
+                    <div slot="body" class="pt0 pb0">
+                        <div v-show="isUpdatedTimer" class="alert alert-success">Time updated successfully<i class="close" @click="isUpdatedTimer=false">x</i></div>
+                        <div class="media_left p10">
+                            <label class="control-label">Time</label>
+                            <input type="number" name="delay_value" v-model="currentDelayValue" class="form-control h52" @change="clearUpdateTimer">
+                        </div>
+                        <div class="media_left p10">
+                            <label class="control-label">&nbsp;</label>
+                            <select name="delay_unit" v-model="currentDelayUnit" class="form-control h52" @change="clearUpdateTimer">
+                                <option value="minute">Minute(s)</option>
+                                <option value="hour">Hour(s)</option>
+                                <option value="day">Day(s)</option>
+                                <option value="week">Week(s)</option>
+                                <option value="month">Month(s)</option>
+                                <option value="year">Year(s)</option>
+
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div slot="footer">
+                        <button type="button" class="btn btn-md bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600" @click="confirmUpdateTimer">Save
+                        </button>
+                        <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20" @click="showModal = false">Close</a>
+                    </div>
+                </modal-popup>
             </div>
 
         </div>
@@ -350,14 +400,17 @@
     </div>
 </template>
 <script>
+    import modalPopup from "../../../components/helpers/Common/ModalPopup";
     import workflowNode from './workflowComponents/Node';
-    import EmailTemplateList from "../templates/TemplateComponents/EmailTemplateList";
+    import emailTemplateList from "../templates/TemplateComponents/EmailTemplateList";
+    import smsTemplateList from "../templates/TemplateComponents/SmsTemplateList";
     import addDefaultMoreButton from './workflowComponents/addMoreButton';
     export default {
         props: ['workflowData'],
-        components: {workflowNode, EmailTemplateList, addDefaultMoreButton},
+        components: {modalPopup, workflowNode, emailTemplateList, smsTemplateList, addDefaultMoreButton},
         data(){
           return {
+              showModal: false,
               successMsg: '',
               errorMsg: '',
               loading: true,
@@ -370,18 +423,26 @@
               subscribersData: '',
               wfRendered: false,
               displayWorkflowTree: true,
+              displayEditTemplateSection: false,
               dynamo: '',
               nodeType: '',
               eventType:'',
               currentId: '',
               previousId: '',
-              currentTime: ''
+              currentTime: '',
+              grapEditorSrc: '',
+              editorIframe: '',
+              currentDelayValue: '',
+              currentDelayUnit: '',
+              currentEventId: '',
+              isUpdatedTimer: false
 
           }
         },
         mounted() {
             this.makeBreadcrumb(this.workflowData.breadcrumb);
             loadMasterWorkflowScripts();
+            loadDraggerScript();
 
         },
         watch: {
@@ -398,6 +459,7 @@
                     elem.wfRendered= true;
                     elem.loading = false;
                 }, 1000);
+
             }
         },
         methods: {
@@ -410,7 +472,7 @@
             },
 
             displayTemplateInterface: function(nodeType, currentId, previousId, eventType){
-                this.nodeType = nodeType; //'email';
+                this.nodeType = nodeType; //'email' // 'sms';
                 this.eventType= eventType;
                 this.currentId = currentId;
                 this.previousId = previousId;
@@ -418,10 +480,17 @@
                 this.dynamo='workflowTemplateArea';
                 //alert('currentID='+ currentId + ' previousID='+previousId);
             },
+            displayEditTemplateInterface: function(){
+                this.displayWorkflowTree = false;
+                this.dynamo='workflowTemplateArea';
+                this.nodeType = '',
+                this.displayEditTemplateSection = true;
+            },
             displayWorkflowTreeInterface: function(){
                 this.nodeType = '';
                 this.displayWorkflowTree = true;
                 this.dynamo='';
+                this.displayEditTemplateSection = false;
             },
             addWorkflowNode: function(templateId, mode){
                 //Write all your code for adding node finally here
@@ -445,8 +514,24 @@
                         if(response.data.status == 'success'){
                             if(mode == 'edit'){
                                 //Open Template Editor
-                                alert('Success, Opening template editor');
                                 this.$emit('realoadTree');
+                                if(this.nodeType == 'email'){
+                                    this.grapEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + response.data.campaign_id + '/' + this.moduleUnitID;
+                                    this.editorIframe = 'emailEditorIframe';
+                                }
+
+                                if(this.nodeType == 'sms'){
+                                    this.grapEditorSrc= '/admin/workflow/loadStripoSMSCampaign/' + this.moduleName + '/' + response.data.campaign_id + '/' + this.moduleUnitID;
+                                    this.editorIframe = 'smsEditorIframe';
+                                }
+
+                                let elem = this;
+                                setTimeout(function(){
+                                    elem.displayEditTemplateInterface();
+                                }, 1500);
+
+
+
                             }else{
                                 this.processReloadTree();
                             }
@@ -470,8 +555,30 @@
                     elem.displayWorkflowTreeInterface();
                 }, 500)
             },
-            editNode: function(eventId){
-                alert('Editing '+ eventId);
+            processReloadTreeEditTemplate: function(){
+                let elem = this;
+                this.$emit('realoadTree');
+                setTimeout(function(){
+                    elem.displayWorkflowTreeInterface();
+                }, 500)
+            },
+            editNode: function(campaignId, campaignType){
+                if(campaignType == 'email'){
+                    this.grapEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + campaignId + '/' + this.moduleUnitID;
+                    this.editorIframe = 'emailEditorIframe';
+                }
+
+                if(campaignType == 'sms'){
+                    this.grapEditorSrc= '/admin/workflow/loadStripoSMSCampaign/' + this.moduleName + '/' + campaignId + '/' + this.moduleUnitID;
+                    this.editorIframe = 'smsEditorIframe';
+                }
+
+                this.loading = true;
+                let elem = this;
+                setTimeout(function(){
+                    elem.displayEditTemplateInterface();
+                    elem.loading = false;
+                }, 1500);
             },
             deleteNode: function(eventId){
                 if(confirm('Are you sure you want to delete this action from the workflow grid?')){
@@ -484,12 +591,115 @@
                         });
 
                 }
+            },
+            onDrag: function(ev){
+                ev.dataTransfer.setData("nodetype", ev.target.id);
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.add('droppable_highlight');
+                })
+            },
+            initiateDragger: function(){
+                //dragElement(document.getElementById("workflow_box"));
+            },
+            updateTimer: function(currentEvent){
+                this.isUpdatedTimer = false;
+                let detalyData = JSON.parse(currentEvent.data);
+                let delayValue = (detalyData.delay_value == '' || detalyData.delay_value == undefined) ? '10' : detalyData.delay_value;
+                let delayUnit = (detalyData.delay_unit == '' || detalyData.delay_unit == undefined) ? 'minute' : detalyData.delay_unit;
+                this.currentDelayValue = delayValue;
+                this.currentDelayUnit = delayUnit;
+                this.currentEventId = currentEvent.id;
+                this.showModal = true;
+            },
+            confirmUpdateTimer: function(){
+                axios.post('/admin/workflow/updateEventTime', {
+                    _token:this.csrf_token(),
+                    moduleName: this.moduleName,
+                    event_id:this.currentEventId,
+                    delay_value: this.currentDelayValue,
+                    delay_unit: this.currentDelayUnit,
+                    event_type: 'sent'
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            document.querySelector("#wf_event_"+this.currentEventId).innerHTML=this.currentDelayValue + ' ' + this.currentDelayUnit;
+                            this.isUpdatedTimer = true;
+                            this.processReloadTree();
+                        }
+                    });
+            },
+            clearUpdateTimer: function(){
+                this.isUpdatedTimer = false;
             }
 
         },
 
 
     };
+
+    $(document).on('dragend', function(){
+        let elems = document.querySelectorAll(".droppable_grid");
+        elems.forEach(function(elem){
+            elem.classList.remove('droppable_highlight');
+        })
+    });
+
+    function loadDraggerScript(){
+        setTimeout(function(){
+            dragElement(document.getElementById("workflow_box"));
+
+        }, 2000);
+
+        function dragElement(elmnt) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            if (document.getElementById(elmnt.id + "_tree")) {
+                /* if present, the header is where you move the DIV from:*/
+                //alert('found');
+                document.getElementById(elmnt.id + "_tree").onmousedown = dragMouseDown;
+            } else {
+                //alert('not found');
+                /* otherwise, move the DIV from anywhere inside the DIV:*/
+                elmnt.onmousedown = dragMouseDown;
+            }
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY-357;
+                //alert(pos3 + ' ' + pos4);
+                console.log(pos3 + ' ' + pos4);
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // set the element's new position:
+                //elmnt.style.top = (pos4-300) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                //console.log(elmnt.offsetLeft + ' ' + elmnt.offsetTop);
+            }
+
+            function closeDragElement() {
+                /* stop moving when mouse button is released:*/
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+    }
+
+
 
     function zoom_page(step) {
 
@@ -523,6 +733,22 @@
 <style>
     .workflowTemplateArea {
         padding: 32px 64px !important;
+    }
+    .emailEditorIframe{
+        height: 1500px;
+    }
+
+    .smsEditorIframe{
+        height: 900px;
+    }
+    .droppable_highlight{
+        border:1px solid #cccccc !important;
+        height: 70px !important;
+        background: #ffff00 !important;
+        border-style: dashed !important;
+    }
+    .droppable_grid{
+        cursor: pointer;
     }
 </style>
 

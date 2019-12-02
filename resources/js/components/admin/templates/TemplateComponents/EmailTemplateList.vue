@@ -4,7 +4,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-9"><loading :isLoading="loading"></loading></div>
         </div>
-        <div v-show="listTemplateSection">
+        <div v-show="listEmailTemplateSection">
             <div class="row">
                 <div class="col-md-3">
                     <h4 class="fsize12 fw500 dark_200 ls4 mb20">TEMPLATES</h4>
@@ -132,7 +132,7 @@
         data(){
             return {
                 loading: true,
-                listTemplateSection: true,
+                listEmailTemplateSection: true,
                 editTemplateSection: false,
                 hasData : true,
                 templates: {},
@@ -225,42 +225,6 @@
             $(".wfEmailPreviewTemplatePopup").animate({
                 width: "toggle"
             });
-        });
-        let tkn = $('meta[name="_token"]').attr('content');
-        var elem = this;
-        $(document).on("click", ".previewEmailTemplate", function (e) {
-            var templateID = $(this).attr('template_id');
-            var source = $(this).attr('source');
-            var moduleName = '{{ $moduleName }}';
-            var moduleUnitId = '{{ $moduleUnitID }}';
-
-            if (templateID != '') {
-                $('.overlaynew').show();
-                $.ajax({
-                    url: "/admin/templates/loadTemplatePreview",
-                    type: "POST",
-                    data: {
-                        _token: tkn,
-                        template_id: templateID,
-                        source: source,
-                        moduleName: moduleName,
-                        moduleUnitId: moduleUnitId
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.status == 'success') {
-                            $('.overlaynew').hide();
-                            $("#emailPreviewContainer").html(data.content);
-                            $("#email_template_preview_modal").modal();
-                        } else if (data.status == 'error') {
-                            $('.overlaynew').hide();
-
-                        }
-
-                    }
-                });
-
-            }
         });
 
     });

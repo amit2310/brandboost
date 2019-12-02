@@ -55,6 +55,7 @@ import PeopleDeals from './components/admin/deals/Deals';
 
 
 
+
 const routes = [
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
