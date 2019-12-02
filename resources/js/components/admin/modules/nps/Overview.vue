@@ -80,7 +80,12 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showNpsStats(nps.id)"><i class="dripicons-user text-muted mr-2"></i> Stats</a>
-                                    <a class="dropdown-item createSegment" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Create Segment</a>
+                                    <a class="dropdown-item createSegment" href="javascript:void(0);"
+                                       segment-type="total-click"
+                                       :campaign-id="`${nps.id}`"
+                                       campaign-type="email"
+                                       sending_method="normal"
+                                       title="click to create segment"><i class="dripicons-user text-muted mr-2"></i> Create Segment</a>
                                 </div>
                             </div>
                             <div v-if="nps.id > 0" @click="showNpsSetup(nps.id)" style="cursor:pointer;">
@@ -443,50 +448,6 @@
         });
 
         $('[name=tags]').tagify();
-
-        /* Create Segment */
-        $(document).on("click", ".createSegment", function () {
-
-            var campaignID = $(this).attr('campaign-id');
-            var segmentType = $(this).attr('segment-type');
-            var campaignType = $(this).attr('campaign-type');
-            var sendingMethod = $(this).attr('sending_method');
-            $("#hidSegmentCampaignID").val(campaignID);
-            $("#hidSegmentType").val(segmentType);
-            $("#hidCampaignType").val(campaignType);
-            $("#hidSendingMethod").val(sendingMethod);
-            $("#addSegment").modal("show");
-        });
-
-        $('#addBroadcastSegment').submit(function () {
-            $('.overlaynew').show();
-            var formData = new FormData($(this)[0]);
-            var tkn = $('meta[name="_token"]').attr('content');
-            $.ajax({
-                url: "/admin/broadcast/createSegment",
-                type: "POST",
-                data: formData + '&_token=' + tkn,
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $('.overlaynew').hide();
-                        displayMessagePopup('sccess', '', 'Segment created successfully!');
-                        $("#addSegment").modal("hide");
-
-                    } else if (data.status == 'error' && data.msg == 'duplicate') {
-                        $('.overlaynew').hide();
-                        $("#addSegmentValidation").html('Segment with the same name already exists. Choose other title please').show();
-                        setTimeout(function () {
-                            $("#addSegmentValidation").html("").hide();
-                        }, 5000);
-                    }
-                }
-            });
-            return false;
-        });
     });
 </script>
 
