@@ -53,8 +53,14 @@
 .circle_green_status.status-mark{ border:2px solid #ffffff; background:#00CC00; position:absolute; bottom:0; width:9px; height:9px; right:-3px; display: none}	
 a.icons.fl_letters.s24 {width: 36px;height: 36px;box-shadow: none !important;background: #fff;text-align: center;text-transform: uppercase;line-height: 36px;color: #fff;border-radius: 100px;
 font-size: 9px;	font-weight: 500;background: #333;display: block}
-.mainchatsvroll2  {height: 500px !important; overflow-x: hidden; overflow-y: auto; padding-right: 30px}
-/*.mainchatsvroll2:hover  {overflow-y: auto}*/
+.mainchatsvroll2  {height: 500px; overflow-x: hidden; overflow-y: auto; padding-right: 30px}
+.chat_mis_sec{min-height: 500px;}
+
+@media (max-width:1440px) {
+	.mainchatsvroll2{height: 350px;}
+	.chat_mis_sec{min-height: 350px; max-height: 350px!important}
+}
+		
 		
 
 		.profile_image_bkg{width: 108px; height: 108px; text-align: center; line-height: 108px; background: url(assets/images/profile_bkg.png)center center no-repeat; margin: auto}
@@ -159,7 +165,7 @@ font-size: 9px;	font-weight: 500;background: #333;display: block}
      	</div>
      </div>
      
-     <div class="p0 bbot position-relative" style="min-height: 500px;">
+     <div class="p0 bbot position-relative chat_mis_sec">
      <a class="slidebox user_profile_show" href="#"><img src="assets/images/user_profile_show.svg"/></a>
      
 <div class="tab-content">
@@ -299,6 +305,7 @@ Start with ‘/’ to select a  Saved Message
         
         
         <div class="p20 pt0 pb0">
+        
         	<ul class="list_with_icons">
         	<li class="d-flex">
         	<div class="media_left">
@@ -408,6 +415,7 @@ Start with ‘/’ to select a  Saved Message
         	
         	
         </ul>
+       
         <div class="clearfix"></div>
         </div>
         
@@ -461,7 +469,17 @@ $(document).ready(function(){
 			width: "toggle"
 		});
 	});
+	
+
+	
+	
+	
 });
+	
+	
+	
+	
+	
 </script>
 
 <script>
