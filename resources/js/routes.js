@@ -10,6 +10,7 @@ import VueCsvImport from './components/admin/contact/VueCsvImport.vue';
 import AppImport from './components/admin/contact/App.vue';
 import PeopleContactsListMapping from './components/admin/contact/PeopleContactsListMapping.vue';
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
+import TemplateMaster from './components/admin/templates/TemplateMaster';
 import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
@@ -55,6 +56,7 @@ import broadcastStep5 from './components/admin/broadcast/Setup5';
 import Companies from './components/admin/companies/Companies';
 import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
+
 
 
 
@@ -132,6 +134,7 @@ const routes = [
     /*Workflow Module*/
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/workflow/setup/:id', component: WorkflowSetup, meta: { title: 'Workflow Setup'} },
+    { path: '/modules/emails/templatestest', component: TemplateMaster, meta: { title: 'Workflow Setup'} },
 
 
 
