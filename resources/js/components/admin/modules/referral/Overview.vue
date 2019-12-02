@@ -80,6 +80,12 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(program.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(program.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showReferralStats(program.id)"><i class="dripicons-user text-muted mr-2"></i> Stats</a>
+                                    <a class="dropdown-item createSegment" href="javascript:void(0);"
+                                       segment-type="total-click"
+                                       :campaign-id="`${program.id}`"
+                                       campaign-type="email"
+                                       sending_method="normal"
+                                       title="click to create segment"><i class="dripicons-user text-muted mr-2"></i> Create Segment</a>
                                 </div>
                             </div>
                             <div v-if="program.id > 0" @click="showReferralSetup(program.id)" style="cursor:pointer;">
@@ -201,6 +207,50 @@
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
                                     <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
                             </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Segment Popup -->
+        <div id="addSegment" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" name="addBroadcastSegment" id="addBroadcastSegment" action="javascript:void();">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><img src="/assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Segment Title:</label>
+                                        <input class="form-control" id="segmentName" name="segmentName" placeholder="Enter Segment Title" type="text" required>
+                                        <div id="addSegmentValidation" style="color:#FF0000;display:none;"></div>
+
+                                    </div>
+
+                                    <div class="form-group mb0">
+                                        <label>Segment Description:</label>
+                                        <input class="form-control h52" type="text" id="segmentDescription" name="segmentDescription" value="" placeholder="Enter segment description"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-left">
+                            <input type="hidden" value="" name="broadcastID" id="hidSegmentCampaignID">
+                            <input type="hidden" value="Email" name="segmentType" id="hidSegmentType">
+                            <input type="hidden" value="Email" name="campaignType" id="hidCampaignType">
+                            <input type="hidden" value="Email" name="sendingMethod" id="hidSendingMethod">
+
+                            <input type="hidden" :value="`${programs.moduleName}`" name="moduleName" />
+
+                            <button data-toggle="modal" type="submit" class="btn dark_btn bkg_sblue fsize14 h52">Continue</button>
+                            <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
+
                         </div>
                     </form>
                 </div>
