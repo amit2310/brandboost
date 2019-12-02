@@ -1,5 +1,5 @@
 <template>
-    <workflow-grid :workflowData="workflowData" v-bind="workflowData"></workflow-grid>
+    <workflow-grid :workflowData="workflowData" v-bind="workflowData" @realoadTree="refreshTree"></workflow-grid>
 </template>
 <script>
     import workflowGrid from '../../workflow/MasterWorkflow';
@@ -28,12 +28,16 @@
             },
             removeWorkflowStyle: function(){
                 document.querySelector(".navbar-custom").style = "";
+            },
+            refreshTree: function(){
+                this.getWorkflowData();
             }
         },
         beforeRouteLeave(to, from, next){
             this.removeWorkflowStyle();
             next();
-        },
+        }
+
     }
 </script>
 

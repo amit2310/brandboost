@@ -403,7 +403,7 @@
 @endphp
 <body>
 
-<div style="display:block;width:100%;float:right;margin-right: 20px;margin-bottom:20px;overflow:hidden;">
+<div style="display:none;width:100%;float:right;margin-right: 20px;margin-bottom:20px;overflow:hidden;">
     @php //if ($moduleName == 'automation' || $moduleName == 'broadcast'): @endphp
     <button id="backtoTree" class="control-button-red"><&nbsp;&nbsp;<span>Back</span></button>
     @php //endif @endphp
@@ -454,7 +454,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="p20 pt0" id="wfSMSActiveCtrEdit">
+                <div class="p20 pt0" id="wfSMSActiveCtrEdit" style="display: none;">
 
                     <input type="hidden" name="wf_editor_campaign_id" id="wf_sms_editor_campaign_id"
                            value="{{ $campaignID }}">

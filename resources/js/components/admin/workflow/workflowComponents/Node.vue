@@ -2,12 +2,8 @@
     <div class="row">
 
         <!--Main Event-->
-        <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
-        <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;padding:28px 0 0 0 !important;">
-            <div class="wf_icons circle_32 img bkg_light_300" style="top:-33px !important;">
-                <img width="32" src="/assets/images/blue-plus.svg">
-            </div>
-        </div>
+        <!--<div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+        <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>-->
         <!--<template v-if="(oEvent && (oEvent.previous_event_id == '' || oEvent.previous_event_id ===null))">
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
             <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;">
@@ -19,21 +15,22 @@
         <!--End Main Event-->
 
 
-        <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+        <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
         <div v-for="campaign in campaigns" :class="`col-md-${column_index}`">
-            <div class="workflow_card" style="height:75px;">
+            <div class="workflow_card" style="height:75px;cursor:pointer;" @click="editTimer">
                 <div class="wf_icons circle_32 img bkg_dark_300"><img width="32" src="/assets/images/time-fill.svg"/></div>
-                <p class="dark_800 htxt_bold_14 mb25"><span class="dark_200">Wait for</span> {{delayTime}}</p>
+                <p class="dark_800 htxt_bold_14 mb25"><span class="dark_200">Wait for</span> <span :id="`wf_event_${oEvent.id}`">{{delayTime}}</span></p>
             </div>
-            <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
+
+            <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'email'">
                 <div class="edit_delete">
-                    <a href="#"><i class="icon-gear fsize12 dark_100"></i></a>
-                    <a href="#"><i class="icon-bin2 fsize10 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="editNode(campaign.id, 'email')"><i class="icon-gear fsize12 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="deleteNode(oEvent.id)"><i class="icon-bin2 fsize10 dark_100"></i></a>
                 </div>
                 <div class="wf_icons bkg_brand_300"><img src="/assets/images/send-plane-fill-24.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Email </p>
-                <p class="dark_800 htxt_bold_14 mb25">Email Campaign </p>
+                <p class="dark_800 htxt_bold_14 mb25">{{campaign.name}} </p>
                 <div class="p15 pt10 btop">
                     <ul class="workflow_list">
                         <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> {{campaign.stats.processed>999 ? (campaign.stats.processed/100)+'k' : campaign.stats.processed}}</a></li>
@@ -43,9 +40,13 @@
                 </div>
             </div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'sms'">
+                <div class="edit_delete">
+                    <a href="javascript:void(0);" @click="editNode(campaign.id, 'sms')"><i class="icon-gear fsize12 dark_100"></i></a>
+                    <a href="javascript:void(0);" @click="deleteNode(oEvent.id)"><i class="icon-bin2 fsize10 dark_100"></i></a>
+                </div>
                 <div class="wf_icons bkg_sms_400"><img src="/assets/images/message-2-fill.svg"/></div>
                 <p class="dark_200 htxt_medium_12 mb10 text-uppercase">SMS </p>
-                <p class="dark_800 htxt_bold_14 mb25">SMS Campaign </p>
+                <p class="dark_800 htxt_bold_14 mb25">{{campaign.name}}</p>
                 <div class="p15 pt10 btop">
                     <ul class="workflow_list">
                         <li><a href="#"><span><img src="/assets/images/send-plane-line.svg"/></span> {{campaign.stats.sentSms>999 ? (campaign.stats.sentSms/100)+'k' : campaign.stats.sentSms}}</a></li>
@@ -57,20 +58,19 @@
         </div>
 
 
-        <template v-if="lastNode">
+        <!--<template v-if="lastNode">
             <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
-            <div class="workflow_card" style="height:25px;background:transparent;border:none;box-shadow:none!important;">
-                <div class="wf_icons circle_32 img bkg_light_300">
-                    <img width="32" src="/assets/images/blue-plus.svg">
-                </div>
-            </div>
-        </template>
+            <add-more-button :oEvent="oEvent" :wfData="wfData" @addAction="initAction"></add-more-button>
+        </template>-->
+        <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
+        <add-more-button :oEvent="oEvent" :wfData="wfData" eventType="followup" @addAction="initAction"></add-more-button>
     </div>
 </template>
 <script>
-
+    import addMoreButton from './addMoreButton';
     export default {
         props: ['oEvent', 'wfData'],
+        components: {addMoreButton},
        data(){
           return {
               moduleName: '',
@@ -78,14 +78,15 @@
               moduleAccountID: '',
               campaigns: '',
               total_campaigns: 0,
-              column_index: 0
+              column_index: 0,
+
           }
         },
          mounted() {
              this.moduleName = this.wfData.moduleName;
              this.moduleUnitID = this.wfData.moduleUnitID;
              this.getWorkflowCampaign();
-            /*let d = JSON.parse(this.oEvent.data);
+             /*let d = JSON.parse(this.oEvent.data);
             alert(d.delivery_date);*/
 
         },
@@ -94,6 +95,7 @@
                 this.total_campaigns = this.campaigns.length;
                 this.column_index = Math.ceil(12/this.total_campaigns);
             }
+
         },
         computed: {
             delayTime: function(){
@@ -114,18 +116,44 @@
                     .then(response => {
                         this.campaigns = response.data.oCampaigns;
                     });
+            },
+            initAction: function(action, currentId, previousId, eventType){
+                //alert('Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
+                if(previousId == null || previousId == ''){
+                    //alert('Main Event ' + 'Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
+                }else{
+                    //alert('Followup Event ' + 'Adding '+action + ' CurrnetId = '+currentId+ ' PreviousId = '+previousId);
+                }
+                this.$emit('chooseTemplate', action, currentId, previousId, eventType);
+            },
+            editNode: function(campaignId, nodeType){
+                this.$emit('editNode', campaignId, nodeType);
+            },
+            deleteNode: function(eventId){
+                this.$emit('deleteNode', eventId);
+            },
+            editTimer: function(){
+                this.$emit("updateTimer", this.oEvent)
             }
 
-        }
-    }
 
-    $("#fullscreen").click(function(){
-        $(".content-area").toggleClass("fullscreen");
-    });
-    /*$(".touchspin-step").TouchSpin({
-        step: 10
-    });*/
+        }
+
+    };
+
+
 </script>
+<style>
+    .ddmtext{
+        margin-top:10px !important;
+    }
+    .ddmli li{
+        padding: 6px 0 !important;
+        cursor:pointer;
+
+    }
+</style>
+
 
 
 

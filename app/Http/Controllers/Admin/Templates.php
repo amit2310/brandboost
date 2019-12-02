@@ -495,6 +495,8 @@ class Templates extends Controller
             $oCategorizedTemplates = $mTemplates->getCommonTemplates('', $categoryID, '', $campaignType);
         }
 
+        $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType);
+
         //pre($oCategorizedTemplates);
 
         /*if ($campaignType == 'email') {
@@ -523,10 +525,18 @@ class Templates extends Controller
             'Templates' => ''
         ];
         $oCategories = $mTemplates->getCommonTemplateCategories();
+        if(!empty($oCategories)){
+            foreach($oCategories as $oCategory){
+                $categoryID = $oCategory->id;
+                $totalTemplates = $mTemplates->countCategoryTemplates($categoryID);
+                $oCategory->totalCount = $totalTemplates;
+            }
+        }
         $aData = array(
             'title' => 'Email Templates',
             'breadcrumb' => $aBreadcrumb,
             'oTemplates' => $oCategorizedTemplates->items(),
+            'myTemplates' => $oUserTemplates,
             'allData' => $oCategorizedTemplates,
             'oCategories' => $oCategories,
             'templateType' => 'email',
