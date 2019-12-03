@@ -42,7 +42,7 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Reviews Feed</h3>
+   	<h3 class="htxt_medium_24 dark_700">Review Requests</h3>
    	</div>
    	<div class="col-md-6 text-right">
    		<button class="circle-icon-40"><img src="assets/images/filter_review.svg"/></button>
@@ -69,8 +69,8 @@
     		<div class="row mb65">
      		<div class="col-md-6 text-left">
      			<a class="lh_32 reviews_400 htxt_bold_14" href="#">
-     				<span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
-     				Set up reviews monitoring
+     				<span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/download-fill-review.svg"></span>
+     				Import review requests
      			</a>
      		</div>
      		<div class="col-md-6 text-right">
@@ -84,10 +84,10 @@
     		
      		<div class="row mb65">
      		<div class="col-md-12 text-center">
-     			<img class="mt40" style="max-width: 240px; " src="assets/images/review_feed_illustration.svg">
-     			<h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
-     			<h3 class="htxt_regular_14 dark_200 mt20 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
-     			<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Monitor reviews site</button>
+     			<img class="mt40" style="max-width: 250px; " src="assets/images/review_request.svg">
+     			<h3 class="htxt_bold_18 dark_700 mt30">No review request so far. But you can change it!</h3>
+     			<h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import review request!</h3>
+     			<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>
      		</div>
      		</div>
      		
