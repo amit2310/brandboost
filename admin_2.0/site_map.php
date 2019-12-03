@@ -121,7 +121,14 @@
      		<ul>
      			<li><a target="_blank" href="review_dashboard.php">Review Dashboard</a></li>
      			<li><a target="_blank" href="review_feed1.php">Review Feed 1</a></li>
-     			<li><a target="_blank" href="review_feed2.php">Review Feed 2 working...</a></li>
+     			<li><a target="_blank" href="review_feed2.php">Review Feed 2 </a></li>
+     			<li><a target="_blank" href="review_campaign1.php">Review Camapign 1 </a></li>
+     			<li><a target="_blank" href="review_campaign2.php">Review Camapign 2 </a></li>
+     			<li><a target="_blank" href="review_campaign3.php">Review Camapign 3 </a></li>
+     			<li><a target="_blank" href="review_request1.php">Review Requests 1 </a></li>
+     			<li><a target="_blank" href="review_request2.php">Review Requests 2 </a></li>
+     			<li><a target="_blank" href="review_request3.php">Review Requests 3 </a></li>
+     			
      		</ul>
      		</div>
      		
