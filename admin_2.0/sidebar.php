@@ -10,7 +10,7 @@
     <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a> 
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
     <a href="#BrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <img src="assets/images/window-2-fill.svg"/> </a> 
-    <a href="#ReviewSystem" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a> 
+    <a href="#ReviewSystem" class="nav-link review" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a> 
     <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a> 
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
     <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a> 
@@ -177,14 +177,30 @@
       <!--************
        REVIEW
      *************-->
-      <div id="ReviewSystem" class="main-icon-menu-pane">
+      <div id="ReviewSystem" class="main-icon-menu-pane review">
         <div class="title-box">
-          <h6 class="menu-title">Review</h6>
+          <h6 class="menu-title">REVIEWS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/star-line-dark.svg"/></i><span class="menu-item-text">Reviews Feed</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Review Requests</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/pie-chart-line.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
+        <div class="title-box-mid">
+          <h6 class="menu-title">CAMPAIGNS</h6>
+        </div>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span class="menu-item-text">Top Campaign</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span class="menu-item-text">Email New Broadcast</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
+        </ul>
+        
       </div>
       
       <!--************
