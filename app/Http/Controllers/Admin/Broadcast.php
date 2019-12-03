@@ -154,9 +154,8 @@ class Broadcast extends Controller {
                         $totalQueuedGraph = ceil($totalQueuedGraph);
                     }
                 }
-
+                $totalVariations = 0;
                 if ($broadCastData->sending_method == 'split') {
-                    $totalVariations = 0;
                     $oVariations = $mBroadcast->getBroadcastVariations($broadCastData->broadcast_id);
                     $totalVariations = count($oVariations);
                 }
@@ -2985,7 +2984,7 @@ class Broadcast extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . base_url('admin/broadcast/emails') . '" class="sidebar-control hidden-xs">Broadcast </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/broadcast/mysegments') . '" class="sidebar-control hidden-xs">Segments </a></li>    
+                        <li><a href="' . base_url('admin/broadcast/mysegments') . '" class="sidebar-control hidden-xs">Segments </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="My Segments" class="sidebar-control active hidden-xs ">Segment Contacts</a></li>
                     </ul>';
@@ -4159,7 +4158,7 @@ class Broadcast extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . base_url('admin/broadcast/' . strtolower($broadcastType)) . '" class="sidebar-control hidden-xs">Broadcast </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/broadcast/' . strtolower($broadcastType)) . '" class="sidebar-control hidden-xs">Reports </a></li>    
+                        <li><a href="' . base_url('admin/broadcast/' . strtolower($broadcastType)) . '" class="sidebar-control hidden-xs">Reports </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBroadcast[0]->title . '" class="sidebar-control active hidden-xs ">' . $oBroadcast[0]->title . '</a></li>
                     </ul>';
