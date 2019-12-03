@@ -1409,13 +1409,28 @@ PAGE WITH SIDEBAR CSS
 .nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}
 .nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 500!important}
 
-
+.nav.nav-pills.review_feed a{color: #56627F; font-weight: 400!important}
+.nav.nav-pills.review_feed a.active{color: #717CEF; font-weight: 500!important}
+.nav.nav-pills.review_feed a span.badge{font-weight: 500; border-radius: 100px;}
 
 .people_config_list{margin: 0; padding: 0;}
 .people_config_list li{ list-style: none; margin: 0; padding: 0; line-height: 40px;}
 .people_config_list li a{  margin: 0; padding: 0 0 0px; color: #687693; font-weight: 500; font-size: 14px; }
 .people_config_list li a img{margin-right: 10px;}
 .people_config_list li a:hover, .people_config_list li a.active{color: #5D82F1; font-weight: 500;}
+
+
+
+.review_rating_start i{margin: 0 3px;}
+.review_sites_list{margin: 0; padding: 0;}
+.review_sites_list li{list-style: none; margin: 0 0 8px; padding: 0; float: left; width: 100%; font-size: 14px; color: #56627F}
+.review_sites_list li img{ margin-right: 5px;}
+.review_sites_list li:last-child{margin: 0!important}
+
+
+
+
+
 
 
 /*.main-icon-menu:hover .enlarge-menu .main-menu-inner, .enlarge-menu .main-menu-inner.active {
