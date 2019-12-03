@@ -491,6 +491,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/workflow/syncWorkflowAudienceGlobal', 'Admin\WorkFlow@syncWorkflowAudienceGlobal');
     Route::get('admin/workflow/loadStripoTemplate/{type}/{id}', 'Admin\WorkFlow@loadStripoTemplate');
     Route::get('admin/workflow/loadStripoTemplateResources/{type}/{module_name}/{temp_id}', 'Admin\WorkFlow@loadStripoTemplateResources');
+    Route::post('admin/workflow/loadWorkflowAudience', 'Admin\WorkFlow@loadWorkflowAudience');
 
 
 //Templates Module
@@ -843,6 +844,7 @@ Route::post('admin/helperutility/getSubscriberTags', 'Admin\HelperUtility@getSub
 Route::post('admin/helperutility/getFeedbackTags', 'Admin\HelperUtility@getFeedbackTags');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/eventCampaigns', 'Admin\HelperUtility@eventCampaigns');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', 'Admin\HelperUtility@workflowSubscribers');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData', 'Admin\HelperUtility@getWorkflowContactSelectionInterfaceData');
 
 
 
