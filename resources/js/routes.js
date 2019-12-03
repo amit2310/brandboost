@@ -35,6 +35,10 @@ import ListSubscribers from './components/admin/contact/ListSubscribers';
 import EmailDashboard from './components/admin/modules/emails/Dashboard';
 import BroadcastCampaigns from './components/admin/modules/emails/Broadcast';
 
+/*Sms Module*/
+import SmsDashboard from './components/admin/modules/sms/Dashboard';
+import SmsBroadcastCampaigns from './components/admin/modules/sms/Broadcast';
+
 /*Referral Module*/
 import ReferralOverview from './components/admin/modules/referral/Overview';
 
@@ -121,6 +125,10 @@ const routes = [
     { path: '/modules/emails/broadcast/setup/:id/3', component: broadcastStep3, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastStep4, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastStep5, props : {title : 'Email Templates', type : 'email' } },
+
+    /*SMS Module*/
+    { path: '/modules/sms/dashboard', component: SmsDashboard, meta: { title: 'SMS Dashboard'} },
+    { path: '/modules/sms/broadcast', component: SmsBroadcastCampaigns, meta: { title: 'SMS Campaigns'} },
 
     /*Referral Module*/
     { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
