@@ -2767,9 +2767,9 @@ class WorkFlow extends Controller {
         }
 
         $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-        $content = view('admin.workflow2.partials.filtered-contacts-ajax', array('oCampaignSubscribers' => $oCampaignSubscribers))->render();
+        //$content = view('admin.workflow2.partials.filtered-contacts-ajax', array('oCampaignSubscribers' => $oCampaignSubscribers))->render();
         $response['status'] = 'success';
-        $response['content'] = $content;
+        //$response['content'] = $content;
         $response['total_audience'] = count($oCampaignSubscribers);
         echo json_encode($response);
         exit;

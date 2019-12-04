@@ -43,13 +43,21 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb20">
-                                        <div class="link_button">
-                                            <a href="#"><img src="/assets/images/arrow-right-line_grey.svg"/></a>
-                                            <a href="#"><img src="/assets/images/arrow-left-line_grey.svg"/></a>
+                                        <div class="link_button" style="position:fixed;bottom:100px;">
+                                            <a href="javascript:void(0);"
+                                               @mousedown="shiftLeft"
+                                               @mouseup="stopShift"
+                                               @click="moveLeft"
+                                            ><img src="/assets/images/arrow-right-line_grey.svg"/></a>
+                                            <a href="javascript:void(0);"
+                                               @mousedown="shiftRight"
+                                               @mouseup="stopShift"
+                                               @click="moveRight"
+                                            ><img src="/assets/images/arrow-left-line_grey.svg"/></a>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 mb20 text-right">
+                                    <div class="col-md-6 mb20 text-right" style="position:fixed;bottom:70px;right:70px;">
                                         <div class="link_button mr20">
                                             <a id="fullscreen" href="javascript:void(0);"><img src="/assets/images/share-box-fill.svg"/></a>
                                         </div>
@@ -64,17 +72,18 @@
 
                                 <div class="row" @click="initiateDragger">
                                     <div class="col-md-12 mb-3">
-
-                                        <div class="workflow_box" id="workflow_box" style="position:absolute;width:100%;">
-                                            <div draggable="true" id="workflow_box_tree">
+                                        <div class="workflow_box">
+                                            <div id="workflow_box9" style="position:absolute;width:250px;left:36%;top:0px;cursor:move;">
                                                 <div class="row" >
                                                     <div class="col-md-12">
-                                                        <div class="workflow_card" @click="displayContactInterface" style="cursor: pointer;">
+                                                        <div class="workflow_card">
                                                             <div class="wf_icons br8 bkg_blue_300"><img class="rotate-45" src="/assets/images/peopleLight.svg"/></div>
+                                                            <div @click="displayContactInterface" style="cursor: pointer;">
                                                             <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
                                                             <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
                                                             <div class="p15 btop">
                                                                 <p class="dark_200 htxt_regular_12 text-uppercase m0">{{subscribersData.total}} Contacts </p>
+                                                            </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -159,7 +168,7 @@
                                                     <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
                                                     <add-default-more-button :oEvent="{}" :wfData="{}" eventType="main" @addAction="initActionPrimary"></add-default-more-button>
                                                 </div>
-
+                                                <div style="margin-bottom: 500px !important;">
                                                 <workflow-node
                                                     v-for="oEvent in oEvents"
                                                     :oEvent="oEvent"
@@ -170,6 +179,7 @@
                                                     @deleteNode="deleteNode"
                                                     @updateTimer="updateTimer"
                                                 ></workflow-node>
+                                                </div>
                                                 <!--<div v-if="oEvents.length==0">
                                                 <div class="col-md-12"><img src="/assets/images/wfline_single.png"/></div>
                                                 <add-default-more-button :oEvent="{}" :wfData="{}" @addAction="initActionPrimary"></add-default-more-button>
@@ -194,7 +204,7 @@
                     <!--******************
                    PAGE SIDEBAR
                    **********************-->
-                    <div class="page_sidebar bkg_light_000 absl">
+                    <div class="page_sidebar bkg_light_000 absl" style="position:fixed !important;left:128px!important;">
                         <div class="inner2 pb0">
                             <div class="title-box">
                                 <h6 class="menu-title" style="line-height: 36px;"><span class="button-menu-mobile_sidebar"><img src="/assets/images/close_menu_circle.svg"></span> &nbsp; Open Menu</h6>
@@ -406,6 +416,7 @@
     </div>
 </template>
 <script>
+    var shiftInterval;
     import modalPopup from "../../../components/helpers/Common/ModalPopup";
     import workflowNode from './workflowComponents/Node';
     import emailTemplateList from "../templates/TemplateComponents/EmailTemplateList";
@@ -450,7 +461,8 @@
         mounted() {
             this.makeBreadcrumb(this.workflowData.breadcrumb);
             loadMasterWorkflowScripts();
-            loadDraggerScript();
+            //loadDraggerScript();
+
 
         },
         watch: {
@@ -466,6 +478,9 @@
                 setTimeout(function(){
                     elem.wfRendered= true;
                     elem.loading = false;
+                    setTimeout(function(){
+                        loadNewDraggerScript();
+                    }, 1000);
                 }, 1000);
 
             }
@@ -648,7 +663,39 @@
             },
             clearUpdateTimer: function(){
                 this.isUpdatedTimer = false;
+            },
+            stopShift(){
+                clearInterval(shiftInterval);
+            },
+            shiftLeft: function(){
+                let elem = this;
+                if(shiftInterval){
+                    clearInterval(shiftInterval);
+                }
+                shiftInterval = setInterval(function(){
+                    elem.moveLeft();
+                }, 200);
+
+            },
+            shiftRight: function(){
+                let elem = this;
+                if(shiftInterval){
+                    clearInterval(shiftInterval);
+                }
+                shiftInterval = setInterval(function(){
+                    elem.moveRight();
+                }, 200);
+
+            },
+            moveLeft: function(){
+                let leftOffset = document.querySelector("#workflow_box9").style.left.replace('%', '').replace('px','');
+                document.querySelector("#workflow_box9").style.left = (parseInt(leftOffset)-5) + 'px';
+            },
+            moveRight: function(){
+                let leftOffset = document.querySelector("#workflow_box9").style.left.replace('%', '').replace('px','');
+                document.querySelector("#workflow_box9").style.left = (parseInt(leftOffset)+5) + 'px';
             }
+
 
         },
 
@@ -661,61 +708,6 @@
             elem.classList.remove('droppable_highlight');
         })
     });
-
-    function loadDraggerScript(){
-        setTimeout(function(){
-            dragElement(document.getElementById("workflow_box"));
-
-        }, 2000);
-
-        function dragElement(elmnt) {
-            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            if (document.getElementById(elmnt.id + "_tree")) {
-                /* if present, the header is where you move the DIV from:*/
-                //alert('found');
-                document.getElementById(elmnt.id + "_tree").onmousedown = dragMouseDown;
-            } else {
-                //alert('not found');
-                /* otherwise, move the DIV from anywhere inside the DIV:*/
-                elmnt.onmousedown = dragMouseDown;
-            }
-
-            function dragMouseDown(e) {
-                e = e || window.event;
-                e.preventDefault();
-                // get the mouse cursor position at startup:
-                pos3 = e.clientX;
-                pos4 = e.clientY-357;
-                //alert(pos3 + ' ' + pos4);
-                console.log(pos3 + ' ' + pos4);
-                document.onmouseup = closeDragElement;
-                // call a function whenever the cursor moves:
-                document.onmousemove = elementDrag;
-            }
-
-            function elementDrag(e) {
-                e = e || window.event;
-                e.preventDefault();
-                // calculate the new cursor position:
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                // set the element's new position:
-                //elmnt.style.top = (pos4-300) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-                //console.log(elmnt.offsetLeft + ' ' + elmnt.offsetTop);
-            }
-
-            function closeDragElement() {
-                /* stop moving when mouse button is released:*/
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
-
-    }
-
 
 
     function zoom_page(step) {
@@ -745,6 +737,12 @@
             zoom_page();
         });
 
+
+
+    }
+
+    function loadNewDraggerScript(){
+        loadWorkflowDraggerScript();
     }
 </script>
 <style>
@@ -767,6 +765,7 @@
     .droppable_grid{
         cursor: pointer;
     }
+
 </style>
 
 

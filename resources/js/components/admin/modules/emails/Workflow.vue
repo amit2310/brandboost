@@ -98,7 +98,7 @@
 
 
                 <div class="row">
-                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id" @click="setupWorkflow(campaign.id)" style="cursor:pointer;">
+                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 min_h_275 text-center animate_top">
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
@@ -112,7 +112,7 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
-
+                            <div @click="setupWorkflow(campaign.id)" style="cursor:pointer;" >
                             <a href="javascript:void(0)" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/flashlight-fill.svg"/> </a>
                             <a href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/flashlight-fill-grey.svg"> </a>
                             <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
@@ -128,6 +128,7 @@
                                     <li><a href="javascript:void(0)"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.stats.open_rate}}%</a></li>
                                     <li><a href="javascript:void(0)"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.stats.click_rate}}%</a></li>
                                 </ul>
+                            </div>
                             </div>
 
                         </div>

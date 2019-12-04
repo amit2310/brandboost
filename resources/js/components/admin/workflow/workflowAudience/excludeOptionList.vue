@@ -121,7 +121,6 @@
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
-                moduleName: '',
                 displayContacts: false,
                 displayLists: false,
                 displaySegments: false,
@@ -164,6 +163,8 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
+                        document.querySelector('#excludedContacts').innerHTML= response.data.total_contacts;
+                        this.$emit('syncWorkflowAudience');
                         this.$emit('loadFreshSelectionData');
                     });
             },
@@ -176,6 +177,8 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
+                        document.querySelector('#excludedContactList').innerHTML= response.data.total_lists;
+                        this.$emit('syncWorkflowAudience');
                         this.$emit('loadFreshSelectionData');
                     });
             },
@@ -188,6 +191,8 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
+                        document.querySelector('#excludedContactSegment').innerHTML= response.data.total_segments;
+                        this.$emit('syncWorkflowAudience');
                         this.$emit('loadFreshSelectionData');
                     });
             },
@@ -200,21 +205,15 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
+                        document.querySelector('#excludedContactTag').innerHTML= response.data.total_tags;
+                        this.$emit('syncWorkflowAudience');
                         this.$emit('loadFreshSelectionData');
                     });
             },
 
         },
         mounted() {
-            /*axios.get('/admin/broadcast/setup/' + this.campaignId)
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.moduleName = response.data.moduleName;
-                    this.campaign = response.data.oBroadcast;
-                    this.user = response.data.userData;
-                    this.loading = false;
-                });*/
+            //this.resetAllOptions();
         }
 
     };

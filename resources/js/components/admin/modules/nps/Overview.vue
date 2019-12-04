@@ -447,7 +447,7 @@
             });
         });
 
-        $('[name=tags]').tagify();
+        /*$('[name=tags]').tagify();*/
     });
 </script>
 
