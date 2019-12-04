@@ -2465,12 +2465,24 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastClone(Request $request) {
 
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'campaign_name' => ['required'],
+            'description' => ['required'],
+            'broadcast_type' => ['required']
+        ]);
+
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
 
+        $automation_id = $request->automation_id;
         $broadcastId = $request->edit_broadcastId;
+        $broadcastId = (!empty($automation_id) ? $automation_id : $broadcastId);
+
         $campaignName = $request->campaign_name;
         $description = $request->description;
         $cData = array(
@@ -2835,6 +2847,11 @@ class Broadcast extends Controller {
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
+        $validatedData = $request->validate([
+            'campaign_name' => ['required'],
+            'description' => ['required'],
+            'broadcast_type' => ['required']
+        ]);
 
         $response = array();
 
@@ -2934,6 +2951,83 @@ class Broadcast extends Controller {
         } else {
             $response = array('status' => 'error');
         }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     *
+     */
+    public function updateAutomation(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        if (empty($request->automation_id)) {
+            $response = array('status' => 'error','type' => 'emptyid',  'msg' => 'Something went wrong, please refresh the page and try again.');
+            echo json_encode($response);
+            exit;
+        }
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        if ($user_role == 1) {
+            $userID = '';
+        }
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $automationID = $request->automation_id;
+        $title = !empty($request->title) ? $request->title : '';
+        $description = !empty($request->description) ? $request->description : '';
+        $automation_type = !empty($request->automation_type) ? $request->automation_type : 'email';
+        $dateTime = date("Y-m-d H:i:s");
+
+        $aData = array(
+            'title' => $title,
+            'description' => $description
+        );
+
+        //Instantiate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+
+        $bAlreadyExists = $mEmails->checkIfEmailAutomationExists($title, $userID, $automationID);
+        if ($bAlreadyExists == true) {
+            $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Automation title already exists');
+            echo json_encode($response);
+            exit;
+        }
+
+        $bUpdated = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
+        if ($bUpdated) {
+            $setupUrl = base_url() . 'admin#/modules/emails/workflow/setup/' . $automationID;
+            $response = array('status' => 'success', 'id' => $automationID, 'actionUrl' =>  $setupUrl, 'msg' => "Automation updated successfully!");
+
+            //Add Useractivity log
+            $aActivityData = array(
+                'user_id' => $userID,
+                'event_type' => 'module_'.$automation_type,
+                'action_name' => 'automation_updated',
+                'automation_id' => $automationID,
+                'list_id' => '',
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Updated '.$automation_type.' automation',
+                'activity_created' => $dateTime
+            );
+            @logUserActivity($aActivityData);
+        }
+
         echo json_encode($response);
         exit;
     }
