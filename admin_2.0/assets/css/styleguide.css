@@ -67,13 +67,17 @@ Misc
 FORMS GROUP
 ******************************/
 .form-group label{font-size: 14px; color: #242B3D; font-weight: 400; margin-bottom: 7px;}
+.review_forms .form-group label{font-size: 12px; color: #7B89A6; font-weight: 400; margin-bottom: 7px;}
 .form-group .form-control{font-size: 16px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; padding: 5px 17px;}
 .form-group .form-control.h50{height: 50px;}
-.form-group .form-control.h36{height: 36px;}
+.form-group .form-control.h36{height: 36px; font-size: 14px;}
+.form-group .form-control.h40{height: 40px; font-size: 14px;}
 .form-group .form-control.h56{height: 56px;}
 .form-control::placeholder {color: #7B89A6; opacity: 1;}
 .form-control-dark::placeholder {color: #333D54; opacity: 1; font-size: 14px;}
 .form-group .form-control.emoji{ background: url(../images/Emoji.png) 95% 15px #fff no-repeat;}
+.form-group .form-control.shadow{border: none!important;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.3)!important;border-radius: 4px;}
+.review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
 
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
