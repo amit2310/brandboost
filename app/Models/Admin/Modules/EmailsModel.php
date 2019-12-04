@@ -16,11 +16,14 @@ class EmailsModel extends Model {
      * @param type $automationType
      * @return type
     */
-    public function getEmailAutomations($userID = '', $id = '', $automationType = '') {
+    public function getEmailAutomations($userID = '', $id = '', $automationType = '', $email_type = '') {
         $oData = DB::table('tbl_automations_emails')
 			->join('tbl_users', 'tbl_automations_emails.user_id', '=', 'tbl_users.id')
 			->select('tbl_automations_emails.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar')
-			->where('tbl_automations_emails.email_type', 'automation')
+			//->where('tbl_automations_emails.email_type', 'automation')
+            ->when(!empty($email_type), function ($query) use ($email_type) {
+                return $query->where('tbl_automations_emails.email_type', $email_type);
+            })
 			->where('tbl_automations_emails.deleted', 0)
 			->when(($id > 0), function ($query) use ($id) {
 				return $query->where('tbl_automations_emails.id', $id);

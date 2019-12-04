@@ -9,8 +9,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/emailfilter.svg"/></button>
-                        <!--<button class="btn btn-md bkg_email_300 light_000 js-sms-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>-->
-                        <button class="btn btn-md bkg_email_300 light_000 addBroadcast" broadcast_type="SMS"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_email_300 light_000 js-sms-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -97,61 +96,61 @@
 
 
                 <div class="row">
-                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id" @click="setupBroadcast(campaign.broadcast_id)" style="cursor:pointer;">
+                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.broadcast_id" style="cursor:pointer;">
                         <div class="card p0 pt30 min_h_275 text-center animate_top">
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareCampaignUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                    <a v-if="campaign.status == 'inactive' || campaign.status == 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                    <a v-if="campaign.status == 'active' && campaign.status != 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'draft')"><i class="dripicons-user text-muted mr-2"></i> Draft</a>
-                                    <a v-if="campaign.status == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                    <a v-if="campaign.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareCampaignUpdate(campaign.broadcast_id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <a class="dropdown-item clonBroadcastCampaign" href="javascript:void(0);" :broadcast_id="`${campaign.broadcast_id}`"><i class="dripicons-user text-muted mr-2"></i> Duplicate</a>
+                                    <a v-if="campaign.status == 'inactive' || campaign.status == 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.broadcast_id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-if="campaign.status == 'active' && campaign.status != 'draft'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.broadcast_id, 'draft')"><i class="dripicons-user text-muted mr-2"></i> Draft</a>
+                                    <a v-if="campaign.status == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.broadcast_id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="campaign.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.broadcast_id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.broadcast_id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
+                            <div @click="setupBroadcast(campaign.broadcast_id)">
+                                <a href="javascript:void(0);" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.bc_status=='active' && campaign.isExpired == false" ><img src="assets/images/send-plane-fill-grey.svg"/> </a>
+                                <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto" v-else-if="(campaign.bc_status=='active' && campaign.isExpired == true)"><img src="assets/images/send-plane-fill-grey.svg"> </a>
+                                <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/send-plane-fill-grey.svg"> </a>
+                                <h3
+                                    class="htxt_bold_16 dark_700 mb-1 mt-4"
+                                    :title="capitalizeFirstLetter(campaign.title)"
+                                >
+                                    {{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}
+                                </h3>
+                                <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
+                                <p
+                                    class="fsize11 fw500 dark_200"
+                                    v-if="campaign.bc_status=='active' && campaign.isExpired == true"
+                                >
+                                    <em>(Expired)</em>
+                                </p>
+                                <p
+                                    class="fsize11 fw500 dark_200"
+                                    v-else
+                                >
+                                    <em>({{ capitalizeFirstLetter(campaign.bc_status) }})</em>
+                                </p>
+                                <div style="min-height: 40px; margin: 4px 0;" class="img_box">
+                                    <img src="assets/images/email_campaign_graph.png"/>
+                                </div>
 
-                            <a href="javascript:void(0);" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.bc_status=='active' && campaign.isExpired == false" ><img src="assets/images/send-plane-fill-grey.svg"/> </a>
-                            <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto" v-else-if="(campaign.bc_status=='active' && campaign.isExpired == true)"><img src="assets/images/send-plane-fill-grey.svg"> </a>
-                            <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/send-plane-fill-grey.svg"> </a>
-                            <h3
-                                class="htxt_bold_16 dark_700 mb-1 mt-4"
-                                :title="capitalizeFirstLetter(campaign.title)"
-                            >
-                                {{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}
-                            </h3>
-                            <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
-                            <p
-                                class="fsize11 fw500 dark_200"
-                                v-if="campaign.bc_status=='active' && campaign.isExpired == true"
-                            >
-                                <em>(Expired)</em>
-                            </p>
-                            <p
-                                class="fsize11 fw500 dark_200"
-                                v-else
-                            >
-                                <em>({{ capitalizeFirstLetter(campaign.bc_status) }})</em>
-                            </p>
-                            <div style="min-height: 40px; margin: 4px 0;" class="img_box">
-                                <img src="assets/images/email_campaign_graph.png"/>
+                                <div class="p15 pt15 btop">
+                                    <ul class="workflow_list">
+                                        <li><a href="javascript:void(0);"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.totalSent > 999 ? (campaign.totalSent/100)+'k' : campaign.totalSent}}</a></li>
+                                        <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.totalOpenGraph}}%</a></li>
+                                        <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.totalClickGraph}}%</a></li>
+                                    </ul>
+                                </div>
                             </div>
-
-                            <div class="p15 pt15 btop">
-                                <ul class="workflow_list">
-                                    <li><a href="javascript:void(0);"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.totalSent > 999 ? (campaign.totalSent/100)+'k' : campaign.totalSent}}</a></li>
-                                    <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.totalOpenGraph}}%</a></li>
-                                    <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.totalClickGraph}}%</a></li>
-                                </ul>
-                            </div>
-
                         </div>
                     </div>
 
-                    <!--<div class="col-md-3 text-center js-sms-campaign-slidebox" style="cursor: pointer;">-->
-                    <div class="col-md-3 text-center addBroadcast" broadcast_type="SMS" style="cursor: pointer;">
+                    <div class="col-md-3 text-center js-sms-campaign-slidebox" style="cursor: pointer;">
                         <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>Sms Campaign</p>
@@ -172,6 +171,7 @@
         </div>
         <!--Content Area End-->
 
+        <!-- Add Broadcast Popup -->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-sms-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
@@ -199,70 +199,6 @@
 
                                     <hr class="mt30 mb30"/>
 
-
-                                    <div class="form-group">
-                                        <label class="mb10">Campaign type</label>
-                                        <div class="clearfix"></div>
-
-
-                                        <label class="w-100 mb0" for="Broadcast_campaign">
-                                            <div class="card border active  shadow_none p20">
-                                                <div class="row">
-                                                    <div class="col-md-3"><img src="/assets/images/campaign1.svg"/></div>
-                                                    <div class="col-md-9 pl0">
-                                                        <p class="fsize16 fw400 dark_700 m0">Broadcast</p>
-                                                        <p class="fsize12 fw300 dark_200 m0">Simple one time sms</p>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="Broadcast_campaign" name="campaign_type">
-                                                    <label class="custom-control-label" for="customRadio"></label>
-                                                </div>
-
-
-
-                                            </div>
-                                        </label>
-
-
-
-                                        <label class="w-100 mb0" for="Emailworkflows">
-                                            <div class="card border shadow_none p20">
-                                                <div class="row">
-                                                    <div class="col-md-3"><img src="/assets/images/campaign2.svg"/></div>
-                                                    <div class="col-md-9 pl0">
-                                                        <p class="fsize16 fw400 dark_700 m0">SMS workflows</p>
-                                                        <p class="fsize12 fw300 dark_200 m0">Simple one time sms</p>
-                                                    </div>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="Emailworkflows" name="campaign_type">
-                                                    <label class="custom-control-label" for="customRadio"></label>
-                                                </div>
-                                            </div>
-                                        </label>
-
-
-
-                                        <label class="w-100 mb0" for="Transactionalemails">
-                                            <div class="card border shadow_none p20">
-                                                <div class="row">
-                                                    <div class="col-md-3"><img src="/assets/images/campaign3.svg"/></div>
-                                                    <div class="col-md-9 pl0">
-                                                        <p class="fsize16 fw400 dark_700 m0">Transactional sms</p>
-                                                        <p class="fsize12 fw300 dark_200 m0">Send automated transactional sms</p>
-                                                    </div>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="Transactionalemails" name="campaign_type">
-                                                    <label class="custom-control-label" for="customRadio"></label>
-                                                </div>
-                                            </div>
-                                        </label>
-
-                                    </div>
                             </div>
                         </div>
 
@@ -271,6 +207,8 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
+                                <input type="hidden" value="" name="template_name" id="template_name">
+                                <textarea name="template_content" id="template_content" style="display:none;"></textarea>
                                 <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                 <input type="hidden" name="module_account_id" id="module_account_id"
                                        :value="moduleAccountID">
@@ -282,52 +220,39 @@
                 </div>
             </div>
         </div>
+        <!-- /Add Broadcast -->
 
-        <!-- Add Broadcast Modal-->
-
-        <div id="addBroadcast" class="modal fade">
+        <!-- Update Broadcast Modal-->
+        <div id="updateBroadcast" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" name="addBroadcastData" id="addBroadcastData" action="javascript:void();">
+                    <form method="post" name="updateBroadcastData" class="form-horizontal" id="updateBroadcastData" action="javascript:void();">
                         <div class="modal-header">
-                            <h5 class="modal-title">
-                                <img src="/assets/css/menu_icons/Sms_Color.svg"/> Add Brand Boost Broadcast <i class="icon-info22 fsize12 txt_grey"></i>
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h5 class="modal-title">Update Brand Boost Broadcast</h5>
                         </div>
                         <div class="modal-body">
-
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Please Enter Title below:</label>
-                                        <input class="form-control" id="campaignName" name="campaignName" placeholder="Enter Title" type="text" required>
+                                    <h3 class="mt0">Campaign Name</h3>
+                                    <p>Enter a name to help you remember what this campaign is all about. Only you will see this.</p>
+                                    <input class="form-control" type="text" name="edit_broadcast" id="edit_broadcast" value="" placeholder="Campaign Name" />
 
-                                    </div>
-
-                                    <div class="form-group mb0">
-                                        <label>Please Enter Description:</label>
-                                        <input class="form-control h52" type="text" id="description" name="description" value="" placeholder="Enter broadcast description"/>
-                                    </div>
+                                    <h3 class="mt10">Description</h3>
+                                    <textarea class="form-control" id="edit_description" name="edit_description"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <input type="hidden" value="" name="campaignTemplateID" id="campaignTemplateID">
-                            <textarea id="campaignTemplateContant" style="display:none;"></textarea>
-                            <input type="hidden" value="SMS" name="broadCastType" id="broadCastType">
-
-                            <button data-toggle="modal" type="submit" class="btn dark_btn bkg_green fsize14 h52">Continue</button>
-                            <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
-
+                        <div class="modal-footer p40">
+                            <input type="hidden" value="" name="edit_broadcastId" id="edit_broadcastId">
+                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn dark_btn">Continue</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-
-        <!-- /Add Broadcast -->
     </div>
 </template>
 <script>
@@ -349,7 +274,9 @@
                 form: {
                     campaign_name: '',
                     description: '',
-                    campaign_type: 'sms',
+                    broadcast_type: 'SMS',
+                    template_name: '',
+                    template_content: '',
                     automation_id: ''
                 },
                 formLabel: 'Create'
@@ -370,21 +297,22 @@
                 document.querySelector('.js-sms-campaign-slidebox').click();
             },
             prepareCampaignUpdate: function(campaignId) {
+                //window.location.href='#/broadcast/edit/'+campaignId;
                 this.getCampaignInfo(campaignId);
             },
             getCampaignInfo: function(campaignId){
                 axios.post('/admin/modules/emails/getAutomation', {
                     automation_id:campaignId,
                     moduleName: this.moduleName,
+                    email_type: 'broadcast',
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
                             //Fill up the form fields
                             let formData = response.data;
-                            this.form.title = formData.title;
+                            this.form.campaign_name = formData.title;
                             this.form.description = formData.description;
-                            this.form.campaign_type = formData.automation_type;
                             this.form.automation_id = formData.id;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
@@ -397,7 +325,7 @@
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.automation_id>0){
-                    formActionSrc = '/admin/modules/emails/updateAutomation';
+                    formActionSrc = '/admin/broadcast/updateBroadcastClone';
                 }else{
                     formActionSrc = '/admin/broadcast/createBroadcast';
                     this.form.module_account_id = this.moduleAccountID;
@@ -407,7 +335,7 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             if(this.form.automation_id>0){
-                                this.setupAutomation(this.form.automation_id);
+                                window.location.href='#/broadcast/edit/'+this.form.automation_id;
                                 return false;
                             }
                             this.loading = false;
@@ -508,32 +436,55 @@
             });
         });
 
+        $(document).on('click', '.clonBroadcastCampaign', function () {
+            var automationID = $(this).attr('broadcast_id');
+            $.ajax({
+                url: "/admin/broadcast/clonBroadcastCampaign",
+                type: "POST",
+                data: {_token: '{{ csrf_token() }}', automation_id: automationID},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 'success') {
+                        //window.location.href = window.location.href;
+                        $('#edit_broadcast').val(data.broadcastName);
+                        $('#edit_description').val(data.description);
+                        $('#edit_broadcastId').val(data.broadcastId);
+                        $("#updateBroadcast").modal();
+                    }
+                }
+            });
+        });
 
-
-        $(document).on('click', '.addBroadcast', function(){
-            $('.campaignContainer .hide_sms, .campaignContainer .hide_email').show();
-            if ($(this).attr('broadcast_type') == 'Email') {
-                $('.campaignContainer .hide_sms').hide();
+        $('#updateBroadcastData').submit(function () {
+            var campaignName = $('#edit_broadcast').val();
+            var description = $('#edit_description').val();
+            var broadcastId = $('#edit_broadcastId').val();
+            if (campaignName == '') {
+                alertMessage('Please enter campaign name.');
             } else {
-                $('.campaignContainer .hide_email').hide();
+                $('.overlaynew').show();
+                $.ajax({
+                    url: "/admin/broadcast/updateBroadcastClone",
+                    type: "POST",
+                    data: {_token: '{{ csrf_token() }}', edit_broadcastId: broadcastId, campaign_name: campaignName, description: description},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            $('.overlaynew').hide();
+                            window.location.href = "#/broadcast/edit/" + broadcastId;
+                        } else {
+                            $('.overlaynew').hide();
+                            alertMessage('Error: Some thing wrong!');
+                            return false;
+                        }
+                    }, error: function (xhr, status, error) {
+                        $('.overlaynew').hide();
+                        alertMessage('Error: Some thing wrong!');
+                    }
+                });
             }
-            $('#broadCastType').val($(this).attr('broadcast_type'));
-            $("#addBroadcast").modal();
+            return false;
         });
-
-        $('.hideABModalBox').click(function () {
-            $("#addBroadcast").modal('hide');
-        });
-
-        $('.select_campaign_box').click(function () {
-            var templateID = $(this).attr('template_id');
-            var templateContent = $(this).attr('template_content');
-            $('#campaignTemplateID').val(templateID);
-            $('#campaignTemplateContant').val(templateContent);
-            $('.select_campaign_box').css('border', '1px solid #e6e6e6');
-            $(this).css('border', '3px solid #1F8EE7');
-        });
-
 
     });
 </script>

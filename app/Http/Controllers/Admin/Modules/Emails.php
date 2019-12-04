@@ -526,11 +526,13 @@ class Emails extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $automationID = $request->automation_id;
+        $email_type = (!empty($request->email_type) ? $request->email_type : 'automation');
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
             $userID = '';
         }
-        $oAutomation = $mEmails->getEmailAutomations($userID, $automationID);
+        $oAutomation = $mEmails->getEmailAutomations($userID, $automationID, '', $email_type);
+
         if (!empty($oAutomation)) {
             $response = array('status' => 'success', 'id' => $oAutomation[0]->id, 'title' => $oAutomation[0]->title, 'description' => $oAutomation[0]->description);
         } else {
