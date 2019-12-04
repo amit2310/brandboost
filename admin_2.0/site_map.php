@@ -112,6 +112,23 @@
      		</ul>
      			
      		</div>
+     		
+     		
+     		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 reviews_500">Review</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="review_dashboard.php">Review Dashboard</a></li>
+     			<li><a target="_blank" href="review_feed1.php">Review Feed 1</a></li>
+     			<li><a target="_blank" href="review_feed2.php">Review Feed 2 working...</a></li>
+     		</ul>
+     		</div>
+     		
+     		
+     		
+     		
+     		
      	</div>
      	
      	<div class="col-md-6">

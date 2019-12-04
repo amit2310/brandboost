@@ -174,4 +174,12 @@ class HelperUtility extends Controller
         exit;
     }
 
+    public function getWorkflowContactSelectionInterfaceData(Request $request){
+        $moduleName = $request->moduleName;
+        $moduleUnitID = $request->moduleUnitID;
+        $aContactSelectionData = WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
+        echo json_encode(['contactSelectionData' => $aContactSelectionData]);
+        exit;
+    }
+
 }

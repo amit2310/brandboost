@@ -38,6 +38,7 @@ import BroadcastCampaigns from './components/admin/modules/emails/Broadcast';
 /*Sms Module*/
 import SmsDashboard from './components/admin/modules/sms/Dashboard';
 import SmsBroadcastCampaigns from './components/admin/modules/sms/Broadcast';
+import SmsAutomationCampaigns from './components/admin/modules/sms/Workflow';
 
 /*Referral Module*/
 import ReferralOverview from './components/admin/modules/referral/Overview';
@@ -143,6 +144,8 @@ const routes = [
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/workflow/setup/:id', component: WorkflowSetup, meta: { title: 'Workflow Setup'} },
     { path: '/modules/emails/templatestest', component: TemplateMaster, meta: { title: 'Workflow Setup'} },
+
+    { path: '/modules/sms/workflow', component: SmsAutomationCampaigns, meta: { title: 'SMS Campaigns'} },
 
 
 

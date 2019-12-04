@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\SubscriberModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\WorkflowModel;
@@ -2797,6 +2798,136 @@ class WorkFlow extends Controller {
     public function syncWorkflowAudienceGlobal() {
         $mWorkflow = new WorkflowModel();
         $mWorkflow->syncWorkflowAudienceGlobalModel();
+    }
+
+    /**
+     * Used to load Broadcast users added to the campaign
+     */
+    public function loadWorkflowAudience(Request $request) {
+        $response = array();
+
+        if (!empty($request)) {
+
+            $moduleName = strip_tags($request->moduleName);
+            $moduleUnitId = strip_tags($request->moduleUnitId);
+            $actionType = strip_tags($request->actionType);
+            if ($moduleUnitId > 0) {
+
+                $aUser = getLoggedUser();
+                $userID = $aUser->id;
+
+                //Instantiate workflow model to get its methods and properties
+                $mWorkflow = new WorkflowModel();
+
+                //Instantiate Lists model to get its methods and properties
+                $mLists = new ListsModel();
+
+                $duplicateCount = 0;
+
+                $oLists = $mWorkflow->getWorkflowMyLists($userID);
+
+                $oCampaign = $mWorkflow->getWorkflowCampaign($moduleUnitId,  $moduleName);
+                $oSegments = $mWorkflow->getWorkflowSegments($userID);
+                $subscribersData = SubscriberModel::getGlobalSubscribers($userID);
+                $aTags = TagsModel::getClientTags($userID);
+
+                if ($actionType == 'import') {
+                    $oCampaignContacts = $mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitId);
+                    $oAutomationLists = $mWorkflow->getWorkflowImportLists($moduleName, $moduleUnitId);
+                    $oCampaignTags = $mWorkflow->getWorkflowImportTags($moduleName, $moduleUnitId);
+                    $oCampaignSegments = $mWorkflow->getWorkflowImportSegments($moduleName, $moduleUnitId);
+                }
+
+                if ($actionType == 'exclude') {
+                    $oCampaignContacts = $mWorkflow->getWorkflowExcludeContacts($moduleName, $moduleUnitId);
+                    $oAutomationLists = $mWorkflow->getWorkflowExcludeLists($moduleName, $moduleUnitId);
+                    $oCampaignTags = $mWorkflow->getWorkflowExcludeTags($moduleName, $moduleUnitId);
+                    $oCampaignSegments = $mWorkflow->getWorkflowExcludeSegments($moduleName, $moduleUnitId);
+                }
+
+                //Do some more calculations for vue
+                //For Contacts
+                if(!empty($oCampaignContacts)){
+                    $aSelectedContacts = array();
+                    foreach ($oCampaignContacts as $oRec) {
+                        $aSelectedContacts[] = $oRec->subscriber_id;
+                    }
+                }
+
+                //For Lists
+                $aSelectedListIDs = array();
+                if($oAutomationLists->isNotEmpty()){
+                    foreach ($oAutomationLists as $oAutomationList) {
+                        $aSelectedListIDs[] = $oAutomationList->list_id;
+                    }
+                }
+
+                $newolists = array();
+
+                foreach ($oLists as $key => $value) {
+                    $newolists[$value->id][] = $value;
+                }
+
+                //For Segments
+                $aSelectedSegments = array();
+                if ($oCampaignSegments->isNotEmpty()) {
+                    foreach ($oCampaignSegments as $oRec) {
+                        $aSelectedSegments[] = $oRec->segment_id;
+                    }
+                }
+
+                if($oSegments->isNotEmpty()){
+                    foreach($oSegments->items() as $oSegment){
+                        $oSubscribers = $mWorkflow->getWorkflowSegmentSubscribers($oSegment->id, $userID);
+                        $oSegment->subscribersData = $oSubscribers;
+                    }
+                }
+
+                //For Tags
+                $aSelectedTags = array();
+                if ($oCampaignTags->isNotEmpty()) {
+                    foreach ($oCampaignTags as $oRec) {
+                        $aSelectedTags[] = $oRec->tag_id;
+                    }
+                }
+
+                if($aTags->isNotEmpty()){
+                    foreach ($aTags->items() as $aTag){
+                        $tagID = $aTag->tagid;
+                        $oTagSubscribers = SubscriberModel::getTagSubscribers($tagID);
+                        $aTag->subscribersData = $oTagSubscribers;
+                    }
+
+                }
+
+                $aData = array(
+                    'oAutomationLists' => $oAutomationLists,
+                    'oLists' => $oLists,
+                    'newolists' => $newolists,
+                    'aSelectedListIDs' => $aSelectedListIDs,
+                    'subscribersData' => $subscribersData->items(),
+                    'allDataContacts' => $subscribersData,
+                    'aSelectedContacts' => $aSelectedContacts,
+                    'oCampaignContacts' => $oCampaignContacts,
+                    'oCampaignTags' => $oCampaignTags,
+                    'oSegments' => $oSegments->items(),
+                    'allDataSegments' => $oSegments,
+                    'oCampaignSegments' => $oCampaignSegments,
+                    'aSelectedSegments' => $aSelectedSegments,
+                    'duplicateSubscriber' => $duplicateCount,
+                    'aTags' => $aTags->items(),
+                    'allDataTags' => $aTags,
+                    'aSelectedTags' => $aSelectedTags,
+                    'moduleName' => $moduleName,
+                    'moduleUnitID' => $moduleUnitId,
+                    'userData' => $aUser,
+                    'oCampaign' => $oCampaign,
+
+                );
+            }
+        }
+        echo json_encode($aData);
+        exit;
     }
 
 }

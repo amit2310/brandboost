@@ -2391,7 +2391,8 @@ class WorkflowModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
-                ->get();
+            ->paginate(10);
+                //->get();
         return $oData;
     }
 
@@ -2923,7 +2924,8 @@ class WorkflowModel extends Model {
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
                 ->where("$tableName.$fieldName", $moduleUnitID)
                 ->orderBy("$tableName.id", "desc")
-                ->get();
+                ->paginate(5);
+                //->get();
         return $oData;
     }
 
@@ -2947,7 +2949,11 @@ class WorkflowModel extends Model {
 
             $aTags = \App\Models\Admin\TagsModel::getClientTags($userID);
 
-            $oCampaignSubscribers = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+            $oCampaignSubscribersAll = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+
+            $oCampaignSubscribers = $oCampaignSubscribersAll->items();
+
+
 
 
             //Import Specific Data
@@ -3009,6 +3015,7 @@ class WorkflowModel extends Model {
                 'subscribersData' => $subscribersData,
                 'aTags' => $aTags,
                 'oCampaignSubscribers' => $oCampaignSubscribers,
+                'oCampaignSubscribersAll' => $oCampaignSubscribersAll,
                 'oTotalImportedSubscribers' => $oTotalImportedSubscribers,
                 'oImportLists' => $oImportLists,
                 'oCampaignImportContacts' => $oCampaignImportContacts,

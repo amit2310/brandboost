@@ -278,6 +278,7 @@ Button CLASSES
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
 .circle-icon-52{width: 52px;height: 52px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 52px;  }
+.circle-icon-56{width: 56px;height: 56px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 56px;  }
 .circle-icon-64{width: 64px;height: 64px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 64px;  }
 
 
@@ -443,7 +444,7 @@ Background COLOR CLASSES
 
 .bkg_green_100{background: #9CE4AF}
 .bkg_green_200{background: #8CDAA4}
-.bkg_green_300{background: #7ECD99}
+.bkg_green_300{background: #7ECD99!important}
 .bkg_green_400{background: #62C08E}
 .bkg_green_500{background: #4AAF85}
 
@@ -505,6 +506,7 @@ Background COLOR CLASSES
 .bkg_chat_500{background: #3D5DD4}
 
 
+.bkg_reviews_000{background: #f1f2fd}
 .bkg_reviews_100{background: #C6CAFC}
 .bkg_reviews_200{background: #AFB4FA}
 .bkg_reviews_300{background: #9AA1F9}
@@ -791,6 +793,8 @@ Line Height CLASSES
 .lh_18{line-height: 18px!important;}
 .lh_19{line-height: 19px!important;}
 .lh_20{line-height: 20px!important;}
+.lh_21{line-height: 21px!important;}
+.lh_22{line-height: 22px!important;}
 
 
 

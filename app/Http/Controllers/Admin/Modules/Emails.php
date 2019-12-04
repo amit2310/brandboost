@@ -256,10 +256,19 @@ class Emails extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Automations" class="sidebar-control active hidden-xs ">Automations</a></li>
                     </ul>';
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Sms' => '#/modules/sms/dashboard',
+            'Workflows' => ''
+        );
+
         $aData = array(
             'title' => 'SMS Automations',
             'pagename' => $breadcrumb,
-            'oAutomations' => $oAutomations,
+            'setupAutomation' => $aBreadcrumb,
+            'oAutomations' => $oAutomations->items(),
+            'allData' => $oAutomations,
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
             'moduleName' => 'automation',
@@ -267,7 +276,10 @@ class Emails extends Controller {
             'automation_type' => 'sms'
         );
 
-        return view('admin.modules.emails.index', $aData);
+        echo json_encode($aData);
+        exit;
+
+        //return view('admin.modules.emails.index', $aData);
     }
 
 

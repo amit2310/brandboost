@@ -9,7 +9,8 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/emailfilter.svg"/></button>
-                        <button class="btn btn-md bkg_email_300 light_000 js-sms-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <!--<button class="btn btn-md bkg_email_300 light_000 js-sms-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>-->
+                        <button class="btn btn-md bkg_email_300 light_000 addBroadcast" broadcast_type="SMS"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -112,7 +113,7 @@
                                 </div>
                             </div>
 
-                            <a href="javascript:void(0);" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.bc_status=='active' && campaign.isExpired == false" ><img src="assets/images/send-plane-fill-email_blue.svg"/> </a>
+                            <a href="javascript:void(0);" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.bc_status=='active' && campaign.isExpired == false" ><img src="assets/images/send-plane-fill-grey.svg"/> </a>
                             <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto" v-else-if="(campaign.bc_status=='active' && campaign.isExpired == true)"><img src="assets/images/send-plane-fill-grey.svg"> </a>
                             <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/send-plane-fill-grey.svg"> </a>
                             <h3
@@ -140,7 +141,7 @@
 
                             <div class="p15 pt15 btop">
                                 <ul class="workflow_list">
-                                    <li><a href="javascript:void(0);"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.totalSent>999 ? (campaign.totalSent/100)+'k' : campaign.totalSent}}</a></li>
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.totalSent > 999 ? (campaign.totalSent/100)+'k' : campaign.totalSent}}</a></li>
                                     <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.totalOpenGraph}}%</a></li>
                                     <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.totalClickGraph}}%</a></li>
                                 </ul>
@@ -149,7 +150,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 text-center js-sms-campaign-slidebox" style="cursor: pointer;">
+                    <!--<div class="col-md-3 text-center js-sms-campaign-slidebox" style="cursor: pointer;">-->
+                    <div class="col-md-3 text-center addBroadcast" broadcast_type="SMS" style="cursor: pointer;">
                         <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>Sms Campaign</p>
@@ -184,8 +186,8 @@
 
                                     <div class="form-group">
                                         <label for="title">Campaign name</label>
-                                        <input type="text" class="form-control h56" id="title" placeholder="Enter campaign name" name="title"
-                                               v-model="form.title">
+                                        <input type="text" class="form-control h56" id="campaign_name" placeholder="Enter campaign name" name="campaign_name"
+                                               v-model="form.campaign_name">
                                     </div>
 
                                     <div class="form-group">
@@ -280,6 +282,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- Add Broadcast Modal-->
+
+        <div id="addBroadcast" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" name="addBroadcastData" id="addBroadcastData" action="javascript:void();">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <img src="/assets/css/menu_icons/Sms_Color.svg"/> Add Brand Boost Broadcast <i class="icon-info22 fsize12 txt_grey"></i>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Please Enter Title below:</label>
+                                        <input class="form-control" id="campaignName" name="campaignName" placeholder="Enter Title" type="text" required>
+
+                                    </div>
+
+                                    <div class="form-group mb0">
+                                        <label>Please Enter Description:</label>
+                                        <input class="form-control h52" type="text" id="description" name="description" value="" placeholder="Enter broadcast description"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" value="" name="campaignTemplateID" id="campaignTemplateID">
+                            <textarea id="campaignTemplateContant" style="display:none;"></textarea>
+                            <input type="hidden" value="SMS" name="broadCastType" id="broadCastType">
+
+                            <button data-toggle="modal" type="submit" class="btn dark_btn bkg_green fsize14 h52">Continue</button>
+                            <button data-toggle="modal" data-dismiss="modal" type="button" class="btn btn-link fsize14 txt_blue h52">Cancel</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- /Add Broadcast -->
     </div>
 </template>
 <script>
@@ -299,9 +347,9 @@
                 current_page: 1,
                 breadcrumb: '',
                 form: {
-                    title: '',
+                    campaign_name: '',
                     description: '',
-                    campaign_type: '',
+                    campaign_type: 'sms',
                     automation_id: ''
                 },
                 formLabel: 'Create'
@@ -351,7 +399,7 @@
                 if(this.form.automation_id>0){
                     formActionSrc = '/admin/modules/emails/updateAutomation';
                 }else{
-                    formActionSrc = '/admin/modules/emails/addAutiomation';
+                    formActionSrc = '/admin/broadcast/createBroadcast';
                     this.form.module_account_id = this.moduleAccountID;
                 }
 
@@ -393,7 +441,7 @@
             loadPaginatedData : function(){
                 axios.get('/admin/broadcast/sms?page='+this.current_page)
                     .then(response => {
-                        console.log(response.data);
+                        //console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -459,6 +507,33 @@
                 width: "toggle"
             });
         });
+
+
+
+        $(document).on('click', '.addBroadcast', function(){
+            $('.campaignContainer .hide_sms, .campaignContainer .hide_email').show();
+            if ($(this).attr('broadcast_type') == 'Email') {
+                $('.campaignContainer .hide_sms').hide();
+            } else {
+                $('.campaignContainer .hide_email').hide();
+            }
+            $('#broadCastType').val($(this).attr('broadcast_type'));
+            $("#addBroadcast").modal();
+        });
+
+        $('.hideABModalBox').click(function () {
+            $("#addBroadcast").modal('hide');
+        });
+
+        $('.select_campaign_box').click(function () {
+            var templateID = $(this).attr('template_id');
+            var templateContent = $(this).attr('template_content');
+            $('#campaignTemplateID').val(templateID);
+            $('#campaignTemplateContant').val(templateContent);
+            $('.select_campaign_box').css('border', '1px solid #e6e6e6');
+            $(this).css('border', '3px solid #1F8EE7');
+        });
+
 
     });
 </script>

@@ -69,12 +69,12 @@
                                             <div draggable="true" id="workflow_box_tree">
                                                 <div class="row" >
                                                     <div class="col-md-12">
-                                                        <div class="workflow_card">
+                                                        <div class="workflow_card" @click="displayContactInterface" style="cursor: pointer;">
                                                             <div class="wf_icons br8 bkg_blue_300"><img class="rotate-45" src="/assets/images/peopleLight.svg"/></div>
                                                             <p class="dark_200 htxt_medium_12 mb10 text-uppercase">Tag </p>
                                                             <p class="dark_800 htxt_bold_14 mb25">New Customer </p>
                                                             <div class="p15 btop">
-                                                                <p class="dark_200 htxt_regular_12 text-uppercase m0">{{subscribersData.length}} Contacts </p>
+                                                                <p class="dark_200 htxt_regular_12 text-uppercase m0">{{subscribersData.total}} Contacts </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -364,6 +364,12 @@
                     </div>
 
                 </div>
+                <choose-workflow-subscribers
+                    v-if="workflowData && displayContactSelectionInterface"
+                    :moduleName="moduleName"
+                    :moduleUnitId="moduleUnitID"
+                    @displayTreeInterface="displayWorkflowTreeInterface"
+                ></choose-workflow-subscribers>
                 <modal-popup v-if="showModal" @close="showModal = false" width="sm">
                     <h3 slot="header">Delay Time</h3>
                     <div slot="body" class="pt0 pb0">
@@ -405,9 +411,10 @@
     import emailTemplateList from "../templates/TemplateComponents/EmailTemplateList";
     import smsTemplateList from "../templates/TemplateComponents/SmsTemplateList";
     import addDefaultMoreButton from './workflowComponents/addMoreButton';
+    import ChooseWorkflowSubscribers from "./ChooseWorkflowSubscribers";
     export default {
         props: ['workflowData'],
-        components: {modalPopup, workflowNode, emailTemplateList, smsTemplateList, addDefaultMoreButton},
+        components: {ChooseWorkflowSubscribers,modalPopup, workflowNode, emailTemplateList, smsTemplateList, addDefaultMoreButton},
         data(){
           return {
               showModal: false,
@@ -435,7 +442,8 @@
               currentDelayValue: '',
               currentDelayUnit: '',
               currentEventId: '',
-              isUpdatedTimer: false
+              isUpdatedTimer: false,
+              displayContactSelectionInterface: false
 
           }
         },
@@ -463,6 +471,13 @@
             }
         },
         methods: {
+            displayContactInterface: function(){
+                this.displayContactSelectionInterface = true;
+                this.displayWorkflowTree = false;
+                this.dynamo='workflowTemplateArea';
+                this.nodeType = '',
+                this.displayEditTemplateSection = false;
+            },
             getWorkflowSubscribers: function(){
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', {moduleName: this.moduleName, moduleUnitID:this.moduleUnitID})
                     .then(response => {
@@ -484,6 +499,7 @@
                 this.displayWorkflowTree = false;
                 this.dynamo='workflowTemplateArea';
                 this.nodeType = '',
+                this.displayContactSelectionInterface = false;
                 this.displayEditTemplateSection = true;
             },
             displayWorkflowTreeInterface: function(){
@@ -491,6 +507,7 @@
                 this.displayWorkflowTree = true;
                 this.dynamo='';
                 this.displayEditTemplateSection = false;
+                this.displayContactSelectionInterface = false;
             },
             addWorkflowNode: function(templateId, mode){
                 //Write all your code for adding node finally here
