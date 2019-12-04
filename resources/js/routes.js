@@ -35,6 +35,11 @@ import ListSubscribers from './components/admin/contact/ListSubscribers';
 import EmailDashboard from './components/admin/modules/emails/Dashboard';
 import BroadcastCampaigns from './components/admin/modules/emails/Broadcast';
 
+/*Sms Module*/
+import SmsDashboard from './components/admin/modules/sms/Dashboard';
+import SmsBroadcastCampaigns from './components/admin/modules/sms/Broadcast';
+import SmsAutomationCampaigns from './components/admin/modules/sms/Workflow';
+
 /*Referral Module*/
 import ReferralOverview from './components/admin/modules/referral/Overview';
 
@@ -122,6 +127,10 @@ const routes = [
     { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastStep4, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastStep5, props : {title : 'Email Templates', type : 'email' } },
 
+    /*SMS Module*/
+    { path: '/modules/sms/dashboard', component: SmsDashboard, meta: { title: 'SMS Dashboard'} },
+    { path: '/modules/sms/broadcast', component: SmsBroadcastCampaigns, meta: { title: 'SMS Campaigns'} },
+
     /*Referral Module*/
     { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
     { path: '/modules/referral/', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
@@ -135,6 +144,8 @@ const routes = [
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/workflow/setup/:id', component: WorkflowSetup, meta: { title: 'Workflow Setup'} },
     { path: '/modules/emails/templatestest', component: TemplateMaster, meta: { title: 'Workflow Setup'} },
+
+    { path: '/modules/sms/workflow', component: SmsAutomationCampaigns, meta: { title: 'SMS Campaigns'} },
 
 
 
