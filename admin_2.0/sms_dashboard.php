@@ -24,7 +24,7 @@
 
 
 </head>
-<body id="EmailSection">
+<body id="SMSSection">
 
 <div class="page-wrapper">
  <!--******************
@@ -48,11 +48,11 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Email Dashboard</h3>
+   	<h3 class="htxt_medium_24 dark_700">SMS Dashboard</h3>
    	</div>
    	<div class="col-md-6 text-right">
-   		<button class="circle-icon-40 mr15"><img src="assets/images/emailfilter.svg"/></button>
-   		<button class="btn btn-md light_000 bkg_email_300 slidebox" >Create new <span style="opacity: 0.3"><img src="assets/images/blue-plus.svg"/></span></button>
+   		<button class="mr15 btn btn-md bkg_light_000 sms_400">Filters &nbsp; &nbsp; <img src="assets/images/sms_filter.svg"/></button>
+   		<button class="btn btn-md light_000 bkg_sms_400 slidebox" >New campaign &nbsp; &nbsp; <span><img src="assets/images/sms_add.svg"/></span></button>
    	</div>
    </div>
    </div>
@@ -91,14 +91,13 @@
      		<div class="row">
      		<div class="col-md-6">
      			<h3 class="htxt_medium_32 dark_700">79,3%</h3>
-     			<p class="grey-sub-headings">YOUR EMAIL MARKETING IS GOOD</p>
+     			<p class="grey-sub-headings">YOUR SMS MARKETING IS GOOD</p>
      			<hr>
-     			<p class="fsize14 mb30" style="color: #5a6f80;">Your recent emails have low avg. 9% bounce rate. We suggest you to send new email 
-in next 3 days.</p>
-    		<a class="fsize15 email_400" href="#"><img src="assets/images/emailedit.svg"/>&nbsp; Create new email</a>
+     			<p class="fsize14 mb30 dark_300" style="max-width: 316px;">Your recent emails have low avg. 9% bounce rate. We suggest you to send new email in next 3 days.</p>
+    			<button class="btn btn-md bkg_sms_000 sms_400 pr20">Create SMS</button>
      		</div>
      		<div class="col-md-6 text-center">
-     			<img class="" style="max-height: 210px; " src="assets/images/email_dashboard_illustration.png"/>
+     			<img class="" style="max-height: 210px; " src="assets/images/sms_dashboard1.svg"/>
      		</div>
      			
      		</div>
@@ -111,10 +110,10 @@ in next 3 days.</p>
      			<div id="credit_chart" style="max-height: 135px;">
 					<apexchart type=radialBar height=200 :options="chartOptions3" :series="series" />
 				  </div>
-     			<p class="fsize14 mb0 mt10" style="color: #5a6f80;">You used 408/450 montly credits</p>
+     			<p class="fsize14 mb10 mt20 dark_300">You used 408/450 montly credits</p>
      		</div>
-     			<div class="p15 btop">
-     				<a class="fsize15 fw500 email_400 mt20" href="#">Purchase more credits</a>	
+     			<div class="p20 btop">
+     				<a class="fsize14 fw500 sms_400 mt20" href="#">Purchase more credits</a>	
      			</div>
      			
      		</div>
@@ -214,9 +213,9 @@ $(document).ready(function(){
 
 <script>
 	//side nav active script
-	$(".nav-link.email").addClass("active");
+	$(".nav-link.sms").addClass("active");
 	$(".nav-link.people").removeClass("active");
-	$(".main-icon-menu-pane.email").addClass("active");
+	$(".main-icon-menu-pane.sms").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
 </script>
 
@@ -228,8 +227,8 @@ $(document).ready(function(){
   <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
 
   <script>
-    var colors = ['#a3d6ee'];
-    var colors2 = ['#59b3e1'];
+    var colors = ['#96D0A5'];
+    var colors2 = ['#96D0A5'];
     
     new Vue({
       el: '#chartSubscriptions',
@@ -267,7 +266,7 @@ $(document).ready(function(){
             bar: {
               columnWidth: '60%',
               distributed: true,
-				//endingShape: 'rounded'
+				endingShape: 'rounded'
             }
           },
           dataLabels: {
@@ -372,7 +371,7 @@ $(document).ready(function(){
   
   
   <script>
-	  var colors4 = ['#a3d6ee'];
+	  var colors4 = ['#71BE9B'];
     new Vue({
       el: '#credit_chart',
       components: {
