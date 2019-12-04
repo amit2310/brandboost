@@ -98,8 +98,9 @@
 
 
                 <div class="row">
-                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id" @click="setupWorkflow(campaign.id)" style="cursor:pointer;">
-                        <div class="card p0 pt30 min_h_275 text-center animate_top">
+
+                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id" style="cursor:pointer;">
+                        <div class="card p0 pt30 min_h_275 text-center animate_top">{{ campaign.status }}
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
@@ -110,18 +111,19 @@
                                     <a v-if="campaign.status == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                     <a v-if="campaign.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                </div>
                             </div>
-
-                            <a href="javascript:void(0)" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/flashlight-fill.svg"/> </a>
-                            <a href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/flashlight-fill-grey.svg"> </a>
-                            <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
-                            <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
-                            <p class="fsize11 fw500 dark_200"><em>({{ campaign.status }})</em></p>
-                            <div style="min-height: 40px; margin: 4px 0;" class="img_box">
-                                <img src="assets/images/email_campaign_graph.png"/>
+                            <div @click="setupWorkflow(campaign.id)">
+                                <a href="javascript:void(0)" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/flashlight-fill.svg"/> </a>
+                                <a href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/flashlight-fill-grey.svg"> </a>
+                                <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
+                                <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
+                                <p class="fsize11 fw500 dark_200"><em>( {{ campaign.status }} )</em></p>
+                                <div style="min-height: 40px; margin: 4px 0;" class="img_box">
+                                    <img src="assets/images/email_campaign_graph.png"/>
+                                </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -245,6 +247,7 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
+                                <input type="hidden" name="automation_type" value="sms" />
                                 <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                 <input type="hidden" name="module_account_id" id="module_account_id"
                                        :value="moduleAccountID">
@@ -278,7 +281,8 @@
                     title: '',
                     description: '',
                     campaign_type: '',
-                    automation_id: ''
+                    automation_id: '',
+                    automation_type: 'sms'
                 },
                 formLabel: 'Create'
             }
@@ -333,28 +337,32 @@
 
                 axios.post(formActionSrc , this.form)
                     .then(response => {
-                        if (response.data.status == 'success') {
-                            if(this.form.automation_id>0){
-                                this.setupAutomation(this.form.automation_id);
-                                return false;
-                            }
-                            this.loading = false;
-                            //this.form = {};
-                            this.form.automation_id ='';
-                            document.querySelector('.js-sms-workflow-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
-                            var elem = this;
-                            setTimeout(function () {
-                                elem.loadPaginatedData();
-                            }, 500);
 
-                            syncContactSelectionSources();
+                        if (response.data.status == 'success') {
+
+                            if(response.data.actionUrl != '') {
+                                window.location.href = response.data.actionUrl;
+                                return false;
+                            } else {
+                                this.loading = false;
+                                //this.form = {};
+                                this.form.automation_id = '';
+                                document.querySelector('.js-sms-workflow-slidebox').click();
+                                this.successMsg = 'Action completed successfully.';
+                                var elem = this;
+                                setTimeout(function () {
+                                    elem.loadPaginatedData();
+                                }, 500);
+
+                                syncContactSelectionSources();
+                            }
                         }
                         else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate') {
                                 alert('Error: Campaign already exists.');
-                            }
-                            else {
+                            } else if (response.data.type == 'emptyid') {
+                                alert('Error: Something went wrong, please refresh the page and try again.');
+                            } else {
                                 alert('Error: Something went wrong.');
                             }
                         }
@@ -363,12 +371,13 @@
                         this.loading = false;
                         console.log(error);
                         //error.response.data
-                        alert('All form fields are required');
+                        //alert('All form fields are required');
                     });
             },
             loadPaginatedData : function(){
                 axios.get('/admin/modules/emails/sms?page='+this.current_page)
                     .then(response => {
+                        console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -393,7 +402,9 @@
                         _token: this.csrf_token()
                     })
                         .then(response => {
+                            console.log(response.data);
                             if(response.data.status == 'success'){
+                                this.successMsg = 'Action completed successfully.';
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
