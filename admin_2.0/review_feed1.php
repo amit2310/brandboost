@@ -84,7 +84,7 @@
     		
      		<div class="row mb65">
      		<div class="col-md-12 text-center">
-     			<img class="mt40" style="max-width: 250px; " src="assets/images/review_illustration.png">
+     			<img class="mt40" style="max-width: 240px; " src="assets/images/review_feed_illustration.svg">
      			<h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
      			<h3 class="htxt_regular_14 dark_200 mt20 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
      			<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Monitor reviews site</button>

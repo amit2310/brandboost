@@ -98,7 +98,7 @@
 
 
                 <div class="row">
-                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id">
+                    <div class="col-md-3" v-for="campaign in campaigns" :key="campaign.id" style="cursor:pointer;">
                         <div class="card p0 pt30 min_h_275 text-center animate_top">
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
@@ -130,7 +130,6 @@
                                 </ul>
                             </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -343,27 +342,29 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            if(this.form.automation_id>0){
-                                this.setupAutomation(this.form.automation_id);
+                            if(response.data.actionUrl != '') {
+                                window.location.href = response.data.actionUrl;
                                 return false;
-                            }
-                            this.loading = false;
-                            //this.form = {};
-                            this.form.automation_id ='';
-                            document.querySelector('.js-email-workflow-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
-                            var elem = this;
-                            setTimeout(function () {
-                                elem.loadPaginatedData();
-                            }, 500);
+                            } else {
+                                this.loading = false;
+                                //this.form = {};
+                                this.form.automation_id = '';
+                                document.querySelector('.js-email-workflow-slidebox').click();
+                                this.successMsg = 'Action completed successfully.';
+                                var elem = this;
+                                setTimeout(function () {
+                                    elem.loadPaginatedData();
+                                }, 500);
 
-                            syncContactSelectionSources();
+                                syncContactSelectionSources();
+                            }
                         }
                         else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate') {
                                 alert('Error: Campaign already exists.');
-                            }
-                            else {
+                            } else if (response.data.type == 'emptyid') {
+                                alert('Error: Something went wrong, please refresh the page and try again.');
+                            } else {
                                 alert('Error: Something went wrong.');
                             }
                         }

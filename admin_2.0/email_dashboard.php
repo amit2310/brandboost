@@ -155,8 +155,8 @@ in next 3 days.</p>
      			<!--<img class="mt-5" src="assets/images/email_graph.png"/>-->
      			
      			
-     			 <div id="chartSubscriptions" style="margin-left: -20px">
-					<apexchart type=bar height=280 :options="chartOptions" :series="series" />
+     			 <div id="chartSubscriptions" style="margin-left: -20px; margin-top: 50px;">
+					<apexchart type=bar height=220 :options="chartOptions" :series="series" />
 				  </div>
      			
      		</div>
@@ -238,7 +238,7 @@ $(document).ready(function(){
       },
       data: {
         series: [{
-          data: [21, 22, 10, 28, 16, 21, 13, 30, 21, 22, 10, 28, 16, /*21, 13, 30, 16, 21, 13, 30, 21*/]
+          data: [21, 22, 10, 28, 16, 21, 13, 30, 21, 22, 10, 28, 16, 21, 13, 30, 16, 21, 13, 30, 21]
         }],
         chartOptions: {
           chart: {
@@ -258,8 +258,8 @@ $(document).ready(function(){
           },
 			
 			grid: {
-			  borderColor: '#ddd',
-			  strokeDashArray: 5,
+			  borderColor: '#eee',
+			  strokeDashArray: 2,
 			},
 			
           colors: colors,
@@ -327,7 +327,7 @@ $(document).ready(function(){
             },
             stroke: {
                 curve: 'straight',
-				 width: 4
+				 width: 2
             },
 			
            
@@ -336,8 +336,8 @@ $(document).ready(function(){
                     colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
                     opacity: 0.1
                 },
-				borderColor: '#ddd',
-			    strokeDashArray: 5
+				borderColor: '#eee',
+			    strokeDashArray: 3
             },
             xaxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],

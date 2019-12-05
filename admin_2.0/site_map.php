@@ -18,7 +18,7 @@
 	.sitemap ul{margin: 0; padding: 0;}
 	.sitemap ul li{margin: 0; padding: 0; list-style: none;}
 	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left top no-repeat}
-	.sitemap ul li a:hover{font-weight: 600}
+	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
 	</style>
 
 </head>
@@ -121,7 +121,14 @@
      		<ul>
      			<li><a target="_blank" href="review_dashboard.php">Review Dashboard</a></li>
      			<li><a target="_blank" href="review_feed1.php">Review Feed 1</a></li>
-     			<li><a target="_blank" href="review_feed2.php">Review Feed 2 working...</a></li>
+     			<li><a target="_blank" href="review_feed2.php">Review Feed 2 </a></li>
+     			<li><a target="_blank" href="review_campaign1.php">Review Camapign 1 </a></li>
+     			<li><a target="_blank" href="review_campaign2.php">Review Camapign 2 </a></li>
+     			<li><a target="_blank" href="review_campaign3.php">Review Camapign 3 </a></li>
+     			<li><a target="_blank" href="review_request1.php">Review Requests 1 </a></li>
+     			<li><a target="_blank" href="review_request2.php">Review Requests 2 </a></li>
+     			<li><a target="_blank" href="review_request3.php">Review Requests 3 </a></li>
+     			
      		</ul>
      		</div>
      		
