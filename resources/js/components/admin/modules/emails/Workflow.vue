@@ -112,23 +112,23 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteCampaign(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
-                            <div @click="setupWorkflow(campaign.id)">
-                                <a href="javascript:void(0)" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/flashlight-fill.svg"/> </a>
-                                <a href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/flashlight-fill-grey.svg"> </a>
-                                <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
-                                <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
-                                <p class="fsize11 fw500 dark_200"><em>({{ campaign.status }})</em></p>
-                                <div style="min-height: 40px; margin: 4px 0;" class="img_box">
-                                    <img src="assets/images/email_campaign_graph.png"/>
-                                </div>
+                            <div @click="setupWorkflow(campaign.id)" style="cursor:pointer;" >
+                            <a href="javascript:void(0)" class="circle-icon-64 bkg_email_000 m0auto" v-if="campaign.status='active'"><img src="assets/images/flashlight-fill.svg"/> </a>
+                            <a href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto" v-else><img src="assets/images/flashlight-fill-grey.svg"> </a>
+                            <h3 class="htxt_bold_16 dark_700 mb-1 mt-4" :title="capitalizeFirstLetter(campaign.title)">{{setStringLimit(capitalizeFirstLetter(campaign.title), 15)}}</h3>
+                            <!-- <p class="fsize11 fw500 dark_200 text-uppercase">Campaign</p> -->
+                            <p class="fsize11 fw500 dark_200"><em>({{ campaign.status }})</em></p>
+                            <div style="min-height: 40px; margin: 4px 0;" class="img_box">
+                                <img src="assets/images/email_campaign_graph.png"/>
+                            </div>
 
-                                <div class="p15 pt15 btop">
-                                    <ul class="workflow_list">
-                                        <li><a href="javascript:void(0);" @click="setupAutomation(campaign.id)"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.stats.sent_total>999 ? (campaign.stats.sent_total/100)+'k' : campaign.stats.sent_total}}</a></li>
-                                        <li><a href="javascript:void(0)"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.stats.open_rate}}%</a></li>
-                                        <li><a href="javascript:void(0)"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.stats.click_rate}}%</a></li>
-                                    </ul>
-                                </div>
+                            <div class="p15 pt15 btop">
+                                <ul class="workflow_list">
+                                    <li><a href="javascript:void(0);" @click="setupAutomation(campaign.id)"><span><img src="assets/images/send-plane-line.svg"></span> {{campaign.stats.sent_total>999 ? (campaign.stats.sent_total/100)+'k' : campaign.stats.sent_total}}</a></li>
+                                    <li><a href="javascript:void(0)"><span><img src="assets/images/mail-open-line.svg"></span> {{campaign.stats.open_rate}}%</a></li>
+                                    <li><a href="javascript:void(0)"><span><img src="assets/images/cursor-line.svg"></span> {{campaign.stats.click_rate}}%</a></li>
+                                </ul>
+                            </div>
                             </div>
                         </div>
                     </div>

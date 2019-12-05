@@ -22,6 +22,9 @@
                 <p class="dark_800 htxt_bold_14 mb25"><span class="dark_200">Wait for</span> <span :id="`wf_event_${oEvent.id}`">{{delayTime}}</span></p>
             </div>
 
+            <!--<div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
+            <add-more-button :oEvent="oEvent" :wfData="wfData" eventType="followup" @addAction="initAction"></add-more-button>-->
+
             <div class="col-md-12"><img src="/assets/images/wfline_single.png" style="height:24px;"/></div>
             <div class="workflow_card" v-if="campaign.campaign_type.toLowerCase() == 'email'">
                 <div class="edit_delete">

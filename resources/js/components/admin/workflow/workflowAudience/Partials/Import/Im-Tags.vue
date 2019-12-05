@@ -3,7 +3,7 @@
         <loading :isLoading="loading"></loading>
         <div class="p10">
             <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="backtoOption"><span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button>
-            <h3 style="float: right;">Add from Tags <span>{{selected_tags.length}}</span></h3>
+            <h3 style="float: right;">Add from Tags <span id="includeContactTag">{{selected_tags.length}}</span></h3>
         </div>
 
         <div class="row">

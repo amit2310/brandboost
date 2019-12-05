@@ -3,7 +3,7 @@
         <loading :isLoading="loading"></loading>
         <div class="p10">
             <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="backtoOption"><span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button>
-            <h3 style="float: right;">Exclude from Segments <span>{{selected_segments.length}}</span></h3>
+            <h3 style="float: right;">Exclude from Segments <span id="excludedContactSegment">{{selected_segments.length}}</span></h3>
         </div>
 
         <div class="row">
@@ -38,7 +38,7 @@
                                 <td>
                                     {{ segment.segment_name }}
                                 </td>
-                                <td class="text-left">{{ segment.subscribersData.total }}</td>
+                                <td class="text-left">{{ segment.subscribersData.length }}</td>
                                 <td class="text-right">
                                     <div class="media-left text-right pull-right">
                                         <div class=""><a href="#" class="txt_grey">{{ displayDateFormat('m d, Y', segment.created) }}

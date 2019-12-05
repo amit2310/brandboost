@@ -275,7 +275,7 @@
     /* Customized Functions */
     $(document).ready(function () {
         $(document).on('click', '.js-contact-slidebox', function(){
-            $('[name=tags]').tagify();
+            /*$('[name=tags]').tagify();*/
             $(".box").animate({
                 //width: "toggle"
             });

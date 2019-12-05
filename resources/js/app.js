@@ -47,4 +47,3 @@ const app = new Vue({
         pageColor: '',
     },
 }).$mount('#masterContainer2')
-0

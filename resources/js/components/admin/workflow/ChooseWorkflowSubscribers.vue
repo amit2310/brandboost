@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading :isLoading="loading"></loading>
         <div class="row">
             <div class="col-md-6 d-flex">
                 <div class="card col animate_top p0">
@@ -67,6 +68,7 @@
             :module-unit-id="moduleUnitId"
             :showHeader="false"
             @navPage ="navigatePagination"
+            :key="refreshKey"
         ></workflow-subscribers>
 
         <div class="row mt20">
@@ -79,12 +81,13 @@
         <!--Include Popup-->
         <div class="box includeWorkflowAudiencePopup" style="width: 80%; display: none;">
             <div style="width: 80%;overflow: hidden;height: 100%;">
-                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon includeWorkflowAudience"><i><img
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon includeWorkflowAudience" @click="refreshalllists"><i><img
                     src="/assets/images/cross.svg"></i></a>
                     <workflow-audience-include
                         :moduleName="moduleName"
                         :moduleUnitId="moduleUnitId"
                         @loadFreshSelectionData="refreshSelectionData"
+                        @syncWorkflowAudience="syncWorkflowAudience"
                     ></workflow-audience-include>
                 </div>
             </div>
@@ -93,12 +96,13 @@
         <!--Exclude Popup-->
         <div class="box excludeWorkflowAudiencePopup" style="width: 80%; display: none;">
             <div style="width: 80%;overflow: hidden;height: 100%;">
-                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon excludeWorkflowAudience"><i><img
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon excludeWorkflowAudience" @click="refreshalllists"><i><img
                     src="/assets/images/cross.svg"></i></a>
                     <workflow-audience-exclude
                         :moduleName="moduleName"
                         :moduleUnitId="moduleUnitId"
                         @loadFreshSelectionData="refreshSelectionData"
+                        @syncWorkflowAudience="syncWorkflowAudience"
                     ></workflow-audience-exclude>
                 </div>
             </div>
@@ -128,6 +132,7 @@
                 activeCount: 0,
                 archiveCount: 0,
                 loading: true,
+                refreshKey: '1'
                 //alert(subscribersData)
             }
         },
@@ -141,11 +146,14 @@
                         this.excludeButtons = this.contactSelectionData.sExcludButtons;
                         this.subscribers = this.contactSelectionData.oCampaignSubscribers;
                         this.allData = this.contactSelectionData.oCampaignSubscribersAll;
+                        this.loading = false;
+                        this.refreshalllists();
 
                     });
             },
             refreshSelectionData: function(){
                 this.loadPaginatedData();
+
             },
             getWorkflowSubscribers: function(){
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', {moduleName: this.moduleName, moduleUnitID:this.moduleUnitId})
@@ -154,6 +162,15 @@
                     });
 
             },
+            syncWorkflowAudience : function(){
+                axios.post('/admin/workflow/syncWorkflowAudience', {
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    _token: this.csrf_token()
+                }).then(response => {
+
+                });
+            },
             navigatePagination: function(p){
                 this.loading=true;
                 this.current_page = p;
@@ -161,12 +178,17 @@
             },
             backToWorkflowGrid: function(){
                 this.$emit("displayTreeInterface")
+            },
+            refreshalllists: function(){
+                let randomNo = new Date().getTime() + Math.random();
+                this.refreshKey = randomNo;
             }
         },
 
         mounted() {
             this.getWorkflowSubscribers();
             this.loadPaginatedData();
+
 
         }
 
