@@ -14,7 +14,7 @@
     <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a> 
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
     <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a> 
-    <a href="#SMSMarketing" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a> 
+    <a href="#SMSMarketing" class="nav-link sms" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a> 
     <a href="#Referrals" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <img src="assets/images/share-fill.svg"/> </a> 
     <a href="#SiteWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <img src="assets/images/rocket-2-fill.svg"/> </a>
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
@@ -254,7 +254,7 @@
       <!--************
        SMS Marketing
      *************-->
-      <div id="SMSMarketing" class="main-icon-menu-pane">
+      <div id="SMSMarketing" class="main-icon-menu-pane sms">
         <div class="title-box">
           <h6 class="menu-title">SMS Marketing</h6>
         </div>

@@ -18,7 +18,7 @@
 	.sitemap ul{margin: 0; padding: 0;}
 	.sitemap ul li{margin: 0; padding: 0; list-style: none;}
 	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left top no-repeat}
-	.sitemap ul li a:hover{font-weight: 600}
+	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
 	</style>
 
 </head>
