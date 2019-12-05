@@ -65,6 +65,7 @@
                 <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a>
                 <a href="#SMSMarketing" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a>
                 <a href="#Referrals" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <img src="assets/images/share-fill.svg"/> </a>
+                <a href="#Nps" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Nps"> <img src="assets/images/share-fill.svg"/> </a>
                 <a href="#SiteWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <img src="assets/images/rocket-2-fill.svg"/> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
                 <a href="#Feedback" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Feedback"> <img src="assets/images/chat-smile-3-fill.svg"/> </a>
@@ -267,14 +268,12 @@
                     <h6 class="menu-title">SMS Marketing</h6>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url('#/modules/sms/dashboard') }}"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/broadcast') }}"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">SMS Campaigns</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/subscribers') }}"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/workflow') }}"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
                 </ul>
                 <hr>
                 <div class="title-box-mid">
@@ -297,14 +296,23 @@
                     <h6 class="menu-title">Referrals</h6>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/referral/overview') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/referral/') }}"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Referral Programs</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url('#/modules/referral/') }}"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Advocates</span></a></li>
+                </ul>
+            </div>
+
+            <!--************
+             Nps
+           *************-->
+            <div id="Nps" class="main-icon-menu-pane">
+                <div class="title-box">
+                    <h6 class="menu-title">Nps</h6>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/nps/overview') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/nps/') }}"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Campaigns</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url('#/modules/nps/') }}"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Score/Feedbacks</span></a></li>
                 </ul>
             </div>
 

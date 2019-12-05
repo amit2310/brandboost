@@ -266,7 +266,7 @@ class Emails extends Controller {
         $aData = array(
             'title' => 'SMS Automations',
             'pagename' => $breadcrumb,
-            'setupAutomation' => $aBreadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'oAutomations' => $oAutomations->items(),
             'allData' => $oAutomations,
             'bActiveSubsription' => $bActiveSubsription,
