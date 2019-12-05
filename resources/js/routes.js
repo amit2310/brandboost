@@ -137,7 +137,7 @@ const routes = [
 
     /* Nps Survey Module */
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
-    // { path: '/modules/nps/', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
+    { path: '/modules/nps/', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/score/:hashKey', component: NpsScore, meta: { title: 'NPS Survey Score'} },
 
     /*Workflow Module*/

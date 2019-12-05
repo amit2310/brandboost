@@ -228,8 +228,8 @@
                 <div class="modal-content">
                     <form method="post" name="updateBroadcastData" class="form-horizontal" id="updateBroadcastData" action="javascript:void();">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h5 class="modal-title">Update Brand Boost Broadcast</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -440,8 +440,9 @@
             var automationID = $(this).attr('broadcast_id');
             $.ajax({
                 url: "/admin/broadcast/clonBroadcastCampaign",
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                 type: "POST",
-                data: {_token: '{{ csrf_token() }}', automation_id: automationID},
+                data: {automation_id: automationID},
                 dataType: "json",
                 success: function (data) {
                     if (data.status == 'success') {
@@ -465,13 +466,15 @@
                 $('.overlaynew').show();
                 $.ajax({
                     url: "/admin/broadcast/updateBroadcastClone",
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     type: "POST",
-                    data: {_token: '{{ csrf_token() }}', edit_broadcastId: broadcastId, campaign_name: campaignName, description: description},
+                    data: {edit_broadcastId: broadcastId, campaign_name: campaignName, description: description, broadcast_type: 'SMS'},
                     dataType: "json",
                     success: function (data) {
                         if (data.status == 'success') {
                             $('.overlaynew').hide();
                             window.location.href = "#/broadcast/edit/" + broadcastId;
+                            return false;
                         } else {
                             $('.overlaynew').hide();
                             alertMessage('Error: Some thing wrong!');
