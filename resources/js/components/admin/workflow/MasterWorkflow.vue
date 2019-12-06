@@ -23,7 +23,9 @@
                         <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="/assets/images/settings-3-fill.svg"/></button>
                         <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="/assets/images/play-fill.svg"/></button>
                         <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="/assets/images/checkbox-circle-fill.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img src="/assets/images/blue-plus.svg"/></span></button>
+
+                        <button v-if="themeColor == 'blue'" class="btn btn-md light_000 bkg_blue_200 slidebox">Main Action <span><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <button v-else class="btn btn-md light_000 bkg_green_200 slidebox" :class="themeColor">Main Action <span><img src="/assets/images/sms_add.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -454,7 +456,8 @@
               currentDelayUnit: '',
               currentEventId: '',
               isUpdatedTimer: false,
-              displayContactSelectionInterface: false
+              displayContactSelectionInterface: false,
+              themeColor: 'blue',
 
           }
         },
@@ -473,6 +476,7 @@
                 this.moduleName = this.workflowData.moduleName;
                 this.moduleUnitID = this.workflowData.moduleUnitID;
                 this.oEvents = this.workflowData.oEvents;
+                this.themeColor = this.workflowData.automation_type == 'sms' ? 'green' : 'blue';
                 this.getWorkflowSubscribers();
                 let elem = this;
                 setTimeout(function(){

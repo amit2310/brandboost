@@ -285,6 +285,19 @@ function helloTest(){
     }
 
 </script>
+<script>
+    $(document).ready(function(){
+        $("#loadSMSTheme").click(function(){
+            document.querySelector("body").id="SMSSection";
+        });
+        $("#loadEmailTheme").click(function(){
+            document.querySelector("body").id="EmailSection";
+        });
+        $("#loadContactTheme").click(function(){
+            document.querySelector("body").id="PeopleSection";
+        });
+    });
+</script>
 
 </body>
 </html>

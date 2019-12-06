@@ -211,7 +211,7 @@
                                 <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                 <input type="hidden" name="module_account_id" id="module_account_id"
                                        :value="moduleAccountID">
-                                <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
+                                <button class="btn btn-lg bkg_sms_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
                                 <a class="dark_200 fsize16 fw400 ml20" href="#">Close</a> </div>
                         </div>
                     </div>
@@ -282,6 +282,7 @@
             }
         },
         mounted() {
+            document.querySelector("body").id="SMSSection";
             this.loadPaginatedData();
         },
         methods: {

@@ -380,19 +380,31 @@ class Templates extends Controller
         $templateType = strip_tags($request->templateType);
         $templateDescription = (!empty($request->templateDescription) ? strip_tags($request->templateDescription) : '');
         $dateTime = date("Y-m-d H:i:s");
+
+
         $aData = array(
             'category_id' => $category,
             'template_name' => $templateName,
             'template_type' => $templateType,
             'template_description' => $templateDescription
         );
+        $originalTemplateName = '';
+        if ($templateID > 0) {
+            $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
+            if (!empty($oTemplate)) {
+                $originalTemplateName = $oTemplate->template_name;
+            }
 
-        $bAlreadyExists = $mTemplates->checkIfTemplateNameExists($templateName, $userID);
-        if ($bAlreadyExists == true) {
-            $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Template name already exists');
-            echo json_encode($response);
-            exit;
         }
+        if ($templateName != $originalTemplateName) {
+            $bAlreadyExists = $mTemplates->checkIfTemplateNameExists($templateName, $userID);
+            if ($bAlreadyExists == true) {
+                $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Template name already exists');
+                echo json_encode($response);
+                exit;
+            }
+        }
+
 
         if ($userRole != '1') {
             $bUpdated = $mTemplates->updateCommonTemplate($aData, $templateID, $userID);
@@ -518,15 +530,24 @@ class Templates extends Controller
         exit;
 
         */
+        if ($campaignType == 'email') {
+            $aBreadcrumb = [
+                'Home' => '#/',
+                'Email' => '#/modules/emails/dashboard',
+                'Templates' => ''
+            ];
+        }
+        if ($campaignType == 'sms') {
+            $aBreadcrumb = [
+                'Home' => '#/',
+                'SMS' => '#/modules/sms/dashboard',
+                'Templates' => ''
+            ];
+        }
 
-        $aBreadcrumb = [
-            'Home' => '#/',
-            'Email' => '#/modules/emails/dashboard',
-            'Templates' => ''
-        ];
         $oCategories = $mTemplates->getCommonTemplateCategories();
-        if(!empty($oCategories)){
-            foreach($oCategories as $oCategory){
+        if (!empty($oCategories)) {
+            foreach ($oCategories as $oCategory) {
                 $categoryID = $oCategory->id;
                 $totalTemplates = $mTemplates->countCategoryTemplates($categoryID);
                 $oCategory->totalCount = $totalTemplates;
