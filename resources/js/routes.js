@@ -10,6 +10,7 @@ import VueCsvImport from './components/admin/contact/VueCsvImport.vue';
 import AppImport from './components/admin/contact/App.vue';
 import PeopleContactsListMapping from './components/admin/contact/PeopleContactsListMapping.vue';
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
+import ListSMSTemplates from './components/admin/templates/ListSMSTemplates.vue';
 import TemplateMaster from './components/admin/templates/TemplateMaster';
 import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
@@ -49,6 +50,7 @@ import NpsScore from './components/admin/modules/nps/Score';
 
 import AutomationCampaigns from './components/admin/modules/emails/Workflow';
 import WorkflowSetup from './components/admin/modules/emails/WorkflowSetup';
+import SMSWorkflowSetup from './components/admin/modules/sms/WorkflowSetup';
 //import WorkflowSetup from './components/admin/workflow/MasterWorkflow';
 
 /*Broadcast Setup*/
@@ -141,6 +143,8 @@ const routes = [
     { path: '/modules/sms/broadcast/setup/:id/3', component: smsBroadcastStep3, props : {title : 'Sms Campaign', type : 'sms' } },
     { path: '/modules/sms/broadcast/setup/:id/4', component: smsBroadcastStep4, props : {title : 'Sms Campaign', type : 'sms' } },
     { path: '/modules/sms/broadcast/setup/:id/5', component: smsBroadcastStep5, props : {title : 'Sms Campaign', type : 'sms' } },
+    { path: '/modules/sms/templates', component: ListSMSTemplates, props : {title : 'SMS Templates', type : 'sms' } },
+    { path: '/modules/sms/workflow/setup/:id', component: SMSWorkflowSetup, meta: { title: 'Workflow Setup'} },
 
     /*Referral Module*/
     { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },

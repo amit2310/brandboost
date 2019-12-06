@@ -8,8 +8,8 @@
                         <h3 class="htxt_medium_24 dark_700">SMS Workflows</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="/assets/images/emailfilter.svg"/></button>
-                        <button class="btn btn-md bkg_email_300 light_000 js-sms-workflow-slidebox"> New workflow <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <button class="mr15 btn btn-md bkg_light_000 sms_400">Filters &nbsp; &nbsp; <img src="/assets/images/sms_filter.svg"/></button>
+                        <button class="btn btn-md bkg_sms_400 light_000 js-sms-workflow-slidebox"> New workflow <span><img src="/assets/images/sms_add.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -251,7 +251,7 @@
                                 <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                 <input type="hidden" name="module_account_id" id="module_account_id"
                                        :value="moduleAccountID">
-                                <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
+                                <button class="btn btn-lg bkg_sms_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
                                 <a class="dark_200 fsize16 fw400 ml20 js-sms-workflow-slidebox" href="javascript:void(0);">Close</a> </div>
                         </div>
                     </div>
@@ -288,11 +288,12 @@
             }
         },
         mounted() {
+            document.querySelector("body").id="SMSSection";
             this.loadPaginatedData();
         },
         methods: {
             setupWorkflow: function(id){
-                window.location.href='#/modules/emails/workflow/setup/'+id;
+                window.location.href='#/modules/sms/workflow/setup/'+id;
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){

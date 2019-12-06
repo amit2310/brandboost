@@ -54,7 +54,7 @@
             <nav class="nav">
                 <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
                 <a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a>
-                <a href="#people" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a>
+                <a href="#people" id="loadContactTheme" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a>
                 <a href="#live_messanger" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a>
                 <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
@@ -62,8 +62,8 @@
                 <a href="#ReviewSystem" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a>
                 <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-                <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a>
-                <a href="#SMSMarketing" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a>
+                <a href="#EmailMarketing" id="loadEmailTheme" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a>
+                <a href="#SMSMarketing" id="loadSMSTheme" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a>
                 <a href="#Referrals" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <img src="assets/images/share-fill.svg"/> </a>
                 <a href="#Nps" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Nps"> <img src="assets/images/share-fill.svg"/> </a>
                 <a href="#SiteWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <img src="assets/images/rocket-2-fill.svg"/> </a>
@@ -270,6 +270,7 @@
                 <ul class="nav">
                     <li class="nav-item"><a class="nav-link active" href="{{ url('#/modules/sms/dashboard') }}"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/broadcast') }}"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">SMS Campaigns</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/templates') }}"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">SMS Templates</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/subscribers') }}"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/sms/workflow') }}"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="jasvascript:void(0);"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>

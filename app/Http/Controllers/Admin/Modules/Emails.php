@@ -198,12 +198,25 @@ class Emails extends Controller {
         $oDraftTemplates = $mTemplates->getCommonDraftTemplates($userID, '');
         $oCategories = $mTemplates->getCommonTemplateCategories();
         $type = ($automationType == 'email') ? 'emails' : 'sms';
-        $aBreadcrumb = array(
-            'Home' => '#/',
-            'Email' => '#/modules/'.$type.'/dashboard',
-            'Workflow'=> '#/modules/'.$type.'/workflow',
-            'Setup' => ''
-        );
+
+        if($type == 'emails'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Email' => '#/modules/'.$type.'/dashboard',
+                'Workflow'=> '#/modules/'.$type.'/workflow',
+                'Setup' => ''
+            );
+        }
+
+        if($type == 'sms'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'SMS' => '#/modules/'.$type.'/dashboard',
+                'Workflow'=> '#/modules/'.$type.'/workflow',
+                'Setup' => ''
+            );
+        }
+
 
 
         $pageData = array(
