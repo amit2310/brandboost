@@ -341,12 +341,21 @@ class Brandboost extends Controller
      */
     public function reviewRequest(Request $request)
     {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
         $param = $request->type;
+        $moduleName = 'brandboost';
+
+        //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
 
-        $oRequests = $mBrandboost->getReviewRequest();
-        //pre($oRequests);die;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            ucwords($param).' Review Requests' => '#/brandboost/review_request/'.$param
+        );
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -355,12 +364,15 @@ class Brandboost extends Controller
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Review Requests" class="sidebar-control active hidden-xs ">Review Requests</a></li>
 			</ul>';
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+
+        $oRequests = $mBrandboost->getReviewRequest();
+        //pre($oRequests);die;
+
         $count = 0;
-        if (!empty($oRequests)) {
+        if (!empty($oRequests->items())) {
             $oReqOnsite = array();
             $oReqOffsite = array();
-            foreach ($oRequests as $data2) {
+            foreach ($oRequests->items() as $data2) {
                 if ($data2->review_type == 'onsite') {
                     $oReqOnsite[] = $data2;
                 } else if ($data2->review_type == 'offsite') {
@@ -375,7 +387,7 @@ class Brandboost extends Controller
             } else if ($param == 'offsite') {
                 $oData = $oReqOffsite;
             } else {
-                $oData = $oRequests;
+                $oData = $oRequests->items();
             }
 
             $count = count($oData);
@@ -383,13 +395,15 @@ class Brandboost extends Controller
 
 
         $aData = array(
-            'oRequest' => $oRequests,
-            'title' => 'Review Requests',
-            'pagename' => $breadcrumb,
+            'title' => 'Brand Boost Review Requests',
+            'breadcrumb' => $aBreadcrumb,
             'bActiveSubsription' => $bActiveSubsription,
             'param' => $param,
+            'allData' => $oRequests,
+            'oRequest' => $oRequests->items(),
             'totalCount' => $count,
-            'oFilteredRequests' => $oData
+            'oFilteredRequests' => $oData,
+            'moduleName' => $moduleName
         );
 
 
@@ -3072,7 +3086,7 @@ class Brandboost extends Controller
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/widgets/' . $widgetID) . '">' . $oWidgets[0]->widget_title . '</a></li>
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-			<li><a class="sidebar-control hidden-xs">Statistics</a></li>    
+			<li><a class="sidebar-control hidden-xs">Statistics</a></li>
 			</ul>';
 
         $aData = array(
