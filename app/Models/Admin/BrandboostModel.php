@@ -210,10 +210,12 @@ class BrandboostModel extends Model {
 			->when((!empty($type)), function ($query) use ($type) {
 				return $query->where('tbl_tracking_log_email_sms.type', $type);
 			}, function ($query) {
-				return $query->where('tbl_tracking_log_email_sms.type', 'email')
-						->orWhere('tbl_tracking_log_email_sms.type', 'sms');
+				//return $query->where('tbl_tracking_log_email_sms.type', 'email')
+						//->orWhere('tbl_tracking_log_email_sms.type', 'sms');
 			})
-			->get();
+			//->get();
+            ->paginate(10);
+
         return $oData;
     }
 
@@ -1276,8 +1278,8 @@ class BrandboostModel extends Model {
                                         <li><a href="javascript:void(0);" class="deleteCampaign" brandID="' . $data->id . '"><i class="icon-file-text2"></i> Delete</a></li>
                                         <li><a href="javascript:void(0);" class="viewECode" brandID="' . $data->id . '"><i class="icon-file-locked"></i> Get Embedded Code</a></li>
                                         <li><a href="' . base_url('admin/brandboost/stats/onsite/' . $data->id . '?t=contact') . '" target="_blank"><i class="icon-gear"></i> Contacts</a></li>
-                                        <li><a href="http://pleasereviewmehere.com/campaign/' . strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id . '" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>    
-                                            
+                                        <li><a href="http://pleasereviewmehere.com/campaign/' . strtolower(str_replace(" ", "-", $data->brand_title)) . '-' . $data->id . '" target="_blank"><i class="icon-menu"></i>Campaign Page</a></li>
+
                                     </ul>
                                 </li>
                             </ul>
@@ -1359,11 +1361,11 @@ class BrandboostModel extends Model {
                       </div>'; */
                 }
                 $output .= '</div>
-                    
-                    
-                    
+
+
+
                 </td>
-                
+
                 <td><span class="ratingBox" style="display: block">';
                 $starInt = 1;
                 for ($i = 1; $i <= 5; $i++) {
@@ -1379,9 +1381,9 @@ class BrandboostModel extends Model {
 
 
                 $output .= '</td>
-                
+
                 <td><div class="text-semibold">' . date('F d, Y', strtotime($oReview->created)) . '</div><div class="text-muted text-size-small">' . date('h:i A', strtotime($oReview->created)) . ' (' . timeAgo($oReview->created) . ')</div></td>
-                
+
                 <td style="text-align: center;">';
 
                 if ($oReview->status == 0) {
@@ -1393,7 +1395,7 @@ class BrandboostModel extends Model {
                 }
 
                 $output .= '</td>
-                
+
                 <td class="text-center">
                     <ul class="icons-list">';
                 if ($inc > 5) {
@@ -1421,13 +1423,13 @@ class BrandboostModel extends Model {
                     $output .= '<li><a href="javascript:void(0);" class="editVideoReview" reviewid="' . $oReview->id . '"><i class="icon-gear"></i> Edit</a></li>';
                 }
                 $output .= '<li><a href="javascript:void(0);" class="deleteReview" reviewid="' . $oReview->id . '" ><i class="icon-trash"></i> Delete</a></li>
-                                
+
                             </ul>
                         </li>
                     </ul>
                 </td>
-                
-                
+
+
             </tr>';
                 $inc++;
             }
@@ -1466,7 +1468,7 @@ class BrandboostModel extends Model {
                 $userName = $getUserDetail->firstname . ' ' . $getUserDetail->lastname;
 
                 $output .= '<tr>
-            
+
             <td style="white-space: normal;"><span class="text-default text-semibold">' . setStringLimit($oComment->content) . '</span>
             <div class="text-muted text-size-small">' . $oComment->brand_title . '</div></td>
             <td >' . $userName . '</td>
@@ -1482,7 +1484,7 @@ class BrandboostModel extends Model {
                 }
 
                 $output .= '</td>
-            
+
             <td class="text-center">
                 <ul class="icons-list">';
                 if ($inc > 5) {
@@ -1504,9 +1506,9 @@ class BrandboostModel extends Model {
 
 
                 $output .= '<li><a href="javascript:void(0);" class="editComment" commentid="' . $oComment->id . '"><i class="icon-gear"></i> Edit</a></li>
-                            
+
                             <li><a href="javascript:void(0);" class="deleteComment" commentid="' . $oComment->id . '"><i class="icon-trash"></i> Delete</a></li>
-                            
+
                         </ul>
                     </li>
                 </ul>
@@ -1576,7 +1578,7 @@ class BrandboostModel extends Model {
                     }
 
                     $output .= '<li><a href="javascript:void(0);" class="editSubscriber" subscriberid="' . $data->id . '"><i class="icon-gear"></i> Edit</a></li>
-                                    
+
                                     <li><a class="deleteSubscriber" href="javascript:void(0);" subscriberid="' . $data->id . '"><i class="icon-trash"></i> Delete</a></li>';
                 }
                 $output .= '</ul>
