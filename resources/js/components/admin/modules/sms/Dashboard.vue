@@ -4,88 +4,87 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
+                        <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">SMS Dashboard</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="/assets/images/emailfilter.svg"/></button>
-                        <button class="btn btn-md light_000 bkg_email_300 slidebox">Create new <span style="opacity: 0.3"><img
-                            src="/assets/images/blue-plus.svg"/></span></button>
+                        <button class="mr15 btn btn-md bkg_light_000 sms_400">Filters &nbsp; &nbsp; <img src="assets/images/sms_filter.svg"/></button>
+                        <button class="btn btn-md light_000 bkg_sms_400 slidebox" >New campaign &nbsp; &nbsp; <span><img src="assets/images/sms_add.svg"/></span></button>
                     </div>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
-        <!--Content Area-->
+
+        <!--******************
+          Content Area
+         **********************-->
         <div class="content-area">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="card min-h-280">
+                    <div class="col-md-8 d-flex">
+                        <div class="card col">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3 class="htxt_medium_32 dark_700">60.1%</h3>
+                                    <h3 class="htxt_medium_32 dark_700">79.3%</h3>
                                     <p class="grey-sub-headings">YOUR SMS MARKETING IS GOOD</p>
                                     <hr>
-                                    <p class="fsize14 mb30" style="color: #5a6f80;">Your recent sms have low avg. 5%
-                                        bounce rate. We suggest you to send new sms
-                                        in next 3 days.</p>
-                                    <a class="fsize15 email_400" href="#"><img src="/assets/images/emailedit.svg"/>&nbsp;
-                                        Create new sms</a>
+                                    <p class="fsize14 mb30 dark_300" style="max-width: 316px;">Your recent emails have low avg. 9% bounce rate. We suggest you to send new email in next 3 days.</p>
+                                    <button class="btn btn-md bkg_sms_000 sms_400 pr20">Create SMS</button>
                                 </div>
                                 <div class="col-md-6 text-center">
-                                    <img class="" style="max-width: 225px; "
-                                         src="/assets/images/email_dashboard_illustration.png" />
+                                    <img class="" style="max-height: 210px; " src="assets/images/sms_dashboard1.svg"/>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card min-h-280 p0 text-center">
+                    <div class="col-md-4 d-flex">
+                        <div class="card p0 text-center col">
                             <div class="p20 mb10">
-                                <img class="mb20" style="max-width: 130px; margin: 0 auto"
-                                     src="/assets/images/dashboard_graph0.png"/>
-                                <p class="grey-sub-headings mb10">CREDITS BALANCE</p>
-                                <p class="fsize14 mb10" style="color: #5a6f80;">You used 408/450 montly credits</p>
+                                <img class="mb20" style="max-width: 130px; margin: 0 auto" src="/assets/images/dashboard_graph0.png"/>
+                                <!--<div id="credit_chart" style="max-height: 135px;">
+                                    <apexchart type=radialBar height=200 :options="chartOptions3" :series="series" />
+                                </div>-->
+                                <p class="fsize14 mb10 mt20 dark_300">You used 408/450 montly credits</p>
                             </div>
-                            <div class="p15 btop">
-                                <a class="fsize15 fw500 email_400 mt20" href="#">Purchase more credits</a>
+                            <div class="p20 btop">
+                                <a class="fsize14 fw500 sms_400 mt20" href="#">Purchase more credits</a>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-6 d-flex">
                         <div class="card min-h-280 p0 col">
                             <div class="p15 pl40 bbot">
                                 <a class="fsize12 dark_200" href="#">SMS SENT</a>
                             </div>
-                            <div class="p30 pl40">
+                            <div class="p30 pl40 pb0">
                                 <h3 class="htxt_medium_24 dark_700 mb10">51,913</h3>
-                                <p class="fsize14"><span class="green_400">33.87%</span> &nbsp; <span class="dark_400">last month</span>
-                                </p>
-                                <img src="/assets/images/email_graph2.png"/>
+                                <p class="fsize14"><span class="green_400">33.87%</span> &nbsp;  <span class="dark_400">last month</span></p>
+                                <img  src="assets/images/email_graph2.png"/>
+                                <!--<div id="basiclinechart" style="margin-left: -20px">
+                                    <apexchart type=line height=240 :options="chartOptions2" :series="series" />
+                                </div>-->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 d-flex">
-                        <div class="card min-h-280 col">
+                        <div class="card col pb0">
                             <h3 class="htxt_medium_32 dark_700">139</h3>
                             <p class="grey-sub-headings">Subscriptions</p>
-                            <img class="mt-5" src="/assets/images/email_graph.png"/>
+                            <img class="mt-5" src="assets/images/email_graph.png"/>
+                            <!--<div id="chartSubscriptions" style="margin-left: -20px; margin-top: 50px;">
+                                <apexchart type=bar height=220 :options="chartOptions" :series="series" />
+                            </div>-->
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-        <!--Content Area End-->
+        <!--******************
+          Content Area End
+         **********************-->
 
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
