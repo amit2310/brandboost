@@ -493,7 +493,7 @@ class WorkFlow extends Controller {
         if ($moduleName == 'broadcast') {
             //Update in the default variation too
             $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
-            if (!empty($oVariations)) {
+            if ($oVariations->isNotEmpty()) {
                 $campaignID = $oVariations[0]->id;
                 if(!empty($aData)){
                     $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);

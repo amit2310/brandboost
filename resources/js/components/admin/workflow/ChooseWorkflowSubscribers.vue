@@ -73,7 +73,7 @@
 
         <div class="row mt20">
             <!--<div class="col-md-12"><hr class="mb25"></div>-->
-            <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="backToWorkflowGrid"> <span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button></div>
+            <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" id="backtoworkflowgridbutton" @click="backToWorkflowGrid"> <span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button></div>
             <div class="col-6"></div>
         </div>
 

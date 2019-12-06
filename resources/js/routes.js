@@ -58,6 +58,12 @@ import broadcastStep3 from './components/admin/broadcast/Setup3';
 import broadcastStep4 from './components/admin/broadcast/Setup4';
 import broadcastStep5 from './components/admin/broadcast/Setup5';
 
+import smsBroadcastStep1 from './components/admin/broadcast/sms/Setup';
+import smsBroadcastStep2 from './components/admin/broadcast/sms/Setup2';
+import smsBroadcastStep3 from './components/admin/broadcast/sms/Setup3';
+import smsBroadcastStep4 from './components/admin/broadcast/sms/Setup4';
+import smsBroadcastStep5 from './components/admin/broadcast/sms/Setup5';
+
 import Companies from './components/admin/companies/Companies';
 import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
@@ -130,6 +136,11 @@ const routes = [
     /*SMS Module*/
     { path: '/modules/sms/dashboard', component: SmsDashboard, meta: { title: 'SMS Dashboard'} },
     { path: '/modules/sms/broadcast', component: SmsBroadcastCampaigns, meta: { title: 'SMS Campaigns'} },
+    { path: '/modules/sms/broadcast/setup/:id/1', component: smsBroadcastStep1, props : {title : 'Sms Campaign', type : 'sms' } },
+    { path: '/modules/sms/broadcast/setup/:id/2', component: smsBroadcastStep2, props : {title : 'Sms Campaign', type : 'sms' } },
+    { path: '/modules/sms/broadcast/setup/:id/3', component: smsBroadcastStep3, props : {title : 'Sms Campaign', type : 'sms' } },
+    { path: '/modules/sms/broadcast/setup/:id/4', component: smsBroadcastStep4, props : {title : 'Sms Campaign', type : 'sms' } },
+    { path: '/modules/sms/broadcast/setup/:id/5', component: smsBroadcastStep5, props : {title : 'Sms Campaign', type : 'sms' } },
 
     /*Referral Module*/
     { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
