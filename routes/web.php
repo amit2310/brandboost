@@ -529,6 +529,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/broadcast/smsoverview', 'Admin\Broadcast@smsoverview');
     Route::get('admin/broadcast/edit/{id?}', 'Admin\Broadcast@edit');
     Route::get('admin/broadcast/setup/{id?}', 'Admin\Broadcast@setup');
+    Route::get('admin/broadcast/smsSetup/{id?}', 'Admin\Broadcast@smsSetup');
     Route::get('admin/broadcast/setupTargetAudience/{id?}', 'Admin\Broadcast@setupTargetAudience');
     Route::get('admin/broadcast/setupViewSummary/{id?}', 'Admin\Broadcast@setupViewSummary');
     Route::get('admin/broadcast/setupLoadTemplates/{id?}', 'Admin\Broadcast@setupLoadTemplates');

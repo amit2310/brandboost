@@ -496,7 +496,7 @@
 
                 </div>
                 <div class="clearfix"></div>
-
+                <div class="alert alert-success" id="displaysmseditorsuccessmsg" style="display:none;margin:20px;">Changes have been updated successfully!!<a href="javascript:void(0);" onclick="$('#displaysmseditorsuccessmsg').hide();" data-dismiss="alert" class="close">&times;</a> </div>
                 <div class="panel panel-flat mb30">
                     <div class="sms_preview">
                         <div class="phone_sms">
@@ -600,7 +600,12 @@
             }
         });
 
+        $(document).on('change', "#smsWorkflowCampaignBody", function(){
+            $('#updateWorkflowSmsCampaign').click();
+        });
+
         $(document).on('click', '#updateWorkflowSmsCampaign', function (e) {
+            $("#displaysmseditorsuccessmsg").hide();
             e.preventDefault();
             var templateContent = $("#smsWorkflowCampaignBody").val();
             var campaignId = $("#wf_sms_editor_campaign_id").val();
@@ -619,7 +624,8 @@
                 success: function (data) {
                     if (data.status == 'success') {
                         window.parent.$('.overlaynew').hide();
-                        window.parent.displayMessagePopup("success", "Success", "SMS saved successfully!");
+                        //window.parent.displayMessagePopup("success", "Success", "SMS saved successfully!");
+                        $("#displaysmseditorsuccessmsg").show();
                         //window.location.href = window.location.href;
                         //alert('Action was Successful!');
                     }

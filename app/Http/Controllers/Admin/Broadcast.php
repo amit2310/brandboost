@@ -526,6 +526,58 @@ class Broadcast extends Controller {
         //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
     }
 
+    public function smsSetup(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $twillioData = $mBroadcast->getTwillioData($userID);
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/sms");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Sms' => '#/modules/sms/dashboard',
+            'Sms Campaigns' => '#/modules/sms/broadcast',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Sms Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'twillioData' => $twillioData[0],
+            'campaignType' => $campaignType
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
     public function setupTargetAudience(Request $request) {
 
         $aUser = getLoggedUser();
@@ -608,12 +660,24 @@ class Broadcast extends Controller {
         $exportedCount = count($aAudienceCount['excluded']);
 
 
-        $aBreadcrumb = array(
-            'Home' => '#/',
-            'Email' => '#/modules/email/dashboard',
-            'Email Campaigns' => '#/modules/emails/broadcast',
-            'Setup' => '',
-        );
+        if(strtolower($campaignType) == 'email'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Email' => '#/modules/email/dashboard',
+                'Email Campaigns' => '#/modules/emails/broadcast',
+                'Setup' => '',
+            );
+        }
+
+        if(strtolower($campaignType) == 'sms'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Sms' => '#/modules/sms/dashboard',
+                'Sms Campaigns' => '#/modules/sms/broadcast',
+                'Setup' => '',
+            );
+        }
+
 
         $aData = array(
             'title' => 'Email Broadcast',
@@ -658,10 +722,11 @@ class Broadcast extends Controller {
         }
 
         $moduleName = 'broadcast';
+        $campaignType = strtolower($oBroadcast[0]->campaign_type);
 
-        $oDefaultTemplates = $mTemplates->getCommonTemplates('', '', '', strtolower($oBroadcast[0]->campaign_type), true);
+        $oDefaultTemplates = $mTemplates->getCommonTemplates('', '', '', $campaignType, true);
         $oTemplates = $oDefaultTemplates;
-        $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', strtolower($oBroadcast[0]->campaign_type));
+        $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType);
         $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
         $oCategories = $mWorkflow->getWorkflowTemplateCategories($moduleName);
 
@@ -676,13 +741,13 @@ class Broadcast extends Controller {
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Email' => '#/modules/email/dashboard',
-            'Email Campaigns' => '#/modules/emails/broadcast',
+            ucfirst($campaignType) => '#/modules/'.$campaignType.'/dashboard',
+            ucfirst($campaignType).' Campaigns' => '#/modules/'.$campaignType.'/broadcast',
             'Setup' => '',
         );
 
         $aData = array(
-            'title' => 'Email Broadcast',
+            'title' => ucfirst($campaignType).' Broadcast',
             'breadcrumb' => $aBreadcrumb,
             'oBroadcast' => $oBroadcast[0],
             'moduleName' => $moduleName,
@@ -781,12 +846,23 @@ class Broadcast extends Controller {
         $exportedCount = count($aAudienceCount['excluded']);
 
 
-        $aBreadcrumb = array(
-            'Home' => '#/',
-            'Email' => '#/modules/email/dashboard',
-            'Email Campaigns' => '#/modules/emails/broadcast',
-            'Setup' => '',
-        );
+        if(strtolower($campaignType) == 'email'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Email' => '#/modules/email/dashboard',
+                'Email Campaigns' => '#/modules/emails/broadcast',
+                'Setup' => '',
+            );
+        }
+
+        if(strtolower($campaignType) == 'sms'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Sms' => '#/modules/sms/dashboard',
+                'Sms Campaigns' => '#/modules/sms/broadcast',
+                'Setup' => '',
+            );
+        }
 
         $aData = array(
             'title' => 'Email Broadcast',

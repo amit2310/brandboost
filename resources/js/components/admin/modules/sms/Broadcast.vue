@@ -286,7 +286,7 @@
         },
         methods: {
             setupBroadcast: function(id){
-                window.location.href='#/modules/emails/broadcast/setup/'+id+'/1';
+                window.location.href='#/modules/sms/broadcast/setup/'+id+'/1';
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
