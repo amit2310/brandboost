@@ -180,15 +180,33 @@
      			<li><a target="_blank" href="live_messenger.php">Live Messenger</a></li>
      			<li><a target="_blank" href="live_visitors.php">Live Visitors</a></li>
      			<li><a target="_blank" href="live_visitors2.php">Live Visitors 2</a></li>
-     			
-     			
-     			
      			<li><a target="_blank" href="live_chat.php">Live Chat</a></li>
      			<li><a target="_blank" href="live_messanger_configuration.php">Live Messanger Configuration</a></li>
      			<li><a target="_blank" href="live_chat_boat.php">Live Chat Boat</a></li>
      			<li><a target="_blank" href="live_auto_message.php">Live Auto Message</a></li>
-     			
+     		</ul>
+     		</div>
      		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 sms_400">SMS</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="live_dashboard.php">SMS Dashboard</a></li>
+     			<li><a target="_blank" href="sms_campaign1.php">SMS Camapaigns 1</a></li>
+     			<li><a target="_blank" href="sms_campaign2.php">SMS Camapaigns 2</a></li>
+     			<li><a target="_blank" href="sms_subscriber1.php">SMS Subscribers 1</a></li>
+     			<li><a target="_blank" href="sms_subscriber2.php">SMS Subscribers 2</a></li>
+     			<li><a target="_blank" href="sms_subscriber3.php">SMS Subscribers 3</a></li>
+     			<li><a target="_blank" href="sms_subscriber4.php">SMS Subscribers 4</a></li>
+     			
+     			<li><a target="_blank" href="sms_template1.php">SMS Template 1</a></li>
+     			<li><a target="_blank" href="sms_template2.php">SMS Template 2</a></li>
+     			<li><a target="_blank" href="sms_template3.php">SMS Template 3</a></li>
+     			
+     			<li><a target="_blank" href="sms_form1.php">SMS Form 1</a></li>
+     			<li><a target="_blank" href="sms_form2.php">SMS Form 2</a></li>
+     			<li><a target="_blank" href="sms_form3.php">SMS Form 3</a></li>
+     			
      			
      		</ul>
      		</div>
