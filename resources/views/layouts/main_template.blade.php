@@ -94,8 +94,9 @@
         $onsite_active = 'active';
     }
 
+
 @endphp
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -297,7 +298,28 @@ function helloTest(){
             document.querySelector("body").id="PeopleSection";
         });
     });
+
+    function setMenuItemsActive(){
+        $(".main-icon-menu-pane").removeClass("active");
+        $(".nav-link").removeClass("active");
+        var uriPath = window.location.hash;
+        if(uriPath.indexOf('modules/sms') != -1){
+            $("#SMSMarketing").addClass("active");
+            $("#loadSMSTheme").addClass("active");
+        }else if(uriPath.indexOf('modules/emails') != -1){
+            $("#EmailMarketing").addClass("active");
+            $("#loadEmailTheme").addClass("active");
+        }
+        else if(uriPath.indexOf('/contacts/') != -1){
+            $("#people").addClass("active");
+            $("#loadContactTheme").addClass("active");
+        }
+
+    }
+    setMenuItemsActive();
 </script>
+
+
 
 </body>
 </html>

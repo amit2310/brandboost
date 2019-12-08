@@ -113,7 +113,7 @@
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="cloneTemplate(template.id, 'email')"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
-                                    <a class="dropdown-item previewEmailTemplate" href="javascript:void(0);" :template_id="template.id"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                                    <a class="dropdown-item wfEmailMyTemplates" href="javascript:void(0);" @click="displayEmailPreview(template)"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareTemplateUpdate(template.id)"><i class="dripicons-gear text-muted mr-2"></i> Edit</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteTemplate(template.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
@@ -151,7 +151,7 @@
         <email-template-popups></email-template-popups>
 
         <!--Smart Popup-->
-        <div class="box" style="width: 424px;">
+        <div class="box js-email-templates-slidebox-popup" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-email-templates-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="processForm">
@@ -205,6 +205,25 @@
             </div>
         </div>
 
+        <!--Preview Popup-->
+        <div class="box wfEmailMyTemplatesPopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon wfEmailMyTemplates"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+                    <div class="p40">
+                        <div class="row" v-html="previewTemplate"></div>
+                        <div class="row bottom-position">
+                            <div class="col-md-12 mb15">
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20 wfEmailMyTemplates">Close</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 
@@ -240,7 +259,8 @@
                 userid: '',
                 source: '',
                 current_page: 1,
-                allData: ''
+                allData: '',
+                previewTemplate: ''
             }
         },
         mounted() {
@@ -248,6 +268,9 @@
             this.loadPaginatedData();
         },
         methods: {
+            displayEmailPreview: function (data) {
+                this.previewTemplate = atob(data.stripo_compiled_html);
+            },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
                     this.form={};
@@ -388,46 +411,15 @@
 
     $(document).ready(function () {
         $(document).on('click', '.js-email-templates-slidebox', function(){
-            $(".box").animate({
+            $(".js-email-templates-slidebox-popup").animate({
                 width: "toggle"
             });
         });
 
-        let tkn = $('meta[name="_token"]').attr('content');
-        var elem = this;
-        $(document).on("click", ".previewEmailTemplate", function (e) {
-            var templateID = $(this).attr('template_id');
-            var source = $(this).attr('source');
-            var moduleName = '{{ $moduleName }}';
-            var moduleUnitId = '{{ $moduleUnitID }}';
-
-            if (templateID != '') {
-                $('.overlaynew').show();
-                $.ajax({
-                    url: "/admin/templates/loadTemplatePreview",
-                    type: "POST",
-                    data: {
-                        _token: tkn,
-                        template_id: templateID,
-                        source: source,
-                        moduleName: moduleName,
-                        moduleUnitId: moduleUnitId
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.status == 'success') {
-                            $('.overlaynew').hide();
-                            $("#emailPreviewContainer").html(data.content);
-                            $("#email_template_preview_modal").modal();
-                        } else if (data.status == 'error') {
-                            $('.overlaynew').hide();
-
-                        }
-
-                    }
-                });
-
-            }
+        $(document).on('click', '.wfEmailMyTemplates', function () {
+            $(".wfEmailMyTemplatesPopup").animate({
+                width: "toggle"
+            });
         });
 
     });

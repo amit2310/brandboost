@@ -30,27 +30,29 @@
 
                             <div class="row mb65">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 sms_400 htxt_bold_14" href="#">
-                                        <span class="circle-icon-32 float-left bkg_sms_000 mr10"><img src="assets/images/sms-download-fill.svg"></span>
+                                    <a class="lh_32 sms_400 htxt_bold_14" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-left bkg_sms_000 mr10"><img src="/assets/images/sms-download-fill.svg"></span>
                                         Import campaign
                                     </a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
-                                        Learn how to use reviews monitoring
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="/assets/images/question-line.svg"></span>
+                                        Learn how to use campaigns
                                     </a>
                                 </div>
                             </div>
 
+
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 240px; " src="assets/images/review_feed_illustration.svg">
+                                    <img class="mt40" style="max-width: 240px; " src="/assets/images/review_feed_illustration.svg">
                                     <h3 class="htxt_bold_18 dark_700 mt30">No campaigns yet. Create a first one!</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or create SMS campaign!</h3>
-                                    <button class="btn btn-sm bkg_sms_000 pr20 sms_400 js-sms-campaign-slidebox">Create SMS Campaign</button>
+                                    <button class="btn btn-sm bkg_sms_000 pr20 sms_400 js-sms-campaign-slidebox ">Create SMS campaign</button>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -177,7 +179,7 @@
                     <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
-                            <div class="col-md-12"> <img src="/assets/images/email_campaign_icon.svg"/>
+                            <div class="col-md-12"> <img src="/assets/images/sms_temp_icon.svg"/>
                                 <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} SMS Campaign </h3>
                                 <hr class="mt30 mb30">
                             </div>

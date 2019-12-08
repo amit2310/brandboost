@@ -12,7 +12,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="mr15 btn btn-md bkg_light_000 sms_400">Filters &nbsp; &nbsp; <img src="/assets/images/sms_filter.svg"></button>
-                        <button class="btn btn-md bkg_sms_400 light_000 js-sms-templates-slidebox"> Create new <span><img src="/assets/images/sms_add.svg"/></span></button>
+                        <button class="btn btn-md bkg_sms_400 light_000 js-sms-templates-slidebox"> New template <span><img src="/assets/images/sms_add.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -31,14 +31,14 @@
 
                             <div class="row mb65">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 email_400 htxt_bold_14" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-left bkg_email_000 mr10"><img src="/assets/images/download-fill-email.svg"/></span>
+                                    <a class="lh_32 sms_400 htxt_bold_14" href="#">
+                                        <span class="circle-icon-32 float-left bkg_sms_000 mr10"><img src="/assets/images/sms-download-fill.svg"></span>
                                         Import template
                                     </a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="/assets/images/question-line.svg"/></span>
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
+                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="/assets/images/question-line.svg"></span>
                                         Learn how to use sms templates
                                     </a>
                                 </div>
@@ -47,16 +47,12 @@
 
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 225px; " src="/assets/images/email-template.svg">
+                                    <img class="mt40" style="max-width: 250px; " src="/assets/images/sms_templates.svg">
                                     <h3 class="htxt_bold_18 dark_700 mt30">No templates so far. But you can change it!</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import templates!</h3>
-                                    <button class="btn btn-sm bkg_email_000 pr20 email_400 js-sms-templates-slidebox">Add template</button>
+                                    <button class="btn btn-sm bkg_sms_000 pr20 sms_400 js-sms-templates-slidebox">Add template</button>
                                 </div>
                             </div>
-
-
-
-
 
 
                         </div>
@@ -107,21 +103,24 @@
 
                 <div class="row">
                     <div class="col-md-3 d-flex" v-for="template in templates">
-                        <div class="card p-1 text-center pb0 animate_top col">
+                        <div class="card p0 animate_top col">
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="cloneTemplate(template.id, 'sms')"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
-                                    <a class="dropdown-item previewEmailTemplate" href="javascript:void(0);" :template_id="template.id"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                                    <a class="dropdown-item wfSmsMyTemplates" href="javascript:void(0);" @click="displaySMSPreview(template)"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareTemplateUpdate(template.id)"><i class="dripicons-gear text-muted mr-2"></i> Edit</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteTemplate(template.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
                             </div>
-                            <div class="email_temp_img_box">
-                                <img style="width:256px;height:220px;" :src="template.thumbnail ? template.thumbnail : '/assets/images/temp_prev9.png'"/>
+                            <div class="p20">
+                                <!--<img style="width:256px;height:220px;" :src="template.thumbnail ? template.thumbnail : '/assets/images/temp_prev9.png'"/>-->
+                                <p class="htxt_regular_12 dark_600 lh_19 m-0" v-html="setStringLimit(atob(template.stripo_compiled_html), 150)" style="height:152px;">
+
+                                </p>
                             </div>
-                            <div class="email_temp_txt p-3">
+                            <div class="p20 btop mt-3 text-center">
                                 <p class="htxt_regular_14 dark_800 mb-2">{{capitalizeFirstLetter(template.template_name)}}</p>
                                 <p class="dark_200 fsize11 fw500 text-uppercase m-0">{{template.category_name ? template.category_name : 'Uncategorized'}}</p>
                             </div>
@@ -151,13 +150,13 @@
         <sms-template-popups></sms-template-popups>
 
         <!--Smart Popup-->
-        <div class="box" style="width: 424px;">
+        <div class="box js-sms-templates-slidebox-Popup" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-sms-templates-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="processForm">
                     <div class="p40">
                         <div class="row">
-                            <div class="col-md-12"> <img src="/assets/images/email_temp_icons.svg"/>
+                            <div class="col-md-12"> <img src="/assets/images/sms_temp_icon.svg"/>
                                 <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} SMS Template </h3>
                                 <hr>
                             </div>
@@ -205,6 +204,35 @@
             </div>
         </div>
 
+        <!--Preview SMS Popup-->
+        <div class="box wfSmsMyTemplatesPopup" style="width: 80%; display: none;">
+            <div style="width: 80%;overflow: hidden;height: 100%;">
+                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon wfSmsMyTemplates"><i><img
+                    src="/assets/images/cross.svg"></i></a>
+                    <div class="p40">
+                        <div class="row">
+                            <div class="sms_preview">
+                                <div class="phone_sms">
+                                    <div class="inner">
+                                        <p v-html="previewTemplate.replace(/\n/g, '<br/>')"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row bottom-position">
+                            <div class="col-md-12 mb15">
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20 wfSmsMyTemplates">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 
@@ -232,7 +260,7 @@
                 errorMsg: '',
                 loading: true,
                 breadcrumb: '',
-                hasData : true,
+                hasData : false,
                 templates: {},
                 categories: {},
                 method: '',
@@ -242,7 +270,8 @@
                 current_page: 1,
                 allData: '',
                 moduleName: '',
-                moduleAccountID: ''
+                moduleAccountID: '',
+                previewTemplate: ''
             }
         },
         mounted() {
@@ -251,6 +280,12 @@
             this.loadPaginatedData();
         },
         methods: {
+            displaySMSPreview: function (data) {
+                this.previewTemplate = atob(data.stripo_compiled_html);
+            },
+            atob: function(str){
+              return atob(str);
+            },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
                     this.form={};
@@ -336,6 +371,7 @@
                         this.userid = response.data.userID;
                         this.allData = response.data.allData;
                         this.loading = false;
+                        this.hasData = true;
                     });
             },
             showPaginationData: function (current_page) {
@@ -391,48 +427,16 @@
 
     $(document).ready(function () {
         $(document).on('click', '.js-sms-templates-slidebox', function(){
-            $(".box").animate({
+            $(".js-sms-templates-slidebox-Popup").animate({
                 width: "toggle"
             });
         });
 
-        let tkn = $('meta[name="_token"]').attr('content');
-        var elem = this;
-        $(document).on("click", ".previewEmailTemplate", function (e) {
-            var templateID = $(this).attr('template_id');
-            var source = $(this).attr('source');
-            var moduleName = '{{ $moduleName }}';
-            var moduleUnitId = '{{ $moduleUnitID }}';
-
-            if (templateID != '') {
-                $('.overlaynew').show();
-                $.ajax({
-                    url: "/admin/templates/loadTemplatePreview",
-                    type: "POST",
-                    data: {
-                        _token: tkn,
-                        template_id: templateID,
-                        source: source,
-                        moduleName: moduleName,
-                        moduleUnitId: moduleUnitId
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.status == 'success') {
-                            $('.overlaynew').hide();
-                            $("#emailPreviewContainer").html(data.content);
-                            $("#email_template_preview_modal").modal();
-                        } else if (data.status == 'error') {
-                            $('.overlaynew').hide();
-
-                        }
-
-                    }
-                });
-
-            }
+        $(document).on('click', '.wfSmsMyTemplates', function () {
+            $(".wfSmsMyTemplatesPopup").animate({
+                width: "toggle"
+            });
         });
-
     });
 
 </script>
