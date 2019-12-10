@@ -25,7 +25,8 @@ class BrandboostModel extends Model {
                 })
                 ->where('delete_status', 0)
                 ->orderBy('id', 'desc')
-                ->get();
+                //->get();
+                ->paginate(10);
 
         return $oData;
     }
@@ -266,7 +267,9 @@ class BrandboostModel extends Model {
 			})
 			->where('delete_status', 0)
 			->orderBy('id', 'desc')
-			->get();
+			//->get();
+            ->paginate(10);
+
         return $oData;
     }
 
