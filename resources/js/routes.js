@@ -19,6 +19,8 @@ import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
+import ReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
+import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
 import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
 import TagSubscribers from './components/admin/tags/TagSubscribers';
@@ -112,7 +114,9 @@ const routes = [
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
 
-
+    /* Review Module */
+    { path: '/brandboost/review_campaigns/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
+    { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
 
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },

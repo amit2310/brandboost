@@ -175,11 +175,12 @@
 
 <script>
     import UserAvatar from '../../../helpers/UserAvatar';
+    import Pagination from '../../../helpers/Pagination';
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
         props : ['pageColor', 'title', 'review_type'],
-        components: {UserAvatar},
+        components: {UserAvatar, Pagination},
         data(){
             return {
                 successMsg : '',

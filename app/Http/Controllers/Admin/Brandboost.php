@@ -184,6 +184,11 @@ class Brandboost extends Controller
         }
         $moduleName = 'brandboost-onsite';
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Onsite Review Campaigns' => '#/brandboost/review_campaigns/onsite'
+        );
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -197,8 +202,9 @@ class Brandboost extends Controller
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaigns',
-            'pagename' => $breadcrumb,
-            'aBrandbosts' => $aBrandboostList,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $aBrandboostList,
+            'aBrandbosts' => $aBrandboostList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
             'company_name' => $company_name,
