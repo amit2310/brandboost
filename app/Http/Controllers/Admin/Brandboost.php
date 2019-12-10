@@ -2655,8 +2655,12 @@ class Brandboost extends Controller
     public
     function addOnsite(Request $request)
     {
-
         $response = array();
+
+        $validatedData = $request->validate([
+            'campaignName' => ['required'],
+            'OnsitecampaignDescription' => ['required']
+        ]);
 
         $userID = Session::get("current_user_id");
         $campaignName = $request->campaignName;
@@ -2671,12 +2675,15 @@ class Brandboost extends Controller
             'user_id' => $userID,
             'brand_title' => $campaignName,
             'brand_desc' => $OnsitecampaignDescription,
-            'status' => 0,
+            'status' => 1,
             'hashcode' => md5($hashcode),
             'created' => date("Y-m-d H:i:s")
         );
 
-        $brandboostID = BrandboostModel::add($aData);
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+
+        $brandboostID = $mBrandboost->add($aData);
 
         if ($brandboostID) {
             $aBrandboostData = array(
@@ -2723,7 +2730,7 @@ class Brandboost extends Controller
                 'created' => date("Y-m-d H:i:s")
             );
 
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         } else {
             $response['status'] = "Error";
         }
@@ -5171,9 +5178,11 @@ class Brandboost extends Controller
     public
     function getCampaign(Request $request)
     {
+        $mBrandboost = new BrandboostModel();
 
         $campaignId = $request->campaignId;
-        $result = $this->mBrandboost->getCampaignBycampID($campaignId);
+        //$result = $this->mBrandboost->getCampaignBycampID($campaignId);
+        $result = $mBrandboost->getCampaignBycampID($campaignId);
         if ($result) {
             //pre($result);
             $response['status'] = 'success';
@@ -5181,6 +5190,34 @@ class Brandboost extends Controller
             $response['emailContent'] = base64_decode($result[0]->html);
             $response['description'] = base64_decode($result[0]->description);
             $response['createdVal'] = 'Created: ' . date("M d, Y h:i A", strtotime($result[0]->created)) . ' (' . timeAgo($result[0]->created) . ')';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /*
+     * Function to get information of the selected review campaign
+     */
+
+    public
+    function getReviewCampaign(Request $request)
+    {
+        $mBrandboost = new BrandboostModel();
+
+        $campaign_id = $request->campaign_id;
+
+        $result = $mBrandboost->getReviewCampaignBycampID($campaign_id);
+
+        if ($result) {
+            //pre($result);
+            $response['status'] = 'success';
+            $response['campData'] = $result[0];
+            $response['campaign_id'] = $result[0]->id;
+            $response['campaignName'] = $result[0]->brand_title;
+            $response['description'] = $result[0]->brand_desc;
         } else {
             $response['status'] = "Error";
         }

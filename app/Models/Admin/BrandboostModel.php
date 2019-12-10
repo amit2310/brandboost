@@ -274,6 +274,25 @@ class BrandboostModel extends Model {
     }
 
     /**
+     * Used to get Review Campaign By id
+     * @param type $campaignID
+     * @return type
+     */
+    public function getReviewCampaignBycampID($campaignID) {
+        $oData = DB::table('tbl_brandboost')
+            ->when(($campaignID > 0), function ($query) use ($campaignID) {
+                return $query->where('id', $campaignID);
+            })
+			->get();
+
+        //print_r($oData); exit;
+        if ($oData) {
+            $response = $oData;
+        }
+        return $response;
+    }
+
+    /**
      * Used to get onsite brandboost event data
      * @param type $brandboostID
      * @return type
