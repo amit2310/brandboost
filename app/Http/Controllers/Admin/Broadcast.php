@@ -488,6 +488,7 @@ class Broadcast extends Controller {
 
         $twillioData = $mBroadcast->getTwillioData($userID);
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
         if (empty($oBroadcast)) {
             redirect("admin/broadcast/email");
             exit;
@@ -519,7 +520,8 @@ class Broadcast extends Controller {
             'moduleName' => $moduleName,
             'userData' => $aUser,
             'twillioData' => $twillioData[0],
-            'campaignType' => $campaignType
+            'campaignType' => $campaignType,
+            'subscribers' => $oBroadcastSubscriber
         );
         echo json_encode($aData);
         exit;
@@ -540,6 +542,7 @@ class Broadcast extends Controller {
 
         $twillioData = $mBroadcast->getTwillioData($userID);
         $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
         if (empty($oBroadcast)) {
             redirect("admin/broadcast/sms");
             exit;
@@ -571,7 +574,8 @@ class Broadcast extends Controller {
             'moduleName' => $moduleName,
             'userData' => $aUser,
             'twillioData' => $twillioData[0],
-            'campaignType' => $campaignType
+            'campaignType' => $campaignType,
+            'subscribers' => $oBroadcastSubscriber
         );
         echo json_encode($aData);
         exit;
@@ -2727,8 +2731,8 @@ class Broadcast extends Controller {
         $broadcastID = strip_tags($request->broadcast_id);
         Session::put("setTab", trim($request->tab));
 
-        $deliveryDate = strip_tags($request->delivery_date);
-        $deliveryTime = strip_tags($request->delivery_time);
+        $deliveryDate = $request->delivery_date;
+        $deliveryTime = $request->delivery_time;
 
         $triggerTime = array(
             'delivery_date' => $deliveryDate,
