@@ -39,7 +39,7 @@
 
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h3 class="htxt_bold_20 dark_700 mb20 mt40">Are you ready to send this email to 1,389 subscribers?</h3>
+                        <h3 class="htxt_bold_20 dark_700 mb20 mt40">Are you ready to send this sms to {{totalSubscribers.total}} subscribers?</h3>
                         <p class="htxt_normal_14 dark_200 mb40 mt20">It’s very easy to create or import!</p>
                     </div>
                 </div>
@@ -104,26 +104,50 @@
             </div>
         </div>
         <!--Content Area End-->
-        <div class="box broadcastSchedulerPopup" style="width: 80%; display: none;">
-            <div style="width: 80%;overflow: hidden;height: 100%;">
-                <div style="height: 100%; overflow: hidden auto;"><a class="cross_icon js-broadcast-schedule-slidebox"><i><img
-                    src="/assets/images/cross.svg"></i></a>
-
-                        <form method="post" @submit.prevent="processForm">
-                            <div class="p40">
-                                Scheduler will be display here
-                            </div>
-                        </form>
-
+        <modal-popup v-if="showModal" @close="showModal = false" width="sm">
+            <h3 slot="header">Schedule Time</h3>
+            <div slot="body" class="pt0 pb0">
+                <loading :isLoading="loading"></loading>
+                <div v-show="isUpdatedSchedule" class="alert alert-success">Schedule updated successfully<i
+                    class="close" @click="isUpdatedSchedule=false">x</i></div>
+                <div class="media_left p10">
+                    <label class="control-label">Date</label>
+                    <datetime
+                        v-model="scheduleDate"
+                        input-class="my-class form-control"
+                        format="LLL dd, yyyy"
+                    ></datetime>
                 </div>
+                <div class="media_left p10">
+                    <label class="control-label">Time</label>
+                    <datetime
+                        type="time"
+                        v-model="scheduleTime"
+                        input-class="my-class form-control"
+                        format="hh:mm a"
+                        use12-hour
+                    ></datetime>
+                </div>
+                <div class="clearfix"></div>
             </div>
-        </div>
+            <div slot="footer">
+                <button type="button" class="btn btn-md bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600"
+                        @click="confirmUpdateSchedule">Save
+                </button>
+                <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20" @click="showModal = false">Close</a>
+            </div>
+        </modal-popup>
 
     </div>
 </template>
 <script>
+    import {DateTime as LuxonDateTime} from 'luxon';
+    import {Datetime} from 'vue-datetime';
 
+    import 'vue-datetime/dist/vue-datetime.css';
+    import modalPopup from "../../../../components/helpers/Common/ModalPopup";
     export default {
+        components: {datetime: Datetime, modalPopup},
         data() {
             return {
                 successMsg: '',
@@ -136,7 +160,12 @@
                 campaign: {},
                 user: {},
                 breadcrumb: '',
-                set_scheduler: ''
+                set_scheduler: '',
+                scheduleDate: '',
+                scheduleTime: '',
+                showModal: false,
+                isUpdatedSchedule: false,
+                totalSubscribers: 0
             }
         },
         mounted() {
@@ -148,10 +177,36 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oBroadcast;
                     this.user = response.data.userData;
+                    let scheduleData = JSON.parse(this.campaign.data);
+                    let rawDate = this.displayDateFormat('Y-m-d', scheduleData.delivery_date);
+                    this.scheduleDate = rawDate + 'T00:00:00.000Z';
+                    this.scheduleTime = LuxonDateTime.fromFormat(scheduleData.delivery_time,'hh:mm a').toISO();
+                    this.user = response.data.userData;
+                    this.totalSubscribers = response.data.subscribers;
                     this.loading = false;
                 });
         },
         methods: {
+            confirmUpdateSchedule: function () {
+                this.isUpdatedSchedule = false;
+                let selectedDate = LuxonDateTime.fromISO(this.scheduleDate).toFormat('LL/dd/yyyy');
+                let selectedTime = LuxonDateTime.fromISO(this.scheduleTime).toFormat('hh:mm a');
+
+                //alert(selectedDate + ' And Time is ' + selectedTime);
+                //Update settings now
+                this.loading = true;
+                axios.post('/admin/broadcast/updateBroadcastSettings', {
+                    _token: this.csrf_token(),
+                    delivery_date: selectedDate,
+                    delivery_time: selectedTime,
+                    event_id: this.campaign.event_id,
+                    campaign_id: this.campaign.id,
+                    broadcast_id: this.campaign.broadcast_id
+                }).then(response => {
+                    this.isUpdatedSchedule = true;
+                    this.loading = false;
+                });
+            },
             displayStep: function(step){
                 let path = '/admin#/modules/sms/broadcast/setup/'+this.campaignId+'/'+step;
                 window.location.href = path;
@@ -200,6 +255,18 @@
             },
             setScheduler: function(method){
                 this.set_scheduler = method;
+                if (method == 'schedule') {
+                    this.showModal = true;
+                }
+
+                if(method == 'now'){
+                    let isoTime = LuxonDateTime.local().toISO();
+                    this.scheduleDate = isoTime;
+                    this.scheduleTime = isoTime;
+                    this.confirmUpdateSchedule();
+                    this.isUpdatedSchedule = false;
+
+                }
             },
             launchCampaign: function(){
                 if(confirm('Are you sure? This will make your campaign active')){
@@ -224,16 +291,6 @@
         }
 
     };
-
-    $(document).ready(function () {
-        $(document).on('click', '.js-broadcast-schedule-slidebox', function(){
-            $(".broadcastSchedulerPopup").animate({
-                width: "toggle"
-            });
-        });
-
-    });
-
 </script>
 
 
