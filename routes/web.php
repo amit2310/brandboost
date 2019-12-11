@@ -202,6 +202,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/savePreviewData', 'Admin\Brandboost@savePreviewData');
     Route::post('admin/brandboost/addBrandBoostWidgetDesign', 'Admin\Brandboost@addBrandBoostWidgetDesign');
     Route::post('admin/brandboost/getReviewCampaign', 'Admin\Brandboost@getReviewCampaign');
+    Route::post('admin/brandboost/updateReviewCampaign', 'Admin\Brandboost@updateReviewCampaign');
     Route::post('admin/brandboost/addBrandBoostWidgetCampaign', 'Admin\Brandboost@addBrandBoostWidgetCampaign');
     Route::post('admin/brandboost/publishOnsiteStatusBB', 'Admin\Brandboost@publishOnsiteStatusBB');
     Route::post('admin/brandboost/saveOnsitePreferences', 'Admin\Brandboost@saveOnsitePreferences');

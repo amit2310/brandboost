@@ -173,6 +173,7 @@ class Brandboost extends Controller
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $company_name = $aUser->company_name;
+        $companyName = strtolower(str_replace(' ', '-', $company_name));
 
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
@@ -207,13 +208,52 @@ class Brandboost extends Controller
             'aBrandbosts' => $aBrandboostList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
-            'company_name' => $company_name,
+            'company_name' => $companyName,
             'moduleName' => $moduleName,
             'viewstats' => true
         );
 
 //		return view('admin.brandboost.onsite_list', $aData);
         echo json_encode($aData);
+        exit;
+    }
+
+
+    /**
+     * Used to update in the review campaign
+     */
+    public function updateReviewCampaign(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'campaignName' => ['required'],
+            'OnsitecampaignDescription' => ['required']
+        ]);
+
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+
+        $response = array();
+
+        $campaign_id = $request->campaign_id;
+
+        $campaignName = $request->campaignName;
+        $description = $request->OnsitecampaignDescription;
+        $cData = array(
+            'brand_title' => $campaignName,
+            'brand_desc' => $description
+        );
+        $result = $mBrandboost->updateBrandboost($userID, $cData, $campaign_id);
+
+        if ($result) {
+            $response = array('status' => 'success', 'brandboostID' => $campaign_id, 'msg' => 'Edit Review Campaign successfully.');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
         exit;
     }
 

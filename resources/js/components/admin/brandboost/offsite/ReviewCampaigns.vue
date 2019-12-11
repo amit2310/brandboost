@@ -83,21 +83,25 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id" style="cursor:pointer;">
+                    <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 text-center animate_top col">
 
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                    <a v-if="campaign.status == '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Start</a>
+                                    <a v-if="campaign.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
+                                    <a v-if="campaign.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showContacts(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Contacts</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <div @click="setupBroadcast(campaign.id)">
+                            <div @click="setupBroadcast(campaign.id)" style="cursor:pointer;">
                                 <a v-if="campaign.status===0" href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto"><img src="assets/images/star-fill-grey.svg"> </a>
                                 <a v-else href="javascript:void(0)" class="circle-icon-64 bkg_reviews_000 m0auto"><img src="assets/images/star-fill-review-24.svg"> </a>
                                 <h3 class="htxt_bold_16 dark_700 mb-2 mt-4">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
@@ -243,6 +247,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                company_name: '',
                 count : 0,
                 campaigns : '',
                 allData: {},
@@ -264,12 +269,25 @@
             setupBroadcast: function(id){
                 window.location.href='#/brandboost/onsite_setup/'+id;
             },
+            showContacts: function(id){
+                window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
+            },
+            showCampaignPage: function(id,companyName,campaignName){
+                window.location.href='#/for/'+companyName+'/'+campaignName+'-'+id;
+            },
+            showReviews: function(id){
+                window.location.href='#/admin/brandboost/reviews/'+id;
+            },
+            showQuestions: function(id){
+                window.location.href='#/admin/questions/view/'+id;
+            },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/onsite?page='+this.current_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
+                        this.company_name = response.data.company_name;
                         this.allData = response.data.allData;
                         this.campaigns = response.data.aBrandbosts;
                         this.loading = false;
@@ -294,8 +312,8 @@
                 document.querySelector('.js-review-campaign-slidebox').click();
             },
             prepareItemUpdate: function(campaign_id) {
-                window.location.href='#/brandboost/onsite_setup/'+campaign_id;
-                //this.getItemInfo(campaign_id);
+                //window.location.href='#/brandboost/onsite_setup/'+campaign_id;
+                this.getItemInfo(campaign_id);
             },
             getItemInfo: function(campaign_id){
                 axios.post('/admin/brandboost/getReviewCampaign', {
@@ -321,7 +339,7 @@
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.campaign_id>0){
-                    formActionSrc = '/admin/broadcast/updateBroadcastClone';
+                    formActionSrc = '/admin/brandboost/updateReviewCampaign';
                 }else{
                     formActionSrc = '/admin/brandboost/addOnsite';
                     this.form.module_account_id = this.moduleAccountID;
@@ -330,7 +348,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            if(this.form.campaign_id>0){
+                            if(response.data.brandboostID>0){
                                 window.location.href='#/brandboost/onsite_setup/'+response.data.brandboostID;
                                 return false;
                             } else {
@@ -365,11 +383,11 @@
                         alert('All form fields are required');
                     });
             },
-            changeStatus: function(subscriberId, status) {
+            changeStatus: function(campaign_id, status) {
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/brandboost/update_subscriber_status', {
-                        subscriber_id:subscriberId,
+                    axios.post('/admin/brandboost/updateOnsiteStatus', {
+                        brandboostID:campaign_id,
                         status:status,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
