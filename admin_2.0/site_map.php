@@ -129,6 +129,9 @@
      			<li><a target="_blank" href="review_request2.php">Review Requests 2 </a></li>
      			<li><a target="_blank" href="review_request3.php">Review Requests 3 </a></li>
      			
+     			<li><a target="_blank" href="review_campaign4.php">Review Camapign 4 </a></li>
+     			<li><a target="_blank" href="review_edit.php">Review Edit </a></li>
+     			
      		</ul>
      		</div>
      		
@@ -206,6 +209,10 @@
      			<li><a target="_blank" href="sms_form1.php">SMS Form 1</a></li>
      			<li><a target="_blank" href="sms_form2.php">SMS Form 2</a></li>
      			<li><a target="_blank" href="sms_form3.php">SMS Form 3</a></li>
+     			
+     			<li><a target="_blank" href="sms_workflow1.php">SMS Workflow 1</a></li>
+     			<li><a target="_blank" href="sms_workflow2.php">SMS Workflow 2</a></li>
+     			<li><a target="_blank" href="sms_workflow3.php">SMS Workflow 3</a></li>
      			
      			
      		</ul>
