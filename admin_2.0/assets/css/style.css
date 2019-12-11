@@ -1410,6 +1410,10 @@ PAGE WITH SIDEBAR CSS
 .nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}
 .nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 500!important}
 
+.nav.nav-pills.review_sec_tab a{color: #7B89A6; font-weight: 400!important}
+.nav.nav-pills.review_sec_tab a.active{color: #717CEF; border-bottom: 2px solid #717CEF; padding-bottom: 21px; font-weight: 500!important}
+
+
 .nav.nav-pills.review_feed a{color: #56627F; font-weight: 400!important}
 .nav.nav-pills.review_feed a.active{color: #717CEF; font-weight: 500!important}
 .nav.nav-pills.review_feed a span.badge{font-weight: 500; border-radius: 100px;}
@@ -1430,6 +1434,10 @@ PAGE WITH SIDEBAR CSS
 
 
 
+
+.ratingbox{background: #fff9ea;  max-width: 200px; margin: auto;  height: 45px; line-height: 41px; border-radius: 50px;}
+	.ratingbox ul{margin: 0; padding: 0}
+	.ratingbox ul li{margin: 0 3px;; padding: 0; display: inline-block; list-style: none}
 
 
 
