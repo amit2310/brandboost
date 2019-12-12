@@ -2885,7 +2885,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID) {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=5) {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2924,7 +2924,7 @@ class WorkflowModel extends Model {
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
                 ->where("$tableName.$fieldName", $moduleUnitID)
                 ->orderBy("$tableName.id", "desc")
-                ->paginate(5);
+                ->paginate($limit);
                 //->get();
         return $oData;
     }

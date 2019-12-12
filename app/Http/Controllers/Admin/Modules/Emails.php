@@ -224,6 +224,7 @@ class Emails extends Controller {
             'breadcrumb' => $aBreadcrumb,
             'bActiveSubsription' => $bActiveSubsription,
             'oAutomations' => $oAutomations,
+            'campaignTitle' => $oAutomations[0]->title,
             'oLists' => $oLists,
             'oAutomationLists' => $oAutomationLists,
             'oEvents' => $oEvents,

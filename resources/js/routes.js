@@ -20,6 +20,13 @@ import OnsiteList from './components/admin/brandboost/onsite/';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import ReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
+/*Import Onsite Setup components*/
+import onsiteStep1 from './components/admin/brandboost/onsite/setup/Setup';
+import onsiteStep2 from './components/admin/brandboost/onsite/setup/Setup2';
+import onsiteStep3 from './components/admin/brandboost/onsite/setup/Setup3';
+import onsiteStep4 from './components/admin/brandboost/onsite/setup/Setup4';
+import onsiteStep5 from './components/admin/brandboost/onsite/setup/Setup5';
+
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
 import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/';
@@ -117,6 +124,12 @@ const routes = [
     /* Review Module */
     { path: '/brandboost/review_campaigns/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
+    { path: '/reviews/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
+    { path: '/reviews/onsite/setup/:id/1', component: onsiteStep1, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/setup/:id/2', component: onsiteStep2, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/setup/:id/3', component: onsiteStep3, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/setup/:id/4', component: onsiteStep4, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
 
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
