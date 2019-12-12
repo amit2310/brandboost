@@ -336,21 +336,21 @@ class Brandboost extends Controller
 
         $fromNumber = '';
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a  href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $getBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $getBrandboost[0]->brand_title . '</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaign',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'getOnsite' => $getBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $getBrandboostFR,
             'brandboostData' => $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
             'eventsData' => $eventsdata,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
@@ -376,7 +376,118 @@ class Brandboost extends Controller
             'aUserInfo' => $oUser
         );
 
-        return view('admin.brandboost.onsite_setup', $aData);
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
+     * This function is used to get onsite campaign subscribers
+     * @param Request $request
+     */
+    public function onsiteSetupSubscribers(Request $request)
+    {
+        $brandboostID = $request->id;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mWorkflow = new WorkflowModel();
+
+        if (empty($brandboostID)) {
+            redirect("#admin/reviews/onsite");
+            exit;
+        }
+
+
+        $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+        $moduleName = 'brandboost';
+        $moduleUnitID = '';
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
+
+        $aData = array(
+
+            'breadcrumb' => $aBreadcrumb,
+            'brandboostData' => $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'allData' => $oCampaignSubscribers, // $allSubscribers,
+            'subscribers' => $oCampaignSubscribers->items(),
+            'aUserInfo' => $oUser
+        );
+
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
+     * This function is used to get onsite reviews data
+     * @param Request $request
+     */
+    public function onsiteSetupReview(Request $request)
+    {
+        $brandboostID = $request->id;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mWorkflow = new WorkflowModel();
+
+        if (empty($brandboostID)) {
+            redirect("#admin/reviews/onsite");
+            exit;
+        }
+
+        $mReviews = new ReviewsModel();
+        $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+        $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
+        $moduleName = 'brandboost';
+        $moduleUnitID = '';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
+
+        if (!empty($aReviews)) {
+            foreach ($aReviews->items() as $aReview) {
+                $aReview->getComm = getCampaignCommentCount($aReview->id);
+                $aReview->reviewTags = getTagsByReviewID($aReview->id);
+                $aReview->smilyImage = ratingView($aReview->ratings);
+
+                $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->id, 0, 100);
+
+                if(!empty($getBrandboost[0]->reviewResponse)) {
+                    $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
+                }
+            }
+        }
+
+        $aData = array(
+            'breadcrumb' => $aBreadcrumb,
+            'brandboostData' => $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'allData' => $aReviews, // $allSubscribers,
+            'reviews' => $aReviews->items(),
+            'aUserInfo' => $oUser
+        );
+
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 

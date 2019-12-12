@@ -472,7 +472,7 @@
             workflowData: function(){
                 this.makeBreadcrumb(this.workflowData.breadcrumb);
                 this.wfData = this.workflowData;
-                this.title = this.workflowData.oAutomations[0].title;
+                this.title = this.workflowData.campaignTitle;
                 this.moduleName = this.workflowData.moduleName;
                 this.moduleUnitID = this.workflowData.moduleUnitID;
                 this.oEvents = this.workflowData.oEvents;
