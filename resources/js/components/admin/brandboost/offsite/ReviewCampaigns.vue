@@ -48,7 +48,7 @@
                 <div class="table_head_action bbot pb30">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ campaigns.length }}&nbsp;Campaigns</h3>
+                            <h3 class="htxt_medium_16 dark_400">{{ allData.total}}&nbsp;Campaigns</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="table_action">
@@ -88,6 +88,7 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
                             </div>
+                            <div @click="setupCampaign(campaign.id)" style="cursor: pointer;">
                             <a v-if="campaign.status===0" href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto"><img src="assets/images/star-fill-grey.svg"> </a>
                             <a v-else href="javascript:void(0)" class="circle-icon-64 bkg_reviews_000 m0auto"><img src="assets/images/star-fill-review-24.svg"> </a>
                             <h3 class="htxt_bold_16 dark_700 mb-2 mt-4">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
@@ -99,6 +100,7 @@
                                     <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> 28%</a></li>
                                     <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> 67%</a></li>
                                 </ul>-->
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -195,6 +197,9 @@
             this.loadPaginatedData();
         },
         methods: {
+            setupCampaign: function(id){
+                window.location.href='#/reviews/onsite/setup/'+id+'/1';
+            },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/onsite?page='+this.current_page)
                     .then(response => {

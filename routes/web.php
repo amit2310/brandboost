@@ -170,6 +170,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/onsite', 'Admin\Brandboost@onsite');
     Route::get('admin/brandboost/review_request/{type}', 'Admin\Brandboost@reviewRequest');
     Route::get('admin/brandboost/onsite_setup/{id}', 'Admin\Brandboost@onsiteSetup');
+    Route::get('admin/brandboost/onsiteSetupSubscribers/{id}', 'Admin\Brandboost@onsiteSetupSubscribers');
+    Route::get('admin/brandboost/onsiteSetupReview/{id}', 'Admin\Brandboost@onsiteSetupReview');
     Route::get('admin/brandboost/reviews', 'Admin\Brandboost@reviews');
     Route::get('admin/brandboost/reviews/{id}', 'Admin\Brandboost@reviews');
     Route::get('admin/brandboost/media', 'Admin\Brandboost@media');
@@ -492,6 +494,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/workflow/loadStripoTemplate/{type}/{id}', 'Admin\WorkFlow@loadStripoTemplate');
     Route::get('admin/workflow/loadStripoTemplateResources/{type}/{module_name}/{temp_id}', 'Admin\WorkFlow@loadStripoTemplateResources');
     Route::post('admin/workflow/loadWorkflowAudience', 'Admin\WorkFlow@loadWorkflowAudience');
+    Route::post('admin/workflow/getWorkflowCampaignSubscribers', 'Admin\WorkFlow@getWorkflowCampaignSubscribers');
 
 
 //Templates Module

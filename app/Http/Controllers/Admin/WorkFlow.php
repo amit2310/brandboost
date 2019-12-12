@@ -2930,4 +2930,20 @@ class WorkFlow extends Controller {
         exit;
     }
 
+    /**
+     * This function is used to get campaign contacts assoicated with specific modules
+     * @param $moduleName
+     * @param $moduleUnitID
+     */
+    public function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID){
+        $mWorkflow = new WorkflowModel();
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, 10);
+        $aData = array(
+            'allData' => $oCampaignSubscribers,
+            'subscribers' => $oCampaignSubscribers->items()
+        );
+        echo json_encode($aData);
+        exit;
+    }
+
 }
