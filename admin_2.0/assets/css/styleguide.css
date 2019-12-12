@@ -154,8 +154,9 @@ TABLES STYLES
 .table.table-borderless tbody tr{border-bottom: 2px solid #edf1fb; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
 .table.table-borderless tbody tr:last-child{border: none!important; }
 .table.table-borderless tbody tr td{background: #fff;  color: #687693; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
+.table.table-borderless.big tbody tr td{padding: 24px 12px; }
 .table.table-borderless tbody tr td:first-child{padding-left: 40px ; border-radius: 2px 0 0 2px; }
-.table.table-borderless tbody tr td:last-child{padding-right: 30px ; border-radius: 0 2px 2px 0;}
+.table.table-borderless tbody tr td:last-child{padding-right: 40px ; border-radius: 0 2px 2px 0;}
 .table.table-borderless tbody tr:hover td{background: #fcfdff;}
 .table.table-borderless span.icons{margin: 0 5px;}
 .table.table-borderless .badge.badge-dark{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
@@ -163,7 +164,8 @@ TABLES STYLES
 .table_search{border: none; padding-left: 25px; background: url(../images/search_icon_16.svg) left 4px no-repeat; color: #7B89A6; font-size: 14px; font-weight: 400; max-width: 90px; height: 20px}
 .table_search::placeholder {color: #7B89A6; opacity: 1;}
 
-
+.table.table-borderless tbody tr td p{color: #242B3D; font-size: 14px; font-weight: 500; margin-bottom: 10px; line-height: 120%;}
+.table.table-borderless tbody tr td p.small{color: #687693; font-size: 12px; font-weight: 400; margin: 0!important}
 
 
 
@@ -171,7 +173,7 @@ TABLES STYLES
 .table_dots_dd:after{display: none}
 
 
-@media only screen and (max-width:1500px){
+@media only screen and (max-width:1366px){
 	.table.table-borderless tbody tr td:first-child{padding-left: 12px ; border-radius: 2px 0 0 2px; }
 	.table.table-borderless tbody tr td:last-child{padding-right: 12px ; border-radius: 0 2px 2px 0;}
 }
@@ -277,10 +279,12 @@ Button CLASSES
 .btn-md-44{height: 44px; line-height: 26px;}
 .btn-sm{height: 36px; line-height: 26px;}
 .btn-sm-32{height: 32px; line-height: 17px;}
+.btn-sm-24{height: 24px; line-height: 11px;}
 
 
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
+.circle-icon-48{width: 48px;height: 48px;border-radius: 100px; border: none; display: inline-block; text-align: center; line-height: 48px;}
 .circle-icon-52{width: 52px;height: 52px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 52px;  }
 .circle-icon-56{width: 56px;height: 56px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 56px;  }
 .circle-icon-64{width: 64px;height: 64px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 64px;  }
