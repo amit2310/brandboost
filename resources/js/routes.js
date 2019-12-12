@@ -15,6 +15,7 @@ import TemplateMaster from './components/admin/templates/TemplateMaster';
 import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
+import OnsiteCampaignReviews from './components/admin/brandboost/onsite/OnsiteCampaignReviews';
 import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
@@ -101,6 +102,7 @@ const routes = [
     { path: '/brandboost/onsite_overview', component: OnsiteOverview, props:{pageColor: 'onsite_sec'}, meta: {title: 'Onsite overview - Brand Boost'} },
     { path: '/brandboost/onsite', component: OnsiteList, props: {pageColor: 'onsite_sec'} },
     { path: '/brandboost/reviews', component: OnsiteReviews, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
+    { path: '/brandboost/reviews/:id', component: OnsiteCampaignReviews, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite Campaign Reviews - Brand Boost'} },
     { path: '/questions', component: OnsiteQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite questions - Brand Boost'} },
     { path: '/brandboost/review_request/onsite', component: OnsiteReviewRequest, props: {pageColor: 'onsite_sec', title : 'Review Requests', review_type: 'onsite'} },
 

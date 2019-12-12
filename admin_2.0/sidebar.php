@@ -1,42 +1,42 @@
-<div class="left-sidenav">
+    <div class="left-sidenav">
   <div class="main-icon-menu">
-   <div class="slimscroll"> 
-    <nav class="nav"> 
+   <div class="slimscroll">
+    <nav class="nav">
     <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
-    
-    <a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a> 
-    <a href="#people" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a> 
-    <a href="#live_messanger" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a> 
-    <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a> 
+
+    <a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a>
+    <a href="#people" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a>
+    <a href="#live_messanger" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a>
+    <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a>
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-    <a href="#BrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <img src="assets/images/window-2-fill.svg"/> </a> 
-    <a href="#ReviewSystem" class="nav-link review" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a> 
-    <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a> 
+    <a href="#BrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <img src="assets/images/window-2-fill.svg"/> </a>
+    <a href="#ReviewSystem" class="nav-link review" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a>
+    <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a>
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-    <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a> 
-    <a href="#SMSMarketing" class="nav-link sms" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a> 
-    <a href="#Referrals" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <img src="assets/images/share-fill.svg"/> </a> 
+    <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a>
+    <a href="#SMSMarketing" class="nav-link sms" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a>
+    <a href="#Referrals" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <img src="assets/images/share-fill.svg"/> </a>
     <a href="#SiteWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <img src="assets/images/rocket-2-fill.svg"/> </a>
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-    <a href="#Feedback" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Feedback"> <img src="assets/images/chat-smile-3-fill.svg"/> </a> 
-    <a href="#HelpDesk" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Help Desk"> <img src="assets/images/customer-service-fill.svg"/> </a> 
-    <a href="#KnowledgeBase" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Knowledge Base"> <img src="assets/images/book-open-fill.svg"/> </a> 
-    <a href="#Appointments" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Appointments"> <img src="assets/images/calendar-event-fill.svg"/> </a> 
+    <a href="#Feedback" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Feedback"> <img src="assets/images/chat-smile-3-fill.svg"/> </a>
+    <a href="#HelpDesk" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Help Desk"> <img src="assets/images/customer-service-fill.svg"/> </a>
+    <a href="#KnowledgeBase" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Knowledge Base"> <img src="assets/images/book-open-fill.svg"/> </a>
+    <a href="#Appointments" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Appointments"> <img src="assets/images/calendar-event-fill.svg"/> </a>
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-    <a href="#Analytics" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Analytics"> <img src="assets/images/bar-chart-box-fill.svg"/> </a> 
-    <a href="#Settings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <img src="assets/images/settings-3-fill-icon.svg"/> </a> 
+    <a href="#Analytics" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Analytics"> <img src="assets/images/bar-chart-box-fill.svg"/> </a>
+    <a href="#Settings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <img src="assets/images/settings-3-fill-icon.svg"/> </a>
     </nav>
   </div>
   </div>
-  
-  
-  
-  
+
+
+
+
   <div class="main-menu-inner">
-    <div class="menu-body slimscroll"> 
+    <div class="menu-body slimscroll">
      <span style="" class="button-menu-mobile"><img src="assets/images/arrow_right_36.svg"/></span>
      <span style="position: absolute; top: 17px; right: 20px; transform:rotate(180deg);" class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>
-     
+
      <!--************
        DASHBOARD
      *************-->
@@ -62,7 +62,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_green.svg"/></i><span class="menu-item-text">The Walt  Company </span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        PEOPLE
      *************-->
@@ -90,7 +90,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_yellow.svg"/></i><span class="menu-item-text">Louis Vuitton</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_green.svg"/></i><span class="menu-item-text">The Walt  Company </span></a></li>
         </ul>
-        
+
         <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">CONTACTS</h6>
@@ -100,7 +100,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        LIVE MESSANGER
      *************-->
@@ -127,7 +127,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_email.svg"/></i><span class="menu-item-text">Telegram</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_green.svg"/></i><span class="menu-item-text">SMS</span></a></li>
         </ul>
-        
+
         <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">CONTACTS</h6>
@@ -137,7 +137,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        EMAIL INBOX
      *************-->
@@ -154,7 +154,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        BRAND PAGE
      *************-->
@@ -173,7 +173,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        REVIEW
      *************-->
@@ -200,9 +200,9 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
         </ul>
-        
+
       </div>
-      
+
       <!--************
        MEDIA GALLERY
      *************-->
@@ -221,7 +221,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        Email Marketing
      *************-->
@@ -250,7 +250,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        SMS Marketing
      *************-->
@@ -278,9 +278,9 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
         </ul>
-        
+
       </div>
-      
+
       <!--************
        Referrals
      *************-->
@@ -299,7 +299,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        Site Widgets
      *************-->
@@ -314,7 +314,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        Feed back
      *************-->
@@ -330,7 +330,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        Help Desk
      *************-->
@@ -346,7 +346,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
       <!--************
        Knowledge Base
      *************-->
@@ -362,7 +362,7 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
+
        <!--************
        Appointments
      *************-->
@@ -378,8 +378,8 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
-      
+
+
       <!--************
        Analytics
      *************-->
@@ -395,8 +395,8 @@
           <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
-      
-      
+
+
       <!--************
        Settings
      *************-->

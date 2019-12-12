@@ -476,6 +476,12 @@ class Brandboost extends Controller
             $aReviews = $mReviews->getCampaignReviews($campaignId);
             $bActiveSubsription = $mUsers->isActiveSubscription();
 
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                $oCampaign->brand_title => '#/brandboost/onsite',
+                'Reviews' => ''
+            );
+
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 				<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -487,13 +493,18 @@ class Brandboost extends Controller
             $aData = array(
                 'title' => 'Brand Boost Reviews',
                 'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'oCampaign' => $oCampaign,
-                'aReviews' => $aReviews,
+                'allData' => $aReviews,
+                'aReviews' => $aReviews->items(),
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );
 
-            return view('admin.brandboost.review_list_camp', $aData);
+            //return view('admin.brandboost.review_list_camp', $aData);
+
+            echo json_encode($aData);
+            exit;
 
         } else {
             $aUser = getLoggedUser();
@@ -530,7 +541,7 @@ class Brandboost extends Controller
 
                     $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->reviewid, 0, 100);
 
-                    if(!empty($aBrandboostVal->reviewResponse)) {
+                    if(!empty($aReview->reviewResponse)) {
                         $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
                     }
                 }
