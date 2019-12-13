@@ -2532,7 +2532,87 @@ class Brandboost extends Controller
         echo json_encode($response);
         exit;
     }
+    function saveOnsiteSettings(Request $request)
+    {
 
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $brandboostID = $request->brandboostId;
+        $fieldName = $request->fieldName;
+        $fieldValue = $request->fieldVal;
+        $type = $request->requestType;
+
+        $aProductData = [];
+        $aBrandboostData = [];
+        $aFeedbackData = [];
+        $aExpiryData = [];
+        if (!empty($fieldName) && $brandboostID > 0) {
+            if ($type == 'product') {
+                $aProductData[$fieldName] = $fieldValue;
+            } else if ($type == 'brandboost') {
+                $aBrandboostData[$fieldName] = $fieldValue;
+                $result = BrandboostModel::updateBrandBoost($userID, $aBrandboostData, $brandboostID);
+            } else if ($type == 'feedback') {
+                $aFeedbackData[$fieldName] = $fieldValue;
+                $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+                if (isset($aResponse->id)) {
+                    $result = BrandboostModel::updateBrandboostFeedbackResponse($aFeedbackData, $brandboostID);
+                } else {
+                    $aFeedbackData['brandboost_id'] = $brandboostID;
+                    $aFeedbackData['created'] = date("Y-m-d H:i:s");
+                    $result = BrandboostModel::addBrandboostFeedbackResponse($aFeedbackData);
+                }
+            }else if($type == 'expiry'){
+                $aLinkExpiryData = [];
+                $txtInteger = $exp_duration = '';
+                if ($fieldValue == 'custom' || $fieldName == 'txtInteger'  || $fieldName == 'exp_duration') {
+                    $aExpiry = $request->linkExpiryData;
+                    $aExpData = json_decode($aExpiry);
+                    if($fieldValue == 'txtInteger'){
+                        $txtInteger = $fieldValue;
+                        $exp_duration = $aExpData['delay_unit'];
+                    }
+
+                    if($fieldValue == 'exp_duration'){
+                        $exp_duration = $fieldValue;
+                        $txtInteger = $aExpData['delay_unit'];
+                    }
+
+                    $aLinkExpiryData['delay_value'] = $txtInteger;
+                    $aLinkExpiryData['delay_unit'] = $exp_duration;
+                } else {
+
+                    $aLinkExpiryData['delay_value'] = 'never';
+                    $aLinkExpiryData['delay_unit'] = 'never';
+                }
+
+                if($fieldValue == 'never'){
+                    $aExpiryData[$fieldName] = $fieldValue;
+                }else{
+                    $aExpiryData['link_expire_custom'] = json_encode($aLinkExpiryData);
+                }
+
+                $result = BrandboostModel::updateBrandBoost($userID, $aExpiryData, $brandboostID);
+
+            }
+        }
+
+
+        if ($result) {
+            //Okay We also need to update "From" info into the campaigns
+
+            //$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
+
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
     /**
      * Used to save onsite widget
      * @return type

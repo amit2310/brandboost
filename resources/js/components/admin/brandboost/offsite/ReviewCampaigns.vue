@@ -267,7 +267,7 @@
         },
         methods: {
             setupBroadcast: function(id){
-                window.location.href='#/brandboost/onsite_setup/'+id;
+                window.location.href='#/reviews/onsite/setup/'+id+'/1';
             },
             showContacts: function(id){
                 window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';

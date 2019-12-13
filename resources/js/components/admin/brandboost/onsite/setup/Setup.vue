@@ -19,7 +19,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+            <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
             <loading :isLoading="loading"></loading>
 
             <div class="container-fluid">
@@ -52,12 +52,20 @@
                                     <p class="fsize12 fw300 dark_300 mb20">Name of the campaign and logo for the same</p>
                                 </div>
 
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="frm_bb_title" class="fsize12 fw300">Brand Boost Name</label>
-                                        <input type="text" class="form-control emoji h50" placeholder="New Product on Site Boost" id="frm_bb_title"
+                                        <input type="text" class="form-control emoji h50" placeholder="New Product on Site Boost"
                                                name="title" v-model="campaign.brand_title"
-                                               @change="updatesettings('subject')">
+                                               @change="updateSettings('brand_title', $event.target.value, 'brandboost')">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="frm_bb_title" class="fsize12 fw300">Domain</label>
+                                        <input type="text" class="form-control emoji h50" placeholder="www.google.com"
+                                               name="domain_name" v-model="campaign.domain_name"
+                                               @change="updateSettings('domain_name', $event.target.value, 'brandboost')">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -88,7 +96,7 @@
                                         <label for="frm_from_name" class="fsize12 fw300">Review Request "Form" Name</label>
                                         <input type="text" class="form-control form-control-dark h50" id="frm_from_name"
                                                placeholder="Alen Sultanic" name="from_name" v-model="feedbackResponse.from_name"
-                                               @change="updatesettings('from_name')" required>
+                                               @change="updateSettings('from_name', $event.target.value, 'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -96,7 +104,7 @@
                                         <label for="frm_from_email" class="fsize12 fw300">Review Request "Form" Email</label>
                                         <input type="text" class="form-control form-control-dark h50" id="frm_from_email"
                                                placeholder="alen@brandboost.io" name="from_email"
-                                               v-model="feedbackResponse.from_email" @change="updatesettings('from_email')" required>
+                                               v-model="feedbackResponse.from_email" @change="updateSettings('from_email', $event.target.value, 'feedback')" required>
                                     </div>
                                 </div>
 
@@ -104,7 +112,7 @@
                                     <div class="form-group">
                                         <label for="frm_sender_phone" class="fsize12 fw300">Review Request SMS "Form" Number</label>
                                         <input type="text" name="sender_phone" class="form-control form-control-dark h50" id="frm_sender_phone" readonly="readonly"
-                                               v-model="fromNumber ? fromNumber : user.mobile"  @change="updatesettings('from_email')" required>
+                                               v-model="fromNumber ? fromNumber : user.mobile"  required>
                                     </div>
                                 </div>
 
@@ -126,14 +134,14 @@
                                         <label class="control-label mb20">Automatically expire link after user leaves review?</label>
                                         <div class="clearfix"></div>
                                         <label class="custmo_radiobox pull-left mb10">
-                                            <input name="review_expire" value="yes" type="radio">
+                                            <input name="link_expire_review" value="yes" type="radio" :checked="campaign.link_expire_review == 'yes'" @change="updateSettings('link_expire_review', $event.target.value, 'brandboost')">
                                             <span class="custmo_radiomark"></span>
                                             Yes
                                         </label>
                                         <div class="clearfix"></div>
                                         <label class="custmo_radiobox pull-left mb10">
 
-                                            <input name="review_expire" value="no" checked="" type="radio">
+                                            <input name="link_expire_review" value="no" :checked="campaign.link_expire_review == 'no'" type="radio" @change="updateSettings('link_expire_review', $event.target.value, 'brandboost')">
                                             <span class="custmo_radiomark"></span>
                                             No
                                         </label>
@@ -144,17 +152,30 @@
                                         <label class="control-label mb20">Automatically expire link</label>
                                         <div class="clearfix"></div>
                                         <label class="custmo_radiobox pull-left mb10">
-                                            <input name="review_expire_link" value="never" type="radio">
+                                            <input name="link_expire_custom" value="never" :checked="checkLinkExpiry.delay_value == 'never'" type="radio" @change="updateSettings('link_expire_custom', $event.target.value, 'expiry')">
                                             <span class="custmo_radiomark"></span>
                                             Never Expire
                                         </label>
                                         <div class="clearfix"></div>
                                         <label class="custmo_radiobox pull-left mb10">
 
-                                            <input name="review_expire_link" value="custom" checked="" type="radio">
+                                            <input name="link_expire_custom" value="custom" type="radio" :checked="checkLinkExpiry.delay_value != 'never'" @change="updateSettings('link_expire_custom', $event.target.value, 'expiry')">
                                             <span class="custmo_radiomark"></span>
                                             Expire After
                                         </label>
+                                        <div class="expireLinkBox" v-show="displayCustomLinkExpiry">
+                                            <div class="form-group">
+                                                <input type="number" name="txtInteger"  v-model="checkLinkExpiry.delay_value" size="3" class="numaric_only form-control daysnumber2" @change="updateSettings('txtInteger', $event.target.value, 'expiry')">
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control" v-model="checkLinkExpiry.delay_unit" name="exp_duration" @change="updateSettings('exp_duration', $event.target.value, 'expiry')">
+                                                    <option value="day">Day</option>
+                                                    <option value="week">Week</option>
+                                                    <option value="month">Month</option>
+                                                    <option value="year">Year</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +200,7 @@
                                         <input type="text" class="form-control form-control-dark h50" id="frm_positive_title"
                                                name="positive_title"
                                                v-model="feedbackResponse.pos_title"
-                                               @change="updatesettings('reply_to')" required>
+                                               @change="updateSettings('pos_title', $event.target.value, 'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -188,7 +209,7 @@
                                         <input type="text" class="form-control form-control-dark h50" id="frm_positive_subtitle"
                                                name="positive_subtitle"
                                                v-model="feedbackResponse.pos_sub_title"
-                                               @change="updatesettings('reply_to')" required>
+                                               @change="updateSettings('pos_sub_title', $event.target.value,'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -217,7 +238,7 @@
                                         <input type="text" class="form-control form-control-dark h50" id="frm_neutral_title"
                                                name="neutral_title"
                                                v-model="feedbackResponse.neu_title"
-                                               @change="updatesettings('reply_to')" required>
+                                               @change="updateSettings('neu_title', $event.target.value, 'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -226,7 +247,7 @@
                                         <input type="text" class="form-control form-control-dark h50" id="frm_neutral_subtitle"
                                                name="neutral_subtitle"
                                                v-model="feedbackResponse.neu_sub_title"
-                                               @change="updatesettings('reply_to')" required>
+                                               @change="updateSettings('neu_sub_title', $event.target.value, 'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -255,7 +276,7 @@
                                         <input type="text" class="form-control form-control-dark h50" id="frm_negetive_title"
                                                name="negetive_title"
                                                v-model="feedbackResponse.neg_title"
-                                               @change="updatesettings('reply_to')" required>
+                                               @change="updateSettings('neg_title', $event.target.value,'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -264,7 +285,7 @@
                                         <input type="text" class="form-control form-control-dark h50" id="frm_negetive_subtitle"
                                                name="negetive_subtitle"
                                                v-model="feedbackResponse.neg_sub_title"
-                                               @change="updatesettings('reply_to')" required>
+                                               @change="updateSettings('neg_sub_title', $event.target.value,'feedback')" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -317,6 +338,7 @@
     export default {
         data() {
             return {
+                refreshMessage: 1,
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
@@ -328,7 +350,8 @@
                 user: {},
                 breadcrumb: '',
                 feedbackResponse: '',
-                fromNumber: ''
+                fromNumber: '',
+                displayCustomLinkExpiry: false
             }
         },
         mounted() {
@@ -343,6 +366,31 @@
                     this.user = response.data.aUserInfo;
                     this.loading = false;
                 });
+        },
+        computed: {
+            checkLinkExpiry: function(){
+                let linkExpiry = this.campaign.link_expire_custom;
+                if(linkExpiry){
+                    let aExpiryData = JSON.parse(linkExpiry);
+                    let delayValue = aExpiryData.delay_value;
+                    let delayUnit = aExpiryData.delay_unit;
+                    if(delayValue != 'never'){
+                        this.displayCustomLinkExpiry = true;
+                    }else{
+                        this.displayCustomLinkExpiry = false;
+                    }
+                    return {
+                        delay_unit: delayUnit,
+                        delay_value: delayValue != 'never' ? delayValue : 'never'
+                    };
+                }else{
+                    return {
+                        delay_unit: '',
+                        delay_value: 'never'
+                    };
+                }
+
+            }
         },
         methods: {
             displayStep: function(step){
@@ -359,23 +407,29 @@
                 if (e.target.checked) {
                     this.campaign.from_email = this.user.email;
                     this.campaign.from_name = this.user.firstname + ' ' + this.user.lastname;
-                    this.updatesettings('from_email');
-                    this.updatesettings('from_name');
+                    this.updateSettings('from_email');
+                    this.updateSettings('from_name');
                 } else {
 
                 }
             },
-            updatesettings: function (fieldName) {
+            updateSettings: function (fieldName, fieldValue,  type) {
                 this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcastSettingUnit', {
+
+                if(type =='expiry'){
+                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
+                }
+                axios.post('/admin/brandboost/saveOnsiteSettings', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
-                    fieldVal: this.campaign[fieldName],
-                    event_id: this.campaign.event_id,
-                    campaign_id: this.campaign.id,
-                    broadcast_id: this.campaign.broadcast_id
+                    fieldVal: fieldValue,
+                    brandboostId: this.campaignId,
+                    linkExpiryData : this.campaign.link_expire_custom,
+                    requestType: type
+
                 }).then(response => {
-                    this.successMsg = 'Updated the changes successfully!!'
+                    this.refreshMessage = Math.random();
+                    this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
                 });
 
