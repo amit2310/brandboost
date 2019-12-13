@@ -177,6 +177,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/media', 'Admin\Brandboost@media');
     Route::post('admin/brandboost/reviewdetails/{id}', 'Admin\Brandboost@reviewDetails');
     Route::get('admin/brandboost/reviewdetails/{id}', 'Admin\Brandboost@reviewDetails');
+    Route::get('admin/brandboost/reviewInfo/{id}', 'Admin\Brandboost@reviewInfo');
     Route::post('admin/brandboost/setTab/', 'Admin\Brandboost@setTab');
     Route::get('admin/brandboost/offsite_overview', 'Admin\Brandboost@offsiteOverview');
     Route::get('admin/brandboost/offsite', 'Admin\Brandboost@offsite');

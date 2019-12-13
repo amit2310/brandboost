@@ -854,6 +854,70 @@ class Brandboost extends Controller
 
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public
+    function reviewInfo(Request $request)
+    {
+        $response = array();
+        $response['status'] = 'error';
+
+        $reviewID = $request->id;
+        $revID = $request->reviewid;
+        $actionName = $request->action;
+        $mUser = new UsersModel();
+        $product_id = "";
+        $product_name = "";
+        $brand_title = "";
+
+        $reviewID = ($revID > 0) ? $revID : $reviewID;
+        $productData = array();
+        $reviewCommentCount = getCampaignCommentCount($reviewID);
+        $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
+        $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
+        $reviewData = ReviewsModel::getReviewInfo($reviewID);
+        $reviewTags = getTagsByReviewID($reviewID);
+        $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
+        if (!empty($reviewData->product_id)) {
+            $productData = BrandboostModel::getProductDataById($reviewData->product_id);
+            $product_id = $reviewData->product_id;
+            $product_name = $productData->product_name;
+            $brand_title = $reviewData->brand_title;
+        }
+
+        $productName = $product_id > 0 ? $product_name : $brand_title;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Review' => '',
+        );
+
+
+        $aData = array(
+            'title' => 'Brand Boost Review Details',
+            'breadcrumb' => $aBreadcrumb,
+            'reviewData' => $reviewData,
+            'productData' => $productData,
+            'reviewCommentCount' => $reviewCommentCount,
+            'reviewNotesData' => $reviewNotesData,
+            'reviewCommentsData' => $reviewCommentsData,
+            'reviewTags' => $reviewTags,
+            'reviewID' => $reviewID,
+            'totalComment' => $totalComment,
+            'productName' => $productName,
+
+        );
+
+        echo json_encode($aData);
+        exit;
+
+    }
+
+
+    /**
      * Used to get show media page
      * @param type $param
      * @return type
