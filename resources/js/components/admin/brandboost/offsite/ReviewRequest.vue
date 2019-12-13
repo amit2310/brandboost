@@ -136,7 +136,13 @@
                                     <td>{{ request.email }}</td>
                                     <td>{{ displayDateFormat('M d, h:i A', request.created) }}</td>
                                     <td class="text-right">
-                                        <span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
+                                        <span v-for="rating in request.ratings" class="icons">
+                                            <img src="assets/images/star-fill_yellow_16.svg">
+                                        </span>
+                                        <span v-for="rating in (5 - request.ratings)" class="icons">
+                                            <img src="assets/images/star-line.svg">
+                                        </span>
+                                        <span class="dark_400 fsize14">{{ request.ratings }}/5</span>
                                     </td>
                                     <td>
                                         <div class="float-right">

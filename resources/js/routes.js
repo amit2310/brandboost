@@ -14,6 +14,7 @@ import ListSMSTemplates from './components/admin/templates/ListSMSTemplates.vue'
 import TemplateMaster from './components/admin/templates/TemplateMaster';
 import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
+import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
 import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
 import OnsiteCampaignReviews from './components/admin/brandboost/onsite/OnsiteCampaignReviews';
@@ -125,6 +126,7 @@ const routes = [
     { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
 
     /* Review Module */
+    { path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
     { path: '/brandboost/review_campaigns/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
     { path: '/reviews/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
