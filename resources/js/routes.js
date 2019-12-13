@@ -16,6 +16,7 @@ import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
 import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
+import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
 import OnsiteCampaignReviews from './components/admin/brandboost/onsite/OnsiteCampaignReviews';
 import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
@@ -134,6 +135,7 @@ const routes = [
     { path: '/reviews/onsite/setup/:id/3', component: onsiteStep3, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/4', component: onsiteStep4, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/reviews/:id', component: onsiteReviewDetails, props : {title : 'On Site Reviews'} },
 
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },

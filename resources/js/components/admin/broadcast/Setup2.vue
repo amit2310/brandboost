@@ -28,16 +28,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="email_config_list">
-                                <li><a class="done" href="#"><span class="num_circle"><span class="num">1</span><span
+                                <li><a class="done" href="javascript:void(0);" @click="displayStep(1)"><span class="num_circle"><span class="num">1</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Basic
                                     campaign info</a></li>
-                                <li><a class="active" href="#"><span class="num_circle"><span class="num">2</span><span
+                                <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Content &
                                     Design</a></li>
-                                <li><a href="#"><span class="num_circle"><span class="num">3</span><span
+                                <li><a href="javascript:void(0);" @click="displayStep(3)"><span class="num_circle"><span class="num">3</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
-                                <li><a href="#"><span class="num_circle"><span class="num">4</span><span
+                                <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Review &
                                     confirm</a></li>
                             </ul>

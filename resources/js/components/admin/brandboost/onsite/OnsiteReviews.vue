@@ -79,6 +79,11 @@
                                         </button>
                                         <div class="dropdown-menu" x-placement="bottom-start"
                                              style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item"
+                                               href="javascript:void(0);" @click="navigateToReview(review.id)"
+
+                                            ><i
+                                                class="dripicons-user text-muted mr-2"></i> Details</a>
                                             <a v-if="review.subscriberstatus == 'active'" class="dropdown-item"
                                                href="javascript:void(0);"
                                                @click="changeStatus(review.subscriberid, '0')"><i
@@ -187,6 +192,9 @@
                 this.loading = true;
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            navigateToReview: function(id){
+                window.location.href = '/admin#/reviews/onsite/reviews/'+id;
             }
         }
 

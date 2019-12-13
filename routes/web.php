@@ -177,6 +177,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/media', 'Admin\Brandboost@media');
     Route::post('admin/brandboost/reviewdetails/{id}', 'Admin\Brandboost@reviewDetails');
     Route::get('admin/brandboost/reviewdetails/{id}', 'Admin\Brandboost@reviewDetails');
+    Route::get('admin/brandboost/reviewInfo/{id}', 'Admin\Brandboost@reviewInfo');
     Route::post('admin/brandboost/setTab/', 'Admin\Brandboost@setTab');
     Route::get('admin/brandboost/offsite_overview', 'Admin\Brandboost@offsiteOverview');
     Route::get('admin/brandboost/offsite', 'Admin\Brandboost@offsite');
@@ -224,6 +225,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaignSpecific');
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
+    Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
 
 
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');

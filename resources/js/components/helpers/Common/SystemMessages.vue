@@ -15,6 +15,9 @@
             SuccessMessage
         },
         props : ['successMsg', 'errorMsg'],
+        mounted() {
+
+        },
 
         computed: {
             /*errors() {
