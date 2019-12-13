@@ -224,6 +224,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaignSpecific');
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
+    Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
 
 
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');

@@ -1,5 +1,5 @@
 <template>
-    <div class="system-message alert alert-success" role="alert" v-if="message">
+    <div class="system-message alert alert-success" role="alert" v-if="message" v-show="isAllowed">
         <button @click.stop="clearMessage()" class="close">&times;</button>
         <p>{{ message }}</p>
     </div>
@@ -8,9 +8,14 @@
     export default {
         name: 'success-message',
         props: ['message'],
+        data(){
+            return {
+                isAllowed: true
+            }
+        },
         methods: {
             clearMessage : function () {
-                this.message = '';
+                this.isAllowed = false;
             }
         }
     }
