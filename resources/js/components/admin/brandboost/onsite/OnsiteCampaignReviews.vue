@@ -114,8 +114,14 @@
                                         </span>
                                         <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(review.firstname) }} {{ capitalizeFirstLetter(review.lastname) }}</span>
                                     </td>
-                                    <td><span><img src="assets/images/mail-line.svg"/></span>&nbsp; {{ capitalizeFirstLetter(review.tracksubscribertype) }} </td>
-                                    <td>{{ review.email }}</td>
+                                    <td>
+                                        <span><img src="assets/images/mail-line.svg"/></span>&nbsp;{{ review.email }}
+                                    </td>
+                                    <td>
+                                        {{ setStringLimit(capitalizeFirstLetter(review.review_title), 25) }}
+                                        <br />
+                                        <span><em>( {{ review.review_type }} )</em></span>
+                                    </td>
                                     <td>{{ displayDateFormat('M d, h:i A', review.created) }}</td>
                                     <td class="text-right">
                                         <span v-for="rating in review.ratings" class="icons">
@@ -125,6 +131,11 @@
                                             <img src="assets/images/star-line.svg">
                                         </span>
                                         <span class="dark_400 fsize14">{{ review.ratings }}/5</span>
+                                        <br />
+                                        <span v-if="review.ratings >= 4" class="dark_400 fsize14">Positive</span>
+                                        <span v-else-if="review.ratings == 3" class="dark_400 fsize14">Neutral</span>
+                                        <span v-else-if="review.ratings < 3 && review.ratings > 1" class="dark_400 fsize14">Negative</span>
+                                        <span v-else class="dark_400 fsize14">&nbsp;</span>
                                     </td>
                                     <td>
                                         <div class="float-right">

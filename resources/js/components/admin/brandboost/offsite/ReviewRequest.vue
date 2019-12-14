@@ -143,6 +143,11 @@
                                             <img src="assets/images/star-line.svg">
                                         </span>
                                         <span class="dark_400 fsize14">{{ request.ratings }}/5</span>
+                                        <br />
+                                        <span v-if="request.ratings >= 4" class="dark_400 fsize14">Positive</span>
+                                        <span v-else-if="request.ratings == 3" class="dark_400 fsize14">Neutral</span>
+                                        <span v-else-if="request.ratings < 3 && request.ratings > 1" class="dark_400 fsize14">Negative</span>
+                                        <span v-else class="dark_400 fsize14">&nbsp;</span>
                                     </td>
                                     <td>
                                         <div class="float-right">
