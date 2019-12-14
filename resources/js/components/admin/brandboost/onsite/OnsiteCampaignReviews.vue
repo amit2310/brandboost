@@ -103,7 +103,7 @@
                             <table class="table table-borderless">
                                 <tbody>
                                 <tr v-for="review in reviews">
-                                    <td>
+                                    <td @click="navigateToDetails(review.id)" style="cursor:pointer;">
                                         <span class="table-img mr15">
                                            <!-- <span class="fl_name bkg_red_light red_300">vw</span>-->
                                             <user-avatar
@@ -112,12 +112,14 @@
                                                 :lastname="review.lastname"
                                             ></user-avatar>
                                         </span>
-                                        <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(review.firstname) }} {{ capitalizeFirstLetter(review.lastname) }}</span>
+                                        <span class="htxt_medium_14 dark_900">
+                                            {{ capitalizeFirstLetter(review.firstname) }} {{ capitalizeFirstLetter(review.lastname) }}
+                                        </span>
                                     </td>
                                     <td>
                                         <span><img src="assets/images/mail-line.svg"/></span>&nbsp;{{ review.email }}
                                     </td>
-                                    <td>
+                                    <td @click="navigateToDetails(review.id)" style="cursor:pointer;">
                                         {{ setStringLimit(capitalizeFirstLetter(review.review_title), 25) }}
                                         <br />
                                         <span><em>( {{ review.review_type }} )</em></span>
@@ -201,6 +203,9 @@
             //console.log("Component mounted "+this.$route.params.id)
         },
         methods: {
+            navigateToDetails: function(id){
+                window.location.href='#/reviews/onsite/reviews/'+id;
+            },
             loadPaginatedData: function () {
                 axios.get('/admin/brandboost/reviews/' + this.$route.params.id+'/?page='+this.current_page)
                     .then(response => {
