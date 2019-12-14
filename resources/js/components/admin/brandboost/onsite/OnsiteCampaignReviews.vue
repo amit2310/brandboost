@@ -103,7 +103,7 @@
                             <table class="table table-borderless">
                                 <tbody>
                                 <tr v-for="review in reviews">
-                                    <td>
+                                    <td @click="navigateToDetails(review.id)" style="cursor:pointer;">
                                         <span class="table-img mr15">
                                            <!-- <span class="fl_name bkg_red_light red_300">vw</span>-->
                                             <user-avatar
