@@ -163,6 +163,8 @@
      			<li><a target="_blank" href="email_campaign2.php">Email Camapaign 2</a></li>
      			<li><a target="_blank" href="email_campaign3.php">Email Camapaign 3</a></li>
      			<li><a target="_blank" href="email_campaign4.php">Email Camapaign 4</a></li>
+     			<li><a target="_blank" href="email_campaign_list.php">Email Camapaign List</a></li>
+     			<li><a target="_blank" href="email_campaign_new.php">Email Camapaign New </a></li>
      			<li><a target="_blank" href="email_campaign5.php">Email Camapaign 5 <span class="green_400"> Chart </span></a></li>
      			
      			<hr>
