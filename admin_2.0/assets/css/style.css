@@ -1298,6 +1298,10 @@ PAGE WITH SIDEBAR CSS
 .time_badge{position: absolute; top: 15px; right: 0px; width: 50px; height: 16px; text-align: right}
 .time_badge .badge.badge-grey.chatlist{background: #73ABFF!important; font-size: 10px; color: #ffffff!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; margin-left: 5px  }
 
+.list_with_icons2{margin: 0; padding: 0;}
+.list_with_icons2 li{padding: 15px 0; border-bottom: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px; position: relative; z-index: 9}
+.list_with_icons2 li:last-child{border: none}
+.list_with_icons2 li p{margin: 0; padding: 0; line-height: 32px;}
 
 
 .circle_32{width: 32px; height: 32px; background: #333;  line-height: 32px; display: block; text-align: center; border-radius: 50px; margin-top: 6px;} 
@@ -1307,6 +1311,8 @@ PAGE WITH SIDEBAR CSS
 .circle_32 span.text{ opacity:1; }
 .circle_32.img{line-height: 30px;}
 
+
+.profile_icons a{display: inline-block!important; margin: 0 10px 10px 0}
 
 
 .media_left{display: inline-block; margin-right: 13px; float: left;}
