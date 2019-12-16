@@ -145,9 +145,10 @@
                                                 <span><img src="assets/images/more-vertical.svg"></span>
                                             </button>
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a v-if="review.subscriberstatus == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(review.subscriberid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                                <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(review.subscriberid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(review.subscriberid,review.trackinglogid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                                <a v-if="review.status == '2'" class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Pending</a>
+                                                <a v-if="review.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(review.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                                <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(review.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(review.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -216,7 +217,7 @@
                         this.campaigns = response.data.oCampaign;
                         this.allData = response.data.allData;
                         this.reviews = response.data.aReviews;
-                        console.log(this.reviews);
+                        //console.log(this.reviews);
                     });
             },
             showPaginationData: function (p) {
@@ -228,6 +229,43 @@
                 this.loading = true;
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            changeStatus: function(id, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/reviews/update_review_status', {
+                        review_id:id,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            },
+            deleteItem: function(id) {
+                if(confirm('Are you sure you want to delete this item?')){
+                    //Do axios
+                    axios.post('/admin/reviews/deleteReview', {
+                        reviewid:id,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
             }
         }
     }

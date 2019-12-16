@@ -32,6 +32,11 @@ class Questions extends Controller {
         $oQuestions = $mQuestion->getAllBrandboostQuestions($userID);
         $bActiveSubsription = $mUsers->isActiveSubscription();
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Onsite Questions' => '#/brandboost/questions/'
+        );
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -42,8 +47,10 @@ class Questions extends Controller {
 
         $aData = array(
             'title' => 'Onsite Questions',
+            'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
-            'oQuestions' => $oQuestions,
+            'allData' => $oQuestions,
+            'oQuestions' => $oQuestions->items(),
             'campaignId' => $campaignId,
             'bActiveSubsription' => $bActiveSubsription
         );
@@ -65,23 +72,34 @@ class Questions extends Controller {
             $oBrandboost = BrandboostModel::getBrandboost($campaignId);
             $oQuestions = QuestionModel::getBrandboostQuestions($campaignId);
             $bActiveSubsription = UsersModel::isActiveSubscription();
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Onsite Questions' => '#/brandboost/questions/'
+            );
+
+            /*$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite_setup/' . $campaignId) . '">' . $oBrandboost[0]->brand_title . '</a></li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Questions" class="sidebar-control active hidden-xs ">Questions</a></li>
-                </ul>';
+                </ul>';*/
 
             $aData = array(
                 'title' => 'Onsite Questions',
-                'pagename' => $breadcrumb,
-                'oQuestions' => $oQuestions,
+                'breadcrumb' => $aBreadcrumb,
+                /*'pagename' => $breadcrumb,*/
+                'allData' => $oQuestions,
+                'oQuestions' => $oQuestions->items(),
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );
 
-			return view('admin.question.question_list', $aData);
+			//return view('admin.question.question_list', $aData);
+
+            echo json_encode($aData);
+            exit();
         }
     }
 

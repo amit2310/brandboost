@@ -276,10 +276,10 @@
                 window.location.href='#/for/'+companyName+'/'+campaignName+'-'+id;
             },
             showReviews: function(id){
-                window.location.href='#/admin/brandboost/reviews/'+id;
+                window.location.href='#/brandboost/reviews/'+id;
             },
             showQuestions: function(id){
-                window.location.href='#/admin/questions/view/'+id;
+                window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/onsite?page='+this.current_page)

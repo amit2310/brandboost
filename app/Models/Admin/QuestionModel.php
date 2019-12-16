@@ -24,10 +24,11 @@ class QuestionModel extends Model
 			->orderBy('tbl_reviews_question.id', 'desc')
 			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_reviews_question.campaign_id')
 			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_reviews_question.user_id')
-			->get();
+			//->get();
+            ->paginate(10);
         return $oData;
     }
-	
+
 	/**
      * Used to get brandboost all answers of question response
      * @param type $questionID
@@ -46,7 +47,7 @@ class QuestionModel extends Model
 			->get();
         return $oData;
     }
-	
+
 	/**
      * Used to get brandboost all questions by campaign id
      * @param type $campId
@@ -60,10 +61,12 @@ class QuestionModel extends Model
 			->leftJoin('tbl_users', 'tbl_reviews_question.user_id', '=' , 'tbl_users.id')
 			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_reviews_question.campaign_id')
 			->orderBy('id', 'desc')
-			->get();
+			//->get();
+            ->paginate(10);
+
         return $oData;
     }
-	
+
 	/**
      * Used to get questions details by question id
      * @param type $questionID
@@ -78,7 +81,7 @@ class QuestionModel extends Model
 			->first();
         return $oData;
     }
-	
+
 	/**
      * Used to get questions notes by question id
      * @param type $questionId
@@ -201,12 +204,12 @@ class QuestionModel extends Model
 
         return true;
     }
-	
+
 
     public function getReviewAnswerHelpful($answerID){
 
         $response = array();
-        
+
         $this->db->order_by('id', 'DESC');
         $this->db->where('helpful_yes', 1);
         $this->db->where('answer_id', $answerID);
@@ -217,12 +220,12 @@ class QuestionModel extends Model
         }
         return $response;
     }
-    
 
-    
-    
-    
-   
+
+
+
+
+
 
     /*public function getBrandboostQuestions($brandboostID) {
         $response = array();
@@ -269,8 +272,8 @@ class QuestionModel extends Model
         }
         return $response;
     }
-    
-    
+
+
 
     public function getAllAnswerModified($questionID, $id = '') {
 
@@ -279,7 +282,7 @@ class QuestionModel extends Model
                 . "tbl_reviews_question.media_url, tbl_reviews_question.question, tbl_reviews_question.status AS questionStatus, "
                 . "tbl_reviews_question.created AS questionCreated, tbl_reviews_question.updated AS questionUpdated");
         $this->db->join("tbl_reviews_question_answers", "tbl_reviews_question_answers.question_id = tbl_reviews_question.id", "LEFT");
-                
+
         if (!empty($id)) {
             $this->db->where('tbl_reviews_question_answers.id', $id);
         }
@@ -294,7 +297,7 @@ class QuestionModel extends Model
         return $response;
     }
 
-    
+
     /**
     * This function is used to delete the Question
     * @param type $quesId
@@ -375,8 +378,8 @@ class QuestionModel extends Model
                 ->delete();
         return true;
     }
-	
-	
+
+
 
     /* public function getQuesDetailByCamp($campId, $revId) {
 
