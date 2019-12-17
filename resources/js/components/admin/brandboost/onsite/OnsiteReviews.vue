@@ -61,6 +61,7 @@
                                 <td><span><img src="/assets/images/mail-line.svg"/></span>&nbsp; Email
                                 </td>
                                 <td>{{ review.email }}</td>
+                                <td><a href="javascript:void(0);" target="_blank" @click="navigateToReview(review.id)">{{ setStringLimit(review.comment_text, 40) }}</a></td>
                                 <td>{{ displayDateFormat('M d, h:i A', review.created) }}</td>
                                 <td class="text-right">
                                 <span class="icons" v-for="num in [1,2,3,4,5]">
