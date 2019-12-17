@@ -125,6 +125,16 @@
                                         <span><em>( {{ review.review_type }} )</em></span>
                                     </td>
                                     <td>{{ displayDateFormat('M d, h:i A', review.created) }}</td>
+                                    <td :id="'review_tag_' + review.id">
+                                        <button type="button" class="btn btn-xs btn_white_table bluee dropdown-toggle" data-toggle="dropdown"> {{ reviewTags[review.id].length }} Tags <span class="caret"></span> </button>
+                                        <ul class="dropdown-menu dropdown-menu-right tagss">
+                                            <span v-if="reviewTags.length" v-for="reviewTag in reviewTags">
+                                                <button class="btn btn-xs btn_white_table pr10"> {{ reviewTag.tag_name }} </button>
+                                            </span>
+                                            <button class="btn btn-xs plus_icon ml10 applyInsightTagsReviewsNew" :reviewid="review.id" action_name="review-tag"><i class="icon-plus3"></i></button>
+                                        </ul>
+                                        <button class="btn btn-xs plus_icon ml10 applyInsightTagsReviewsNew" :reviewid="review.id" action_name="review-tag"><i class="icon-plus3"></i></button>
+                                    </td>
                                     <td class="text-right">
                                         <span v-for="rating in review.ratings" class="icons">
                                             <img src="assets/images/star-fill_yellow_16.svg">
@@ -148,6 +158,9 @@
                                                 <a v-if="review.status == '2'" class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Pending</a>
                                                 <a v-if="review.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(review.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                                 <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(review.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="navigateToDetails(review.id)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                                <a v-if="review.review_type == 'text'" class="dropdown-item editReviewNew" :reviewid="review.id" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                                <a v-else class="dropdown-item editVideoReviewNew" :reviewid="review.id" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(review.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
@@ -170,6 +183,146 @@
         <!--******************
           Content Area End
          **********************-->
+
+        <div id="editReviewNew" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" class="form-horizontal" id="updateReviewNew" action="javascript:void(0);">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Title</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" name="edit_review_title" id="edit_review_title" placeholder="Title" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Comment</label>
+                                <div class="col-lg-9">
+                                    <textarea class="form-control" placeholder="Leave Review" name="edit_content" id="edit_content" required ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Rating</label>
+                                <div class="col-lg-9">
+                                    <div class="step_star_new" style="padding: 5px 0;">
+
+                                        <ul id='stars'>
+
+                                            <li class='star' title='Poor' data-value='1'>
+
+                                                <i class='fa fa-star fa-fw' style="margin: 0;"></i>
+
+                                            </li>
+
+                                            <li class='star' title='Fair' data-value='2'>
+
+                                                <i class='fa fa-star fa-fw' style="margin: 0;"></i>
+
+                                            </li>
+
+                                            <li class='star' title='Good' data-value='3'>
+
+                                                <i class='fa fa-star fa-fw' style="margin: 0;"></i>
+
+                                            </li>
+
+                                            <li class='star' title='Excellent' data-value='4'>
+
+                                                <i class='fa fa-star fa-fw' style="margin: 0;"></i>
+
+                                            </li>
+
+                                            <li class='star' title='WOW!!!' data-value='5'>
+
+                                                <i class='fa fa-star fa-fw' style="margin: 0;"></i>
+
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" value="0" id="ratingValue" name="ratingValue">
+                            <input type="hidden" name="edit_reviewid" id="edit_reviewid" value="">
+                            <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-check"></i> Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="editVideoReviewNew" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" class="form-horizontal" id="updateVideoReviewNew" action="javascript:void(0);">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Update Review</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Title</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" name="edit_review_title" id="edit_video_review_title" placeholder="Title" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Rating</label>
+                                <div class="col-lg-9">
+                                    <div class="step_star_new" style="padding: 5px 0;">
+                                        <ul id='stars_video'>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" value="0" id="ratingValueVideo" name="ratingValueVideo">
+                            <input type="hidden" name="edit_video_content" id="edit_video_content" value="">
+                            <input type="hidden" name="edit_video_reviewid" id="edit_video_reviewid" value="">
+                            <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-check"></i> Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="ReviewTagListModalNew" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" name="frmReviewTagListModalNew" id="frmReviewTagListModalNew" action="javascript:void();">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Apply Tags</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body" id="tagEntireListReview"></div>
+
+                        <div class="modal-footer modalFooterBtn">
+                            <input type="hidden" name="review_id" id="tag_review_id" />
+                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn dark_btn">Apply Tag</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -195,7 +348,8 @@
                 allData: {},
                 current_page: 1,
                 breadcrumb: '',
-                campaigns: ''
+                campaigns: '',
+                reviewTags: ''
             }
         },
         mounted() {
@@ -215,9 +369,10 @@
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
                         this.campaigns = response.data.oCampaign;
+                        this.reviewTags = response.data.reviewTags;
                         this.allData = response.data.allData;
                         this.reviews = response.data.aReviews;
-                        //console.log(this.reviews);
+                        console.log(this.reviewTags);
                     });
             },
             showPaginationData: function (p) {
@@ -269,4 +424,220 @@
             }
         }
     }
+
+
+    /* Normal Script */
+    $(document).ready(function () {
+        $(document).on('click', '.editReviewNew', function () { alert("here"); return false;
+            var reviewID = $(this).attr('reviewid');
+            $.ajax({
+                url: '/admin/reviews/getReviewById',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: {reviewid: reviewID},
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        var reviewData = data.result[0];
+
+                        $('#edit_content').val(reviewData.comment_text);
+                        $('#edit_review_title').val(reviewData.review_title);
+                        $('#edit_reviewid').val(reviewData.id);
+                        $('#stars li').each(function (index, value) {
+                            $('#ratingValue').val(reviewData.ratings);
+                            if (reviewData.ratings > index) {
+                                $(this).addClass('selected');
+                            } else {
+                                $(this).removeClass('selected');
+                            }
+                        });
+                        $("#editReviewNew").modal();
+
+                    } else {
+
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '.editVideoReviewNew', function () {
+            var reviewID = $(this).attr('reviewid');
+            $.ajax({
+                url: '/admin/reviews/getReviewById',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: {reviewid: reviewID},
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        var reviewData = data.result[0];
+                        //console.log(reviewData); return false;
+                        if(reviewData.comment_video) {
+                            $('#edit_video_content').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + reviewData.comment_video);
+                        }
+                        $('#edit_video_reviewid').val(reviewData.id);
+                        $('#edit_video_review_title').val(reviewData.review_title);
+                        var start = '';
+                        var startName = ['', 'Poor', 'Fair', 'Good', 'Excellent', 'WOW!!!'];
+                        for (var inc = 1; inc <= 5; inc++) {
+                            if (inc < reviewData.ratings || inc == reviewData.ratings) {
+                                start += "<li class='star txt_yellow' style='display:inline; color: #FFCC00;' title='" + startName[inc] + "' data-value='" + inc + "'><i class='fa fa-star fa-fw' style='margin: 0;'></i></li>";
+                            } else {
+                                start += "<li class='star txt_grey' style='display:inline;' title='" + startName[inc] + "' data-value='" + inc + "'><i class='fa fa-star-o fa-fw' style='margin: 0;'></i></li>";
+                            }
+                        }
+
+                        $('#stars_video').html(start);
+                        $('#ratingValueVideo').val(reviewData.ratings);
+                        $('#stars_video li').each(function (index, value) {
+                            if (reviewData.ratings > index) {
+                                $(this).addClass('selected');
+                            } else {
+                                $(this).removeClass('selected');
+                            }
+                        });
+
+                        $("#editVideoReviewNew").modal();
+
+                    } else {
+
+                    }
+                }
+            });
+        });
+        $("#updateReviewNew").submit(function () {
+
+            $('.overlaynew').show();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                url: '/admin/reviews/update_review',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        window.location.href = '';
+                    } else {
+                        alertMessage('Error: Some thing wrong!');
+                        $('.overlaynew').hide();
+                    }
+                }
+            });
+        });
+
+
+        $("#updateVideoReviewNew").submit(function () {
+
+            $('.overlaynew').show();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                url: '/admin/reviews/update_video_review',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: "json",
+                success: function (data) {
+                    //console.log("here "+data.status); return false;
+                    if (data.status == 'success') {
+                        //window.location.href = '';
+                        window.location.reload();
+                    } else {
+                        alertMessage('Error: Some thing wrong!');
+                        $('.overlaynew').hide();
+                    }
+                }
+            });
+        });
+
+        var ratingValueVideo = 0;
+
+        $(document).on('click', '#stars_video li', function () {
+            var onStar = parseInt($(this).data('value'), 10);
+            var stars = $(this).parent().children('li.star');
+
+            for (var i = 0; i < stars.length; i++) {
+                $(stars[i]).removeClass('selected');
+                $(stars[i]).children('i').removeClass('fa-star');
+                $(stars[i]).children('i').addClass('fa-star-o');
+            }
+
+            for (var i = 0; i < onStar; i++) {
+                $(stars[i]).addClass('selected');
+                $(stars[i]).children('i').removeClass('fa-star-o');
+                $(stars[i]).children('i').addClass('fa-star');
+            }
+
+            ratingValueVideo = parseInt($('#stars_video li.selected').last().data('value'), 10);
+            $('#ratingValueVideo').val(ratingValueVideo);
+
+        });
+
+        $(document).on("click", ".applyInsightTagsReviewsNew", function () {
+            var review_id = $(this).attr("reviewid");
+            var feedback_id = $(this).attr("feedback_id");
+            var action_name = $(this).attr("action_name");
+
+            $.ajax({
+                url: '/admin/tags/listAllTags',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: {review_id: review_id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        var dataString = data.list_tags;
+                        if (dataString.search('have any tags yet :-') > 0) {
+                            $('.modalFooterBtn').hide();
+                        } else {
+                            $('.modalFooterBtn').show();
+                        }
+
+                        $("#tagEntireListReview").html(dataString);
+                        $("#tag_review_id").val(review_id);
+                        $("#tag_feedback_id").val(feedback_id);
+                        if (action_name == 'review-tag') {
+                            $("#ReviewTagListModalNew").modal("show");
+                        } else if (action_name == 'feedback-tag') {
+                            $("#FeedbackTagListModal").modal("show");
+                        }
+                    }
+                }
+            });
+        });
+
+        $("#frmReviewTagListModalNew").submit(function () {
+            var formdata = $("#frmReviewTagListModalNew").serialize();
+            $.ajax({
+                url: '/admin/tags/applyReviewTag',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: formdata,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        $("#review_tag_" + data.id).html(data.refreshTags);
+                        $("#ReviewTagListModalNew").modal("hide");
+                        //window.location.href = '';
+                    } else {
+                        $('.overlaynew').hide();
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
 </script>
