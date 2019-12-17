@@ -491,6 +491,50 @@ class Brandboost extends Controller
         exit;
     }
 
+    public function OnsiteReviewStats(Request $request)
+    {
+        $brandboostID = $request->id;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $mBrandboost = new BrandboostModel();
+
+        if (empty($brandboostID)) {
+            redirect("#admin/reviews/onsite");
+            exit;
+        }
+
+        $mReviews = new ReviewsModel();
+        $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
+        $moduleName = 'brandboost';
+
+
+        if (!empty($aReviews)) {
+            foreach ($aReviews->items() as $aReview) {
+                $aReview->getComm = getCampaignCommentCount($aReview->id);
+                $aReview->reviewTags = getTagsByReviewID($aReview->id);
+                $aReview->smilyImage = ratingView($aReview->ratings);
+
+                $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->id, 0, 100);
+
+                if(!empty($getBrandboost[0]->reviewResponse)) {
+                    $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
+                }
+            }
+        }
+
+        $aData = array(
+
+            'allData' => $aReviews, // $allSubscribers,
+            'reviews' => $aReviews->items(),
+            'aUserInfo' => $oUser
+        );
+
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
 
     /**
      * Used to get campaign review request data
@@ -815,6 +859,9 @@ class Brandboost extends Controller
         $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
         $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
         $reviewData = ReviewsModel::getReviewInfo($reviewID);
+        if($reviewData->isNotEmpty()){
+            $bbID = $reviewData->bbId;
+        }
         $reviewTags = getTagsByReviewID($reviewID);
         $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
         if (!empty($reviewData->product_id)) {
@@ -877,11 +924,10 @@ class Brandboost extends Controller
 
         $reviewID = $request->id;
         $revID = $request->reviewid;
-        $actionName = $request->action;
-        $mUser = new UsersModel();
         $product_id = "";
         $product_name = "";
         $brand_title = "";
+        $mReviews = new ReviewsModel();
 
         $reviewID = ($revID > 0) ? $revID : $reviewID;
         $productData = array();
@@ -891,6 +937,41 @@ class Brandboost extends Controller
         $reviewData = ReviewsModel::getReviewInfo($reviewID);
         $reviewTags = getTagsByReviewID($reviewID);
         $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
+        if(!empty($reviewData)){
+            $bbID = $reviewData->bbId;
+            $aAllReviews = $mReviews->getCampaignAllReviews($bbID, true);
+            if(!empty($aAllReviews)){
+                $oneStar = $twoStar = $threeStar = $fourStar = $fiveStar = $otherStar = $totalReviews = 0;
+                foreach ($aAllReviews as $aReview){
+                    $totalReviews++;
+                    $rating = $aReview->ratings;
+                    if($rating == 1){
+                        $oneStar++;
+                    }else if($rating == 2){
+                        $twoStar++;
+                    }else if($rating == 3){
+                        $threeStar++;
+                    }else if($rating == 4){
+                        $fourStar++;
+                    }else if($rating == 5){
+                        $fiveStar++;
+                    }
+                }
+            }
+            $aReviewStats = [
+                'totalReviews' => $totalReviews,
+                'oneStar' => $oneStar,
+                'oneStarPercent' => number_format((($oneStar*100)/$totalReviews),2),
+                'twoStar' => $twoStar,
+                'twoStarPercent' => number_format((($twoStar*100)/$totalReviews),2),
+                'threeStar' => $threeStar,
+                'threeStarPercent' => number_format((($threeStar*100)/$totalReviews),2),
+                'fourStar' => $fourStar,
+                'fourStarPercent' => number_format((($fourStar*100)/$totalReviews),2),
+                'fiveStar' => $fiveStar,
+                'fiveStarPercent' => number_format((($fiveStar*100)/$totalReviews),2)
+            ];
+        }
         if (!empty($reviewData->product_id)) {
             $productData = BrandboostModel::getProductDataById($reviewData->product_id);
             $product_id = $reviewData->product_id;
@@ -907,7 +988,7 @@ class Brandboost extends Controller
         );
 
 
-        $aData = array(
+        $aData = [
             'title' => 'Brand Boost Review Details',
             'breadcrumb' => $aBreadcrumb,
             'reviewData' => $reviewData,
@@ -919,8 +1000,8 @@ class Brandboost extends Controller
             'reviewID' => $reviewID,
             'totalComment' => $totalComment,
             'productName' => $productName,
-
-        );
+            'reviewStats' => $aReviewStats
+        ];
 
         echo json_encode($aData);
         exit;
