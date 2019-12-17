@@ -224,9 +224,10 @@ class Tags extends Controller {
             echo json_encode($response);
             exit;
         }
-        $reviewID = base64_url_decode(strip_tags($request->review_id));
-        $feedbackID = base64_url_decode(strip_tags($request->feedback_id));
-        $questionID = base64_url_decode(strip_tags($request->question_id));
+
+        $reviewID = $request->review_id;//base64_url_decode(strip_tags($request->review_id));
+        $feedbackID = $request->feedback_id;//base64_url_decode(strip_tags($request->feedback_id));
+        $questionID = $request->question_id;//base64_url_decode(strip_tags($request->question_id));
 
         if ($reviewID > 0) {
             $aAppliedTags = $mTag->getTagsDataByReviewID($reviewID);
@@ -241,6 +242,7 @@ class Tags extends Controller {
         $aTag = TagsModel::getClientTags($userID);
         $sTags = view('admin.tags.mytags', array('oTags' => $aTag, 'aAppliedTags' => $aAppliedTags))->render();
         $response = array('status' => 'success', 'list_tags' => $sTags);
+
         echo json_encode($response);
         exit;
     }
@@ -675,7 +677,7 @@ class Tags extends Controller {
         $userID = $aUser->id;
         $mTag = new TagsModel();
 
-        $reviewID = base64_url_decode(strip_tags($request->review_id));
+        $reviewID = $request->review_id;//base64_url_decode(strip_tags($request->review_id));
         $aTagID = $request->applytag;
         $aInput = array(
             'aTagIDs' => $aTagID,
@@ -689,16 +691,17 @@ class Tags extends Controller {
             //Get refreshed tag list
             $oTags = $mTag->getTagsDataByReviewID($reviewID);
 
-            $sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'reviewid', 'fieldValue' => base64_url_encode($reviewID), 'actionName' => 'review-tag', 'actionClass' => 'applyInsightTagsReviews'))->render();
+            //$sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'reviewid', 'fieldValue' => $reviewID, 'actionName' => 'review-tag', 'actionClass' => 'applyInsightTagsReviews'))->render();
+            $sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'reviewid', 'fieldValue' => $reviewID, 'actionName' => 'review-tag', 'actionClass' => 'applyInsightTagsReviewsNew'))->render();
 
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id' => $reviewID);
-            echo json_encode($response);
-            exit;
+
         } else {
             $response = array('status' => 'error', 'msg' => 'Something went wrong!');
-            echo json_encode($response);
-            exit;
         }
+
+        echo json_encode($response);
+        exit;
     }
 
     public function applyFeedbackTag(Request $request) {
