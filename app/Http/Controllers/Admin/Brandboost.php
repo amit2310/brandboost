@@ -747,72 +747,100 @@ class Brandboost extends Controller
      */
     public function media()
     {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
 
-        $aReviews = $mReviews->getCampaignReviewsDetail();
+        $aReviews = $mReviews->getCampaignReviewsDetail('', $userID, true);
         $allMediaImagesShow = array();
         $hasImages = $hasVideos = false;
 
         if (!empty($aReviews)) {
-            foreach ($aReviews as $review) {
+            foreach ($aReviews->items() as $review) {
+                $mediaUrl = [];
                 $mediaUrl = @(unserialize($review->media_url));
+                if(empty($mediaUrl) && !empty($review->media_url)){
+                    $getFileSize = '512KB';
+                    $smilyImage = smilyRating($review->ratings);
+                    $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $review->media_url;
+                    $fileExt = pathinfo($review->media_url, PATHINFO_EXTENSION);
+                    $mediaUrl[0] = [
+                        'smily' => $smilyImage,
+                        'filePath' => $filePath,
+                        'fileExt' => $fileExt,
+                        'allowfilesize' => $getFileSize,
+                        'media_type' => ($fileExt == 'mp4') ? 'video' : 'image'
+                    ];
+                }else{
+                    if (!empty($mediaUrl)) {
+                        foreach ($mediaUrl as $key => $value) {
 
-                if (!empty($mediaUrl)) {
-                    foreach ($mediaUrl as $key => $value) {
+                            if (!in_array($value['media_url'], $allMediaImagesShow)) {
+                                if($value['media_type'] == 'image'){
+                                    $hasImages = true;
+                                }else{
+                                    $hasVideos = true;
+                                }
+                                $allMediaImagesShow[] = $value['media_url'];
 
-                        if (!in_array($value['media_url'], $allMediaImagesShow)) {
-                            if($value['media_type'] == 'image'){
-                                $hasImages = true;
-                            }else{
-                                $hasVideos = true;
+                                $smilyImage = smilyRating($review->ratings);
+
+                                $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $value['media_url'];
+
+                                $fileExt = pathinfo($value['media_url'], PATHINFO_EXTENSION);
+
+                                if ($fileExt == 'mp4') {
+                                    $extFileImage = base_url('assets/images/mp4.png');
+                                } else if ($fileExt == 'png') {
+                                    $extFileImage = base_url('assets/images/png.png');
+                                } else if ($fileExt == 'jpg' || $fileExt == 'jpeg') {
+                                    $extFileImage = base_url('assets/images/jpg.png');
+                                } else {
+                                    $extFileImage = base_url('assets/images/file_blank.png');
+                                }
+
+                                $getFileSize = '512KB';
+                                $value['smily'] = $smilyImage;
+                                $value['filePath'] = $filePath;
+                                $value['fileExt'] = $fileExt;
+                                $value['allowfilesize'] = $getFileSize;
+                                $mediaUrl[$key] = $value;
+
                             }
-                            $allMediaImagesShow[] = $value['media_url'];
-
-                            $smilyImage = smilyRating($review->ratings);
-
-                            $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $value['media_url'];
-
-                            $fileExt = pathinfo($value['media_url'], PATHINFO_EXTENSION);
-
-                            if ($fileExt == 'mp4') {
-                                $extFileImage = base_url('assets/images/mp4.png');
-                            } else if ($fileExt == 'png') {
-                                $extFileImage = base_url('assets/images/png.png');
-                            } else if ($fileExt == 'jpg' || $fileExt == 'jpeg') {
-                                $extFileImage = base_url('assets/images/jpg.png');
-                            } else {
-                                $extFileImage = base_url('assets/images/file_blank.png');
-                            }
-
-                            $getFileSize = '512KB';
-                            $value['smily'] = $smilyImage;
-                            $value['filePath'] = $filePath;
-                            $value['fileExt'] = $fileExt;
-                            $value['allowfilesize'] = $getFileSize;
-                            $mediaUrl[$key] = $value;
-
+                            /*pre($mediaUrl);
+                            die;*/
                         }
-                        /*pre($mediaUrl);
-                        die;*/
-                    }
 
+                    }
                 }
+
+
+
                 $review->fileCollection = $mediaUrl;
             }
         }
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite') . '">On site</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Media" class="sidebar-control active hidden-xs ">Media</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Media' => '',
+        );
 
-        $aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews, 'hasImages' => $hasImages, 'hasVideos'=> $hasVideos);
+        $aData = [
+            'title' => 'On Site Brand Boost Media',
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $aReviews,
+            'aReviews' => $aReviews->items(),
+            'hasImages' => $hasImages,
+            'hasVideos'=> $hasVideos
+        ];
+
         //return view('admin.brandboost.media', $aData);
         echo json_encode($aData);
+        exit;
     }
 
 

@@ -15,8 +15,9 @@ class ReviewsModel extends Model {
      * @param type $userID
      * @return type
      */
-    public static function getCampaignReviewsDetail($campaignID = '', $userID = '') {
-        $oData = DB::table('tbl_reviews')
+    public static function getCampaignReviewsDetail($campaignID = '', $userID = '', $pagination=false) {
+        if($pagination == false){
+            $oData = DB::table('tbl_reviews')
                 ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
                 ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.country', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img')
@@ -26,9 +27,25 @@ class ReviewsModel extends Model {
                 ->when(!empty($userID), function ($query) use ($userID) {
                     return $query->where('tbl_brandboost.user_id', $userID);
                 })
+                ->where('tbl_reviews.media_url', '!=', 'a:0:{}')
                 ->orderBy('tbl_reviews.id', 'desc')
                 ->get();
+        }else{
+            $oData = DB::table('tbl_reviews')
+                ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
+                ->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_reviews.campaign_id')
+                ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.avatar', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.country', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img')
+                ->when(!empty($campaignID), function ($query) use ($campaignID) {
+                    return $query->where('tbl_reviews.campaign_id', $campaignID);
+                })
+                ->when(!empty($userID), function ($query) use ($userID) {
+                    return $query->where('tbl_brandboost.user_id', $userID);
+                })
+                ->where('tbl_reviews.media_url', '!=', 'a:0:{}')
+                ->orderBy('tbl_reviews.id', 'desc')
+                ->paginate(10);
 
+        }
         return $oData;
     }
 

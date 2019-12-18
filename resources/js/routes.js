@@ -12,7 +12,6 @@ import PeopleContactsListMapping from './components/admin/contact/PeopleContacts
 import ListTemplates from './components/admin/templates/ListTemplates.vue';
 import ListSMSTemplates from './components/admin/templates/ListSMSTemplates.vue';
 import TemplateMaster from './components/admin/templates/TemplateMaster';
-import Service from './components/Services.vue';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
 import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
@@ -21,6 +20,7 @@ import OnsiteCampaignReviews from './components/admin/brandboost/onsite/OnsiteCa
 import OnsiteCampaignQuestions from './components/admin/brandboost/onsite/OnsiteCampaignQuestions';
 import OnsiteQuestions from './components/admin/brandboost/onsite/questions';
 import OnsiteList from './components/admin/brandboost/onsite/';
+import OnsiteMedia from './components/admin/brandboost/onsite/Media';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import ReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
@@ -111,6 +111,7 @@ const routes = [
     /*Onsite Module*/
     { path: '/brandboost/onsite_overview', component: OnsiteOverview, props:{pageColor: 'onsite_sec'}, meta: {title: 'Onsite overview - Brand Boost'} },
     { path: '/brandboost/onsite', component: OnsiteList, props: {pageColor: 'onsite_sec'} },
+    { path: '/reviews/onsite/media', component: OnsiteMedia, props: {pageColor: 'onsite_sec'} },
     { path: '/brandboost/reviews', component: OnsiteReviews, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/reviews/:id', component: OnsiteCampaignReviews, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite Campaign Reviews - Brand Boost'} },
     { path: '/brandboost/questions/:id', component: OnsiteCampaignQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite Campaign Questions - Brand Boost'} },
