@@ -15,7 +15,7 @@ CARD CLASSES
 /******************************
 SHADOWS STYLES
 ******************************/
-.shadow1{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
+.shadow1{box-shadow: 0px 3pximg_vid_upload_medium 3px rgba(0, 57, 168, 0.04);}
 .shadow2{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06)!important;}
 .shadow_none{box-shadow: none!important;}
 
@@ -88,6 +88,7 @@ FORMS GROUP
 .img_vid_upload{width: 100%; min-height: 320px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_medium{width: 100%; min-height: 180px; border-radius: 4px; background:url(../../assets/images/addfile_txt.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 4px; background:url(../../assets/images/no_image.png) 20px 17px no-repeat #fff; border: 1px solid #dfe5f0;}
+.img_vid_upload_circle{width: 125px; height: 125px;  border-radius: 100px; background:url(../../assets/images/browse_img.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 
 
 
@@ -876,7 +877,7 @@ VISIBLE CLASSES
 }
 
 @media only screen and (max-width:767px){
-
+	.htxt_regular_14{line-height: 160%;}
 }
 
 
