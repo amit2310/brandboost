@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 //use Aws\S3\S3Client;
 //use Aws\Exception\AwsException;
 
+use App\Models\Admin\TagsModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
@@ -624,6 +625,7 @@ class Brandboost extends Controller
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
+        $mTags = new TagsModel();
         $campaignId = $request->id;
         if (!empty($campaignId)) {
 
@@ -645,6 +647,14 @@ class Brandboost extends Controller
 				<li><a class="sidebar-control hidden-xs">Reviews</a></li>
                 </ul>';
 
+            $reviewTags = array();
+            if(!empty($aReviews->items())) {
+                foreach($aReviews->items() as $kRev => $vRev) {
+                    //$vRev->id = 108;
+                    $reviewTags[$vRev->id] = getTagsByReviewID($vRev->id);
+                }
+            }
+
             $aData = array(
                 'title' => 'Brand Boost Reviews',
                 'pagename' => $breadcrumb,
@@ -652,6 +662,7 @@ class Brandboost extends Controller
                 'oCampaign' => $oCampaign,
                 'allData' => $aReviews,
                 'aReviews' => $aReviews->items(),
+                'reviewTags' => $reviewTags,
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );

@@ -339,6 +339,7 @@ class Reviews extends Controller {
             $reviewID = $request->edit_video_reviewid;
             $ratingValue = $request->ratingValueVideo;
             $reviewTitle = $request->edit_review_title;
+
             $mReviews  = new ReviewsModel();
             $aData = array(
                     'ratings' => $ratingValue,
@@ -346,6 +347,8 @@ class Reviews extends Controller {
                 );
             $result = $mReviews->updateReview($aData, $reviewID);
             if ($result) {
+                $response['status'] = 'success';
+                $response['message'] = "Review has been updated successfully.";
 
                 $aActivityData = array(
                     'user_id' => $userID,
@@ -359,10 +362,7 @@ class Reviews extends Controller {
                     'activity_message' => 'Update Onsite Review',
                     'activity_created' => date("Y-m-d H:i:s")
                 );
-                logUserActivity($aActivityData);
-
-                $response['status'] = 'success';
-                $response['message'] = "Review has been updated successfully.";
+                @logUserActivity($aActivityData);
             } else {
                 $response['message'] = "Error: Something went wrong, try again";
             }
