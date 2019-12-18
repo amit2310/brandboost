@@ -213,7 +213,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_feedback') }}"><i><img src="assets/images/star-line-dark.svg"/></i><span class="menu-item-text">Reviews Feed</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/offsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Review Requests</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/onsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Onsite Review Requests</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Templates</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/onsite/media') }}"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Media</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/pie-chart-line.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
