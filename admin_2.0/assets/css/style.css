@@ -1413,17 +1413,18 @@ PAGE WITH SIDEBAR CSS
 .info_list li{margin: 0; padding: 0; font-size: 14px; list-style: none; line-height: 30px;}
 .info_list li span{color: #56627F; font-weight: 400; }
 .info_list li strong{ color: #151A25; font-weight: 400!important; float: right; text-align: right}
+
 .nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}
 .nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 500!important}
-
 .nav.nav-pills.review_sec_tab a{color: #7B89A6; font-weight: 400!important}
 .nav.nav-pills.review_sec_tab a.active{color: #717CEF; border-bottom: 2px solid #717CEF; padding-bottom: 21px; font-weight: 500!important}
-
-
 .nav.nav-pills.review_feed a{color: #56627F; font-weight: 400!important}
 .nav.nav-pills.review_feed a.active{color: #717CEF; font-weight: 500!important}
 .nav.nav-pills.review_feed a span.badge{font-weight: 500; border-radius: 100px;}
-
+@media only screen and (max-width:767px){
+	.nav.nav-pills li{display: block; width: 100%; margin: 0 0 10px!important}
+	.nav.nav-pills li a{display: block; padding-bottom: 10px!important;}
+}
 .people_config_list{margin: 0; padding: 0;}
 .people_config_list li{ list-style: none; margin: 0; padding: 0; line-height: 40px;}
 .people_config_list li a{  margin: 0; padding: 0 0 0px; color: #687693; font-weight: 500; font-size: 14px; }
@@ -1442,8 +1443,70 @@ PAGE WITH SIDEBAR CSS
 
 
 .ratingbox{background: #fff9ea;  max-width: 200px; margin: auto;  height: 45px; line-height: 41px; border-radius: 50px;}
-	.ratingbox ul{margin: 0; padding: 0}
-	.ratingbox ul li{margin: 0 3px;; padding: 0; display: inline-block; list-style: none}
+.ratingbox ul{margin: 0; padding: 0}
+.ratingbox ul li{margin: 0 3px;; padding: 0; display: inline-block; list-style: none}
+
+
+/**************
+LOGIN & SIGN UP CSS
+*****************/
+#login_page{background: #eff3fc}
+.login_text_area{width: 480px; height: 100vh; background: #5d82f1; float: right;position: relative}
+.login_text_area .inner_txt{width: 100%; text-align: center; max-width: 265px; min-height: 185px; position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%); color: #fff;}
+
+
+.login_area{width: calc( 100% - 480px ); height: 100vh; background: #eff3fc; float: left; position: relative}
+.login_section{	background: #FFFFFF;box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.04);border-radius: 4px; width: 100%; max-width: 472px;  position: absolute; top: 50%; left: 50%;
+	transform: translate(-50%, -50%); padding: 0px;}
+.login_section .toparea{padding: 56px 56px 40px;}
+.login_section button.loginwith{width: 100%; height: 56px; border-radius: 4px; color: #333D54; font-size: 14px; border: none;}
+.login_section button.loginwith.google{background: url(../images/google-fill.svg) 20px 15px no-repeat #f4f7fd; }
+.login_section button.loginwith.google:hover{background: url(../images/google-fill.svg) 20px 15px no-repeat #f9fafe; }
+.login_section button.loginwith.facebook{background: url(../images/facebook-circle-fill.svg) 20px 15px no-repeat #f4f7fd; }
+.login_section button.loginwith.facebook:hover{background: url(../images/facebook-circle-fill.svg) 20px 15px no-repeat #f9fafe; }
+
+.login_section .form-control{font-size: 14px!important; border-radius: 4px!important; color: #151A25!important ;caret-color: #5893ff; caret-width:2px; cursor: url(../images/formcontrolcursor.svg), auto; }
+.login_section .form-control:focus{border: 2px solid #73abff!important; box-shadow: none!important }
+.login_section .form-control.email{background:url(../images/login-mail-line.svg) 95% 17px no-repeat #fff;}
+.login_section .form-control.password{background:url(../images/door-lock-line.svg) 95% 17px no-repeat #fff;}
+.login_section label{font-weight: 500!important;font-size: 10px!important;line-height: 120%;letter-spacing: 0.04em;text-transform: uppercase; color: #445069!important; float: left}
+.login_section button.login_btn{background: #5893FF;box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.05);border-radius: 54px; display: block; height: 56px; width: 100%; border: none; font-size: 14px; color: #fff; font-weight: 500;}
+.login_section a.fgpswd{background: #ffffff; display: block; height: 56px; width: 100%;  font-size: 14px; color: #7B89A6; font-weight: 400; line-height: 56px; text-align: right}
+.login_section a.dontac{background: #ffffff; display: block; width: 100%;  font-size: 14px; color: #7B89A6; font-weight: 400;}
+.login_section a.signinsec{background: #ffffff; display: block; width: 100%;  font-size: 14px; color: #5893FF; font-weight: 500;}
+
+#login_error{background: #FFFFFF;box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.04);border-radius: 0px; position: fixed; z-index: 999; top: 0; width: 100%; height: 64px; line-height: 64px; font-size: 14px;
+color: #333D54;}
+#login_error a.signinsec{background: #ffffff; display: inline;  font-size: 14px; color: #5893FF; font-weight: 500;}
+
+.login_terms{position: absolute; bottom: -90px; width: 100%; text-align: center;}
+.login_terms p{font-size: 13px;line-height: 21px;color: #7B89A6}
+.login_terms a{color: #5893FF}
+
+.pswd_strength{float: right; margin: 0; padding: 0 0 0 15px}
+.pswd_strength li{list-style: none; display: inline-block; margin: 0 0 0 2px}
+.strength-dot{width: 6px; height: 6px; border-radius: 6px; display: block;}
+
+
+@media only screen and (max-width:1000px){
+	.login_area{width: 100%;}
+	.login_text_area{width: 100%; height: 310px; padding-top: 64px;}
+}
+
+
+
+.login_area.account_setup{width: 100%;}
+.login_section.setup_sec{max-width: 688px;}
+.setup_nextstep{background: #E8EEF9;border-radius: 54px; height: 44px; padding: 0 30px; border: none; font-weight: 500;font-size: 14px;line-height: 115%;color: #B4C0D4;}
+.stepcount{position: absolute; top: -85px; width: 100%}
+.stepcount p{font-weight: 500;font-size: 14px;line-height: 120%;letter-spacing: 0.08em;text-transform: uppercase;color: #B4C0D4; margin: 10px 0 0 0}
+
+
+
+
+
+
+
 
 
 

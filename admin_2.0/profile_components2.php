@@ -32,6 +32,9 @@
  .chat_user_list ul{margin: 0; padding: 0;}
  .chat_user_list ul li{display: inline-block;  margin: 0 -2px; padding: 0; line-height: 36px;}
  .chat_user_list ul li img{width: 36px; height: 36px;}
+		
+		
+		
 </style>
 
 
@@ -59,11 +62,11 @@
   <div class="top-bar-top-section bbot">
   <div class="container-fluid">
    <div class="row">
-   	<div class="col-md-6">
+   	<div class="col-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
    	<h3 class="htxt_medium_24 dark_700">Profile Components</h3>
    	</div>
-   	<div class="col-md-6 text-right">
+   	<div class="col-6 text-right">
    		<button class="circle-icon-40 mr15"><img src="assets/images/emailfilter.svg"/></button>
    		<button class="btn btn-md bkg_email_300 light_000 slidebox"> Save <span style="opacity: 0.3"><img src="assets/images/blue-plus.svg"/></span></button>
    	</div>
@@ -92,12 +95,7 @@
 								<p class="fsize16 fw500 dark_700 float-left mr-3"><img src="assets/images/avatar/14.png" width="32"> &nbsp; Gladys Russell</p>
 								<p class="mt-1 review_rating_start"><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_grey_18.svg"></i></p>
 									</div>
-									<div class="col-md-4">
-									
-									
-									
-									
-									
+									<div class="col-md-4 d-none d-md-block">
 									<div class="float-right mt-1 ml-2">
 										<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
 										  <span><img src="assets/images/more-vertical.svg"></span>
@@ -109,7 +107,7 @@
 										</div>
 									  </div>
 						  			<p class="float-right fsize14 dark_200 mt-1 mb-0 ml-5">Dec 9, 2019</p>
-						  			<button class="btn btn-sm-24 bkg_blue_000 pr10 pl10 blue_300 fsize12 fw500 mt-1 float-right">Published</button>
+						  			<button class="btn btn-sm-24 bkg_blue_000 pr10 pl10 blue_300 fsize12 fw500 mt-1 float-right d-none d-lg-block">Published</button>
 									</div>
 								</div>
 							
@@ -127,9 +125,36 @@
 					</div>
     	</div>
     </div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="card animate_top profile_contact_details">
+    		<div class="row">
+    			<div class="col" style="max-width: 110px;">
+    				<img class="mt-1" width="80" src="assets/images/avatar/11.png"/ >
+    			</div>
+    			<div class="col">
+    				<h3 class="fsize20 fw500 dark_700 mb-1">Zack Fox</h3>
+    				<p class="fsize14 dark_400 mb-1">United States . Lewisville, Texas</p>
+    				<p class="fsize14 dark_400 m-0">zack.fox.empire@gmail.com . (208) 555-0112</p>
+    			</div>
+    			<div class="col blef brig mr30" style="max-width: 180px;">
+    				<ul class="info_list pl20 pr20">
+					  <li><span>Reviews</span><strong>33</strong></li>
+					  <li><span>Emails</span><strong>76</strong></li>
+					  <li><span>Messages</span><strong>62</strong></li>
+					</ul>
+    			</div>
+    			<div class="col float-right" style="max-width: 120px;">
+    				<img width="86" src="assets/images/scoregrapg.svg"/ >
+    			</div>
+    		</div>
+    		</div>
+    	</div>
+    </div>
   
     
-      <div class="row">
+    <div class="row">
       
       
     	<div class="col-md-8">
@@ -140,16 +165,21 @@
 			<div class="row mb-3">
 			<div class="col-md-12">
 			
-			<div class="activity_card email">
+			
+				
+				<div class="activity_date_small">
 					<div class="row">
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<div class="icons bkg_green_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-							<p class="htxt_bold_16 dark_800 mb-2">Sed donec bibendum facilisis mauris felis.</p>
-							<p class="htxt_regular_14 dark_400 mb0">Mauris faucibus urna suspendisse lacus sociis ut.</p>
+							<p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
+							<p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
+							
 						</div>
-						<div class="col-md-2 text-right"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+						<div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
 					</div>
 				</div>
+				
+				
 				
 				<div class="activity_date_small">
 					<div class="row">
@@ -579,20 +609,6 @@
     	
     	
     </div>
-    
-      
-          
-  
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
      </div>
       </div>
