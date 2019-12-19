@@ -15,7 +15,7 @@ CARD CLASSES
 /******************************
 SHADOWS STYLES
 ******************************/
-.shadow1{box-shadow: 0px 3pximg_vid_upload_medium 3px rgba(0, 57, 168, 0.04);}
+.shadow1{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
 .shadow2{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06)!important;}
 .shadow_none{box-shadow: none!important;}
 
@@ -78,7 +78,6 @@ FORMS GROUP
 .form-group .form-control.emoji{ background: url(../images/Emoji.png) 95% 15px #fff no-repeat;}
 .form-group .form-control.shadow{border: none!important;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.3)!important;border-radius: 4px;}
 .review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
-
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
 .phonenumber.h50{ height: 50px;}
