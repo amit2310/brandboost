@@ -137,6 +137,25 @@
      		
      		
      		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 blue_300">Account,  Login & Signup</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="account_login.php">Account Login</a></li>
+     			<li><a target="_blank" href="account_signup.php">Account Signup</a></li>
+     			<li><a target="_blank" href="account_setup_step1.php">Account Setup Step 1</a></li>
+     			<li><a target="_blank" href="account_setup_step2.php">Account Setup Step 2</a></li>
+     			<li><a target="_blank" href="account_setup_step3.php">Account Setup Step 3</a></li>
+     			<li><a target="_blank" href="account_setup_step4.php">Account Setup Step 4</a></li>
+     			<li><a target="_blank" href="account_setup_step5.php">Account Setup Step 5</a></li>
+     			<li><a target="_blank" href="account_forgot_password.php">Account Forgot Password</a></li>
+     			<li><a target="_blank" href="account_reset_pass_sent.php">Account Forgot pass sent</a></li>
+     		</ul>
+     			
+     		</div>
+     		
+     		
+     		
      		
      		
      	</div>
