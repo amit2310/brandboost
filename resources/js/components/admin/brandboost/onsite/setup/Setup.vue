@@ -68,13 +68,26 @@
                                                @change="updateSettings('domain_name', $event.target.value, 'brandboost')">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="frm_logo_img" class="fsize12 fw300">Brand Logo</label>
+                                        <label for="logo_img" class="fsize12 fw300">Add/Change Brand Logo</label>
 
-                                        <input type="file" id="frm_logo_img" name="logo_img" class="form-control">
+                                        <input type="hidden" id="logo_img" name="logo_img" @click="updateSettings('logo_img', $event.target.value, 'brandboost')">
+                                        <div class="img_vid_upload_small">
+                                            <div class="dropzone" id="myDropzone_logo_img"></div>
+                                        </div>
+
                                     </div>
                                 </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label for="logo_img" class="fsize12 fw300">Brand Logo</label>
+                                        <div class="clearfix"></div>
+                                        <img width="64" height="65" class="rounded" id="showLogoImage" onerror="this.src='assets/images/default-logo.png'" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${campaign.logo_img}`">
+                                    </div>
+                                </div>
+
+
 
                             </div>
 
@@ -365,7 +378,11 @@
                     this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
                     this.user = response.data.aUserInfo;
                     this.loading = false;
+                    //loadJQScript(this.user.id);
+
                 });
+            loadJQScript(35);
+
         },
         computed: {
             checkLinkExpiry: function(){
@@ -455,6 +472,45 @@
 
     };
 
+    function loadJQScript(userid){
+        var tkn = $('meta[name="_token"]').attr('content');
+        Dropzone.autoDiscover = false;
+        var myDropzoneLogoImg = new Dropzone(
+            '#myDropzone_logo_img', //id of drop zone element 1
+            {
+                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
+                uploadMultiple: false,
+                maxFiles: 1,
+                maxFilesize: 600,
+                acceptedFiles: 'image/*',
+                addRemoveLinks: false,
+                success: function (response) {
+
+                    if (response.xhr.responseText != "") {
+
+                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
+                        var dropImage = $('#logo_img').val();
+                        $.ajax({
+                            url: "/admin/brandboost/DeleteObjectFromS3",
+                            type: "POST",
+                            data: {dropImage: dropImage, _token: tkn},
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                        $('#logo_img').val(response.xhr.responseText);
+                        $('#logo_img').click();
+
+                    }
+
+                }
+            });
+        myDropzoneLogoImg.on("complete", function (file) {
+            myDropzoneLogoImg.removeFile(file);
+        });
+    }
+
 </script>
 <style scoped>
     .email_config_list li{
@@ -488,6 +544,11 @@
         background: #eb4f76!important;
         background-color: #eb4f76!important;
     }
+    .dropzone .dz-default.dz-message:before { content: ''!important; }
+    .dropzone {min-height:32px !important; opacity:0;height:32px; }
+    .dropzone .dz-default.dz-message{ top: 0%!important; height:40px;  margin-top:0px;}
+    .dropzone .dz-default.dz-message span {    font-size: 13px;    margin-top: -10px;}
+    .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 5px; background:url('/assets/images/upload_bkg2.png') 25px 8px no-repeat #fff; border: 1px solid #dfe5f0;box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.04);}
 </style>
 
 
