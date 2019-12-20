@@ -79,7 +79,6 @@ FORMS GROUP
 .form-group .form-control.shadow{border: none!important;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.3)!important;border-radius: 4px;}
 .review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
 
-
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
 .phonenumber.h50{ height: 50px;}
 .phonenumber .inputbox{border: none; font-size: 16px; color: #7B89A6; font-weight: 400; background: none; border-left: 1px solid #C4CFE1; padding-left: 17px; margin: 11px 0 0 10px; height: 20px; max-width: 230px; }
@@ -88,6 +87,7 @@ FORMS GROUP
 .img_vid_upload{width: 100%; min-height: 320px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_medium{width: 100%; min-height: 180px; border-radius: 4px; background:url(../../assets/images/addfile_txt.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 4px; background:url(../../assets/images/no_image.png) 20px 17px no-repeat #fff; border: 1px solid #dfe5f0;}
+.img_vid_upload_circle{width: 125px; height: 125px;  border-radius: 100px; background:url(../../assets/images/browse_img.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 
 
 
@@ -876,7 +876,7 @@ VISIBLE CLASSES
 }
 
 @media only screen and (max-width:767px){
-
+	.htxt_regular_14{line-height: 160%;}
 }
 
 
