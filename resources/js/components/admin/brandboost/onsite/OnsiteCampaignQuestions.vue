@@ -103,7 +103,8 @@
                             <table class="table table-borderless">
                                 <tbody>
                                 <tr v-for="question in questions">
-                                    <td @click="navigateToDetails(question.id)" style="cursor:pointer;">
+                                    <!--<td @click="navigateToDetails(question.id)" style="cursor:pointer;">-->
+                                    <td class="viewQuestionSmartPopup" :questionid="`${question.id}`" style="cursor:pointer;">
                                         <span class="table-img mr15">
                                            <!-- <span class="fl_name bkg_red_light red_300">vw</span>-->
                                             <user-avatar
@@ -161,6 +162,52 @@
           Content Area End
          **********************-->
 
+        <!-- Smart Popup -->
+        <div class="box" style="width: 424px;">
+            <div style="width: 424px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-question-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
+
+                        <div class="p40">
+                            <div class="row">
+                                <div class="col-md-12"> <img src="/assets/images/sms_temp_icon.svg"/>
+                                    <h3 class="htxt_medium_24 dark_800 mt20">Question </h3>
+                                    <hr class="mt30 mb30">
+                                </div>
+                                <div class="col-md-12">
+
+                                    <!--<div id="questionSmartPopup"></div>-->
+                                    <input type="hidden" name="smartpopup_question_id" id="smartpopup_question_id" value="" />
+                                    <div class="interactions p0 pull-left">
+                                        <ul>
+                                            <li><i class="icon-user"></i><strong>Full Name</strong></li>
+                                            <li><i class="icon-envelop2"></i><strong>Email Address</strong></li>
+                                            <li><i class="icon-iphone"></i><strong>Phone Number</strong></li>
+                                            <li><i class="icon-calendar"></i><strong>Created Date</strong></li>
+                                        </ul>
+                                    </div>
+
+                                    <hr class="mt30 mb30"/>
+
+                                </div>
+                            </div>
+
+                            <div class="row bottom-position">
+                                <div class="col-md-12 mb15">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                    <input type="hidden" name="module_account_id" id="module_account_id"
+                                           :value="moduleAccountID">
+                                    <button class="btn btn-lg bkg_sms_400 light_000 pr20 min_w_160 fsize16 fw600">Save</button>
+                                    <a class="dark_200 fsize16 fw400 ml20" href="#">Close</a> </div>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /Smart Popup -->
 
         <div id="reviewPopup" class="modal fade">
             <div class="modal-dialog">
@@ -231,7 +278,7 @@
                 window.location.href='#/questions/details/'+id;
             },
             navigateToCampaignDetails: function(campaign_id){
-                window.location.href='#/reviews/onsite/setup/'+campaign_id;
+                window.location.href='#/reviews/onsite/setup/'+campaign_id+'/1';
             },
             loadPaginatedData: function () {
                 axios.get('/admin/questions/view/' + this.$route.params.id+'/?page='+this.current_page)
@@ -299,6 +346,12 @@
 
     /* Normal Script */
     $(document).ready(function () {
+        $(document).on('click', '.js-review-question-slidebox', function(){
+            $(".box").animate({
+                width: "toggle"
+            });
+        });
+
         $(document).on("click", ".displayReviewNew", function () {
             var elem = $(this);
             var reviewid = $(this).attr("reviewid");
@@ -353,9 +406,33 @@
                     }
                 },
                 error: function (response) {
-                    alertMessage(response.message);
+                    alert(response.message);
                 }
             });
         });
+
+        $(document).on("click", ".viewQuestionSmartPopup", function () {
+            $("#questionSmartPopup").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
+            var questionId = $(this).attr('questionid');
+            loadQuestionSmartPopup(questionId);
+            document.querySelector('.js-review-question-slidebox').click();
+        });
+        $(".viewQuestionSmartPopup").first().trigger('click');
     });
+
+    function loadQuestionSmartPopup(questionID, selectedTab) {
+        $.ajax({
+            url: 'admin/questions/details/' + questionID + '?t=' + selectedTab,
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            type: "POST",
+            data: {questionID: questionID, action: 'smart-popup'},
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 'success') {
+                    var questionData = data.content;
+                    $("#questionSmartPopup").html(questionData);
+                }
+            }
+        });
+    }
 </script>
