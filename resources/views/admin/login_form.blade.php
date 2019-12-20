@@ -57,7 +57,7 @@
                             <!-- Advanced login -->
 
                             <div class="panel login-form2">
-                                <div class="form_center"> 
+                                <div class="form_center">
                                     <form action="{{ url('/admin/login') }}" method="post">
                                         @csrf
                                         <div class="pt30 pb20 bbot">
@@ -77,7 +77,7 @@
                                             <div class="alert-success text-center" style="margin-bottom:10px;">
                                                 {{ session('success_message') }}
                                             </div>
-                                            @if ($errors->any())        
+                                            @if ($errors->any())
                                             <div class="alert-danger text-center" style="margin-bottom:10px;">
                                                 {{ session('error_message') }}
 
@@ -95,7 +95,7 @@
                                                     <input type="text" class="form-control input-lg h52" placeholder="login@example.com" name="email" id="email" required="">
                                                     <div class="form-control-feedback h52">
                                                         <i class="fa fa-envelope-o text-muted"></i>Email
-                                                    </div>                                                                                
+                                                    </div>
                                                 </div>
                                                 <div class="form-group has-feedback has-feedback-left ">
                                                     <input type="password" class="form-control input-lg h52" placeholder="password" name="password" id="password" required="">
@@ -114,12 +114,12 @@
                                             <div class="form-group login-options mb30">
                                                 <div class="row">
                                                     <!--<div class="col-sm-6">
-         
+
                                                      <ul class="list-inline form-group list-inline-condensed">
                                                      <li><a href="#"><img src="assets/images/google_icon.png"></a></li>
          <li><a href="#"><img src="assets/images/fb_icon.png"></a></li>
          <li><a href="#"><img src="assets/images/twitter_icon.png"></a></li>
-         
+
          </ul>
                                                                                              </div>-->
 
@@ -160,7 +160,7 @@
                                                                 <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
                                                                 <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
 
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -179,7 +179,7 @@
                                                                 <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
                                                                 <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
 
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -198,7 +198,7 @@
                                                                 <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
                                                                 <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
 
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -217,7 +217,7 @@
                                                                 <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
                                                                 <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
 
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -236,7 +236,7 @@
                                                                 <div class="box_1 txt_grey pt20 pb20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Connect your favorite tools</p></div>
                                                                 <div class="box_1 b_r txt_grey pb20 pt20 pl30 pr30"><i><img src="{{ URL::asset('assets/images/icon_blue.png') }}" class="mb10"></i><p>Automate your busy work</p></div>
 
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
