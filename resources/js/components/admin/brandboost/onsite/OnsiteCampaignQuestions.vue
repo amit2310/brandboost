@@ -136,6 +136,8 @@
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                 <a v-if="question.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(question.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                                 <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(question.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                                <a href="javascript:void(0);" class="dropdown-item displayReviewNew" action_name="review-tag" tab_type="note" :reviewid="question.id" :review_time="displayDateFormat('M d, Y h:i A', question.created)"><i class="dripicons-exit text-muted mr-2"></i> Add Notes</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="navigateToDetails(question.id)"><i class="dripicons-exit text-muted mr-2"></i> View Answer</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(question.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
@@ -158,6 +160,38 @@
         <!--******************
           Content Area End
          **********************-->
+
+
+        <div id="reviewPopup" class="modal fade">
+            <div class="modal-dialog">
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div style="border-top: none; border-bottom: 1px solid #eee!important;" class="panel-footer panel-footer-condensed">
+                                <div class="heading-elements not-collapsible">
+                                    <button class="btn btn-link pull-right" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
+                                    <span class="heading-text text-semibold">
+                                        <i class="icon-history position-left"></i>
+                                        <span class="reviewTime"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="panel-body" id="reviewContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- newreviewpopup -->
+        <div id="newreviewpopup" class="modal fade newreviewpopup2">
+            <div class="modal-dialog">
+                <div class="modal-content" id="reviewPopupBox">
+
+                </div>
+            </div>
+        </div>
+        <!-- /newreviewpopup -->
 
     </div>
 
@@ -262,4 +296,66 @@
             }
         }
     }
+
+    /* Normal Script */
+    $(document).ready(function () {
+        $(document).on("click", ".displayReviewNew", function () {
+            var elem = $(this);
+            var reviewid = $(this).attr("reviewid");
+            var tabtype = $(this).attr('tab_type');
+            var reviewTime = $(this).attr('review_time');
+            displayReviewPopupNew(reviewid, tabtype, reviewTime);
+
+        });
+
+        function displayReviewPopupNew(reviewid, tabtype, reviewTime) {
+            $('.overlaynew').show();
+            $.ajax({
+                url: '/admin/reviews/displayreview',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: {rid: reviewid},
+                dataType: "json",
+                success: function (response) {
+                    if (response.status == "success") {
+                        $('.overlaynew').hide();
+                        $("#reviewContent").html(response.popup_data);
+                        $(".reviewTime").html(reviewTime);
+                        $("#reviewPopup").modal("show");
+                        if (tabtype == 'note') {
+                            $('.tabbable a[href="#note-tab"]').trigger('click');
+                        } else {
+                            $('.tabbable a[href="#review-tab"]').trigger('click');
+                        }
+                    }
+                },
+                error: function (response) {
+                    alert(response.message);
+                }
+            });
+        }
+
+        $(document).on("click", "#saveReviewNotes", function () {
+            var formdata = $("#frmSaveNote").serialize();
+            $('.overlaynew').show();
+            $.ajax({
+                url: '/admin/reviews/saveReviewNotes',
+                type: "POST",
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                data: formdata,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status == "success") {
+                        var reviewid = $("input[name='reviewid']").val();
+                        var tabtype = 'note';
+                        var reviewtime = $("input[name='reviewtime']").val();
+                        displayReviewPopupNew(reviewid, tabtype, reviewtime);
+                    }
+                },
+                error: function (response) {
+                    alertMessage(response.message);
+                }
+            });
+        });
+    });
 </script>

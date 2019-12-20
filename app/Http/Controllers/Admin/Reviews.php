@@ -383,7 +383,7 @@ class Reviews extends Controller {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         if (!empty($request)) {
-            $reviewID = $request->rid;
+            $reviewID = 80;//$request->rid;
             $campaginTitle = "";
             if ($reviewID > 0) {
                 $oReviewData = ReviewsModel::getReviewInfo($reviewID);
