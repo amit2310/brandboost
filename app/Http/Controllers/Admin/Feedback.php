@@ -19,6 +19,8 @@ class Feedback extends Controller {
 	* @return type
 	*/
 	public function getAllListingData($brandboostID = 0) {
+        $mFeedback  =  new FeedbackModel();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -26,14 +28,14 @@ class Feedback extends Controller {
         $getBrandboost = '';
         if ($brandboostID > 0) {
             $getBrandboost = BrandboostModel::getBrandboost($brandboostID);
-            $result = FeedbackModel::getFeedbackByBrandboostID($brandboostID);
+            $result = $mFeedback->getFeedbackByBrandboostID($brandboostID);
             $selectedTab = Request::input('t');
         } else {
-            $result = FeedbackModel::getFeedback($userID, $user_role);
+            $result = $mFeedback->getFeedback($userID, $user_role);
         }
 
-        if(!empty($result)){
-            foreach ($result as $key => $data){
+        if(!empty($result->items())){
+            foreach ($result->items() as $key => $data){
                 if ($data->category == 'Positive') {
                     $ratingValue = 5;
                 } else if ($data->category == 'Neutral') {
@@ -42,8 +44,9 @@ class Feedback extends Controller {
                     $ratingValue = 1;
                 }
                 $smily = ratingView($ratingValue);
+                $data->ratings = $ratingValue;
                 $data->smily = $smily;
-                $result[$key] = $data;
+                $result->items()[$key] = $data;
             }
         }
         list($canRead, $canWrite) = fetchPermissions('Feedbacks');
@@ -54,18 +57,36 @@ class Feedback extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Feedback" class="sidebar-control active hidden-xs ">Feedback</a></li>
                     </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Offsite' => '#/brandboost/review_request/offsite',
+            'Review Feedback' => '#/feedback'
+        );
+
+        //$feedbackTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
+        $feedbackTags = array();
+        if(!empty($result->items())) {
+            foreach($result->items() as $kRev => $vRev) {
+                $feedbackTags[$vRev->id] = TagsModel::getTagsDataByFeedbackID($vRev->id);
+            }
+        }
 
         $aData = array(
             'title' => 'Requires Attention',
+            'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
             'selected_tab' => $selectedTab,
             'brandboostDetail' => $getBrandboost,
-            'result' => $result,
-            'totalResults' => count($result),
+            'allData' => $result,
+            'result' => $result->items(),
+            'totalResults' => count($result->items()),
+            'feedbackTags' => $feedbackTags,
             'canRead' => $canRead,
             'canWrite' => $canWrite
         );
+
 		//return view('admin.feedback.feedback', $aData);
+
         echo json_encode($aData);
         exit;
     }

@@ -710,7 +710,7 @@ class Tags extends Controller {
         $userID = $aUser->id;
         $mTag = new TagsModel();
 
-        $feedbackID = base64_url_decode(strip_tags($request->feedback_id));
+        $feedbackID = $request->feedback_id;//base64_url_decode(strip_tags($request->feedback_id));
         $aTagID = $request->applytag;
         $aInput = array(
             'aTagIDs' => $aTagID,
@@ -724,16 +724,17 @@ class Tags extends Controller {
             //Get refreshed tag list
             $oTags = $mTag->getTagsDataByFeedbackID($feedbackID);
 
-            $sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'feedback_id', 'fieldValue' => base64_url_encode($feedbackID), 'actionName' => 'feedback-tag'))->render();
+            //$sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'feedback_id', 'fieldValue' => base64_url_encode($feedbackID), 'actionName' => 'feedback-tag'))->render();
+            $sTagDropdown = view("admin/tags/tag_dropdown", array('oTags' => $oTags, 'fieldName' => 'feedback_id', 'fieldValue' => $feedbackID, 'actionName' => 'feedback-tag', 'actionClass' => 'applyInsightTagsFeedbackNew'))->render();
 
             $response = array('status' => 'success', 'msg' => 'Tag added successfully!', 'refreshTags' => $sTagDropdown, 'id' => $feedbackID);
-            echo json_encode($response);
-            exit;
+
         } else {
             $response = array('status' => 'error', 'msg' => 'Something went wrong!');
-            echo json_encode($response);
-            exit;
         }
+
+        echo json_encode($response);
+        exit;
     }
 
     public function applyQuestionTag(Request $request) {

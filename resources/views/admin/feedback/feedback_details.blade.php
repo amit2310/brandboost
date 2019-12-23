@@ -222,7 +222,7 @@
 
                     @php
 						$avatarImage = base_url() . "assets/images/userp.png";
-                    @endif
+                    @endphp
 
                     <div class="media-left media-middle pr10"> <a class="icons" href="javascript:void(0);"><img style="width: 18px;" src="{{ $avatarImage }}" class="img-circle" alt=""></a> </div>
                     <div class="media-left">

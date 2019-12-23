@@ -136,29 +136,37 @@
                                     <td>{{ request.email }}</td>
                                     <td>{{ displayDateFormat('M d, h:i A', request.created) }}</td>
                                     <td class="text-right">
+
                                         <span v-for="rating in request.ratings" class="icons">
                                             <img src="assets/images/star-fill_yellow_16.svg">
                                         </span>
+
                                         <span v-for="rating in (5 - request.ratings)" class="icons">
                                             <img src="assets/images/star-line.svg">
                                         </span>
+
                                         <span class="dark_400 fsize14">{{ request.ratings }}/5</span>
+
                                         <br />
+
                                         <span v-if="request.ratings >= 4" class="dark_400 fsize14">Positive</span>
                                         <span v-else-if="request.ratings == 3" class="dark_400 fsize14">Neutral</span>
-                                        <span v-else-if="request.ratings < 3 && request.ratings > 1" class="dark_400 fsize14">Negative</span>
+                                        <span v-else-if="request.ratings < 3 && request.ratings >= 1" class="dark_400 fsize14">Negative</span>
                                         <span v-else class="dark_400 fsize14">&nbsp;</span>
                                     </td>
                                     <td>
                                         <div class="float-right">
+
                                             <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
                                                 <span><img src="assets/images/more-vertical.svg"></span>
                                             </button>
+
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a v-if="request.subscriberstatus == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(request.subscriberid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                                <a v-if="request.subscriberstatus == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(request.subscriberid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                                 <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(request.subscriberid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(request.subscriberid,request.trackinglogid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -244,13 +252,13 @@
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
                     })
-                        .then(response => {
-                            if(response.data.status == 'success'){
-                                syncContactSelectionSources();
-                                this.showPaginationData(this.current_page);
-                            }
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            syncContactSelectionSources();
+                            this.showPaginationData(this.current_page);
+                        }
 
-                        });
+                    });
                 }
             },
             deleteItem: function(subscriberid,trackinglogid) {
@@ -263,13 +271,13 @@
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
                     })
-                        .then(response => {
-                            if(response.data.status == 'success'){
-                                syncContactSelectionSources();
-                                this.showPaginationData(this.current_page);
-                            }
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            syncContactSelectionSources();
+                            this.showPaginationData(this.current_page);
+                        }
 
-                        });
+                    });
                 }
             }
         }
