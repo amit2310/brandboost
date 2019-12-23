@@ -2,8 +2,8 @@
 
     <div>
         <!--******************
-  Top Heading area
- **********************-->
+        Top Heading area
+        **********************-->
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">
@@ -29,6 +29,24 @@
         **********************-->
         <div class="content-area">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p40 pt0 pb0">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p class="fsize12 fw500 dark_200 mt30 mb30"><i><img src="assets/images/lightbulb-fill.svg"></i> &nbsp; TIPS</p>
+                                    <h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
+                                    <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">Conversational marketing platform that helps companies close more deals by messaging with prospects in real-time & via intelligent chatbots. Qualify leads, book meetings.</p>
+
+                                </div>
+                                <div class="col-md-5 text-center mt0">
+                                    <img class="mt0" style="max-width: 240px;" src="assets/images/review_feed_illustration.svg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <div class="row">

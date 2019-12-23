@@ -163,7 +163,7 @@ class Login extends Controller {
         return redirect('/user/login');
     }
 
-    public function forgot_password(Request $request) {
+/*    public function forgot_password(Request $request) {
 
         if (!empty($request)) {
             $response = array();
@@ -184,6 +184,40 @@ class Login extends Controller {
             }
         } else {
             $this->load->view('/admin/forgot_password');
+        }
+    }   */
+
+    public function forgot_password(Request $request) {
+        $mLogin = new LoginModel();
+        Session::forget('forgot_success_message');
+        Session::forget('forgot_error_message');
+
+        if (!empty($request)) {
+            $response = array();
+            $email = (isset($request->email) && !empty($request->email)) ? $request->email : '';
+
+            if(!empty($email)) {
+                $checkAdminUser = $mLogin->ForgotPassword($email);
+                $aData = array('userDetail'=>$checkAdminUser);
+                //pre($aData);
+                if(!empty($aData['userDetail'])) {
+                    //$body = $this->load->view('admin/email_templates/general/reset_password', $aData, true);
+                    //$subject = 'Forgot Password';
+                    //emailTemplate($subject, $body, $checkAdminUser);
+
+                    Session::flash('forgot_success_message', 'Reset password link has been sent in your email.');
+                    Session::push('flash.old', 'forgot_success_message');
+                } else {
+                    Session::flash('forgot_error_message', 'Your Email address doesn\'t exist in our database!');
+                    Session::push('flash.old', 'forgot_error_message');
+                }
+                //redirect('/admin/login');
+                return view('admin.forgot_password');
+            } else {
+                return view('admin.forgot_password');
+            }
+        } else {
+            return view('admin.forgot_password');
         }
     }
 
