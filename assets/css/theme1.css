@@ -7,7 +7,7 @@
 html { /*font-family: 'Inter UI', sans-serif;*/  /*font-family: 'BwNistaGeo-Rg' !important;*/}
 body {
 	background: #f4f6fa !important;
-    color: #303a52 !important; 
+    color: #303a52 !important;
 	font-size: 13px!important;
 	/*font-family: 'Inter UI'!important;
 	font-family: 'Inter UI', sans-serif!important;*/
@@ -263,7 +263,7 @@ NIVIGATION & SIDEBAR
 
 
 .upgrade_btn {	border:none !important;	color: #fff !important;	border-radius: 30px; background:none!important;   padding: 18px 17px!important; text-transform: none!important; max-height: 56px;}
-.upgrade_btn:hover {border-color: #d82a57 !important;color: #d82a57 !important;background: #fff !important;}		
+.upgrade_btn:hover {border-color: #d82a57 !important;color: #d82a57 !important;background: #fff !important;}
 
 
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {	background-color:rgba(255,255,255,0.00)!important;}
@@ -351,7 +351,7 @@ PANEL CSS
 .table_action_tool a i img{width: 14px; height: 14px;}
 
 .panel-heading .btn.btn-xs{height: 28px;  border-radius: 5px;  box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);  background-color: #ffffff;  border: solid 1px #e3e9f3; margin: -3px 0 0 0; line-height: 12px; color: #4b5873; font-weight: 300;}
-.panel-heading .btn.btn-xs i{font-size: 10px!important; color: #9faecb;}	
+.panel-heading .btn.btn-xs i{font-size: 10px!important; color: #9faecb;}
 
 
 .heading_links{margin-left: 20px;}
@@ -829,7 +829,7 @@ MODAL POPUP CSS
 .modal-body.pricing_modal {height: auto;overflow-y: inherit;}
 .monthly_btn{position: absolute; right: 30px; bottom: 40px; z-index: 99;}
 .monthly_btn a{background: #a691f7;color: #fff;padding: 10px 15px;border-radius: 5px 0px 0 5px; font-size: 12px; }
-.month_btn{background: #2c2d66 !important;border-radius:0px 5px 5px 0px !important;margin-left: -4px;}	
+.month_btn{background: #2c2d66 !important;border-radius:0px 5px 5px 0px !important;margin-left: -4px;}
 
 
 
@@ -909,20 +909,20 @@ DASHBOARD CSS
 **********/
 .review_ratings h1{margin: 0; font-size: 28px; font-weight: 400; color: #313b50!important;}
 .review_ratings sup{font-size: 13px;}
-.review_ratings .icon-star-full2{font-size: 25px; margin-right: 10px; color: #ffc537!important} 
+.review_ratings .icon-star-full2{font-size: 25px; margin-right: 10px; color: #ffc537!important}
 
-.ratings .icon-star-full2{font-size: 12px; margin-right: 1px; color: #9faecb;} 
+.ratings .icon-star-full2{font-size: 12px; margin-right: 1px; color: #9faecb;}
 .ratings p{margin: 0; color: #8b9ab9;}
 .ratings p span{color: #22375e; margin-left: 10px;}
 .ratings .inner{margin-bottom:20px;}
 .ratings .progress{height: 4px!important;}
 
 .emailsent{text-align: center;}
-.emailsent h1{margin: 0; padding: 0; line-height: 30px; font-size: 28px; color: #313b50;} 
+.emailsent h1{margin: 0; padding: 0; line-height: 30px; font-size: 28px; color: #313b50;}
 .emailsent p{margin: 0; padding: 0; color: #6a7995; font-size: 12px;}
 
 .db_stats{ background: #ffffff !important; }
-.db_stats h1{margin: 0; padding: 0; line-height: 30px; font-size: 20px; color: #2f3053; font-weight: 400;} 
+.db_stats h1{margin: 0; padding: 0; line-height: 30px; font-size: 20px; color: #2f3053; font-weight: 400;}
 .db_stats p{margin: 0; padding: 0; color: #6a7995; font-size: 12px;}
 .db_stats p span.txt_dgrey{color: #5e729d!important; font-weight: 300;}
 
@@ -991,7 +991,7 @@ DASHBOARD CSS
 .checker span::after {	top: 2px;	left: 2px; font-size: 13px; color: #fff!important}
 
 
-.reviews{position: fixed; top: 50%; left: -30px; color: #fff; z-index: 9; display: block; padding: 0px; border-radius: 100px; width: 28px; height: 28px; text-align: center; line-height: 26px; 
+.reviews{position: fixed; top: 50%; left: -30px; color: #fff; z-index: 9; display: block; padding: 0px; border-radius: 100px; width: 28px; height: 28px; text-align: center; line-height: 26px;
   background-color: #5d7df3;  }
 .reviews:hover{text-decoration: none; color: #fff; cursor: pointer;}
 .slide-toggle{right:360px; position: absolute; left: auto;}
@@ -1117,7 +1117,7 @@ DASHBOARD CSS
 .col-md-2.review_source_new .custmo_checkbox.checkboxs{position: absolute; width: 17px; right: 5px!important; top: 11px; z-index: 9; display: inline-block;}
 .col-md-2.review_source_new .custmo_checkbox.checkboxs input:checked .inner:after{display: block; cursor: pointer;}
 
-	
+
 
 
 
@@ -1183,7 +1183,7 @@ DASHBOARD CSS
 
 
 /*******************************
-LOGIN & SIGN UP 
+LOGIN & SIGN UP
 **********/
 .login_main{width: 100%; margin: 0 auto; max-width: 920px; border-radius: 8px; height: 540px; top: 50%; position:absolute; margin-top: -270px; left: 50%; margin-left: -460px;}
 .login-container .page-container .login-form{width: 360px;  height: 540px;  border-radius: 8px 0 0 8px;  background-color: #ffffff!important;  box-shadow: 0 3px 2px 0 rgba(0, 53, 193, 0.01), 0 1px 1px 0 rgba(0, 19, 151, 0.05), 0 24px 24px 0 rgba(0, 20, 62, 0.03)!important; margin: 0!important; float: left;}
@@ -1314,7 +1314,7 @@ CUSTOM RADIO BUTTON STYLES
 .custmo_radiobox .custmo_radiomark:after {	left: 4px;	top: 4px;	width: 9px;	height: 9px;	border-radius: 100px;	background: #fff;}
 
 .offsite_sec_body .custmo_radiobox input:checked ~ .custmo_radiomark {	background-color: #9b83ff!important;}
-.onsite_sec_body .custmo_radiobox input:checked ~ .custmo_radiomark {	background-color: #9b83ff!important;}     
+.onsite_sec_body .custmo_radiobox input:checked ~ .custmo_radiomark {	background-color: #9b83ff!important;}
 
 
 /*******************************
@@ -1385,7 +1385,7 @@ OFFSITE REVIEW SOURCES
 .filter_campaign .thumbnail:hover{background: #fff!important; cursor: pointer;}
 .filter_campaign .thumbnail h5{font-size: 13px; text-align: left!important; margin-bottom: 0px!important; letter-spacing: 0.3px; font-weight: 400; color: #1d2129}
 .filter_campaign .thumbnail h6{margin: 0 0 4px!important; font-weight: 400; font-size: 12px; text-align: left; color: #1d2129!important;}
-.filter_campaign .btn.btn-xs.bl_cust_btn{padding: 5px 10px!important; position: absolute; top: 20px; right: 15px; z-index: 9; } 
+.filter_campaign .btn.btn-xs.bl_cust_btn{padding: 5px 10px!important; position: absolute; top: 20px; right: 15px; z-index: 9; }
 .filter_campaign .rev_col{ width: 220px!important; max-width: 220px!important; margin:0 0px 20px 0;}
 .filter_campaign .thumbnail .thumb{ padding: 33px 0; background: #f1f6ff; border-radius: 6px 6px 0 0!important; height: 124px; text-align:center;}
 .filter_campaign .bkg1{background: #ffeceb!important}
@@ -1405,7 +1405,7 @@ OFFSITE REVIEW SOURCES
 .filter_campaign_new .thumbnail:hover{background: #fff!important; cursor: pointer;}
 .filter_campaign_new .thumbnail h5{font-size: 13px; text-align: left!important; margin-bottom: 0px!important; letter-spacing: 0.3px; font-weight: 400; color: #09204f}
 .filter_campaign_new .thumbnail h6{margin: 0 0 4px!important; font-weight: 400; font-size: 12px; text-align: left; color: #7a8dae!important;}
-.filter_campaign_new .btn.btn-xs.bl_cust_btn{padding: 5px 10px!important; position: absolute; top: 20px; right: 15px; z-index: 9; } 
+.filter_campaign_new .btn.btn-xs.bl_cust_btn{padding: 5px 10px!important; position: absolute; top: 20px; right: 15px; z-index: 9; }
 .filter_campaign_new .rev_col{ width: 175px!important; max-width: 175px!important; margin:0px 14px 0 0; padding:0px!important; /*width: calc(16.66% - 15px);*/}
 .filter_campaign_new .thumbnail .thumb{ padding: 29px 0; background: #ffffff; border-radius: 6px 6px 0 0!important; height: 110px; text-align:center; border-bottom:1px solid #f4f6fa;}
 .filter_campaign_new .bkg1{background: #ffffff!important}
@@ -1430,7 +1430,7 @@ OFFSITE REVIEW SOURCES
 .filter_campaign.competitor .thumbnail .caption{padding:3px 20px 0px!important; border: none!important;}
 .filter_campaign.competitor .thumbnail h6{color: #7a8dae!important}
 
-.filter_campaign.integrations .rev_col {	width: 270px !important;	max-width: 270px !important;	margin: 0 0px 25px 0;}	
+.filter_campaign.integrations .rev_col {	width: 270px !important;	max-width: 270px !important;	margin: 0 0px 25px 0;}
 .filter_campaign.integrations .thumbnail .caption{padding: 20px!important}
 .filter_campaign.integrations .white_box{background: #fff; padding: 15px;height: 59px;  border-radius: 3px;  box-shadow: 0 3px 2px 0 rgba(0, 34, 124, 0.02), 0 1px 1px 0 rgba(0, 19, 151, 0.07); margin-bottom: 30px; line-height: 30px;}
 .filter_campaign.integrations .white_box a{text-decoration: underline;}
@@ -1457,12 +1457,12 @@ MEDIA GALLERY CSS
 **********/
 
 .panel-body.gallerytabtable {background-image: linear-gradient(237deg, #f7f8fb, #f7f8fb)!important;  box-shadow: 0 3px 2px 0 rgba(0, 50, 179, 0.03), 0 1px 1px 0 rgba(0, 17, 136, 0.08)!important;}
-.thumbnail {padding: 0px!important; border-radius: 5px;  background-color: #ffffff;  box-shadow: 0 3px 2px 0 rgba(0, 53, 193, 0.06), 0 1px 1px 0 rgba(0, 19, 151, 0.010)!important; border: none; position: relative;}		
+.thumbnail {padding: 0px!important; border-radius: 5px;  background-color: #ffffff;  box-shadow: 0 3px 2px 0 rgba(0, 53, 193, 0.06), 0 1px 1px 0 rgba(0, 19, 151, 0.010)!important; border: none; position: relative;}
 .thumbnail .caption{ padding:17px 20px!important; border-bottom: 1px solid #f3f4f7;}
 .caption.bot{border: none!important;}
 .thumbnail .caption p{line-height: 19px; margin: 0!important; font-size: 13px; color: #1e1e40;}
-.thumbnail .caption p.text-size-small{font-size: 10px;}	
-.thumbnail .thumb img{border-radius: 5px 5px 0 0; max-height: 250px;}		
+.thumbnail .caption p.text-size-small{font-size: 10px;}
+.thumbnail .thumb img{border-radius: 5px 5px 0 0; max-height: 250px;}
 .media_details p {	font-size: 11px!important;color: #2f3053!important; line-height: 22px!important}
 .media_details p strong {	width: 60px;	float: left; font-weight: 300!important; color: #64658b!important; font-size: 11px!important;}
 .media_details p i{font-size: 9px!important;}
@@ -1574,7 +1574,7 @@ CHAT PAGE CSS
 
 
 .slimScrollBar{background-image: linear-gradient(259deg, #5a99f6, #1266c1)!important;}
-	
+
 .chat-list .text-muted{ color:#0c0c2c!important;}
 .chat-list .media-annotation{ color:#64658b!important;}
 .chat_border  .form-control.addnote{ resize:none; margin:0!important;}
@@ -1727,11 +1727,11 @@ EMAIL ORKFLOW SECTION
 
 
 /*******************************
-CHAT WIDGET 
+CHAT WIDGET
 **********/
 
 .chat_widget_bot_right{position: absolute; bottom: 40px; right: 40px; width: 100%; max-width: 260px; min-height: 200px;}
-		
+
 .white_box{width: 100%;  padding: 20px;  border-radius: 5px;  background-color: #ffffff;  position: relative; margin-bottom: 10px; box-shadow: 0 3px 5px 0 rgba(1, 21, 64, 0.06);}
 .white_box p{font-size: 13px; color: #102243; font-weight: 400; margin: 0px; }
 .white_box p span{font-size: 13px; color: #22375e; font-weight: 200; }
@@ -1782,7 +1782,7 @@ ul.rating_numbers li a{margin: 0; padding: 0; display: inline-block; width: 24px
  .img_icon{width: 84px;  height: 84px;  box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03); border-radius: 100%; margin: 0 auto 10px; background: #fff; text-align: center; line-height: 84px; border: 1px solid #f0f1f6;}
 
 /*******************************
-USER AND BRAND SETTINGS 
+USER AND BRAND SETTINGS
 **********/
 .user_display{padding: 30px;}
 .user_area{ box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.04); border-radius:5px; background:#fff; width:100%; min-height:300px; text-align:center; border:1px solid #ececf3; padding:30px 55px; margin-bottom:20px;}
@@ -1985,7 +1985,7 @@ BRAND PAGE CSS
 
 .bp_fleft{float: left;}
 .bp_fright{float: right;}
-.bp_clear{clear: both;}	
+.bp_clear{clear: both;}
 .bp_pad5{padding: 5px!important;}
 .bp_pad10{padding: 10px!important;}
 .bp_pad15{padding: 15px!important;}
@@ -2018,7 +2018,7 @@ BRAND PAGE CSS
 .bp_pagination ul.bbpagination_list li{list-style: none; margin: 0; padding: 0; display: inline-block}
 .bp_pagination ul.bbpagination_list li a{margin: 0; display: inline-block; font-size: 12px; color: #425784; font-weight: 500; text-decoration: none; padding:8px 12px; border: 1px solid #fff; border-radius: 4px;}
 .bp_pagination ul.bbpagination_list li a.bbactive{border: 1px solid #eee; color: #127bfb}
-a.bp_txt_blue{text-decoration: none; border-bottom: 1px solid #eee!important; padding-bottom: 2px; display: inline-block;}	
+a.bp_txt_blue{text-decoration: none; border-bottom: 1px solid #eee!important; padding-bottom: 2px; display: inline-block;}
 .bp_rw04_1 {width: 100%; position:relative; margin-left: 0px; margin-top: 0px; border-radius: 0px; /*font-family: 'Inter UI', sans-serif;*/ font-family: 'BwNista Geo'; font-size: 13px; color: #09204f; box-sizing: border-box; }
 .bp_rw04_1 .bp_comments_area{ height: calc(100% - 170px); overflow-y: hidden; overflow-x: hidden;}
 .bp_rw04_1 .bp_comments_area:hover{ overflow-y: auto; overflow-x: hidden;}
@@ -2109,7 +2109,7 @@ review_request_sec SEC
 .review_star_box i.yellow{color: #ffc54f;}
 
 .img_vid_upload{width: 100%; min-height: 233px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
-.img_vid_upload_small{width: 100%; min-height: 86px; border-radius: 5px; background:url(../../assets/images/upload_bkg2.png) 25px 25px no-repeat #fff; border: 1px solid #dfe5f0; 
+.img_vid_upload_small{width: 100%; min-height: 86px; border-radius: 5px; background:url(../../assets/images/upload_bkg2.png) 25px 25px no-repeat #fff; border: 1px solid #dfe5f0;
   box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.04);}
 
 
@@ -2300,7 +2300,7 @@ EMAIL BROADCAST SECTION
 /*******************************
 HELPDESK
 **********/
-.helpdesk_sec .chat_user_list:before{ display: none!important}	
+.helpdesk_sec .chat_user_list:before{ display: none!important}
 .helpdesk_sec .chat_search_icon {position: relative;height: 21px;width: 100%;border: none;}
 .helpdesk_sec .chat_search_icon input[type="text"]{width: calc(100% - 25px); border: none; height: 20px; font-size: 11px; float: left; margin: 0px 0 0 0; padding: 0px;}
 .helpdesk_sec .chat_search_icon button[type="submit"]{width: 20px;height: 20px; border: none; background: none; padding: 0px;}
@@ -2330,7 +2330,7 @@ THEME COLOR OPTIONS
 
 .navbar-nav > li > a {	padding-top: 19px;	padding-bottom: 17px;padding-left: 5px;padding-right: 5px;}
 .content-wrapper{position: relative;}
-.content-wrapper:before{position: absolute; width: 100%; height: 232px; content: ''; top: -56px; left: 0;z-index: -999; background-image: linear-gradient(260deg, #6a7995, #404c65); 
+.content-wrapper:before{position: absolute; width: 100%; height: 232px; content: ''; top: -56px; left: 0;z-index: -999; background-image: linear-gradient(260deg, #6a7995, #404c65);
 	background-image: -webkit-linear-gradient(260deg, #6a7995, #404c65); }
 
 
@@ -2410,7 +2410,7 @@ THEME COLOR OPTIONS
 .notfound404 h1{font-size: 25px; color: #000; font-weight: 700; margin: 0; line-height: 40px;}
 .notfound404 h1 span{ color: #98adcf; }
 .notfound404 p{max-width: 275px; font-size: 13px; color: #253b6a; line-height: 22px; margin: 20px 0 30px;}
- 
+
 
 /*******************************
 PADDING CLASSES
@@ -2608,7 +2608,7 @@ BACKGROUND CLASSES
 .progress_yellow{background: #fcead6 !important;}
 .progress-bar-dred{background-color: #fd8394 !important;border-radius: 1.5px; box-shadow: none;}
 .progress_red{background: #fde0e5 !important;}
-		
+
 .bkg_bl_gr{background-image: linear-gradient(to bottom, #2eb4dd, #2779dc)!important;}
 
 .bkg_gradient{background-image: linear-gradient(207deg, #f7f8fb, #ffffff);}
@@ -2639,12 +2639,12 @@ BACKGROUND CLASSES
 mis
 **********/
 @media (min-width: 769px) {
-	.sidebar {width: 200px;} 
+	.sidebar {width: 200px;}
 	.navbar-header{min-width: 200px;}
 }
 
 @media (min-width: 1371px) {
-	.sidebar {width: 240px;} 
+	.sidebar {width: 240px;}
 	.navbar-header{min-width: 240px;}
 }
 
@@ -2844,8 +2844,8 @@ mis
 .choose_orientation li a i.fa{color: #09204f; font-size: 13px;}
 .choose_orientation li a.active i.fa{color: #962e6c; font-size: 13px;}
 .degtop {-webkit-transform: rotate(-45deg);	-ms-transform: rotate(-45deg);	transform: rotate(-45deg);}
-.degbot {-webkit-transform: rotate(-45deg);	 -ms-transform: rotate(45deg); 	 transform: rotate(45deg); }																															
- 
+.degbot {-webkit-transform: rotate(-45deg);	 -ms-transform: rotate(45deg); 	 transform: rotate(45deg); }
+
 
 .brand_page_pr .panel-heading{height: auto!important}
 .brand_page_pr .brand_thumbs {	border: 1px solid #f4f6fa!important;}
@@ -2886,7 +2886,7 @@ mis
 /*====responsive CSS===*/
 
 @media only screen and (min-width:768px) and (max-width:1500px){
-.minh950{min-height: 1100px;}	
+.minh950{min-height: 1100px;}
 .dboard_wiz h1{font-size: 16px;}
 .col-md-2.review_source{max-width: 33%; float: left; margin-bottom: 25px;}
 .col-md-2.review_source .inner .text_sec {	padding: 10px;}
@@ -2916,38 +2916,38 @@ mis
 	.badge.notify{right: 15px!important}
 	.hidetab{display: none!important;}
 	.minh950{min-height: 1200px;}
-	
-	
-	
+
+
+
 	body{font-size: 12px!important}
 	.navigation {padding: 0 10px !important;}
 	.navigation strong.nav_icon{width: 22px!important;}
 	.navigation > li > a{padding: 7px!important; font-size: 12px}
 	.navigation .navigation-header{padding: 7px 7px 2px !important}
 	.navbar-brand {	padding: 16px 20px 7px 30px;}
-	
+
 	.table > tbody > tr > td{font-size: 11px!important}
 	.table .text-size-small{font-size: 11px!important}
 	.table > thead > tr > th{font-size: 11px!important}
-	
+
 	.btn_area .btn.light_btn, .btn_area .btn.dark_btn {	height: 33px !important; line-height: 19px!important;font-size: 12px !important; padding: 7px 10px!important}
-	
+
 	.page_header{min-height: 80.5px; position: relative;}
 	.page_header .btn_area {padding-top: 17px;}
 	.nav-tabs > li > a {padding: 4px 0 5px;}
 	.content-wrapper:before {height: 207px;}
-	
-	
-	
-	
-	
+
+
+
+
+
 }
 
 @media only screen and (min-width:768px) and (max-width:1280px){
 	.tabbed_menu{width: 100%}
 	.page_header .btn_area{padding: 30px 10px!important; text-align: left; width: 100%;}
 	.content-wrapper:before {height: 313px;}
-	
+
 }
 
 
@@ -2955,13 +2955,13 @@ mis
 @media only screen and (max-width:1024px){
 		.chat_sec .col-md-3.pr0 {    padding: 0 10px !important;}
 		.chat_sec .chat_new{border-top-right-radius: 5px !important;}
-			
+
 		.chat_sec .col-md-6.pl0.pr0.chat_border {padding: 0 10px !important;}
         .chat_sec .col-md-3.pl0 {padding: 0 10px !important;margin-top: 20px;}
 		.chat_sec .col-md-6.pl0.pr0.chat_border {padding: 0 10px !important; border: 0;}
-	
+
 	.brand_side.mt-10 .col-md-4{float: none!important}
-			
+
 }
 
 /********************************** Media Query 768px *********************************/
@@ -2969,20 +2969,20 @@ mis
 	@media only screen and (max-width:768px){
 	.content{padding: 15px!important;}
 	.content:first-child {	padding-top: 15px !important;}
-	
+
 	.navbar-default.small-header{padding: 0px!important; opacity: 0.95;}
 	#navbar-mobile {	background: #252649; position: absolute;	width: 100%;	z-index: 999; }
 	.navbar-header{width: 100%!important; min-width: 100%;}
 	.modal-header .close{right: 15px; top: 15px;}
 	.navbar-default .navbar-collapse{border: none;}
-	
-	
+
+
 	.sidebar-xs .header-highlight .navbar-header .navbar-brand{background: none!important; padding-left:16px!important;}
 	.sidebar-xs .sidebar-main{width: 100%;}
 	.sidebar-category{margin-top: 0px!important;}
 	.sidebar-xs .navigation {	padding: 15px !important;}
 	.sidebar-xs .sidebar-main .navigation > li > a > span {	background: none !important; border: none !important;}
-	
+
 	.page_header .btn_area{padding:0px;  margin:0px!important;  position:absolute; z-index: 9; top: 47px; left: 0px;}
 	.page_header h3, .page_header h3 i{ font-size:15px;}
 	.page_header h3 img {	width: 13px!important;	float: left;	margin: 5px 7px 0 0!important;}
@@ -2998,7 +2998,7 @@ mis
 	.page_header .nav-tabs > li.active > a, .page_header .nav-tabs > li.active > a:hover, .page_header .nav-tabs > li.active > a:focus {	color: #6d41f2;	border: none !important;	border-bottom-color: transparent;	background: none!important; cursor: pointer;}
 	.page_header .nav-tabs.nav-tabs-bottom > li.active > a::after {	background-color: none; height: 0px!important; content: "\edc5"; position: absolute; left: -10px; top: 1px; font-family: 'icomoon';}
 	.page_header .nav-tabs.nav-tabs-bottom > li > a::after {	background-color: none; height: 0px!important; content: "\edc5"; position: absolute; left: -10px; top: 1px; font-family: 'icomoon';}
-	
+
 	.panel-heading .nav-tabs {padding:70px 30px 20px 30px; background-image: linear-gradient(252deg, #f7f8fb, #ffffff);	box-shadow: 0 3px 2px 0 rgba(0, 50, 179, 0.03), 0 1px 1px 0 rgba(0, 17, 136, 0.08); border-radius: 5px; margin-top: 0px; margin-bottom: 0px; }
 	.panel-heading .nav-tabs:before{position: absolute; content: 'Tab Navigation' ; width: 100%; border-bottom:  1px solid  rgba(0, 0, 55, 0.20)!important; left: 0; top: 0; text-align: left; padding: 20px 25px; color: #1e1e40!important; font-size: 13px;font-weight: 500; margin: 0!important; text-transform: none;}
 	.panel-heading .nav-tabs > li{margin: 10px 0!important;}
@@ -3007,30 +3007,30 @@ mis
 	.panel-heading .nav-tabs > li.active > a, .panel-heading .nav-tabs > li.active > a:hover, .panel-heading .nav-tabs > li.active > a:focus {	color: #6d41f2;	border: none !important;	border-bottom-color: transparent;	background: none!important; cursor: pointer;}
 	.panel-heading .nav-tabs.nav-tabs-bottom > li.active > a::after {	background-color: none; height: 0px!important; content: "\edc5"; position: absolute; left: -10px; top: 1px; font-family: 'icomoon';}
 	.panel-heading .nav-tabs.nav-tabs-bottom > li > a::after {	background-color: none; height: 0px!important; content: "\edc5"; position: absolute; left: -10px; top: 1px; font-family: 'icomoon';}
-	
-	
-	
+
+
+
 	.heading_links{display: none!important}
-	
+
 	.dataTables_info{margin: 0;}
 	.dataTables_length{width: 100%;}
-	
+
 	.topchart_value .col-xs-2{text-align: center;}
 	.topchart_value .mr20 {margin-right: 0px !important;}
 	.topchart_value .col-xs-2 .pull-left{float: none !important;}
 	.topchart_value h1{font-size: 18px; margin-top: 5px !important;}
-	
+
 	.chat_sec .tabbable .nav > li{display: inline-block;}
 	.chat_sec .tabbable .nav-tabs > li.active > a{background: #fff;}
-	
+
 	.col-md-2.review_source{max-width: 50%!important; float: left; margin-bottom: 25px;}
 	.col-md-2.review_source .inner .text_sec {	padding: 10px;}
-	
-	
-	
-	
+
+
+
+
 	.brand_side .nav-tabs::before {	margin-left: 0!important}
-	.brand_side .tab_brand_new.nav-tabs > li > a {	font-size: 11px;	color: #727291;	padding: 0;	margin: 0 10px 12px 0 !important;	font-weight: 400;}	
+	.brand_side .tab_brand_new.nav-tabs > li > a {	font-size: 11px;	color: #727291;	padding: 0;	margin: 0 10px 12px 0 !important;	font-weight: 400;}
 	.brand_side .review_ratings h1{font-size: 25px!important;}
 	.brand_side p.brand_rating{float: left; margin-right: 10px;}
 	.brand_side .review_ratings .fa.fa-star.big {	font-size: 17px;}
@@ -3038,27 +3038,27 @@ mis
 	.brand_page_pr .white_box{padding: 20px!important;}
 	.brand_page_pr img{max-width: 100px!important; border: 1px solid #eee;}
 	.brand_page_pr .pr, .brand_page_pr .pl{padding: 0px!important}
-	
+
 	.brand_page_pr .rightBtnSection {	width: 100%;padding-bottom: 0px;	float: none; border: none!important; margin: 0!important}
 	.brand_page_pr .interactions.p25{padding: 10px 0 20px!important; border-bottom: 1px solid #eee; margin: 0 10px 20px 10px!important;}
 	.brand_social.pl20{padding: 0!important; float: left;}
 	.contact_btn_box{float: left; width: 100%; padding-left: 0px; margin-top:10px;}
 	.contact_btn_box .dark_btn{width: 125px; font-size: 13px;}
 	.brand_page_pr h4.txt_dgrey {margin-top: 15px!important; font-weight: 600!important;}
-	
+
 	.box, .box div{width: 100%!important}
 	.profile_pic{width: 80px!important}
 	.profile_flags {display: none;}
 	.profile_pic span.icons.fl_letters{margin: 0 auto;}
-		
+
 		.plotLegend{display: none!important}
-	
-	
+
+
 }
 
 /********************************** Media Query 480px *********************************/
 @media only screen and (max-width:480px){
-	.brand_side .tab_brand_new.nav-tabs > li > a {	font-size: 11px;	color: #727291;	padding: 0;	margin: 0 10px 12px 0 !important;	font-weight: 400;}	
+	.brand_side .tab_brand_new.nav-tabs > li > a {	font-size: 11px;	color: #727291;	padding: 0;	margin: 0 10px 12px 0 !important;	font-weight: 400;}
 	.brand_side .review_ratings h1{font-size: 25px!important;}
 	.brand_side p.brand_rating{float: left; margin-right: 10px;}
 	.brand_side .review_ratings .fa.fa-star.big {	font-size: 17px;}
@@ -3066,16 +3066,16 @@ mis
 	.brand_page_pr .white_box{padding: 20px!important;}
 	.brand_page_pr img{max-width: 100px!important; border: 1px solid #eee;}
 	.brand_page_pr .pr, .brand_page_pr .pl{padding: 0px!important}
-	
+
 	.brand_page_pr .rightBtnSection {	width: 100%;	margin-bottom: 10px;	border-bottom: 1px solid #eee;	padding-bottom: 33px;	float: none;}
 	.brand_page_pr .interactions.p25{padding: 10px 0 20px!important; border-bottom: 1px solid #eee; margin: 0 10px 20px 10px!important;}
 	.brand_social.pl20{padding: 0!important; float: left;}
 	.contact_btn_box{float: left; width: 100%; padding-left: 0px; margin-top:10px;}
 	.contact_btn_box .dark_btn{width: 125px; font-size: 13px;}
 	.brand_page_pr h4.txt_dgrey {margin-top: 15px!important; font-weight: 600!important;}
-	
+
 	.col-xs-6.brand_head_sec{width: 100%;}
-	
+
 }
 
 
@@ -3108,7 +3108,7 @@ mis
    padding: 0;
    width: 16px;
    height: 16px;
-   background-color: #F2E9E1; 
+   background-color: #F2E9E1;
    border-radius: 50%;
    line-height: 16px;
 	margin: 0;
@@ -3140,13 +3140,13 @@ mis
 	font-size: 5px;
 	display: none;
 }
-.left-half-clipper { 
+.left-half-clipper {
    /* a round circle */
    border-radius: 50%;
    width: 16px;
    height: 16px;
    position: absolute; /* needed for clipping */
-   clip: rect(0, 16px, 16px, 8px); /* clips the whole left half*/ 
+   clip: rect(0, 16px, 16px, 8px); /* clips the whole left half*/
 }
 /* when p>50, don't clip left half*/
 .progress-circle.over50 .left-half-clipper {
@@ -3155,7 +3155,7 @@ mis
 .value-bar {
    /*This is an overlayed square, that is made round with the border radius,
    then it is cut to display only the left half, then rotated clockwise
-   to escape the outer clipping path.*/ 
+   to escape the outer clipping path.*/
    position: absolute; /*needed for clipping*/
    clip: rect(0, 8px, 16px, 0);
    width: 16px;
@@ -3164,7 +3164,7 @@ mis
    border: 4px solid #53777A; /*The border is 0.35 but making it larger removes visual artifacts */
    /*background-color: #4D642D;*/ /* for debug */
    box-sizing: border-box;
-  
+
 }
 /* Progress bar filling the whole right half for values above 50% */
 .progress-circle.over50 .first50-bar {
@@ -3339,7 +3339,7 @@ mis
 
 
 
-/*.sidebar-xs, .sidebar-main { 
+/*.sidebar-xs, .sidebar-main {
 	-webkit-transition: all 1s;
     -moz-transition: all 1s;
     -o-transition: all 1s;
@@ -3386,7 +3386,7 @@ iframe#loadstripotemplate {
         }
     }
 
-    
+
 
    /* .animated-background {
         -webkit-animation-duration: 1s;
@@ -3413,9 +3413,9 @@ iframe#loadstripotemplate {
 
 
 /*.panel-body{background: #fff; min-height: 136px!important; }*/
-		
-		
-		
+
+
+
 .animated-background {
 	-webkit-animation-duration: 1s;
 	animation-duration: 1s;
@@ -3427,10 +3427,10 @@ iframe#loadstripotemplate {
 	animation-name: placeHolderShimmer;
 	-webkit-animation-timing-function: linear;
 	animation-timing-function: linear;
-	 background: #f6f7f8; 
-	 background: #eeeeee; 
-	 background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee)); 
-	 background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%); 
+	 background: #f6f7f8;
+	 background: #eeeeee;
+	 background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee));
+	 background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
 	background: linear-gradient(to right, #eeeeee 8%,#dddddd 18%,#eeeeee 33%);
 	-webkit-background-size: 800px 104px;
 	background-size: 800px 104px;
