@@ -78,7 +78,8 @@ class FeedbackModel extends Model
 			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_users.user_id')
 			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
 			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
-			->get();
+			//->get();
+            ->paginate(10);
 		return $oData;
     }
 

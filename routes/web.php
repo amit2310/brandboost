@@ -19,6 +19,8 @@ Route::get('admin/', 'Admin\Dashboard@index');
 
 Route::get('admin/login', 'Admin\Login@index');
 Route::post('admin/login', 'Admin\Login@index');
+Route::get('admin/forgot_password', 'User\Login@forgot_password');
+Route::post('admin/forgot_password', 'User\Login@forgot_password');
 Route::get('admin/login/logout', 'Admin\Login@logout');
 
 

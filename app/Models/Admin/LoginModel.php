@@ -12,14 +12,14 @@ class LoginModel extends Model {
     //
     /**
      * Authorizing Login
-     * 
+     *
      * @param type $loginid
      * @param type $password
      * @param type $remember
-     * @return User object 
+     * @return User object
      */
     public function verifyAdminUser($loginid, $password, $remember) {
-        
+
         $response = false;
         $password_hash = 'Umair';
         $siteSalt = 'Rahul';
@@ -72,9 +72,9 @@ class LoginModel extends Model {
                 ->where('password', $pwd)
                 ->where('deleted_status', 0)
                 ->first();
-        
+
         if (!empty($user)) {
-            
+
             if ($user->user_role == 1) {
                 Session::put('admin_user_id', $user->id);
                 Session::put('current_user_id', $user->id);
@@ -100,7 +100,7 @@ class LoginModel extends Model {
 
     /**
      * Authorizing Team member login
-     * 
+     *
      * @param type $email
      * @param type $password
      * @return user Object
@@ -143,7 +143,7 @@ class LoginModel extends Model {
 
     /**
      * Stores login history of users
-     * 
+     *
      * @param type $userId
      * @param type $platform_device
      * @return boolean
@@ -170,7 +170,7 @@ class LoginModel extends Model {
 
     /**
      * update increase counter each time when user login, used for determining whether or not display upgrade popup
-     * 
+     *
      * @param type $userID
      * @param type $dataArray
      * @return boolean
@@ -187,7 +187,7 @@ class LoginModel extends Model {
 
     /**
      * Check whether user has S3 bucket or not
-     * 
+     *
      * @return boolean
      */
     public function checkS3server() {
@@ -207,10 +207,10 @@ class LoginModel extends Model {
 
     /**
      * Update to ensure user folder created in the S3 bucket
-     * 
+     *
      * @return boolean
      */
-    
+
     public function updateS3server() {
 
         $userid = Session::get('customer_user_id');
@@ -227,7 +227,7 @@ class LoginModel extends Model {
 
     /**
      * This function is use for update password
-     * 
+     *
      * @return boolean
      */
     public function ChangePassword($oldPassword, $newPassword, $rePassword) {
@@ -256,13 +256,13 @@ class LoginModel extends Model {
             $aData = array(
                 'password' => $newPassword
             );
-          
+
             $result = DB::table('tbl_users')
                     ->where('id', $userID)
                     ->update($aData);
             $response = true;
         }
-        
+
         return $response;
     }
 
@@ -303,7 +303,7 @@ class LoginModel extends Model {
       return $response;
       } */
 
-    public function ForgotPassword($emailAddress) {
+    /*public function ForgotPassword($emailAddress) {
         $user = false;
         $this->db->from('tbl_users');
         $this->db->where('email', $emailAddress);
@@ -313,9 +313,20 @@ class LoginModel extends Model {
             $user = $query->row();
         }
         return $user;
+    }*/
+
+    public function ForgotPassword($emailAddress) {
+        $user = false;
+        $user = DB::table('tbl_users')
+            ->where('email', $emailAddress)
+            ->first();
+        if (!empty($user)) {
+            $user = true;
+        }
+        return $user;
     }
 
-    
+
 
     public function ChangePasswordAdmin($oldPassword, $newPassword, $rePassword, $userID) {
         $response = false;
