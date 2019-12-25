@@ -193,7 +193,7 @@ span.phonenumber{font-size: 10px; color: rgba(255, 255, 255, 0.8)!important}
 	border-radius: 10px 0 10px 10px;
 	font-size: 12px;
 	border: solid 1px #eaedf3;
-	color: #22375e; 
+	color: #22375e;
 }
 .bb-form-group{padding:30px;}
 .bb-form-group input{width:100%; padding:6px; margin:10px 0; border:1px solid #e7edf8; box-sizing: border-box; border-radius: 5px; height: 40px; text-align: center;}
@@ -213,7 +213,7 @@ span.phonenumber{font-size: 10px; color: rgba(255, 255, 255, 0.8)!important}
 	bottom: 40px;
 	right: 40px;
 	font-family: 'Inter UI';
-	
+
 }
 
 .bb_msg a{color:#FFF;}
@@ -241,7 +241,7 @@ span.phonenumber{font-size: 10px; color: rgba(255, 255, 255, 0.8)!important}
     margin: auto;
     padding: 40px;
     width: 30%;
-	position:relative;    
+	position:relative;
 	border-radius: 20px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13);
 	border:none;
@@ -320,7 +320,7 @@ background-color: #fff; margin-top: 40px; padding: 30px; color: #202040; box-siz
 	border: 2px solid #fff; margin: 0 -5px;
 }
 
-.chat_widget_bot_right{position: absolute; bottom: 0px; font-family: 'Inter UI'; }	
+.chat_widget_bot_right{position: absolute; bottom: 0px; font-family: 'Inter UI'; }
 .bb_white_box{width: 100%;  padding: 20px;  border-radius: 5px;  background-color: #ffffff;    box-shadow: 0 14px 14px 0 rgba(0, 27, 96, 0.05), 0 0 1px 0 rgba(0, 0, 0, 0.03); position: relative; margin-bottom: 10px; box-sizing: border-box;}
 .bb_white_box p{font-size: 15px; color: #102243; font-weight: 600; margin: 5px 0; }
 .bb_white_box p span{font-size: 14px; color: #22375e; font-weight: 400; }

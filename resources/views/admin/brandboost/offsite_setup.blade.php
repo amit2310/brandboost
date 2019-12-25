@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -84,7 +84,7 @@ if ($selectedTab == 'contacts') {
     </div>
     <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
-    <div class="tab-content"> 
+    <div class="tab-content">
         <!--########################TAB 0 ##########################-->
 
         @include('admin.brandboost.campaign-tabs.offsite.offsite-review-sources', array('brandboostID' => $brandboostID, 'sources' => $sources, 'offsites_links' => $offsites_links, 'offSiteData' => $offSiteData, 'offsite_ids' => $offsite_ids))
@@ -94,12 +94,12 @@ if ($selectedTab == 'contacts') {
         <!--########################TAB 2 ##########################-->
 
         @include('admin.brandboost.campaign-tabs.offsite.offsite-workflow-campaign-beta', array('emailWorkflow' => $emailWorkflow, 'subscribersData' => $subscribersData, 'oEvents' => $oEvents))
-        <!--########################TAB 3 ##########################--> 
+        <!--########################TAB 3 ##########################-->
 
         @include('admin.brandboost.campaign-tabs.offsite.offsite-subscribers', array('brandboostID' => $brandboostID, 'campaign' => $campaign))
-        <!--########################TAB 4 ##########################--> 
+        <!--########################TAB 4 ##########################-->
 
-        @include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients)) 
+        @include('admin.brandboost.campaign-tabs.offsite.offsite-feedback', array('brandboostID' => $brandboostID, 'clients' => $clients))
     </div>
 </div>
 
@@ -536,7 +536,7 @@ if ($selectedTab == 'contacts') {
             return false;
         }
     }
-</script>	
+</script>
 
 <script type="text/javascript">
 
@@ -885,7 +885,6 @@ if ($selectedTab == 'contacts') {
         });
 
         $(document).on('click', '.saveReviewSource', function () {
-
             var offstepIds = [];
             var selected_list = $('#selected_list').val();
             var offstepIds = selected_list.split(",");

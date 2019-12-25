@@ -24,13 +24,22 @@ import OnsiteList from './components/admin/brandboost/onsite/';
 import OnsiteMedia from './components/admin/brandboost/onsite/Media';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
-import ReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
+import OnsiteReviewCampaigns from './components/admin/brandboost/onsite/ReviewCampaigns.vue';
+
 /*Import Onsite Setup components*/
 import onsiteStep1 from './components/admin/brandboost/onsite/setup/Setup';
 import onsiteStep2 from './components/admin/brandboost/onsite/setup/Setup2';
 import onsiteStep3 from './components/admin/brandboost/onsite/setup/Setup3';
 import onsiteStep4 from './components/admin/brandboost/onsite/setup/Setup4';
 import onsiteStep5 from './components/admin/brandboost/onsite/setup/Setup5';
+
+import OffsiteReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
+/*Import Offsite Setup components*/
+import offsiteStep1 from './components/admin/brandboost/offsite/setup/Setup';
+import offsiteStep2 from './components/admin/brandboost/offsite/setup/Setup2';
+import offsiteStep3 from './components/admin/brandboost/offsite/setup/Setup3';
+import offsiteStep4 from './components/admin/brandboost/offsite/setup/Setup4';
+import offsiteStep5 from './components/admin/brandboost/offsite/setup/Setup5';
 
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
 import Media from './components/admin/brandboost/Media.vue';
@@ -134,15 +143,24 @@ const routes = [
 
     /* Review Module */
     { path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
-    { path: '/brandboost/review_campaigns/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
+    { path: '/brandboost/review_campaigns/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
-    { path: '/reviews/onsite', component: ReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
+    { path: '/reviews/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
+
     { path: '/reviews/onsite/setup/:id/1', component: onsiteStep1, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/2', component: onsiteStep2, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/3', component: onsiteStep3, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/4', component: onsiteStep4, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/reviews/:id', component: onsiteReviewDetails, props : {title : 'On Site Reviews'} },
+
+
+    { path: '/reviews/offsite', component: OffsiteReviewCampaigns },
+    { path: '/reviews/offsite/setup/:id/1', component: offsiteStep1, props : {title : 'Off Site Campaign'} },
+    { path: '/reviews/offsite/setup/:id/2', component: offsiteStep2, props : {title : 'Off Site Campaign'} },
+    { path: '/reviews/offsite/setup/:id/3', component: offsiteStep3, props : {title : 'Off Site Campaign'} },
+    { path: '/reviews/offsite/setup/:id/4', component: offsiteStep4, props : {title : 'Off Site Campaign'} },
+    { path: '/reviews/offsite/setup/:id/5', component: offsiteStep5, props : {title : 'Off Site Campaign'} },
 
     { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },

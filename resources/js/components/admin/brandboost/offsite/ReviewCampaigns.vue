@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review Campaigns</h3>
+                        <h3 class="htxt_medium_24 dark_700">Offsite Review Campaigns</h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40"><img src="assets/images/filter_review.svg"/></button>
@@ -50,7 +50,7 @@
                     <loading :isLoading="loading"></loading>
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ campaigns.length }}&nbsp;Campaigns</h3>
+                            <h3 class="htxt_medium_16 dark_400">{{ allData.total }}&nbsp;Campaigns</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="table_action">
@@ -94,9 +94,7 @@
                                     <a v-if="campaign.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
                                     <a v-if="campaign.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showContacts(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Contacts</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Statistics</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
@@ -118,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 d-flex js-review-campaign-slidebox" style="cursor: pointer;">
+                    <div class="col-md-3 d-flex js-offsite-review-campaign-slidebox" style="cursor: pointer;">
                         <div class="card p0 pt50 text-center animate_top col">
                             <a href="#" class="circle-icon-64 bkg_dark_000 m0auto"><img src="assets/images/plus_grey_24.svg"> </a>
                             <h3 class="htxt_bold_12 dark_200 mb-0 mt-4 text-uppercase">Create<br>new campaign</h3>
@@ -162,7 +160,7 @@
                                     <img class="mt40" style="max-width: 250px; " src="assets/images/review_campaign.png">
                                     <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any campaigns</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import campaign!</h3>
-                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-review-campaign-slidebox">Create review campaign</button>
+                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-offsite-review-campaign-slidebox">Create review campaign</button>
                                 </div>
                             </div>
 
@@ -174,9 +172,9 @@
 
 
             <!-- Add Campaign Popup -->
-            <div class="box" style="width: 424px;">
+            <div class="box js-offsite-review-campaign-slidebox-Popup" style="width: 424px;">
                 <div style="width: 424px;overflow: hidden; height: 100%;">
-                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
+                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-offsite-review-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                         <form method="post" @submit.prevent="processForm">
                             <div class="p40">
                                 <div class="row">
@@ -187,16 +185,16 @@
                                     <div class="col-md-12">
 
                                         <div class="form-group">
-                                            <label for="title">Campaign name</label>
+                                            <label for="campaignName">Campaign name</label>
                                             <input type="text" class="form-control h56" id="campaignName" placeholder="Enter campaign name" name="campaignName"
                                                    v-model="form.campaignName">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="desc">Description</label>
-                                            <textarea class="form-control min_h_185 p20 pt10" id="OnsitecampaignDescription" placeholder="Campaign description"
-                                                      name="OnsitecampaignDescription"
-                                                      v-model="form.OnsitecampaignDescription"></textarea>
+                                            <label for="campaignDescription">Description</label>
+                                            <textarea class="form-control min_h_185 p20 pt10" id="campaignDescription" placeholder="Campaign description"
+                                                      name="campaignDescription"
+                                                      v-model="form.campaignDescription"></textarea>
                                         </div>
 
                                         <hr class="mt30 mb30"/>
@@ -213,7 +211,7 @@
                                         <input type="hidden" name="module_account_id" id="module_account_id"
                                                :value="moduleAccountID">
                                         <button class="btn btn-lg bkg_sms_400 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                        <a class="dark_200 fsize16 fw400 ml20" href="#">Close</a> </div>
+                                        <a class="dark_200 fsize16 fw400 ml20 js-offsite-review-campaign-slidebox" href="javascript:void(0);">Close</a> </div>
                                 </div>
                             </div>
                         </form>
@@ -255,7 +253,7 @@
                 breadcrumb: '',
                 form: {
                     campaignName: '',
-                    OnsitecampaignDescription: '',
+                    campaignDescription: '',
                     campaign_id: ''
                 },
                 formLabel: 'Create'
@@ -267,22 +265,16 @@
         },
         methods: {
             setupBroadcast: function(id){
-                window.location.href='#/reviews/onsite/setup/'+id+'/1';
+                window.location.href='#/reviews/offsite/setup/'+id+'/1';
             },
             showContacts: function(id){
-                window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
+                window.location.href='#/reviews/offsite/setup/'+id+'/3';
             },
             showCampaignPage: function(id,companyName,campaignName){
                 window.location.href='#/for/'+companyName+'/'+campaignName+'-'+id;
             },
-            showReviews: function(id){
-                window.location.href='#/brandboost/reviews/'+id;
-            },
-            showQuestions: function(id){
-                window.location.href='#/brandboost/questions/'+id;
-            },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/onsite?page='+this.current_page)
+                axios.get('/admin/brandboost/offsite?page='+this.current_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -309,7 +301,7 @@
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-review-campaign-slidebox').click();
+                document.querySelector('.js-offsite-review-campaign-slidebox').click();
             },
             prepareItemUpdate: function(campaign_id) {
                 //window.location.href='#/brandboost/onsite_setup/'+campaign_id;
@@ -327,7 +319,7 @@
                             let formData = response.data;
                             this.form.campaign_id = formData.campaign_id;
                             this.form.campaignName = formData.campaignName;
-                            this.form.OnsitecampaignDescription = formData.description;
+                            this.form.campaignDescription = formData.description;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
@@ -341,7 +333,7 @@
                 if(this.form.campaign_id>0){
                     formActionSrc = '/admin/brandboost/updateReviewCampaign';
                 }else{
-                    formActionSrc = '/admin/brandboost/addOnsite';
+                    formActionSrc = '/admin/brandboost/addOffsite';
                     this.form.module_account_id = this.moduleAccountID;
                 }
 
@@ -349,23 +341,19 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             if(response.data.brandboostID>0){
-                                window.location.href='#/brandboost/onsite_setup/'+response.data.brandboostID;
-                                return false;
-                            } else {
-                                window.location.href='#/brandboost/onsite_setup/'+response.data.brandboostID;
+                                window.location.href='#/reviews/offsite/setup/'+response.data.brandboostID+'/1';
                                 return false;
                             }
                             this.loading = false;
                             //this.form = {};
                             this.form.campaign_id ='';
-                            document.querySelector('.js-review-campaign-slidebox').click();
+                            document.querySelector('.js-offsite-review-campaign-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();
                             }, 500);
 
-                            syncContactSelectionSources();
                         }
                         else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate') {
@@ -413,7 +401,6 @@
                     })
                         .then(response => {
                             if(response.data.status == 'success'){
-                                syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
 
@@ -424,8 +411,8 @@
     }
 
     $(document).ready(function () {
-        $(document).on('click', '.js-review-campaign-slidebox', function(){
-            $(".box").animate({
+        $(document).on('click', '.js-offsite-review-campaign-slidebox', function(){
+            $(".js-offsite-review-campaign-slidebox-Popup").animate({
                 width: "toggle"
             });
         });

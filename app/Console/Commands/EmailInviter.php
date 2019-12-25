@@ -263,7 +263,7 @@ class EmailInviter extends Command {
                 );
 
                 //pre($aMoreEligibleSubscriber);
-                //die;    
+                //die;
                 $this->fireAutomationCampaign($aFireData);
             }
         }
@@ -352,7 +352,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $aEventUsed to process thank you invite
      */
     public function processThankyouInvites($aEvent = array()) {
@@ -542,7 +542,7 @@ class EmailInviter extends Command {
                 $aTrackSetttings['subscriber_id'] = $oSubscriber->id;
                 $aTrackSetttings['client_id'] = $clientID;
                 $aTrackSetttings['module_name'] = $aData['module_name'];
-                //Replace Tags 
+                //Replace Tags
 
                 $contentReplaced = $mInviter->emailTagReplace($aData['automation_id'], $emailContent, 'email', $oSubscriber);
                 //echo "Content is ". $content;
@@ -753,7 +753,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $sMessage
      * @param type $msgID
      * @param type $aTrackSettings
@@ -768,7 +768,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $content
      * @param type $msgId
      * @param type $aSettingsData
@@ -821,7 +821,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $content
      * @param type $msgId
      * @return type
@@ -832,7 +832,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function generateMessageId() {
@@ -840,7 +840,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $val
      * @return type
      */
@@ -849,7 +849,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $val
      * @return type
      */
@@ -858,7 +858,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $delayType
      * @param type $delayUnit
      * @param type $delayValue
@@ -907,7 +907,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return boolean
      */
@@ -958,7 +958,7 @@ class EmailInviter extends Command {
 
 
         $emailContent = $sPreheaderText . $emailData . $footerCompiledCode;
-        
+
 
         $fromName = $aData['from_name'];
         $replyEmail = !empty($aData['reply_email']) ? $aData['reply_email'] : $aData['from_entity'];
@@ -973,7 +973,7 @@ class EmailInviter extends Command {
                 'bb_module_name' => $aData['module_name']
             )
         );
-        
+
         $plainText = convertHtmlToPlain($emailContent);
         $params = array(
             'api_user' => $user,
@@ -993,7 +993,7 @@ class EmailInviter extends Command {
         if (!empty($replyEmail)) {
             $params['replyto'] = $replyEmail;
         }
-        
+
 
         //pre($params);
         $request = $url . 'api/mail.send.json';
@@ -1019,7 +1019,7 @@ class EmailInviter extends Command {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return booleanUsed to sent Twilio SMS
      */

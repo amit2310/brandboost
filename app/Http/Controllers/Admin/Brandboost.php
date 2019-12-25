@@ -188,16 +188,9 @@ class Brandboost extends Controller
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Onsite Review Campaigns' => '#/brandboost/review_campaigns/onsite'
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => ''
         );
-
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
-			</ul>';
 
         $bActiveSubsription = $mUsers->isActiveSubscription();
         //$this->session->set_userdata('setTab', '');
@@ -230,7 +223,7 @@ class Brandboost extends Controller
 
         $validatedData = $request->validate([
             'campaignName' => ['required'],
-            'OnsitecampaignDescription' => ['required']
+            'campaignDescription' => ['required']
         ]);
 
         //Instantiate Brandboost model to get its methods and properties
@@ -241,7 +234,7 @@ class Brandboost extends Controller
         $campaign_id = $request->campaign_id;
 
         $campaignName = $request->campaignName;
-        $description = $request->OnsitecampaignDescription;
+        $description = $request->campaignDescription;
         $cData = array(
             'brand_title' => $campaignName,
             'brand_desc' => $description
@@ -1345,13 +1338,11 @@ class Brandboost extends Controller
 
         $moduleName = 'brandboost-offsite';
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Offsite' => ''
+        );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
 
@@ -1368,12 +1359,13 @@ class Brandboost extends Controller
             }
         }
 
-        $aBradboosts = $this->processOffsiteOverview($aBrandboostList);
+        $aBradboosts = $this->processOffsiteOverview($aBrandboostList->items());
 
         $aData = array(
             'title' => 'Offsite Brand Boost Campaigns',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'aBrandbosts' => $aBradboosts,
+            'allData' => $aBrandboostList,
             'bActiveSubsription' => $bActiveSubsription,
             'currentUserId' => $userID,
             'user_role' => $user_role,
@@ -1595,7 +1587,9 @@ class Brandboost extends Controller
 
         $offsite_ids = $oBrandboost[0]->offsite_ids;
         $offsite_ids = unserialize($offsite_ids);
-        $offsite_ids = @implode(",", $offsite_ids);
+        $offsiteGlue = $offsite_ids = @implode(",", $offsite_ids);
+        $slinks = $oBrandboost[0]->offsites_links;
+        $offsites_links = unserialize($slinks);
         //$totalSocialIcon = OffsiteModel::offsite_count_all_edit('', $offsite_ids);
         $totalSocialIcon = 5;
         $offstepdata = OffsiteModel::getOffsite();
@@ -1613,6 +1607,15 @@ class Brandboost extends Controller
 
         $setTab = Session::get("setTab");
         $offsiteIds = explode(',', $offsite_ids);
+
+
+
+        if($offstepdata->isNotEmpty()){
+            foreach($offstepdata as $data){
+                $aSource = @unserialize($data->site_categories);
+                $data->site_categories_array = $aSource;
+            }
+        }
         if (!empty($offsiteIds)) {
             foreach ($offsiteIds as $value) {
                 if (!empty($value) && $value > 0) {
@@ -1627,18 +1630,18 @@ class Brandboost extends Controller
         }
 
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/offsite') . '" class="sidebar-control hidden-xs">Off site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $oBrandboost[0]->brand_title . '</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Offsite' => '#/reviews/offsite',
+            'Setup' => '',
+        );
+
 
 
         $aData = array(
             'title' => 'Offsite Brand Boost Campaign',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'getOffsite' => $oBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $oFeedbackResponse,
@@ -1659,12 +1662,16 @@ class Brandboost extends Controller
             'selectedTab' => $selectedTab,
             'brandboostID' => $brandboostID,
             'offSiteData' => $offstepdata,
+            'offsiteIds' => $offsiteGlue,
             'offSiteReviews' => $offSiteReviews,
             'emailTemplate' => $emailTemplate,
-            'smsTemplate' => $smsTemplate
+            'smsTemplate' => $smsTemplate,
+            'offsites_links'=> $offsites_links,
+            'aUserInfo' => $aUser
         );
-
-        return view('admin.brandboost.offsite_setup', $aData);
+        echo json_encode($aData);
+        die;
+        //return view('admin.brandboost.offsite_setup', $aData);
     }
 
 
