@@ -42,8 +42,9 @@ import EmailLists from './components/admin/Lists';
 import EmailBroadcasts from './components/admin/broadcast/Email';
 import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
 import FeedbackList from './components/admin/feedback/FeedbackList';
-import OffsiteNegativeFeedback from './components/admin/brandboost/offsite/Feedback';
 import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteCampaign';
+import OffsiteNegativeFeedback from './components/admin/brandboost/offsite/Feedbacks';
+import OffsiteFeedbackDetails from './components/admin/brandboost/offsite/FeedbackDetails';
 import Segments from './components/admin/broadcast/Segments';
 import SegmentSubscribers from './components/admin/contact/SegmentSubscribers';
 import ListSubscribers from './components/admin/contact/ListSubscribers';
@@ -126,7 +127,8 @@ const routes = [
     { path: '/brandboost/offsite', component: OffsiteCampaigns, props: {pageColor:'offsite_sec', title: 'Offsite Brand Boost Campaigns'} },
     { path: '/brandboost/review_request/offsite', component: OffsiteReviewRequest, props: {pageColor:'offsite_sec', title : 'Review Requests', review_type: 'offsite'} },
     { path: '/feedback/listall/', component: FeedbackList, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
-    { path: '/brandboost/offsite/feedback', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
+    { path: '/brandboost/offsite/feedbacks', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
+    { path: '/feedback/:id', component: OffsiteFeedbackDetails, props: { pageColor:'offsite_sec', title: 'Feedback Details'} },
 
     /* Templates Module */
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
