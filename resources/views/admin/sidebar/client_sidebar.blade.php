@@ -208,11 +208,12 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item"><a class="nav-link active" href="{{ url('#/reviews/dashboard') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/offsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Offsite Campaigns</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/onsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Onsite Campaigns</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_feedback') }}"><i><img src="assets/images/star-line-dark.svg"/></i><span class="menu-item-text">Reviews Feed</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/offsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Review Requests</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/onsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Onsite Review Requests</span></a></li>
+                    {{--<li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_feedback') }}"><i><img src="assets/images/star-line-dark.svg"/></i><span class="menu-item-text">Reviews Feed</span></a></li>--}}
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/offsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Offsite Campaigns</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/offsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Review Requests</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/offsite/feedbacks/') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Feedbacks</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/onsite/media') }}"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Media</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/pie-chart-line.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
