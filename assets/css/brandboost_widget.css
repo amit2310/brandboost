@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import url('https://rsms.me/inter/inter-ui.css');
+/*@import url('https://rsms.me/inter/inter-ui.css');*/
 @import url("fonts/BwNistaGeo.css");
 
 /* CSS Document */
@@ -14,7 +14,7 @@ body{margin: 0; padding: 0; background: #eff1f6;}
 /*################## COMMON CSS #################*/
 .bb_fleft{float: left;}
 .bb_fright{float: right;}
-.bb_clear{clear: both;}	
+.bb_clear{clear: both;}
 .bb_pad5{padding: 5px!important;}
 .bb_pad10{padding: 10px!important;}
 .bb_pad15{padding: 15px!important;}
@@ -55,7 +55,7 @@ body{margin: 0; padding: 0; background: #eff1f6;}
 	bottom: 0px;
 }
 
-		  
+
 .bb_pagination{padding: 15px; text-align: center; }
 .bb_pagination ul.bbpagination_list {margin: 0; padding: 0;}
 .bb_pagination ul.bbpagination_list li{list-style: none; margin: 0; padding: 0; display: inline-block}
@@ -175,7 +175,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 .bb_top_button_powered a {	text-decoration: none !important;	font-size: 13px;	color: #09204f;	float: left;	display: block;	width: 100%; text-align: left; font-weight: 400; line-height: 46px!important;}
 .bb_top_button_powered a img{float: left; width: 11px; height: 16px; margin: 15px 10px 0 13px !important}
 
-/*################## WIDGET 01 #################*/		
+/*################## WIDGET 01 #################*/
 .bb_rw01 {width: 360px;  position: fixed; bottom: 30px; right: 30px; border-radius: 6px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box;}
 .bb_rw01 .bb_pr_header01 img{width: 75px; height: 75px; margin-right: 15px; vertical-align: top;}
 .bb_rw01 .bb_pr_header01 h3{margin: 0 0 10px 0; font-size: 16px; font-weight: 500;  line-height: 1.15;}
@@ -197,7 +197,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 .bb_rw01 .bb_small_image_sec img{border-radius: 5px; margin-top: 5px; width: 100px; height: 75px;}
 
 
-/*################## WIDGET 02 #################*/		
+/*################## WIDGET 02 #################*/
 .bb_rw02 {width: 520px; min-height:770px; position: fixed; top: 10%; left: 50%; margin-left: -260px; border-radius: 6px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box;}
 .bb_rw02 .bb_rating_sec{float: left; width: 50%; border-right: 1px solid #f4f6fa; padding-right: 30px; box-sizing: border-box; height: 80px;}
 .bb_rw02 .bb_rating_sec h3{font-size: 20px; color: #080d2e; margin: 0 0 7px; font-weight: 600}
@@ -240,7 +240,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 .bb_rw02 .bb_small_image_sec img{border-radius: 5px; margin-top: 5px; width: 100px; height: 75px;}
 
 
-/*################## WIDGET 03 #################*/		
+/*################## WIDGET 03 #################*/
 .bb_rw03 {width: 100%;  position: fixed; bottom: 0; left: 0;  border-radius: 6px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box;}
 .bb_rw03 .bb_top_header_sec{ margin: 0; padding: 25px 25px 15px; border-bottom: 1px solid #f4f6fa; min-height: 72px; box-sizing: border-box;}
 .bb_rw03 .bb_rating_sec{float: left;  box-sizing: border-box; }
@@ -270,7 +270,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 .bb_rw03 .bb_img_enlagre, .bb_rw03_1 .bb_img_enlagre {width: 118px; height: 76px; border-radius: 5px; margin-right: 20px; margin-top: 5px; }
 
 
-/*################## WIDGET 03_1 #################*/		
+/*################## WIDGET 03_1 #################*/
 .bb_rw03_1 {width: 100%;  position: fixed; bottom: 0; left: 0; padding: 0 20px 20px 20px;  border-radius: 6px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box;}
 .bb_rw03_1 .bb_white_box{background:none!important; box-shadow: none!important}
 .bb_rw03_1 .bb_top_header_sec{ margin: 0; padding: 25px 25px 15px; border-bottom: 1px solid #f4f6fa; min-height: 72px; box-sizing: border-box;}
@@ -303,7 +303,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 
 
 
-/*################## WIDGET 04 #################*/		
+/*################## WIDGET 04 #################*/
 .bb_rw04 {width: 360px; height:100%; position: fixed; top: 0%; left: 0%; margin-left: 0px; margin-top: 0px; border-radius: 0px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box;}
 .bb_rw04 .bb_comments_area{height: 80%; overflow-y: hidden; overflow-x: hidden;}
 .bb_rw04 .bb_comments_area:hover{ overflow-y: auto; overflow-x: hidden;}
@@ -333,7 +333,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 .bb_rw04 .bb_small_image_sec{ float: left; margin-right: 15px;}
 .bb_rw04 .bb_small_image_sec img{border-radius: 5px; margin-top: 5px; width: 100px; height: 75px;}
 
-/*################## WIDGET 04_1 #################*/		
+/*################## WIDGET 04_1 #################*/
 .bb_rw04_1 {width: 360px; height:100%; position: fixed; margin-left: 0px; margin-top: 0px; border-radius: 0px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box; left: 20px; top: 20px; bottom: 20px;}
 
 .bb_rw04_1 .bb_white_box{/*border-radius: 0px; height: 100%*/}
@@ -365,7 +365,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 .bb_rw04_1 .bb_small_image_sec img{border-radius: 5px; margin-top: 5px; width: 100px; height: 75px;}
 
 
-/*################## WIDGET 05 #################*/		
+/*################## WIDGET 05 #################*/
 .bb_rw05 { width: 100%; max-width: 1224px; min-height:770px; position:absolute; top: 0; border-radius: 0px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box; margin: 0; left: 50%; margin-left: -612px; padding: 50px 0;}
 .bb_rw05 .bb_white_box{box-shadow: none!important; border-top: 1px solid #f4f6fa; margin-top: 30px;}
 .bb_rw05 .bbtop_sec{padding: 40px 0;}
@@ -437,7 +437,7 @@ span.icons.fl_letters {	width: 32px;	height: 32px;	box-shadow: none !important;	
 
 
 
-/*################## WIDGET COMMENTS 01 ##############*/		
+/*################## WIDGET COMMENTS 01 ##############*/
 .bb_rwc01 { width: 100%; max-width: 1224px; min-height:770px; position:absolute; top: 0; border-radius: 0px; font-family: 'BwNista Geo'; font-size: 14px; color: #09204f; box-sizing: border-box; margin: 0; left: 50%; margin-left: -612px; padding: 0px 0;}
 .bb_rwc01 .bb_white_box{box-shadow: none!important; margin-top: 0px;}
 .bb_rwc01 .bbtop_sec{padding: 40px 0;}
@@ -588,37 +588,37 @@ position: relative;
 
 /********************************** Media Query 1024px *********************************/
 @media only screen and (max-width:1024px){
-		
-			
+
+
 }
 
 
 /********************************** Media Query 768px *********************************/
 @media only screen and (max-width:767px){
-	
-	
-	
+
+
+
 }
 
 /********************************** Media Query 480px *********************************/
 @media only screen and (max-width:480px){
 	/*******button_widget.html********/
-    .bb_rw01 { width: 335px;bottom: 10px;	right: 20px;}	
+    .bb_rw01 { width: 335px;bottom: 10px;	right: 20px;}
 	.bb_main_comments_section{border-radius: 6px;}
 	.bb_rw01 .bb_main_comments_section {height: 310px !important;}
 	.bb_submit_button_white {width: 40px;height: 40px;}
 	.bb_submit_button_white img {padding-top: 10px!important;width: 15px!important;}
 	.bb_pad20 {	padding: 15px !important;}
 	.bb_rw01 .bb_close {position: relative!important;cursor: pointer;width: 40px;height: 40px;border-radius: 6px;border: none;background-color: #fff;top: -50px!important;left: auto!important;	color: #b4c4dc;	font-size: 18px;box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.08);font-weight: 600 !important;right: auto!important;margin: 0 0 0 7px!important;float: right!important;}
-	
-	
+
+
 	/*******center_popup_widget.html********/
 	.bb_rw02 {width: 335px;min-height: auto;position: fixed;top: auto;left:auto; right: 20px; bottom: -5px;  margin-left: 0;border-radius: 6px;	}
 	.bb_rw02 .bb_main_comments_section{height: 445px;}
 	.bb_rw02 .bb_top_button_powered{margin-bottom: 0px!important; float: right; display: none;}
 	.bb_rw02 .bb_pad30 {padding: 15px 15px!important;}
 	.bb_rw02 .bb_pad30.bb_mob_pb30{padding:15px 15px 30px!important}
-	
+
 	.bb_rw02 .bb_comment_area a {margin-right: 5px;}
 	.bb_rw02 .bb_tab_box{padding: 15px!important}
 	.bb_rw02 .bb_tab_box ul li a {font-size: 12px;}
@@ -630,7 +630,7 @@ position: relative;
 	.bb_rw02 .bb_close.bb_widget_scroll {margin: 0!important; position: relative!important; top: -10px; right: auto;}
 	.bbpw_share_links{right: auto; left: 17px}
 	.hidden-xs{display: none;}
-	
+
 
 	.bb_rw04_1{width: 335px; top: auto!important; bottom: 60px!important; height: auto!important; left:auto; right: 20px!important; }
 	.bb_rw04_1 .bb_close.bbcpw_close_btn{right: 0px!important; top: -10px!important; border-radius: 100px;}
@@ -638,9 +638,9 @@ position: relative;
 	.bb_rw04_1 .bb_main_comments_section {height: 400px!important;}
 	.bb_rw04_1 .bb_submit_button_white {width: 40px;height: 40px; right: 0; bottom: -50px;}
 	.bb_rw04_1 .bb_submit_button_white img {padding-top: 10px!important;width: 15px!important; }
-	
-	
-	
+
+
+
 	.bb_rw05{margin-left:0!important; width: 100%; max-width: 100%; left: 0; padding: 0; }
 	.bb_rw05 .bb_white_box{margin: 0!important; padding: 0 15px!important}
 	.bb_rw05 .bbtop_sec{padding: 20px 0!important}
@@ -655,37 +655,37 @@ position: relative;
 	.bb_rw05 .bb_tab_box ul li a {font-size: 12px;}
 	.bb_rw05 .reviews { font-size: 14px; color: #09204f; font-weight: 500!important; margin: 16px; float: left;}
 	.bb_rw05 .bb_rating_sec h4 {border-bottom: 1px solid #f4f6fa !important;}
-	
+
 	.visible-xs{display: block;}
-	
-	
-	
-	
+
+
+
+
 	.bb_rw03_1{width: 100%; overflow-x: auto;  padding: 75px 20px 20px;}
-	
+
 	.bb_rw03_1 .bb_small_comment_box{width: 335px;}
 	.bb_rw03_1 .bb_top_button_powered{display: none;}
-	
+
 	/*.bb_rw03_1 .bb_sldebutton {	position: relative;	top: -10px;	left: -5px;	margin-left: 0px;}*/
 	.bb_rw03_1 .bb_sldebutton {	position: fixed;	top: auto;	left: 15px;	margin-left: 0px;	bottom: 440px;}
 	/*.bb_rw03_1 .bb_close {	border-radius: 100px;	top: 11px;	right: auto;	left: 315px;}*/
 	.bb_rw03_1 .bb_close {	border-radius: 100px;	top: auto;	right: 15px;	left: auto;	position: fixed;	bottom: 440px;}
-	
+
 	.bb_rw03_1 .bb_small_comment_box{height: 400px;}
 	.bb_rw03_1 .bb_comment_area{bottom: 17px;}
 	.bb_rw03_1 .bb_comment_area a.bb_share_btn {margin: 10px 15 0 0 !important;}
 	.bbpw_share_links{right: auto; left: 0!important; bottom: 1px!important}
-	
+
 	.bb_comments_area{width: 1375px;overflow: auto;position: relative;}
-	
-	
-	
-	
+
+
+
+
 }
 
 /********************************** Media Query 480px *********************************/
 @media only screen and (max-width:380px){
-	
+
 }
 
 
