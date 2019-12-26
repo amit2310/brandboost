@@ -54,7 +54,7 @@ class Feedback extends Controller {
             'Home' => '#/',
             'Reviews' => '#/reviews/dashboard',
             'Offsite' => '#/reviews/offsite',
-            'Feedback' => '',
+            'Feedback' => '#/brandboost/offsite/feedbacks'
         );
 
         //$feedbackTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
@@ -111,10 +111,16 @@ class Feedback extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . base_url('admin/feedback/listall/') . '" data-toggle="tooltip" data-placement="bottom" title="Feedback" class="sidebar-control active hidden-xs ">Feedback</a></li>
                     </ul>';
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Offsite' => '#/brandboost/review_request/offsite',
+                'Review Feedback' => '#/brandboost/offsite/feedbacks',
+                'Details' => '#/feedback/'.$feedbackID
+            );
 
             $aData = array(
                 'title' => 'Feedback Details',
-                'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'result' => $oFeedbackData,
                 'oCommentsData' => $oCommentsData,
                 'oNotes' => $oFeedbackNotes,
@@ -130,7 +136,10 @@ class Feedback extends Controller {
                 echo json_encode($response);
                 exit;
             } else {
-				return view('admin.feedback.feedback_details', $aData);
+				//return view('admin.feedback.feedback_details', $aData);
+
+                echo json_encode($aData);
+                exit;
             }
         }
     }
