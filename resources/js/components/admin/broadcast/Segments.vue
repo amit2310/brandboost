@@ -117,16 +117,35 @@
                                         <a v-if="segment.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="moveArchive(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="prepareSegmentUpdate(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteSegment(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="syncContacts(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Sync</a>
                                     </div>
                                 </div>
-                                <div @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
-                                    <img class="mt20" src="/assets/images/subs-icon_big.svg">
-                                    <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                        {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}</h3>
-                                    <p v-if="segment.status == '2'"><em>(Archived)</em></p>
-                                    <p v-else><em>(Active)</em></p>
-                                    <p class="htxt_regular_12 dark_300 mb15"><i><img src="/assets/images/user_16_grey.svg"/></i>
-                                        {{segment.segmentSubscribers.data.length}}</p>
+                                <div>
+                                    <div v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                        <img src="/assets/images/subs-icon_big.svg">
+                                        <h3 class="htxt_bold_16 dark_700 mt25 ">
+                                            {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}
+                                        </h3>
+                                        <p v-if="segment.status == '2'"><em>(Archived)</em></p>
+                                        <p v-else><em>(Active)</em></p>
+                                    </div>
+                                    <div v-else>
+                                        <img src="/assets/images/subs-icon_big.svg">
+                                        <h3 class="htxt_bold_16 dark_700 mt25 ">
+                                            {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}
+                                        </h3>
+                                        <p v-if="segment.status == '2'"><em>(Archived)</em></p>
+                                        <p v-else><em>(Active)</em></p>
+                                    </div>
+                                    <p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>
+                                    <p v-if="segment.segmentSubscribers.data.length > 0" class="htxt_regular_12 dark_300 mb15" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                        <i><img src="/assets/images/user_16_grey.svg" title="Subscribers"/></i>
+                                        {{segment.segmentSubscribers.data.length}}
+                                    </p>
+                                    <p v-else class="htxt_regular_12 dark_300 mb15">
+                                        <i><img src="/assets/images/user_16_grey.svg" title="Subscribers"/></i>
+                                        {{segment.segmentSubscribers.data.length}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -400,6 +419,31 @@
                                 this.showPaginationData(this.current_page);
                             }
 
+                        });
+                }
+            },
+            syncContacts: function(segmentID) {
+                if(confirm('Are you sure you want to perform this action?')){
+                    this.loading = true;
+                    //Do axios
+                    axios.post('/admin/segments/syncSegment', {
+                        segmentID:segmentID,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.loading = false;
+                                this.successMsg = 'Segment contacts have been synced successfully!';
+                            }
+
+                        })
+                        .catch(error => {
+                            this.loading = false;
+                            //error.response.data
+                            alert('Something went wrong.');
                         });
                 }
             }
