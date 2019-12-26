@@ -3123,19 +3123,20 @@ class Broadcast extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'People' => '#/contacts/dashboard',
-            'Segments' => ''
+            'Segments' => '#/contacts/segments'
         );
 
 
         $oSegments = $mBroadcast->getSegments($userID);
         foreach ($oSegments->items() as $key => $oSegment) {
-            $oSubscribers = BroadcastModel::getSegmentSubscribers($oSegment->id, $userID);
+            $oSubscribers = [];
+            $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
             $aCampaignIDs = @unserialize($oSegment->source_campaign_id);
             $moduleName = $oSegment->source_module_name;
             $modName = '';
             $campaignCollection = [];
             if (!empty($aCampaignIDs)) {
-                $campaignCollection = array();
+                //$campaignCollection = array();
                 foreach ($aCampaignIDs as $campaignId) {
                     $modName = $moduleName;
                     if (in_array($moduleName, array('brandboost-onsite', 'brandboost-offsite'))) {
@@ -3146,6 +3147,7 @@ class Broadcast extends Controller {
                         $modName = 'nps';
                     }
                     $oCampaign = $mWorkflow->getModuleUnitInfo($modName, $campaignId);
+
                     if (!empty($oCampaign)) {
                         //$campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
                         if ($moduleName == 'brandboost') {
@@ -3155,7 +3157,7 @@ class Broadcast extends Controller {
                         } else if ($moduleName == 'brandboost-offsite') {
                             $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/offsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
                         } else if ($moduleName == 'broadcast') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin#/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
                         } else if ($moduleName == 'automation') {
                             $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/emails/setupAutomation/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
                         } else if ($moduleName == 'nps') {
@@ -3177,7 +3179,6 @@ class Broadcast extends Controller {
             $oSegment->campaignCollection = $campaignCollection;
             //$oSegments[$key]->data = $oSegment;
         }
-
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -3300,7 +3301,7 @@ class Broadcast extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'People' => '#/contacts/dashboard',
-            'Segments' => '#/broadcast/mysegments',
+            'Segments' => '#/contacts/segments',
             'Subscribers' => ''
         );
         //Instantiate Broadcast model to get its methods and properties

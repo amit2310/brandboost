@@ -140,7 +140,7 @@
                     <div class="col-md-12">
                         <div class="card p40 pt0 pb0">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <h3 class="htxt_bold_18 dark_800">Info</h3>
                                     <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">
                                         <ul>
@@ -152,7 +152,7 @@
                                     </p>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="profile_headings"><h3 class="htxt_bold_18 dark_800">Feedback Notes</h3> <a class="pull-right plus_icon displayFeedback" href="javascript:void(0);"><i class="icon-plus3"></i></a></div>
                                     <div v-if="notesData.length <= 0" class="p25 bbot"><i>No Notes Available</i></div>
                                     <div v-else class="p25 bbot" v-for="notes in notesData">
