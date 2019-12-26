@@ -525,7 +525,7 @@
                     if (data.status == 'success') {
                         window.location.href = '';
                     } else {
-                        alertMessage('Error: Some thing wrong!');
+                        alert('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
                 }
@@ -552,7 +552,7 @@
                         //window.location.href = '';
                         window.location.reload();
                     } else {
-                        alertMessage('Error: Some thing wrong!');
+                        alert('Error: Some thing wrong!');
                         $('.overlaynew').hide();
                     }
                 }
