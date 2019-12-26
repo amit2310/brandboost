@@ -304,6 +304,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 
     Route::get('admin/feedback/listall', 'Admin\Feedback@getAllListingData');
+    Route::get('admin/feedback/listall/{id}', 'Admin\Feedback@getAllListingData');
     Route::get('admin/feedback/details/{id}', 'Admin\Feedback@feedbackDetails');
     Route::post('admin/feedback/details/{id}', 'Admin\Feedback@feedbackDetails');
     Route::post('admin/feedback/updateFeedbackStatus', 'Admin\Feedback@updateFeedbackStatus');

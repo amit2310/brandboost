@@ -29,7 +29,6 @@ class Feedback extends Controller {
         if ($brandboostID > 0) {
             $getBrandboost = BrandboostModel::getBrandboost($brandboostID);
             $result = $mFeedback->getFeedbackByBrandboostID($brandboostID);
-            $selectedTab = Request::input('t');
         } else {
             $result = $mFeedback->getFeedback($userID, $user_role);
         }
@@ -50,17 +49,12 @@ class Feedback extends Controller {
             }
         }
         list($canRead, $canWrite) = fetchPermissions('Feedbacks');
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Feedback" class="sidebar-control active hidden-xs ">Feedback</a></li>
-                    </ul>';
+
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Offsite' => '#/brandboost/review_request/offsite',
-            'Review Feedback' => '#/brandboost/offsite/feedbacks'
+            'Reviews' => '#/reviews/dashboard',
+            'Offsite' => '#/reviews/offsite',
+            'Feedback' => '#/brandboost/offsite/feedbacks'
         );
 
         //$feedbackTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
@@ -74,8 +68,6 @@ class Feedback extends Controller {
         $aData = array(
             'title' => 'Requires Attention',
             'breadcrumb' => $aBreadcrumb,
-            'pagename' => $breadcrumb,
-            'selected_tab' => $selectedTab,
             'brandboostDetail' => $getBrandboost,
             'allData' => $result,
             'result' => $result->items(),

@@ -9,7 +9,7 @@
                         <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus(2)"> Save as draft</button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(4)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
@@ -31,7 +31,7 @@
                                     class="num">1</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Review
                                     Sources</a></li>
-                                <li><a class="" href="javascript:void(0);"><span
+                                <li><a class="" href="javascript:void(0);" @click="displayStep(2)"><span
                                     class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Preferences</a>
                                 </li>
@@ -111,8 +111,11 @@
                         </button>
                     </div>
                     <div class="col-6">
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right ml-3" @click="changeCampaignStatus(1)">Publish <span><img
+                            src="/assets/images/arrow-right-line.svg"></span></button>
                         <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(5)">Save and continue <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
+
                     </div>
                 </div>
 
@@ -180,18 +183,23 @@
                 this.current_page = p;
                 this.loadPaginatedData();
             },
-            saveDraft: function(){
+            changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcast', {
-                    broadcastId: this.campaignId,
-                    status: 'draft',
-                    current_state: '',
+                axios.post('/admin/brandboost/publishOnsiteStatusBB', {
+                    brandboostID: this.campaignId,
+                    status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            if(status == 2){
+                                this.successMsg = 'Campaign saved as a draft successfully';
+                            }
+                            if(status == 1){
+                                this.successMsg = 'Campaign is active now';
+                            }
+
                         }else{
                             this.errorMsg = 'Something went wrong';
                         }
