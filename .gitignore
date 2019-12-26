@@ -8,11 +8,11 @@ npm-debug.log
 yarn-error.log
 .env
 .htaccess
-
+/vendor/*
 /uploads/*
 /profile_images/*
 /infusionsoft-php-sdk/*
-
+vendor
 
 /nbproject/private/
 .idea
