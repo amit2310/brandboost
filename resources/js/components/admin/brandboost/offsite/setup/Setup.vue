@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20"
-                                v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft
+                                v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus(2)"> Save as draft
                         </button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(2)"> Next <span
                             style="opacity: 1"><img
@@ -420,19 +420,24 @@
                 });
 
             },
-            saveDraft: function () {
+            changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcast', {
-                    broadcastId: this.campaignId,
-                    status: 'draft',
-                    current_state: '',
+                axios.post('/admin/brandboost/publishOnsiteStatusBB', {
+                    brandboostID: this.campaignId,
+                    status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.loading = false;
-                        if (response.data.status == 'success') {
-                            this.successMsg = 'Campaign saved as a draft successfully';
-                        } else {
+                        if(response.data.status == 'success'){
+                            if(status == 2){
+                                this.successMsg = 'Campaign saved as a draft successfully';
+                            }
+                            if(status == 1){
+                                this.successMsg = 'Campaign is active now';
+                            }
+
+                        }else{
                             this.errorMsg = 'Something went wrong';
                         }
                     });

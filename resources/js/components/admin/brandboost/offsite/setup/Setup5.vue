@@ -9,9 +9,9 @@
                         <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
-                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(5)"> Next <span style="opacity: 1"><img
-                            src="/assets/images/arrow-right-line-white.svg"/></span></button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus(2)"> Save as draft</button>
+                        <button class="btn btn-md bkg_email_300 light_000" @click="changeCampaignStatus(1)" >Publish <span><img
+                            src="/assets/images/arrow-right-line.svg"></span>  </button>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <onsite-reviews v-if="campaignId" :campaignId="campaignId"></onsite-reviews>
+                <list-feedback v-if="campaignId" :campaignId="campaignId"></list-feedback>
 
                 <div class="row mt40">
                     <div class="col-md-12">
@@ -65,7 +65,7 @@
                         </button>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(5)">Save and continue <span><img
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="changeCampaignStatus(1)">Publish<span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
@@ -77,9 +77,9 @@
     </div>
 </template>
 <script>
-    //import OnsiteReviews from '../OnsiteReviews';
+    import ListFeedback from '../ListFeedback';
     export default {
-        //components: {OnsiteReviews},
+        components: {ListFeedback},
         data() {
             return {
                 successMsg: '',
@@ -100,7 +100,16 @@
         },
         mounted() {
 
-            this.loading = false;
+            axios.get('/admin/brandboost/offsite_setup/' + this.campaignId)
+                .then(response => {
+                    this.breadcrumb = response.data.breadcrumb;
+                    this.makeBreadcrumb(this.breadcrumb);
+                    this.moduleName = response.data.moduleName;
+                    this.campaign = response.data.brandboostData;
+                    this.loading = false;
+                    //loadJQScript(this.user.id);
+
+                });
         },
         methods: {
             displayStep: function(step){
@@ -113,18 +122,23 @@
 
                 window.location.href = path;
             },
-            saveDraft: function(){
+            changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcast', {
-                    broadcastId: this.campaignId,
-                    status: 'draft',
-                    current_state: '',
+                axios.post('/admin/brandboost/publishOnsiteStatusBB', {
+                    brandboostID: this.campaignId,
+                    status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            if(status == 2){
+                                this.successMsg = 'Campaign saved as a draft successfully';
+                            }
+                            if(status == 1){
+                                this.successMsg = 'Campaign is active now';
+                            }
+
                         }else{
                             this.errorMsg = 'Something went wrong';
                         }
