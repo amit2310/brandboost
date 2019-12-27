@@ -158,8 +158,8 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
-    import Pagination from '../../../helpers/Pagination';
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {

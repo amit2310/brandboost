@@ -72,6 +72,10 @@ import ReferralOverview from './components/admin/modules/referral/Overview';
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
 import NpsScore from './components/admin/modules/nps/Score';
+import npsStep1 from './components/admin/modules/nps/setup/Setup';
+import npsStep2 from './components/admin/modules/nps/setup/Setup2';
+import npsStep3 from './components/admin/modules/nps/setup/Setup3';
+import npsStep4 from './components/admin/modules/nps/setup/Setup4';
 
 import AutomationCampaigns from './components/admin/modules/emails/Workflow';
 import WorkflowSetup from './components/admin/modules/emails/WorkflowSetup';
@@ -204,6 +208,11 @@ const routes = [
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/score/:hashKey', component: NpsScore, meta: { title: 'NPS Survey Score'} },
+    { path: '/nps/setup/:id/1', component: npsStep1, props : {title : 'NPS Campaign Setup'} },
+    { path: '/nps/setup/:id/2', component: npsStep2, props : {title : 'NPS Campaign Setup'} },
+    { path: '/nps/setup/:id/3', component: npsStep3, props : {title : 'NPS Campaign Setup'} },
+    { path: '/nps/setup/:id/4', component: npsStep4, props : {title : 'NPS Campaign Setup'} },
+
 
     /*Workflow Module*/
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },

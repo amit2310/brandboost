@@ -212,7 +212,7 @@
 
 <script>
 
-    import Pagination from '../../helpers/Pagination';
+    import Pagination from '@/components/helpers/Pagination';
 
     export default {
         title: 'Insight Tags - Brand Boost',

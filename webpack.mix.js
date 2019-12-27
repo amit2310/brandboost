@@ -17,5 +17,12 @@ mix.js('resources/js/app.js', 'public/js');
 mix.webpackConfig({
     watchOptions: {
         ignored: /node_modules/
+    },
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+
+            '@': __dirname + '/resources/js/'
+        },
     }
 });

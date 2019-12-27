@@ -142,9 +142,9 @@
     </div>
 </template>
 <script>
-    import WorkflowSubscribers from '../workflow/WorkflowSubscribers.vue';
-    import TargetAudienceInclude from '../workflow/targetAudience/includeOptionList';
-    import TargetAudienceExclude from '../workflow/targetAudience/excludeOptionList';
+    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
+    import TargetAudienceInclude from '@/components/admin/workflow/targetAudience/includeOptionList';
+    import TargetAudienceExclude from '@/components/admin/workflow/targetAudience/excludeOptionList';
     export default {
         components: {'workflow-subscribers':WorkflowSubscribers, 'target-audience-include': TargetAudienceInclude, 'target-audience-exclude': TargetAudienceExclude},
         data() {

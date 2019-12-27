@@ -147,9 +147,9 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
-    import Pagination from '../../../helpers/Pagination';
-    import ContactTags from "../../contact/ContactTags";
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
+    import ContactTags from "@/components/admin/contact/ContactTags";
 
     export default {
         props: ['campaignId'],

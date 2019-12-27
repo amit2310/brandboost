@@ -419,10 +419,10 @@
 </template>
 <script>
     var shiftInterval;
-    import modalPopup from "../../../components/helpers/Common/ModalPopup";
+    import modalPopup from "@/components/helpers/Common/ModalPopup";
     import workflowNode from './workflowComponents/Node';
-    import emailTemplateList from "../templates/TemplateComponents/EmailTemplateList";
-    import smsTemplateList from "../templates/TemplateComponents/SmsTemplateList";
+    import emailTemplateList from "@/components/admin/templates/TemplateComponents/EmailTemplateList";
+    import smsTemplateList from "@/components/admin/templates/TemplateComponents/SmsTemplateList";
     import addDefaultMoreButton from './workflowComponents/addMoreButton';
     import ChooseWorkflowSubscribers from "./ChooseWorkflowSubscribers";
     export default {

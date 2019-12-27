@@ -69,8 +69,8 @@
     </div>
 </template>
 <script>
-    import UserAvatar from '../../../../../helpers/UserAvatar';
-    import Pagination from '../../../../../helpers/Pagination';
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
     export default {
         props: ['moduleName', 'moduleUnitId'],
         components: {UserAvatar, Pagination},

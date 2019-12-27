@@ -240,8 +240,8 @@
 
 
 <script>
-    import SmsPopup from '../modals/templates/SmsTemplatesPopup.vue';
-    import Pagination from '../../helpers/Pagination';
+    import SmsPopup from '@/components/admin/modals/templates/SmsTemplatesPopup.vue';
+    import Pagination from '@/components/helpers/Pagination';
 
     export default {
         props: ['title', 'type'],

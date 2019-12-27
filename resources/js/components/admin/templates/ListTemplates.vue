@@ -231,8 +231,8 @@
 
 
 <script>
-    import EmailPopup from '../modals/templates/EmailTemplatesPopup.vue';
-    import Pagination from '../../helpers/Pagination';
+    import EmailPopup from '@/components/admin/modals/templates/EmailTemplatesPopup.vue';
+    import Pagination from '@/components/helpers/Pagination';
 
     export default {
         props: ['title', 'type'],
