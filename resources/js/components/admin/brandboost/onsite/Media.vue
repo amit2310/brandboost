@@ -231,8 +231,8 @@
 </template>
 
 <script>
-    import Pagination from '../../../helpers/Pagination';
-    import modalPopup from "../../../../components/helpers/Common/ModalPopup";
+    import Pagination from '@/components/helpers/Pagination';
+    import modalPopup from "@/components/helpers/Common/ModalPopup";
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {

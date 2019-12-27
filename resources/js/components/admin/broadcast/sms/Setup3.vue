@@ -58,7 +58,7 @@
     </div>
 </template>
 <script>
-    import chooseWorkflowSubscribers from '../../workflow/ChooseWorkflowSubscribers.vue';
+    import chooseWorkflowSubscribers from '@/components/admin/workflow/ChooseWorkflowSubscribers.vue';
     export default {
         components: {chooseWorkflowSubscribers},
         data() {

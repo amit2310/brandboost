@@ -191,7 +191,7 @@
 </template>
 
 <script>
-    import PeopleContactsUploadFile from '../contact/PeopleContactsUploadFile';
+    import PeopleContactsUploadFile from '@/components/admin/contact/PeopleContactsUploadFile';
 
     let tkn = $('meta[name="_token"]').attr('content');
 

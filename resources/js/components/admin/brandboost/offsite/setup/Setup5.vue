@@ -77,7 +77,7 @@
     </div>
 </template>
 <script>
-    import ListFeedback from '../ListFeedback';
+    import ListFeedback from '@/components/admin/brandboost/offsite/ListFeedback';
     export default {
         components: {ListFeedback},
         data() {

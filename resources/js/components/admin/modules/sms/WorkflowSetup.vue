@@ -2,7 +2,7 @@
     <workflow-grid :workflowData="workflowData" v-bind="workflowData" @realoadTree="refreshTree"></workflow-grid>
 </template>
 <script>
-    import workflowGrid from '../../workflow/MasterWorkflow';
+    import workflowGrid from '@/components/admin/workflow/MasterWorkflow';
     export default {
         components : {workflowGrid},
         data(){

@@ -255,7 +255,7 @@
     </div>
 </template>
 <script>
-    import Pagination from '../../helpers/Pagination';
+    import Pagination from '@/components/helpers/Pagination';
     export default {
         components: {Pagination},
         data() {

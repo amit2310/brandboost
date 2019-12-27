@@ -288,7 +288,7 @@
 </template>
 
 <script>
-    import SmsPopup from '../modals/templates/SmsTemplatesPopup.vue';
+    import SmsPopup from '@/components/admin/modals/templates/SmsTemplatesPopup.vue';
 
     export default {
         /*name: 'email-templates',*/

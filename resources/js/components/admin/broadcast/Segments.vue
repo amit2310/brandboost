@@ -234,7 +234,7 @@
 
 </template>
 <script>
-    import Pagination from '../../helpers/Pagination';
+    import Pagination from '@/components/helpers/Pagination';
 
     export default {
         props: ['pageColor'],

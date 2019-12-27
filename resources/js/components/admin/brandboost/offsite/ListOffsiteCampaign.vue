@@ -391,7 +391,7 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
     import CampaignList from './CampaignList';
 
     export default {

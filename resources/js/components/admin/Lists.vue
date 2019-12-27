@@ -333,9 +333,9 @@
 </template>
 
 <script>
-    import UserAvatar from '../helpers/UserAvatar';
-    import PeopleListCreateSmartPopup from '../helpers/PeopleListCreateSmartPopup';
-    import Pagination from '../helpers/Pagination';
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import PeopleListCreateSmartPopup from '@/components/helpers/PeopleListCreateSmartPopup';
+    import Pagination from '@/components/helpers/Pagination';
 
     export default {
         title: 'Email Lists - Brand Boost',

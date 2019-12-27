@@ -126,7 +126,7 @@
     </div>
 </template>
 <script>
-    import WorkflowSubscribers from '../../../workflow/WorkflowSubscribers.vue';
+    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
     export default {
         components: {WorkflowSubscribers},
         data() {

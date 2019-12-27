@@ -167,7 +167,7 @@
     import {Datetime} from 'vue-datetime';
 
     import 'vue-datetime/dist/vue-datetime.css';
-    import modalPopup from "../../../components/helpers/Common/ModalPopup";
+    import modalPopup from "@/components/helpers/Common/ModalPopup";
 
     export default {
         components: {datetime: Datetime, modalPopup},

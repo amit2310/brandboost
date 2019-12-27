@@ -359,7 +359,7 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
