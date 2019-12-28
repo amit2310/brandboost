@@ -954,8 +954,10 @@ class Referral extends Controller {
 	public function advocates(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mReferral = new ReferralModel();
 
         $referralId = $request->referralId;
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -963,22 +965,42 @@ class Referral extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Advocates" class="sidebar-control active hidden-xs "> Advocates</a></li>
                     </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/modules/referral/overview',
+            'Advocates' => '#/modules/referral/advocates/'.$referralId
+        );
 
         if ($referralId != '') {
-            $referralData = ReferralModel::getReferral($userID, $referralId);
-            $oContacts = ReferralModel::getAllAdvocates($referralData->hashcode);
+            $referralData = $mReferral->getReferral($userID, $referralId);
+            $oContacts = $mReferral->getAllAdvocates($referralData->hashcode);
         } else {
-            $oContacts = ReferralModel::getAllAdvocates();
+            $oContacts = $mReferral->getAllAdvocates();
+        }
+
+        if($oContacts->items()) {
+            foreach ($oContacts->items() as $oContact) {
+                $moduleName = 'referral';
+                $moduleUnitID = $oContact->account_id;
+                $oContact->referralData = $mReferral->getReferralByAccountId($moduleUnitID);
+                $oContact->referralTrackData = $mReferral->getReferralLinkVisitsByAdvocateId($oContact->subscriber_id, $referralData->id);
+                $oContact->referralSaleTrackData = $mReferral->referredSalesByAdvocateId($oContact->subscriber_id, $moduleUnitID);
+            }
         }
 
         $aData = array(
             'title' => 'Referral Module',
             'pagename' => $breadcrumb,
-            'oContacts' => $oContacts,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oContacts,
+            'oContacts' => $oContacts->items(),
             'moduleName' => 'Referral',
             'moduleUnitID' => $referralId
         );
-		return view('admin.modules.referral.advocate', $aData);
+		//return view('admin.modules.referral.advocate', $aData);
+
+        echo json_encode($aData);
+        exit();
     }
 
 

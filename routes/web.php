@@ -263,6 +263,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/referral/stats/{id}', 'Admin\Modules\Referral@stats');
     Route::get('admin/modules/referral/reward/{id}', 'Admin\Modules\Referral@reward');
     Route::get('admin/modules/referral/advocates', 'Admin\Modules\Referral@advocates');
+    Route::get('admin/modules/referral/advocates/{referralId}', 'Admin\Modules\Referral@advocates');
     Route::get('admin/modules/referral/workflow/{id}', 'Admin\Modules\Referral@workflow');
     Route::get('admin/modules/referral/integrations/{id}', 'Admin\Modules\Referral@integrations');
     Route::get('admin/modules/referral/configurations/{id}', 'Admin\Modules\Referral@configurations');
@@ -280,7 +281,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/referral/addReferralWidget', 'Admin\Modules\Referral@addReferralWidget');
     Route::post('admin/modules/referral/deleteBulkReferralWidgets', 'Admin\Modules\Referral@deleteBulkReferralWidgets');
     Route::post('admin/modules/referral/archiveBulkReferralWidgets', 'Admin\Modules\Referral@archiveBulkReferralWidgets');
-    Route::get('admin/modules/referral/advocates/{referralId}', 'Admin\Modules\Referral@advocates');
 
 
 
