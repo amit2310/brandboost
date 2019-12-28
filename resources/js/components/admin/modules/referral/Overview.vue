@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 js-referral-slidebox">New Program<span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 js-referral-slidebox">New Referral<span><img src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -80,6 +80,7 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(program.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(program.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showReferralStats(program.id)"><i class="dripicons-user text-muted mr-2"></i> Stats</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showAdvocated(program.id)"><i class="dripicons-user text-muted mr-2"></i> Advocates</a>
                                     <a class="dropdown-item createSegment" href="javascript:void(0);"
                                        segment-type="total-click"
                                        :campaign-id="`${program.id}`"
@@ -300,6 +301,9 @@
             },
             showReferralStats: function(programId) {
                 window.location.href='#/modules/referral/stats/'+programId;
+            },
+            showAdvocated: function(programId) {
+                window.location.href='#/modules/referral/advocates/'+programId;
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){

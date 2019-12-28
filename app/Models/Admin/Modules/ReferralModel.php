@@ -463,7 +463,8 @@ class ReferralModel extends Model {
 			->when((!empty($accountID)), function ($query) use ($accountID) {
 				return $query->where('tbl_referral_users.account_id', $accountID);
 			})
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }
