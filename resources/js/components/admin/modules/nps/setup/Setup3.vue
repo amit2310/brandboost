@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
-                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(4)"> Next <span style="opacity: 1"><img
+                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(5)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
                 </div>
@@ -35,61 +35,14 @@
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
                                 <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Reviews</a></li>
-                                <li><a href="javascript:void(0);" @click="displayStep(5)"><span class="num_circle"><span class="num">5</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Media</a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
+
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="table_head_action mt-2">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{allData.total}} subscribers</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="table_action">
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="/assets/images/date_created.svg"></span>&nbsp; Date Created
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                                <div class="float-right ml10 mr10">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="/assets/images/list_view.svg"></span>&nbsp; List View
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                                <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Serch">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <workflow-subscribers
-                    :show-archived="true"
-                    :subscribers-data="subscribers"
-                    :all-data="allData"
-                    :active-count="activeCount"
-                    :archive-count="archiveCount"
-                    :module-name="moduleName"
-                    :module-unit-id="moduleUnitID"
-                    :showHeader="false"
-                    @navPage ="navigatePagination"
-                    :key="subscribers"
-                ></workflow-subscribers>
-
+                <onsite-reviews v-if="campaignId" :campaignId="campaignId"></onsite-reviews>
 
                 <div class="row mt40">
                     <div class="col-md-12">
@@ -113,9 +66,9 @@
     </div>
 </template>
 <script>
-    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
+    import OnsiteReviews from '@/components/admin/brandboost/onsite/OnsiteReviews';
     export default {
-        components: {WorkflowSubscribers},
+        components: {OnsiteReviews},
         data() {
             return {
                 successMsg: '',
@@ -130,43 +83,24 @@
                 breadcrumb: '',
                 feedbackResponse: '',
                 current_page: '1',
-                activeCount: 0,
-                archiveCount: 0
+                reviews: ''
 
             }
         },
         mounted() {
-            this.loadPaginatedData();
 
+            this.loading = false;
         },
         methods: {
-            loadPaginatedData: function(){
-                axios.get('/admin/brandboost/onsiteSetupSubscribers/' + this.campaignId+'?page='+this.current_page)
-                    .then(response => {
-                        this.breadcrumb = response.data.breadcrumb;
-                        this.makeBreadcrumb(this.breadcrumb);
-                        this.moduleName = response.data.moduleName;
-                        this.campaign = response.data.brandboostData;
-                        this.subscribers = response.data.subscribers;
-                        this.allData = response.data.allData;
-                        this.user = response.data.aUserInfo;
-                        this.loading = false;
-                    });
-            },
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/reviews/onsite';
+                    path = '/admin#/nps/';
                 }else{
-                    path = '/admin#/reviews/onsite/setup/'+this.campaignId+'/'+step;
+                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
-            },
-            navigatePagination: function(p){
-                this.loading=true;
-                this.current_page = p;
-                this.loadPaginatedData();
             },
             saveDraft: function(){
                 this.loading = true;
@@ -192,7 +126,7 @@
 </script>
 <style scoped>
     .email_config_list li{
-        width: 19.5% !important;
+        width: 24.5% !important;
     }
 </style>
 

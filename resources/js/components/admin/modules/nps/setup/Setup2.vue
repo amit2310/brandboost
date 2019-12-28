@@ -32,7 +32,7 @@
         },
         methods: {
             getWorkflowData: function(){
-                axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+                axios.get('/admin/modules/nps/setup/' + this.campaignId)
                     .then(response => {
                         this.workflowData = response.data;
                     });
@@ -40,9 +40,9 @@
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/reviews/onsite';
+                    path = '/admin#/nps/';
                 }else{
-                    path = '/admin#/reviews/onsite/setup/'+this.campaignId+'/'+step;
+                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
