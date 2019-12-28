@@ -35,290 +35,175 @@
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
                                 <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Reviews</a></li>
-                                <li><a href="javascript:void(0);" @click="displayStep(5)"><span class="num_circle"><span class="num">5</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Media</a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p40 min_h_240">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h3 class="htxt_bold_16 dark_700 mb10">Basic Info</h3>
-                                    <p class="fsize12 fw300 dark_300 mb20">Name of the campaign and logo for the same</p>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="frm_bb_title" class="fsize12 fw300">Brand Boost Name</label>
-                                        <input type="text" class="form-control emoji h50" placeholder="New Product on Site Boost"
-                                               name="title" v-model="campaign.brand_title"
-                                               @change="updateSettings('brand_title', $event.target.value, 'brandboost')">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="frm_bb_title" class="fsize12 fw300">Domain</label>
-                                        <input type="text" class="form-control emoji h50" placeholder="www.google.com"
-                                               name="domain_name" v-model="campaign.domain_name"
-                                               @change="updateSettings('domain_name', $event.target.value, 'brandboost')">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="logo_img" class="fsize12 fw300">Add/Change Brand Logo</label>
-
-                                        <input type="hidden" id="logo_img" name="logo_img" @click="updateSettings('logo_img', $event.target.value, 'brandboost')">
-                                        <div class="img_vid_upload_small">
-                                            <div class="dropzone" id="myDropzone_logo_img"></div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label for="logo_img" class="fsize12 fw300">Brand Logo</label>
-                                        <div class="clearfix"></div>
-                                        <img width="64" height="65" class="rounded" id="showLogoImage" onerror="this.src='assets/images/default-logo.png'" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${campaign.logo_img}`">
-                                    </div>
-                                </div>
-
-
-
+                    <div class="col-md-4">
+                        <div class="email_review_config p20">
+                            <div class="bbot pb10 mb15">
+                                <p class="fsize11 text-uppercase dark_200 m-0">Component</p>
                             </div>
-
-                        </div>
-
-
-                        <div class="card p40 min_h_240">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h3 class="htxt_bold_16 dark_700 mb10">Review Request info</h3>
-                                    <p class="fsize12 fw300 dark_300 mb20">This will be displayed in the ‘From’
-                                        field.</p>
-                                </div>
-                                <div class="col-md-6 text-right">
-
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="frm_from_name" class="fsize12 fw300">Review Request "Form" Name</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_from_name"
-                                               placeholder="Alen Sultanic" name="from_name" v-model="feedbackResponse.from_name"
-                                               @change="updateSettings('from_name', $event.target.value, 'feedback')" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="frm_from_email" class="fsize12 fw300">Review Request "Form" Email</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_from_email"
-                                               placeholder="alen@brandboost.io" name="from_email"
-                                               v-model="feedbackResponse.from_email" @change="updateSettings('from_email', $event.target.value, 'feedback')" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="frm_sender_phone" class="fsize12 fw300">Review Request SMS "Form" Number</label>
-                                        <input type="text" name="sender_phone" class="form-control form-control-dark h50" id="frm_sender_phone" readonly="readonly"
-                                               v-model="fromNumber ? fromNumber : user.mobile"  required>
-                                    </div>
-                                </div>
-
+                            <div class="p0">
+                                <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Logo &nbsp;
+                                    <label class="custom-form-switch float-right">
+                                        <input class="field" type="checkbox" :checked="campaign.display_logo">
+                                        <span class="toggle email"></span> </label>
+                                </h3>
+                                <h3 class="dark_400 mb0 fsize13 fw300">Question &nbsp;
+                                    <label class="custom-form-switch float-right">
+                                        <input class="field" type="checkbox" v-model="campaign.display_additional" :checked="campaign.display_additional">
+                                        <span class="toggle email"></span> </label>
+                                </h3>
+                                <h3 class="dark_400 mb0 fsize13 fw300">Introduction &nbsp;
+                                    <label class="custom-form-switch float-right">
+                                        <input class="field" type="checkbox" v-model="campaign.display_intro" :checked="campaign.display_intro">
+                                        <span class="toggle email"></span> </label>
+                                </h3>
                             </div>
-
-                        </div>
-
-                        <div class="card p40 min_h_240">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h3 class="htxt_bold_16 dark_700 mb10">Review Link Expiry Settings</h3>
-                                    <p class="fsize12 fw300 dark_300 mb20">This ensure the expiry of the review links</p>
+                            <div class="bbot btop pb10 pt10 mb15 mt15">
+                                <p class="fsize11 text-uppercase dark_200 m-0">Popup Details</p>
+                            </div>
+                            <div class="p0">
+                                <div class="form-group">
+                                    <label class="fsize12" for="fname">Brand / Product Name:</label>
+                                    <input type="text" v-model="campaign.brand_name" class="form-control h40" id="fname" placeholder="Enter Brand/Product Name" name="brand_name">
                                 </div>
-                                <div class="col-md-6 text-right">
-
+                                <div class="form-group">
+                                    <label class="fsize12" for="Questions">Questions:</label>
+                                    <textarea
+                                        rows="4"
+                                        class="form-control"
+                                        id="Questions"
+                                        name="question"
+                                        :placeholder="`How likely are you to recommend ${campaign.brand_name ? campaign.brand_name : 'My Store'} to a friend?`"
+                                        v-model="campaign.question"
+                                        ></textarea>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb20">Automatically expire link after user leaves review?</label>
-                                        <div class="clearfix"></div>
-                                        <label class="custmo_radiobox pull-left mb10">
-                                            <input name="link_expire_review" value="yes" type="radio" :checked="campaign.link_expire_review == 'yes'" @change="updateSettings('link_expire_review', $event.target.value, 'brandboost')">
-                                            <span class="custmo_radiomark"></span>
-                                            Yes
-                                        </label>
-                                        <div class="clearfix"></div>
-                                        <label class="custmo_radiobox pull-left mb10">
+                                <div class="form-group">
+                                    <label class="fsize12" for="Introduction">Introduction:</label>
+                                    <textarea
+                                        class="form-control"
+                                        rows="4"
+                                        id="Introduction"
+                                        placeholder="Placeholder Text"
+                                        name="description"
+                                        v-model="campaign.description"
+                                    ></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="m0 w-100" for="upload">
+                                        <div class="img_vid_upload_medium">
+                                            <input class="d-none" type="file" name="brand_logo" id="upload">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="bbot btop pb10 pt10 mb15 mt15">
+                                <p class="fsize11 text-uppercase dark_200 m-0">Settings</p>
+                            </div>
+                            <div class="p0 pb30">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="fsize13 dark_400 mt-2">Question Text Color :</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text"
+                                               class="form-control colorpicker-basic1"
+                                               name="web_text_color111"
+                                               v-model="campaign.web_text_color"
+                                               >
 
-                                            <input name="link_expire_review" value="no" :checked="campaign.link_expire_review == 'no'" type="radio" @change="updateSettings('link_expire_review', $event.target.value, 'brandboost')">
-                                            <span class="custmo_radiomark"></span>
-                                            No
-                                        </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb20">Automatically expire link</label>
-                                        <div class="clearfix"></div>
-                                        <label class="custmo_radiobox pull-left mb10">
-                                            <input name="link_expire_custom" value="never" :checked="checkLinkExpiry.delay_value == 'never'" type="radio" @change="updateSettings('link_expire_custom', $event.target.value, 'expiry')">
-                                            <span class="custmo_radiomark"></span>
-                                            Never Expire
-                                        </label>
-                                        <div class="clearfix"></div>
-                                        <label class="custmo_radiobox pull-left mb10">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="fsize13 dark_400 mt-2">Introduction Text Color:</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text"
+                                               class="form-control colorpicker-basic2"
+                                               v-model="campaign.web_int_text_color"
+                                               >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="fsize13 dark_400 mt-2">Button Text Color :</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text"
+                                               class="form-control colorpicker-basic3"
+                                               v-model="campaign.web_button_text_color"
+                                               >
+                                    </div>
+                                </div>
 
-                                            <input name="link_expire_custom" value="custom" type="radio" :checked="checkLinkExpiry.delay_value != 'never'" @change="updateSettings('link_expire_custom', $event.target.value, 'expiry')">
-                                            <span class="custmo_radiomark"></span>
-                                            Expire After
-                                        </label>
-                                        <div class="expireLinkBox" v-show="displayCustomLinkExpiry">
-                                            <div class="form-group">
-                                                <input type="number" name="txtInteger"  v-model="checkLinkExpiry.delay_value" size="3" class="numaric_only form-control daysnumber2" @change="updateSettings('txtInteger', $event.target.value, 'expiry')">
-                                            </div>
-                                            <div class="form-group">
-                                                <select class="form-control" v-model="checkLinkExpiry.delay_unit" name="exp_duration" @change="updateSettings('exp_duration', $event.target.value, 'expiry')">
-                                                    <option value="day">Day</option>
-                                                    <option value="week">Week</option>
-                                                    <option value="month">Month</option>
-                                                    <option value="year">Year</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                <div class="row" v-if="campaign.platform=='web'">
+                                    <div class="col-md-8">
+                                        <p class="fsize13 dark_400 mt-2">Button Over Text Color :</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text"
+                                               class="form-control colorpicker-basic3"
+                                               v-model="campaign.web_button_over_text_color"
+                                               >
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="fsize13 dark_400 mt-2">Button Background Color :</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text"
+                                               class="form-control colorpicker-basic4"
+                                               v-model="campaign.web_button_color"
+                                               >
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="button" @click="updateConfigurations" class="btn btn-success btn-sm bkg_green_300 light_000 mt-5 ml-3" value="Save Configurations">
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
-                        <div class="card p40 min_h_240">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h3 class="htxt_bold_16 dark_700 mb10">Thank you messages</h3>
-                                    <p class="fsize12 fw300 dark_300 mb20">Capture &amp; foreward reply from your
-                                        customers.</p>
-                                </div>
-                                <div class="col-md-6 text-right">
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group mb0">
-                                        <label for="frm_positive_title" class="fsize12 fw300">Positive Title</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_positive_title"
-                                               name="positive_title"
-                                               v-model="feedbackResponse.pos_title"
-                                               @change="updateSettings('pos_title', $event.target.value, 'feedback')" required>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card p0 m-auto text-center" style="max-width:500px;">
+                            <div class="text-center p30 bbot mb0"> <img width="70" class="mb20" src="assets/images/avatar/02.png"/>
+                                <p class="fsize14 fw500 dark_700 mb-2"> Mr. Anderson</p>
+                                <p class="fsize14 fw400 dark_300">Test Tester</p>
+                                <div class="text-center border shadow br5">
+                                    <div class="p20 bbot">
+                                        <p class="fsize14 fw500 dark_700 mb-2">How Likely are you to Recommend <br>
+                                            My store to a friend ?</p>
+                                    </div>
+                                    <div class="p20">
+                                        <ul class="inline_numbers">
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li><a href="#">6</a></li>
+                                            <li><a href="#">7</a></li>
+                                            <li><a href="#">8</a></li>
+                                            <li><a href="#">9</a></li>
+                                            <li><a href="#">10</a></li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb0">
-                                        <label for="frm_positive_subtitle" class="fsize12 fw300">Positive Sub Title</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_positive_subtitle"
-                                               name="positive_subtitle"
-                                               v-model="feedbackResponse.pos_sub_title"
-                                               @change="updateSettings('pos_sub_title', $event.target.value,'feedback')" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="alert bkg_green txt_white mt30 mb50 preview">
-                                        <div class="media-left">
-                                            <img src="/assets/images/thankyou_smiley_green.png">
-                                        </div>
-                                        <div class="media-left">
-                                            <div class="thanksTitlePreview">
-                                                {{feedbackResponse.pos_title}}
-                                            </div>
-                                            <div>
-                                                <small class="thanksSubTitlePreview">
-                                                    {{feedbackResponse.pos_sub_title}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <div class="form-group mb0">
-                                        <label for="frm_neutral_title" class="fsize12 fw300">Neutral Title</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_neutral_title"
-                                               name="neutral_title"
-                                               v-model="feedbackResponse.neu_title"
-                                               @change="updateSettings('neu_title', $event.target.value, 'feedback')" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb0">
-                                        <label for="frm_neutral_subtitle" class="fsize12 fw300">Neutral Sub Title</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_neutral_subtitle"
-                                               name="neutral_subtitle"
-                                               v-model="feedbackResponse.neu_sub_title"
-                                               @change="updateSettings('neu_sub_title', $event.target.value, 'feedback')" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="alert bkg_dark txt_white mt30 mb50 preview">
-                                        <div class="media-left">
-                                            <img src="/assets/images/thankyou_smiley_grey.png">
-                                        </div>
-                                        <div class="media-left">
-                                            <div class="thanksTitlePreview">
-                                                {{feedbackResponse.neu_title}}
-                                            </div>
-                                            <div>
-                                                <small class="thanksSubTitlePreview">
-                                                    {{feedbackResponse.neu_sub_title}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <div class="form-group mb0">
-                                        <label for="frm_negetive_title" class="fsize12 fw300">Negative Title</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_negetive_title"
-                                               name="negetive_title"
-                                               v-model="feedbackResponse.neg_title"
-                                               @change="updateSettings('neg_title', $event.target.value,'feedback')" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb0">
-                                        <label for="frm_negetive_subtitle" class="fsize12 fw300">Negative Sub Title</label>
-                                        <input type="text" class="form-control form-control-dark h50" id="frm_negetive_subtitle"
-                                               name="negetive_subtitle"
-                                               v-model="feedbackResponse.neg_sub_title"
-                                               @change="updateSettings('neg_sub_title', $event.target.value,'feedback')" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="alert bkg_red txt_white mt30 mb0 preview">
-                                        <div class="media-left">
-                                            <img src="/assets/images/thankyou_smiley_red.png">
-                                        </div>
-                                        <div class="media-left">
-                                            <div class="thanksTitlePreview">
-                                                {{feedbackResponse.neg_title}}
-                                            </div>
-                                            <div>
-                                                <small class="thanksSubTitlePreview">
-                                                    {{feedbackResponse.neg_sub_title}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            </div>
+                            <div class="p20">
+                                <p class="fsize11 fw400 dark_200 mb-2">If you don't know why you got this email, please tell us straight away so we can fix <br>
+                                    this for you. </p>
+                                <p class="mb-0">Thanks</p>
+                                <p class="fsize14 fw500 m-0"> Brandboost Team</p>
                             </div>
                         </div>
                     </div>
@@ -347,7 +232,6 @@
     </div>
 </template>
 <script>
-
     export default {
         data() {
             return {
@@ -367,55 +251,42 @@
                 displayCustomLinkExpiry: false
             }
         },
-        mounted() {
-            axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+        created() {
+            axios.get('/admin/modules/nps/setup/' + this.campaignId)
                 .then(response => {
                     this.breadcrumb = response.data.breadcrumb;
                     this.makeBreadcrumb(this.breadcrumb);
                     this.moduleName = response.data.moduleName;
-                    this.campaign = response.data.brandboostData;
-                    this.feedbackResponse = response.data.feedbackResponse;
-                    this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
-                    this.user = response.data.aUserInfo;
+                    this.campaign = response.data.oNPS;
+                    this.user = response.data.userData;
                     this.loading = false;
-                    //loadJQScript(this.user.id);
 
                 });
-            loadJQScript(35);
+        },
+        mounted() {
+            setTimeout(function(){
+                loadJQScript();
+            }, 500);
 
         },
         computed: {
-            checkLinkExpiry: function(){
-                let linkExpiry = this.campaign.link_expire_custom;
-                if(linkExpiry){
-                    let aExpiryData = JSON.parse(linkExpiry);
-                    let delayValue = aExpiryData.delay_value;
-                    let delayUnit = aExpiryData.delay_unit;
-                    if(delayValue != 'never'){
-                        this.displayCustomLinkExpiry = true;
-                    }else{
-                        this.displayCustomLinkExpiry = false;
-                    }
-                    return {
-                        delay_unit: delayUnit,
-                        delay_value: delayValue != 'never' ? delayValue : 'never'
-                    };
-                }else{
-                    return {
-                        delay_unit: '',
-                        delay_value: 'never'
-                    };
-                }
 
-            }
         },
         methods: {
+            updateConfigurations: function(){
+                this.loading = true;
+                axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
+                    .then(response => {
+                        this.loading = false;
+                    });
+
+            },
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/reviews/onsite';
+                    path = '/admin#/nps/';
                 }else{
-                    path = '/admin#/reviews/onsite/setup/'+this.campaignId+'/'+step;
+                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
@@ -472,83 +343,21 @@
 
     };
 
-    function loadJQScript(userid){
-        var tkn = $('meta[name="_token"]').attr('content');
-        Dropzone.autoDiscover = false;
-        var myDropzoneLogoImg = new Dropzone(
-            '#myDropzone_logo_img', //id of drop zone element 1
-            {
-                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
-
-                    if (response.xhr.responseText != "") {
-
-                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
-                        var dropImage = $('#logo_img').val();
-                        $.ajax({
-                            url: "/admin/brandboost/DeleteObjectFromS3",
-                            type: "POST",
-                            data: {dropImage: dropImage, _token: tkn},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-                        $('#logo_img').val(response.xhr.responseText);
-                        $('#logo_img').click();
-
-                    }
-
-                }
-            });
-        myDropzoneLogoImg.on("complete", function (file) {
-            myDropzoneLogoImg.removeFile(file);
-        });
+    function loadJQScript(){
+        $(".colorpicker-basic1").spectrum();
+        $(".colorpicker-basic2").spectrum();
+        $(".colorpicker-basic3").spectrum();
+        $(".colorpicker-basic4").spectrum();
     }
 
 </script>
 <style scoped>
     .email_config_list li{
-        width: 19.5% !important;
+        width: 24.5% !important;
     }
-    .bkg_green {
-        background: #4ebc86!important;
-        background-color: #4ebc86!important;
+    .email_review_config{
+        width:300px !important;
     }
-    .alert.preview {
-        padding: 20px 25px!important;
-        border-radius: 5px;
-    }
-    .txt_white {
-        color: #ffffff!important;
-    }
-    .media-left, .media > .pull-left {
-        padding-right: 20px;
-        position: relative;
-        display: table-cell;
-    }
-    .alert.preview img {
-        margin-top: 8px;
-        opacity: 0.5;
-    }
-    .bkg_dark {
-        background: #202040!important;
-        background-color: #202040!important;
-    }
-    .bkg_red {
-        background: #eb4f76!important;
-        background-color: #eb4f76!important;
-    }
-    .dropzone .dz-default.dz-message:before { content: ''!important; }
-    .dropzone {min-height:32px !important; opacity:0;height:32px; }
-    .dropzone .dz-default.dz-message{ top: 0%!important; height:40px;  margin-top:0px;}
-    .dropzone .dz-default.dz-message span {    font-size: 13px;    margin-top: -10px;}
-    .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 5px; background:url('/assets/images/upload_bkg2.png') 25px 8px no-repeat #fff; border: 1px solid #dfe5f0;box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.04);}
 </style>
 
 
