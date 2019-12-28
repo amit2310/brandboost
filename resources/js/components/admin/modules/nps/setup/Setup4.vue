@@ -34,10 +34,9 @@
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(3)"><span class="num_circle"><span class="num">3</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
-                                <li><a class="active" href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Reviews</a></li>
-                                <li><a href="javascript:void(0);" @click="displayStep(5)"><span class="num_circle"><span class="num">5</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Media</a></li>
+                                <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">4</span><span
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -55,7 +54,7 @@
                         </button>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(5)">Save and continue <span><img
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(4)">Save and continue <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
@@ -96,9 +95,9 @@
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/reviews/onsite';
+                    path = '/admin#/nps/';
                 }else{
-                    path = '/admin#/reviews/onsite/setup/'+this.campaignId+'/'+step;
+                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
@@ -127,7 +126,7 @@
 </script>
 <style scoped>
     .email_config_list li{
-        width: 19.5% !important;
+        width: 24.5% !important;
     }
 </style>
 

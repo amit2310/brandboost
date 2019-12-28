@@ -185,16 +185,9 @@ class Nps extends Controller {
         if (!empty($oNPS)) {
             // Do nothing for now
             $programID = $oNPS->id;
-            //$defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
             $oContacts = $mNPS->getMyUsers($oNPS->hashcode);
         }
-        if (empty($oNPS->platform)) {
-            $defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
-        } else {
-            $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
-        }
 
-        //$defaultTab = $selectedTab;
         //List of Advocates related data
         $hashCode = $oNPS->hashcode;
         if (!empty($hashCode)) {
@@ -228,21 +221,16 @@ class Nps extends Controller {
 
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/modules/nps/') . '" class="sidebar-control hidden-xs">NPS </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
-                    </ul>';
-        //$oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-        //pre($oFeedback);
-        //pre($campaignTemplates);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Nps' => '#/nps/dashboard',
+            'Campaigns' => '#/nps/',
+            'Setup' => '',
+        );
         $aData = array(
             'bActiveSubsription' => $bActiveSubsription,
             'title' => $sSurveyTypeTitle,
-            'pagename' => $breadcrumb,
-            'defalutTab' => $defaultTab,
+            'breadcrumb' => $aBreadcrumb,
             'programID' => $programID,
             'campaignTemplates' => $campaignTemplates,
             'oNPS' => $oNPS,
@@ -266,7 +254,8 @@ class Nps extends Controller {
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
-        return view('admin.modules.nps.setup-beta', $aData)->with(['mNPS' => $mNPS]);
+        return $aData;
+        //return view('admin.modules.nps.setup-beta', $aData)->with(['mNPS' => $mNPS]);
     }
 
     /**
@@ -292,7 +281,8 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        $npsID = strip_tags($request->nps_id);
+        //$npsID = strip_tags($request->nps_id);
+        $npsID = strip_tags($request->id);
         $title = strip_tags($request->title);
         $platform = strip_tags($request->platform);
         $brand = strip_tags($request->brand_name);
@@ -728,12 +718,12 @@ class Nps extends Controller {
         //pre($npsData);
         $sEmailPreview = view('admin.modules.nps.nps-templates.email.widget_preview', array('oNPS' => $npsData))->render();
         $npsScriptCode = '<pre class="prettyprint" id="prettyprint">
-							&lt;script 
-							type="text/javascript" 
-							id="bbscriptloader" 
-							data-key="' . $npsData->hashcode . '" 
-							data-widgets="nps" 
-							async="" 
+							&lt;script
+							type="text/javascript"
+							id="bbscriptloader"
+							data-key="' . $npsData->hashcode . '"
+							data-widgets="nps"
+							async=""
 							src="' . base_url('assets/js/nps_widgets.js') . '"&gt;
 							&lt;/script&gt;
 						</pre>
