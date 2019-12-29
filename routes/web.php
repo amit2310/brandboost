@@ -264,6 +264,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/referral/reward/{id}', 'Admin\Modules\Referral@reward');
     Route::get('admin/modules/referral/advocates', 'Admin\Modules\Referral@advocates');
     Route::get('admin/modules/referral/advocates/{referralId}', 'Admin\Modules\Referral@advocates');
+    Route::get('admin/modules/referral/advocateProfile/{referralId}', 'Admin\Modules\Referral@advocateProfile');
+    Route::post('admin/modules/referral/advocateProfile/{referralId}', 'Admin\Modules\Referral@advocateProfile');
     Route::get('admin/modules/referral/workflow/{id}', 'Admin\Modules\Referral@workflow');
     Route::get('admin/modules/referral/integrations/{id}', 'Admin\Modules\Referral@integrations');
     Route::get('admin/modules/referral/configurations/{id}', 'Admin\Modules\Referral@configurations');

@@ -543,6 +543,8 @@ class Referral extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
+        $mReferral = new ReferralModel();
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -551,19 +553,57 @@ class Referral extends Controller {
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Referral Report" class="sidebar-control active hidden-xs ">Referral Report</a></li>
                 </ul>';
 
-        $aSettings = ReferralModel::getAccountSettings($referralID);
-        $oRefEvents = ReferralModel::getAutoEvents($referralID);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/modules/referral/overview',
+            'Stats' => '#/modules/referral/stats/'.$referralID
+        );
 
+        $aSettings = $mReferral->getAccountSettings($referralID);
+        $oRefEvents = $mReferral->getAutoEvents($referralID);
+
+        if($oRefEvents->items()) {
+            foreach ($oRefEvents-items() as $oEvent) {
+
+                $aStats = $mReferral->getEmailReferralSendgridStats('event', $oEvent->referral_id, $oEvent->id, '');
+                $aCategorizedStats = $mReferral->getEmailSendgridCategorizedStatsData($aStats);
+
+                $processed = $aCategorizedStats['processed']['UniqueCount'];
+                $delivered = $aCategorizedStats['delivered']['UniqueCount'];
+                $open = $aCategorizedStats['open']['UniqueCount'];
+                $click = $aCategorizedStats['click']['UniqueCount'];
+                $unsubscribe = $aCategorizedStats['unsubscribe']['UniqueCount'];
+                $bounce = $aCategorizedStats['bounce']['UniqueCount'];
+                $dropped = $aCategorizedStats['dropped']['UniqueCount'];
+                $spamReport = $aCategorizedStats['spam_report']['UniqueCount'];
+
+                $processed = $processed == 0 ? 1 : $processed;
+                $oEvent->processed = $processed;
+
+                $oEvent->deliveredGraph = $delivered * 100 / $processed;
+                $oEvent->openGraph = $open * 100 / $processed;
+                $oEvent->clickGraph = $click * 100 / $processed;
+                $oEvent->unsubscribeGraph = $unsubscribe * 100 / $processed;
+                $oEvent->bounceGraph = $bounce * 100 / $processed;
+                $oEvent->droppedGraph = $dropped * 100 / $processed;
+                $oEvent->spamReportGraph = $spamReport * 100 / $processed;
+            }
+        }
         $aData = array(
             'title' => 'Referral Report',
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'userID' => $userID,
             'aSettings' => $aSettings,
-            'oRefEvents' => $oRefEvents,
+            'allData' => $oRefEvents,
+            'oRefEvents' => $oRefEvents->items(),
             'type' => $request->type
         );
 
-		return view('admin.modules.referral.referral-stats', $aData);
+		//return view('admin.modules.referral.referral-stats', $aData);
+
+        echo json_encode($aData);
+        exit();
     }
 
 
@@ -2666,11 +2706,14 @@ class Referral extends Controller {
     public function advocateProfile(Request $request) {
         $oUser = getLoggedUser();
         $clientID = $oUser->id;
-        $contactId = $request->contactId;
         $response = array();
         $response['status'] = 'error';
 
+        $mSubscriber = new SubscriberModel();
+        $mReferral = new ReferralModel();
+
         if (!empty($request)) {
+            $contactId = $request->contactId;
             $subscriberID = $request->subscriberId;
             $actionName = $request->action;
             $accountID = $request->accountId;
@@ -2679,7 +2722,7 @@ class Referral extends Controller {
         if (!empty($contactId)) {
             $moduleName = 'people';
             $subscriberID = (!empty($subscriberID)) ? $subscriberID : $contactId;
-            $subsData = $this->mSubscriber->getModuleSubscriberInfo($moduleName, $subscriberID);
+            $subsData = $mSubscriber->getModuleSubscriberInfo($moduleName, $subscriberID);
             $subscribersData = $subsData[0];
             if (!empty($subscribersData)) {
                 if ($moduleName != 'people') {
@@ -2688,16 +2731,16 @@ class Referral extends Controller {
             }
 
             //Get Referral Related information
-            $oReferral = $this->mReferral->getReferralProgramInfo($accountID);
+            $oReferral = $mReferral->getReferralProgramInfo($accountID);
             $referralID = $oReferral->id;
-            $oRefLink = $this->mReferral->getReferralLinkDetails($subscriberID, $referralID);
-            $oSettings = $this->mReferral->getReferralSettings($referralID);
+            $oRefLink = $mReferral->getReferralLinkDetails($subscriberID, $referralID);
+            $oSettings = $mReferral->getReferralSettings($referralID);
 
-            $oSendgridStats = $this->mReferral->getAdvocateSendgridStats($subscriberID, $referralID);
+            $oSendgridStats = '';//$mReferral->getAdvocateSendgridStats($subscriberID, $referralID);
 
-            $oTrackVisit = $this->mReferral->getReferralLinkVisitsByAdvocateId($subscriberID, $referralID);
-            $oTrackSale = $this->mReferral->referredSalesByAdvocateId($subscriberID, $accountID);
-            $oReferredFriends = $this->mReferral->getReferredFriends($subscriberID, $referralID);
+            $oTrackVisit = $mReferral->getReferralLinkVisitsByAdvocateId($subscriberID, $referralID);
+            $oTrackSale = $mReferral->referredSalesByAdvocateId($subscriberID, $accountID);
+            $oReferredFriends = $mReferral->getReferredFriends($subscriberID, $referralID);
 
 
             $aData = array(
@@ -2716,7 +2759,8 @@ class Referral extends Controller {
         }
 
         if ($actionName == 'smart-popup') {
-            $popupContent = $this->load->view('admin/components/smart-popup/advocates', $aData, true);
+            //$popupContent = $this->load->view('admin/components/smart-popup/advocates', $aData, true);
+            $popupContent = view('admin/components/smart-popup/advocates', $aData, true);
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);
