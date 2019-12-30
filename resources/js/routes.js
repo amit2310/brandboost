@@ -69,7 +69,8 @@ import SmsAutomationCampaigns from './components/admin/modules/sms/Workflow';
 /*Referral Module*/
 import ReferralOverview from './components/admin/modules/referral/Overview';
 import ReferralAdvocates from './components/admin/modules/referral/Advocates';
-import ReferralStats from './components/admin/modules/referral/ReferralStats';
+import ReferralStats from './components/admin/modules/referral/Stats';
+import ReferralReports from './components/admin/modules/referral/Reports';
 
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
@@ -207,6 +208,7 @@ const routes = [
     { path: '/modules/referral/', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
     { path: '/modules/referral/advocates/:id', component: ReferralAdvocates, meta: { title: 'Referral Advocates'} },
     { path: '/modules/referral/stats/:id', component: ReferralStats, meta: { title: 'Referral Statistics'} },
+    { path: '/modules/referral/reports/:id', component: ReferralReports, meta: { title: 'Referral Reports'} },
 
     /* Nps Survey Module */
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },

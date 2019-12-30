@@ -396,7 +396,8 @@ class ReferralModel extends Model {
 			->where('tbl_referral_sales.account_id', $accountID)
 			->where('tbl_referral_sales.affiliateid', '!=', NULL)
 			->orderBy('tbl_referral_sales.id', 'desc')
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }

@@ -484,15 +484,18 @@ class Referral extends Controller {
 	public function reports($referralID) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
+
+        $mReferral = new ReferralModel();
+
 		$referredAmount = 0;
 		$untrackedAmount = 0;
         if ($referralID > 0) {
-            $oSettings = ReferralModel::getReferralSettings($referralID);
+            $oSettings = $mReferral->getReferralSettings($referralID);
             if (!empty($oSettings)) {
                 $accountID = $oSettings->hashcode;
-                $oRefPurchased = ReferralModel::referredSales($accountID);
+                $oRefPurchased = $mReferral->referredSales($accountID);
 
-                $oUntrackedPurchased = ReferralModel::untrackedSales($accountID);
+                $oUntrackedPurchased = $mReferral->untrackedSales($accountID);
 
                 if (!empty($oRefPurchased)) {
                     foreach ($oRefPurchased as $row) {
@@ -506,11 +509,36 @@ class Referral extends Controller {
                     }
                 }
 
-                $oRefVisits = ReferralModel::getReferralLinkVisits($accountID);
-                $oTotalReferralSent = ReferralModel::getStatsTotalSent($referralID);
-                $oTotalReferralTwillio = ReferralModel::getSendgridStats($referralID);
+                $oRefVisits = $mReferral->getReferralLinkVisits($accountID);
+                $oTotalReferralSent = $mReferral->getStatsTotalSent($referralID);
+                $oTotalReferralTwillio = $mReferral->getSendgridStats($referralID);
             }
 
+            if (!empty($oTotalReferralSent)) {
+                foreach ($oTotalReferralSent as $sentCount) {
+                    if ($sentCount->campaign_type == 'email') {
+                        $sentCount->totalEmailSent = ($sentCount->totalCount) ? $sentCount->totalCount : 0;
+                    }
+
+                    if ($sentCount->campaign_type == 'sms') {
+                        $sentCount->totalSmsSent = ($sentCount->totalCount) ? $sentCount->totalCount : 0;
+                    }
+                }
+            }
+
+            if (!empty($oTotalReferralTwillio)) {
+                foreach ($oTotalReferralTwillio as $twilliRec) {
+                    if ($twilliRec->event_name == 'delivered') {
+                        $twilliRec->totalDelivered = $twilliRec->totalDelivered +  ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    } else if ($twilliRec->event_name == 'open') {
+                        $twilliRec->totalOpened = $twilliRec->totalOpened +  ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    } else if ($twilliRec->event_name == 'processed') {
+                        $twilliRec->totalProcessed = $twilliRec->totalProcessed + ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    } else if ($twilliRec->event_name == 'click') {
+                        $twilliRec->totalClicked = $twilliRec->totalClicked + ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    }
+                }
+            }
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -520,12 +548,20 @@ class Referral extends Controller {
                         <li><a style="cursor:text;" title="' . $oSettings->title . ' Report" class="sidebar-control active hidden-xs ">' . $oSettings->title . ' Report</a></li>
                     </ul>';
 
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Referral' => '#/modules/referral/',
+                'Reports' => '#/modules/referral/reports/'.$referralID
+            );
+
             $aData = array(
                 'title' => 'Referral Report',
                 'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'userID' => $userID,
                 'oSettings' => $oSettings,
-                'oRefPurchased' => $oRefPurchased,
+                'allData' => $oRefPurchased,
+                'oRefPurchased' => $oRefPurchased->items(),
                 'referredAmount' => $referredAmount,
                 'oRefVisits' => $oRefVisits,
                 'untrackedAmount' => $untrackedAmount,
@@ -533,7 +569,10 @@ class Referral extends Controller {
                 'oTotalReferralSent' => $oTotalReferralSent,
                 'oTotalReferralTwillio' => $oTotalReferralTwillio
             );
-			return view('admin.modules.referral.reports', $aData);
+			//return view('admin.modules.referral.reports', $aData);
+
+            echo json_encode($aData);
+            exit();
         }
     }
 
@@ -555,7 +594,7 @@ class Referral extends Controller {
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Referral' => '#/modules/referral/overview',
+            'Referral' => '#/modules/referral/',
             'Stats' => '#/modules/referral/stats/'.$referralID
         );
 
@@ -590,7 +629,7 @@ class Referral extends Controller {
             }
         }
         $aData = array(
-            'title' => 'Referral Report',
+            'title' => 'Referral Stats',
             'pagename' => $breadcrumb,
             'breadcrumb' => $aBreadcrumb,
             'userID' => $userID,
