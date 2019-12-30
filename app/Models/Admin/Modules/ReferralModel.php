@@ -396,7 +396,8 @@ class ReferralModel extends Model {
 			->where('tbl_referral_sales.account_id', $accountID)
 			->where('tbl_referral_sales.affiliateid', '!=', NULL)
 			->orderBy('tbl_referral_sales.id', 'desc')
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }
@@ -444,7 +445,8 @@ class ReferralModel extends Model {
 			->leftjoin('tbl_referral_automations_campaigns', 'tbl_referral_automations_events.id','=','tbl_referral_automations_campaigns.event_id')
 			->where('tbl_referral_automations_events.referral_id', $referralID)
 			->orderBy('tbl_referral_automations_events.id', 'ASC')
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }

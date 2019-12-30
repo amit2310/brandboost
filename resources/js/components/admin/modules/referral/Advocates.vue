@@ -70,13 +70,18 @@
                             <div class="dot_dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a v-if="program.status === 'inactive' && program.status !== 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                    <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                    <a v-if="program.status !== 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                <div class="dropdown-menu dropdown-menu-right text-left">
+                                    <span v-if="program.status !== 2">
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    </span>
+                                    <span>
+                                        <a v-if="program.status === 1" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                        <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(program.id, '1')"><i class="dripicons-user text-muted mr-2"></i>Active</a></i></a>
+                                    </span>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(program.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
+                            <!--<div class="viewAdvocateSmartPopupNew" :data-modulecontactid="program.id" :data-modulesubscriberid="program.subscriber_id" :data-accountid="program.account_id">Popup{{program.subscriber_id}}</div>-->
                             <div v-if="program.id > 0" @click="showReferralSetup(program.id)" style="cursor:pointer;">
                                 <img class="" src="assets/images/subs-icon_big.svg">
                                 <h3 class="htxt_bold_16 dark_700  mb15">
@@ -88,11 +93,13 @@
                                 <p><em>[ Created On: {{ displayDateFormat("M d, Y h:i A", program.created) }} ]</em></p>
                             </div>
                             <div v-else>
-                                <img class="mt20" src="assets/images/subs-icon_big.svg">
-                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                    <span>{{capitalizeFirstLetter(setStringLimit(program.title, 20))}}</span>
+                                <img class="" src="assets/images/subs-icon_big.svg">
+                                <h3 class="htxt_bold_16 dark_700  mb15">
+                                    <span>{{ capitalizeFirstLetter(program.firstname) }} {{ capitalizeFirstLetter(program.lastname) }}</span>
+                                    <br />
+                                    <em><span style="font-weight: normal">{{ program.email }}</span></em>
                                 </h3>
-                                <p><em>( Source Type: {{ program.source_type }}  / <strong>{{ program.status }}</strong> )</em></p>
+                                <p><em>( {{capitalizeFirstLetter(setStringLimit(program.referralData.title, 20))}}</em></p>
                                 <p><em>[ Created On: {{ displayDateFormat("M d, Y h:i A", program.created) }} ]</em></p>
                             </div>
                         </div>
@@ -150,55 +157,16 @@
         <!--******************
           Create New Sliding Smart Popup
          **********************-->
-        <div class="box" style="width: 424px;">
-            <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-referral-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
-                    <form method="post" @submit.prevent="processForm">
-                        <div class="p40">
-                            <div class="row">
-                                <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                    <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Referral Program </h3>
-                                    <hr>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="fname">Program Name</label>
-                                        <input type="text" class="form-control h56" id="fname" placeholder="Enter program name" name="title"
-                                               v-model="form.title">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Source Type</label>
-                                        <select class="form-control" name="source_type" v-model="form.source_type" placeholder="Please Select">
-                                            <option value="">Please Select</option>
-                                            <option value="email">email</option>
-                                            <option value="sms">sms</option>
-                                            <option value="widget">widget</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="desc">Description</label>
-                                        <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Description"
-                                                  name="description"
-                                                  v-model="form.description"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row bottom-position">
-                                <div class="col-md-12 mb15">
-                                    <hr>
-                                </div>
-                                <div class="col-md-12">
-                                    <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
-                                    <input type="hidden" name="module_account_id" id="module_account_id"
-                                           :value="moduleAccountID">
-                                    <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                    <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
-                            </div>
+        <div class="box smart-advocate-box" style="width: 680px;z-index:9999999999;">
+            <div style="width: 680px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
+                    <div class="row" style="height: 100%;">
+                        <div class="col-md-12">
+                            <a style="left: 35px; top: 15px;" class="reviews smart-contact slide-toggle bkg_grey_light" ><i class=""><img src="/assets/images/icon_arrow_left.png"/></i></a>
+                            <h5 style="padding-left: 75px;" class="panel-title">Advocate Report</h5>
                         </div>
-                    </form>
+                        <div id="advocateSmartPopupNew"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -227,7 +195,7 @@
                 errorMsg: '',
                 loading: true,
                 breadcrumb: '',
-                moduleName: '',
+                moduleName: 'referral',
                 moduleUnitID: '',
                 moduleAccountID: '',
                 programs: '',
@@ -270,10 +238,10 @@
             changeStatus: function(programId, status) {
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/modules/referral/changeStatus', {
-                        refID:programId,
-                        status:status,
-                        moduleName: this.moduleName,
+                    axios.post('/admin/subscriber/changeModuleContactStatus', {
+                        subscriberId:programId,
+                        contactStatus:status,
+                        moduleName: this.moduleName.toLowerCase(),
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
                     })
@@ -289,9 +257,9 @@
             deleteItem: function(programId) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
-                    axios.post('/admin/modules/referral/deleteReferral', {
-                        ref_id:programId,
-                        moduleName: this.moduleName,
+                    axios.post('/admin/subscriber/deleteModuleSubscriber', {
+                        subscriberId:programId,
+                        moduleName: this.moduleName.toLowerCase(),
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
                     })
@@ -317,7 +285,85 @@
 
         /*$('[name=tags]').tagify();*/
 
+
+        $(".smart-contact").click(function () {
+            $(".smart-advocate-box").animate({
+                width: "toggle"
+            });
+        });
+
+        $(document).on("click", ".viewAdvocateSmartPopupNew", function () {
+
+            $("#advocateSmartPopupNew").html('<h1 class="text-center" style="margin-top:450px;">Loading....</h1>');
+            var contactId = $(this).attr('data-modulecontactid');
+            var subscriberId = $(this).attr('data-modulesubscriberid');
+            var accountID = $(this).attr('data-accountid');
+            loadAdvocateSmartPopupNew(contactId,subscriberId, accountID);
+            $(".smart-advocate-box").show();
+        });
+        $(".viewContactSmartPopup").first().trigger('click');
+        $(".smart-advocate-box").hide();//For auto close
+
+        $(document).on("click", ".addNoteButton2", function () {
+            $('.overlaynew').show();
+            var subscriberid = $("#subscriberid").val();
+            var notes = $("#notes2").val();
+            if (notes == '') {
+                $('.overlaynew').hide();
+                alertMessage('Please enter notes.');
+            } else {
+                $.ajax({
+                    url: '/admin/contacts/add_contact_notes',
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    type: "POST",
+                    data: {notes: notes, subscriberid: subscriberid, type: 'smartpopup'},
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status == "success") {
+                            $('.overlaynew').hide();
+                            $("#notes2").val('');
+                            $("#contact-notes-container").html(response.notes);
+                            $(".contactNewNote").tab('show');
+                        }
+                    },
+                    error: function (response) {
+                        $('.overlaynew').hide();
+                        alertMessage(response.message);
+                    }
+                });
+            }
+        });
+
+        var activityStart = 10;
+        var activityEnd = 20;
+        var activityDiff = activityEnd - activityStart;
+
+        $(document).on('click', '.loadMoreActivity', function () {
+            $('.activityShow').slice(activityStart, activityEnd).slideDown();
+            activityStart = Number(activityStart) + Number(activityDiff);
+            activityEnd = Number(activityEnd) + Number(activityDiff);
+            if ($(".activityShow:hidden").length == 0) {
+                $('.loadMoreRecordActivity').remove();
+            }
+        });
+
     });
+
+    function loadAdvocateSmartPopupNew(contactId, subscriberID, accountId) {
+        $.ajax({
+            url: '/admin/modules/referral/advocateProfile/' + subscriberID,
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            type: "POST",
+            data: {contactId: contactId, subscriberId: subscriberID, accountId: accountId, action: 'smart-popup'},
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 'success') {
+                    var reviewData = data.content;
+                    $("#advocateSmartPopupNew").html(reviewData);
+                }
+            }
+        });
+    }
 </script>
 
 <style>
