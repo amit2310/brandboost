@@ -141,17 +141,15 @@ class Nps extends Controller {
      * @param type $refKey
      * @return type numeric
      */
-    public function t($refKey) {
+    public function t(Request $request, $refKey) {
         $mNPS = new NpsModel();
         $mSubscriber = new SubscriberModel();
         $bRequireGlobalSubs = false;
         $bAllDone = false;
         if (!empty($refKey)) {
-            $get = Request::input();
-            $score = strip_tags($get['s']);
-            $subid = strip_tags($get['subid']);
+            $score = strip_tags($request->input('s'));
+            $subid = strip_tags($request->input('subid'));
             $subid = base64_decode($subid);
-
             if ($subid > 0 && !empty($refKey)) {
                 $oNPS = NpsModel::getSurveyInfoByRef($refKey);
                 if (!empty($oNPS)) {
@@ -224,6 +222,8 @@ class Nps extends Controller {
                         return view('admin.modules.nps.collect-feedback', array('oNPS' => $oNPS, 'score' => $score, 'responseID' => $bResponseID));
                     }
                 }
+            }else{
+                die('No feedback allowed');
             }
         }
     }
