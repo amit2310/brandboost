@@ -221,6 +221,12 @@ class Nps extends Controller {
 
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
+        if($surveyType == 'web' || $surveyType =='link'){
+            $setupPreview = view('admin.modules.nps.nps-tabs.partials.web-widget-only', array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS))->render();
+        }else{
+            $setupPreview = $surveyType == 'email' ? $compiledEmailPriviewCode : $compiledSmsPriviewCode;
+        }
+
         $aBreadcrumb = array(
             'Home' => '#/',
             'Nps' => '#/nps/dashboard',
@@ -248,9 +254,11 @@ class Nps extends Controller {
             'userID' => $userID,
             'userData' => $aUser,
             'user_role' => $user_role,
-            'oFeedbacks' => $oFeedbacks,
+            'oFeedbacks' => $oFeedbacks->items(),
+            'oFeedbackAllData' => $oFeedbacks,
             'emailPreview' => $compiledEmailPriviewCode,
-            'smsPreview' => $compiledSmsPriviewCode
+            'smsPreview' => $compiledSmsPriviewCode,
+            'setupPreview' => $setupPreview
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
@@ -305,6 +313,7 @@ class Nps extends Controller {
         $emailPreviewData = $request->emailPreviewData;
 
         $displayLogo = strip_tags($request->display_logo);
+        $displayQuestion = strip_tags($request->display_additional);
         $displayIntro = strip_tags($request->display_intro);
 
         $displayName = strip_tags($request->display_name);
@@ -374,16 +383,16 @@ class Nps extends Controller {
         }
 
         if ($platform != 'sms') {
-            $aData['display_logo'] = ($displayLogo == 'on') ? 1 : 0;
+            $aData['display_logo'] = ($displayLogo) ? 1 : 0;
         }
 
-        $aData['display_intro'] = ($displayIntro == 'on') ? 1 : 0;
+        $aData['display_intro'] = ($displayIntro) ? 1 : 0;
 
-        $aData['display_name'] = ($displayName == 'on') ? 1 : 0;
+        $aData['display_name'] = ($displayName) ? 1 : 0;
 
-        $aData['display_email'] = ($displayEmail == 'on') ? 1 : 0;
+        $aData['display_email'] = ($displayEmail) ? 1 : 0;
 
-        $aData['display_intro'] = ($displayIntro == 'on') ? 1 : 0;
+        $aData['display_additional'] = ($displayQuestion) ? 1 : 0;
 
 
         if ($npsID > 0) {
@@ -1701,14 +1710,6 @@ class Nps extends Controller {
             $aScoreSummery = $mNPS->getNPSScoreSummery($userID);
         }
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/modules/nps/') . '">NPS</a></li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="NPS Score" class="sidebar-control active hidden-xs ">NPS Score</a></li>
-                </ul>';
-
         $aPageData = array(
             'title' => 'NPS Score',
             'breadcrumb' => $aBreadcrumb,
@@ -1720,8 +1721,7 @@ class Nps extends Controller {
 
         //return view('admin.modules.nps.list-scores', $aPageData)->with(['mNPS'=>$mNPS]);
 
-        echo json_encode($aPageData);
-        exit();
+        return $aPageData;
     }
 
     /**

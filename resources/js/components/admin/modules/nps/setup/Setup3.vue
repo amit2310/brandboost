@@ -9,7 +9,7 @@
                         <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(5)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
@@ -102,18 +102,23 @@
 
                 window.location.href = path;
             },
-            saveDraft: function(){
+            changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcast', {
-                    broadcastId: this.campaignId,
-                    status: 'draft',
-                    current_state: '',
+                axios.post('/admin/modules/nps/changeStatus', {
+                    npsId: this.campaignId,
+                    status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            if(status == 'draft'){
+                                this.successMsg = 'Campaign saved as a draft successfully';
+                            }
+                            if(status == 'active'){
+                                this.successMsg = 'Campaign is active now';
+                            }
+
                         }else{
                             this.errorMsg = 'Something went wrong';
                         }

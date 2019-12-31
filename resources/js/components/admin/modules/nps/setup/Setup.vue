@@ -9,7 +9,7 @@
                         <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(2)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
@@ -49,17 +49,17 @@
                             <div class="p0">
                                 <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Logo &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" :checked="campaign.display_logo">
+                                        <input class="field" type="checkbox" v-model="campaign.display_logo" :checked="campaign.display_logo" @change="toggleLogoDisplay($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Question &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.display_additional" :checked="campaign.display_additional">
+                                        <input class="field" type="checkbox" v-model="campaign.display_additional" :checked="campaign.display_additional" @change="toggleQuestionDisplay($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Introduction &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.display_intro" :checked="campaign.display_intro">
+                                        <input class=" field" type="checkbox" v-model="campaign.display_intro" :checked="campaign.display_intro" @change="toggleIntroDisplay($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                             </div>
@@ -75,28 +75,30 @@
                                     <label class="fsize12" for="Questions">Questions:</label>
                                     <textarea
                                         rows="4"
-                                        class="form-control"
+                                        class="form-control text"
                                         id="Questions"
                                         name="question"
                                         :placeholder="`How likely are you to recommend ${campaign.brand_name ? campaign.brand_name : 'My Store'} to a friend?`"
                                         v-model="campaign.question"
+                                        @keypress="syncQuestion"
                                         ></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="fsize12" for="Introduction">Introduction:</label>
                                     <textarea
-                                        class="form-control"
+                                        class="form-control text"
                                         rows="4"
                                         id="Introduction"
                                         placeholder="Placeholder Text"
                                         name="description"
                                         v-model="campaign.description"
+                                        @keypress="syncIntro"
                                     ></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="m0 w-100" for="upload">
+                                    <label class="m0 w-100" for="uploadNPSBrandLogo">
                                         <div class="img_vid_upload_medium">
-                                            <input class="d-none" type="file" name="brand_logo" id="upload">
+                                            <input class="d-none" type="file" name="brand_logo" id="uploadNPSBrandLogo">
                                         </div>
                                     </label>
                                 </div>
@@ -114,6 +116,7 @@
                                                class="form-control colorpicker-basic1"
                                                name="web_text_color111"
                                                v-model="campaign.web_text_color"
+                                               @change="changeColor"
                                                >
 
                                     </div>
@@ -165,50 +168,20 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <!--<div class="row">
                                     <div class="col-md-12">
                                         <input type="button" @click="updateConfigurations" class="btn btn-success btn-sm bkg_green_300 light_000 mt-5 ml-3" value="Save Configurations">
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="card p0 m-auto text-center" style="max-width:500px;">
-                            <div class="text-center p30 bbot mb0"> <img width="70" class="mb20" src="assets/images/avatar/02.png"/>
-                                <p class="fsize14 fw500 dark_700 mb-2"> Mr. Anderson</p>
-                                <p class="fsize14 fw400 dark_300">Test Tester</p>
-                                <div class="text-center border shadow br5">
-                                    <div class="p20 bbot">
-                                        <p class="fsize14 fw500 dark_700 mb-2">How Likely are you to Recommend <br>
-                                            My store to a friend ?</p>
-                                    </div>
-                                    <div class="p20">
-                                        <ul class="inline_numbers">
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">6</a></li>
-                                            <li><a href="#">7</a></li>
-                                            <li><a href="#">8</a></li>
-                                            <li><a href="#">9</a></li>
-                                            <li><a href="#">10</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p20">
-                                <p class="fsize11 fw400 dark_200 mb-2">If you don't know why you got this email, please tell us straight away so we can fix <br>
-                                    this for you. </p>
-                                <p class="mb-0">Thanks</p>
-                                <p class="fsize14 fw500 m-0"> Brandboost Team</p>
-                            </div>
+                        <div class="card p0 m-auto text-center" v-html="preview">
+
                         </div>
                     </div>
                 </div>
-
 
                 <div class="row mt40">
                     <div class="col-md-12">
@@ -220,10 +193,15 @@
                         </button>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(2)">Save and continue <span><img
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(2)">Continue <span><img
+                            src="/assets/images/arrow-right-line.svg"></span></button>
+                        <button class="btn btn-success btn-sm bkg_green_300 light_000 float-right mr-3" @click="updateConfigurations">Save Changes <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
+
+
+
 
 
             </div>
@@ -232,6 +210,7 @@
     </div>
 </template>
 <script>
+    import jq from 'jquery';
     export default {
         data() {
             return {
@@ -248,7 +227,8 @@
                 breadcrumb: '',
                 feedbackResponse: '',
                 fromNumber: '',
-                displayCustomLinkExpiry: false
+                displayCustomLinkExpiry: false,
+                preview: ''
             }
         },
         created() {
@@ -258,6 +238,7 @@
                     this.makeBreadcrumb(this.breadcrumb);
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oNPS;
+                    this.preview = response.data.setupPreview;
                     this.user = response.data.userData;
                     this.loading = false;
 
@@ -265,7 +246,7 @@
         },
         mounted() {
             setTimeout(function(){
-                loadJQScript();
+                loadJQScript(35);
             }, 500);
 
         },
@@ -273,6 +254,43 @@
 
         },
         methods: {
+            changeColor: function(){
+                alert('changed');
+            },
+            toggleLogoDisplay: function(e){
+                if(e.target.checked){
+                    jq(".logo_img").parent().show();
+                    jq(".product_icon").show();
+                }else{
+                    jq(".product_icon").hide();
+                    jq(".logo_img").parent().hide();
+                }
+            },
+            toggleQuestionDisplay: function(e){
+                if(e.target.checked){
+                    jq(".questionText").show();
+                    jq(".questionEamilText").show();
+                }else{
+                    jq(".questionText").hide();
+                    jq(".questionEamilText").hide();
+                }
+            },
+            toggleIntroDisplay: function(e){
+                if(e.target.checked){
+                    jq(".introductionText").show();
+                }else{
+                    jq(".introductionText").hide();
+                }
+            },
+            syncQuestion: function(){
+                document.querySelector('.questionEamilText').innerHTML=this.campaign.question;
+                document.querySelector('.questionText').innerHTML=this.campaign.question;
+                document.querySelector('.questionSMSText').innerHTML=this.campaign.question + '<br><br>Please Reply with a number from "0" (not likely) to "10" (very likely)';
+            },
+            syncIntro: function(){
+                document.querySelector('.introductionText').innerHTML=this.campaign.description;
+
+            },
             updateConfigurations: function(){
                 this.loading = true;
                 axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
@@ -322,18 +340,23 @@
                 });
 
             },
-            saveDraft: function(){
+            changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcast', {
-                    broadcastId: this.campaignId,
-                    status: 'draft',
-                    current_state: '',
+                axios.post('/admin/modules/nps/changeStatus', {
+                    npsId: this.campaignId,
+                    status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            if(status == 'draft'){
+                                this.successMsg = 'Campaign saved as a draft successfully';
+                            }
+                            if(status == 'active'){
+                                this.successMsg = 'Campaign is active now';
+                            }
+
                         }else{
                             this.errorMsg = 'Something went wrong';
                         }
@@ -343,11 +366,44 @@
 
     };
 
-    function loadJQScript(){
+    function loadJQScript(userid){
+        var tkn = $('meta[name="_token"]').attr('content');
         $(".colorpicker-basic1").spectrum();
         $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic3").spectrum();
         $(".colorpicker-basic4").spectrum();
+        var myDropzoneLogoImg = new Dropzone(
+            '#uploadNPSBrandLogo', //id of drop zone element 1
+            {
+                url: 'dropzone/upload_s3_attachment/'+userid+'/nps',
+                params: {
+                    _token: tkn
+                },
+                uploadMultiple: false,
+                maxFiles: 1,
+                maxFilesize: 600,
+                acceptedFiles: 'image/*',
+                addRemoveLinks: false,
+                success: function (response) {
+                    if(response.xhr.responseText != "") {
+                        $('.logo_img').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
+                        var dropImage = $('#logo_img').val();
+                        $.ajax({
+                            url: '/admin/brandboost/DeleteObjectFromS3',
+                            type: "POST",
+                            data: {_token: tkn, dropImage: dropImage},
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                        $('#logo_img').val(response.xhr.responseText);
+                    }
+                }
+            });
+        myDropzoneLogoImg.on("complete", function(file) {
+            myDropzoneLogoImg.removeFile(file);
+        });
     }
 
 </script>
@@ -357,6 +413,7 @@
     }
     .email_review_config{
         width:300px !important;
+        position: relative !important;
     }
 </style>
 
