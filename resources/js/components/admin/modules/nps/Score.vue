@@ -65,28 +65,80 @@
 
                 <div class="row">
 
-                    <div v-for="feedback in feedbacks" class="col-md-3 text-center">
-
-                        <div class="card p30 animate_top">
-                            <div class="dot_dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                    <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Link 1</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Link 2</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="dripicons-user text-muted mr-2"></i> Link 3</a>
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th><i class="icon-user"></i> Contact</th>
+                                <th><i class="icon-stack-star"></i> Program</th>
+                                <th><i class="icon-display"></i> Phone</th>
+                                <th><i class="icon-calendar"></i> Created</th>
+                                <th><i class="icon-hash"></i> Score</th>
+                                <th><i class="icon-atom"></i> Feedback</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="feedback in feedbacks">
+                                <td>
+                                    <span class="table-img mr15">
+                                        <user-avatar
+                                            :avatar="feedback.avatar"
+                                            :firstname="feedback.firstname"
+                                            :lastname="feedback.lastname"
+                                        ></user-avatar>
+                                    </span>
+                                    <span v-if="feedback.firstname != ''">
+                                        <span class="htxt_medium_14 dark_900">
+                                            {{ capitalizeFirstLetter(feedback.firstname) }} {{ capitalizeFirstLetter(feedback.lastname) }}
+                                        </span>
+                                        <br />
+                                        <span style="padding-left: 50px;">
+                                        {{ (feedback.email != '' ? feedback.email : '') }}
+                                        </span>
+                                    </span>
+                                    <span v-else>
+                                        <span class="htxt_medium_14 dark_900">
+                                            {{ capitalizeFirstLetter(feedback.feedback_fullname) }}
+                                        </span>
+                                        <br />
+                                        <span style="padding-left: 50px;">
+                                        {{ (feedback.feedback_email != '' ? feedback.feedback_email : '') }}
+                                        </span>
+                                    </span>
+                                </td>
+                                <td @click="navigateToSetup(feedback.npsID)" style="cursor: pointer;">
+                                    {{ feedback.campaignTitle }}
+                                    <br />
+                                    {{ capitalizeFirstLetter(feedback.platform) }}
+                                </td>
+                                <td>
+                                   <span v-if="feedback.phone">
+                                        {{ feedback.phone }}
+                                        <br />{{ 'Chat' }}
+                                   </span>
+                                    <span v-else>[No Data]</span>
+                                </td>
+                                <td>
+                                    {{ displayDateFormat('d M Y, h:i A', feedback.created_at) }}
+                                </td>
+                                <td align="center">
+                                    {{ feedback.score > 0 ? feedback.score : 0 }}
+                                </td>
+                                <td>
+                                    <div class="media-left">
+                                        <a style="cursor: pointer;" class="showFeedbackData">
+                                            <span class="text-default"><strong>{{ setStringLimit(feedback.title, 40) }}</strong></span>
+                                        </a>
+                                        <div style="display: none;">{{ setStringLimit(feedback.title, 40) }}</div>
+                                        <div style="display: none;">{{ feedback.feedback != '' ? feedback.feedback : '[No Data]' }}</div>
+                                        <div class="text-muted text-size-small">
+                                            {{ feedback.feedback != '' ? setStringLimit(feedback.feedback, 60) : '' }}
+                                        </div>
                                     </div>
-                                </div>
-                            <div>
-                                <img class="mt20" src="assets/images/subs-icon_big.svg">
-                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                    <span>{{ capitalizeFirstLetter(setStringLimit(feedback.title, 20)) }} <br /> {{ capitalizeFirstLetter(setStringLimit(feedback.campaignTitle, 20)) }}</span>
-                                </h3>
-                                <p><em>( Platform / Score : {{ feedback.platform }} / <strong>{{ feedback.score }}</strong> )</em></p>
-                                <p><em>[Created On: {{ displayDateFormat("M d, Y h:i A", feedback.created_at) }} ]</em></p>
-                            </div>
-                        </div>
-
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>
@@ -132,6 +184,26 @@
           Content Area End
          **********************-->
 
+
+        <!-- showFeedback -->
+        <div id="showFeedbackModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header purple_preview_2 purple_preview_2">
+                        <h5 class="modal-title"><img src="assets/images/customer_profile_icon.png"> NPS Score Feedback</h5>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body p30 minh180">
+                        <label class="fsize11 m0">Heading :</label>
+                        <p class="feedbackHeading fw600 fsize14 text-dark mb10"></p>
+
+                        <label class="fsize11 m0">Description :</label>
+                        <p class="feedbackContent fsize13"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -163,6 +235,9 @@
             this.loadPaginatedData();
         },
         methods: {
+            navigateToSetup: function(id){
+                window.location.href='#/modules/nps/setup/'+id;
+            },
             loadPaginatedData: function () {
                 //getData
                 axios.get('/admin/modules/nps/score/'+this.$route.params.hashKey)
@@ -177,7 +252,7 @@
                         this.feedbacks = response.data.oFeedbacks;
                         this.allData = response.data.allData;
                         this.totalCnt = this.allData.total;
-                        console.log(this.feedbacks);
+                        //console.log(this.feedbacks);
                     });
             },
             showPaginationData: function (current_page) {
@@ -190,6 +265,16 @@
             }
         }
     };
+
+    $(document).ready(function () {
+
+        $(document).on('click', '.showFeedbackData', function () {
+            $('.feedbackHeading').html($(this).next().text());
+            $('.feedbackContent').html($(this).next().next().text());
+            $('#showFeedbackModal').modal();
+        });
+
+    });
 </script>
 
 <style>
