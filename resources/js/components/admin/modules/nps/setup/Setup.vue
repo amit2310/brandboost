@@ -96,11 +96,13 @@
                                     ></textarea>
                                 </div>
                                 <div class="form-group">
+                                    <input type="hidden" name="brand_logo" id="npsBrandLogo" :value="campaign.brand_logo" >
                                     <label class="m0 w-100" for="uploadNPSBrandLogo">
                                         <div class="img_vid_upload_medium">
                                             <input class="d-none" type="file" name="brand_logo" id="uploadNPSBrandLogo">
                                         </div>
                                     </label>
+
                                 </div>
                             </div>
                             <div class="bbot btop pb10 pt10 mb15 mt15">
@@ -114,9 +116,9 @@
                                     <div class="col-md-4">
                                         <input type="text"
                                                class="form-control colorpicker-basic1"
-                                               name="web_text_color111"
+                                               name="web_text_color"
                                                v-model="campaign.web_text_color"
-                                               @change="changeColor"
+
                                                >
 
                                     </div>
@@ -128,6 +130,7 @@
                                     <div class="col-md-4">
                                         <input type="text"
                                                class="form-control colorpicker-basic2"
+                                               name="web_int_text_color"
                                                v-model="campaign.web_int_text_color"
                                                >
                                     </div>
@@ -139,6 +142,7 @@
                                     <div class="col-md-4">
                                         <input type="text"
                                                class="form-control colorpicker-basic3"
+                                               name="web_button_text_color"
                                                v-model="campaign.web_button_text_color"
                                                >
                                     </div>
@@ -151,6 +155,7 @@
                                     <div class="col-md-4">
                                         <input type="text"
                                                class="form-control colorpicker-basic3"
+                                               name="web_button_over_text_color"
                                                v-model="campaign.web_button_over_text_color"
                                                >
                                     </div>
@@ -163,6 +168,7 @@
                                     <div class="col-md-4">
                                         <input type="text"
                                                class="form-control colorpicker-basic4"
+                                               name="web_button_color"
                                                v-model="campaign.web_button_color"
                                                >
                                     </div>
@@ -246,7 +252,7 @@
         },
         mounted() {
             setTimeout(function(){
-                loadJQScript(35);
+                loadNPSJQScript(35);
             }, 500);
 
         },
@@ -254,9 +260,6 @@
 
         },
         methods: {
-            changeColor: function(){
-                alert('changed');
-            },
             toggleLogoDisplay: function(e){
                 if(e.target.checked){
                     jq(".logo_img").parent().show();
@@ -293,6 +296,27 @@
             },
             updateConfigurations: function(){
                 this.loading = true;
+                //Grab color related values
+                let elem1 = document.querySelector('input[name="web_text_color"]');
+                let elem2 = document.querySelector('input[name="web_int_text_color"]');
+                let elem3 = document.querySelector('input[name="web_button_text_color"]');
+                let elem4 = document.querySelector('input[name="web_button_over_text_color"]');
+                let elem5 = document.querySelector('input[name="web_button_color"]');
+                let web_text_color = (elem1 != null) ? elem1.value : null;
+                let web_int_text_color = (elem2 != null) ? elem2.value : null;
+                let web_button_text_color = (elem3 != null) ? elem3.value : null;
+                let web_button_over_text_color = (elem4 != null) ? elem4.value : null;
+                let web_button_color = (elem5 != null) ? elem5.value : null;
+                this.campaign.web_text_color = web_text_color ? web_text_color : this.campaign.web_text_color;
+                this.campaign.web_int_text_color = web_int_text_color ? web_int_text_color : this.campaign.web_int_text_color;
+                this.campaign.web_button_text_color = web_button_text_color ? web_button_text_color : this.campaign.web_button_text_color;
+                this.campaign.web_button_over_text_color = web_button_over_text_color ? web_button_over_text_color : this.campaign.web_button_over_text_color;
+                this.campaign.web_button_color = web_button_color ? web_button_color : this.campaign.web_button_color;
+
+                //Brand logo
+                let brandlogo = document.querySelector('input[name="brand_logo"]');
+                this.campaign.brand_logo = (brandlogo != null) ? brandlogo.value : this.campaign.brand_logo;
+
                 axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
                     .then(response => {
                         this.loading = false;
@@ -366,12 +390,48 @@
 
     };
 
-    function loadJQScript(userid){
+    function loadNPSJQScript(userid){
         var tkn = $('meta[name="_token"]').attr('content');
-        $(".colorpicker-basic1").spectrum();
+        /*$(".colorpicker-basic1").spectrum();
         $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic3").spectrum();
-        $(".colorpicker-basic4").spectrum();
+        $(".colorpicker-basic4").spectrum();*/
+
+        $(".colorpicker-basic1").spectrum({
+            change: function (color) {
+            $('.colorpicker-basic1').val(color.toHexString());
+            },
+            move: function (color) {
+                $('.colorpicker-basic1').val(color.toHexString());
+            }
+        });
+        $(".colorpicker-basic2").spectrum({
+            change: function (color) {
+            $('.colorpicker-basic2').val(color.toHexString());
+            },
+            move: function (color) {
+                $('.colorpicker-basic2').val(color.toHexString());
+            }
+        });
+        $(".colorpicker-basic3").spectrum({
+            change: function (color) {
+            $('.colorpicker-basic3').val(color.toHexString());
+            },
+            move: function (color) {
+                $('.colorpicker-basic3').val(color.toHexString());
+            }
+        });
+        $(".colorpicker-basic4").spectrum({
+            change: function (color) {
+            $('.colorpicker-basic4').val(color.toHexString());
+            },
+            move: function (color) {
+                $('.colorpicker-basic4').val(color.toHexString());
+            }
+        });
+
+
+
         var myDropzoneLogoImg = new Dropzone(
             '#uploadNPSBrandLogo', //id of drop zone element 1
             {
@@ -387,7 +447,7 @@
                 success: function (response) {
                     if(response.xhr.responseText != "") {
                         $('.logo_img').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
-                        var dropImage = $('#logo_img').val();
+                        var dropImage = $('#npsBrandLogo').val();
                         $.ajax({
                             url: '/admin/brandboost/DeleteObjectFromS3',
                             type: "POST",
@@ -397,7 +457,7 @@
                                 console.log(data);
                             }
                         });
-                        $('#logo_img').val(response.xhr.responseText);
+                        $('#npsBrandLogo').val(response.xhr.responseText);
                     }
                 }
             });
