@@ -32,7 +32,7 @@
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ programs.length }} Referral Programs</h3>
+                            <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Referral Programs</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="table_action">
@@ -289,12 +289,15 @@
                 allData: ''
             }
         },
-        mounted() {
+        created() {
             this.loadPaginatedData();
+        },
+        mounted() {
+
         },
         methods: {
             showReferralSetup: function(programId){
-                window.location.href='#/modules/referral/setup/'+programId;
+                window.location.href='#/referral/setup/'+programId+'/1';
             },
             showReferralReports: function(programId) {
                 window.location.href='#/modules/referral/reports/'+programId;

@@ -71,6 +71,11 @@ import ReferralOverview from './components/admin/modules/referral/Overview';
 import ReferralAdvocates from './components/admin/modules/referral/Advocates';
 import ReferralStats from './components/admin/modules/referral/Stats';
 import ReferralReports from './components/admin/modules/referral/Reports';
+import ReferralStep1 from './components/admin/modules/referral/setup/Setup';
+import ReferralStep2 from './components/admin/modules/referral/setup/Setup2';
+import ReferralStep3 from './components/admin/modules/referral/setup/Setup3';
+import ReferralStep4 from './components/admin/modules/referral/setup/Setup4';
+import ReferralStep5 from './components/admin/modules/referral/setup/Setup5';
 
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
@@ -210,6 +215,11 @@ const routes = [
     { path: '/modules/referral/advocates/:id', component: ReferralAdvocates, meta: { title: 'Referral Advocates'} },
     { path: '/modules/referral/stats/:id', component: ReferralStats, meta: { title: 'Referral Statistics'} },
     { path: '/modules/referral/reports/:id', component: ReferralReports, meta: { title: 'Referral Reports'} },
+    { path: '/referral/setup/:id/1', component: ReferralStep1, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/2', component: ReferralStep2, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/3', component: ReferralStep3, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/4', component: ReferralStep4, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/5', component: ReferralStep5, props : {title : 'Referral Campaign Setup'} },
 
     /* Nps Survey Module */
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
