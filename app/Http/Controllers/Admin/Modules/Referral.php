@@ -287,13 +287,12 @@ class Referral extends Controller {
             $setReferralTab = Session::get("setReferralTab");
         }
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/modules/referral/') . '" class="sidebar-control hidden-xs">Referral </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
-                    </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/referral/dashboard',
+            'Campaigns' => '#/referral/',
+            'Setup' => '',
+        );
 
         $oReferral = ReferralModel::getReferral($userID, $referralID);
 
@@ -344,7 +343,7 @@ class Referral extends Controller {
 
         $aData = array(
             'title' => 'Referral Settings',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'defalutTab' => $defaultTab,
             'programID' => $programID,
             'oReferral' => $oReferral,
@@ -363,12 +362,14 @@ class Referral extends Controller {
             'oRefCouponCodes' => $oRefCouponCodes,
             'oContacts' => $oContacts,
             'setReferralTab' => $setReferralTab,
-            'userID' => $userID
+            'userID' => $userID,
+            'campaignTitle' => $oReferral->title
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
 
-		return view('admin.modules.referral.setup-source', $aData);
+		//return view('admin.modules.referral.setup-source', $aData);
+        return $aData;
     }
 
 
@@ -1103,7 +1104,7 @@ class Referral extends Controller {
 
 		$source = 'email';
 
-        if (!empty($referralStatus)) {
+        if ($referralStatus == true) {
             $status = 'active';
         } else {
             $status = 'draft';

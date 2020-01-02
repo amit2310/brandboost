@@ -476,7 +476,7 @@
                 this.moduleName = this.workflowData.moduleName;
                 this.moduleUnitID = this.workflowData.moduleUnitID;
                 this.oEvents = this.workflowData.oEvents;
-                this.themeColor = this.workflowData.automation_type == 'sms' ? 'green' : 'blue';
+                this.themeColor = !this.workflowData.automation_type ? 'blue' : (this.workflowData.automation_type == 'sms' ? 'green' : 'blue');
                 this.getWorkflowSubscribers();
                 let elem = this;
                 setTimeout(function(){

@@ -258,7 +258,8 @@ class Nps extends Controller {
             'oFeedbackAllData' => $oFeedbacks,
             'emailPreview' => $compiledEmailPriviewCode,
             'smsPreview' => $compiledSmsPriviewCode,
-            'setupPreview' => $setupPreview
+            'setupPreview' => $setupPreview,
+            'campaignTitle' => $oNPS->title
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
