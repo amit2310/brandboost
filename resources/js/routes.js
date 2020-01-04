@@ -107,13 +107,16 @@ import Companies from './components/admin/companies/Companies';
 import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
 
-
+import Profile from './components/admin/Profile';
 
 
 const routes = [
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
+
+    /*Admin Profi;e*/
+    { path: '/profile', component: Profile, meta: { title: 'Admin Profile - Brand Boost'} },
 
     /*Contacts*/
     { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
