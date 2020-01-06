@@ -134,7 +134,7 @@
 
             </ul>
             <!--end topbar-nav-->
-            <breadcrumb>
+            <div id="breadcrumb">
                 <ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">
                     <li>
                         <a href="#"><img src="{{ URL::asset('assets/images/mail-open-line.svg') }}"/> &nbsp;Home</a>
@@ -148,13 +148,15 @@
                         <a href="#"><img src="{{ URL::asset('assets/images/mail-open-line.svg') }}"/> &nbsp;People</a>
                     </li>
 
-                    <li class="ml10 mr10"><img src="{{ URL::asset('assets/images/chevron-left.svg') }}"/></li>
+                    <li class="ml10 mr10">
+                        <img src="{{ URL::asset('assets/images/chevron-left.svg') }}"/>
+                    </li>
 
                     <li>
-                        <a href="#">Dashboard</a>
+                        Dashboard
                     </li>
                 </ul>
-            </breadcrumb>
+            </div>
 
             <div class="clearfix"></div>
         </div>

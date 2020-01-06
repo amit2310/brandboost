@@ -1,3 +1,8 @@
+<style>
+    .hide {
+        display:none !important;
+    }
+</style>
 @php $countriesList = getCountriesList(); @endphp
 
 <div id="alertMessagePopup" style="z-index: 9999999999" class="modal fade">
@@ -1341,7 +1346,7 @@
 <div id="subscriberTagListsModal" class="modal fade" style="z-index:9999999999;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void();">
+            <form method="post" name="frmSubscriberApplyTag" id="frmSubscriberApplyTag" action="javascript:void(0);">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Apply Tags</h5>
@@ -1357,3 +1362,123 @@
     </div>
 </div>
 <!--=====================================Add Chat Shortcut Modal Popup End================================-->
+
+
+{{--stripo related popups--}}
+<div id="wfSendTestEmail" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> &nbsp;Send
+                    Test Email <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input class="form-control" id="wfTextPopupSendTestEmail" placeholder="Email"
+                                   type="email" required="required">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="wf_test_email_campaign_id"/>
+                <button type="button" id="wfBtnPopupSendTestEmail" class="btn dark_btn bkg_sblue fsize14">Send
+                    Email
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="wfSendTestSMS" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Sms_Color.svg"/> &nbsp;Send
+                    Test SMS <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input class="form-control" id="wfTextPopupSendTestSMS" placeholder="Phone Number"
+                                   type="text" value="{{ $oUser->mobile }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="wf_test_sms_campaign_id"/>
+                <button type="button" id="wfBtnPopupSendTestSMS" class="btn dark_btn bkg_sblue fsize14">Send SMS
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="emaileditorinfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Email_Color.svg"/> &nbsp;How
+                    to use this editor <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Brandboost Email Builder</b> We will revert back to you very soon with detailed document
+                        and help videos
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark_btn bkg_sblue fsize14">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="smseditorinfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title"><img src="{{ base_url() }}assets/css/menu_icons/Sms_Color.svg"/> &nbsp;How
+                    to use this sms editor <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Brandboost SMS Editor</b> We will revert back to you very soon with detailed document and
+                        help videos
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark_btn bkg_sblue fsize14">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

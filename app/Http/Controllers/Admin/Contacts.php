@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\SettingsModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -162,6 +163,10 @@ class Contacts extends Controller
                 }
             } else {
                 $getUserById = $subscribersData;
+            }
+            $notificationSettings = '';
+            if(!empty($userId)){
+                $notificationSettings = SettingsModel::getNotificationSettings($userId);
             }
 
             $subBrandEmail = $mSubscriber->getSubscriberEmailSms($contactId, 'email');
@@ -327,7 +332,8 @@ class Contacts extends Controller
                 'oNotes' => $oNotes,
                 'result' => $result,
                 'pagename' => $breadcrumb,
-                'oPrograms' => $oPrograms
+                'oPrograms' => $oPrograms,
+                'notificationSettings' => $notificationSettings
             );
         }
 
@@ -339,7 +345,9 @@ class Contacts extends Controller
             echo json_encode($response);
             exit;
         } else {
-            return view('admin.contacts.contact_profile', $aData);
+            //return view('admin.contacts.contact_profile', $aData);
+            echo json_encode($aData);
+            exit;
         }
     }
 
@@ -368,6 +376,13 @@ class Contacts extends Controller
             }
         }
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Contacts' => ''
+        );
+
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a class="sidebar-control hidden-xs slace">/</a></li>
@@ -378,6 +393,7 @@ class Contacts extends Controller
         $aData = array(
             'title' => 'Contacts',
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'archiveContacts' => $archiveContacts,
             'subscribersData' => $subscribersData->items(),
             'allData' => $subscribersData,

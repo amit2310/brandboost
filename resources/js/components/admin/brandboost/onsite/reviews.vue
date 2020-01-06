@@ -645,7 +645,7 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
 
     export default {
         title: 'Onsite reviews - Brand Boost',

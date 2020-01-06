@@ -22,10 +22,34 @@ class TagsModel extends Model {
                 ->when(($userID > 0), function ($query) use ($userID) {
                     return $query->where('tbl_tag_groups.user_id', $userID);
                 })
-                ->orderBy('tbl_tag_groups.id', 'desc')
-                ->orderBy('tbl_tag_groups_entity.id', 'asc')
-                ->get();
+                ->orderBy('tbl_tag_groups.id', 'DESC')
+                ->orderBy('tbl_tag_groups_entity.id', 'DESC')
+                ->paginate(10);
+                //->get();
 
+        return $oData;
+    }
+
+    /**
+     * Used to add new tag review
+     */
+    public function createTagReview($aData) {
+        $insert_id = DB::table('tbl_tag_groups_entity')
+            ->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to check if duplicate tag review
+     * @param type $tagReviewName
+     * @param type $userID
+     * @return boolean
+     */
+    public function isDuplicateTagReview($tagGroupId, $tagReviewName, $userID = 0) {
+        $oData = DB::table('tbl_tag_groups_entity')
+            ->where('group_id', $tagGroupId)
+            ->where('tag_name', $tagReviewName)
+            ->exists();
         return $oData;
     }
 
@@ -65,7 +89,7 @@ class TagsModel extends Model {
 
 
      /**
-    * This function will return all tags by subscriber id 
+    * This function will return all tags by subscriber id
     * @param type $subscriberId
     * @return type
     */
@@ -75,9 +99,9 @@ class TagsModel extends Model {
         $this->db->join("tbl_reviews_tags", "tbl_reviews.id=tbl_reviews_tags.review_id", "LEFT");
     }
 
-   
+
      /**
-    * This function will return all client tags 
+    * This function will return all client tags
     * @param type $userID
     * @return type
     */
@@ -90,7 +114,7 @@ class TagsModel extends Model {
         ->when($userID > 0, function($query) use ($userID){
         return $query->where("tbl_tag_groups.user_id", $userID);
         })
-        
+
          ->orderBy('tbl_tag_groups.id', 'DESC')->get();
         return $oData;
     }
@@ -149,7 +173,7 @@ class TagsModel extends Model {
 
 
     /**
-     * This function will tagids 
+     * This function will tagids
      * @param type $aTagID
      * @param type $reviewID
      * @return type
@@ -166,10 +190,10 @@ class TagsModel extends Model {
     }
 
 
-   
-   
+
+
     /**
-    * This function is used to get the feedback tag 
+    * This function is used to get the feedback tag
     * @param type $aTagID
     * @param type $feedbackID
     * @return type
@@ -211,7 +235,7 @@ class TagsModel extends Model {
              return true;
     }
 
-    
+
     /**
     * This function is used to update the Tag Group entity
     * @param type $id
@@ -360,8 +384,8 @@ class TagsModel extends Model {
 
 
     /**
-    * This function is used to add the feedback data 
-    * @param type 
+    * This function is used to add the feedback data
+    * @param type
     * @return type
     */
     public function addFeedbackTag($aData) {
@@ -411,7 +435,7 @@ class TagsModel extends Model {
     }
 
 
-   
+
     /**
     * This function is used to add Questions tags
     * @param type array
@@ -431,7 +455,7 @@ class TagsModel extends Model {
 
                 $tagData = $this->getTagByQuestionIDTagID($iTagID, $aData['question_id']);
                 if (empty($tagData->id)) {
-                    $result = DB::table('tbl_reviews_question_tags')->insert($aInput); 
+                    $result = DB::table('tbl_reviews_question_tags')->insert($aInput);
                 }
 
                 $qustionTagsData = $this->getTagsDataByQuestionID($aData['question_id']);
@@ -500,7 +524,7 @@ class TagsModel extends Model {
           return false;
         }
 
-        
+
     }
 
 
@@ -592,7 +616,7 @@ class TagsModel extends Model {
         if (!empty($aGroupID)) {
 
             $oData = DB::select(DB::raw("SELECT * FROM tbl_tag_groups_entity WHERE tag_name='$name' AND group_id IN(" . implode(",", $aGroupID) . ")"));
-            
+
             if (!empty($oData)) {
                 return true;
             } else {
@@ -612,7 +636,7 @@ class TagsModel extends Model {
     public function getClientTagGroups($userID = 0) {
         $oData = DB::table('tbl_tag_groups')
          ->where("tbl_tag_groups.user_id", $userID)->get();
-        
+
         return $oData;
     }
 
@@ -657,7 +681,7 @@ class TagsModel extends Model {
                 ->select('tbl_tag_groups_entity.*', 'tbl_subscriber_tags.tag_id', 'tbl_subscriber_tags.subscriber_id')
                 ->where('tbl_subscriber_tags.subscriber_id', $subscriberID)
                 ->get();
-                 return $oData;        
+                 return $oData;
     }
 
     /**
@@ -677,7 +701,7 @@ class TagsModel extends Model {
 
                 $tagData = $this->getTagBySubscriberID($iTagID, $aData['subscriber_id']);
                 if (empty($tagData)) {
-                    $result = DB::table('tbl_subscriber_tags')->insert($aInput); 
+                    $result = DB::table('tbl_subscriber_tags')->insert($aInput);
                 }
 
                 $oTags = self::getSubscriberTags($aData['subscriber_id']);
@@ -697,7 +721,7 @@ class TagsModel extends Model {
             return false;
         }
     }
-    
+
     /**
      * Used to get subscriber's tags
      * @param type $aTagID
@@ -709,7 +733,41 @@ class TagsModel extends Model {
                     ->where('tag_id', $aTagID)
                     ->where('subscriber_id', $subscriberID)
                     ->first();
-        return $oData;        
+        return $oData;
+    }
+
+    /**
+     * Used to count subscriber on which tags are applied
+     * @param type $aTagID
+     * @return type
+     */
+    public function getSubscriberIDsByTagId($aTagID) {
+        $oData = DB::table('tbl_subscriber_tags')
+            ->where('tag_id', $aTagID)
+            ->count();
+        return $oData;
+    }
+
+    /**
+     * Used to get subscriber on which tags are applied
+     * @param type $userID
+     * @param type $listID
+     * @return type
+     */
+    public function getTagContacts($tagID, $userID = '') {
+        $oData = DB::table('tbl_tag_groups_entity')
+            ->join('tbl_subscriber_tags', 'tbl_subscriber_tags.tag_id', '=', 'tbl_tag_groups_entity.id')
+            ->leftJoin('tbl_subscribers', 'tbl_subscriber_tags.subscriber_id', '=', 'tbl_subscribers.id')
+            ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+            ->select('tbl_subscriber_tags.*', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.user_id AS clientID', 'tbl_tag_groups_entity.tag_name', 'tbl_users.avatar')
+            ->when(($tagID > 0), function ($query) use ($tagID) {
+                return $query->where('tbl_tag_groups_entity.id', $tagID);
+            })
+            ->when(($userID > 0), function ($query) use ($userID) {
+                return $query->where('tbl_subscribers.user_id', $userID);
+            })
+            ->paginate(10);
+        return $oData;
     }
 
     /**
@@ -721,7 +779,7 @@ class TagsModel extends Model {
     public function deleteSubscriberTag($id, $subscriberID) {
         $result = DB::table('tbl_subscriber_tags')
         ->where('tag_id', $id)
-        ->where('subscriber_id', $subscriberID)        
+        ->where('subscriber_id', $subscriberID)
         ->delete();
         if ($result) {
             return true;

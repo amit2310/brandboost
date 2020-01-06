@@ -48,13 +48,205 @@ class Broadcast extends Controller {
      */
     public function email() {
         $campaignType = 'Email';
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+        /*$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs">Email </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Broadcast" class="sidebar-control active hidden-xs ">Broadcast</a></li>
-                    </ul>';
+                    </ul>';*/
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/emails/dashboard',
+            'Campaigns' => ''
+        );
+
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        /*$activeTab = Session::put("setTab", "");*/
+        $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
+        /*$campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);*/
+        $moduleName = 'broadcast';
+        /*Session::put("setTab", '');*/
+
+        /* Calculation to render HTML in view template */
+
+        if(count($oBroadcast) > 0) {
+            foreach ($oBroadcast as $broadCastData) {
+                $aDeliveryParam = json_decode($broadCastData->data);
+                $deliveryDate = $aDeliveryParam->delivery_date;
+                $deliveryTime = $aDeliveryParam->delivery_time;
+                $timeString = $deliveryDate . ' ' . $deliveryTime;
+                $deliverAt = strtotime($timeString);
+
+                $gmt_date = strtotime(gmdate('Y-m-d H:i:s', time()));
+                $estTime = date("Y-m-d H:i:s", ($gmt_date - 14400));
+                $timeNow = strtotime($estTime);
+                $bExpired = false;
+                if ($timeNow > $deliverAt) {
+                    $bExpired = true;
+                }
+                $broadCastData->isExpired = $bExpired;
+                $totalSentGraph = 0;
+                $totalOpenGraph = 0;
+                $totalClickGraph = 0;
+                $totalQueuedGraph = 0;
+                $totalDeliveredGraph = 0;
+                $queued = $open = $click = 0;
+                $newQueue = $newSent = $newDelivered = 0;
+                $iActiveCount = $iArchiveCount = 0;
+
+                if ($broadCastData->bc_status == 'archive') {
+                    $iArchiveCount++;
+                } else {
+                    $iActiveCount++;
+                }
+
+                if (strtolower($broadCastData->campaign_type) == 'email') {
+                    if ($broadCastData->sending_method == 'split') {
+                        $aStats = $mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id, '', 'split');
+                        //pre($aStats);
+                    } else {
+                        $aStats = $mBroadcast->getBroadcastSendgridStats('broadcast', $broadCastData->broadcast_id);
+                    }
+
+                    $aCategorizedStats = $mBroadcast->getBroadcastSendgridCategorizedStatsData($aStats);
+                    //pre($aCategorizedStats);
+
+                    $totalSent = $aCategorizedStats['processed']['UniqueCount'];
+                    $delivered = $aCategorizedStats['delivered']['UniqueCount'];
+                    $open = $aCategorizedStats['open']['UniqueCount'];
+                    $click = $aCategorizedStats['click']['UniqueCount'];
+
+                    if ($totalSent > 0) {
+                        $totalSentGraph = $delivered * 100 / $totalSent;
+                        $totalSentGraph = ceil($totalSentGraph);
+                    }
+                } else {
+
+                    if ($broadCastData->sending_method == 'split') {
+                        $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id, '', 'split');
+                    } else {
+                        $aStatsSms = $mBroadcast->getBroadcasstTwilioStats('broadcast', $broadCastData->broadcast_id);
+                    }
+
+                    $aCategorizedStatsSms = $mBroadcast->getBroadcastTwilioCategorizedStatsData($aStatsSms);
+
+                    $totalSent = $aCategorizedStatsSms['sent']['UniqueCount'];
+                    $delivered = $aCategorizedStatsSms['delivered']['UniqueCount'];
+                    $queued = $aCategorizedStatsSms['queued']['UniqueCount'];
+                    $open = $aCategorizedStatsSms['accepted']['UniqueCount'];
+
+                    if ($totalSent > 0) {
+                        $totalDeliveredGraph = $delivered * 100 / $totalSent;
+                        $totalDeliveredGraph = ceil($totalDeliveredGraph);
+
+                        $totalSentGraph = $totalSent * 100 / $totalSent;
+                        $totalSentGraph = ceil($totalSentGraph);
+
+                        $totalQueuedGraph = $queued * 100 / $totalSent;
+                        $totalQueuedGraph = ceil($totalQueuedGraph);
+                    }
+                }
+                $totalVariations = 0;
+                if ($broadCastData->sending_method == 'split') {
+                    $oVariations = $mBroadcast->getBroadcastVariations($broadCastData->broadcast_id);
+                    $totalVariations = count($oVariations);
+                }
+
+
+                if ($totalSent > 0) {
+                    $totalOpenGraph = $open * 100 / $totalSent;
+                    $totalOpenGraph = ceil($totalOpenGraph);
+
+                    $totalClickGraph = $click * 100 / $totalSent;
+                    $totalClickGraph = ceil($totalClickGraph);
+                }
+
+                $addPC = '';
+                if ($totalSentGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalOpenGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalDeliveredGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalClickGraph > 50) {
+                    $addPC = 'over50';
+                } else if ($totalQueuedGraph > 50) {
+                    $addPC = 'over50';
+                }
+
+                $clsCreateSegment = '';
+                if($delivered > 0) {
+                    $clsCreateSegment = 'createSegment';
+                } else if($open > 0) {
+                    $clsCreateSegment = 'createSegment';
+                } else if($click > 0) {
+                    $clsCreateSegment = 'createSegment';
+                } else if($queued > 0) {
+                    $clsCreateSegment = 'createSegment';
+                }
+
+                $broadCastData->totalSent = $totalSent;
+                $broadCastData->delivered = $delivered;
+                $broadCastData->queued = $queued;
+                $broadCastData->open = $open;
+                $broadCastData->click = $click;
+                $broadCastData->clsCreateSegment = $clsCreateSegment;
+                $broadCastData->totalDeliveredGraph = $totalDeliveredGraph;
+                $broadCastData->totalSentGraph = $totalSentGraph;
+                $broadCastData->totalQueuedGraph = $totalQueuedGraph;
+                $broadCastData->totalVariations = $totalVariations;
+                $broadCastData->totalOpenGraph = $totalOpenGraph;
+                $broadCastData->totalClickGraph = $totalClickGraph;
+                $broadCastData->addPC = $addPC;
+                $broadCastData->iActiveCount = $iActiveCount;
+                $broadCastData->iArchiveCount = $iArchiveCount;
+            }
+        }
+
+        $aData = array(
+            'title' => 'Brand Boost Broadcast',
+            'oBroadcast' => $oBroadcast->items(),
+            'allData' => $oBroadcast,
+            'breadcrumb' => $aBreadcrumb,
+            /*'campaignTemplates' => $campaignTemplates,
+            'pagename' => $breadcrumb,*/
+            'campaignType' => $campaignType,
+            'moduleName' => $moduleName
+        );
+
+        /* Calculation to render HTML in view template */
+
+        //return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
+
+        echo json_encode($aData);
+        exit();
+    }
+
+    /**
+     * Used to display all sms broadcast campaigns
+     */
+    public function sms() {
+        $campaignType = 'SMS';
+        /*$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">SMS </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Broadcast" class="sidebar-control active hidden-xs ">Broadcast</a></li>
+                    </ul>';*/
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/sms/dashboard',
+            'Campaigns' => ''
+        );
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -62,25 +254,30 @@ class Broadcast extends Controller {
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-        $activeTab = Session::put("setTab", "");
+        /*$activeTab = Session::put("setTab", "");*/
         $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
-        $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
+        /*$campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);*/
         $moduleName = 'broadcast';
         Session::put("setTab", '');
-
-        $aData = array(
-            'title' => 'Brand Boost Broadcast',
-            'oBroadcast' => $oBroadcast,
-            'campaignTemplates' => $campaignTemplates,
-            'pagename' => $breadcrumb,
-            'campaignType' => $campaignType,
-            'moduleName' => $moduleName
-        );
 
         /* Calculation to render HTML in view template */
 
         if(count($oBroadcast) > 0) {
             foreach ($oBroadcast as $broadCastData) {
+                $aDeliveryParam = json_decode($broadCastData->data);
+                $deliveryDate = $aDeliveryParam->delivery_date;
+                $deliveryTime = $aDeliveryParam->delivery_time;
+                $timeString = $deliveryDate . ' ' . $deliveryTime;
+                $deliverAt = strtotime($timeString);
+
+                $gmt_date = strtotime(gmdate('Y-m-d H:i:s', time()));
+                $estTime = date("Y-m-d H:i:s", ($gmt_date - 14400));
+                $timeNow = strtotime($estTime);
+                $bExpired = false;
+                if ($timeNow > $deliverAt) {
+                    $bExpired = true;
+                }
+                $broadCastData->isExpired = $bExpired;
                 $totalSentGraph = 0;
                 $totalOpenGraph = 0;
                 $totalClickGraph = 0;
@@ -143,8 +340,8 @@ class Broadcast extends Controller {
                     }
                 }
 
+                $totalVariations = 0;
                 if ($broadCastData->sending_method == 'split') {
-                    $totalVariations = 0;
                     $oVariations = $mBroadcast->getBroadcastVariations($broadCastData->broadcast_id);
                     $totalVariations = count($oVariations);
                 }
@@ -200,38 +397,21 @@ class Broadcast extends Controller {
             }
         }
 
-        /* Calculation to render HTML in view template */
+        $aData = array(
+            'title' => 'Brand Boost Broadcast',
+            'oBroadcast' => $oBroadcast->items(),
+            'allData' => $oBroadcast,
+            'breadcrumb' => $aBreadcrumb,
+            /*'campaignTemplates' => $campaignTemplates,
+            'pagename' => $breadcrumb,*/
+            'campaignType' => $campaignType,
+            'moduleName' => $moduleName
+        );
 
         //return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
 
         echo json_encode($aData);
         exit();
-    }
-
-    /**
-     * Used to display all sms broadcast campaigns
-     */
-    public function sms() {
-        $campaignType = 'SMS';
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">SMS </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Broadcast" class="sidebar-control active hidden-xs ">Broadcast</a></li>
-                    </ul>';
-        $aUser = getLoggedUser();
-        $userID = $aUser->id;
-
-        //Instantiate Broadcast model to get its methods and properties
-        $mBroadcast = new BroadcastModel();
-
-        $activeTab = Session::put("setTab", "");
-        $oBroadcast = $mBroadcast->getMyBroadcastsByTypes($userID, $campaignType);
-        $campaignTemplates = $mBroadcast->getMyCampaignTemplate($userID);
-        $moduleName = 'broadcast';
-        Session::put("setTab", '');
-        return view('admin.broadcast.index', array('title' => 'Brand Boost Broadcast', 'oBroadcast' => $oBroadcast, 'campaignTemplates' => $campaignTemplates, 'pagename' => $breadcrumb, 'campaignType' => $campaignType, 'moduleName' => $moduleName))->with('mBroadcast', $mBroadcast);
     }
 
     /**
@@ -288,6 +468,427 @@ class Broadcast extends Controller {
         );
         return view('admin.broadcast.smsoverview', $pageData);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public function setup(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $twillioData = $mBroadcast->getTwillioData($userID);
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Email' => '#/modules/email/dashboard',
+            'Email Campaigns' => '#/modules/emails/broadcast',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'twillioData' => $twillioData[0],
+            'campaignType' => $campaignType,
+            'subscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    public function smsSetup(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $twillioData = $mBroadcast->getTwillioData($userID);
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/sms");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Sms' => '#/modules/sms/dashboard',
+            'Sms Campaigns' => '#/modules/sms/broadcast',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Sms Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'twillioData' => $twillioData[0],
+            'campaignType' => $campaignType,
+            'subscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    public function setupTargetAudience(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instantiate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
+
+
+        //loaded broadcast properties tags
+        $broadcastID = strip_tags($request->broadcastId);
+        $oAutomationLists = $mLists->getAutomationLists($id);
+        $oCampaignContacts = $mBroadcast->getBroadcastContacts($id);
+        $aTags = $mTag->getClientTags($userID);
+        $oCampaignTags = $mBroadcast->getBroadcastTags($id);
+        $oCampaignLists = $oAutomationLists;
+        $oCampaignSegments = $mBroadcast->getBroadcastSegments($id);
+        $aDataImportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignLists,
+            'oCampaignContacts' => $oCampaignContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignTags,
+            'oCampaignSegments' => $oCampaignSegments
+        );
+        $sImportButtons = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+        $aDataImportButtons['bSummary'] = true;
+        $sImportButtonsSummary = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+
+
+
+        //loaded broadcast properties tags
+
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($id);
+        $oCampaignExcludedContacts = $mBroadcast->getBroadcastExcludedContacts($id);
+        $oCampaignExcludedTags = $mBroadcast->getBroadcastExcludedTags($id);
+        $oCampaignExcludedSegments = $mBroadcast->getBroadcastExcludedSegments($id);
+        $aDataExportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignExcludedLists,
+            'oCampaignContacts' => $oCampaignExcludedContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignExcludedTags,
+            'oCampaignSegments' => $oCampaignExcludedSegments
+        );
+        $sExcludButtons = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aDataExportButtons['bSummaryExclude'] = true;
+        $sExcludButtonsSummary = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aAudienceCount = $this->importExcludeAudienceCount($id);
+        $importedCount = count($aAudienceCount['imported']);
+        $exportedCount = count($aAudienceCount['excluded']);
+
+
+        if(strtolower($campaignType) == 'email'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Email' => '#/modules/email/dashboard',
+                'Email Campaigns' => '#/modules/emails/broadcast',
+                'Setup' => '',
+            );
+        }
+
+        if(strtolower($campaignType) == 'sms'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Sms' => '#/modules/sms/dashboard',
+                'Sms Campaigns' => '#/modules/sms/broadcast',
+                'Setup' => '',
+            );
+        }
+
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'campaignType' => $campaignType,
+            'sImportButtons' => $sImportButtons,
+            'sImportButtonsSummary' => $sImportButtonsSummary,
+            'sExcludButtons' => $sExcludButtons,
+            'sExcludButtonsSummary' => $sExcludButtonsSummary,
+            'importedCount' => $importedCount,
+            'exportedCount' => $exportedCount,
+            'oBroadcastSubscriber' => $oBroadcastSubscriber->items(),
+            'allDataSubscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    public function setupLoadTemplates(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Templates model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        $campaignType = strtolower($oBroadcast[0]->campaign_type);
+
+        $oDefaultTemplates = $mTemplates->getCommonTemplates('', '', '', $campaignType, true);
+        $oTemplates = $oDefaultTemplates;
+        $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType);
+        $oDraftTemplates = $mWorkflow->getWorkflowDraftTemplates($moduleName, '', $userID);
+        $oCategories = $mWorkflow->getWorkflowTemplateCategories($moduleName);
+
+        if(!empty($oCategories)){
+            foreach($oCategories as $oCategory){
+                $categoryID = $oCategory->id;
+                $totalTemplates = $mTemplates->countCategoryTemplates($categoryID);
+                $oCategory->totalCount = $totalTemplates;
+            }
+        }
+
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            ucfirst($campaignType) => '#/modules/'.$campaignType.'/dashboard',
+            ucfirst($campaignType).' Campaigns' => '#/modules/'.$campaignType.'/broadcast',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => ucfirst($campaignType).' Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'oTemplates' => $oTemplates->items(),
+            'myTemplates' => $oUserTemplates,
+            'allData' => $oTemplates,
+            'draftTemplates' => $oDraftTemplates,
+            'oCategories' => $oCategories
+
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
+    public function setupViewSummary(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $id = $request->id;
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        //Instantiate Tags model to get its methods and properties
+        $mTag = new TagsModel();
+
+        $oBroadcast = $mBroadcast->getMyBroadcasts($userID, $id);
+        if (empty($oBroadcast)) {
+            redirect("admin/broadcast/email");
+            exit;
+        }
+
+        $moduleName = 'broadcast';
+        if ($id > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($id, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents[0]->id;
+                if ($eventID > 0) {
+                    $oCampaign = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                }
+            }
+        }
+        $campaignType = $oCampaign[0]->campaign_type;
+        $oBroadcastSubscriber = $mBroadcast->getBroadcastSubscribers($id);
+
+
+        //loaded broadcast properties tags
+        $broadcastID = strip_tags($request->broadcastId);
+        $oAutomationLists = $mLists->getAutomationLists($id);
+        $oCampaignContacts = $mBroadcast->getBroadcastContacts($id);
+        $aTags = $mTag->getClientTags($userID);
+        $oCampaignTags = $mBroadcast->getBroadcastTags($id);
+        $oCampaignLists = $oAutomationLists;
+        $oCampaignSegments = $mBroadcast->getBroadcastSegments($id);
+        $aDataImportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignLists,
+            'oCampaignContacts' => $oCampaignContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignTags,
+            'oCampaignSegments' => $oCampaignSegments
+        );
+        $sImportButtons = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+        $aDataImportButtons['bSummary'] = true;
+        $sImportButtonsSummary = view('admin.broadcast.partials.importButtonTags', $aDataImportButtons)->render();
+
+
+
+        //loaded broadcast properties tags
+
+        $oCampaignExcludedLists = $mLists->getAutomationExcludedLists($id);
+        $oCampaignExcludedContacts = $mBroadcast->getBroadcastExcludedContacts($id);
+        $oCampaignExcludedTags = $mBroadcast->getBroadcastExcludedTags($id);
+        $oCampaignExcludedSegments = $mBroadcast->getBroadcastExcludedSegments($id);
+        $aDataExportButtons = array(
+            'broadcastID' => $id,
+            'oCampaignLists' => $oCampaignExcludedLists,
+            'oCampaignContacts' => $oCampaignExcludedContacts,
+            'aTags' => $aTags,
+            'oCampaignTags' => $oCampaignExcludedTags,
+            'oCampaignSegments' => $oCampaignExcludedSegments
+        );
+        $sExcludButtons = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aDataExportButtons['bSummaryExclude'] = true;
+        $sExcludButtonsSummary = view('admin.broadcast.partials.excludeButtonTags', $aDataExportButtons)->render();
+        $aAudienceCount = $this->importExcludeAudienceCount($id);
+        $importedCount = count($aAudienceCount['imported']);
+        $exportedCount = count($aAudienceCount['excluded']);
+
+
+        if(strtolower($campaignType) == 'email'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Email' => '#/modules/email/dashboard',
+                'Email Campaigns' => '#/modules/emails/broadcast',
+                'Setup' => '',
+            );
+        }
+
+        if(strtolower($campaignType) == 'sms'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Sms' => '#/modules/sms/dashboard',
+                'Sms Campaigns' => '#/modules/sms/broadcast',
+                'Setup' => '',
+            );
+        }
+
+        $aData = array(
+            'title' => 'Email Broadcast',
+            'breadcrumb' => $aBreadcrumb,
+            'oBroadcast' => $oBroadcast[0],
+            'moduleName' => $moduleName,
+            'userData' => $aUser,
+            'campaignType' => $campaignType,
+            'sImportButtons' => $sImportButtons,
+            'sImportButtonsSummary' => $sImportButtonsSummary,
+            'sExcludButtons' => $sExcludButtons,
+            'sExcludButtonsSummary' => $sExcludButtonsSummary,
+            'importedCount' => $importedCount,
+            'exportedCount' => $exportedCount,
+            'oBroadcastSubscriber' => $oBroadcastSubscriber->items(),
+            'allDataSubscribers' => $oBroadcastSubscriber
+        );
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.setup', $aData)->with(['mBroadcast' => $mBroadcast, 'mTags' => $mTag]);
+    }
+
 
     /**
      * Used to edit email/sms broadcast campaign
@@ -1944,12 +2545,24 @@ class Broadcast extends Controller {
      */
     public function updateBroadcastClone(Request $request) {
 
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'campaign_name' => ['required'],
+            'description' => ['required'],
+            'broadcast_type' => ['required']
+        ]);
+
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         $response = array();
 
+        $automation_id = $request->automation_id;
         $broadcastId = $request->edit_broadcastId;
+        $broadcastId = (!empty($automation_id) ? $automation_id : $broadcastId);
+
         $campaignName = $request->campaign_name;
         $description = $request->description;
         $cData = array(
@@ -2118,8 +2731,8 @@ class Broadcast extends Controller {
         $broadcastID = strip_tags($request->broadcast_id);
         Session::put("setTab", trim($request->tab));
 
-        $deliveryDate = strip_tags($request->delivery_date);
-        $deliveryTime = strip_tags($request->delivery_time);
+        $deliveryDate = $request->delivery_date;
+        $deliveryTime = $request->delivery_time;
 
         $triggerTime = array(
             'delivery_date' => $deliveryDate,
@@ -2314,6 +2927,11 @@ class Broadcast extends Controller {
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
+        $validatedData = $request->validate([
+            'campaign_name' => ['required'],
+            'description' => ['required'],
+            'broadcast_type' => ['required']
+        ]);
 
         $response = array();
 
@@ -2417,6 +3035,83 @@ class Broadcast extends Controller {
         exit;
     }
 
+    /**
+     *
+     */
+    public function updateAutomation(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        if (empty($request->automation_id)) {
+            $response = array('status' => 'error','type' => 'emptyid',  'msg' => 'Something went wrong, please refresh the page and try again.');
+            echo json_encode($response);
+            exit;
+        }
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        if ($user_role == 1) {
+            $userID = '';
+        }
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $automationID = $request->automation_id;
+        $title = !empty($request->title) ? $request->title : '';
+        $description = !empty($request->description) ? $request->description : '';
+        $automation_type = !empty($request->automation_type) ? $request->automation_type : 'email';
+        $dateTime = date("Y-m-d H:i:s");
+
+        $aData = array(
+            'title' => $title,
+            'description' => $description
+        );
+
+        //Instantiate Email model to get its methods and properties
+        $mEmails = new EmailsModel();
+
+        $bAlreadyExists = $mEmails->checkIfEmailAutomationExists($title, $userID, $automationID);
+        if ($bAlreadyExists == true) {
+            $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'Automation title already exists');
+            echo json_encode($response);
+            exit;
+        }
+
+        $bUpdated = $mEmails->updateEmailAutomation($aData, $automationID, $userID);
+        if ($bUpdated) {
+            $setupUrl = base_url() . 'admin#/modules/emails/workflow/setup/' . $automationID;
+            $response = array('status' => 'success', 'id' => $automationID, 'actionUrl' =>  $setupUrl, 'msg' => "Automation updated successfully!");
+
+            //Add Useractivity log
+            $aActivityData = array(
+                'user_id' => $userID,
+                'event_type' => 'module_'.$automation_type,
+                'action_name' => 'automation_updated',
+                'automation_id' => $automationID,
+                'list_id' => '',
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Updated '.$automation_type.' automation',
+                'activity_created' => $dateTime
+            );
+            @logUserActivity($aActivityData);
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
     public function mysegments() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -2425,8 +3120,66 @@ class Broadcast extends Controller {
         $mBroadcast = new BroadcastModel();
         $mWorkflow = new WorkflowModel();
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Segments' => '#/contacts/segments'
+        );
+
 
         $oSegments = $mBroadcast->getSegments($userID);
+        foreach ($oSegments->items() as $key => $oSegment) {
+            $oSubscribers = [];
+            $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
+            $aCampaignIDs = @unserialize($oSegment->source_campaign_id);
+            $moduleName = $oSegment->source_module_name;
+            $modName = '';
+            $campaignCollection = [];
+            if (!empty($aCampaignIDs)) {
+                //$campaignCollection = array();
+                foreach ($aCampaignIDs as $campaignId) {
+                    $modName = $moduleName;
+                    if (in_array($moduleName, array('brandboost-onsite', 'brandboost-offsite'))) {
+                        $modName = 'brandboost';
+                    }
+
+                    if (in_array($moduleName, array('nps-feedback'))) {
+                        $modName = 'nps';
+                    }
+                    $oCampaign = $mWorkflow->getModuleUnitInfo($modName, $campaignId);
+
+                    if (!empty($oCampaign)) {
+                        //$campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        if ($moduleName == 'brandboost') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/details/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                        } else if ($moduleName == 'brandboost-onsite') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/onsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                        } else if ($moduleName == 'brandboost-offsite') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/offsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                        } else if ($moduleName == 'broadcast') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin#/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'automation') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/emails/setupAutomation/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'nps') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'nps-feedback') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        } else if ($moduleName == 'referral') {
+                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/referral/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                        }
+                    }
+
+
+
+                }
+            }
+
+            $oSegment->segmentSubscribers = $oSubscribers;
+            $oSegment->moduleName = $modName;
+            $oSegment->campaignCollection = $campaignCollection;
+            //$oSegments[$key]->data = $oSegment;
+        }
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -2437,11 +3190,18 @@ class Broadcast extends Controller {
 
         $aData = array(
             'title' => 'My Segments',
-            'oSegments' => $oSegments,
-            'pagename' => $breadcrumb
+            'allData' => $oSegments,
+            'oSegments' => $oSegments->items(),
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
+            'moduleName' => '',
+            'moduleUnitID' => '',
+            'moduleAccountID' => ''
         );
 
-        return view('admin.broadcast.segments', $aData)->with(['mWorkflow'=> $mWorkflow]);
+        //return view('admin.broadcast.segments', $aData)->with(['mWorkflow'=> $mWorkflow]);
+        echo json_encode($aData);
+        exit;
     }
 
     /**
@@ -2467,7 +3227,7 @@ class Broadcast extends Controller {
         $oSegments = $mBroadcast->getSegmentById($userID, $segment_id);
 
         if (!empty($oSegments)) {
-            $response = array('status' => 'success', 'title' => $oSegments[0]->segment_name, 'description' => $oSegments[0]->segment_desc);
+            $response = array('status' => 'success', 'segment_id' => $segment_id, 'title' => $oSegments[0]->segment_name, 'description' => $oSegments[0]->segment_desc);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
@@ -2538,9 +3298,17 @@ class Broadcast extends Controller {
     public function segmentcontacts($segmentID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Segments' => '#/contacts/segments',
+            'Subscribers' => ''
+        );
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+
+        //Get Segment Info
+        $oSegment = $mBroadcast->getSegmentInfo($segmentID);
 
 
         $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID);
@@ -2549,19 +3317,28 @@ class Broadcast extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . base_url('admin/broadcast/emails') . '" class="sidebar-control hidden-xs">Broadcast </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/broadcast/mysegments') . '" class="sidebar-control hidden-xs">Segments </a></li>    
+                        <li><a href="' . base_url('admin/broadcast/mysegments') . '" class="sidebar-control hidden-xs">Segments </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="My Segments" class="sidebar-control active hidden-xs ">Segment Contacts</a></li>
                     </ul>';
 
         $aData = array(
-            'title' => 'Segment Contacts',
-            'oSubscribers' => $oSubscribers,
+            'title' => 'Segment Subscribers',
+            'subscribersData' => $oSubscribers->items(),
+            'allData' => $oSubscribers,
+            'segmentInfo' => $oSegment,
             'moduleName' => 'people',
-            'pagename' => $breadcrumb
+            'moduleUnitID' => '',
+            'moduleAccountID' => '',
+            'activeCount' => '',
+            'archiveCount' => '',
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb
         );
 
-        return view('admin.broadcast.segment_subscribers', $aData);
+        echo json_encode($aData);
+        exit;
+        //return view('admin.broadcast.segment_subscribers', $aData);
     }
 
     /**
@@ -2669,6 +3446,98 @@ class Broadcast extends Controller {
         echo json_encode($response);
         exit;
     }
+
+    /**
+     * Used to update broadcast segments
+     */
+    public function updatePeopleSegment(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        $segmentID = strip_tags($request->segment_id);
+        $title = strip_tags($request->segmentName);
+        $description = strip_tags($request->segmentDescription);
+        $dateTime = date("Y-m-d H:i:s");
+        $aData = array(
+            'segment_name' => $title,
+            'segment_desc' => $description,
+            'status' => 1
+        );
+
+        if ($userRole != '1') {
+            $bUpdated = $mBroadcast->updateSegment($aData, $segmentID, $userID);
+        } else {
+            $userID = '';
+            $bUpdated = $mBroadcast->updateSegment($aData, $segmentID, $userID);
+        }
+
+        if ($bUpdated) {
+            $response = array('status' => 'success', 'msg' => "Segment updated successfully!");
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    public function makeSegment(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'segmentName' => ['required'],
+            'segmentDescription' => ['required']
+        ]);
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+
+        $segmentName = $request->segmentName;
+        $description = $request->segmentDescription;
+        //check for already
+        $bDuplicate = $mBroadcast->isDuplicateSegment($segmentName, $userID);
+        if ($bDuplicate == true) {
+            //Display Error and ask to enter template name something else
+            $response['status'] = 'error';
+            $response['msg'] = 'duplicate';
+        } else {
+            //Insert Segment
+            $aData = array(
+                'user_id' => $userID,
+                'segment_name' => $segmentName,
+                'segment_desc' => $description,
+                'created' => date("Y-m-d H:i:s")
+            );
+
+            $segmentID = $mBroadcast->createSegment($aData);
+
+            if ($segmentID) {
+                $response = array('status' => 'success');
+            } else {
+                $response = array('status' => 'error');
+            }
+        }
+
+
+
+        echo json_encode($response);
+        exit;
+
+
+    }
+
 
     /**
      * Used to create segments
@@ -3385,32 +4254,96 @@ class Broadcast extends Controller {
                     $oCampaignSegments = $mBroadcast->getBroadcastExcludedSegments($broadcastID);
                 }
 
+                //Do some more calculations for vue
+                //For Contacts
+                if($oCampaignContacts->isNotEmpty()){
+                    $aSelectedContacts = array();
+                    foreach ($oCampaignContacts as $oRec) {
+                        $aSelectedContacts[] = $oRec->subscriber_id;
+                    }
+                }
+
+                //For Lists
+                $aSelectedListIDs = array();
+                if($oAutomationLists->isNotEmpty()){
+                    foreach ($oAutomationLists as $oAutomationList) {
+                        $aSelectedListIDs[] = $oAutomationList->list_id;
+                    }
+                }
+
+                $newolists = array();
+
+                foreach ($oLists as $key => $value) {
+                    $newolists[$value->id][] = $value;
+                }
+
+                //For Segments
+                $aSelectedSegments = array();
+                if ($oCampaignSegments->isNotEmpty()) {
+                    foreach ($oCampaignSegments as $oRec) {
+                        $aSelectedSegments[] = $oRec->segment_id;
+                    }
+                }
+
+                if($oSegments->isNotEmpty()){
+                    foreach($oSegments->items() as $oSegment){
+                        $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
+                        $oSegment->subscribersData = $oSubscribers;
+                    }
+                }
+
+                //For Tags
+                $aSelectedTags = array();
+                if ($oCampaignTags->isNotEmpty()) {
+                    foreach ($oCampaignTags as $oRec) {
+                        $aSelectedTags[] = $oRec->tag_id;
+                    }
+                }
+
+                if($aTags->isNotEmpty()){
+                    foreach ($aTags->items() as $aTag){
+                        $tagID = $aTag->tagid;
+                        $oTagSubscribers = SubscriberModel::getTagSubscribers($tagID);
+                        $aTag->subscribersData = $oTagSubscribers;
+                    }
+
+                }
+
                 $aData = array(
                     'oBroadcast' => $oBroadcast[0],
                     'oDefaultTemplates' => $oDefaultTemplates,
                     'oDraftTemplates' => $oDraftTemplates,
                     'oCategories' => $oCategories,
+                    'oAutomationLists' => $oAutomationLists,
                     'oLists' => $oLists,
-                    'subscribersData' => $subscribersData,
+                    'newolists' => $newolists,
+                    'aSelectedListIDs' => $aSelectedListIDs,
+                    'subscribersData' => $subscribersData->items(),
+                    'allDataContacts' => $subscribersData,
+                    'aSelectedContacts' => $aSelectedContacts,
                     'oCampaignContacts' => $oCampaignContacts,
                     'oCampaignTags' => $oCampaignTags,
+                    'oSegments' => $oSegments->items(),
+                    'allDataSegments' => $oSegments,
                     'oCampaignSegments' => $oCampaignSegments,
+                    'aSelectedSegments' => $aSelectedSegments,
                     'totalSubscribers' => $totalSubscribers,
                     'duplicateSubscriber' => $duplicateCount,
-                    'aTags' => $aTags,
-                    'oSegments' => $oSegments,
-                    'oAutomationLists' => $oAutomationLists,
+                    'aTags' => $aTags->items(),
+                    'allDataTags' => $aTags,
+                    'aSelectedTags' => $aSelectedTags,
                     'broadcast_id' => $broadcastID,
                     'moduleName' => 'broadcast',
                     'moduleUnitID' => $broadcastID,
                     'broadcastSettings' => !empty($broadcastSettings[0]) ? $broadcastSettings[0] : array(),
                     'userData' => $aUser,
                     'twillioData' => $twillioData[0],
-                    'oCampaign' => $oCampaign
+                    'oCampaign' => $oCampaign,
+
                 );
             }
 
-            if ($actionType == 'import' && $audienceType == 'lists') {
+            /*if ($actionType == 'import' && $audienceType == 'lists') {
 
                 $content = view('admin.components.smart-popup.broadcast-import-lists', $aData)->with(['mBroadcast' => $mBroadcast])->render();
             } else if ($actionType == 'import' && $audienceType == 'contacts') {
@@ -3430,9 +4363,9 @@ class Broadcast extends Controller {
             }
 
             $response['status'] = 'success';
-            $response['content'] = $content;
+            $response['content'] = $content;*/
         }
-        echo json_encode($response);
+        echo json_encode($aData);
         exit;
     }
 
@@ -3558,7 +4491,7 @@ class Broadcast extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a href="' . base_url('admin/broadcast/' . strtolower($broadcastType)) . '" class="sidebar-control hidden-xs">Broadcast </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/broadcast/' . strtolower($broadcastType)) . '" class="sidebar-control hidden-xs">Reports </a></li>    
+                        <li><a href="' . base_url('admin/broadcast/' . strtolower($broadcastType)) . '" class="sidebar-control hidden-xs">Reports </a></li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBroadcast[0]->title . '" class="sidebar-control active hidden-xs ">' . $oBroadcast[0]->title . '</a></li>
                     </ul>';

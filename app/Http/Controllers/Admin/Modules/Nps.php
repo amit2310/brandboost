@@ -17,6 +17,54 @@ class Nps extends Controller {
      * Default NPS controller
      */
     public function index() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'NPS Surveys' => '#/modules/nps/',
+            'Dashboard' => ''
+        );
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
+        $oPrograms = $mNPS->getNpsLists($userID);
+
+        if (!empty($oPrograms)) {
+            foreach ($oPrograms as $oProgram) {
+                $hashCode = $oProgram->hashcode;
+                $aScore = $mNPS->getNPSScore($hashCode);
+                $oProgram->NPS = $aScore;
+                //pre($aScore);
+            }
+        }
+
+        //pre($oPrograms);
+
+        $moduleName = 'nps-feedback';
+
+        $aPageData = array(
+            'title' => 'NPS Module',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oPrograms,
+            'oPrograms' => $oPrograms->items(),
+            'bActiveSubsription' => $bActiveSubsription,
+            'moduleName' => $moduleName
+        );
+
+        echo json_encode($aPageData);
+        exit();
+    }
+
+    /*
+     * Function to have the reference for the old functionalities
+     */
+    public function indexOld() {
         // Instantiate NPS model to get its properties and methods
         $mNPS = new NpsModel();
 
@@ -137,16 +185,9 @@ class Nps extends Controller {
         if (!empty($oNPS)) {
             // Do nothing for now
             $programID = $oNPS->id;
-            //$defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
             $oContacts = $mNPS->getMyUsers($oNPS->hashcode);
         }
-        if (empty($oNPS->platform)) {
-            $defaultTab = !empty($selectedTab) ? $selectedTab : 'platform';
-        } else {
-            $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
-        }
 
-        //$defaultTab = $selectedTab;
         //List of Advocates related data
         $hashCode = $oNPS->hashcode;
         if (!empty($hashCode)) {
@@ -180,21 +221,22 @@ class Nps extends Controller {
 
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/modules/nps/') . '" class="sidebar-control hidden-xs">NPS </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
-                    </ul>';
-        //$oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
-        //pre($oFeedback);
-        //pre($campaignTemplates);
+        if($surveyType == 'web' || $surveyType =='link'){
+            $setupPreview = view('admin.modules.nps.nps-tabs.partials.web-widget-only', array('template_slug' => 'nps_email_invite', 'oNPS' => $oNPS))->render();
+        }else{
+            $setupPreview = $surveyType == 'email' ? $compiledEmailPriviewCode : $compiledSmsPriviewCode;
+        }
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Nps' => '#/nps/dashboard',
+            'Campaigns' => '#/nps/',
+            'Setup' => '',
+        );
         $aData = array(
             'bActiveSubsription' => $bActiveSubsription,
             'title' => $sSurveyTypeTitle,
-            'pagename' => $breadcrumb,
-            'defalutTab' => $defaultTab,
+            'breadcrumb' => $aBreadcrumb,
             'programID' => $programID,
             'campaignTemplates' => $campaignTemplates,
             'oNPS' => $oNPS,
@@ -212,13 +254,17 @@ class Nps extends Controller {
             'userID' => $userID,
             'userData' => $aUser,
             'user_role' => $user_role,
-            'oFeedbacks' => $oFeedbacks,
+            'oFeedbacks' => $oFeedbacks->items(),
+            'oFeedbackAllData' => $oFeedbacks,
             'emailPreview' => $compiledEmailPriviewCode,
-            'smsPreview' => $compiledSmsPriviewCode
+            'smsPreview' => $compiledSmsPriviewCode,
+            'setupPreview' => $setupPreview,
+            'campaignTitle' => $oNPS->title
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
-        return view('admin.modules.nps.setup-beta', $aData)->with(['mNPS' => $mNPS]);
+        return $aData;
+        //return view('admin.modules.nps.setup-beta', $aData)->with(['mNPS' => $mNPS]);
     }
 
     /**
@@ -244,7 +290,8 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        $npsID = strip_tags($request->nps_id);
+        //$npsID = strip_tags($request->nps_id);
+        $npsID = strip_tags($request->id);
         $title = strip_tags($request->title);
         $platform = strip_tags($request->platform);
         $brand = strip_tags($request->brand_name);
@@ -267,6 +314,7 @@ class Nps extends Controller {
         $emailPreviewData = $request->emailPreviewData;
 
         $displayLogo = strip_tags($request->display_logo);
+        $displayQuestion = strip_tags($request->display_additional);
         $displayIntro = strip_tags($request->display_intro);
 
         $displayName = strip_tags($request->display_name);
@@ -336,16 +384,16 @@ class Nps extends Controller {
         }
 
         if ($platform != 'sms') {
-            $aData['display_logo'] = ($displayLogo == 'on') ? 1 : 0;
+            $aData['display_logo'] = ($displayLogo) ? 1 : 0;
         }
 
-        $aData['display_intro'] = ($displayIntro == 'on') ? 1 : 0;
+        $aData['display_intro'] = ($displayIntro) ? 1 : 0;
 
-        $aData['display_name'] = ($displayName == 'on') ? 1 : 0;
+        $aData['display_name'] = ($displayName) ? 1 : 0;
 
-        $aData['display_email'] = ($displayEmail == 'on') ? 1 : 0;
+        $aData['display_email'] = ($displayEmail) ? 1 : 0;
 
-        $aData['display_intro'] = ($displayIntro == 'on') ? 1 : 0;
+        $aData['display_additional'] = ($displayQuestion) ? 1 : 0;
 
 
         if ($npsID > 0) {
@@ -680,12 +728,12 @@ class Nps extends Controller {
         //pre($npsData);
         $sEmailPreview = view('admin.modules.nps.nps-templates.email.widget_preview', array('oNPS' => $npsData))->render();
         $npsScriptCode = '<pre class="prettyprint" id="prettyprint">
-							&lt;script 
-							type="text/javascript" 
-							id="bbscriptloader" 
-							data-key="' . $npsData->hashcode . '" 
-							data-widgets="nps" 
-							async="" 
+							&lt;script
+							type="text/javascript"
+							id="bbscriptloader"
+							data-key="' . $npsData->hashcode . '"
+							data-widgets="nps"
+							async=""
 							src="' . base_url('assets/js/nps_widgets.js') . '"&gt;
 							&lt;/script&gt;
 						</pre>
@@ -944,8 +992,6 @@ class Nps extends Controller {
      * Used to add a new nps campaign
      */
     public function addNPS(Request $request) {
-        // Instantiate NPS model to get its properties and methods
-        $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
@@ -956,20 +1002,37 @@ class Nps extends Controller {
         }
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'platform' => ['required'],
+            'description' => ['required']
+        ]);
+
         $title = strip_tags($request->title);
+        $platform = strip_tags($request->platform);
+        $description = strip_tags($request->description);
+
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
         for ($i = 0; $i < 20; $i++) {
             $hashcode .= $characters[rand(0, strlen($characters))];
         }
         $hashcode = $hashcode . date('Ymdhis');
+
         $aData = array(
             'hashcode' => $hashcode,
             'user_id' => $userID,
             'title' => $title,
+            'platform' => $platform,
+            'description' => $description,
             'status' => 'draft',
             'created' => date("Y-m-d H:i:s")
         );
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
         $insertID = $mNPS->addNPS($aData);
 
         if ($insertID) {
@@ -982,7 +1045,7 @@ class Nps extends Controller {
             );
             //$bSavedEvent = $mNPS->saveNPSEvents($aEvent, $insertID);
 
-            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
+            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "NPS Survey added successfully!");
 
             $notificationData = array(
                 'event_type' => 'added_nps_program',
@@ -996,6 +1059,7 @@ class Nps extends Controller {
             $eventName = 'sys_nps_added';
             @add_notifications($notificationData, $eventName, $userID);
         }
+
         echo json_encode($response);
         exit;
     }
@@ -1270,8 +1334,6 @@ class Nps extends Controller {
      * Used to get NPS campaign Info
      */
     public function getNPS(Request $request) {
-        // Instantiate NPS model to get its properties and methods
-        $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
@@ -1280,12 +1342,19 @@ class Nps extends Controller {
             echo json_encode($response);
             exit;
         }
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $npsID = strip_tags($request->nps_id);
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
         $oNPS = $mNPS->getNps($userID, $npsID);
+
         if (!empty($oNPS)) {
-            $response = array('status' => 'success', 'id' => $oNPS->id, 'title' => $oNPS->title);
+            $response = array('status' => 'success', 'id' => $oNPS->id, 'title' => $oNPS->title, 'platform' => $oNPS->platform, 'description' => $oNPS->description);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
@@ -1393,8 +1462,6 @@ class Nps extends Controller {
      * Used to update NPS campaign
      */
     public function updateNPS(Request $request) {
-        // Instantiate NPS model to get its properties and methods
-        $mNPS = new NpsModel();
 
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
@@ -1403,14 +1470,31 @@ class Nps extends Controller {
             echo json_encode($response);
             exit;
         }
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'platform' => ['required'],
+            'description' => ['required']
+        ]);
+
         $npsID = strip_tags($request->nps_id);
         $title = strip_tags($request->title);
+        $platform = strip_tags($request->platform);
+        $description = strip_tags($request->description);
+
         $aData = array(
             'title' => $title,
+            'platform' => $platform,
+            'description' => $description,
             'updated' => date("Y-m-d H:i:s")
         );
+
+        // Instantiate NPS model to get its properties and methods
+        $mNPS = new NpsModel();
+
         if ($npsID > 0) {
             $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
@@ -1611,6 +1695,12 @@ class Nps extends Controller {
 
         $hashKey = $request->hashKey;
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'NPS Surveys' => '#/modules/nps/overview',
+            'Score' => '#/modules/nps/score/'.$hashKey
+        );
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($hashKey)) {
@@ -1621,22 +1711,18 @@ class Nps extends Controller {
             $aScoreSummery = $mNPS->getNPSScoreSummery($userID);
         }
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/modules/nps/') . '">NPS</a></li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="NPS Score" class="sidebar-control active hidden-xs ">NPS Score</a></li>
-                </ul>';
-
         $aPageData = array(
             'title' => 'NPS Score',
-            'pagename' => $breadcrumb,
-            'oFeedbacks' => $oFeedback,
-            'aSummary' => $aScoreSummery
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oFeedback,
+            'oFeedbacks' => $oFeedback->items(),
+            'aSummary' => $aScoreSummery,
+            'mNPS'=>$mNPS
         );
 
-        return view('admin.modules.nps.list-scores', $aPageData)->with(['mNPS'=>$mNPS]);
+        //return view('admin.modules.nps.list-scores', $aPageData)->with(['mNPS'=>$mNPS]);
+
+        return $aPageData;
     }
 
     /**

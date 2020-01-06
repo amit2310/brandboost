@@ -133,9 +133,9 @@
 </template>
 
 <script>
-    import UserAvatar from '../../helpers/UserAvatar';
-    import PlatformImage from '../../helpers/PlatformImage';
-    import BrowserImage from '../../helpers/BrowserImage';
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import PlatformImage from '@/components/helpers/PlatformImage';
+    import BrowserImage from '@/components/helpers/BrowserImage';
 
     let tkn = $('meta[name="_token"]').attr('content');
 

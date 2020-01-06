@@ -112,7 +112,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $eventID
      * @param type $moduleName
      * @return boolean
@@ -723,8 +723,10 @@ class WorkflowModel extends Model {
                     ->leftJoin("tbl_subscribers", "{$tableName}.subscriber_id", "=", "tbl_subscribers.id")
                     ->select("{$tableName}.*", "tbl_subscribers.email", "tbl_subscribers.firstname", "tbl_subscribers.lastname", "tbl_subscribers.phone", "tbl_subscribers.status AS globalStatus")
                     ->where("{$tableName}.{$filterField}", $id)
+                    //->where("{$tableName}.status", 1)
                     ->orderBy("{$tableName}.id", "desc")
-                    ->get();
+                    ->paginate(10);
+                    //->get();
         }
         return $oSubscribers;
     }
@@ -1402,10 +1404,10 @@ class WorkflowModel extends Model {
                     }
                 }
             }
-            
+
             //Get From Email, Name info
             $oFrom = $this->getWorkflowFromNameEmailInfo($moduleName, $accountID);
-            
+
             $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $resultData->stripo_compiled_html;
             $aCampaignData = array(
                 'event_id' => $eventID,
@@ -1797,7 +1799,7 @@ class WorkflowModel extends Model {
                 })
                 ->update($aData);
 
-        //print_r(DB::getQuerylog());        
+        //print_r(DB::getQuerylog());
 
         if ($result > -1) {
             return true;
@@ -2389,7 +2391,8 @@ class WorkflowModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
-                ->get();
+            ->paginate(10);
+                //->get();
         return $oData;
     }
 
@@ -2633,7 +2636,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * This method used to get list of contacts 
+     * This method used to get list of contacts
      * @param type $automationID
      * @return type
      */
@@ -2882,7 +2885,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID) {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=5) {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2921,7 +2924,8 @@ class WorkflowModel extends Model {
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
                 ->where("$tableName.$fieldName", $moduleUnitID)
                 ->orderBy("$tableName.id", "desc")
-                ->get();
+                ->paginate($limit);
+                //->get();
         return $oData;
     }
 
@@ -2945,7 +2949,11 @@ class WorkflowModel extends Model {
 
             $aTags = \App\Models\Admin\TagsModel::getClientTags($userID);
 
-            $oCampaignSubscribers = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+            $oCampaignSubscribersAll = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+
+            $oCampaignSubscribers = $oCampaignSubscribersAll->items();
+
+
 
 
             //Import Specific Data
@@ -3007,6 +3015,7 @@ class WorkflowModel extends Model {
                 'subscribersData' => $subscribersData,
                 'aTags' => $aTags,
                 'oCampaignSubscribers' => $oCampaignSubscribers,
+                'oCampaignSubscribersAll' => $oCampaignSubscribersAll,
                 'oTotalImportedSubscribers' => $oTotalImportedSubscribers,
                 'oImportLists' => $oImportLists,
                 'oCampaignImportContacts' => $oCampaignImportContacts,
@@ -3559,7 +3568,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * used to add tagid into workflow tags 
+     * used to add tagid into workflow tags
      * @param array $aData
      * @param type $moduleName
      * @param type $moduleUnitID
@@ -4266,7 +4275,7 @@ class WorkflowModel extends Model {
     }
 
     /**
-     * Used to sync worflow global audience 
+     * Used to sync worflow global audience
      */
     public function syncWorkflowAudienceGlobalModel() {
         $aUser = getLoggedUser();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 //use Aws\S3\S3Client;
 //use Aws\Exception\AwsException;
 
+use App\Models\Admin\TagsModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\UsersModel;
@@ -173,6 +174,7 @@ class Brandboost extends Controller
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $company_name = $aUser->company_name;
+        $companyName = strtolower(str_replace(' ', '-', $company_name));
 
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
@@ -184,30 +186,68 @@ class Brandboost extends Controller
         }
         $moduleName = 'brandboost-onsite';
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">On Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => ''
+        );
 
         $bActiveSubsription = $mUsers->isActiveSubscription();
         //$this->session->set_userdata('setTab', '');
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaigns',
-            'pagename' => $breadcrumb,
-            'aBrandbosts' => $aBrandboostList,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $aBrandboostList,
+            'aBrandbosts' => $aBrandboostList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
-            'company_name' => $company_name,
+            'company_name' => $companyName,
             'moduleName' => $moduleName,
             'viewstats' => true
         );
 
 //		return view('admin.brandboost.onsite_list', $aData);
         echo json_encode($aData);
+        exit;
+    }
+
+
+    /**
+     * Used to update in the review campaign
+     */
+    public function updateReviewCampaign(Request $request) {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'campaignName' => ['required'],
+            'campaignDescription' => ['required']
+        ]);
+
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+
+        $response = array();
+
+        $campaign_id = $request->campaign_id;
+
+        $campaignName = $request->campaignName;
+        $description = $request->campaignDescription;
+        $cData = array(
+            'brand_title' => $campaignName,
+            'brand_desc' => $description
+        );
+        $result = $mBrandboost->updateBrandboost($userID, $cData, $campaign_id);
+
+        if ($result) {
+            $response = array('status' => 'success', 'brandboostID' => $campaign_id, 'msg' => 'Edit Review Campaign successfully.');
+        } else {
+            $response = array('status' => 'error');
+        }
+
+        echo json_encode($response);
         exit;
     }
 
@@ -290,21 +330,21 @@ class Brandboost extends Controller
 
         $fromNumber = '';
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a  href="' . base_url('admin/brandboost/onsite') . '" class="sidebar-control hidden-xs">On site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $getBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $getBrandboost[0]->brand_title . '</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaign',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'getOnsite' => $getBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $getBrandboostFR,
             'brandboostData' => $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
             'eventsData' => $eventsdata,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
@@ -330,7 +370,162 @@ class Brandboost extends Controller
             'aUserInfo' => $oUser
         );
 
-        return view('admin.brandboost.onsite_setup', $aData);
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
+     * This function is used to get onsite campaign subscribers
+     * @param Request $request
+     */
+    public function onsiteSetupSubscribers(Request $request)
+    {
+        $brandboostID = $request->id;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mWorkflow = new WorkflowModel();
+
+        if (empty($brandboostID)) {
+            redirect("#admin/reviews/onsite");
+            exit;
+        }
+
+
+        $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+        $moduleName = 'brandboost';
+        $moduleUnitID = '';
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
+
+        $aData = array(
+
+            'breadcrumb' => $aBreadcrumb,
+            'brandboostData' => $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'allData' => $oCampaignSubscribers, // $allSubscribers,
+            'subscribers' => $oCampaignSubscribers->items(),
+            'aUserInfo' => $oUser
+        );
+
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
+     * This function is used to get onsite reviews data
+     * @param Request $request
+     */
+    public function onsiteSetupReview(Request $request)
+    {
+        $brandboostID = $request->id;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mWorkflow = new WorkflowModel();
+
+        if (empty($brandboostID)) {
+            redirect("#admin/reviews/onsite");
+            exit;
+        }
+
+        $mReviews = new ReviewsModel();
+        $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+        $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
+        $moduleName = 'brandboost';
+        $moduleUnitID = '';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
+
+        if (!empty($aReviews)) {
+            foreach ($aReviews->items() as $aReview) {
+                $aReview->getComm = getCampaignCommentCount($aReview->id);
+                $aReview->reviewTags = getTagsByReviewID($aReview->id);
+                $aReview->smilyImage = ratingView($aReview->ratings);
+
+                $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->id, 0, 100);
+
+                if(!empty($getBrandboost[0]->reviewResponse)) {
+                    $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
+                }
+            }
+        }
+
+        $aData = array(
+            'breadcrumb' => $aBreadcrumb,
+            'brandboostData' => $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'allData' => $aReviews, // $allSubscribers,
+            'reviews' => $aReviews->items(),
+            'aUserInfo' => $oUser
+        );
+
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
+    }
+
+    public function OnsiteReviewStats(Request $request)
+    {
+        $brandboostID = $request->id;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $mBrandboost = new BrandboostModel();
+
+        if (empty($brandboostID)) {
+            redirect("#admin/reviews/onsite");
+            exit;
+        }
+
+        $mReviews = new ReviewsModel();
+        $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
+        $moduleName = 'brandboost';
+
+
+        if (!empty($aReviews)) {
+            foreach ($aReviews->items() as $aReview) {
+                $aReview->getComm = getCampaignCommentCount($aReview->id);
+                $aReview->reviewTags = getTagsByReviewID($aReview->id);
+                $aReview->smilyImage = ratingView($aReview->ratings);
+
+                $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->id, 0, 100);
+
+                if(!empty($getBrandboost[0]->reviewResponse)) {
+                    $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
+                }
+            }
+        }
+
+        $aData = array(
+
+            'allData' => $aReviews, // $allSubscribers,
+            'reviews' => $aReviews->items(),
+            'aUserInfo' => $oUser
+        );
+
+        //return view('admin.brandboost.onsite_setup', $aData);
+        echo json_encode($aData);
+        exit;
     }
 
 
@@ -341,12 +536,21 @@ class Brandboost extends Controller
      */
     public function reviewRequest(Request $request)
     {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
         $param = $request->type;
+        $moduleName = 'brandboost';
+
+        //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
+        $bActiveSubsription = $mUsers->isActiveSubscription();
 
-        $oRequests = $mBrandboost->getReviewRequest();
-        //pre($oRequests);die;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            ucwords($param).' Review Requests' => '#/brandboost/review_request/'.$param
+        );
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -355,12 +559,15 @@ class Brandboost extends Controller
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Review Requests" class="sidebar-control active hidden-xs ">Review Requests</a></li>
 			</ul>';
-        $bActiveSubsription = $mUsers->isActiveSubscription();
+
+        $oRequests = $mBrandboost->getReviewRequest();
+        //pre($oRequests);die;
+
         $count = 0;
-        if (!empty($oRequests)) {
+        if (!empty($oRequests->items())) {
             $oReqOnsite = array();
             $oReqOffsite = array();
-            foreach ($oRequests as $data2) {
+            foreach ($oRequests->items() as $data2) {
                 if ($data2->review_type == 'onsite') {
                     $oReqOnsite[] = $data2;
                 } else if ($data2->review_type == 'offsite') {
@@ -375,7 +582,7 @@ class Brandboost extends Controller
             } else if ($param == 'offsite') {
                 $oData = $oReqOffsite;
             } else {
-                $oData = $oRequests;
+                $oData = $oRequests->items();
             }
 
             $count = count($oData);
@@ -383,13 +590,15 @@ class Brandboost extends Controller
 
 
         $aData = array(
-            'oRequest' => $oRequests,
-            'title' => 'Review Requests',
-            'pagename' => $breadcrumb,
+            'title' => 'Brand Boost Review Requests',
+            'breadcrumb' => $aBreadcrumb,
             'bActiveSubsription' => $bActiveSubsription,
             'param' => $param,
+            'allData' => $oRequests,
+            'oRequest' => $oRequests->items(),
             'totalCount' => $count,
-            'oFilteredRequests' => $oData
+            'oFilteredRequests' => $oData,
+            'moduleName' => $moduleName
         );
 
 
@@ -409,12 +618,19 @@ class Brandboost extends Controller
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
+        $mTags = new TagsModel();
         $campaignId = $request->id;
         if (!empty($campaignId)) {
 
             $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
             $aReviews = $mReviews->getCampaignReviews($campaignId);
             $bActiveSubsription = $mUsers->isActiveSubscription();
+
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                $oCampaign->brand_title => '#/brandboost/onsite',
+                'Reviews' => ''
+            );
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -424,16 +640,30 @@ class Brandboost extends Controller
 				<li><a class="sidebar-control hidden-xs">Reviews</a></li>
                 </ul>';
 
+            $reviewTags = array();
+            if(!empty($aReviews->items())) {
+                foreach($aReviews->items() as $kRev => $vRev) {
+                    //$vRev->id = 108;
+                    $reviewTags[$vRev->id] = getTagsByReviewID($vRev->id);
+                }
+            }
+
             $aData = array(
                 'title' => 'Brand Boost Reviews',
                 'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'oCampaign' => $oCampaign,
-                'aReviews' => $aReviews,
+                'allData' => $aReviews,
+                'aReviews' => $aReviews->items(),
+                'reviewTags' => $reviewTags,
                 'campaignId' => $campaignId,
                 'bActiveSubsription' => $bActiveSubsription
             );
 
-            return view('admin.brandboost.review_list_camp', $aData);
+            //return view('admin.brandboost.review_list_camp', $aData);
+
+            echo json_encode($aData);
+            exit;
 
         } else {
             $aUser = getLoggedUser();
@@ -470,7 +700,7 @@ class Brandboost extends Controller
 
                     $aReview->reviewCommentsData = $mReviews->getReviewAllComments($aReview->reviewid, 0, 100);
 
-                    if(!empty($aBrandboostVal->reviewResponse)) {
+                    if(!empty($aReview->reviewResponse)) {
                         $aReview->status = $this->getCommStatus($aReview->reviewCommentsData);
                     }
                 }
@@ -521,72 +751,100 @@ class Brandboost extends Controller
      */
     public function media()
     {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
 
-        $aReviews = $mReviews->getCampaignReviewsDetail();
+        $aReviews = $mReviews->getCampaignReviewsDetail('', $userID, true);
         $allMediaImagesShow = array();
         $hasImages = $hasVideos = false;
 
         if (!empty($aReviews)) {
-            foreach ($aReviews as $review) {
+            foreach ($aReviews->items() as $review) {
+                $mediaUrl = [];
                 $mediaUrl = @(unserialize($review->media_url));
+                if(empty($mediaUrl) && !empty($review->media_url)){
+                    $getFileSize = '512KB';
+                    $smilyImage = smilyRating($review->ratings);
+                    $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $review->media_url;
+                    $fileExt = pathinfo($review->media_url, PATHINFO_EXTENSION);
+                    $mediaUrl[0] = [
+                        'smily' => $smilyImage,
+                        'filePath' => $filePath,
+                        'fileExt' => $fileExt,
+                        'allowfilesize' => $getFileSize,
+                        'media_type' => ($fileExt == 'mp4') ? 'video' : 'image'
+                    ];
+                }else{
+                    if (!empty($mediaUrl)) {
+                        foreach ($mediaUrl as $key => $value) {
 
-                if (!empty($mediaUrl)) {
-                    foreach ($mediaUrl as $key => $value) {
+                            if (!in_array($value['media_url'], $allMediaImagesShow)) {
+                                if($value['media_type'] == 'image'){
+                                    $hasImages = true;
+                                }else{
+                                    $hasVideos = true;
+                                }
+                                $allMediaImagesShow[] = $value['media_url'];
 
-                        if (!in_array($value['media_url'], $allMediaImagesShow)) {
-                            if($value['media_type'] == 'image'){
-                                $hasImages = true;
-                            }else{
-                                $hasVideos = true;
+                                $smilyImage = smilyRating($review->ratings);
+
+                                $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $value['media_url'];
+
+                                $fileExt = pathinfo($value['media_url'], PATHINFO_EXTENSION);
+
+                                if ($fileExt == 'mp4') {
+                                    $extFileImage = base_url('assets/images/mp4.png');
+                                } else if ($fileExt == 'png') {
+                                    $extFileImage = base_url('assets/images/png.png');
+                                } else if ($fileExt == 'jpg' || $fileExt == 'jpeg') {
+                                    $extFileImage = base_url('assets/images/jpg.png');
+                                } else {
+                                    $extFileImage = base_url('assets/images/file_blank.png');
+                                }
+
+                                $getFileSize = '512KB';
+                                $value['smily'] = $smilyImage;
+                                $value['filePath'] = $filePath;
+                                $value['fileExt'] = $fileExt;
+                                $value['allowfilesize'] = $getFileSize;
+                                $mediaUrl[$key] = $value;
+
                             }
-                            $allMediaImagesShow[] = $value['media_url'];
-
-                            $smilyImage = smilyRating($review->ratings);
-
-                            $filePath = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' . $value['media_url'];
-
-                            $fileExt = pathinfo($value['media_url'], PATHINFO_EXTENSION);
-
-                            if ($fileExt == 'mp4') {
-                                $extFileImage = base_url('assets/images/mp4.png');
-                            } else if ($fileExt == 'png') {
-                                $extFileImage = base_url('assets/images/png.png');
-                            } else if ($fileExt == 'jpg' || $fileExt == 'jpeg') {
-                                $extFileImage = base_url('assets/images/jpg.png');
-                            } else {
-                                $extFileImage = base_url('assets/images/file_blank.png');
-                            }
-
-                            $getFileSize = '512KB';
-                            $value['smily'] = $smilyImage;
-                            $value['filePath'] = $filePath;
-                            $value['fileExt'] = $fileExt;
-                            $value['allowfilesize'] = $getFileSize;
-                            $mediaUrl[$key] = $value;
-
+                            /*pre($mediaUrl);
+                            die;*/
                         }
-                        /*pre($mediaUrl);
-                        die;*/
-                    }
 
+                    }
                 }
+
+
+
                 $review->fileCollection = $mediaUrl;
             }
         }
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/onsite') . '">On site</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Media" class="sidebar-control active hidden-xs ">Media</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Media' => '',
+        );
 
-        $aData = array('title' => 'On Site Brand Boost Media', 'pagename' => $breadcrumb, 'aReviews' => $aReviews, 'hasImages' => $hasImages, 'hasVideos'=> $hasVideos);
+        $aData = [
+            'title' => 'On Site Brand Boost Media',
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $aReviews,
+            'aReviews' => $aReviews->items(),
+            'hasImages' => $hasImages,
+            'hasVideos'=> $hasVideos
+        ];
+
         //return view('admin.brandboost.media', $aData);
         echo json_encode($aData);
+        exit;
     }
 
 
@@ -622,6 +880,9 @@ class Brandboost extends Controller
         $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
         $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
         $reviewData = ReviewsModel::getReviewInfo($reviewID);
+        if($reviewData->isNotEmpty()){
+            $bbID = $reviewData->bbId;
+        }
         $reviewTags = getTagsByReviewID($reviewID);
         $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
         if (!empty($reviewData->product_id)) {
@@ -668,6 +929,104 @@ class Brandboost extends Controller
             return view('admin.brandboost.review_details', $aData);
 
         }
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public
+    function reviewInfo(Request $request)
+    {
+        $response = array();
+        $response['status'] = 'error';
+
+        $reviewID = $request->id;
+        $revID = $request->reviewid;
+        $product_id = "";
+        $product_name = "";
+        $brand_title = "";
+        $mReviews = new ReviewsModel();
+
+        $reviewID = ($revID > 0) ? $revID : $reviewID;
+        $productData = array();
+        $reviewCommentCount = getCampaignCommentCount($reviewID);
+        $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
+        $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
+        $reviewData = ReviewsModel::getReviewInfo($reviewID);
+        $reviewTags = getTagsByReviewID($reviewID);
+        $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
+        if(!empty($reviewData)){
+            $bbID = $reviewData->bbId;
+            $aAllReviews = $mReviews->getCampaignAllReviews($bbID, true);
+            if(!empty($aAllReviews)){
+                $oneStar = $twoStar = $threeStar = $fourStar = $fiveStar = $otherStar = $totalReviews = 0;
+                foreach ($aAllReviews as $aReview){
+                    $totalReviews++;
+                    $rating = $aReview->ratings;
+                    if($rating == 1){
+                        $oneStar++;
+                    }else if($rating == 2){
+                        $twoStar++;
+                    }else if($rating == 3){
+                        $threeStar++;
+                    }else if($rating == 4){
+                        $fourStar++;
+                    }else if($rating == 5){
+                        $fiveStar++;
+                    }
+                }
+            }
+            $aReviewStats = [
+                'totalReviews' => $totalReviews,
+                'oneStar' => $oneStar,
+                'oneStarPercent' => number_format((($oneStar*100)/$totalReviews),2),
+                'twoStar' => $twoStar,
+                'twoStarPercent' => number_format((($twoStar*100)/$totalReviews),2),
+                'threeStar' => $threeStar,
+                'threeStarPercent' => number_format((($threeStar*100)/$totalReviews),2),
+                'fourStar' => $fourStar,
+                'fourStarPercent' => number_format((($fourStar*100)/$totalReviews),2),
+                'fiveStar' => $fiveStar,
+                'fiveStarPercent' => number_format((($fiveStar*100)/$totalReviews),2)
+            ];
+        }
+        if (!empty($reviewData->product_id)) {
+            $productData = BrandboostModel::getProductDataById($reviewData->product_id);
+            $product_id = $reviewData->product_id;
+            $product_name = $productData->product_name;
+            $brand_title = $reviewData->brand_title;
+        }
+
+        $productName = $product_id > 0 ? $product_name : $brand_title;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Review' => '',
+        );
+
+
+        $aData = [
+            'title' => 'Brand Boost Review Details',
+            'breadcrumb' => $aBreadcrumb,
+            'reviewData' => $reviewData,
+            'productData' => $productData,
+            'reviewCommentCount' => $reviewCommentCount,
+            'reviewNotesData' => $reviewNotesData,
+            'reviewCommentsData' => $reviewCommentsData,
+            'reviewTags' => $reviewTags,
+            'reviewID' => $reviewID,
+            'totalComment' => $totalComment,
+            'productName' => $productName,
+            'reviewStats' => $aReviewStats
+        ];
+
+        echo json_encode($aData);
+        exit;
+
     }
 
 
@@ -979,13 +1338,11 @@ class Brandboost extends Controller
 
         $moduleName = 'brandboost-offsite';
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs">Off Site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Campaigns" class="sidebar-control active hidden-xs ">Campaigns</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Offsite' => ''
+        );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
 
@@ -1002,12 +1359,13 @@ class Brandboost extends Controller
             }
         }
 
-        $aBradboosts = $this->processOffsiteOverview($aBrandboostList);
+        $aBradboosts = $this->processOffsiteOverview($aBrandboostList->items());
 
         $aData = array(
             'title' => 'Offsite Brand Boost Campaigns',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'aBrandbosts' => $aBradboosts,
+            'allData' => $aBrandboostList,
             'bActiveSubsription' => $bActiveSubsription,
             'currentUserId' => $userID,
             'user_role' => $user_role,
@@ -1229,7 +1587,9 @@ class Brandboost extends Controller
 
         $offsite_ids = $oBrandboost[0]->offsite_ids;
         $offsite_ids = unserialize($offsite_ids);
-        $offsite_ids = @implode(",", $offsite_ids);
+        $offsiteGlue = $offsite_ids = @implode(",", $offsite_ids);
+        $slinks = $oBrandboost[0]->offsites_links;
+        $offsites_links = unserialize($slinks);
         //$totalSocialIcon = OffsiteModel::offsite_count_all_edit('', $offsite_ids);
         $totalSocialIcon = 5;
         $offstepdata = OffsiteModel::getOffsite();
@@ -1247,6 +1607,15 @@ class Brandboost extends Controller
 
         $setTab = Session::get("setTab");
         $offsiteIds = explode(',', $offsite_ids);
+
+
+
+        if($offstepdata->isNotEmpty()){
+            foreach($offstepdata as $data){
+                $aSource = @unserialize($data->site_categories);
+                $data->site_categories_array = $aSource;
+            }
+        }
         if (!empty($offsiteIds)) {
             foreach ($offsiteIds as $value) {
                 if (!empty($value) && $value > 0) {
@@ -1261,18 +1630,18 @@ class Brandboost extends Controller
         }
 
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a href="' . base_url('admin/brandboost/offsite') . '" class="sidebar-control hidden-xs">Off site </a></li>
-			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="' . $oBrandboost[0]->brand_title . '" class="sidebar-control active hidden-xs ">' . $oBrandboost[0]->brand_title . '</a></li>
-			</ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Offsite' => '#/reviews/offsite',
+            'Setup' => '',
+        );
+
 
 
         $aData = array(
             'title' => 'Offsite Brand Boost Campaign',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'getOffsite' => $oBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $oFeedbackResponse,
@@ -1293,12 +1662,16 @@ class Brandboost extends Controller
             'selectedTab' => $selectedTab,
             'brandboostID' => $brandboostID,
             'offSiteData' => $offstepdata,
+            'offsiteIds' => $offsiteGlue,
             'offSiteReviews' => $offSiteReviews,
             'emailTemplate' => $emailTemplate,
-            'smsTemplate' => $smsTemplate
+            'smsTemplate' => $smsTemplate,
+            'offsites_links'=> $offsites_links,
+            'aUserInfo' => $aUser
         );
-
-        return view('admin.brandboost.offsite_setup', $aData);
+        echo json_encode($aData);
+        die;
+        //return view('admin.brandboost.offsite_setup', $aData);
     }
 
 
@@ -2361,7 +2734,87 @@ class Brandboost extends Controller
         echo json_encode($response);
         exit;
     }
+    function saveOnsiteSettings(Request $request)
+    {
 
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $brandboostID = $request->brandboostId;
+        $fieldName = $request->fieldName;
+        $fieldValue = $request->fieldVal;
+        $type = $request->requestType;
+
+        $aProductData = [];
+        $aBrandboostData = [];
+        $aFeedbackData = [];
+        $aExpiryData = [];
+        if (!empty($fieldName) && $brandboostID > 0) {
+            if ($type == 'product') {
+                $aProductData[$fieldName] = $fieldValue;
+            } else if ($type == 'brandboost') {
+                $aBrandboostData[$fieldName] = $fieldValue;
+                $result = BrandboostModel::updateBrandBoost($userID, $aBrandboostData, $brandboostID);
+            } else if ($type == 'feedback') {
+                $aFeedbackData[$fieldName] = $fieldValue;
+                $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+                if (isset($aResponse->id)) {
+                    $result = BrandboostModel::updateBrandboostFeedbackResponse($aFeedbackData, $brandboostID);
+                } else {
+                    $aFeedbackData['brandboost_id'] = $brandboostID;
+                    $aFeedbackData['created'] = date("Y-m-d H:i:s");
+                    $result = BrandboostModel::addBrandboostFeedbackResponse($aFeedbackData);
+                }
+            }else if($type == 'expiry'){
+                $aLinkExpiryData = [];
+                $txtInteger = $exp_duration = '';
+                if ($fieldValue == 'custom' || $fieldName == 'txtInteger'  || $fieldName == 'exp_duration') {
+                    $aExpiry = $request->linkExpiryData;
+                    $aExpData = json_decode($aExpiry);
+                    if($fieldValue == 'txtInteger'){
+                        $txtInteger = $fieldValue;
+                        $exp_duration = $aExpData['delay_unit'];
+                    }
+
+                    if($fieldValue == 'exp_duration'){
+                        $exp_duration = $fieldValue;
+                        $txtInteger = $aExpData['delay_unit'];
+                    }
+
+                    $aLinkExpiryData['delay_value'] = $txtInteger;
+                    $aLinkExpiryData['delay_unit'] = $exp_duration;
+                } else {
+
+                    $aLinkExpiryData['delay_value'] = 'never';
+                    $aLinkExpiryData['delay_unit'] = 'never';
+                }
+
+                if($fieldValue == 'never'){
+                    $aExpiryData[$fieldName] = $fieldValue;
+                }else{
+                    $aExpiryData['link_expire_custom'] = json_encode($aLinkExpiryData);
+                }
+
+                $result = BrandboostModel::updateBrandBoost($userID, $aExpiryData, $brandboostID);
+
+            }
+        }
+
+
+        if ($result) {
+            //Okay We also need to update "From" info into the campaigns
+
+            //$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
+
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
     /**
      * Used to save onsite widget
      * @return type
@@ -2635,8 +3088,12 @@ class Brandboost extends Controller
     public
     function addOnsite(Request $request)
     {
-
         $response = array();
+
+        $validatedData = $request->validate([
+            'campaignName' => ['required'],
+            'OnsitecampaignDescription' => ['required']
+        ]);
 
         $userID = Session::get("current_user_id");
         $campaignName = $request->campaignName;
@@ -2651,12 +3108,15 @@ class Brandboost extends Controller
             'user_id' => $userID,
             'brand_title' => $campaignName,
             'brand_desc' => $OnsitecampaignDescription,
-            'status' => 0,
+            'status' => 1,
             'hashcode' => md5($hashcode),
             'created' => date("Y-m-d H:i:s")
         );
 
-        $brandboostID = BrandboostModel::add($aData);
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+
+        $brandboostID = $mBrandboost->add($aData);
 
         if ($brandboostID) {
             $aBrandboostData = array(
@@ -2703,7 +3163,7 @@ class Brandboost extends Controller
                 'created' => date("Y-m-d H:i:s")
             );
 
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         } else {
             $response['status'] = "Error";
         }
@@ -3072,7 +3532,7 @@ class Brandboost extends Controller
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/brandboost/widgets/' . $widgetID) . '">' . $oWidgets[0]->widget_title . '</a></li>
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-			<li><a class="sidebar-control hidden-xs">Statistics</a></li>    
+			<li><a class="sidebar-control hidden-xs">Statistics</a></li>
 			</ul>';
 
         $aData = array(
@@ -5151,9 +5611,11 @@ class Brandboost extends Controller
     public
     function getCampaign(Request $request)
     {
+        $mBrandboost = new BrandboostModel();
 
         $campaignId = $request->campaignId;
-        $result = $this->mBrandboost->getCampaignBycampID($campaignId);
+        //$result = $this->mBrandboost->getCampaignBycampID($campaignId);
+        $result = $mBrandboost->getCampaignBycampID($campaignId);
         if ($result) {
             //pre($result);
             $response['status'] = 'success';
@@ -5161,6 +5623,34 @@ class Brandboost extends Controller
             $response['emailContent'] = base64_decode($result[0]->html);
             $response['description'] = base64_decode($result[0]->description);
             $response['createdVal'] = 'Created: ' . date("M d, Y h:i A", strtotime($result[0]->created)) . ' (' . timeAgo($result[0]->created) . ')';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /*
+     * Function to get information of the selected review campaign
+     */
+
+    public
+    function getReviewCampaign(Request $request)
+    {
+        $mBrandboost = new BrandboostModel();
+
+        $campaign_id = $request->campaign_id;
+
+        $result = $mBrandboost->getReviewCampaignBycampID($campaign_id);
+
+        if ($result) {
+            //pre($result);
+            $response['status'] = 'success';
+            $response['campData'] = $result[0];
+            $response['campaign_id'] = $result[0]->id;
+            $response['campaignName'] = $result[0]->brand_title;
+            $response['description'] = $result[0]->brand_desc;
         } else {
             $response['status'] = "Error";
         }

@@ -57,12 +57,12 @@
 					<td>
 						<table style="background:#fff; box-shadow:0px 0px 8px;">
 							<tr>
-								<th style="padding:20px 80px 0px;" class="pb"> 
+								<th style="padding:20px 80px 0px;" class="pb">
 									<table width="100%" class="table_mr">
 										<tbody>
 											<tr>
-												<th> 
-													<center><div style="width: 100px;height: 100px;padding: 8px;border-radius: 100px;background-color: #fafafd; box-sizing: border-box; margin: 0 auto;"><img style="width: 100px; height: 100px; border-radius: 100px;<?php if (!$oNPS->display_logo): ?>display:none;<?php endif; ?>" src="@{{BRAND_LOGO}}" class="logo_img" /></div></center>
+												<th>
+													<center><div style="width: 100px;height: 100px;padding: 8px;border-radius: 100px;background-color: #fafafd; box-sizing: border-box; margin: 0 auto;<?php if (!$oNPS->display_logo): ?>display:none;<?php endif; ?>"><img style="width: 100px; height: 100px; border-radius: 100px;" src="@{{BRAND_LOGO}}" class="logo_img" /></div></center>
 
 													<p style="font-family: 'Open Sans', sans-serif; text-align: center; margin:10px 0 15px; font-size: 20px; color:#0c0c2c; font-weight: 600; padding: 0;" class="col_t_3 p15" id="wf_edit_template_greeting">{GREETING}</p>
 													<p style="text-align: center; font-weight: 400; font-size: 20px; color: @{{INTRODUCTION_TEXT_COLOR}}; margin: 0; font-family: arial;"><span class="introductionText" <?php if (!$oNPS->display_intro): ?>style="display:none;"<?php endif; ?> id="wf_edit_template_introduction">@{{INTRODUCTION}} </span></p>
@@ -73,7 +73,7 @@
 								</th>
 							</tr>
 							<tr>
-								<th style="padding:20px 80px 0;" class=""> 
+								<th style="padding:20px 80px 0;" class="">
 									<table style="margin-top: 20px;">
 										<tbody>
 											<tr>
@@ -98,7 +98,7 @@
 															<div style="clear: both;"></div>
 														</ul>
 													</div>
-												</div>	
+												</div>
 											</tr>
 											<tr>
 												<td height="40">&nbsp;</td>
@@ -111,7 +111,7 @@
 								<th style="padding:20px 80px 0; border-top: 1px solid #f3f5fa;" class=""> <table style="margin-top: 20px;">
 										<tbody>
 											<tr>
-												<th> 
+												<th>
 													<p style="line-height: 20px; padding:0; margin: 0 0 25px 0; font-size: 12px; font-weight: normal; color: #727291; font-family: 'Open Sans', sans-serif; text-align: center; padding: 0 60px;" class="p15">If you don’t know why you got this email, please tell us straight away so we can fix this for you.</p>
 													<p style="line-height: 20px; padding:0; margin: 0; font-size: 12px; font-weight: normal; color: #494968; font-family: 'Open Sans', sans-serif; text-align: center; padding: 0 60px;" class="p15">Thanks,</p>
 													<p style="line-height: 20px; padding:0; margin: 0; font-size: 12px; font-weight: 600; color: #494968; font-family: 'Open Sans', sans-serif; text-align: center; padding: 0 60px;" class="p15">BrandBoost Team</p>

@@ -74,7 +74,7 @@
                         <tr class="template_row" v-for="template in templates"
                             v-if="selected_template> 0 && template.id == selected_template && template.status=='1' && template.template_type.toLowerCase() == 'email'">
                             <td style="display: none;"></td>
-                            <td style="display: none;">{{ template.id }}99999999</td>
+                            <td style="display: none;">{{ template.id }}</td>
 
                             <td>
                                 <div class="white_box template_preview ">
@@ -298,7 +298,7 @@
 </template>
 
 <script>
-    import EmailPopup from '../modals/templates/EmailTemplatesPopup.vue';
+    import EmailPopup from '@/components/admin/modals/templates/EmailTemplatesPopup.vue';
 
     export default {
         /*name: 'email-templates',*/

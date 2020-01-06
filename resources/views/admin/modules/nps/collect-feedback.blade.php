@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>BrandBoost::{{ (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}' }}</title>
+        <title>BrandBoost::<?php echo $oNPS->brand_name ? $oNPS->brand_name : '{{BRANDNAME}}' ?></title>
         <link rel="icon" href="assets/images/icon.ico" sizes="16x16" type="image/ico">
         <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/jquery.min.js"></script>
         <!-- Global stylesheets -->
@@ -13,7 +13,7 @@
         <!-- /global stylesheets -->
     </head>
     <body>
-        <div class="profile_main"> 
+        <div class="profile_main">
             <!--======================profile_header=======================-->
             <div class="profile_header_bkg"></div>
             <div class="page_header">
@@ -29,16 +29,16 @@
                         <div class="white_box text-center profile_sec mb25">
 
                             <div class="p25 bbot">
-                                <div class="profile_avatar"> 
+                                <div class="profile_avatar">
                                     @if (!empty($oNPS->brand_logo))
-                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $oNPS->brand_logo }}"/> 
+                                        <img src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $oNPS->brand_logo }}"/>
                                     @else
                                         <img src="{{ base_url() }}assets/images/face2.jpg"/>
-                                    @endif   
+                                    @endif
 
 
                                 </div>
-                                <h3>{{ (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}' }}</h3>
+                                <h3><?php echo (!empty($oNPS->brand_name)) ? $oNPS->brand_name : '{{BRANDNAME}}' ?></h3>
                                 <p>{{ (!empty($oNPS->description)) ? $oNPS->description : '{INTRODUCTION}' }}</p>
                             </div>
                             <div class="p15">
@@ -107,4 +107,4 @@
             });
         });
     </script>
-</html>	
+</html>

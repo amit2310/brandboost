@@ -23,14 +23,68 @@ class Lists extends Controller {
     {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Lists' => '#/lists',
+            'Subscribers' => ''
+        );
 
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
+        if ($userRole != '1') {
+            $oLists = $mLists->getLists($userID);
+        } else {
+            $oLists = $mLists->getLists();
+        }
+
+        //Instantiate Workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        $moduleName = 'list';
+
+        if(!empty($oLists->items())) {
+            foreach ($oLists->items() as $val) {
+
+                $moduleUnitID = $val->id;
+                $ListSubscribers = $mWorkflow->getWorkflowSubscribers($moduleUnitID, $moduleName);
+
+                $cnt = $ListSubscribers->total();
+                $val->countSubscribers = $cnt;
+            }
+        }
+        //pre($oLists);
+        //exit;
+
+        $aData = array(
+            'title' => 'Lists',
+            'allData' => $oLists,
+            'oLists' => $oLists->items(),
+            'moduleName' => 'list',
+            'moduleUnitID' => '',
+            'moduleAccountID' => '',
+            'activeCount' => '',
+            'archiveCount' => '',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb
+        );
+
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
+     * Default controller
+     */
+    public function indexOld()
+    {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
         //Instantiate Users model to get its methods and properties
         $mUser = new UsersModel();
-
-
         $userDetail = $mUser->getAllUsers($userID);
         $userRole = $userDetail[0]->user_role;
         if ($userRole != '1') {
@@ -38,10 +92,8 @@ class Lists extends Controller {
         } else {
             $oLists = $mLists->getLists();
         }
-
         //$oContacts = $mLists->getListContacts($userID);
         $bActiveSubsription = $mUser->isActiveSubscription();
-
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -49,30 +101,23 @@ class Lists extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Lists" class="sidebar-control active hidden-xs ">Lists</a></li>
                     </ul>';
-
         /* Computed Data In A List */
         if (count($oLists) > 0) {
-
             $newolists = array();
-
             $archiveList = $activeList = 0;
             foreach ($oLists as $value) {
                 $newolists[$value->id][] = $value;
             }
-
             $totEmailCount = 0;
             $totSMSCount = 0;
             $totUnsubscribeCount = 0;
             $newEmails = $newSMS = $newUnsubs = 0;
-
             foreach ($newolists as $countObject) {
-
                 if ($countObject[0]->status == 'archive') {
                     $archiveList++;
                 } else {
                     $activeList++;
                 }
-
                 $lastList = end($countObject);
                 //pre($lastList->l_created);
                 if (!empty($lastList->l_created)) {
@@ -89,9 +134,7 @@ class Lists extends Controller {
                 } else {
                     $totAll = 0;
                 }
-
                 foreach ($countObject as $value) {
-
                     if (!empty($value->l_email)) {
                         $totEmailCount++;
                     }
@@ -102,30 +145,25 @@ class Lists extends Controller {
                         $totUnsubscribeCount++;
                     }
                 }
-
                 $countObject = $countObject[0];
-
                 $totalContacts = $totAll;
                 $totalEmailGraph = 0;
                 $totalSMSGraph = 0;
                 $totalUnsubGraph = 0;
-
                 if ($totalContacts > 0) {
                     $totalEmailGraph = $totEmailCount * 100 / $totalContacts;
                     $totalEmailGraph = ceil($totalEmailGraph);
-
                     $totalSMSGraph = $totSMSCount * 100 / $totalContacts;
                     $totalSMSGraph = ceil($totalSMSGraph);
-
                     $totalUnsubGraph = $totUnsubscribeCount * 100 / $totalContacts;
                     $totalUnsubGraph = ceil($totalUnsubGraph);
                 }
             }
-
             $addPC = '';
             if ($totalEmailGraph > 50)
                 $addPC = 'over50';
-
+            //$newolists1 = arrayToObject($newolists);
+            //print_r($newolists1);
             $aData = array(
                 'title' => 'Lists',
                 'pagename' => $breadcrumb,
@@ -152,12 +190,11 @@ class Lists extends Controller {
             );
         }
         /* Computed Data In A List */
-
         //return view('admin.lists.index', $aData);
-
-        echo json_encode($aData);
+        echo json_encode($aData)."^^^^^".json_encode($newolists);
         exit();
     }
+
 
     /**
      * Used to get Sms lists
@@ -234,7 +271,12 @@ class Lists extends Controller {
             exit();
         }
         $bActiveSubsription = $mUser->isActiveSubscription();
-
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'People' => '#/contacts/dashboard',
+            'Lists' => '#/lists/',
+            'Subscribers' => ''
+        );
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -247,16 +289,23 @@ class Lists extends Controller {
 
         $aData = array(
             'title' => 'List Subscribers',
-            'subscribersData' => $subscribersData,
+            'allData' => $subscribersData,
+            'subscribersData' => $subscribersData->items(),
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'moduleName' => $moduleName,
             'moduleUnitID' => $moduleUnitID,
+            'moduleAccountID' => '',
             'listName' => $listName,
+            'activeCount' => 0,
+            'archiveCount' => 0,
             'list_id' => $listID,
             'listtype' => 'email',
             'bActiveSubsription' => $bActiveSubsription
         );
-        return view('admin.lists.list-contacts-beta', $aData);
+        echo json_encode($aData);
+        exit;
+        //return view('admin.lists.list-contacts-beta', $aData);
     }
 
 
@@ -438,6 +487,11 @@ class Lists extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'listDescription' => ['required']
+        ]);
+
         //Instantiate Lists model to get its methods and properties
         $mLists = new ListsModel();
 
@@ -529,9 +583,79 @@ class Lists extends Controller {
 
 
         if (!empty($oList)) {
-            $response = array('status' => 'success', 'title' => $oList[0]->list_name, 'description' => $oList[0]->description);
+            $response = array('status' => 'success', 'list_id' => $listID, 'title' => $oList[0]->list_name, 'description' => $oList[0]->description);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Used to update contact lists
+     */
+
+    public function updatePeopleList(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'listDescription' => ['required']
+        ]);
+
+        //Instantiate Lists model to get its methods and properties
+        $mLists = new ListsModel();
+
+        $listID = strip_tags($request->list_id);
+        $title = strip_tags($request->title);
+        $description = strip_tags($request->listDescription);
+        $dateTime = date("Y-m-d H:i:s");
+        $aData = array(
+            'list_name' => $title,
+            'description' => $description
+        );
+
+        $bAlreadyExists = $mLists->checkIfListExists($title, $userID, $listID);
+        if ($bAlreadyExists == true) {
+            $response = array('status' => 'error', 'type' => 'duplicate', 'msg' => 'List name already exists');
+            echo json_encode($response);
+            exit;
+        }
+
+        if ($userRole != '1') {
+            $bUpdated = $mLists->updateLists($aData, $listID, $userID);
+        } else {
+            $userID = '';
+            $bUpdated = $mLists->updateLists($aData, $listID, $userID);
+        }
+
+        if ($bUpdated) {
+            //Add Useractivity log
+            $aActivityData = array(
+                'user_id' => $userID,
+                'event_type' => 'manage_lists',
+                'action_name' => 'updated_list',
+                'list_id' => $listID,
+                'brandboost_id' => '',
+                'campaign_id' => '',
+                'inviter_id' => '',
+                'subscriber_id' => '',
+                'feedback_id' => '',
+                'activity_message' => 'Updated contact list',
+                'activity_created' => $dateTime
+            );
+            logUserActivity($aActivityData);
+            $response = array('status' => 'success', 'msg' => "List updated successfully!");
         }
 
         echo json_encode($response);

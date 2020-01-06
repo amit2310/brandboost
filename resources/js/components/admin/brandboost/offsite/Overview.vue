@@ -399,7 +399,7 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
     import OverviewStats from './OverviewStats';
     import CampaignList from './CampaignList';
 

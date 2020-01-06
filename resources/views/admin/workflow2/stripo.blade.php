@@ -213,10 +213,13 @@
         margin-bottom: 10px;
         box-shadow: 0 3px 5px 0 rgba(1, 21, 64, 0.06);
     }
+    .hide {
+        display:none !important;
+    }
 
 </style>
 <body>
-<div class="">
+<div class="" style="display:none;">
     <div class="row">
         <div class="col-md-12">
             <div style="display:block;width:100%;float:right;margin-right: 20px;margin-top:-5px;">
@@ -869,6 +872,14 @@
             //console.log(source);
         }
     });
+
+    cmdm.add('save-my-template', {
+        run(editor, sender) {
+            $("#saveToMyTemplates").trigger("click");
+            var cmdGetCode = cmdm.get('gjs-get-inlined-html');
+            var source = cmdGetCode && cmdGetCode.run(editor);
+        }
+    });
     pnm.addButton('options', {
         id: 'send-test',
         className: 'fa fa-paper-plane',
@@ -884,6 +895,16 @@
         command: 'save-template',
         attributes: {
             'title': 'Save Template',
+            'data-tooltip-pos': 'bottom',
+        },
+    });
+
+    pnm.addButton('options', {
+        id: 'save-my-template',
+        className: 'fa fa-copy',
+        command: 'save-my-template',
+        attributes: {
+            'title': 'Save to my template',
             'data-tooltip-pos': 'bottom',
         },
     });

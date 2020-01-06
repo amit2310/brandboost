@@ -19,6 +19,41 @@ class Referral extends Controller {
     public function index() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $userRole = $aUser->user_role;
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/modules/referral/overview',
+            'Dashboard' => ''
+        );
+
+        //Instantiate Referral model to get its methods and properties
+        $mReferral = new ReferralModel();
+
+        $oPrograms = $mReferral->getReferralLists($userID);
+        $moduleName = 'referral';
+
+        $aPageData = array(
+            'title' => 'Referral Module',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oPrograms,
+            'oPrograms' => $oPrograms->items(),
+            'bActiveSubsription' => $bActiveSubsription,
+            'moduleName' => $moduleName
+        );
+
+        echo json_encode($aPageData);
+        exit();
+    }
+
+    /*
+     * Function is kept for the reference for the old one before Vue JS
+     */
+    public function indexOld() {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
         $bActiveSubsription = UsersModel::isActiveSubscription();
         $oPrograms = ReferralModel::getReferralLists($userID);
         $moduleName = 'referral';
@@ -37,11 +72,10 @@ class Referral extends Controller {
             'moduleName' => $moduleName
         );
 
-		return view('admin.modules.referral.list', $aPageData);
+        return view('admin.modules.referral.list', $aPageData);
     }
 
-
-	public function overview() {
+    public function overview() {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -65,22 +99,30 @@ class Referral extends Controller {
             'oEmail' => $oEmail,
             'oClick' => $oClick
         );
-		return view('admin.modules.referral.overview', $aPageData);
+        return view('admin.modules.referral.overview', $aPageData);
     }
-
 
 	public function changeStatus(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->refID;
         $status = $request->status;
+
+        $mReferral = new ReferralModel();
+
         $aData = array(
             'status' => $status,
         );
         if ($referralID > 0) {
-            $bUpdateID = ReferralModel::updateReferral($aData, $userID, $referralID);
+            $bUpdateID = $mReferral->updateReferral($aData, $userID, $referralID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -116,12 +158,21 @@ class Referral extends Controller {
 
     public function deleteReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->ref_id;
+
+        $mReferral = new ReferralModel();
+
         if ($referralID > 0) {
-            $bDeleted = ReferralModel::deleteReferral($userID, $referralID);
+            $bDeleted = $mReferral->deleteReferral($userID, $referralID);
             if ($bDeleted) {
                 $response = array('status' => 'success', 'msg' => "Success");
             }
@@ -134,10 +185,26 @@ class Referral extends Controller {
 
 	public function addReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $title = $request->title;
+
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'source_type' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $title = strip_tags($request->title);
+        $source_type = strip_tags($request->source_type);
+        $description = strip_tags($request->description);
+
+        $mReferral = new ReferralModel();
 
         /*$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
@@ -154,10 +221,12 @@ class Referral extends Controller {
             'hashcode' => $hashcode,
             'user_id' => $userID,
             'title' => $title,
+            'source_type' => $source_type,
+            'description' => $description,
             'status' => 'draft',
             'created' => date("Y-m-d H:i:s")
         );
-        $insertID = ReferralModel::addReferral($aData);
+        $insertID = $mReferral->addReferral($aData);
 
         if ($insertID) {
             //Update in automation table to take effect in email/sms settings
@@ -179,22 +248,24 @@ class Referral extends Controller {
                 'created' => date("Y-m-d H:i:s")
             );
 
-            $bUpdated = ReferralModel::updateStoreSettings($aDefaultSettings, $insertID);
+            $bUpdated = $mReferral->updateStoreSettings($aDefaultSettings, $insertID);
 
-            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Success");
+            $response = array('status' => 'success', 'id' => $insertID, 'msg' => "Program added successfully!");
 
             $notificationData = array(
                 'event_type' => 'added_referral_program',
-                'event_id' => 0,
+                'event_id' => '0',
                 'link' => base_url() . 'admin/modules/referral/setup/' . $insertID,
                 'message' => 'Created new referral.',
                 'user_id' => $userID,
                 'status' => 1,
                 'created' => date("Y-m-d H:i:s")
             );
+
             $eventName = 'sys_referral_added';
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
+
         echo json_encode($response);
         exit;
     }
@@ -216,13 +287,12 @@ class Referral extends Controller {
             $setReferralTab = Session::get("setReferralTab");
         }
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a href="' . base_url('admin/modules/referral/') . '" class="sidebar-control hidden-xs">Referral </a></li>
-                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Setup" class="sidebar-control active hidden-xs ">Setup</a></li>
-                    </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/referral/dashboard',
+            'Campaigns' => '#/referral/',
+            'Setup' => '',
+        );
 
         $oReferral = ReferralModel::getReferral($userID, $referralID);
 
@@ -273,7 +343,7 @@ class Referral extends Controller {
 
         $aData = array(
             'title' => 'Referral Settings',
-            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'defalutTab' => $defaultTab,
             'programID' => $programID,
             'oReferral' => $oReferral,
@@ -292,24 +362,36 @@ class Referral extends Controller {
             'oRefCouponCodes' => $oRefCouponCodes,
             'oContacts' => $oContacts,
             'setReferralTab' => $setReferralTab,
-            'userID' => $userID
+            'userID' => $userID,
+            'campaignTitle' => $oReferral->title
         );
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
 
-		return view('admin.modules.referral.setup-source', $aData);
+		//return view('admin.modules.referral.setup-source', $aData);
+        return $aData;
     }
 
 
 	public function getReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->ref_id;
-        $oReferral = ReferralModel::getReferral($userID, $referralID);
+
+        $mReferral = new ReferralModel();
+
+        $oReferral = $mReferral->getReferral($userID, $referralID);
+
         if (!empty($oReferral)) {
-            $response = array('status' => 'success', 'id' => $oReferral->id, 'title' => $oReferral->title);
+            $response = array('status' => 'success', 'id' => $oReferral->id, 'title' => $oReferral->title, 'source_type' => $oReferral->source_type, 'description' => $oReferral->description);
         } else {
             $response = array('status' => 'error', 'msg' => 'Not found');
         }
@@ -321,17 +403,30 @@ class Referral extends Controller {
 
 	public function updateReferral(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
+        if (empty($request)) {
+            $response = array('status' => 'error', 'msg' => 'Request header is empty');
+            echo json_encode($response);
+            exit;
+        }
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+
         $referralID = $request->ref_id;
         $title = $request->title;
+        $source_type = $request->source_type;
+        $description = $request->description;
+
+        $mReferral = new ReferralModel();
+
         $aData = array(
             'title' => $title,
+            'source_type' => $source_type,
+            'description' => $description,
             'updated' => date("Y-m-d H:i:s")
         );
         if ($referralID > 0) {
-            $bUpdateID = ReferralModel::updateReferral($aData, $userID, $referralID);
+            $bUpdateID = $mReferral->updateReferral($aData, $userID, $referralID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
             }
@@ -390,15 +485,18 @@ class Referral extends Controller {
 	public function reports($referralID) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
+
+        $mReferral = new ReferralModel();
+
 		$referredAmount = 0;
 		$untrackedAmount = 0;
         if ($referralID > 0) {
-            $oSettings = ReferralModel::getReferralSettings($referralID);
+            $oSettings = $mReferral->getReferralSettings($referralID);
             if (!empty($oSettings)) {
                 $accountID = $oSettings->hashcode;
-                $oRefPurchased = ReferralModel::referredSales($accountID);
+                $oRefPurchased = $mReferral->referredSales($accountID);
 
-                $oUntrackedPurchased = ReferralModel::untrackedSales($accountID);
+                $oUntrackedPurchased = $mReferral->untrackedSales($accountID);
 
                 if (!empty($oRefPurchased)) {
                     foreach ($oRefPurchased as $row) {
@@ -412,11 +510,36 @@ class Referral extends Controller {
                     }
                 }
 
-                $oRefVisits = ReferralModel::getReferralLinkVisits($accountID);
-                $oTotalReferralSent = ReferralModel::getStatsTotalSent($referralID);
-                $oTotalReferralTwillio = ReferralModel::getSendgridStats($referralID);
+                $oRefVisits = $mReferral->getReferralLinkVisits($accountID);
+                $oTotalReferralSent = $mReferral->getStatsTotalSent($referralID);
+                $oTotalReferralTwillio = $mReferral->getSendgridStats($referralID);
             }
 
+            if (!empty($oTotalReferralSent)) {
+                foreach ($oTotalReferralSent as $sentCount) {
+                    if ($sentCount->campaign_type == 'email') {
+                        $sentCount->totalEmailSent = ($sentCount->totalCount) ? $sentCount->totalCount : 0;
+                    }
+
+                    if ($sentCount->campaign_type == 'sms') {
+                        $sentCount->totalSmsSent = ($sentCount->totalCount) ? $sentCount->totalCount : 0;
+                    }
+                }
+            }
+
+            if (!empty($oTotalReferralTwillio)) {
+                foreach ($oTotalReferralTwillio as $twilliRec) {
+                    if ($twilliRec->event_name == 'delivered') {
+                        $twilliRec->totalDelivered = $twilliRec->totalDelivered +  ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    } else if ($twilliRec->event_name == 'open') {
+                        $twilliRec->totalOpened = $twilliRec->totalOpened +  ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    } else if ($twilliRec->event_name == 'processed') {
+                        $twilliRec->totalProcessed = $twilliRec->totalProcessed + ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    } else if ($twilliRec->event_name == 'click') {
+                        $twilliRec->totalClicked = $twilliRec->totalClicked + ($twilliRec->totalCount > 0 ? $twilliRec->totalCount : 0);
+                    }
+                }
+            }
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -426,12 +549,20 @@ class Referral extends Controller {
                         <li><a style="cursor:text;" title="' . $oSettings->title . ' Report" class="sidebar-control active hidden-xs ">' . $oSettings->title . ' Report</a></li>
                     </ul>';
 
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Referral' => '#/modules/referral/',
+                'Reports' => '#/modules/referral/reports/'.$referralID
+            );
+
             $aData = array(
                 'title' => 'Referral Report',
                 'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'userID' => $userID,
                 'oSettings' => $oSettings,
-                'oRefPurchased' => $oRefPurchased,
+                'allData' => $oRefPurchased,
+                'oRefPurchased' => $oRefPurchased->items(),
                 'referredAmount' => $referredAmount,
                 'oRefVisits' => $oRefVisits,
                 'untrackedAmount' => $untrackedAmount,
@@ -439,7 +570,10 @@ class Referral extends Controller {
                 'oTotalReferralSent' => $oTotalReferralSent,
                 'oTotalReferralTwillio' => $oTotalReferralTwillio
             );
-			return view('admin.modules.referral.reports', $aData);
+			//return view('admin.modules.referral.reports', $aData);
+
+            echo json_encode($aData);
+            exit();
         }
     }
 
@@ -449,6 +583,8 @@ class Referral extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
 
+        $mReferral = new ReferralModel();
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                     <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                     <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
@@ -457,19 +593,57 @@ class Referral extends Controller {
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Referral Report" class="sidebar-control active hidden-xs ">Referral Report</a></li>
                 </ul>';
 
-        $aSettings = ReferralModel::getAccountSettings($referralID);
-        $oRefEvents = ReferralModel::getAutoEvents($referralID);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/modules/referral/',
+            'Stats' => '#/modules/referral/stats/'.$referralID
+        );
 
+        $aSettings = $mReferral->getAccountSettings($referralID);
+        $oRefEvents = $mReferral->getAutoEvents($referralID);
+
+        if($oRefEvents->items()) {
+            foreach ($oRefEvents-items() as $oEvent) {
+
+                $aStats = $mReferral->getEmailReferralSendgridStats('event', $oEvent->referral_id, $oEvent->id, '');
+                $aCategorizedStats = $mReferral->getEmailSendgridCategorizedStatsData($aStats);
+
+                $processed = $aCategorizedStats['processed']['UniqueCount'];
+                $delivered = $aCategorizedStats['delivered']['UniqueCount'];
+                $open = $aCategorizedStats['open']['UniqueCount'];
+                $click = $aCategorizedStats['click']['UniqueCount'];
+                $unsubscribe = $aCategorizedStats['unsubscribe']['UniqueCount'];
+                $bounce = $aCategorizedStats['bounce']['UniqueCount'];
+                $dropped = $aCategorizedStats['dropped']['UniqueCount'];
+                $spamReport = $aCategorizedStats['spam_report']['UniqueCount'];
+
+                $processed = $processed == 0 ? 1 : $processed;
+                $oEvent->processed = $processed;
+
+                $oEvent->deliveredGraph = $delivered * 100 / $processed;
+                $oEvent->openGraph = $open * 100 / $processed;
+                $oEvent->clickGraph = $click * 100 / $processed;
+                $oEvent->unsubscribeGraph = $unsubscribe * 100 / $processed;
+                $oEvent->bounceGraph = $bounce * 100 / $processed;
+                $oEvent->droppedGraph = $dropped * 100 / $processed;
+                $oEvent->spamReportGraph = $spamReport * 100 / $processed;
+            }
+        }
         $aData = array(
-            'title' => 'Referral Report',
+            'title' => 'Referral Stats',
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
             'userID' => $userID,
             'aSettings' => $aSettings,
-            'oRefEvents' => $oRefEvents,
+            'allData' => $oRefEvents,
+            'oRefEvents' => $oRefEvents->items(),
             'type' => $request->type
         );
 
-		return view('admin.modules.referral.referral-stats', $aData);
+		//return view('admin.modules.referral.referral-stats', $aData);
+
+        echo json_encode($aData);
+        exit();
     }
 
 
@@ -860,8 +1034,10 @@ class Referral extends Controller {
 	public function advocates(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $mReferral = new ReferralModel();
 
         $referralId = $request->referralId;
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -869,22 +1045,42 @@ class Referral extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Advocates" class="sidebar-control active hidden-xs "> Advocates</a></li>
                     </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral' => '#/modules/referral/overview',
+            'Advocates' => '#/modules/referral/advocates/'.$referralId
+        );
 
         if ($referralId != '') {
-            $referralData = ReferralModel::getReferral($userID, $referralId);
-            $oContacts = ReferralModel::getAllAdvocates($referralData->hashcode);
+            $referralData = $mReferral->getReferral($userID, $referralId);
+            $oContacts = $mReferral->getAllAdvocates($referralData->hashcode);
         } else {
-            $oContacts = ReferralModel::getAllAdvocates();
+            $oContacts = $mReferral->getAllAdvocates();
+        }
+
+        if($oContacts->items()) {
+            foreach ($oContacts->items() as $oContact) {
+                $moduleName = 'referral';
+                $moduleUnitID = $oContact->account_id;
+                $oContact->referralData = $mReferral->getReferralByAccountId($moduleUnitID);
+                $oContact->referralTrackData = $mReferral->getReferralLinkVisitsByAdvocateId($oContact->subscriber_id, $referralData->id);
+                $oContact->referralSaleTrackData = $mReferral->referredSalesByAdvocateId($oContact->subscriber_id, $moduleUnitID);
+            }
         }
 
         $aData = array(
             'title' => 'Referral Module',
             'pagename' => $breadcrumb,
-            'oContacts' => $oContacts,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oContacts,
+            'oContacts' => $oContacts->items(),
             'moduleName' => 'Referral',
             'moduleUnitID' => $referralId
         );
-		return view('admin.modules.referral.advocate', $aData);
+		//return view('admin.modules.referral.advocate', $aData);
+
+        echo json_encode($aData);
+        exit();
     }
 
 
@@ -908,7 +1104,7 @@ class Referral extends Controller {
 
 		$source = 'email';
 
-        if (!empty($referralStatus)) {
+        if ($referralStatus == true) {
             $status = 'active';
         } else {
             $status = 'draft';
@@ -2550,11 +2746,14 @@ class Referral extends Controller {
     public function advocateProfile(Request $request) {
         $oUser = getLoggedUser();
         $clientID = $oUser->id;
-        $contactId = $request->contactId;
         $response = array();
         $response['status'] = 'error';
 
+        $mSubscriber = new SubscriberModel();
+        $mReferral = new ReferralModel();
+
         if (!empty($request)) {
+            $contactId = $request->contactId;
             $subscriberID = $request->subscriberId;
             $actionName = $request->action;
             $accountID = $request->accountId;
@@ -2563,7 +2762,7 @@ class Referral extends Controller {
         if (!empty($contactId)) {
             $moduleName = 'people';
             $subscriberID = (!empty($subscriberID)) ? $subscriberID : $contactId;
-            $subsData = $this->mSubscriber->getModuleSubscriberInfo($moduleName, $subscriberID);
+            $subsData = $mSubscriber->getModuleSubscriberInfo($moduleName, $subscriberID);
             $subscribersData = $subsData[0];
             if (!empty($subscribersData)) {
                 if ($moduleName != 'people') {
@@ -2572,16 +2771,16 @@ class Referral extends Controller {
             }
 
             //Get Referral Related information
-            $oReferral = $this->mReferral->getReferralProgramInfo($accountID);
+            $oReferral = $mReferral->getReferralProgramInfo($accountID);
             $referralID = $oReferral->id;
-            $oRefLink = $this->mReferral->getReferralLinkDetails($subscriberID, $referralID);
-            $oSettings = $this->mReferral->getReferralSettings($referralID);
+            $oRefLink = $mReferral->getReferralLinkDetails($subscriberID, $referralID);
+            $oSettings = $mReferral->getReferralSettings($referralID);
 
-            $oSendgridStats = $this->mReferral->getAdvocateSendgridStats($subscriberID, $referralID);
+            $oSendgridStats = '';//$mReferral->getAdvocateSendgridStats($subscriberID, $referralID);
 
-            $oTrackVisit = $this->mReferral->getReferralLinkVisitsByAdvocateId($subscriberID, $referralID);
-            $oTrackSale = $this->mReferral->referredSalesByAdvocateId($subscriberID, $accountID);
-            $oReferredFriends = $this->mReferral->getReferredFriends($subscriberID, $referralID);
+            $oTrackVisit = $mReferral->getReferralLinkVisitsByAdvocateId($subscriberID, $referralID);
+            $oTrackSale = $mReferral->referredSalesByAdvocateId($subscriberID, $accountID);
+            $oReferredFriends = $mReferral->getReferredFriends($subscriberID, $referralID);
 
 
             $aData = array(
@@ -2600,7 +2799,8 @@ class Referral extends Controller {
         }
 
         if ($actionName == 'smart-popup') {
-            $popupContent = $this->load->view('admin/components/smart-popup/advocates', $aData, true);
+            //$popupContent = $this->load->view('admin/components/smart-popup/advocates', $aData, true);
+            $popupContent = view('admin/components/smart-popup/advocates', $aData, true);
             $response['status'] = 'success';
             $response['content'] = $popupContent;
             echo json_encode($response);

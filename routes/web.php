@@ -19,6 +19,8 @@ Route::get('admin/', 'Admin\Dashboard@index');
 
 Route::get('admin/login', 'Admin\Login@index');
 Route::post('admin/login', 'Admin\Login@index');
+Route::get('admin/forgot_password', 'User\Login@forgot_password');
+Route::post('admin/forgot_password', 'User\Login@forgot_password');
 Route::get('admin/login/logout', 'Admin\Login@logout');
 
 
@@ -170,11 +172,14 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/onsite', 'Admin\Brandboost@onsite');
     Route::get('admin/brandboost/review_request/{type}', 'Admin\Brandboost@reviewRequest');
     Route::get('admin/brandboost/onsite_setup/{id}', 'Admin\Brandboost@onsiteSetup');
+    Route::get('admin/brandboost/onsiteSetupSubscribers/{id}', 'Admin\Brandboost@onsiteSetupSubscribers');
+    Route::get('admin/brandboost/onsiteSetupReview/{id}', 'Admin\Brandboost@onsiteSetupReview');
     Route::get('admin/brandboost/reviews', 'Admin\Brandboost@reviews');
     Route::get('admin/brandboost/reviews/{id}', 'Admin\Brandboost@reviews');
     Route::get('admin/brandboost/media', 'Admin\Brandboost@media');
     Route::post('admin/brandboost/reviewdetails/{id}', 'Admin\Brandboost@reviewDetails');
     Route::get('admin/brandboost/reviewdetails/{id}', 'Admin\Brandboost@reviewDetails');
+    Route::get('admin/brandboost/reviewInfo/{id}', 'Admin\Brandboost@reviewInfo');
     Route::post('admin/brandboost/setTab/', 'Admin\Brandboost@setTab');
     Route::get('admin/brandboost/offsite_overview', 'Admin\Brandboost@offsiteOverview');
     Route::get('admin/brandboost/offsite', 'Admin\Brandboost@offsite');
@@ -201,6 +206,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/addBrandBoostWidgetData', 'Admin\Brandboost@addBrandBoostWidgetData');
     Route::post('admin/brandboost/savePreviewData', 'Admin\Brandboost@savePreviewData');
     Route::post('admin/brandboost/addBrandBoostWidgetDesign', 'Admin\Brandboost@addBrandBoostWidgetDesign');
+    Route::post('admin/brandboost/getReviewCampaign', 'Admin\Brandboost@getReviewCampaign');
+    Route::post('admin/brandboost/updateReviewCampaign', 'Admin\Brandboost@updateReviewCampaign');
     Route::post('admin/brandboost/addBrandBoostWidgetCampaign', 'Admin\Brandboost@addBrandBoostWidgetCampaign');
     Route::post('admin/brandboost/publishOnsiteStatusBB', 'Admin\Brandboost@publishOnsiteStatusBB');
     Route::post('admin/brandboost/saveOnsitePreferences', 'Admin\Brandboost@saveOnsitePreferences');
@@ -220,6 +227,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/campaign_specific', 'Admin\Brandboost@campaignSpecific');
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
+    Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
 
 
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
@@ -255,6 +263,9 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/referral/stats/{id}', 'Admin\Modules\Referral@stats');
     Route::get('admin/modules/referral/reward/{id}', 'Admin\Modules\Referral@reward');
     Route::get('admin/modules/referral/advocates', 'Admin\Modules\Referral@advocates');
+    Route::get('admin/modules/referral/advocates/{referralId}', 'Admin\Modules\Referral@advocates');
+    Route::get('admin/modules/referral/advocateProfile/{referralId}', 'Admin\Modules\Referral@advocateProfile');
+    Route::post('admin/modules/referral/advocateProfile/{referralId}', 'Admin\Modules\Referral@advocateProfile');
     Route::get('admin/modules/referral/workflow/{id}', 'Admin\Modules\Referral@workflow');
     Route::get('admin/modules/referral/integrations/{id}', 'Admin\Modules\Referral@integrations');
     Route::get('admin/modules/referral/configurations/{id}', 'Admin\Modules\Referral@configurations');
@@ -272,7 +283,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/referral/addReferralWidget', 'Admin\Modules\Referral@addReferralWidget');
     Route::post('admin/modules/referral/deleteBulkReferralWidgets', 'Admin\Modules\Referral@deleteBulkReferralWidgets');
     Route::post('admin/modules/referral/archiveBulkReferralWidgets', 'Admin\Modules\Referral@archiveBulkReferralWidgets');
-    Route::get('admin/modules/referral/advocates/{referralId}', 'Admin\Modules\Referral@advocates');
 
 
 
@@ -296,6 +306,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 
     Route::get('admin/feedback/listall', 'Admin\Feedback@getAllListingData');
+    Route::get('admin/feedback/listall/{id}', 'Admin\Feedback@getAllListingData');
     Route::get('admin/feedback/details/{id}', 'Admin\Feedback@feedbackDetails');
     Route::post('admin/feedback/details/{id}', 'Admin\Feedback@feedbackDetails');
     Route::post('admin/feedback/updateFeedbackStatus', 'Admin\Feedback@updateFeedbackStatus');
@@ -491,6 +502,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/workflow/syncWorkflowAudienceGlobal', 'Admin\WorkFlow@syncWorkflowAudienceGlobal');
     Route::get('admin/workflow/loadStripoTemplate/{type}/{id}', 'Admin\WorkFlow@loadStripoTemplate');
     Route::get('admin/workflow/loadStripoTemplateResources/{type}/{module_name}/{temp_id}', 'Admin\WorkFlow@loadStripoTemplateResources');
+    Route::post('admin/workflow/loadWorkflowAudience', 'Admin\WorkFlow@loadWorkflowAudience');
+    Route::post('admin/workflow/getWorkflowCampaignSubscribers', 'Admin\WorkFlow@getWorkflowCampaignSubscribers');
 
 
 //Templates Module
@@ -499,6 +512,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/templates/sms', 'Admin\Templates@sms');
     Route::post('admin/templates/addUserTemplate', 'Admin\Templates@addUserTemplate');
     Route::get('admin/templates/editTemplate', 'Admin\Templates@editTemplate');
+    Route::post('admin/templates/getTemplateInfo', 'Admin\Templates@getTemplateInfo');
+    Route::post('admin/templates/editUserTemplate', 'Admin\Templates@editUserTemplate');
     Route::post('admin/templates/updateUserTemplate', 'Admin\Templates@updateUserTemplate');
     Route::post('admin/templates/updateUserTemplateName', 'Admin\Templates@updateUserTemplateName');
     Route::get('admin/templates/loadEmailTemplate/{id}', 'Admin\Templates@loadEmailTemplate');
@@ -525,6 +540,11 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/broadcast/sms', 'Admin\Broadcast@sms');
     Route::get('admin/broadcast/smsoverview', 'Admin\Broadcast@smsoverview');
     Route::get('admin/broadcast/edit/{id?}', 'Admin\Broadcast@edit');
+    Route::get('admin/broadcast/setup/{id?}', 'Admin\Broadcast@setup');
+    Route::get('admin/broadcast/smsSetup/{id?}', 'Admin\Broadcast@smsSetup');
+    Route::get('admin/broadcast/setupTargetAudience/{id?}', 'Admin\Broadcast@setupTargetAudience');
+    Route::get('admin/broadcast/setupViewSummary/{id?}', 'Admin\Broadcast@setupViewSummary');
+    Route::get('admin/broadcast/setupLoadTemplates/{id?}', 'Admin\Broadcast@setupLoadTemplates');
     Route::post('admin/broadcast/addVariation', 'Admin\Broadcast@addVariation');
     Route::post('admin/broadcast/updateSplitTest', 'Admin\Broadcast@updateSplitTest');
     Route::post('admin/broadcast/updateBroadcastSettingUnit', 'Admin\Broadcast@updateBroadcastSettingUnit');
@@ -568,6 +588,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/broadcast/deleteSegment', 'Admin\Broadcast@deleteSegment');
     Route::post('admin/broadcast/archive_multipal_segment', 'Admin\Broadcast@archive_multipal_segment');
     Route::post('admin/broadcast/createSegment', 'Admin\Broadcast@createSegment');
+    Route::post('admin/broadcast/makeSegment', 'Admin\Broadcast@makeSegment');
     Route::post('admin/broadcast/syncSegment', 'Admin\Broadcast@syncSegment');
     Route::post('admin/broadcast/syncSegmentMultiple', 'Admin\Broadcast@syncSegmentMultiple');
     Route::post('admin/broadcast/addCampaignToBroadcast', 'Admin\Broadcast@addCampaignToBroadcast');
@@ -590,11 +611,17 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 //Subscriber
     Route::post('admin/subscriber/add_contact', 'Admin\Subscribers@add_contact');
+    Route::post('admin/subscriber/update_contact', 'Admin\Subscribers@update_contact');
     Route::get('admin/subscriber/exportSubscriberCSV', 'Admin\Subscribers@exportSubscriberCSV');
     Route::post('admin/subscriber/importSubscriberCSV', 'Admin\Subscribers@importSubscriberCSV');
+    Route::post('admin/subscriber/importSubscriberList', 'Admin\Subscribers@importSubscriberList');
+    Route::post('admin/subscriber/readSubscriberCSV', 'Admin\Subscribers@readSubscriberCSV');
+    Route::post('admin/subscriber/mapSubscriberCSV', 'Admin\Subscribers@mapSubscriberCSV');
+    Route::post('admin/subscriber/readSubscriberCSVToMap', 'Admin\Subscribers@readSubscriberCSVToMap');
     Route::post('admin/subscriber/moveToArchiveModuleContact', 'Admin\Subscribers@moveToArchiveModuleContact');
     Route::post('admin/subscriber/changeModuleContactStatus', 'Admin\Subscribers@changeModuleContactStatus');
     Route::post('admin/subscriber/getSubscriberDetail', 'Admin\Subscribers@getSubscriberDetail');
+    Route::post('admin/subscriber/getSubscriberDetailFile', 'Admin\Subscribers@getSubscriberDetailFile');
     Route::post('admin/subscriber/updateSubscriberDetails', 'Admin\Subscribers@updateSubscriberDetails');
     Route::post('admin/subscriber/deleteModuleSubscriber', 'Admin\Subscribers@deleteModuleSubscriber');
     Route::post('admin/subscriber/deleteBulkModuleContacts', 'Admin\Subscribers@deleteBulkModuleContacts');
@@ -610,6 +637,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/lists/addList', 'Admin\Lists@addList');
     Route::post('admin/lists/getList', 'Admin\Lists@getList');
     Route::post('admin/lists/updateList', 'Admin\Lists@updateList');
+    Route::post('admin/lists/updatePeopleList', 'Admin\Lists@updatePeopleList');
     Route::post('admin/lists/archiveMultipalLists', 'Admin\Lists@archiveMultipalLists');
     Route::post('admin/lists/deleteMultipalLists', 'Admin\Lists@deleteMultipalLists');
     Route::post('admin/lists/deleteLists', 'Admin\Lists@deleteLists');
@@ -680,6 +708,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 //Tag Module
     Route::get('admin/tags', 'Admin\Tags@index');
+    Route::get('admin/tags/getTagContacts', 'Admin\Tags@getTagContacts');
     Route::post('admin/tags/addgroupentity', 'Admin\Tags@addgroupentity');
     Route::post('admin/tags/addgroup', 'Admin\Tags@addgroup');
     Route::get('admin/tags/tagsreview', 'Admin\Tags@tagsreview');
@@ -687,6 +716,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/tags/review/{id}', 'Admin\Tags@review');
     Route::get('admin/tags/listAllTags', 'Admin\Tags@listAllTags');
     Route::post('admin/tags/applyReviewTag', 'Admin\Tags@applyReviewTag');
+    Route::post('admin/tags/addTagReviews', 'Admin\Tags@addTagReviews');
     Route::post('admin/reviews/update_review_status', 'Admin\Reviews@updateReviewStatus');
     Route::post('admin/reviews/displayreview', 'Admin\Reviews@displayreview');
     Route::post('admin/reviews/saveReviewNotes', 'Admin\Reviews@saveReviewNotes');
@@ -758,6 +788,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/segments/syncSegment', 'Admin\Segments@syncSegment');
     Route::post('admin/broadcast/getSegment', 'Admin\Broadcast@getSegment');
     Route::post('admin/broadcast/updateSegment', 'Admin\Broadcast@updateSegment');
+    Route::post('admin/broadcast/updatePeopleSegment', 'Admin\Broadcast@updatePeopleSegment');
     Route::post('admin/broadcast/archive_multipal_segment', 'Admin\Broadcast@archive_multipal_segment');
     Route::post('admin/broadcast/deleteSegment', 'Admin\Broadcast@deleteSegment');
 
@@ -824,6 +855,9 @@ Route::get('survey/{hashcode}', 'Survey@index');
 //VueJS Helper Utilities Controller
 Route::post('admin/helperutility/getSubscriberTags', 'Admin\HelperUtility@getSubscriberTags');
 Route::post('admin/helperutility/getFeedbackTags', 'Admin\HelperUtility@getFeedbackTags');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/eventCampaigns', 'Admin\HelperUtility@eventCampaigns');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', 'Admin\HelperUtility@workflowSubscribers');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData', 'Admin\HelperUtility@getWorkflowContactSelectionInterfaceData');
 
 
 

@@ -1,4 +1,4 @@
-/hot
+
 /hot
 /storage
 /storage/*.key
@@ -20,4 +20,4 @@ vendor
 .idea/*
 public/js/app.js
 /public/js/app.js
-
+node_modules/.cache

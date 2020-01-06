@@ -4069,4 +4069,46 @@ if (!function_exists('getLoggedUserID')) {
     }
 
 }
+
+/*Workflow Helper Functions*/
+
+/**
+ * This function is helpful for sorting the exact order in which workflow needs to follow
+ */
+if (!function_exists('sortWorkflowEvents')) {
+    function sortWorkflowEvents($oEvents){
+        $oFinal = array();
+        $oMainEvent = array();
+
+        //In order to maintain order of the events
+        if ($oEvents->isNotEmpty()) {
+            $oFinal[] = $oEvents[0];
+            $eventID = $oEvents[0]->id;
+            foreach ($oEvents as $key => $value) {
+                foreach ($oEvents as $inner) {
+                    if ($inner->previous_event_id == $eventID) {
+                        $oFinal[] = $inner;
+                        $eventID = $inner->id;
+                        break;
+                    }
+                }
+            }
+        }
+
+        $oEvents = $oFinal;
+
+        if (!empty($oEvents)) {
+            foreach ($oEvents as $oEvent) {
+                if (empty($oEvent->previous_event_id)) {
+                    $oMainEvent = $oEvent;
+                    break;
+                }
+            }
+        }
+
+        return ['oEvents' => $oFinal, 'oMainEvent'=> $oMainEvent];
+    }
+
+}
+
 ?>

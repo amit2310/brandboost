@@ -310,7 +310,7 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
     export default {
         name : 'campaign-list',
         props : ['oBrandboosts', 'bActiveSubsription', 'currentUserId', 'iActiveCount', 'iArchiveCount', 'user_role', 'canRead', 'canWrite'],

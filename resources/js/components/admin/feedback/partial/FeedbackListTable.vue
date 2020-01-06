@@ -236,9 +236,8 @@
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
     import FeedbackTags from './FeedbackTags';
-    /*import FeedbackJS from '../../../../../../assets/js/modules/offsite/feedback.js';*/
     export default {
         name : 'feedback-list-table',
         props : ['oData', 'canRead', 'canWrite'],

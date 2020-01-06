@@ -9,8 +9,32 @@ export default {
                 custom_data_table(tableId);
             }, time);
         },
-        mobileNoFormat(phoneNumber) {
-            return phoneNumber;
+        mobileNoFormat(mobileNo) {
+            if (mobileNo.length <= 3) {
+                return '';
+            }
+            mobileNo = mobileNo.replace(/\D/g,'');
+            var len = mobileNo.length;
+            switch (len) {
+                case 7:
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{4})/, '$1-$2');
+                    break;
+                case 10:
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    break;
+                case 11:
+                    mobileNo = mobileNo.substr(1);
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    break;
+                case 12:
+                    mobileNo = mobileNo.substr(2);
+                    mobileNo = mobileNo.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    break;
+                default:
+                    break;
+            }
+
+            return mobileNo;
         },
         csrf_token() {
             let tkn = $('meta[name="_token"]').attr('content');
@@ -26,9 +50,12 @@ export default {
             }
             return post + dotVal;
         },
-
         displayNoData() {
             return "<span class=\"text-muted text-size-small\">[No Data]</span>";
+        },
+        nl2br (str, is_xhtml) {
+            var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
         },
         number_format(num, placeVal) {
             var placeVal = placeVal != '' ? placeVal : 2;
@@ -166,8 +193,77 @@ export default {
             //alert("Formatted Date: "+dateString);
         },
         displayDateFormat(format, datetime) {
+            /*
+                Day:
+                d - Numeric day of the month with leading zeros (01 to 31)
+                D - Short day abbreviation (three letters). Mon through Sun.
+                j - Day of the month without leading zeros ( 1 to 31)
+                l (lowercase 'L') - Full day name (Sunday through Saturday)
+                N - ISO-8601 numeric representation of a day of a week (1 (for Monday) through 7 (for Sunday).
+                S - English ordinal suffix for the day of the month, 2 characters (st, nd, rd or th. Works well with j)
+                w - Numeric day of the week. (0 (for Sunday) through 6 (for Saturday)
+                z - Numeric day of the year (0 to 365)
+
+                Week:
+                W - ISO-8601 numeric representation of week number of year. Week starting from Monday
+
+                Month :
+                F - Full month name. (January through December)
+                m - Numeric representation of a month with leading zeros (01 to 12)
+                M - Short month abbreviation (three letters). Jan through Dec
+                n - Numeric representation of a month, without leading zeros (1 through 12)
+                t -Number of days of a specified month (28 through 31)
+
+                Year :
+                L - Whether it's a leap year (set 1 if leapyear otherwise 0)
+                o - ISO-8601 year number
+                Y - Numeric year value in 4 digits (1999)
+                y - Numeric year value in two digit (1999 as 99)
+
+                Time :
+                a - Lowercase am or pm.
+                A - Uppercase AM or PM.
+                B - Swatch Internet time (000 through 999)
+                g - 12-hour format of an hour without leading zeros (1 to 12)
+                G - 24-hour format of an hour without leading zeros (0 to 23)
+                h - 12-hour format of an hour with leading zeros (01 to 12)
+                H - 24-hour format of an hour with leading zeros(00 to 23)
+                i - Minutes with leading zeros (00 to 59)
+                s - Seconds, with leading zeros (00 to 59)
+                u - Microseconds(numeric value) Example : 574925
+
+                Timezone :
+                T - Timezone abbreviation. (Examples: EST, MDT)
+             */
+
             //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
             return date(format, strtotime(datetime));
+        },
+        makeBreadcrumb(elements){
+            if(elements!= ''){
+                let breadcrumbString = '';
+                breadcrumbString = '<ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">';
+                for(name in elements){
+                    let url = elements[name];
+                    breadcrumbString += '<li>';
+                    if(url != ''){
+                        breadcrumbString += '<a href="'+url+'">';
+                        breadcrumbString += '<img src="/assets/images/mail-open-line.svg"/>';
+                    }
+                    breadcrumbString += ' &nbsp;' + name;
+                    if(url != ''){
+                        breadcrumbString += '</a>';
+                    }
+                    breadcrumbString += '</li>';
+                    if(url != '') {
+                        breadcrumbString += '<li class="ml10 mr10"><img src="/assets/images/chevron-left.svg"/></li>';
+                    }
+                }
+
+                breadcrumbString += '</ul>';
+                document.getElementById("breadcrumb").innerHTML = breadcrumbString;
+
+            }
         }
 
     }

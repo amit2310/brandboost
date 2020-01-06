@@ -7,7 +7,8 @@ use DB;
 use Cookie;
 use Session;
 
-class TemplatesModel extends Model {
+class TemplatesModel extends Model
+{
 
     /**
      * This function used to get Common templates which used in all modules
@@ -18,28 +19,52 @@ class TemplatesModel extends Model {
      * @param type $bHideStaticTemplate
      * @return type
      */
-    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false) {
+    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false)
+    {
         $oData = DB::table('tbl_common_templates')
-                ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
-                ->select('tbl_common_templates.*', 'tbl_common_templates_categories.category_name', 'tbl_common_templates_categories.status AS category_status', 'tbl_common_templates_categories.module_name')
-                ->when(!empty($userID), function ($query) use ($userID) {
-                    return $query->where('tbl_common_templates.user_id', $userID);
-                }, function ($query) {
-                    return $query->where('tbl_common_templates.user_id', 0);
-                })
-                ->when(($categoryID > 0), function($query) use ($categoryID) {
-                    return $query->where('tbl_common_templates.category_id', $categoryID);
-                })->when(!empty($templateType), function($query) use ($templateType) {
-                    return $query->where('tbl_common_templates.template_type', $templateType);
-                })
-                ->when(($id > 0), function($query) use ($id) {
-                    return $query->where('tbl_common_templates.id', $id);
-                })
-                ->when(($bHideStaticTemplate == true), function($query) {
-                    return $query->where('tbl_common_templates_categories.status', '!=', 2);
-                })
-                ->get();
+            ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
+            ->select('tbl_common_templates.*', 'tbl_common_templates_categories.category_name', 'tbl_common_templates_categories.status AS category_status', 'tbl_common_templates_categories.module_name')
+            ->when(!empty($userID), function ($query) use ($userID) {
+                return $query->where('tbl_common_templates.user_id', $userID);
+            }, function ($query) {
+                return $query->where('tbl_common_templates.user_id', 0);
+            })
+            ->when(($categoryID > 0), function ($query) use ($categoryID) {
+                return $query->where('tbl_common_templates.category_id', $categoryID);
+            })->when(!empty($templateType), function ($query) use ($templateType) {
+                return $query->where('tbl_common_templates.template_type', $templateType);
+            })
+            ->when(($id > 0), function ($query) use ($id) {
+                return $query->where('tbl_common_templates.id', $id);
+            })
+            ->when(($bHideStaticTemplate == true), function ($query) {
+                return $query->where('tbl_common_templates_categories.status', '!=', 2);
+            })
+            ->where('tbl_common_templates.status', 1)
+            ->orderBy('tbl_common_templates.id', 'desc')
+            ->paginate(10);
+            //->get();
         return $oData;
+    }
+
+    /**
+     * This method used to fetch template count in provided category id
+     * @param $categoryID
+     * @param string $templateType
+     * @return mixed
+     */
+    public function countCategoryTemplates($categoryID, $templateType='email'){
+        $oData = DB::table('tbl_common_templates')
+            ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
+            ->select('tbl_common_templates.id')
+            ->where('tbl_common_templates.user_id', 0)
+            ->where('tbl_common_templates.category_id', $categoryID)
+            ->where('tbl_common_templates.template_type', $templateType)
+            ->where('tbl_common_templates.status', 1)
+            ->count();
+        //->get();
+        return $oData;
+
     }
 
     /**
@@ -49,16 +74,17 @@ class TemplatesModel extends Model {
      * @param type $templateType
      * @return boolean
      */
-    public function getCommonDraftTemplates($userID = '', $id, $templateType = '') {
+    public function getCommonDraftTemplates($userID = '', $id, $templateType = '')
+    {
         $oData = DB::table('tbl_common_templates_drafts')
-                ->when(!empty($id), function ($query) use ($id) {
-                    return $query->where('id', $id);
-                })
-                ->when(!empty($templateType), function ($query) use ($templateType) {
-                    return $query->where('template_type', $id);
-                })
-                ->orderBy('id', 'desc')
-                ->get();
+            ->when(!empty($id), function ($query) use ($id) {
+                return $query->where('id', $id);
+            })
+            ->when(!empty($templateType), function ($query) use ($templateType) {
+                return $query->where('template_type', $id);
+            })
+            ->orderBy('id', 'desc')
+            ->get();
         return $oData;
     }
 
@@ -66,9 +92,10 @@ class TemplatesModel extends Model {
      * Used to get common template categories
      * @return boolean
      */
-    public static function getCommonTemplateCategories() {
+    public static function getCommonTemplateCategories()
+    {
         $oData = DB::table('tbl_common_templates_categories')
-                ->get();
+            ->get();
         return $oData;
     }
 
@@ -76,7 +103,8 @@ class TemplatesModel extends Model {
      * Get Template Tags
      * @return type
      */
-    public function getTemplateTags() {
+    public function getTemplateTags()
+    {
         $aTags = config('bbconfig.email_tags');
         return $aTags;
     }
@@ -87,29 +115,31 @@ class TemplatesModel extends Model {
      * @param type $slug
      * @return boolean
      */
-    public function getCommonTemplateInfo($templateID = '', $slug = '') {
+    public function getCommonTemplateInfo($templateID = '', $slug = '')
+    {
         $oData = DB::table('tbl_common_templates')
-                ->when(($templateID > 0), function ($query) use ($templateID) {
-                    return $query->where('id', $templateID);
-                })
-                ->when(!empty($slug), function ($query) use ($slug) {
-                    return $query->where('template_slug', $slug);
-                })
-                ->first();
+            ->when(($templateID > 0), function ($query) use ($templateID) {
+                return $query->where('id', $templateID);
+            })
+            ->when(!empty($slug), function ($query) use ($slug) {
+                return $query->where('template_slug', $slug);
+            })
+            ->first();
         return $oData;
     }
 
     /**
-     * This function used to check duplicate template name 
+     * This function used to check duplicate template name
      * @param type $sName
      * @param type $userID
      * @return boolean
      */
-    public function checkIfTemplateNameExists($sName, $userID) {
+    public function checkIfTemplateNameExists($sName, $userID)
+    {
         $bExists = DB::table('tbl_common_templates')
-                ->where('template_name', $sName)
-                ->where('user_id', $userID)
-                ->exists();
+            ->where('template_name', $sName)
+            ->where('user_id', $userID)
+            ->exists();
 
         return $bExists;
     }
@@ -119,7 +149,8 @@ class TemplatesModel extends Model {
      * @param type $aData
      * @return type
      */
-    public function addUserTemplate($aData) {
+    public function addUserTemplate($aData)
+    {
         $insert_id = DB::table('tbl_common_templates')->insertGetId($aData);
         return $insert_id;
     }
@@ -131,12 +162,13 @@ class TemplatesModel extends Model {
      * @param type $userID
      * @return boolean
      */
-    public function updateCommonTemplate($aData, $templateID, $userID) {
+    public function updateCommonTemplate($aData, $templateID, $userID)
+    {
         if ($templateID > 0) {
             $result = DB::table('tbl_common_templates')
-                    ->where('id', $templateID)
-                    ->where('user_id', $userID)
-                    ->update($aData);
+                ->where('id', $templateID)
+                ->where('user_id', $userID)
+                ->update($aData);
             if ($result)
                 return true;
         }
@@ -149,11 +181,12 @@ class TemplatesModel extends Model {
      * @param type $userID
      * @return boolean
      */
-    public function deleteUserTemplate($templateID, $userID) {
+    public function deleteUserTemplate($templateID, $userID)
+    {
         $result = DB::table('tbl_common_templates')
-                ->where('id', $templateID)
-                ->where('user_id', $userID)
-                ->delete();
+            ->where('id', $templateID)
+            ->where('user_id', $userID)
+            ->delete();
         if ($result) {
             return true;
         }
@@ -165,7 +198,8 @@ class TemplatesModel extends Model {
      * @param type $aData
      * @return boolean
      */
-    public function addTemplate($aData) {
+    public function addTemplate($aData)
+    {
 
         $result = DB::table('tbl_templates')->insert($aData);
         //echo $this->db->last_query();exit;
@@ -180,13 +214,14 @@ class TemplatesModel extends Model {
      * @param type $id
      * @return type
      */
-    public function getAllTemplate($id = '') {
+    public function getAllTemplate($id = '')
+    {
         $oData = DB::table('tbl_templates')
-                ->when(($id > 0), function ($query) use ($id) {
-                    return $query->where('id', $id);
-                })
-                ->orderBy('id', 'asc')
-                ->get();
+            ->when(($id > 0), function ($query) use ($id) {
+                return $query->where('id', $id);
+            })
+            ->orderBy('id', 'asc')
+            ->get();
         return $oData;
     }
 
@@ -195,10 +230,11 @@ class TemplatesModel extends Model {
      * @param type $slug
      * @return type
      */
-    public static function getTemplateBySlug($slug) {
+    public static function getTemplateBySlug($slug)
+    {
         $oData = DB::table('tbl_templates')
-                ->where('slug', $slug)
-                ->get();
+            ->where('slug', $slug)
+            ->get();
         return $oData;
     }
 
@@ -208,24 +244,26 @@ class TemplatesModel extends Model {
      * @param type $aData
      * @return boolean
      */
-    public function updateTemplate($tempId, $aData) {
+    public function updateTemplate($tempId, $aData)
+    {
         $oData = DB::table('tbl_templates')
-                ->where('id', $tempId)
-                ->update($aData);
+            ->where('id', $tempId)
+            ->update($aData);
         return true;
     }
-    
-    
+
+
     /**
      * Delete template
      * @param type $tempId
      * @return boolean
      */
-    public function deleteTemplate($tempId) {
+    public function deleteTemplate($tempId)
+    {
         $oData = DB::table('tbl_templates')
-                ->where('id', $tempId)
-                ->delete();
-        return true;        
+            ->where('id', $tempId)
+            ->delete();
+        return true;
     }
 
 }

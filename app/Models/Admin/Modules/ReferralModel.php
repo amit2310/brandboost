@@ -56,7 +56,8 @@ class ReferralModel extends Model {
 			->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
 			->leftjoin('tbl_users', 'tbl_referral_rewards.user_id','=','tbl_users.id')
 			->where('tbl_referral_rewards.user_id', $userID)
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }
@@ -395,7 +396,8 @@ class ReferralModel extends Model {
 			->where('tbl_referral_sales.account_id', $accountID)
 			->where('tbl_referral_sales.affiliateid', '!=', NULL)
 			->orderBy('tbl_referral_sales.id', 'desc')
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }
@@ -443,7 +445,8 @@ class ReferralModel extends Model {
 			->leftjoin('tbl_referral_automations_campaigns', 'tbl_referral_automations_events.id','=','tbl_referral_automations_campaigns.event_id')
 			->where('tbl_referral_automations_events.referral_id', $referralID)
 			->orderBy('tbl_referral_automations_events.id', 'ASC')
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }
@@ -462,7 +465,8 @@ class ReferralModel extends Model {
 			->when((!empty($accountID)), function ($query) use ($accountID) {
 				return $query->where('tbl_referral_users.account_id', $accountID);
 			})
-			->get();
+			//->get();
+            ->paginate(10);
 
         return $aData;
     }

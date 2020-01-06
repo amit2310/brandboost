@@ -1,393 +1,270 @@
 <template>
+
     <div class="content">
 
-        <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
-        <div class="page_header">
-            <div class="row">
-                <!--=============Headings & Tabs menu==============-->
-                <div class="col-md-3">
-                    <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> {{ title }}</h3>
+        <!--******************
+          Top Heading area
+         **********************-->
+        <div class="top-bar-top-section bbot">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
+                        <h3 class="htxt_medium_24 dark_700">Review Requests</h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="circle-icon-40"><img src="assets/images/filter_review.svg"/></button>
+                    </div>
                 </div>
-                <!--=============Button Area Right Side==============-->
-                <div class="col-md-9 text-right btn_area">
-                    <div class="btn-group">
-                        <button type="button" class="btn light_btn btn-icon dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-calendar2"></i>&nbsp; &nbsp; Filter Contacts &nbsp; &nbsp; <span class="caret"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-content width-320 dropdown-menu-right">
-                            <div class="dropdown-content-heading"> Filter
-                                <ul class="icons-list">
-                                    <li><a href="#"><i class="icon-more"></i></a> </li>
-                                </ul>
-                            </div>
-                            <div class="">
-                                <div class="panel-group panel-group-control panel-group-control-right content-group-lg filter_campaign" id="accordion-control-right">
-                                    <div class="panel panel-white">
-                                        <div class="panel-heading sidebarheadings active">
-                                            <h6 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group1"><i class="icon-star-empty3"></i>&nbsp;Campaign Type</a> </h6>
-                                        </div>
-                                        <div id="accordion-control-right-group1" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        Most startups fail. But many of those failures are preventable. The Lean Startup is a new approach being adopted across the globe, changing the way companies are built and new products are launched.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-white">
-                                        <div class="panel-heading sidebarheadings">
-                                            <h6 class="panel-title"> <a class="collapsed" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group2"><i class="icon-arrow-up-left2"></i>&nbsp; Source</a> </h6>
-                                        </div>
-                                        <div id="accordion-control-right-group2" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-md-12"> Conetent Goes here... </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-white">
-                                        <div class="panel-heading sidebarheadings">
-                                            <h6 class="panel-title"> <a class="collapsed" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group73"><i class="icon-star-full2"></i>&nbsp; Rating</a> </h6>
-                                        </div>
-                                        <div id="accordion-control-right-group73" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-md-12"> Conetent Goes here... </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-white">
-                                        <div class="panel-heading sidebarheadings">
-                                            <h6 class="panel-title"> <a class="collapsed" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group74"><i class="icon-calendar"></i>&nbsp; Date Created</a> </h6>
-                                        </div>
-                                        <div id="accordion-control-right-group74" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-md-12"> Conetent Goes here... </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-white">
-                                        <div class="panel-heading sidebarheadings">
-                                            <h6 class="panel-title"> <a class="collapsed" data-toggle="collapse" data-parent="#accordion-control-right" href="#accordion-control-right-group83"><i class="icon-thumbs-up2"></i>&nbsp; Reviews</a> </h6>
-                                        </div>
-                                        <div id="accordion-control-right-group83" class="panel-collapse collapse in">
-                                            <div class="panel-body">
-                                                <div class="row mb20">
-                                                    <div class="col-xs-6">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input type="checkbox"  class="control-primary" checked="checked">
-                                                                Total Reviews
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <input class="form-control input-sm" type="text" name="" value="20" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" />
-                                                    </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
 
-                                                </div>
-                                                <div class="row mb20">
-                                                    <div class="col-xs-6">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input type="checkbox"  class="control-primary" checked="checked">
-                                                                Positive
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <input class="form-control input-sm" type="text" name="" value="20" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" />
-                                                    </div>
+        <!--******************
+          Content Area
+         **********************-->
+        <div class="content-area">
+            <div class="container-fluid" v-if="count <= 0">
 
-                                                </div>
-                                                <div class="row mb20">
-                                                    <div class="col-xs-6">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input type="checkbox"  class="control-primary">
-                                                                Neutral
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <input class="form-control input-sm" type="text" name="" value="20" disabled /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="100" disabled />
-                                                    </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card_shadow min-h-280">
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input type="checkbox"  class="control-primary" checked="checked">
-                                                                Negative
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <input class="form-control input-sm" type="text" name="" value="0" /> <span class="dash">-</span> <input class="form-control input-sm" type="text" name="" value="10" />
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="row mb65">
+                                <div class="col-md-6 text-left">
+                                    <a class="lh_32 reviews_400 htxt_bold_14" href="#">
+                                        <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/download-fill-review.svg"></span>
+                                        Import review requests
+                                    </a>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
+                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
+                                        Learn how to use reviews monitoring
+                                    </a>
                                 </div>
                             </div>
-                            <div class="dropdown-content-footer">
-                                <button type="button" class="btn dark_btn dropdown-toggle" style="display: inline-block;"><i class="icon-filter4"></i><span> &nbsp;  Filter</span> </button>
-                                &nbsp; &nbsp;
-                                <a style="display: inline-block;" href="#">Clear All</a>
+
+                            <div class="row mb65">
+                                <div class="col-md-12 text-center">
+                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_request.svg">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">No review request so far. But you can change it!</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import review request!</h3>
+                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container-fluid" v-else>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p40 pt0 pb0">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p class="fsize12 fw500 yellow_500 mt30 mb30"><i><img src="assets/images/lightbulb-fill1_yellow.svg"></i> &nbsp; TIPS</p>
+                                    <h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
+                                    <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">Conversational marketing platform that helps companies close more deals by messaging with prospects in real-time &amp; via intelligent chatbots. Qualify leads, book meetings.</p>
+
+                                </div>
+                                <div class="col-md-5 text-center mt20">
+                                    <img class="mt0" style="max-width: 272px;" src="assets/images/review_request.svg">
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
-        </div>
-        <!--&&&&&&&&&&&& PAGE HEADER END &&&&&&&&&&-->
 
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Marketing campaigns -->
-                <div class="panel panel-flat">
-                    <div class="panel-heading" style="box-shadow:none">
-                        <h6 class="panel-title">{{count}} Review Requests</h6>
-
-                        <div class="heading-elements">
-
-                            <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                <input class="form-control input-sm cus_search" tableid="reviewRequestOnsite" placeholder="Search by name" type="text">
-                                <div class="form-control-feedback">
-                                    <i class=""><img src="/assets/images/icon_search.png" width="14"></i>
+                <div class="table_head_action mt-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="htxt_medium_16 dark_400">{{ count }} &nbsp; Review requests</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table_action">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="table_action_tool">
-                                <a href="javascript:void(0);"><i class=""><img src="/assets/images/icon_calender.png"/></i></a>
-                                <a href="javascript:void(0);" class="editDataList"><i class=""><img src="/assets/images/icon_edit.png"/></i></a>
-                                <a href="javascript:void(0);" id="deleteReviewRequest" class="custom_action_box" style="display:none;"><i class="icon-trash position-left"></i></a>
+                                <div class="float-right ml10 mr10">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/list_view.svg"></span>&nbsp; List View
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <input class="table_search" type="text" placeholder="Search">
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="table-responsive">
-                        <table v-if="count>0" class="table" id="reviewRequestOnsite">
-                            <thead>
-                            <tr>
-                                <th style="display: none;"></th>
-                                <th style="display: none;"></th>
-                                <th class="nosort editAction" style="display:none;"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                <th><i class="icon-stack-star"></i>Name</th>
-                                <th><i class="icon-atom"></i>Campaign</th>
-                                <!-- <th><i class="icon-display"></i>Phone</th> -->
-
-                                <th><i class="icon-hash"></i>Source</th>
-                                <th><i class="icon-user"></i>Contact Details</th>
-                                <th><i class="icon-calendar"></i>Created</th>
-                                <th><i class="icon-calendar"></i>Request Sent Date</th>
-                                <th class="text-center"><i class="fa fa-dot-circle-o"></i>Status</th>
-                                <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="request in requests" :id="`append-${request.trackinglogid}`" class="selectedClass">
-                                <td style="display: none;">{{ request.created}}</td>
-                                <td style="display: none;">{{ request.trackinglogid }}</td>
-                                <td class="editAction" style="display:none;">
-                                    <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox" name="checkRows[]" class="checkRows" :id="`chk${request.trackinglogid}`" :value="request.trackinglogid" ><span class="custmo_checkmark"></span>
-                                    </label>
-                                </td>
-
-                                <td>
-                                    <div class="media-left media-middle">
-                                        <a class="editBrandboost" :brandid="request.brandboost_id" b_title="click to view campaign details" href="javascript:void(0);">
-                                            <img v-if="request.brand_img" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${request.brand_img}`" onerror="this.src='/assets/images/default-logo.png'"  class="img-circle img-xs br5" alt="">
-                                            <img v-else src="/assets/images/default_table_img2.png" onerror="this.src='/assets/images/default-logo.png'"  class="img-circle img-xs br5" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="media-left">
-                                        <div class=""><a href="javascript:void(0);" class="text-default text-semibold" :brandid="request.brandboost_id">{{ request.brand_title }}</a> </div>
-                                        <div v-if="request.brand_desc" class="text-muted text-size-small">{{setStringLimit(request.brand_desc, 20)}}</div>
-                                        <div v-else class="text-muted text-size-small" v-html="displayNoData()"></div>
-                                    </div>
-                                </td>
-
-                                <td><div class="media-left media-middle"> <a class="icons" href="#"><i class="icon-display4 txt_purple"></i></a> </div>
-                                    <div class="media-left">
-                                        <div class="pt-5"><a href="#" class="text-default text-semibold">{{ capitalizeFirstLetter(request.review_type) }}</a></div>
-                                    </div></td>
-
-                                <td><div class="media-left media-middle"> <a class="icons" href="javascript:void(0);">
-                                    <i v-if="capitalizeFirstLetter(request.tracksubscribertype) == 'Sms'" class="icon-mobile2 txt_green"></i>
-                                    <i v-else class="icon-envelop txt_blue"></i>
-
-                                </a> </div>
-                                    <div class="media-left">
-                                        <div class="pt-5">
-                                            <a href="javascript:void(0);" class="text-default text-semibold">{{ capitalizeFirstLetter(request.tracksubscribertype) }}</a></div>
-                                    </div></td>
-
-                                <td>
-                                    <div class="media-left media-middle">
-                                        <user-avatar
-                                            :avatar="request.avatar"
-                                            :firstname="request.firstname"
-                                            :lastname="request.lastname"
-                                        ></user-avatar>
-                                    </div>
-
-                                    <div v-if="request.uid" class="media-left">
-                                        <div class="pt-5">
-                                            <a :href="`/admin/subscriber/activities/${request.uid}`" target="_blank" class="text-default text-semibold bbot">
-                                                <span>{{ request.firstname }} {{ request.lastname }}</span>
-                                            </a>
-                                            <img class="flags" :src="`/assets/images/flags/${request.country.toLowerCase()}.png`" onerror="this.src='/assets/images/flags/us.png'"/></div>
-                                        <div class="text-muted text-size-small">{{ request.email }}</div>
-                                    </div>
-                                    <div v-else class="media-left" v-html="displayNoData()"></div>
-                                </td>
-
-                                <td>
-                                    <div class="media-left">
-                                        <div class="pt-5"><span class="text-default text-semibold">{{request.created}}</span></div>
-                                        <div class="text-muted text-size-small">{{request.created}}</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="media-left">
-                                        <div class="pt-5"><span class="text-default text-semibold">{{ request.requestdate }}</span></div>
-                                        <div class="text-muted text-size-small">{{ request.requestdate }}</div>
-                                    </div>
-                                </td>
-
-                                <td class="text-center">
-                                    <div class="tdropdown">
-                                        <i v-if="request.subscriberstatus == 1" class="icon-primitive-dot txt_green fsize16"></i>
-                                        <i v-else class="icon-primitive-dot txt_red fsize16"></i>
-                                        <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">{{ request.subscriberstatus == 1 ? ' Active' : ' Inactive' }}</a>
-                                        <ul style="right: 0;" class="dropdown-menu dropdown-menu-right status">
-
-                                            <li v-if="request.subscriberstatus == 1">
-                                                <a :subscriberId="request.subscriberid" change_status = "0" class="chg_status"><i class='icon-primitive-dot txt_red'></i> Inacive</a>
-                                            </li>
-
-                                            <li v-else>
-                                                <a  :subscriberId="request.subscriberid" change_status = "1" class="chg_status"><i class='icon-primitive-dot txt_green'></i> Active</a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <ul class="icons-list">
-                                        <li class="dropdown">
-                                            <a class="table_more dropdown-toggle" data-toggle="dropdown"><img src="/assets/images/more.svg"></a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li v-if="request.subscriberstatus == 1">
-                                                    <a :subscriberId="request.subscriberid" change_status = "0" class="chg_status"><i class='icon-file-locked'></i> Inacive</a>
-                                                </li>
-                                                <li v-else>
-                                                    <a  :subscriberId="request.subscriberid" change_status = "1" class="chg_status"><i class='icon-file-locked'></i> Active</a>
-                                                </li>
-
-
-                                                <li><a class="deleteSubscriber" href="javascript:void(0);" :subscriberId="request.subscriberid" :recordId="request.trackinglogid"><i class="icon-trash"></i> Delete</a></li>
-
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </td>
-
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <table v-else class="table datatable-basic">
-                            <thead>
-                            <tr>
-                                <th><i class="icon-stack-star"></i>Name</th>
-                                <th><i class="icon-atom"></i>Campaign</th>
-                                <th><i class="icon-hash"></i>Source</th>
-                                <th><i class="icon-user"></i>Contact Details</th>
-                                <th><i class="icon-calendar"></i>Created</th>
-                                <th><i class="icon-calendar"></i>Request Sent Date</th>
-                                <th class="text-center"><i class="fa fa-dot-circle-o"></i>Status</th>
-                                <th class="text-center nosort"><i class="fa fa-dot-circle-o"></i>Action</th>
-
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <td style="display: none"></td>
-                            <td style="display: none"></td>
-                            <td colspan="10">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div style="margin: 20px 0px 0;" class="text-center">
-                                            <h5 class="mb-20 mt40">
-                                                Looks Like You Don’t Have Any Review Request Yet <img src="/assets/images/smiley.png"> <br>
-                                                Lets Create Your First Review Request.
-                                            </h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr v-for="request in requests">
+                                    <td>
+                                        <span class="table-img mr15">
+                                           <!-- <span class="fl_name bkg_red_light red_300">vw</span>-->
+                                            <user-avatar
+                                                :avatar="request.avatar"
+                                                :firstname="request.firstname"
+                                                :lastname="request.lastname"
+                                            ></user-avatar>
+                                        </span>
+                                        <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</span>
+                                    </td>
+                                    <td><span><img src="assets/images/mail-line.svg"/></span>&nbsp; {{ capitalizeFirstLetter(request.tracksubscribertype) }} </td>
+                                    <td>{{ request.email }}</td>
+                                    <td>{{ displayDateFormat('M d, h:i A', request.created) }}</td>
+                                    <td class="text-right">
+                                        <span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
+                                    </td>
+                                    <td>
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
+                                                <span><img src="assets/images/more-vertical.svg"></span>
+                                            </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a v-if="request.subscriberstatus == 'active'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(request.subscriberid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                                <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(request.subscriberid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(request.subscriberid,request.trackinglogid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="display: none"></td>
-                            <td style="display: none"></td>
-                            <td style="display: none"></td>
-                            <td style="display: none"></td>
-                            <td style="display: none"></td>
-                            </tbody>
-                        </table>
-
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <!--<div align="right" id="pagination_link"></div>-->
-                <!-- /marketing campaigns -->
+
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    :offset="4">
+                </pagination>
+
             </div>
         </div>
+        <!--******************
+          Content Area End
+         **********************-->
+
     </div>
-
-
 
 </template>
 
 <script>
-    import UserAvatar from '../../../helpers/UserAvatar';
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
-        props : ['title', 'review_type'],
-        components: {UserAvatar},
+        props : ['pageColor', 'title', 'review_type'],
+        components: {UserAvatar, Pagination},
         data(){
             return {
+                successMsg : '',
+                errorMsg: '',
+                loading: true,
+                moduleName: '',
+                moduleUnitID: '',
+                moduleAccountID: '',
                 count : 0,
-                requests : {},
-
+                requests : '',
+                allData: {},
+                current_page: 1,
+                breadcrumb: '',
             }
         },
         mounted() {
-            axios.get('/admin/brandboost/review_request/onsite')
-                .then(response => {
-                    this.requests = response.data.oFilteredRequests;
-                    this.count = response.data.totalCount;
-                    let tableId = 'reviewRequestOnsite';
-                    this.paginate(tableId);
-                });
-
+            this.$parent.pageColor = this.pageColor;
+            this.loadPaginatedData();
         },
+        methods: {
+            loadPaginatedData : function(){
+                axios.get('/admin/brandboost/review_request/onsite')
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.requests = response.data.oFilteredRequests;
+                        this.count = response.data.totalCount;
+                        this.allData = response.data.allData;
+                        this.loading = false;
+                    });
+            },
+            showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            navigatePagination: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            changeStatus: function(subscriberId, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/brandboost/update_subscriber_status', {
+                        subscriber_id:subscriberId,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
 
+                        });
+                }
+            },
+            deleteItem: function(subscriberid,trackinglogid) {
+                if(confirm('Are you sure you want to delete this item?')){
+                    //Do axios
+                    axios.post('/admin/brandboost/deleteRRrecord', {
+                        subscriberId:subscriberid,
+                        recordId:trackinglogid,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            }
+        }
     }
 </script>
 
 <style>
-    .createSegment{
-        cursor:pointer!important;
-    }
+
 </style>
