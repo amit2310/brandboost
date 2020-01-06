@@ -34,6 +34,9 @@ class AccountSetting extends Controller
         $mTags = new TagsModel();
         $mLists = new ListsModel();
 
+        /* Country List */
+        $countries = getAllCountries();
+
         $aTeamInfo = '';
         if (empty($userID)) {
             $aUser = getLoggedUser();
@@ -99,6 +102,7 @@ class AccountSetting extends Controller
                 'pagename' => $breadcrumb,
                 'breadcrumb' => $aBreadcrumb,
                 'userDetail' => $userDetail,
+                'countries' => $countries,
                 'onsiteList' => $aBrandboostList,
                 'offsiteList' => $aBrandboostOffsiteList,
                 'getCampEmail' => $getCampEmail,
