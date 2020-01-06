@@ -21,8 +21,6 @@
 	.apexcharts-xaxis-tick{display: none}
 	
 	</style>
-
-
 </head>
 <body id="EmailSection">
 
@@ -95,14 +93,10 @@
      			<hr>
      			<p class="fsize14 mb30" style="color: #5a6f80;">Your recent emails have low avg. 9% bounce rate. We suggest you to send new email 
 in next 3 days.</p>
-    		<a class="fsize15 email_400" href="#"><img src="assets/images/emailedit.svg"/>&nbsp; Create new email</a>
-     		</div>
+    		<a class="fsize15 email_400" href="#"><img src="assets/images/emailedit.svg"/>&nbsp; Create new email</a>     		</div>
      		<div class="col-md-6 text-center">
-     			<img class="" style="max-height: 210px; " src="assets/images/email_dashboard_illustration.png"/>
+     			<img class="" style="max-height: 210px; " src="assets/images/email_dashboard_illustration.png"/>     		</div>
      		</div>
-     			
-     		</div>
-     			
      		</div>
      	</div>
      	<div class="col-md-4 d-flex">
@@ -114,9 +108,7 @@ in next 3 days.</p>
      			<p class="fsize14 mb0 mt10" style="color: #5a6f80;">You used 408/450 montly credits</p>
      		</div>
      			<div class="p15 btop">
-     				<a class="fsize15 fw500 email_400 mt20" href="#">Purchase more credits</a>	
-     			</div>
-     			
+     				<a class="fsize15 fw500 email_400 mt20" href="#">Purchase more credits</a>     			</div>
      		</div>
      	</div>
      </div>
@@ -132,8 +124,7 @@ in next 3 days.</p>
      	<div class="col-md-6 d-flex">
      		<div class="card min-h-280 p0 col">
      		<div class="p15 pl40 bbot">
-     			<a class="fsize12 dark_200" href="#">EMAILS SENT</a>
-     		</div>
+     			<a class="fsize12 dark_200" href="#">EMAILS SENT</a>     		</div>
      		<div class="p30 pl40 pb0">
      			<h3 class="htxt_medium_24 dark_700 mb10">51,913</h3>
      			<p class="fsize14"><span class="green_400">33,87%</span> &nbsp;  <span class="dark_400">last month</span></p>
@@ -142,9 +133,6 @@ in next 3 days.</p>
      			<div id="basiclinechart" style="margin-left: -20px">
     				<apexchart type=line height=240 :options="chartOptions2" :series="series" />
   				</div>
-    		
-    		
-    		
      		</div>
      		</div>
      	</div>
@@ -158,21 +146,10 @@ in next 3 days.</p>
      			 <div id="chartSubscriptions" style="margin-left: -20px; margin-top: 50px;">
 					<apexchart type=bar height=220 :options="chartOptions" :series="series" />
 				  </div>
-     			
      		</div>
      	</div>
      </div>
-     
-     		
-     		
-
-    
-    
-    
-     
-     
       </div>
-      
       </div>
       
 <!--******************
@@ -423,6 +400,5 @@ $(document).ready(function(){
 
     })
   </script>
-
 </body>
 </html>
