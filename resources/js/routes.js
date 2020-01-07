@@ -44,6 +44,7 @@ import offsiteStep5 from './components/admin/brandboost/offsite/setup/Setup5';
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
 import Media from './components/admin/brandboost/Media.vue';
 import Tags from './components/admin/tags/Index';
+import TagGroups from './components/admin/tags/TagGroups';
 import TagSubscribers from './components/admin/tags/TagSubscribers';
 import TagsReview from './components/admin/tags/TagsReview';
 import TagsFeedback from './components/admin/tags/TagsFeedback';
@@ -181,7 +182,7 @@ const routes = [
     { path: '/reviews/offsite/setup/:id/4', component: offsiteStep4, props : {title : 'Off Site Campaign'} },
     { path: '/reviews/offsite/setup/:id/5', component: offsiteStep5, props : {title : 'Off Site Campaign'} },
 
-
+    { path: '/tags/groups', component: TagGroups, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
