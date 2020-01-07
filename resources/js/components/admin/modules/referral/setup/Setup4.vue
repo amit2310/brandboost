@@ -71,7 +71,7 @@
                                                 class="field"
                                                 type="checkbox"
                                                 v-model="form.referralStatus"
-                                                :checked="form.referralStatus != 'draft'"
+                                                :checked="form.referralStatus == 'active' || form.referralStatus == true"
                                                 @change="updateSettings"
                                             >
                                             <span class="toggle email"></span> </label>

@@ -29,7 +29,7 @@
                             <ul class="email_config_list">
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(1)"><span class="num_circle"><span class="num">1</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Sources</a></li>
-                                <li><a class="" href="javascript:void(0);"><span class="num_circle"><span class="num">2</span><span
+                                <li><a class="" href="javascript:void(0);" @click="displayStep(2)"><span class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Rewards</a></li>
                                 <li><a href="javascript:void(0);" @click="displayStep(3)"><span class="num_circle"><span class="num">3</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Workflow</a>
@@ -42,8 +42,175 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    Integration Setup here!
+                <div class="card p40 min_h_240">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="htxt_bold_16 dark_700 mb10">Invite Code</h3>
+                            <p class="fsize12 fw300 dark_300 mb20">Embed code into your website</p>
+                        </div>
+
+                        <div class="col-md-8">
+                            <code>
+                            <pre class="prettyprint invite_code_copy">
+&lt;script
+    type="text/javascript"
+    id="bbscriptloader"
+    data-key="{{campaign.hashcode}}"
+    data-widgets="referral"
+    async="true"
+    src="http://brandboostx.com/assets/js/ref_widgets.js"&gt;
+&lt;/script&gt;</pre></code>
+                            <button class="btn btn-sm bkg_green_300 light_000 float-left" type="button" onclick="copyToClipboard('.invite_code_copy')">Copy Code
+                                <span>&nbsp;</span>
+                            </button>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div style="margin-top:-35px;">
+                                <h6 class="pb-3">How to add widget</h6>
+                                <div>
+                                    <iframe class="embed-responsive-item br0"  src="https://www.youtube.com/embed/2H_Jsgh2Z3Y?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="card p40 min_h_240">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="htxt_bold_16 dark_700 mb10">Post Purchase Code</h3>
+                            <p class="fsize12 fw300 dark_300 mb20">Embed code into your website</p>
+                        </div>
+
+                        <div class="col-md-8">
+                            <code>
+                            <pre class="prettyprint copySaleWithoutPopup">
+&lt;div id="bb-invoice_details"
+        data-bb-firstname="Alen"
+        data-bb-lastname="Sultanic"
+        data-bb-email="umair.products@gmail.com"
+        data-bb-invoice-id="12345"
+        data-bb-amount="10"
+        data-bb-currency="USD"
+        data-bb-timestamp={{new Date().getTime()}}&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"
+         id="bbscriptloader"
+         data-key="{{campaign.hashcode}}"
+         data-widgets="referral-sale"
+         async="true"
+         src="http://brandboostx.com/assets/js/ref_widgets.js"&gt;
+&lt;/script&gt;
+                            </pre></code>
+                            <button class="btn btn-sm bkg_green_300 light_000 float-left" type="button" onclick="copyToClipboard('.copySaleWithoutPopup')">Copy Code
+                                <span>&nbsp;</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="margin-top:-50px;">
+                                <h6 class="pb-3">You’re All Set!</h6>
+                                <div>
+                                    <div class="m0">
+                                        <p>Visit your store's dashboard and find your purchase completed page.Paste this code just before the closing body tag on your purchase completed page after replacing these dynamic variables: You must replace the following dummy fields in the code snippet with dynamic checkout data from your store platform:
+                                        </p>
+                                    </div>
+                                    <div class="">
+                                        <p class="fsize11 text-muted m0">
+                                            data-bb-firstname: Customer First Name<br><br>
+
+                                            data-bb-lastname: Customer Last Name<br><br>
+
+                                            data-bb-email: Customer Email Address<br><br>
+
+                                            data-bb-invoice-id: Invoice Number<br><br>
+
+                                            data-bb-amount: Invoice Amount<br><br>
+
+                                            data-bb-currency: Invoice Currency (3 letter code)<br><br>
+
+                                            data-bb-timestamp: Purchase Timestamp (UNIX time)<br><br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="card p40 min_h_240">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="htxt_bold_16 dark_700 mb10">Post Purchase Code with Referral Popup</h3>
+                            <p class="fsize12 fw300 dark_300 mb20">Display Referral popup after successful purchase</p>
+                        </div>
+
+                        <div class="col-md-8">
+                            <code>
+                            <pre class="prettyprint copySalePopup">
+&lt;div id="bb-invoice_details"
+        data-bb-firstname="Alen"
+        data-bb-lastname="Sultanic"
+        data-bb-email="umair.products@gmail.com"
+        data-bb-invoice-id="12345"
+        data-bb-amount="10"
+        data-bb-currency="USD"
+        data-bb-timestamp="{{new Date().getTime()}}"
+        data-bb-showwidget="true"&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"
+         id="bbscriptloader"
+         data-key="{{campaign.hashcode}}"
+         data-widgets="referral-sale"
+         async="true"
+         src="http://brandboostx.com/assets/js/ref_widgets.js"&gt;
+&lt;/script&gt;
+                            </pre></code>
+                            <button class="btn btn-sm bkg_green_300 light_000 float-left" type="button" onclick="copyToClipboard('.copySalePopup')">Copy Code
+                                <span>&nbsp;</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="margin-top:-50px;">
+                                <h6 class="pb-3">You’re All Set!</h6>
+                                <div>
+                                    <div class="m0">
+                                        <p>Visit your store's dashboard and find your purchase completed page.Paste this code just before the closing body tag on your purchase completed page after replacing these dynamic variables: You must replace the following dummy fields in the code snippet with dynamic checkout data from your store platform:
+                                        </p>
+                                    </div>
+                                    <div class="">
+                                        <p class="fsize11 text-muted m0">
+                                            data-bb-firstname: Customer First Name<br><br>
+
+                                            data-bb-lastname: Customer Last Name<br><br>
+
+                                            data-bb-email: Customer Email Address<br><br>
+
+                                            data-bb-invoice-id: Invoice Number<br><br>
+
+                                            data-bb-amount: Invoice Amount<br><br>
+
+                                            data-bb-currency: Invoice Currency (3 letter code)<br><br>
+
+                                            data-bb-timestamp: Purchase Timestamp (UNIX time)<br><br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
                 </div>
 
 
@@ -97,8 +264,6 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oReferral;
                     this.loading = false;
-                    //loadJQScript(this.user.id);
-
                 });
         },
         mounted() {
@@ -156,6 +321,8 @@
         }
 
     };
+
+
 
 </script>
 <style scoped>
