@@ -107,7 +107,7 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteTagGroup(oTagGroup.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <div style="cursor:pointer;">
+                            <div @click="showTags(oTagGroup.id)" style="cursor:pointer;">
                                 <img class="mt20" src="assets/images/tag_icon_circle.svg">
                                 <h3 class="htxt_bold_16 dark_700 mt25 mb15">
                                     {{capitalizeFirstLetter(setStringLimit(oTagGroup.group_name, 20))}}
@@ -218,8 +218,8 @@
             console.log('Component mounted.');
         },
         methods: {
-            showTagSubscribers: function(tagId){
-                window.location.href='#/tags/getTagContacts/'+tagId;
+            showTags: function(groupId){ alert(groupId)
+                window.location.href='#/tags/'+groupId;
             },
             loadPaginatedData: function () {
                 axios.get('/admin/tags/groups?page=' + this.current_page)
@@ -250,7 +250,7 @@
                         } else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate_entry') {
                                 this.loading = false;
-                                this.successMsg = 'Group name is already exists.';
+                                this.successMsg = 'Group name already exists.';
                             } else {
                                 this.loading = false;
                                 this.successMsg = 'Something went wrong.';
@@ -263,11 +263,11 @@
                         alert('All form fields are required');
                     });
             },
-            deleteTagGroup: function(tagId) {
+            deleteTagGroup: function(groupId) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
                     axios.post('/admin/tags/deleteTagGroup', {
-                        id:tagId,
+                        id:groupId,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()

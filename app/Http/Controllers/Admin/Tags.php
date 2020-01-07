@@ -83,7 +83,7 @@ class Tags extends Controller {
             'Tags' => '#/tags/groups'
         );
 
-        $aTagGroups = TagsModel::getClientTagGroups($userID);
+        $aTagGroups = $mTag->getClientTagGroups($userID);
 
         $aData = array(
             'title' => 'Insight Tags',
@@ -397,8 +397,13 @@ class Tags extends Controller {
             exit;
         }
 
+        $validatedData = $request->validate([
+            'txtTagName' => ['required'],
+            'description' => ['required']
+        ]);
 
         $tagName = strip_tags($request->txtTagName);
+        $description = strip_tags($request->description);
         $bTagExists = $mTag->checkifGroupEntityExist($tagName, $userID);
 
         if ($bTagExists == false) {
@@ -406,6 +411,7 @@ class Tags extends Controller {
             $aInput = array(
                 'group_id' => $groupID,
                 'tag_name' => $tagName,
+                'tag_description' => $description,
                 'tag_created' => date("Y-m-d H:i:s")
             );
             $tagID = $mTag->addTagGroupEntity($aInput);
@@ -673,7 +679,7 @@ class Tags extends Controller {
         if (!empty($id)) {
             $bDeleted = $mTag->deleteTagGroupEntity($id);
             if ($bDeleted) {
-                $response = array('status' => 'success', 'msg' => 'Tag group deleted successfully!');
+                $response = array('status' => 'success', 'msg' => 'Tag deleted successfully!');
                 echo json_encode($response);
                 exit;
             } else {
@@ -820,16 +826,38 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mTag = new TagsModel();
+
         if (empty($request) || empty($userID)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
             echo json_encode($response);
             exit;
         }
-        $groupID = strip_tags($request->groupID);
+
+        $groupID = strip_tags($request->id);
+
+        $aTagGroupDetails = $mTag->getTagGroupDetails($groupID);
         $aTags = $mTag->getTagList($groupID);
-        $sTagList = $this->load->view('admin/tags/taglist', array('aTags' => $aTags), true);
-        $response = array('status' => 'success', 'content' => $sTagList);
-        echo json_encode($response);
+
+        //$sTagList = $this->load->view('admin/tags/taglist', array('aTags' => $aTags), true);
+        //$response = array('status' => 'success', 'content' => $sTagList);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Tag Group' => '#/tags/groups',
+            'Tags' => '#/tags/list/'.$groupID
+        );
+
+        $aData = array(
+            'title' => 'Insight Tags',
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
+            'userID' => $userID,
+            'groupID' => $groupID,
+            'allData' => $aTags,
+            'aTags' => $aTags->items(),
+            'aTagGroupDetails' => $aTagGroupDetails
+        );
+
+        echo json_encode($aData);
         exit;
     }
 
