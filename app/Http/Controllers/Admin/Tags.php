@@ -52,11 +52,10 @@ class Tags extends Controller {
                 $TagSubscribers[$tid] = $mTag->getSubscriberIDsByTagId($tid);
             }
         }
-
+        $aData = ['allData' => $aTag, 'aTag' => $aTag->items(), 'aGroupID' => $aGroupID, 'aTagSubscribers' => $TagSubscribers];
         //$aTag->aGroupID = $aGroupID;
 //        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
-        echo json_encode(['allData' => $aTag, 'aTag' => $aTag->items(), 'aGroupID' => $aGroupID, 'aTagSubscribers' => $TagSubscribers]);
-        exit;
+        return $aData;;
     }
 
     /**

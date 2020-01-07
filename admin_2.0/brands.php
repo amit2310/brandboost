@@ -10,6 +10,7 @@
  <!--******************
  CSS
  **********************-->
+ <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
@@ -17,29 +18,9 @@
 
 <style>
 	
-	.brand_sidebar .form-group.select_box {
-		padding: 10px 0;
-		margin: 0 !important;
-	}
-	.brand_sidebar .form-group.select_box label{font-size: 14px!important}
-	.brand_sidebar .selectbox_cls {
-		float: right;
-		border: none!important;
-		box-shadow: none;
-		width: 96px;
-		height: 20px;
-		padding: 0!important;
-		background: url(assets/images/select_bkg.svg) right 7px no-repeat #fff !important;
-		padding-right: 14px !important;
-		text-align: right;
-		appearance: none;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		font-size: 13px!important;
-	}
-	.brand_sidebar .selectbox_cls:focus{box-shadow: none!important}
-	.brand_sidebar .img_vid_upload_medium{min-height: 150px;}
-	.brand_sidebar .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(assets/images/select_bkg.svg) 93% 23px no-repeat #fff}
+
+	
+	
 	</style>
 
 </head>
@@ -381,38 +362,186 @@
 					</div>
 					
 					
-					<div class="p20 bbot btop pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Dual Pane Design <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
-					</div>
-					<div class="p20">
-										<h3 class="dark_500 mb0 fsize14 fw400">Dual Pane Design
+								<!---------------Dual Pane Design----------------->
+									<div class="p20 bbot btop pt10 pb10 bkg_light_050">
+									  <h3 class="text-uppercase m-0 fw400 dark_200 fsize13">Dual Pane Design
+									  <label class="custom-form-switch float-right">
+										<input class="field" type="checkbox" checked="">
+										<span class="toggle email"></span>
+									  </label>
+									 </h3>
+									</div>
+									<div class="p20">
+										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Single Color picker <small class="text-lowercase dark_200">Solid color</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
 											<span class="toggle email"></span>
 										  </label>
 										 </h3>
-										 <hr>
-										 <h3 class="dark_500 mb0 fsize14 fw400">Single Pane Design
+										 <div class="form-group">
+										 <input type="text" class="form-control" value="#ffffff" />	
+										 </div>
+										 
+										
+										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">MAIN Gradient color <small class="text-lowercase dark_200">Gradient</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
 											<span class="toggle email"></span>
 										  </label>
 										 </h3>
-										 <hr>
-										 <h3 class="dark_500 mb0 fsize14 fw400">Single Color picker
+                                    	<div class="form-group">
+                                    		<div class="color_box">
+												<div class="color_cube dred"></div>
+												<div class="color_cube yellow"></div>
+												<div class="color_cube red"></div>
+												<div class="color_cube green active"></div>
+												<div class="color_cube blue"></div>
+												<div class="color_cube black"></div>
+												<div class="clearfix"></div>
+											</div>
+                                    	</div>
+                                    	<h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Choose orientation</h3>
+                                    	<div class="form-group">
+                                    		<ul class="choose_orientation">
+                                                			<li class="torighttop"><a class="active" color-orientation="to right top" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toright"><a class="" color-orientation="to right" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                			<li class="torightbottom"><a class="" color-orientation="to right bottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="tobottom"><a class="" color-orientation="to bottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                			<li class="toleftbottom"><a class="" color-orientation="to left bottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toleft"><a class="" color-orientation="to left" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                			<li class="tolefttop"><a class="" color-orientation="to left top" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="totop"><a class="" color-orientation="to top" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                			<li class="circle"><a class="" color-orientation="circle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                		</ul>
+                                    	</div>
+                                    
+                                     
+                                       <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Gradient Color picker <small class="text-lowercase dark_200">Custom Gradient color</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
 											<span class="toggle email"></span>
 										  </label>
 										 </h3>
-                                      <hr>
-                                       <h3 class="dark_500 mb0 fsize14 fw400">MAIN Gradient color
-										  <label class="custom-form-switch float-right">
-											<input class="field" type="checkbox" checked="">
-											<span class="toggle email"></span>
-										  </label>
-										 </h3>
+                                       <div class="form-group">
+                                       	<div class="row">
+                                       		<div class="col-md-6">
+											  <input type="text" class="form-control colorpicker-basic1" value="#20BF7E">
+											</div>
+                                      	<div class="col-md-6">
+											  <input type="text" class="form-control colorpicker-basic2" value="#000000">
+											</div>
+                                       	</div>
+                                       </div>
+                                       <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Choose orientation</h3>
+                                    	<div class="form-group">
+                                    		<ul class="choose_orientation">
+                                                			<li class="torighttop"><a class="active" color-orientation="to right top" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toright"><a class="" color-orientation="to right" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                			<li class="torightbottom"><a class="" color-orientation="to right bottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="tobottom"><a class="" color-orientation="to bottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                			<li class="toleftbottom"><a class="" color-orientation="to left bottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toleft"><a class="" color-orientation="to left" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                			<li class="tolefttop"><a class="" color-orientation="to left top" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="totop"><a class="" color-orientation="to top" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                			<li class="circle"><a class="" color-orientation="circle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                		</ul>
+                                    	</div>
                                         </div>
+                                        
+                                        
+                                        
+                                     <!---------------Single Pane Design----------------->   
+                                    <div class="p20 bbot btop pt10 pb10 bkg_light_050">
+									  <h3 class="text-uppercase m-0 fw400 dark_200 fsize13">Single Pane Design
+									  <label class="custom-form-switch float-right">
+										<input class="field" type="checkbox" checked="">
+										<span class="toggle email"></span>
+									  </label>
+									 </h3>
+									</div>
+									
+									<div class="p20">
+										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Single Color picker <small class="text-lowercase dark_200">Solid color</small>
+										  <label class="custom-form-switch float-right">
+											<input class="field" type="checkbox" checked="">
+											<span class="toggle email"></span>
+										  </label>
+										 </h3>
+										 <div class="form-group">
+										 <input type="text" class="form-control" value="#ffffff" />	
+										 </div>
+										 
+										
+										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">MAIN Gradient color <small class="text-lowercase dark_200">Gradient</small>
+										  <label class="custom-form-switch float-right">
+											<input class="field" type="checkbox" checked="">
+											<span class="toggle email"></span>
+										  </label>
+										 </h3>
+                                    	<div class="form-group">
+                                    		<div class="color_box">
+												<div class="color_cube dred"></div>
+												<div class="color_cube yellow"></div>
+												<div class="color_cube red"></div>
+												<div class="color_cube green active"></div>
+												<div class="color_cube blue"></div>
+												<div class="color_cube black"></div>
+												<div class="clearfix"></div>
+											</div>
+                                    	</div>
+                                    	<h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Choose orientation</h3>
+                                    	<div class="form-group">
+                                    		<ul class="choose_orientation">
+                                                			<li class="torighttop"><a class="active" color-orientation="to right top" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toright"><a class="" color-orientation="to right" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                			<li class="torightbottom"><a class="" color-orientation="to right bottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="tobottom"><a class="" color-orientation="to bottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                			<li class="toleftbottom"><a class="" color-orientation="to left bottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toleft"><a class="" color-orientation="to left" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                			<li class="tolefttop"><a class="" color-orientation="to left top" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="totop"><a class="" color-orientation="to top" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                			<li class="circle"><a class="" color-orientation="circle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                		</ul>
+                                    	</div>
+                                    
+                                     
+                                       <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Gradient Color picker <small class="text-lowercase dark_200">Custom Gradient color</small>
+										  <label class="custom-form-switch float-right">
+											<input class="field" type="checkbox" checked="">
+											<span class="toggle email"></span>
+										  </label>
+										 </h3>
+                                       <div class="form-group">
+                                       	<div class="row">
+                                       		<div class="col-md-6">
+											  <input type="text" class="form-control colorpicker-basic1" value="#20BF7E">
+											</div>
+                                      	<div class="col-md-6">
+											  <input type="text" class="form-control colorpicker-basic2" value="#000000">
+											</div>
+                                       	</div>
+                                       </div>
+                                       <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Choose orientation</h3>
+                                    	<div class="form-group">
+                                    		<ul class="choose_orientation">
+                                                			<li class="torighttop"><a class="active" color-orientation="to right top" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toright"><a class="" color-orientation="to right" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                			<li class="torightbottom"><a class="" color-orientation="to right bottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="tobottom"><a class="" color-orientation="to bottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                			<li class="toleftbottom"><a class="" color-orientation="to left bottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                			<li class="toleft"><a class="" color-orientation="to left" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                			<li class="tolefttop"><a class="" color-orientation="to left top" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                			<li class="totop"><a class="" color-orientation="to top" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                			<li class="circle"><a class="" color-orientation="circle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                		</ul>
+                                    	</div>
+                                        </div>
+									
+                                        
+                                        
+                                        
+                                        
+                                        
                                         
                                         <div class="p20 bbot btop pt10 pb10">
 										 <p class="text-uppercase m-0 fw400 dark_200">Save Brand Theme Settings <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	

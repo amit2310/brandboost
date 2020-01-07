@@ -318,6 +318,18 @@ function helloTest(){
 
     }
     setMenuItemsActive();
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        var widgetScript = String($(element).text());
+        $temp.val(widgetScript).select();
+        if(document.execCommand("copy")){
+            alert('code copied to clipboard successfully')
+        }else{
+            alert('something went wrong, try again');
+        }
+        $temp.remove();
+    }
 </script>
 
 
