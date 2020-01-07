@@ -12,8 +12,8 @@
         </ul>
 
          @if(isset($pagename))
-			{!! $pagename !!} 
-         @endif        
+			{!! $pagename !!}
+         @endif
         <ul class="nav navbar-nav navbar-right">
 
             <!--===========SEARCH============-->
@@ -34,9 +34,9 @@
 
 
             <!--===========COMPANY  PROFILE============-->
-            <li class="dropdown dropdown-user left hidden-xs company_profile"> 
-                <a class="dropdown-toggle" data-toggle="dropdown"> 
-                    <img src="{{ URL::asset('assets/images/wakerslogo.png') }}" alt=""> 
+            <li class="dropdown dropdown-user left hidden-xs company_profile">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ URL::asset('assets/images/wakerslogo.png') }}" alt="">
                     <span>Wakers Inc.</span>
                     <i class="caret"></i>
                 </a>
@@ -49,24 +49,24 @@
             </li>
 
             <!--===========Upgrade Account============-->
-            
-            <li class="dropdown hidden-xs"> 
-                <a class="dropdown-toggle pl20"> 
-                    <i class="icon-coins"></i> {{ (!empty($aUInfo->credits->total_credits)) ? number_format($aUInfo->credits->total_credits) . ' Credits' : 0 . ' Credits' }}  
+
+            <li class="dropdown hidden-xs">
+                <a class="dropdown-toggle pl20">
+                    <i class="icon-coins"></i> {{ (!empty($aUInfo->credits->total_credits)) ? number_format($aUInfo->credits->total_credits) . ' Credits' : 0 . ' Credits' }}
                 </a>
-                
+
             </li>
 
             @if (!empty($oCurrentPlanData))
                 <li class="hbr">
-                    <a id="showupgradePopup" class="btn bl_cust_btn btn-default upgrade_btn" data-toggle="modal" data-target="#upgrade_popup2"><img width="18" src="{{ URL::asset('assets/images/upgrade_account_icon.png') }}"/>&nbsp; Upgrade <span class="hidetab">Account</span></a> 
+                    <a id="showupgradePopup" class="btn bl_cust_btn btn-default upgrade_btn" data-toggle="modal" data-target="#upgrade_popup2"><img width="18" src="{{ URL::asset('assets/images/upgrade_account_icon.png') }}"/>&nbsp; Upgrade <span class="hidetab">Account</span></a>
                 </li>
             @endif
 
             <!--===========Documentation BOOK ICON============-->
-            <li class="dropdown hidden-xs documentation"> 
-                <a style="padding: 17px!important;" class="dropdown-toggle" data-toggle="dropdown"> 
-                    <img src="{{ URL::asset('assets/images/book.png') }}" alt="" width="17"> 
+            <li class="dropdown hidden-xs documentation">
+                <a style="padding: 17px!important;" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ URL::asset('assets/images/book.png') }}" alt="" width="17">
                 </a>
                 <ul style="left: 50%; margin-left: -90px;" class="dropdown-menu dropdown-menu-right width_170">
                     <li><a class="active" data-toggle="modal" data-target="#tutorialspopup1"><i class="icon-user-plus"></i> Documentation</a> </li>
@@ -114,8 +114,8 @@
                                         }else{
                                             $oNotification = '';
                                         }
-                                        
-                                        
+
+
                                         if (!empty($oNotification)) {
                                             $messageTitle = $oNotification->title;
                                             $msgNotify = ($userRole == '1') ? $oNotification->tag_language_admin : $oNotification->tag_language;
@@ -132,7 +132,7 @@
                                                 $iconNotify = "icon-stack-text txt_purple";
                                             }
                                         } else {
-                                            
+
                                             $messageTitle = $oSysNotify->message;
                                             $msgNotify = $oSysNotify->message;
                                             $iconNotify = 'icon-stack-text txt_purple';
@@ -189,7 +189,7 @@
                         <li><a href="{{ url('/admin/autoresponder/') }}"><i class="icon-comment-discussion"></i> Auto Responder</a>
                         </li>
                     @endif
-                    @if ($userRole == 1) 
+                    @if ($userRole == 1)
                         <li><a href="{{ url('/admin/popupsettings/') }}"><i class="icon-cog5"></i> Popup settings</a>
                         </li>
                         <li><a href="{{ url('/admin/filesize/') }}"><i class="icon-cog5"></i> Filesize settings</a>

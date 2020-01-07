@@ -43,10 +43,11 @@ import offsiteStep5 from './components/admin/brandboost/offsite/setup/Setup5';
 
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
 import Media from './components/admin/brandboost/Media.vue';
-import Tags from './components/admin/tags/';
+import Tags from './components/admin/tags/Index';
+import TagGroups from './components/admin/tags/TagGroups';
 import TagSubscribers from './components/admin/tags/TagSubscribers';
-import TagsReview from './components/admin/tags/tagsreview';
-import TagsFeedback from './components/admin/tags/tagsfeedback';
+import TagsReview from './components/admin/tags/TagsReview';
+import TagsFeedback from './components/admin/tags/TagsFeedback';
 import EmailLists from './components/admin/Lists';
 import EmailBroadcasts from './components/admin/broadcast/Email';
 import OffsiteOverview from './components/admin/brandboost/offsite/Overview';
@@ -107,13 +108,16 @@ import Companies from './components/admin/companies/Companies';
 import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
 
-
+import Profile from './components/admin/Profile';
 
 
 const routes = [
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
+
+    /*Admin Profi;e*/
+    { path: '/profile', component: Profile, meta: { title: 'Admin Profile - Brand Boost'} },
 
     /*Contacts*/
     { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
@@ -151,6 +155,8 @@ const routes = [
     { path: '/brandboost/offsite/feedbacks', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
     { path: '/feedback/:id', component: OffsiteFeedbackDetails, props: { pageColor:'offsite_sec', title: 'Feedback Details'} },
 
+    { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
+
     /* Templates Module */
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
@@ -176,16 +182,15 @@ const routes = [
     { path: '/reviews/offsite/setup/:id/4', component: offsiteStep4, props : {title : 'Off Site Campaign'} },
     { path: '/reviews/offsite/setup/:id/5', component: offsiteStep5, props : {title : 'Off Site Campaign'} },
 
-    { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
+    { path: '/tags/groups', component: TagGroups, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
     { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
-    { path: '/lists/getListContacts/:id', component: ListSubscribers, meta: { title: 'Segments Subscribers'} },
-    { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
 
     /*Segments*/
-
+    { path: '/lists/getListContacts/:id', component: ListSubscribers, meta: { title: 'Segments Subscribers'} },
     { path: '/broadcast/segmentContacts/:id', component: SegmentSubscribers, meta: { title: 'Segments Subscribers'} },
+    { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
 
     /*Email Module*/
     { path: '/modules/emails/dashboard', component: EmailDashboard, meta: { title: 'Email Dashboard'} },

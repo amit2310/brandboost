@@ -59,6 +59,46 @@ class Tags extends Controller {
     }
 
     /**
+     * tags index function to load initial view of the tax groups
+     * @param type
+     * @return type
+     */
+
+    public function TagGroups() {
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mTag = new TagsModel();
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs">Tags </a></li>
+                        <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
+                        <li><a data-toggle="tooltip" data-placement="bottom" title="Tags Group" class="sidebar-control active hidden-xs ">Tags Group</a></li>
+                    </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Tags' => '#/tags/groups'
+        );
+
+        $aTagGroups = TagsModel::getClientTagGroups($userID);
+
+        $aData = array(
+            'title' => 'Insight Tags',
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
+            'userID' => $userID,
+            'allData' => $aTagGroups,
+            'aTagGroups' => $aTagGroups->items()
+        );
+
+//        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
+        echo json_encode($aData);
+        exit;
+    }
+
+    /**
      * Used to get contact lists
      */
     public function getTagContacts(Request $request) {
@@ -310,18 +350,26 @@ class Tags extends Controller {
             echo json_encode($response);
             exit;
         }
-
+        $validatedData = $request->validate([
+            'txtGroupName' => ['required'],
+            'description' => ['required']
+        ]);
 
         $groupName = strip_tags($request->txtGroupName);
+        $description = strip_tags($request->description);
+
         $bGroupExists = $mTag->checkifGroupExist($groupName, $userID);
         if ($bGroupExists == false) {
             $aInput = array(
                 'user_id' => $userID,
                 'group_name' => $groupName,
+                'group_description' => $description,
                 'group_created' => date("Y-m-d H:i:s")
             );
             $groupID = $mTag->addTagGroup($aInput);
+
             $response = array('status' => 'success', 'group_id' => $groupID, 'msg' => 'Group added successfully!');
+
             echo json_encode($response);
             exit;
         } else {
