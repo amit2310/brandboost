@@ -635,7 +635,10 @@ class TagsModel extends Model {
 
     public function getClientTagGroups($userID = 0) {
         $oData = DB::table('tbl_tag_groups')
-         ->where("tbl_tag_groups.user_id", $userID)->get();
+            ->where("tbl_tag_groups.user_id", $userID)
+            ->orderBy('tbl_tag_groups.id', 'DESC')
+            //->get();
+            ->paginate(10);
 
         return $oData;
     }

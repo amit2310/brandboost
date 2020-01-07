@@ -121,7 +121,7 @@
                         <img src="{{ $srcUserImg }}" alt="profile-user" class="rounded-circle">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ url('/admin/profile/') }}"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="{{ url('#/profile/') }}"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
                         <a class="dropdown-item" href="{{ url('/admin/accounts/usage') }}"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
                         <a class="dropdown-item" href="{{ url('/admin/invoices/view/'.$aUInfo->id.'') }}"><i class="dripicons-wallet text-muted mr-2"></i> Invoices</a>
                         <a class="dropdown-item" href="{{ url('/admin/settings/') }}"><i class="dripicons-gear text-muted mr-2"></i> Settings</a>

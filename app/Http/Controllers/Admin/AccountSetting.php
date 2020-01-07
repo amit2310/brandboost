@@ -34,6 +34,9 @@ class AccountSetting extends Controller
         $mTags = new TagsModel();
         $mLists = new ListsModel();
 
+        /* Country List */
+        $countries = getAllCountries();
+
         $aTeamInfo = '';
         if (empty($userID)) {
             $aUser = getLoggedUser();
@@ -68,13 +71,18 @@ class AccountSetting extends Controller
                         <li><a data-toggle="tooltip" data-placement="bottom" title="' . $userDetail->firstname . ' ' . $userDetail->lastname . '" class="sidebar-control active hidden-xs ">' . $userDetail->firstname . ' ' . $userDetail->lastname . '</a></li>
                     </ul>';
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Profile' => '#/profile/',
+            $userDetail->firstname . ' ' . $userDetail->lastname => ''
+        );
+
         $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
         $aBrandboostOffsiteList = BrandboostModel::getBrandboostByUserId($userID, 'offsite');
         $emailFooterData = $dashboard->getEmailFooterData($userID);
         if(!empty($emailFooterData[0]->footer_content)) {
             $emailFooterData = base64_decode($emailFooterData[0]->footer_content);
         }
-
 
         if(!empty($aTeamInfo)) {
 
@@ -87,12 +95,14 @@ class AccountSetting extends Controller
 
             $this->template->load('admin/admin_template_new', 'admin/account_team_setting', $aData);
         }
-        else {
-
+        else
+        {
             $aData = array(
                 'title' => 'Brand Boost Profile',
                 'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'userDetail' => $userDetail,
+                'countries' => $countries,
                 'onsiteList' => $aBrandboostList,
                 'offsiteList' => $aBrandboostOffsiteList,
                 'getCampEmail' => $getCampEmail,
@@ -104,7 +114,9 @@ class AccountSetting extends Controller
                 'aTeamInfo' => $aTeamInfo
             );
 
-            return view('admin.account_setting', $aData);
+            //return view('admin.account_setting', $aData);
+            echo json_encode($aData);
+            exit();
         }
 
     }
