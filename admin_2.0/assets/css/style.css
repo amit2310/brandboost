@@ -1262,7 +1262,9 @@ color:#7989b4
 
 .content-area{padding: 32px 64px; position:relative; }
 .content-area hr{border-color: #f0f1f4!important}
-
+@media only screen and (max-width:1400px){
+	.content-area{padding: 30px; position:relative; }
+}
 
 /********************
 PAGE WITH SIDEBAR CSS
@@ -2957,7 +2959,11 @@ NPS EMAIL PREVIEW
 .inline_numbers li{ list-style:none; display:inline-block;}
 .inline_numbers li a{ display:inline-block; width:25px; height:25px; border-radius:100%; line-height:25px; background:#FF0000; color:#fff; font-size:12px; margin:0 2px;}
 .inline_numbers li a:hover{ background:#000000;}
+<<<<<<< HEAD
+.email_review_config{ position:absolute; left:0; top:0; width:280px;  z-index:9; background:#f9fbff;border-right: 1px solid #e9eff8;padding: 0px;}
+=======
 .email_review_config{ position:absolute; left:0; top:0; width:280px;  z-index:999; background:#f9fbff;border-right: 1px solid #e9eff8;padding: 0px;}
+>>>>>>> 9ad849d2de7135b05b0b5e0c78d986db0a2a825f
 
 
 
