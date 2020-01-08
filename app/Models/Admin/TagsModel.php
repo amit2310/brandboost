@@ -110,13 +110,15 @@ class TagsModel extends Model {
     public function getAllClientTags($userID = "") {
 
        $oData = DB::table('tbl_tag_groups_entity')
-        ->select('tbl_tag_groups_entity.*', 'tbl_tag_groups.group_name', 'tbl_tag_groups.user_id')
-        ->leftJoin('tbl_tag_groups', 'tbl_tag_groups.id','=','tbl_tag_groups_entity.group_id')
-        ->when($userID > 0, function($query) use ($userID){
-        return $query->where("tbl_tag_groups.user_id", $userID);
-        })
+            ->select('tbl_tag_groups_entity.*', 'tbl_tag_groups.group_name', 'tbl_tag_groups.user_id')
+            ->leftJoin('tbl_tag_groups', 'tbl_tag_groups.id','=','tbl_tag_groups_entity.group_id')
+            ->when($userID > 0, function($query) use ($userID){
+                return $query->where("tbl_tag_groups.user_id", $userID);
+            })
+            ->orderBy('tbl_tag_groups.id', 'DESC')
+            //->get();
+            ->paginate(10);
 
-         ->orderBy('tbl_tag_groups.id', 'DESC')->get();
         return $oData;
     }
 

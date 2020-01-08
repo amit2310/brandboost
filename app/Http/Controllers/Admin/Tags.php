@@ -204,6 +204,10 @@ class Tags extends Controller {
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Tags Reviews" class="sidebar-control active hidden-xs ">Tags Reviews</a></li>
                     </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'TagReviews' => '#/tagsreview'
+        );
 
         $tagData = $mTag->getAllClientTags($userID);
         //return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
@@ -215,7 +219,15 @@ class Tags extends Controller {
             }
         }
 
-        echo json_encode($tagData);
+        $aData = array(
+            'title' => 'Insight Tag Reviews',
+            'uRole' => $userRole,
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $tagData,
+            'atagData' => $tagData->items()
+        );
+
+        echo json_encode($aData);
         exit;
     }
 
