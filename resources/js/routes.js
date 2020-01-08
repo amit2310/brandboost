@@ -187,7 +187,7 @@ const routes = [
     { path: '/tags/:id', component: TagList, meta: { title: 'Insight Tag List - Brand Boost'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
     { path: '/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
-    { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
+    { path: '/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
 
     /*Segments*/
     { path: '/lists/getListContacts/:id', component: ListSubscribers, meta: { title: 'Segments Subscribers'} },

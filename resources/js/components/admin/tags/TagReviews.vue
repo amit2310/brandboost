@@ -101,13 +101,16 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oTag.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     </div>
                                 </div>
-                                <div @click="showTags(oTag.id)" style="cursor:pointer;">
+                                <div>
                                     <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                                    <h3 class="htxt_bold_16 dark_700 mt25 mb15">
+                                    <h3 class="htxt_bold_16 dark_700 ">
                                         {{ capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20)) }}
                                     </h3>
-                                    <p class="htxt_regular_12 dark_300 mb15"><em> Tag Group: {{ capitalizeFirstLetter(setStringLimit(oTag.group_name, 20)) }} </em></p>
+                                    <p class="htxt_regular_12 dark_300 mt25 mb15" @click="showTags(oTag.group_id)" style="cursor:pointer;">
+                                        <em> Tag Group: <strong>{{ capitalizeFirstLetter(setStringLimit(oTag.group_name, 20)) }}</strong> </em>
+                                    </p>
                                     <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oTag.tag_created) }} </em></p>
+                                    <p class="htxt_regular_12 dark_300 mb15"><em> Reviews: {{ oTag.TagDataById }} </em></p>
                                 </div>
                             </div>
                         </div>
@@ -171,9 +174,10 @@
                     .then(response => {
                         this.loading = false;
                         //console.log(response.data);
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
                         this.allData = response.data.allData;
                         this.otagData = response.data.atagData;
-                        console.log(this.otagData.length);
                     });
             },
             showPaginationData: function (current_page) {
