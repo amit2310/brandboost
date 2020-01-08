@@ -19,6 +19,7 @@ class TagsModel extends Model {
         $oData = DB::table('tbl_tag_groups')
                 ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups.id', '=', 'tbl_tag_groups_entity.group_id')
                 ->select('tbl_tag_groups.*', 'tbl_tag_groups_entity.id AS tagid', 'tbl_tag_groups_entity.tag_name', 'tbl_tag_groups_entity.tag_created')
+                ->whereNotNull('tag_name')
                 ->when(($userID > 0), function ($query) use ($userID) {
                     return $query->where('tbl_tag_groups.user_id', $userID);
                 })
@@ -490,7 +491,23 @@ class TagsModel extends Model {
 
     public function getTagList($groupID) {
         $oData = DB::table('tbl_tag_groups_entity')
-        ->where("group_id", $groupID)->get();
+            ->where("group_id", $groupID)
+            ->orderBy('id', 'DESC')
+        //->get();
+        ->paginate(10);
+
+        return  $oData;
+    }
+
+    /**
+     * This function will return Tag Group Details
+     * @param type $groupID
+     * @return type
+     */
+
+    public function getTagGroupDetails($groupID) {
+        $oData = DB::table('tbl_tag_groups')
+            ->where("id", $groupID)->get();
         return  $oData;
     }
 
