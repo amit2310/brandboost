@@ -15,7 +15,31 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-
+<style>
+	
+.review_source_new{max-width: 210px; width: 100%; margin-bottom: 10px;}
+.review_source_new label{width: 100%;}
+.review_source_new .inner{text-align: center;  border-radius: 5px;  box-shadow: 0 2px 4px 0 rgba(1, 21, 64, 0.06);  background-color: #ffffff;  /*border: solid 1px #e3e9f3;*/ min-height: 248px; position: relative; padding: 15px; border: 1px solid #eeeeee!important}
+.review_source_new .inner figure{border-radius:0; margin-bottom: 15px;}
+.review_source_new .inner img{border-radius: 5px 5px 0 0; width: 100%;}
+.review_source_new .inner .text_sec{padding: 15px 10px 0; border-top: 1px solid #f4f6fa;}
+.review_source_new .inner .text_sec p{margin-bottom: 5px;}
+.review_source_new .inner .text_sec p strong{ font-size: 13px; font-weight: 400; color: #09204f;}
+.review_source_new .inner .text_sec h5{ font-size: 12px; font-weight: 300!important; color: #5e729d; line-height: 1.33; margin: 0;}
+.review_source_new .inner.active{border: 1px solid #9986e4!important }
+.review_source_new .inner:hover{border: 1px solid #9986e4!important}
+.review_source_new .inner .checkbox{position: absolute; right: -10px; top: -15px; z-index: 99}
+.review_source_new .inner .checkbox label{padding-left: 20px!important;}
+.review_source_new .inner .checker span{background: #9c88e6!important}
+.review_source_new .inner .custmo_radiobox input:checked ~ .custmo_radiomark {	background-color: #9986e4!important;}
+.review_source_new .inner .custmo_checkmark{border-radius: 50px; border: 1px solid #fff;}
+.review_source_new .inner:after{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; content: ''; border-radius: 5px; display: none;}
+.review_source_new :hover .inner:after{display: block; cursor: pointer; }
+.review_source_new .custmo_checkbox.checkboxs{position: absolute; width: 17px; right: 5px!important; top: 11px; z-index: 9; display: inline-block;}
+.review_source_new .custmo_checkbox.checkboxs input:checked .inner:after{display: block; cursor: pointer;}
+	
+	
+	</style>
 </head>
 <body id="PeopleSection">
 
@@ -61,94 +85,6 @@
    <div class="content-area">
    
    
-  <!--============Seeting sidebar===================-->
-  <div class="email_review_config p20 d-none">
-    <div class="bbot pb10 mb15">
-      <p class="fsize11 text-uppercase dark_200 m-0">Component</p>
-    </div>
-    <div class="p0">
-      <h3 class="dark_400 mb0 fsize13 fw300">Logo &nbsp;
-        <label class="custom-form-switch float-right">
-        <input class="field" type="checkbox" checked="">
-        <span class="toggle email"></span> </label>
-      </h3>
-      <h3 class="dark_400 mb0 fsize13 fw300">Question &nbsp;
-        <label class="custom-form-switch float-right">
-        <input class="field" type="checkbox" checked="">
-        <span class="toggle email"></span> </label>
-      </h3>
-      <h3 class="dark_400 mb0 fsize13 fw300">Introduction &nbsp;
-        <label class="custom-form-switch float-right">
-        <input class="field" type="checkbox" checked="">
-        <span class="toggle email"></span> </label>
-      </h3>
-    </div>
-    <div class="bbot btop pb10 pt10 mb15 mt15">
-      <p class="fsize11 text-uppercase dark_200 m-0">Popup Details</p>
-    </div>
-    <div class="p0">
-      <div class="form-group">
-        <label class="fsize12" for="fname">Brand / Product Name:</label>
-        <input type="text" class="form-control h40" id="fname" placeholder="Enter name" name="fname">
-      </div>
-      <div class="form-group">
-        <label class="fsize12" for="Questions">Questions:</label>
-        <textarea class="form-control" id="Questions"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="fsize12" for="Introduction">Introduction:</label>
-        <textarea class="form-control" id="Introduction"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="fsize12">Introduction:</label>
-        <label class="m0 w-100" for="upload">
-        <div class="img_vid_upload_medium">
-          <input class="d-none" type="file" name="" value="" id="upload">
-        </div>
-        </label>
-      </div>
-    </div>
-    <div class="bbot btop pb10 pt10 mb15 mt15">
-      <p class="fsize11 text-uppercase dark_200 m-0">Settings</p>
-    </div>
-    <div class="p0 pb30">
-      <div class="row">
-        <div class="col-md-8">
-          <p class="fsize13 dark_400 mt-2">Question Text Color :</p>
-        </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control colorpicker-basic1" value="#20BF7E">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <p class="fsize13 dark_400 mt-2">Introduction Text Color:</p>
-        </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control colorpicker-basic2" value="#000000">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <p class="fsize13 dark_400 mt-2">Button Text Color :</p>
-        </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control colorpicker-basic3" value="#ffffff">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <p class="fsize13 dark_400 mt-2">Button Background Color :</p>
-        </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control colorpicker-basic4" value="#333333">
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--============Seeting sidebar END===================-->
-  
-  
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-3 col-lg-4">
@@ -168,7 +104,7 @@
 					 <p class="text-uppercase m-0 fw400 dark_200">Template <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20">
-					 <button class="btn br6 border p15 w-100 shadow-none">Horizontal Popup</button>
+					 <button class="btn br6 border p15 w-100 shadow-none slidebox fw400">Horizontal Popup</button>
 					</div>
 					
 					<div class="p20 bbot btop pt10 pb10">
@@ -1039,6 +975,13 @@
  
  
  
+ <!--******************
+  Create Contact Sliding Smart Popup
+ **********************-->
+ <?php include("choose_template_smart_popup.php"); ?>
+ 
+    
+ 
  
  
  <!--******************
@@ -1059,6 +1002,15 @@ $(".colorpicker-basic3").spectrum();
 $(".colorpicker-basic4").spectrum();
 </script>
 
+<script>
+$(document).ready(function(){
+	$(".slidebox").click(function(){
+		$(".box").animate({
+			width: "toggle"
+		});
+	});
+});
+</script>
 
 </body>
 </html>
