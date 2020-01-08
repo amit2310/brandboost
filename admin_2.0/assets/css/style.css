@@ -3509,3 +3509,32 @@ BRAND PAGE SIDEBAR
 .choose_orientation li a.active i.fa{color: #962e6c; font-size: 13px;}
 .degtop {-webkit-transform: rotate(-45deg);	-ms-transform: rotate(-45deg);	transform: rotate(-45deg);}
 .degbot {-webkit-transform: rotate(-45deg);	 -ms-transform: rotate(45deg); 	 transform: rotate(45deg); }	
+
+
+
+
+	
+.brand_page_main {background: #f3f3fa; position: relative; height: 100%; }
+.brand_page_main .brand_page_pr {background-image: linear-gradient(101deg, #5c37f2, #aa7bff) !important;}
+.brand_page_main .brand_page_gr {position: absolute;width: 100%;height: 290px;content: '';top: 0px;left: 0;z-index: 0;overflow: inherit !important;}
+.brand_page_main .brand_page_pr .page_header {padding: 30px;min-height: 103px; position: relative}
+.brand_page_main .brand_top_sec{padding: 45px!important; margin-top: 103px;}
+	
+.brand_page_main .ratings .icon-star-full2{font-size: 12px; margin-right: 1px; color: #9faecb;} 
+.brand_page_main .ratings p{margin: 0; color: #8b9ab9;}
+.brand_page_main .ratings .inner{margin-bottom:13px;}
+.brand_page_main .ratings .progress{height: 6px!important; margin-top: 8px;}
+.brand_page_main .progress-bar-info {	background-color: #B4C0D4;	border-radius: 1.5px;}
+.brand_page_main .interactions ul{margin: 0; padding: 0;}
+.brand_page_main .interactions ul li{ list-style: none; margin: 0; padding: 0; line-height: 32px; /*float: left;*/ width: 100%; }
+.brand_page_main .interactions ul li small{width: 130px; float: left; color: #506591; font-size: 13px;}
+.brand_page_main .interactions ul li strong{ font-weight: 400;  color: #09204f; font-size: 13px;}
+.brand_page_main .interactions ul li .fa{font-size: 10px; color: #b4c4dc!important; margin-right: 10px;}
+.brand_page_main .interactions ul li i{font-size: 12px; color: #b4c4dc!important; margin-right: 13px;}
+.brand_page_main .brand_social i{color: #7f62df; font-size: 17px; background: none;}
+.brand_page_main .brand_social a{background: none !important; display: inline-block; margin-right: 18px;}
+
+.brand_page_main .brand_btn_sec{max-width: 280px;}
+.brand_page_main .brand_btn_sec a{background-color:rgba(155, 131, 255, 0.2);border-radius: 5px;padding: 8px 12px;margin: 0 8px 8px 0;float: left;line-height: 100%;font-size: 11px;}	
+	
+
