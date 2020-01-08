@@ -78,6 +78,10 @@ import ReferralStep3 from './components/admin/modules/referral/setup/Setup3';
 import ReferralStep4 from './components/admin/modules/referral/setup/Setup4';
 import ReferralStep5 from './components/admin/modules/referral/setup/Setup5';
 
+/*Brand Page*/
+import BrandSetting from './components/admin/brand/Settings';
+import BrandConfiguration from './components/admin/brand/Configurations';
+import BrandConfigurationSingle from './components/admin/brand/Single';
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
 import NpsScore from './components/admin/modules/nps/Score';
@@ -90,7 +94,6 @@ import AutomationCampaigns from './components/admin/modules/emails/Workflow';
 import WorkflowSetup from './components/admin/modules/emails/WorkflowSetup';
 import SMSWorkflowSetup from './components/admin/modules/sms/WorkflowSetup';
 //import WorkflowSetup from './components/admin/workflow/MasterWorkflow';
-
 /*Broadcast Setup*/
 import broadcastStep1 from './components/admin/broadcast/Setup';
 import broadcastStep2 from './components/admin/broadcast/Setup2';
@@ -241,6 +244,11 @@ const routes = [
     { path: '/modules/emails/templatestest', component: TemplateMaster, meta: { title: 'Workflow Setup'} },
 
     { path: '/modules/sms/workflow', component: SmsAutomationCampaigns, meta: { title: 'SMS Campaigns'} },
+
+    /*Brand Page*/
+    { path: '/brand/settings', component: BrandSetting, meta: { title: 'Brand Settings'} },
+    { path: '/brand/configuration', component: BrandConfiguration, meta: { title: 'Brand Configuration'} },
+    { path: '/brand/configuration/single', component: BrandConfigurationSingle, meta: { title: 'Campaign Specific Brand Configuration'} },
 
 
 
