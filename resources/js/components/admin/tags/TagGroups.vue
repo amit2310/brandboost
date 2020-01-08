@@ -218,7 +218,7 @@
             console.log('Component mounted.');
         },
         methods: {
-            showTags: function(groupId){ alert(groupId)
+            showTags: function(groupId){
                 window.location.href='#/tags/'+groupId;
             },
             loadPaginatedData: function () {

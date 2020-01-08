@@ -47,7 +47,7 @@ import Tags from './components/admin/tags/Index';
 import TagGroups from './components/admin/tags/TagGroups';
 import TagList from './components/admin/tags/TagList';
 import TagSubscribers from './components/admin/tags/TagSubscribers';
-import TagsReview from './components/admin/tags/TagsReview';
+import TagsReview from './components/admin/tags/Reviews';
 import TagsFeedback from './components/admin/tags/TagsFeedback';
 import EmailLists from './components/admin/Lists';
 import EmailBroadcasts from './components/admin/broadcast/Email';
@@ -186,7 +186,7 @@ const routes = [
     { path: '/tags/groups', component: TagGroups, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/:id', component: TagList, meta: { title: 'Insight Tag List - Brand Boost'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
-    { path: '/tags/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
+    { path: '/tags/review', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tags/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
 
     /*Segments*/

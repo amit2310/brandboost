@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-6 col-6">
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">{{ oTagGroupDetails[0].group_name }} :: Tags</h3>
+                        <h3 class="htxt_medium_24 dark_700">{{ capitalizeFirstLetter(oTagGroupDetails[0].group_name) }} :: Tags</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
