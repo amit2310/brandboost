@@ -3560,16 +3560,26 @@ class Brandboost extends Controller
         $aBrandboostList = $mBrandboostObj->getBrandboostByUserId($userID, 'onsite');
         $faQData = $BrandObj->getFaqData();
         $aReviews = $mReviewsObj->getCampaignReviewsByUserId($userID);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Brand' => '#/brand/configuration',
+            'Configurations' => '',
+        );
         //pre($aReviews);
+        $aData = [
+            'title' => 'Brand Configuration',
+            'breadcrumb' => $aBreadcrumb,
+            'brandData' => $brandData[0],
+            'aBrandbosts' => $aBrandboostList,
+            'brandThemeData' => $brandThemeData,
+            'faQData' => $faQData,
+            'aReviews' => $aReviews,
+            'userData' => $oUser
+        ];
 
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-			<li><a class="sidebar-control hidden-xs slace">/</a></li>
-			<li><a class="sidebar-control hidden-xs">Brand Configuration</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Brand Configuration" class="sidebar-control active hidden-xs ">Brand Configuration</a></li>
-			</ul>';
 
-        return view('admin.brandboost.brand_configuration', array('title' => 'Brand Configuration', 'pagename' => $breadcrumb, 'brandData' => $brandData[0], 'aBrandbosts' => $aBrandboostList, 'brandThemeData' => $brandThemeData, 'faQData' => $faQData, 'aReviews' => $aReviews, 'userData' => $oUser));
+        //return view('admin.brandboost.brand_configuration', $aData);
+        return $aData;
 
     }
 
