@@ -3803,6 +3803,36 @@ class Brandboost extends Controller
 
         $response = array();
         $BrandModelObj = new BrandModel();
+        $aData = $request->formData;
+        if($userID>0){
+            $aData['user_id'] = $userID;
+        }
+
+        $bData = $BrandModelObj->getBrandConfigurationData($userID);
+        if ($bData->count() > 0) {
+            $result = $BrandModelObj->updateBrandConfiguration($userID, $aData);
+        } else {
+            $result = $BrandModelObj->addBrandConfiguration($aData);
+        }
+        if ($result) {
+            $response = array('status' => 'ok');
+        } else {
+            $response = array('status' => 'ok');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    public
+    function addBrandConfigurationDataOld(Request $request)
+    {
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $response = array();
+        $BrandModelObj = new BrandModel();
         //$brandboostId = $request->brandboost_id;
         $avatar = $request->avatar_switch != '' ? '1' : '0';
         $company_des = $request->company_des_switch != '' ? '1' : '0';
