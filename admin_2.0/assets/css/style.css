@@ -3538,3 +3538,20 @@ BRAND PAGE SIDEBAR
 .brand_page_main .brand_btn_sec a{background-color:rgba(155, 131, 255, 0.2);border-radius: 5px;padding: 8px 12px;margin: 0 8px 8px 0;float: left;line-height: 100%;font-size: 11px;}	
 	
 
+
+/***********
+REFERRALS Pages
+*************/
+
+.broadcast_select_contact{ width: 100%; margin: 0 0px; display: inline-block; height: 323px; border-radius: 6px;  box-shadow: 0 3px 5px 0 rgba(1, 21, 64, 0.06); padding: 35px 20px; background: #fff; text-align: center; position: relative; cursor: pointer;}
+.broadcast_select_contact.ref{height: auto;}
+.broadcast_select_contact .img_box{width: 170px;  margin: 0 auto;  text-align: center; margin-bottom: 20px;}
+.broadcast_select_contact .img_box img{height: 125px;}
+.broadcast_select_contact.ref .img_box img{height: 104px;}
+.broadcast_select_contact p{max-width: 193px; margin: 0 auto 10px;}
+.broadcast_select_contact .custmo_checkbox {position: absolute;	top: 0px;	right: 0px; height: 32px; width: 32px; padding-left: 32px;}
+.broadcast_select_contact .custmo_checkmark {border-radius:4px; border: none; height: 32px; width: 32px;}
+.broadcast_select_contact .custmo_checkmark::after {left: 19px!important;top: 5px!important;width: 5px;height: 8px;border-width: 0 2px 2px 0;}
+.broadcast_select_contact .custmo_checkbox input:checked ~ .custmo_checkmark.green_tr {	border:none!important;	background: url(http://brandboost.io/new_pages/assets/images/checkmark_bkg_green.png) top right no-repeat!important;}
+
+

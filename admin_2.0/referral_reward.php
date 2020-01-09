@@ -23,6 +23,10 @@
 }
 	.email_config_list li{width: 19.5%}
 	.card{width: 100%}
+	
+
+	
+	
 	</style>
 </head>
 <body id="EmailSection">
@@ -74,8 +78,8 @@
     <div class="row">
     	<div class="col-md-12">
     		<ul class="email_config_list">
-    			<li><a class="active" href="#"><span class="num_circle"><span class="num">1</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Select Source</a></li>
-    			<li><a class="" href="#"><span class="num_circle"><span class="num">2</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Rewards</a></li>
+    			<li><a class="done" href="#"><span class="num_circle"><span class="num">1</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Select Source</a></li>
+    			<li><a class="active" href="#"><span class="num_circle"><span class="num">2</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Rewards</a></li>
     			<li><a href="#"><span class="num_circle"><span class="num">3</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Email Workflow</a></li>
     			<li><a href="#"><span class="num_circle"><span class="num">4</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Configuration</a></li>
     			<li><a href="#"><span class="num_circle"><span class="num">5</span><span class="check_img"><img src="assets/images/email_check.svg"/></span></span>Summary</a></li>
@@ -91,7 +95,7 @@
     	</div>
     </div>
     
-    <div class="row">
+    <!--<div class="row">
     	<div class="col-md-4 text-center d-flex animate_top">
     		<div class="card br8 p0 ">
     			<div class="p40 pb20 col">
@@ -123,7 +127,64 @@
     			
     		</div>
     	</div>
-    </div>
+    </div>-->
+    
+    <div class="row mb30">
+                                <div class="col-md-4 text-center">
+                                    <label for="temp1" class="m0 w-100">
+                                        <div class="broadcast_select_contact ref">
+                                            <label class="custmo_checkbox">
+                                                <input class="check" type="checkbox" id="temp1" checked="">
+                                                <span class="custmo_checkmark green_tr"></span>
+                                            </label>
+                                            <div class="img_box img_inactive" style="display: none;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_1.png">
+                                            </div>
+                                            <div class="img_box img_active " style="display: block;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_1_act.png">
+                                            </div>
+                                            <p class="fsize14 txt_dark fw500">Coupon</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <label for="temp2" class="m0 w-100">
+                                        <div class="broadcast_select_contact ref">
+                                            <label class="custmo_checkbox">
+                                                <input class="check" type="checkbox" id="temp2">
+                                                <span class="custmo_checkmark green_tr"></span>
+                                            </label>
+                                            <div class="img_box img_inactive" style="display: block;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_2.png">
+                                            </div>
+                                            <div class="img_box img_active " style="display: none;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_2_act.png">
+                                            </div>
+                                            <p class="fsize14 txt_dark fw500">Cash</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <label for="temp3" class="m0 w-100">
+                                        <div class="broadcast_select_contact ref">
+                                            <label class="custmo_checkbox">
+                                                <input class="check" type="checkbox" id="temp3" >
+                                                <span class="custmo_checkmark green_tr"></span>
+                                            </label>
+                                            <div class="img_box img_inactive" style="display: block;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_3.png">
+                                            </div>
+                                            <div class="img_box img_active " style="display: none;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_3_act.png">
+                                            </div>
+                                            <p class="fsize14 txt_dark fw500">Custom</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
     
     
     <div class="row">
@@ -170,39 +231,62 @@
     </div>
     
     
-   <div class="row">
-    	<div class="col-md-4 text-center d-flex animate_top">
-    		<div class="card br8 p0 ">
-    			<div class="p40 pb20 col">
-    				<img src="http://brandboost.io/assets/images/ref_reward_1_act.png">
-    				<h3 class="htxt_medium_16 dark_700 mb10 mt20">Coupon</h3>
-    				<p class="htxt_normal_14 dark_200 mb20 mt10">Coupon discount for advocate</p>
-    				
-    			</div>
-    			
-    		</div>
-    	</div>
-    	<div class="col-md-4 text-center d-flex animate_top">
-    		<div class="card br8 p0 ">
-    			<div class="p40 pb20 col">
-    				<img src="http://brandboost.io/assets/images/ref_reward_2.png">
-    				<h3 class="htxt_medium_16 dark_700 mb10 mt20">Cash</h3>
-    				<p class="htxt_normal_14 dark_200 mb20 mt10">Cash discount for advocate</p>
-    			</div>
-    			
-    		</div>
-    	</div>
-    	<div class="col-md-4 text-center d-flex animate_top">
-    		<div class="card br8 p0 ">
-    			<div class="p40 pb20 col">
-    				<img src="http://brandboost.io/assets/images/ref_reward_3.png">
-    				<h3 class="htxt_medium_16 dark_700 mb10 mt20">Custom</h3>
-    				<p class="htxt_normal_14 dark_200 mb20 mt10">Custom discount for advocate</p>
-    			</div>
-    			
-    		</div>
-    	</div>
-    </div>
+   <div class="row mb30">
+                                <div class="col-md-4 text-center">
+                                    <label for="temp4" class="m0 w-100">
+                                        <div class="broadcast_select_contact ref">
+                                            <label class="custmo_checkbox">
+                                                <input class="check" type="checkbox" id="temp4" checked="">
+                                                <span class="custmo_checkmark green_tr"></span>
+                                            </label>
+                                            <div class="img_box img_inactive" style="display: none;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_1.png">
+                                            </div>
+                                            <div class="img_box img_active " style="display: block;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_1_act.png">
+                                            </div>
+                                            <p class="fsize14 txt_dark fw500">Coupon</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <label for="temp5" class="m0 w-100">
+                                        <div class="broadcast_select_contact ref">
+                                            <label class="custmo_checkbox">
+                                                <input class="check" type="checkbox" id="temp5">
+                                                <span class="custmo_checkmark green_tr"></span>
+                                            </label>
+                                            <div class="img_box img_inactive" style="display: block;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_2.png">
+                                            </div>
+                                            <div class="img_box img_active " style="display: none;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_2_act.png">
+                                            </div>
+                                            <p class="fsize14 txt_dark fw500">Cash</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <label for="temp6" class="m0 w-100">
+                                        <div class="broadcast_select_contact ref">
+                                            <label class="custmo_checkbox">
+                                                <input class="check" type="checkbox" id="temp6" >
+                                                <span class="custmo_checkmark green_tr"></span>
+                                            </label>
+                                            <div class="img_box img_inactive" style="display: block;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_3.png">
+                                            </div>
+                                            <div class="img_box img_active " style="display: none;">
+                                                <img src="http://brandboost.io/assets/images/ref_reward_3_act.png">
+                                            </div>
+                                            <p class="fsize14 txt_dark fw500">Custom</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
     
     
     <div class="row">
@@ -287,6 +371,19 @@
 	$(".nav-link.people").removeClass("active");
 	$(".main-icon-menu-pane.email").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
+	
+	
+	
+	$('.check').change(function(){
+	if($(this).prop("checked")){
+		$(this).parent().parent().find(".img_inactive").hide();
+		$(this).parent().parent().find(".img_active").show();
+	}else{
+		$(this).parent().parent().find(".img_inactive").show();
+		$(this).parent().parent().find(".img_active").hide();
+	}
+	
+}) 
 </script>
 </body>
 </html>
