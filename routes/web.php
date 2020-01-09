@@ -709,11 +709,11 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 //Tag Module
     Route::get('admin/tags', 'Admin\Tags@index');
     Route::get('admin/tags/groups', 'Admin\Tags@TagGroups');
+    Route::get('admin/tags/tagsreview', 'Admin\Tags@tagsreview');
     Route::get('admin/tags/{id}', 'Admin\Tags@getTagList');
     Route::get('admin/tags/getTagContacts', 'Admin\Tags@getTagContacts');
     Route::post('admin/tags/addgroupentity', 'Admin\Tags@addgroupentity');
     Route::post('admin/tags/addgroup', 'Admin\Tags@addgroup');
-    Route::get('admin/tags/tagsreview', 'Admin\Tags@tagsreview');
     Route::post('admin/tags/deleteTagGroup', 'Admin\Tags@deleteTagGroup');
     Route::post('admin/tags/deleteTagGroupEntity', 'Admin\Tags@deleteTagGroupEntity');
     Route::get('admin/tags/review/{id}', 'Admin\Tags@review');

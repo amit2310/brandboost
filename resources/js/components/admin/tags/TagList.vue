@@ -222,6 +222,8 @@
                     .then(response => {
                         this.loading = false;
                         //console.log(response.data);
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
                         this.allData = response.data.allData;
                         this.oTags = response.data.aTags;
                         this.oTagGroupDetails = response.data.aTagGroupDetails;

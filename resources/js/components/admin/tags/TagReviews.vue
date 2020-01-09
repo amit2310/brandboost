@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-6 col-6">
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Tags Feedback</h3>
+                        <h3 class="htxt_medium_24 dark_700">Tag Reviews</h3>
                     </div>
                 </div>
             </div>
