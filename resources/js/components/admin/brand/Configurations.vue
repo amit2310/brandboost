@@ -32,11 +32,11 @@
                             <div class="p0">
                                 <div class="tab-content">
                                     <!--======Tab 1====-->
-                                    <configure v-if="brandData" :brandData="brandData"></configure>
+                                    <configure v-if="brandData" :brandData="brandData" :brandThemeData="brandThemeData"></configure>
                                     <!--======Tab 2=====-->
                                     <design v-if="brandData" :brandData="brandData" :brandThemeData="brandThemeData"></design>
                                     <!--======Tab 3=====-->
-                                    <campaign v-if="brandData" :brandData="brandData"></campaign>
+                                    <campaign v-if="brandData" :brandData="brandData" :brandThemeData="brandThemeData" :aBrandbosts="aBrandbosts"></campaign>
 
                                 </div>
                             </div>
@@ -93,6 +93,7 @@
                 loading: true,
                 brandData: '',
                 brandThemeData: '',
+                aBrandbosts: '',
                 user: {},
                 breadcrumb: ''
 
@@ -105,6 +106,7 @@
                     this.makeBreadcrumb(this.breadcrumb);
                     this.brandData = response.data.brandData;
                     this.brandThemeData = response.data.brandThemeData;
+                    this.aBrandbosts = response.data.aBrandbosts;
                     this.loading = false;
                     //loadJQScript(this.user.id);
 
