@@ -110,7 +110,7 @@
                                         <em> Tag Group: <strong>{{ capitalizeFirstLetter(setStringLimit(oTag.group_name, 20)) }}</strong> </em>
                                     </p>
                                     <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oTag.tag_created) }} </em></p>
-                                    <p class="htxt_regular_12 dark_300 mb15"><em> Reviews: {{ oTag.TagDataById }} </em></p>
+                                    <p class="htxt_regular_12 dark_300 mb15"><em> Feedbacks: {{ oTag.TagDataById }} </em></p>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                 window.location.href='#/tags/'+groupId;
             },
             loadPaginatedData: function () {
-                axios.get('/admin/tags/tagsreview?page=' + this.current_page)
+                axios.get('/admin/tags/tagsfeedback?page=' + this.current_page)
                     .then(response => {
                         this.loading = false;
                         //console.log(response.data);

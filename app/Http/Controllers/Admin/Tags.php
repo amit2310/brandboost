@@ -238,7 +238,7 @@ class Tags extends Controller {
     * @return type
     */
     public function tagsfeedback() {
-die("1111111111111");
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -264,7 +264,7 @@ die("1111111111111");
                 $tagDataVal->TagDataById = !empty($tagDataByIdCnt) ? count($tagDataByIdCnt) : 0;
             }
         }
-pre($tagData);
+
         $aData = array(
             'title' => 'Insight Tags Feedback',
             'uRole' => $userRole,

@@ -113,6 +113,7 @@ import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
 
 import Profile from './components/admin/Profile';
+import Settings from './components/admin/Settings';
 
 
 const routes = [
@@ -121,7 +122,8 @@ const routes = [
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
 
     /*Admin Profi;e*/
-    { path: '/profile', component: Profile, meta: { title: 'Admin Profile - Brand Boost'} },
+    { path: '/profile', component: Profile, meta: { title: 'Admin Settings - Brand Boost'} },
+    { path: '/settings', component: Settings, meta: { title: 'Brand Settings - Brand Boost'} },
 
     /*Contacts*/
     { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },

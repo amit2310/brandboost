@@ -710,6 +710,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/tags', 'Admin\Tags@index');
     Route::get('admin/tags/groups', 'Admin\Tags@TagGroups');
     Route::get('admin/tags/tagsreview', 'Admin\Tags@tagsreview');
+    Route::get('admin/tags/tagsfeedback', 'Admin\Tags@tagsfeedback');
+    Route::get('admin/tags/feedback/{id}', 'Admin\Tags@feedback');
     Route::get('admin/tags/{id}', 'Admin\Tags@getTagList');
     Route::get('admin/tags/getTagContacts', 'Admin\Tags@getTagContacts');
     Route::post('admin/tags/addgroupentity', 'Admin\Tags@addgroupentity');
@@ -726,8 +728,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/reviews/getReviewPopupData', 'Admin\Reviews@getReviewPopupData');
     Route::post('admin/reviews/getReviewById', 'Admin\Reviews@getReviewById');
     Route::post('admin/reviews/update_video_review', 'Admin\Reviews@update_video_review');
-    Route::get('admin/tags/tagsfeedback', 'Admin\Tags@tagsfeedback');
-    Route::get('admin/tags/feedback/{id}', 'Admin\Tags@feedback');
 
 //NPS Module
     Route::get('admin/modules/nps', 'Admin\Modules\Nps@index');

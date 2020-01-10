@@ -294,7 +294,7 @@
     import Pagination from '@/components/helpers/Pagination';
 
     export default {
-        title: 'Email Lists - Brand Boost',
+        title: 'Admin Settings - Brand Boost',
         components: {UserAvatar, PeopleListCreateSmartPopup, Pagination},
         data() {
             return {
