@@ -240,6 +240,20 @@
      		</div>
      		
      		
+     		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 sms_400">Brand Page</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="brands.php">Brands</a></li>
+     			<li><a target="_blank" href="brands_page1.php">Brands Page 1</a></li>
+     		</ul>
+     		</div>
+     		
+     		
+     		
+     		
+     		
      	</div>
      </div>
      

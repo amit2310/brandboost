@@ -11,80 +11,13 @@
                     <span class="toggle email"></span>
                 </label>
             </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
+            <h3 v-for="campaing in aBrandbosts" class="dark_500 mb0 fsize14 fw400">{{campaing.brand_title}}
                 <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
+                    <input class="field" type="checkbox" name="campaign[]" :value="campaing.id">
                     <span class="toggle email"></span>
                 </label>
             </h3>
 
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
-            <h3 class="dark_500 mb0 fsize14 fw400">Test
-                <label class="custom-form-switch float-right">
-                    <input class="field" type="checkbox">
-                    <span class="toggle email"></span>
-                </label>
-            </h3>
         </div>
         <div class="p20 btop">
             <button class="btn btn-md bkg_blue_200 light_000 w-100">Save </button>
@@ -93,7 +26,9 @@
 
 </template>
 <script>
-    export default { }
+    export default {
+        props: ['brandData', 'brandThemeData', 'aBrandbosts'],
+    }
 </script>
 
 

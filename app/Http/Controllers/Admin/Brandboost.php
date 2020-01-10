@@ -3570,7 +3570,7 @@ class Brandboost extends Controller
             'title' => 'Brand Configuration',
             'breadcrumb' => $aBreadcrumb,
             'brandData' => $brandData[0],
-            'aBrandbosts' => $aBrandboostList,
+            'aBrandbosts' => $aBrandboostList->items(),
             'brandThemeData' => $brandThemeData,
             'faQData' => $faQData,
             'aReviews' => $aReviews,
