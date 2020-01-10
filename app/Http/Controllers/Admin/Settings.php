@@ -24,11 +24,18 @@ class Settings extends Controller {
         $pID =$oUser->plan_id;
         $topupPlanID = isset($oUser->topup_plan_id) ? $oUser->topup_plan_id : '';
 
+        /* Country List */
+        $countries = getAllCountries();
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Brand Settings" class="sidebar-control active hidden-xs ">Brand Settings</a></li>
                     </ul>';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Brand Setting' => '#/settings/'
+        );
 
         $oSettings = SettingsModel::getNotificationSettings($userID);
         $notificationlisting = SettingsModel::getallowNotification();
@@ -42,6 +49,8 @@ class Settings extends Controller {
 
         $oExportHistory = SettingsModel::getExportHistory($userID);
 
+        $oRegularMembership = '';
+        $oTopupMembership = '';
         $oMemberships = MembershipModel::getActiveMembership();
         if (!empty($oMemberships)) {
 
@@ -57,9 +66,11 @@ class Settings extends Controller {
             }
         }
 
-        $data = array(
+        $aData = array(
             'title' => 'Brand Settings',
             'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
+            'countries' => $countries,
             'settingsData' => SettingsModel::getSettingsData(),
             'notificationData' => $oSettings,
             'oImportHistory' => $oImportHistory,
@@ -73,7 +84,9 @@ class Settings extends Controller {
             'oUser' => $oUser
         );
 
-        return view('admin.settings.brand', $data);
+        //return view('admin.settings.brand', $data);
+        echo json_encode($aData);
+        exit();
 
 	}
 
