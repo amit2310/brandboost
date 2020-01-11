@@ -3769,6 +3769,7 @@ class Brandboost extends Controller
         $mBrand = new BrandModel();
         $result = $mBrand->getBrandThemeConfigData($BrandthemeId);
 
+
         if ($result) {
             $response = array('status' => 'ok');
             $response['brand_theme_title'] = $result[0]->brand_theme_title;
