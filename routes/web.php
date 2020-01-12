@@ -671,6 +671,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/brand_configuration', 'Admin\Brandboost@brand_configuration');
     Route::post('admin/brandboost/addBrandConfigurationData', 'Admin\Brandboost@addBrandConfigurationData');
     Route::post('admin/brandboost/updateBrandConfigurationData', 'Admin\Brandboost@updateBrandConfigurationData');
+    Route::post('admin/brandboost/createBrandPageTheme', 'Admin\Brandboost@createBrandPageTheme');
     Route::post('admin/contacts/profile/{contactId}', 'Admin\Contacts@profile');
     Route::post('admin/contacts/add_contact_notes', 'Admin\Contacts@add_contact_notes');
     Route::get('admin/contacts/mycontacts', 'Admin\Contacts@mycontacts');

@@ -36,7 +36,7 @@
                                     <!--======Tab 2=====-->
                                     <design v-if="brandData" :brandData="brandData" :brandThemeData="brandThemeData"></design>
                                     <!--======Tab 3=====-->
-                                    <campaign v-if="brandData" :brandData="brandData" :brandThemeData="brandThemeData" :aBrandbosts="aBrandbosts"></campaign>
+                                    <campaign v-if="brandData" :brandData="brandData" :brandThemeData="brandThemeData" :aBrandbosts="aBrandbosts" :selectedCampaigns="selectedCampaigns"></campaign>
 
                                 </div>
                             </div>
@@ -94,6 +94,7 @@
                 brandData: '',
                 brandThemeData: '',
                 aBrandbosts: '',
+                selectedCampaigns: '',
                 user: {},
                 breadcrumb: ''
 
@@ -107,6 +108,7 @@
                     this.brandData = response.data.brandData;
                     this.brandThemeData = response.data.brandThemeData;
                     this.aBrandbosts = response.data.aBrandbosts;
+                    this.selectedCampaigns = response.data.selectedCampaigns;
                     this.loading = false;
                     //loadJQScript(this.user.id);
 
