@@ -406,18 +406,19 @@
                     });
             },
             createTheme: function(){
-                this.saveChanges();
-                /*this.loading = true;
-                axios.post('/admin/brandboost/addBrandConfigurationData', {
+                this.loading = true;
+                axios.post('/admin/brandboost/createBrandPageTheme', {
                     themeTitle: this.themeTitle,
                     themeData: this.brandData,
                     _token: this.csrf_token()
                 })
                     .then(response => {
+                        let themeReponseData = response.data.themeCollection;
+                        this.brandThemeData = themeReponseData;
                         this.successMsg = 'Configuration saved successfully!!';
                         this.loading = false;
 
-                    });*/
+                    });
             }
         }
     }
