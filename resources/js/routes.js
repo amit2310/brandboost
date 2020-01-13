@@ -116,6 +116,9 @@ import Profile from './components/admin/Profile';
 import Settings from './components/admin/Settings';
 
 
+/* Sub User Section */
+import UserProfile from './components/user/Profile';
+
 const routes = [
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
@@ -255,7 +258,8 @@ const routes = [
     { path: '/brand/configuration/single', component: BrandConfigurationSingle, meta: { title: 'Campaign Specific Brand Configuration'} },
 
 
-
+    /* Sub User Section */
+    { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
 ];
 
 export default routes;

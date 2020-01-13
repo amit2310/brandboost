@@ -18,7 +18,7 @@ class Settings extends Controller {
      */
 	public function index(Request $request) {
 
-		$seletedTab = $request->input('t');
+		$seletedTab = 1;//$request->input('t');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $pID =$oUser->plan_id;
