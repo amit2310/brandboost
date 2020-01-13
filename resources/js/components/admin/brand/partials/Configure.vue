@@ -132,6 +132,11 @@
                 loading: false,
             }
         },
+        watch:{
+            brandData: function(){
+                this.$emit('syncConfigure', this.brandData);
+            }
+        },
         methods:{
             saveConfiguration: function(){
                 this.loading = true;

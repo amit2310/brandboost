@@ -80,15 +80,15 @@ if ($brandData->header_color == 'blue') {
          ?>}
      <?php }
      ?>
-	
+
 </style>
 <div class="brand_page_pr Parent <?php if ($brandData->area_type == '2' && $brandData->color_orientation_full == "") {
          echo $brandData->header_color_fix == '1' ? $brandData->header_color . '_preview_1' : '';
          ?>" style="<?php echo $brandData->header_color_solid == '1' ? 'background:' . $brandData->header_solid_color : ''; ?> <?php
         echo $brandData->header_color_custom == '1' ? 'background-image:linear-gradient(45deg, ' . $brandData->header_custom_color1 . ' 1%, ' . $brandData->header_custom_color2 . ')' : '';
     } else if ($brandData->area_type == '2' && $brandData->color_orientation_full != "") {
-        ?>" 
-         style="<?php echo $brandData->header_color_solid == '1' ? 'background:' . $brandData->header_solid_color : ''; ?> 
+        ?>"
+         style="<?php echo $brandData->header_color_solid == '1' ? 'background:' . $brandData->header_solid_color : ''; ?>
              <?php
              echo $brandData->header_color_custom == '1' ? 'background-image:' . $Btype_area2 . '(' . $brandData->color_orientation_full . ', ' . $brandData->header_custom_color1 . ' 1%, ' . $brandData->header_custom_color2 . ')' : '';
              echo $brandData->header_color_fix == '1' ? 'background-image:' . $Btype_area2 . '(' . $brandData->color_orientation_full . ', ' . $headercolor1 . ' 1%, ' . $headercolor2 . ')' : '';
@@ -99,12 +99,12 @@ if ($brandData->header_color == 'blue') {
     <div class="brand_page_gr headerbg <?php
          if ($brandData->area_type == '1' && $brandData->color_orientation_top == "") {
              echo $brandData->header_color_fix == '1' ? $brandData->header_color . '_preview_1' : '';
-             ?>" 
-             style="<?php echo $brandData->header_color_solid == '1' ? 'background:' . $brandData->header_solid_color : ''; ?> 
+             ?>"
+             style="<?php echo $brandData->header_color_solid == '1' ? 'background:' . $brandData->header_solid_color : ''; ?>
                     <?php
                     echo $brandData->header_color_custom == '1' ? 'background-image:linear-gradient(45deg, ' . $brandData->header_custom_color1 . ' 1%, ' . $brandData->header_custom_color2 . ')' : '';
                 } else if ($brandData->area_type == '1' && $brandData->color_orientation_top != "") {
-                    ?>" 
+                    ?>"
              style="<?php echo $brandData->header_color_solid == '1' ? 'background:' . $brandData->header_solid_color : ''; ?>
                     <?php
                     echo $brandData->header_color_custom == '1' ? 'background-image:' . $Btype_area1 . '(' . $brandData->color_orientation_top . ', ' . $brandData->header_custom_color1 . ' 1%, ' . $brandData->header_custom_color2 . ')' : '';
@@ -116,13 +116,13 @@ if ($brandData->header_color == 'blue') {
 
         <div class="page_header">
             <div class="col-md-6">
-                        @if ($brandData->company_logo == "") 
-                    <img class="company_avatar top_1 br5" src="{{ base_url('assets/images/avatar_defaut_logo.png') }}" 
+                        @if ($brandData->company_logo == "")
+                    <img class="company_avatar top_1 br5" src="{{ base_url('assets/images/avatar_defaut_logo.png') }}"
                          alt="" width="100" style="max-height:50px">
                         @else
-                    <img class="company_avatar top_1 br5" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $brandData->company_logo }}" 
+                    <img class="company_avatar top_1 br5" src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $brandData->company_logo }}"
                          alt="" width="100" style="max-height:50px">
-                        @endif			
+                        @endif
             </div>
             <div class="col-md-6 text-right"><a href="" class="txt_white">FAQ</a></div>
         </div>
@@ -133,13 +133,13 @@ if ($brandData->header_color == 'blue') {
             <div class="col-md-12">
                 <div class="white_box inline_block top_sec">
                     <div class="col-md-1 pr avatarSection" style="display: {{ ($brandData->avatar == '1' || $brandData->avatar == '') ? 'block' : 'none' }}">
-                        @if ($brandData->company_header_logo == "") 
-                            <img  src="{{ base_url('assets/images/default-logo.png') }}" 
+                        @if ($brandData->company_header_logo == "")
+                            <img  src="{{ base_url('assets/images/default-logo.png') }}"
                                   alt=""  width="95" height="95" class="rounded company_header_avatar bot1">
                         @else
-                            <img  src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $brandData->company_header_logo }}" 
+                            <img  src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $brandData->company_header_logo }}"
                                   alt="" width="95" height="95" class="rounded company_header_avatar bot1" >
-                        @endif						
+                        @endif
                     </div>
                     <div class="col-md-11 pl30">
                         @php
@@ -162,6 +162,7 @@ if ($brandData->header_color == 'blue') {
                             $starRating = 'block';
                         }
                         @endphp
+                        {{--About Company Block--}}
                         <div class="col-md-6 aboutCompanySection" style="float: {{ $acpfloat }}">
                             <div class="col-md-9">
                                 <input type="hidden" id="default_brand_title" value="{{-- $brandboostData->brand_title --}}">
@@ -172,15 +173,16 @@ if ($brandData->header_color == 'blue') {
                                     {{ ($brandData->company_info > 0 || empty($brandData)) ? '' : nl2br($brandData->company_info_description) }}
                                 </p>
                                 <div class="walker_p servicesSection" {{ ($brandData->services == '1' || $brandData->services == '') ? '' : 'style="display:none;"' }}>
-                                    <a href="#" class="customColor">Design Agency</a> 
-                                    <a href="#" class="customColor">Design &amp; Development</a> 
-                                    <a href="#" class="customColor">User Expirience Design</a> 
+                                    <a href="#" class="customColor">Design Agency</a>
+                                    <a href="#" class="customColor">Design &amp; Development</a>
+                                    <a href="#" class="customColor">User Expirience Design</a>
                                     <a href="#" class="customColor">Logo</a>
                                 </div>
                                 <div class="contactUsBtnSection" {{ ($brandData->contact_button == '1' || $brandData->contact_button == '') ? '' : 'style="display:none;"' }}><button type="button" class="btn dark_btn">Contact Us</button></div>
                             </div>
                         </div>
 
+                        {{--Social Media Block--}}
                         <div class="col-md-6 socialMediaSection">
                             <div class="interactions p15 contactInfoSection" {{ ($brandData->contact_info == '1' || $brandData->contact_info == '') ? '' : 'style="display:none;"' }}>
                                 <ul>
@@ -193,12 +195,12 @@ if ($brandData->header_color == 'blue') {
                             </div>
 
                             <div class="brand_social pl10 socialSection" {{ ($brandData->socials == '1' || $brandData->socials == '') ? '' : 'style="display:none;"' }}>
-                                <a href="#" class="customColor"><i class="fa fa-facebook"></i></a> 
-                                <a href="#" class="customColor"><i class="icon-bubble"></i></a> 
-                                <a href="#" class="customColor"><i class="icon-paperplane"></i></a> 
-                                <a href="#" class="customColor"><i class="icon-youtube"></i></a> 
-                                <a href="#" class="customColor"><i class="icon-twitter"></i></a> 
-                                <a href="#" class="customColor"><i class="icon-instagram"></i></a> 
+                                <a href="#" class="customColor"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="customColor"><i class="icon-bubble"></i></a>
+                                <a href="#" class="customColor"><i class="icon-paperplane"></i></a>
+                                <a href="#" class="customColor"><i class="icon-youtube"></i></a>
+                                <a href="#" class="customColor"><i class="icon-twitter"></i></a>
+                                <a href="#" class="customColor"><i class="icon-instagram"></i></a>
                                 <a href="#" class="customColor"><i class="fa fa-google"></i></a>
                             </div>
                         </div>
