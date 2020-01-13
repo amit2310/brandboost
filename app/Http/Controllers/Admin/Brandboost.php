@@ -3557,7 +3557,11 @@ class Brandboost extends Controller
 
         $brandData = $BrandObj->getBrandConfigurationData($userID);
         $brandThemeData = $BrandObj->getBrandThemesData($userID);
-        $aBrandboostList = $mBrandboostObj->getBrandboostByUserId($userID, 'onsite');
+        $aBrandboostList = $mBrandboostObj->getReviewCampaigns($userID, 'onsite');
+        $selectedCampaigns = [];
+        if (!empty(unserialize($brandData[0]->campaign_ids))) {
+            $selectedCampaigns = unserialize($brandData[0]->campaign_ids);
+        }
         $faQData = $BrandObj->getFaqData();
         $aReviews = $mReviewsObj->getCampaignReviewsByUserId($userID);
         $aBreadcrumb = array(
@@ -3570,8 +3574,9 @@ class Brandboost extends Controller
             'title' => 'Brand Configuration',
             'breadcrumb' => $aBreadcrumb,
             'brandData' => $brandData[0],
-            'aBrandbosts' => $aBrandboostList->items(),
+            'aBrandbosts' => $aBrandboostList,
             'brandThemeData' => $brandThemeData,
+            'selectedCampaigns' => $selectedCampaigns,
             'faQData' => $faQData,
             'aReviews' => $aReviews,
             'userData' => $oUser
@@ -3768,6 +3773,7 @@ class Brandboost extends Controller
         $userID = $oUser->id;
         $mBrand = new BrandModel();
         $result = $mBrand->getBrandThemeConfigData($BrandthemeId);
+
 
         if ($result) {
             $response = array('status' => 'ok');
@@ -4069,6 +4075,57 @@ class Brandboost extends Controller
             $response = array('status' => 'error');
         }
 
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * @param Request $request
+     * This method used to save/update brand page theme data
+     */
+    public
+    function createBrandPageTheme(Request $request)
+    {
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $BrandModelObj = new BrandModel();
+        $theme_title = $request->themeTitle;
+        $brandData = $request->themeData;
+        $aThemeData = array(
+            'user_id' => $userID,
+            'area_type' => $brandData['area_type'],
+            'header_color' => $brandData['header_color'],
+            'brand_theme_title' => $theme_title,
+            'header_solid_color' => $brandData['header_solid_color'],
+            'header_custom_color1' => $brandData['header_custom_color1'],
+            'header_custom_color2' => $brandData['header_custom_color2'],
+            'header_color_solid' => $brandData['header_color_solid'],
+            'header_color_fix' => $brandData['header_color_fix'],
+            'header_color_custom' => $brandData['header_color_custom'],
+            'color_orientation_top' => $brandData['color_orientation_top'],
+            'color_orientation_full' => $brandData['color_orientation_full']
+        );
+
+        $bData = $BrandModelObj->getBrandConfigurationData($userID);
+        if ($bData->count() > 0) {
+            $result = $BrandModelObj->saveTheme($userID, $brandData, $aThemeData, $theme_title);
+            if ($result) {
+                $response = array('status' => 'ok');
+            } else {
+                $response = array('status' => 'ok');
+            }
+        } else {
+            $result = $BrandModelObj->addBrandConfiguration($brandData, $aThemeData, $theme_title);
+            if ($result) {
+                $response = array('status' => 'ok');
+            } else {
+                $response = array('status' => 'error');
+            }
+        }
+        $brandThemeData = $BrandModelObj->getBrandThemesData($userID);
+        $response['themeCollection'] = $brandThemeData;
         echo json_encode($response);
         exit;
     }

@@ -32,6 +32,27 @@ class BrandboostModel extends Model {
     }
 
     /**
+     * This method used to get review campaigns
+     * @param $userId
+     * @param string $type
+     * @return mixed
+     */
+    public static function getReviewCampaigns($userId, $type = '') {
+            $oData = DB::table('tbl_brandboost')
+                    ->when(($userId > 0), function($query) use ($userId) {
+                        return $query->where('user_id', $userId);
+                    })
+                    ->when((!empty($type)), function($query) use ($type) {
+                        return $query->where('review_type', $type);
+                    })
+                    ->where('delete_status', 0)
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+            return $oData;
+        }
+
+    /**
      * function is used to fetch the BB campaign information
      * @param type $campaignID
      * @return type
