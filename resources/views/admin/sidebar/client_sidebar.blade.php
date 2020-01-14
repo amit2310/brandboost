@@ -156,10 +156,10 @@
                     <h6 class="menu-title">Live Messanger</h6>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/dashbaord') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/web') }}"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Web Chat</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/sms') }}"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">SMS Chat</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/shortcuts') }}"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Chat Shortcut</span></a></li>
                 </ul>
             </div>
 

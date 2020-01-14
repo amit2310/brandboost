@@ -18,28 +18,41 @@ class WebChat extends Controller {
      */
     public function index() {
         $oUser = getLoggedUser();
-        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                        <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                        <li><a class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Live Chat" class="sidebar-control active hidden-xs ">Live Chat</a></li>
-                      </ul>';
-        $oContacts = SubscriberModel::getGlobalSubscribers($oUser->id);
-        $favouriteUserData = SmsChatModel::getSMSFavouriteByUserId($oUser->id);
-        $webChatModel = new WebChatModel();
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Chat' => '#/chat/dashboard',
+            'Web Chat' => ''
+        );
+        $oContacts = SubscriberModel::getGlobalSubscribers($oUser->id, false);
+        $mWebChat = new WebChatModel();
+        $favoriteChatData = $mWebChat->getFavouriteUsers($oUser->id);
         $isLoggedInTeam = Session::get("team_user_id");
         if (!empty($isLoggedInTeam)) {
-            $assignedChat = $webChatModel->getTeamAssign($isLoggedInTeam);
-            $assignedChatData = $webChatModel->getTeamAssignData($isLoggedInTeam);
+            $assignedChat = $mWebChat->getTeamAssign($isLoggedInTeam);
+            $assignedChatData = $mWebChat->getTeamAssignData($isLoggedInTeam);
             $loggedYou = $isLoggedInTeam;
         } else {
-            $assignedChat = $webChatModel->getTeamAssign($oUser->id);
-            $assignedChatData = $webChatModel->getTeamAssignData($oUser->id);
+            $assignedChat = $mWebChat->getTeamAssign($oUser->id);
+            $assignedChatData = $mWebChat->getTeamAssignData($oUser->id);
             $loggedYou = $oUser->id;
         }
-        $unassignedChat = $webChatModel->getTeamAssign(0);
-        $unassignedChatData = $webChatModel->getTeamAssignData(0);
-        $data = array('title' => 'Chat System', 'pagename' => $breadcrumb, 'usersdata' => $oContacts, 'favouriteUserData' => $favouriteUserData, 'loginUserData' => $oUser, 'totalSubscriber' => count($oContacts), 'unassignedChat' => $unassignedChat, 'assignedChat' => $assignedChat, 'assignedChatData' => $assignedChatData, 'unassignedChatData' => $unassignedChatData, 'loggedYou' => $loggedYou);
-        return view('admin.web_chat.index', $data);
+        $unassignedChat = $mWebChat->getTeamAssign(0);
+        $unassignedChatData = $mWebChat->getTeamAssignData(0);
+        $aData = [
+            'title' => 'Web Chat',
+            'breadcrumb' => $aBreadcrumb,
+            'usersdata' => $oContacts,
+            'favouriteUserData' => $favoriteChatData,
+            'loginUserData' => $oUser,
+            'totalSubscriber' => count($oContacts),
+            'unassignedChat' => $unassignedChat,
+            'assignedChat' => $assignedChat,
+            'assignedChatData' => $assignedChatData,
+            'unassignedChatData' => $unassignedChatData,
+            'loggedYou' => $loggedYou
+        ];
+        //return view('admin.web_chat.index', $data);
+        return $aData;
     }
     /**
      * This function is used to get userinformation based on the client/user id

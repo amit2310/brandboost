@@ -83,6 +83,11 @@ import ReferralStep5 from './components/admin/modules/referral/setup/Setup5';
 import BrandSetting from './components/admin/brand/Settings';
 import BrandConfiguration from './components/admin/brand/Configurations';
 import BrandConfigurationSingle from './components/admin/brand/Single';
+/*Chat Module*/
+import ChatDashboard from './components/admin/chat/Dashboard';
+import ChatWeb from './components/admin/chat/web/BigChat';
+import ChatSMS from './components/admin/chat/sms/BigChat';
+import ChatShortcut from './components/admin/chat/Shortcuts';
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
 import NpsScore from './components/admin/modules/nps/Score';
@@ -257,6 +262,11 @@ const routes = [
     { path: '/brand/configuration', component: BrandConfiguration, meta: { title: 'Brand Configuration'} },
     { path: '/brand/configuration/single', component: BrandConfigurationSingle, meta: { title: 'Campaign Specific Brand Configuration'} },
 
+    /*Chat Module*/
+    { path: '/chat/dashboard', component: ChatDashboard, meta: { title: 'Chat Dashboard'} },
+    { path: '/chat/web', component: ChatWeb, meta: { title: 'Web Chat'} },
+    { path: '/chat/sms', component: ChatSMS, meta: { title: 'SMS Chat'} },
+    { path: '/chat/shortcuts', component: ChatShortcut, meta: { title: 'Chat Shortcuts'} },
 
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },

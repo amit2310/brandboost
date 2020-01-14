@@ -20,7 +20,7 @@ class WebChatModel extends Model {
                 ->where('assign_team_member', $teamId)
                 ->get();
         $rCount = $oResult->count();
-        return $rCount; 
+        return $rCount;
     }
 
 
@@ -38,7 +38,7 @@ class WebChatModel extends Model {
     }
 
      /**
-     * this function is used to get the webchat notes 
+     * this function is used to get the webchat notes
      * @param type $userid
      * @return type object
      */
@@ -66,7 +66,7 @@ class WebChatModel extends Model {
     }
 
      /**
-    * This function is used to add the web notes 
+    * This function is used to add the web notes
     * @return type
     */
     public function addWebNotes($data)
@@ -147,7 +147,7 @@ class WebChatModel extends Model {
      * @param type $token
      * @return type object
      */
-    public function checkTeamAssign($token) { 
+    public function checkTeamAssign($token) {
         $oData = DB::table('tbl_chat_supportuser')
         ->select('*')
         ->where('room', $token)
@@ -204,7 +204,7 @@ class WebChatModel extends Model {
 
     }
 
-    
+
 
     /**
      * this function is used to update the chat user contact information
@@ -244,8 +244,8 @@ class WebChatModel extends Model {
 
         }
 
-        return $oData; 
-       
+        return $oData;
+
 
     }
 
@@ -254,7 +254,7 @@ class WebChatModel extends Model {
      * @return type boolean
      */
     public function updateChatboxstatus($aData) {
-        $responseRes = DB::select(DB::raw("select * from tbl_chat_status where  
+        $responseRes = DB::select(DB::raw("select * from tbl_chat_status where
         user_id = '".$aData['user_id']."' AND subscriber_id='".$aData['subscriber_id']."' "));
 
         if(empty($responseRes))
@@ -270,7 +270,7 @@ class WebChatModel extends Model {
      */
     public function removeActiveBoxStatus($aData)
     {
-        $responseRes = DB::select(DB::raw("delete from tbl_chat_status where  
+        $responseRes = DB::select(DB::raw("delete from tbl_chat_status where
         user_id = '".$aData['user_id']."' AND subscriber_id='".$aData['subscriber_id']."' "));
         return 1;
     }
@@ -284,7 +284,7 @@ class WebChatModel extends Model {
         ->select('*')
         ->where('hashcode', $userToken)
         ->first();
-        return $oData;     
+        return $oData;
     }
 
     /**
@@ -299,7 +299,7 @@ class WebChatModel extends Model {
         ->where('token', $token)
         ->orderBy('id', 'asc')
         ->get();
-        return $oData;   
+        return $oData;
     }
 
 
@@ -314,7 +314,7 @@ class WebChatModel extends Model {
         ->select('*')
         ->where('room', $token)
         ->first();
-        return $oData;    
+        return $oData;
     }
 
     /**
@@ -329,7 +329,7 @@ class WebChatModel extends Model {
         return $oData;
     }
 
- 
+
    /**
      * this function is used to add favourite webchatuser
      * @return type object
@@ -340,7 +340,7 @@ class WebChatModel extends Model {
         $oData = DB::table('tbl_chat_supportuser')
             ->where('id', $userId)
             ->update($aData);
-             return $oData; 
+             return $oData;
 
         }
 
@@ -369,30 +369,43 @@ public static function getTeamByroomDetails($room)
 
         if($searchval!="")
         {
-        $oData = DB::select(DB::raw(" SELECT 
-      tcm_subs.* FROM 
-      tbl_chat_message tc INNER JOIN 
-      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token 
+        $oData = DB::select(DB::raw(" SELECT
+      tcm_subs.* FROM
+      tbl_chat_message tc INNER JOIN
+      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token
       WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "') AND tc.message  LIKE '%".$searchval."%'
       GROUP BY tc.token ORDER BY tcm_subs.created DESC"));
       }
       else
       {
-      $oData = DB::select(DB::raw(" SELECT 
+      $oData = DB::select(DB::raw(" SELECT
       tcm_subs.*
-FROM 
-      tbl_chat_message tc INNER JOIN 
-      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token 
-      WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "') 
+FROM
+      tbl_chat_message tc INNER JOIN
+      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token
+      WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "')
       GROUP BY tc.token ORDER BY tcm_subs.created DESC"));
-      
-      } 
-      
-       
+
+      }
+
+
         return $oData;
     }
 
-       
+    /**
+     * This function is used to get the list of favorite chat users
+     * @param $userId
+     * @return mixed
+     */
+    public function getFavouriteUsers($userId) {
+
+        $oFavorite = DB::table('tbl_chat_favourite')
+            ->where('curr_user_id', $userId)
+            ->get();
+        return $oFavorite;
+    }
+
+
 
 
 }
