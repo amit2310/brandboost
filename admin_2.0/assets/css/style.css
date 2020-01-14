@@ -1270,7 +1270,7 @@ color:#7989b4
 PAGE WITH SIDEBAR CSS
 *********************/
 .page_sidebar{float: left; width: 280px; height: 100vh; background: #f9fbff; border-right: 1px solid #e9eff8; padding:0px;/*position: fixed*/}
-.page_sidebar.absl{float: left; width: 280px; height: 100vh; background: #ffffff; border-right: 1px solid #e9eff8; padding:0px; position: absolute; top: 0px; left: 0px;}
+.page_sidebar.absl{float: left; width: 280px; height: 100vh; /*background: #ffffff;*/ background: #F9FBFF!important;  padding:0px; position: absolute; top: 0px; left: 0px;}
 .page_sidebar.width_360{width: 360px;}
 .page_sidebar .inner{padding:25px 20px;}
 .page_sidebar .inner2{padding:22px 20px;}
@@ -1285,7 +1285,7 @@ PAGE WITH SIDEBAR CSS
 
 
 .sidebar_search_big{padding: 10px 0; margin-bottom: 15px;}
-.sidebar_search_big input[type="text"]{background: #f4f6f9;border-radius: 50px; height: 36px; border: none; max-width: 192px; padding: 0 15px; color: #B4C0D4; font-size: 14px;}
+.sidebar_search_big input[type="text"]{background: #ffffff;border-radius: 4px; height: 44px; border: none; max-width: 192px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07);}
 .sidebar_search_big input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
 .sidebar_search_big .sidebar_search_submit{border: none; background: none; box-shadow: none; width: 36px; height: 36px; padding: 0; margin: 0 0 0 7px;}
 
@@ -1296,7 +1296,8 @@ PAGE WITH SIDEBAR CSS
 .list_with_icons{margin: 0; padding: 0;}
 .list_with_icons li{padding: 15px 0; border-bottom: 1px solid #eef2f9; border-top: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px; position: relative; z-index: 9}
 .list_with_icons li p{margin: 0; padding: 0; line-height: 23px;}
-.list_with_icons li.active:after{ position: absolute; background: #f9fbff; content: ''; top: 0; left: -20px; height: 100%; width: 100%; z-index: -1; border-left: 2px solid #8faefc; min-width: 279px;}
+.list_with_icons li.active:after{ position: absolute; background: #EFF3FC; content: ''; top: 0; left: -20px; height: 100%; width: 100%; z-index: -1; border-right: 2px solid #8faefc; min-width: 279px;}
+.list_with_icons li:hover:after{ position: absolute; background: #EFF3FC; content: ''; top: 0; left: -20px; height: 100%; width: 100%; z-index: -1; border-right: 2px solid #8faefc; min-width: 279px;}
 .time_badge{position: absolute; top: 15px; right: 0px; width: 50px; height: 16px; text-align: right}
 .time_badge .badge.badge-grey.chatlist{background: #73ABFF!important; font-size: 10px; color: #ffffff!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; margin-left: 5px  }
 
@@ -3555,3 +3556,63 @@ REFERRALS Pages
 .broadcast_select_contact .custmo_checkbox input:checked ~ .custmo_checkmark.green_tr {	border:none!important;	background: url(http://brandboost.io/new_pages/assets/images/checkmark_bkg_green.png) top right no-repeat!important;}
 
 
+
+
+
+
+/***********
+Live Chat Messangers
+*************/
+
+
+#LiveChatSection .navbar-custom{background: #ffffff!important; padding-left: 320px}
+#LiveChatSection .top-bar-top-section{padding-left: 310px}
+#LiveChatSection .content-area.chat_messanger_area{padding:0 280px 0 280px; position: inherit}
+
+.chat_messanger_area .chat_user_list {max-width: 225px; border-right: 2px solid #d5dfef; padding-right: 15px; float: right}
+.chat_messanger_area .chat_user_list ul{margin: 0; padding: 0;}
+.chat_messanger_area .chat_user_list ul li{display: inline-block;  margin: 0 2px; padding: 0; line-height: 28px;}
+.chat_messanger_area .chat_user_list ul li img{width: 28px; height: 28px;}
+
+.chat_messanger_area .action_list {max-width: 207px; float: right; margin-left: 10px}
+.chat_messanger_area .action_list ul{margin: 0; padding: 0;}
+.chat_messanger_area .action_list ul li{display: inline-block;  margin: 0 6px; padding: 0; line-height: 28px;}
+.chat_messanger_area .action_list ul li img{}
+
+.chat_messanger_area .messanger_tab {margin: 8px 0px 0 0}
+.chat_messanger_area .messanger_tab li{margin: 0 30px 0 0}
+.chat_messanger_area .nav.nav-pills.messanger_tab a{color: #687693; font-size: 14px;}
+.chat_messanger_area .nav.nav-pills.messanger_tab a.active{color: #4F8AF4; border-top: 2px solid #4F8AF4; padding-top: 39px;}
+
+.chat_messanger_area .media-body {position: relative;}
+.chat_messanger_area .chat-list{padding: 30px 0 30px 30px; margin: 0}
+.chat_messanger_area .chat-list .media.reversed .media-content:not([class*="bg-"]) {border-radius: 6px!important; border: none!important; background-color: #edf5ff!important; float:right;}
+.chat_messanger_area .chat-list .media.reversed .media-content {text-align: left;	color: #242B3D!important; font-size:14px; font-weight:400; clear: both;}
+.chat_messanger_area .chat-list .media.reversed .media-content:before {display: none;}
+.chat_messanger_area .chat-list .media-content:not([class*="bg-"]) {	background-color: #eff3fc;	border:none; border-radius: 6px!important;}
+.chat_messanger_area .chat-list .media-content:before {display: none; }
+.chat_messanger_area .chat-list .media-content{padding: 18px 25px!important; font-size: 14px; font-weight: 400!important; max-width: 500px; color:#242B3D!important; display:table!important; margin-bottom: 8px !important;position: relative; width: auto; clear: both}
+.chat_messanger_area .chat-list .media{ margin-left:50px;}
+.chat_messanger_area .chat-list .media.reversed{ margin-right:50px;}
+.chat_messanger_area .chat-list .media .media-annotation.user_icon{ position:absolute; left:-50px; width: 36px;height: 36px;right: auto; top: 0;}
+.chat_messanger_area .chat-list .media.reversed .media-annotation.user_icon{  right:-50px;left: auto;}
+.chat_messanger_area .circle_green_status.status-mark{ border:2px solid #ffffff; background:#00CC00; position:absolute; bottom:0; width:9px; height:9px; right:-3px; display: none}	
+.chat_messanger_area a.icons.fl_letters.s24 {width: 36px;height: 36px;box-shadow: none !important;/*background: #fff;*/text-align: center;text-transform: uppercase;line-height: 36px;color: #fff;border-radius: 100px;font-size: 9px;	font-weight: 500;background: #333;display: block}
+.chat_messanger_area .mainchatsvroll2  {height: 500px; /*overflow-x: hidden; overflow-y: auto;*/ padding-right: 30px; overflow: hidden;}
+.chat_messanger_area .mainchatsvroll2:hover{overflow-y: auto}
+.chat_messanger_area .chat_mis_sec{min-height: 500px;}
+
+@media (max-width:1440px) {
+	.chat_messanger_area .mainchatsvroll2{height: 350px;}
+	.chat_messanger_area .chat_mis_sec{min-height: 350px; max-height: 350px!important}
+}
+		
+		
+
+.chat_messanger_area .profile_image_bkg{width: 108px; height: 108px; text-align: center; line-height: 108px; background: url(../images/profile_bkg.png)center center no-repeat; margin: auto}
+.chat_messanger_area .profile_social_icon {padding: 0; margin: 0}
+.chat_messanger_area .profile_social_icon li{list-style: none; display: inline-block; margin: 0 5px;}
+.chat_messanger_area .user_details_list{margin: 0; padding: 0}
+.chat_messanger_area .user_details_list li{list-style: none; color: #242B3D; font-size: 14px; line-height: 30px; margin: 0; padding: 0}
+.chat_messanger_area .user_profile_show{position: absolute; right: 0; top: 30px;}
+.chat_messanger_area .box::after{display: none}

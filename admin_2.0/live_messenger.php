@@ -14,65 +14,11 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-	<style>
-		.navbar-custom{background: #ffffff!important; padding-left: 320px}
-		.top-bar-top-section{padding-left: 310px}
-		.content-area.chat_messanger_area{padding:0 0 0 280px;}
-		
-		.chat_messanger_area .chat_user_list {max-width: 225px; border-right: 2px solid #d5dfef; padding-right: 15px; float: right}
-		.chat_messanger_area .chat_user_list ul{margin: 0; padding: 0;}
-		.chat_messanger_area .chat_user_list ul li{display: inline-block;  margin: 0 2px; padding: 0; line-height: 28px;}
-		.chat_messanger_area .chat_user_list ul li img{width: 28px; height: 28px;}
-		
-		
-		.chat_messanger_area .action_list {max-width: 207px; float: right; margin-left: 10px}
-		.chat_messanger_area .action_list ul{margin: 0; padding: 0;}
-		.chat_messanger_area .action_list ul li{display: inline-block;  margin: 0 6px; padding: 0; line-height: 28px;}
-		.chat_messanger_area .action_list ul li img{}
-		
-		.chat_messanger_area .messanger_tab {margin: 8px 0px 0 0}
-		.chat_messanger_area .messanger_tab li{margin: 0 30px 0 0}
-		.chat_messanger_area .nav.nav-pills.messanger_tab a{color: #687693; font-size: 14px;}
-		.chat_messanger_area .nav.nav-pills.messanger_tab a.active{color: #4F8AF4; border-top: 2px solid #4F8AF4; padding-top: 39px;}
 
-		
-		
-
-.media-body {position: relative;}
-.chat-list{padding: 30px 0 30px 30px; margin: 0}
-.chat-list .media.reversed .media-content:not([class*="bg-"]) {border-radius: 6px!important; border: none!important; background-color: #edf5ff!important; float:right;}
-.chat-list .media.reversed .media-content {text-align: left;	color: ##242B3D!important; font-size:14px; font-weight:400; clear: both;}
-.chat-list .media.reversed .media-content:before {display: none;}
-.chat-list .media-content:not([class*="bg-"]) {	background-color: #eff3fc;	border:none; border-radius: 6px!important;}
-.chat-list .media-content:before {display: none; }
-.chat-list .media-content{padding: 18px 25px!important; font-size: 14px; font-weight: 400!important; max-width: 500px; color:##242B3D!important; display:table!important; margin-bottom: 8px !important;position: relative; width: auto; clear: both}
-.chat-list .media{ margin-left:50px;}
-.chat-list .media.reversed{ margin-right:50px;}
-.chat-list .media .media-annotation.user_icon{ position:absolute; left:-50px; width: 36px;height: 36px;right: auto; top: 0;}
-.chat-list .media.reversed .media-annotation.user_icon{  right:-50px;left: auto;}
-.circle_green_status.status-mark{ border:2px solid #ffffff; background:#00CC00; position:absolute; bottom:0; width:9px; height:9px; right:-3px; display: none}	
-a.icons.fl_letters.s24 {width: 36px;height: 36px;box-shadow: none !important;background: #fff;text-align: center;text-transform: uppercase;line-height: 36px;color: #fff;border-radius: 100px;
-font-size: 9px;	font-weight: 500;background: #333;display: block}
-.mainchatsvroll2  {height: 500px; overflow-x: hidden; overflow-y: auto; padding-right: 30px}
-.chat_mis_sec{min-height: 500px;}
-
-@media (max-width:1440px) {
-	.mainchatsvroll2{height: 350px;}
-	.chat_mis_sec{min-height: 350px; max-height: 350px!important}
-}
-		
-		
-
-		.profile_image_bkg{width: 108px; height: 108px; text-align: center; line-height: 108px; background: url(assets/images/profile_bkg.png)center center no-repeat; margin: auto}
-		.profile_social_icon {padding: 0; margin: 0}
-		.profile_social_icon li{list-style: none; display: inline-block; margin: 0 5px;}
-		
-		.user_details_list{margin: 0; padding: 0}
-		.user_details_list li{list-style: none; color: #242B3D; font-size: 14px; line-height: 30px; margin: 0; padding: 0}
-		.user_profile_show{position: absolute; right: 0; top: 30px;}
-		
-		.box::after{display: none}
-	</style>
+<style>
+	
+	
+</style>
 </head>
 
 
@@ -165,8 +111,8 @@ font-size: 9px;	font-weight: 500;background: #333;display: block}
      	</div>
      </div>
      
-     <div class="p0 bbot position-relative chat_mis_sec">
-     <a class="slidebox user_profile_show" href="#"><img src="assets/images/user_profile_show.svg"/></a>
+<div class="p0 bbot position-relative chat_mis_sec">
+<!--<a class="slidebox user_profile_show" href="#"><img src="assets/images/user_profile_show.svg"/></a>-->
      
 <div class="tab-content">
 <!--======Tab 1====-->
@@ -290,9 +236,9 @@ Start with ‘/’ to select a  Saved Message
 	<div class="page_sidebar bkg_light_000 absl">
 	 	<div class="inner2 pb0">
 			<div class="title-box">
-			  <h6 class="menu-title" style="line-height: 36px;"><span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; Open Menu</h6>
+			  <h6 class="menu-title" style="line-height: 36px;"><!--<span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; -->LIVE MESSENGER</h6>
 			</div>
-			<h3 class="htxt_medium_20 dark_800" >Chats </h3>
+			<h3 class="htxt_medium_20 dark_800" >Contacts </h3>
 			<hr />
 			
 			<div class="sidebar_search_big">
@@ -304,7 +250,7 @@ Start with ‘/’ to select a  Saved Message
       
         
         
-        <div class="p20 pt0 pb0">
+        <div class="p20 pt0 pb0 bkg_light_050">
         
         	<ul class="list_with_icons">
         	<li class="d-flex">
@@ -463,26 +409,15 @@ Start with ‘/’ to select a  Saved Message
 <script src="assets/js/app.js"></script>
 
 <script>
-$(document).ready(function(){
-	$(".slidebox").click(function(){
-		$(".box").animate({
-			width: "toggle"
-		});
-	});
+//	$(document).ready(function(){
+//		$(".slidebox").click(function(){
+//			$(".box").animate({
+//				width: "toggle"
+//			});
+//		});
+//	});
 	
 
-	
-	
-	
-});
-	
-	
-	
-	
-	
-</script>
-
-<script>
 	//side nav active script
 	$(".nav-link.livechat").addClass("active");
 	$(".nav-link.people").removeClass("active");
