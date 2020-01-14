@@ -121,6 +121,9 @@ import Profile from './components/admin/Profile';
 import Settings from './components/admin/Settings';
 
 
+/* Sub User Section */
+import UserProfile from './components/user/Profile';
+
 const routes = [
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
@@ -265,7 +268,8 @@ const routes = [
     { path: '/chat/sms', component: ChatSMS, meta: { title: 'SMS Chat'} },
     { path: '/chat/shortcuts', component: ChatShortcut, meta: { title: 'Chat Shortcuts'} },
 
-
+    /* Sub User Section */
+    { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
 ];
 
 export default routes;
