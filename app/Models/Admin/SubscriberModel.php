@@ -15,16 +15,19 @@ class SubscriberModel extends Model {
      * @param type $userID
      * @return type
      */
-    public static function getGlobalSubscribers($userID) {
-        $oData = DB::table('tbl_subscribers')
+    public static function getGlobalSubscribers($userID, $paginated = true) {
+        $query = DB::table('tbl_subscribers')
                 ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus', 'tbl_users.avatar')
                 ->where('tbl_subscribers.owner_id', $userID)
                 ->where('tbl_subscribers.firstname', '!=', 'NA')
                 ->where('tbl_subscribers.status', 1)
-                ->orderBy('tbl_subscribers.id', 'desc')
-                /*->get()*/
-                ->paginate(10);
+                ->orderBy('tbl_subscribers.id', 'desc');
+            if($paginated){
+                $oData = $query->paginate(10);
+            }else{
+                $oData = $query->get();
+            }
         return $oData;
     }
 
@@ -208,20 +211,20 @@ class SubscriberModel extends Model {
      */
     public static function activeOnlysmsDetails($Number) {
 
-        $oData = DB::select(DB::raw("SELECT tcm_subs1.* 
-			FROM   tbl_chat_sms_thread tc1 
-				   INNER JOIN (SELECT * 
-							   FROM   tbl_chat_sms_thread 
-							   GROUP  BY token, 
-										 created 
-							   ORDER  BY created DESC) AS tcm_subs1 
-						   ON tc1.token = tcm_subs1.token 
-			WHERE  ( tc1.to = '" . $Number . "' 
-					  OR tc1.from = '" . $Number . "' ) 
+        $oData = DB::select(DB::raw("SELECT tcm_subs1.*
+			FROM   tbl_chat_sms_thread tc1
+				   INNER JOIN (SELECT *
+							   FROM   tbl_chat_sms_thread
+							   GROUP  BY token,
+										 created
+							   ORDER  BY created DESC) AS tcm_subs1
+						   ON tc1.token = tcm_subs1.token
+			WHERE  ( tc1.to = '" . $Number . "'
+					  OR tc1.from = '" . $Number . "' )
 			  AND tc1.token!=''
 			   AND tc1.module_name='chat'
 
-			GROUP  BY tc1.token 
+			GROUP  BY tc1.token
 			ORDER  BY tcm_subs1.created DESC "));
         return $oData;
     }
@@ -233,17 +236,17 @@ class SubscriberModel extends Model {
      */
     public static function SmsOldest_list($Number) {
 
-        $oData = DB::select(DB::raw("SELECT tcm_subs1.* 
-			FROM   tbl_chat_sms_thread tc1 
-				   INNER JOIN (SELECT * 
-							   FROM   tbl_chat_sms_thread 
-							   GROUP  BY token, 
-										 created 
-							   ORDER  BY created ASC) AS tcm_subs1 
-						   ON tc1.token = tcm_subs1.token 
-			WHERE  ( tc1.to = '" . $Number . "' 
-					  OR tc1.from = '" . $Number . "' ) 
-			GROUP  BY tc1.token 
+        $oData = DB::select(DB::raw("SELECT tcm_subs1.*
+			FROM   tbl_chat_sms_thread tc1
+				   INNER JOIN (SELECT *
+							   FROM   tbl_chat_sms_thread
+							   GROUP  BY token,
+										 created
+							   ORDER  BY created ASC) AS tcm_subs1
+						   ON tc1.token = tcm_subs1.token
+			WHERE  ( tc1.to = '" . $Number . "'
+					  OR tc1.from = '" . $Number . "' )
+			GROUP  BY tc1.token
 			ORDER  BY tcm_subs1.created ASC "));
 
         return $oData;
@@ -813,22 +816,22 @@ class SubscriberModel extends Model {
 
         if ($searchval != "") {
 
-            $oData = DB::select(DB::raw("SELECT 
+            $oData = DB::select(DB::raw("SELECT
       tcm_subs1.*
-FROM 
-      tbl_chat_sms_thread tc1 INNER JOIN 
-      (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token 
+FROM
+      tbl_chat_sms_thread tc1 INNER JOIN
+      (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token
       WHERE (tc1.to = '" . $Number . "' or tc1.from ='" . $Number . "') AND tc1.msg  LIKE '%" . $searchval . "%'
       GROUP BY tc1.token ORDER BY tcm_subs1.created DESC "));
 
 
         } else {
 
-            $oData = DB::select(DB::raw("SELECT 
+            $oData = DB::select(DB::raw("SELECT
       tcm_subs1.*
-FROM 
-      tbl_chat_sms_thread tc1 INNER JOIN 
-      (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token 
+FROM
+      tbl_chat_sms_thread tc1 INNER JOIN
+      (SELECT * FROM tbl_chat_sms_thread group by token, created ORDER BY created DESC) as tcm_subs1 ON tc1.token = tcm_subs1.token
       WHERE (tc1.to = '" . $Number . "' or tc1.from ='" . $Number . "') AND tc1.msg  LIKE '%" . $searchval . "%'
       GROUP BY tc1.token ORDER BY tcm_subs1.created DESC "));
 
@@ -1427,20 +1430,20 @@ FROM
     public function activeOnlywebDetailsByinput($userID, $searchval) {
 
         if ($searchval != "") {
-            $result = $this->db->query(" SELECT 
+            $result = $this->db->query(" SELECT
       tcm_subs.*
-FROM 
-      tbl_chat_message tc INNER JOIN 
-      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token 
+FROM
+      tbl_chat_message tc INNER JOIN
+      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token
       WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "') AND tc.message  LIKE '%" . $searchval . "%'
       GROUP BY tc.token ORDER BY tcm_subs.created DESC");
         } else {
-            $result = $this->db->query(" SELECT 
+            $result = $this->db->query(" SELECT
       tcm_subs.*
-FROM 
-      tbl_chat_message tc INNER JOIN 
-      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token 
-      WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "') 
+FROM
+      tbl_chat_message tc INNER JOIN
+      (SELECT * FROM tbl_chat_message group by token, created ORDER BY created DESC) as tcm_subs ON tc.token = tcm_subs.token
+      WHERE (tc.user_to = '" . $userID . "' or tc.user_form ='" . $userID . "')
       GROUP BY tc.token ORDER BY tcm_subs.created DESC");
         }
 
