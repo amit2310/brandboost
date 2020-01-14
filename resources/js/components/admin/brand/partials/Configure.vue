@@ -7,7 +7,7 @@
             <p class="text-uppercase m-0 fw400 dark_200">Template <a class="float-right" href="javascript:void(0);"><i class="icon-arrow-down12 fsize15"></i></a></p>
         </div>
         <div class="p20">
-            <button class="btn br6 border p15 w-100 shadow-none">Horizontal Popup</button>
+            <button class="btn br6 border p15 w-100 shadow-none chooseBrandTemplate" @click="openTemplateSelector">Horizontal Popup</button>
         </div>
 
         <div class="p20 bbot btop pt10 pb10">
@@ -117,13 +117,16 @@
             <button class="btn btn-md bkg_blue_200 light_000 w-100" @click.prevent="saveConfiguration">Save </button>
         </div>
 
+        <choose-template :brandData="brandData" @openTemplateSelector="openTemplateSelector" @selectTemplate="saveBrandTemplate" ></choose-template>
     </div>
 
 </template>
 <script>
-
+    import ChooseTemplate from "./ChooseTemplate";
+    import jq from "jquery";
     export default {
         props: ['brandData'],
+        components: {ChooseTemplate},
         data(){
             return {
                 refreshMessage: 1,
@@ -138,6 +141,14 @@
             }
         },
         methods:{
+            saveBrandTemplate: function(param2){
+                this.brandData = param2;
+            },
+            openTemplateSelector: function(){
+                jq(".chooseBrandTemplatePopup").animate({
+                    width: "toggle"
+                });
+            },
             saveConfiguration: function(){
                 this.loading = true;
                 axios.post('/admin/brandboost/addBrandConfigurationData', {
