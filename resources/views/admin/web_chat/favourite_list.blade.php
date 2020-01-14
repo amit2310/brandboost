@@ -43,8 +43,10 @@
     " style="
         @if ($count > 7)
 {{ "display:block" }}
+@endif
 @if ($count == 1)
 {{ 'box-shadow:0 2px 4px 0 rgba(1, 21, 64, 0.06)!important; border-radius:0 0 5px 5px' }}
+@endif
 @if ($count == 2)
 {{ 'border-radius:5px 5px 5px 5px' }}
 @endif
