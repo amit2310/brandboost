@@ -75,7 +75,7 @@
    <div class="content-area chat_messanger_area">
    
    
-    <!--******************
+<!--******************
   Create Contact Sliding Smart Popup
  **********************-->
  <?php include("user_profile_smart_popup.php"); ?>
@@ -205,7 +205,7 @@ Start with ‘/’ to select a  Saved Message
      	</textarea>
      </div>
      
-     <div class="p30 bbot">
+     <div class="p30">
      	<div class="row">
      		<div class="col-md-7">
      			<ul class="nav nav-pills messanger_tab" role="tablist">
@@ -217,11 +217,106 @@ Start with ‘/’ to select a  Saved Message
      		</div>
      		<div class="col-md-5">
      			<div class="action_list">
+     			<!--*****EMOJI*****-->
+     			<div class="chat_emoji_box">
+     				<div class="form-group">
+     					<input type="text" class="form-control search fsize13 h48" placeholder="Search template" />
+     				</div>
+     				<div class="emoji_box mb20">
+     					<p class="htxt_medium_15 dark_800 mb-1 fw500">Recent</p>
+     					<ul class="emojisec">
+     						<li><a href="#"><img src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-hand-medium-skin-tone-v-victory-37773.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-face-mouth-open-sympathy-emoji-37685.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-bright-cool-eye-eyewear-face-glasses-smile-sun-sunglasses-emoji-37654.svg"/></a></li>
+     						
+     					</ul>
+     				</div>
+     				<div class="emoji_box mb20">
+     					<p class="htxt_medium_15 dark_800 mb-1 fw500">Smiles & People</p>
+     					<ul class="emojisec">
+     						<li><a href="#"><img src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-face-unamused-unhappy-angry-emoji-37702.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-face-sleep-emoji-tired-37692.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-face-sleep-zzz-tired-bore-emoji-37691.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-face-tongue-stuck-out-emoji-37695.svg"/></a></li>
+     						
+     						
+     						<li><a href="#"><img src="assets/images/emojie-face-kiss-flirt-emoji-37697.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-grinning-face-with-smiling-eyes-happy-emoji-37710.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-delicious-face-savouring-smile-um-yum-eye-emoji-37671.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-dizzy-face-error-emoji-37670.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-confounded-face-sad-cry-unhappy-emoji-37707.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-cold-face-open-smile-sweat-happy-emoji-37709.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-disappointed-face-sad-emoji-37669.svg"/></a></li>
+     						
+     						
+     						<li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-eye-face-love-smile-heart-emoji-37674.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-angry-face-mad-emoji-37652.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-hand-medium-skin-tone-wave-waving-37774.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-clenched-fist-hand-medium-light-skin-tone-punch-37735.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-backhand-down-finger-hand-index-medium-light-skin-tone-point-37723.svg"/></a></li>
+     						
+     						
+     						<li><a href="#"><img src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-backhand-finger-hand-index-medium-light-skin-tone-point-up-37722.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-clap-hand-medium-skin-tone-37733.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-hand-medium-light-skin-tone-thumb-up-37775.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-cat-face-joy-tear-happy-emoji-37666.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
+     						<li><a href="#"><img src="assets/images/emojie-cat-face-ironic-smile-wry-emoji-37662.svg"/></a></li>
+     						
+     					</ul>
+     				</div>
+     			</div>
+     			<!--*****SAVED MESSAGE*****-->
+     			<div class="chat_saved_temp">
+     				<div class="form-group">
+     					<div class="row">
+     						<div class="col-md-11">
+     							<input type="text" class="form-control search fsize13 h48" placeholder="Search template" />
+     						</div>
+     						<div class="col-md-1 pl-0"><button class="btn_plus_icon slidebox"><img src="assets/images/add-fill.svg"/></button></div>
+     					</div>
+     					
+     				</div>
+     				
+     				
+    				
+    				
+    				
+    				
+     				<div class="savedchat mb-2">
+     					<p class="htxt_medium_16 dark_800 mb-2">Review invite</p>
+     					<p class="htxt_regular_14 dark_200">Hi, :contact:! Thank you for choosing :location:. Could you take a 30 seconds to leave us a review...</p>
+     				</div>
+     				<div class="savedchat mb-2">
+     					<p class="htxt_medium_16 dark_800 mb-2">Say friendly thanks</p>
+     					<p class="htxt_regular_14 dark_200">Thanks so much for the review :contact:! Feel free to text this number anytime and we’ll be happy to...</p>
+     				</div>
+     				<div class="savedchat">
+     					<p class="htxt_medium_16 dark_800 mb-2">Feedback invite</p>
+     					<p class="htxt_regular_14 dark_200">Hi, :contact:! On scale from 1-10, how satisfied were you with your product or service?</p>
+     				</div>
+     			</div>
      				<ul>
-     					<li><a href="#"><img src="assets/images/emoticon.svg"></a></li>
-     					<li><a href="#"><img src="assets/images/image_12.svg"></a></li>
-     					<li><a href="#"><img src="assets/images/attachment.svg"></a></li>
-     					<li><a href="#"><img src="assets/images/pluscircle_12.svg"></a></li>
+     					<li><a class="active show_emoji" href="#"><img src="assets/images/user-smile-line.svg"></a></li>
+     					<li><a class="show_saved_chat" href="#"><img src="assets/images/clipboard-line.svg"></a></li>
+     					<li><a href="#"><img src="assets/images/Image_18.svg"></a></li>
+     					<li><a href="#"><img src="assets/images/attachment-line.svg"></a></li>
+     					<li><a href="#"><img src="assets/images/add-circle-line.svg"></a></li>
      					<li><a href="#"><img src="assets/images/submit_btn_icon.svg"></a></li>
      				</ul>
      			</div>
@@ -394,7 +489,12 @@ Start with ‘/’ to select a  Saved Message
   
  
  
+ <!--******************
+  Create Saved Reply Sliding Smart Popup
+ **********************-->
+ <?php include("saved_reply_create_smart_popup.php"); ?>
  
+    
 
  
  
@@ -409,13 +509,27 @@ Start with ‘/’ to select a  Saved Message
 <script src="assets/js/app.js"></script>
 
 <script>
-//	$(document).ready(function(){
-//		$(".slidebox").click(function(){
-//			$(".box").animate({
-//				width: "toggle"
-//			});
-//		});
-//	});
+	$(document).ready(function(){
+		$(".slidebox").click(function(){
+			$(".box").animate({
+				width: "toggle"
+			});
+		});
+	});
+	
+$(document).ready(function(){
+  $(".show_emoji").click(function(){
+    $(".chat_emoji_box").toggle();
+  });
+});
+	
+$(document).ready(function(){
+  $(".show_saved_chat").click(function(){
+    $(".chat_saved_temp").toggle();
+  });
+});
+	
+	
 	
 
 	//side nav active script
