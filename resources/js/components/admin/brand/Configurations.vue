@@ -111,7 +111,7 @@
                                                         <div class="col-md-5">
                                                             <p class="fsize17 dark_600 mb-1">
                                                                 {{brandData.company_info_name}}</p>
-                                                            <p class="mb-1" v-show="brandData.rating">
+                                                            <p class="mb-1" v-show="brandData.customer_experiance">
                                                                 <a href="#"><i
                                                                     class="fa fa-star yellow_400 fsize14"></i></a>
                                                                 <a href="#"><i
@@ -214,33 +214,66 @@
                                         <div class="row"
                                              v-show="brandData.template_style == 1 || brandData.template_style == 0">
                                             <div class="col-md-4">
-                                                <experience-box></experience-box>
-                                                <reviews-box></reviews-box>
+                                                <experience-box v-show="brandData.rating == 'on'"></experience-box>
+                                                <template v-if="brandData.about_company_position == 'left'">
+                                                    <about-box></about-box>
+                                                    <media-box></media-box>
+                                                </template>
+                                                <template v-if="brandData.review_list_position == 'left'">
+                                                    <reviews-box></reviews-box>
+                                                </template>
                                             </div>
                                             <div class="col-md-8">
+                                                <template v-if="brandData.about_company_position == 'right'">
                                                 <about-box></about-box>
                                                 <media-box></media-box>
+                                                </template>
+                                                <template v-if="brandData.review_list_position == 'right'">
+                                                    <reviews-box></reviews-box>
+                                                </template>
                                             </div>
                                         </div>
 
                                         <!--Layer-2-->
                                         <div class="row" v-show="brandData.template_style == 2">
                                             <div class="col-md-4">
-                                                <reviews-box></reviews-box>
+                                                <template v-if="brandData.review_list_position == 'left'">
+                                                    <reviews-box></reviews-box>
+                                                </template>
+                                                <template v-if="brandData.about_company_position == 'left'">
+                                                    <media-box></media-box>
+                                                </template>
+
                                             </div>
                                             <div class="col-md-8">
+                                                <template v-if="brandData.about_company_position == 'right'">
                                                 <media-box></media-box>
+                                                </template>
+                                                <template v-if="brandData.review_list_position == 'right'">
+                                                    <reviews-box></reviews-box>
+                                                </template>
                                             </div>
                                         </div>
 
                                         <!--Layer-3-->
                                         <div class="row" v-show="brandData.template_style == 3">
                                             <div class="col-md-4">
+                                                <template v-if="brandData.about_company_position == 'left'">
                                                 <about-box></about-box>
                                                 <media-box></media-box>
+                                                </template>
+                                                <template v-if="brandData.review_list_position == 'left'">
+                                                    <reviews-box></reviews-box>
+                                                </template>
                                             </div>
                                             <div class="col-md-8">
+                                                <template v-if="brandData.review_list_position == 'right'">
                                                 <reviews-box></reviews-box>
+                                                </template>
+                                                <template v-if="brandData.about_company_position == 'right'">
+                                                    <about-box></about-box>
+                                                    <media-box></media-box>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
