@@ -1285,9 +1285,9 @@ PAGE WITH SIDEBAR CSS
 
 
 .sidebar_search_big{padding: 10px 0; margin-bottom: 15px;}
-.sidebar_search_big input[type="text"]{background: #ffffff;border-radius: 4px; height: 44px; border: none; max-width: 192px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07);}
+.sidebar_search_big input[type="text"]{border-radius: 4px; height: 44px; border: none; max-width: 185px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); background: url(../images/search-2-line.svg) 10px 12px #fff no-repeat; padding-left: 35px;}
 .sidebar_search_big input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
-.sidebar_search_big .sidebar_search_submit{border: none; background: none; box-shadow: none; width: 36px; height: 36px; padding: 0; margin: 0 0 0 7px;}
+.sidebar_search_big .sidebar_search_submit{border: none; background:#fff; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); width: 44px; height: 44px; padding: 0; margin: 0 0 0 0px; border-radius: 4px;}
 
 
 
@@ -1419,6 +1419,10 @@ PAGE WITH SIDEBAR CSS
 
 .nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}
 .nav.nav-pills.profile_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 500!important}
+
+.nav.nav-pills.chat_contact_tab a{color: #445069; font-weight: 400!important; font-size: 13px}
+.nav.nav-pills.chat_contact_tab a.active{color: #3970D9; border-bottom: 2px solid #73abff; padding-bottom: 21px; font-weight: 500!important}
+
 .nav.nav-pills.review_sec_tab a{color: #7B89A6; font-weight: 400!important}
 .nav.nav-pills.review_sec_tab a.active{color: #717CEF; border-bottom: 2px solid #717CEF; padding-bottom: 21px; font-weight: 500!important}
 .nav.nav-pills.review_feed a{color: #56627F; font-weight: 400!important}
@@ -3629,3 +3633,16 @@ Live Chat Messangers
 .chat_messanger_area .user_details_list li{list-style: none; color: #242B3D; font-size: 14px; line-height: 30px; margin: 0; padding: 0}
 .chat_messanger_area .user_profile_show{position: absolute; right: 0; top: 30px;}
 .chat_messanger_area .box::after{display: none}
+
+
+
+.chat_dropdown{width: 220px; background: #fff!important; padding:15px 20px; box-shadow: 0 0px 10px 0 rgba(1, 21, 64, 0.16) !important; margin-top: 20px;}
+.chat_dropdown li{line-height: 30px; font-size: 12px;}
+.chat_dropdown li img{ width: 16px; height: 16px; border-radius: 100%; margin-right: 6px;}
+.chat_dropdown li img.small{ width: 12px; height: 12px; border-radius: 100%; margin-right: 8px; float: left; margin-top: 10px; }
+.chat_dropdown li strong{color: #253b6a; font-weight: 400; font-size: 12px;}
+.chat_dropdown li strong a{color: #253b6a; font-weight: 400; text-decoration: none; display: block; position: relative; font-size: 12px;}
+.chat_dropdown li span{color: #7a8dae; font-weight: 400; font-size: 12px;}
+.chat_dropdown li strong a.active{color: #3680dc}
+.chat_dropdown li strong a.active:after{color: #3680dc; position: absolute; right: 0; top: 0; content: "\ed6c" ; font-family: 'icomoon'; font-size: 9px;}
+.chat_dropdown li strong a:hover{color: #3680dc}
