@@ -27,17 +27,17 @@ class WebChat extends Controller {
         $mWebChat = new WebChatModel();
         $favoriteChatData = $mWebChat->getFavouriteUsers($oUser->id);
         $isLoggedInTeam = Session::get("team_user_id");
-        if (!empty($isLoggedInTeam)) {
-            $assignedChat = $mWebChat->getTeamAssign($isLoggedInTeam);
-            $assignedChatData = $mWebChat->getTeamAssignData($isLoggedInTeam);
-            $loggedYou = $isLoggedInTeam;
-        } else {
-            $assignedChat = $mWebChat->getTeamAssign($oUser->id);
-            $assignedChatData = $mWebChat->getTeamAssignData($oUser->id);
-            $loggedYou = $oUser->id;
-        }
-        $unassignedChat = $mWebChat->getTeamAssign(0);
-        $unassignedChatData = $mWebChat->getTeamAssignData(0);
+
+        //Assigned Chat
+        $id = (!empty($isLoggedInTeam)) ? $isLoggedInTeam : $oUser->id;
+        $assignedChat = $mWebChat->getTeamAssignData($id);
+        $assignedChatData = $assignedChat;
+        $loggedYou = $id;
+
+        //Unassigned Chat
+        $unassignedChat = $mWebChat->getTeamAssignData(0);
+        $unassignedChatData = $unassignedChat;
+
         $aData = [
             'title' => 'Web Chat',
             'breadcrumb' => $aBreadcrumb,

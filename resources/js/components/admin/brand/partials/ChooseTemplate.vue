@@ -15,7 +15,7 @@
                                 <div class="col-md-4 review_source_new bwwCWBox">
                                     <label for="active_soruce1">
                                         <div class="inner"> <span class="custmo_checkbox checkboxs">
-						<input type="radio" class="template_select" value="1" name="template_type" v-model="brandData.template_style"
+						<input type="radio" class="template_select" value="1" name="tt" :checked="brandData.template_style == 1"
                                id="active_soruce1">
 						<span class="custmo_checkmark red_tr "></span> </span>
                                             <figure><img src="http://brandboost.io/assets/images/brand_page1_icon.png">
@@ -26,7 +26,7 @@
                                 <div class="col-md-4 review_source_new bfwCWBox">
                                     <label for="active_soruce2">
                                         <div class="inner"> <span class="custmo_checkbox checkboxs">
-						<input type="radio" class="template_select" value="2" name="template_type" id="active_soruce2" v-model="brandData.template_style">
+						<input type="radio" class="template_select" value="2" name="tt" id="active_soruce2" :checked="brandData.template_style == 2">
 						<span class="custmo_checkmark red_tr "></span> </span>
                                             <figure><img src="http://brandboost.io/assets/images/brand_page2_icon.png">
                                             </figure>
@@ -36,7 +36,7 @@
                                 <div class="col-md-4 review_source_new vpwCWBox">
                                     <label for="active_soruce3">
                                         <div class="inner"> <span class="custmo_checkbox checkboxs">
-							<input type="radio" class="template_select" value="3" name="template_type" v-model="brandData.template_style"
+							<input type="radio" class="template_select" value="3" name="tt" :checked="brandData.template_style == 3"
                                    id="active_soruce3">
 							<span class="custmo_checkmark red_tr "></span> </span>
                                             <figure><img src="http://brandboost.io/assets/images/brand_page3_icon.png">
@@ -66,6 +66,15 @@
         props: ['brandData'],
         methods:{
             saveSelectedTemplate: function(){
+                let selectedTemplate = document.querySelector("input[name='tt']:checked").value;
+                if(selectedTemplate == 1 || selectedTemplate == 2){
+                    this.brandData.about_company_position = 'right';
+                    this.brandData.review_list_position = 'left';
+                }else if(selectedTemplate == 3){
+                    this.brandData.about_company_position = 'left';
+                    this.brandData.review_list_position = 'right';
+                }
+                this.brandData.template_style = selectedTemplate;
                 this.$emit('saveBrandTemplate', this.brandData);
                 this.$emit('openTemplateSelector');
             }
