@@ -291,12 +291,23 @@ function helloTest(){
     $(document).ready(function(){
         $("#loadSMSTheme").click(function(){
             document.querySelector("body").id="SMSSection";
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
         });
         $("#loadEmailTheme").click(function(){
             document.querySelector("body").id="EmailSection";
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
         });
         $("#loadContactTheme").click(function(){
             document.querySelector("body").id="PeopleSection";
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
+        });
+        $(".loadChatTheme").click(function(){
+            document.querySelector("body").id="LiveChatSection";
+            document.querySelector(".page-content").classList.add("bkg_light_000");
+        });
+        $(".loadReviewsTheme").click(function(){
+            document.querySelector("body").id="ReviewSection";
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
         });
     });
 
@@ -307,13 +318,27 @@ function helloTest(){
         if(uriPath.indexOf('modules/sms') != -1){
             $("#SMSMarketing").addClass("active");
             $("#loadSMSTheme").addClass("active");
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
         }else if(uriPath.indexOf('modules/emails') != -1){
             $("#EmailMarketing").addClass("active");
             $("#loadEmailTheme").addClass("active");
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
+        }
+        else if(uriPath.indexOf('/reviews/') != -1){
+            $("#ReviewSystem").addClass("active");
+            $("#loadReviewsTheme").addClass("active");
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
         }
         else if(uriPath.indexOf('/contacts/') != -1){
             $("#people").addClass("active");
             $("#loadContactTheme").addClass("active");
+            document.querySelector(".page-content").classList.remove("bkg_light_000");
+        }
+        else if(uriPath.indexOf('/chat/') != -1){
+            $("#live_messanger").addClass("active");
+            $("#loadChatTheme").addClass("active");
+            document.querySelector("body").id="LiveChatSection";
+            document.querySelector(".page-content").classList.add("bkg_light_000");
         }
 
     }
