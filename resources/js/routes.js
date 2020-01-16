@@ -123,6 +123,7 @@ import Settings from './components/admin/Settings';
 
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
+import UserMedia from './components/user/Media';
 
 const routes = [
 
@@ -270,6 +271,7 @@ const routes = [
 
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
+    { path: '/user/media', component: UserMedia, meta: { title: 'My Media - Brand Boost'} },
 ];
 
 export default routes;
