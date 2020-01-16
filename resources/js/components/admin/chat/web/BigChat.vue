@@ -1,6 +1,6 @@
 <template>
 
-    <div class="content">
+    <div class="h-100">
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">
@@ -18,8 +18,360 @@
             <div class="clearfix"></div>
         </div>
         <div class="content-area chat_messanger_area">
-            <div class="box" style="width: 300px; top: 129px!important; height: calc(100% - 129px); max-height: 798px; position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8">
-                <div style="width: 300px;overflow: hidden; height: 100%;">
+
+
+
+            <!--******************
+             PAGE SIDEBAR
+            **********************-->
+            <div class="page_sidebar bkg_light_000 absl">
+                <div class="inner2 pb0">
+                    <div class="title-box">
+                        <h6 class="menu-title" style="line-height: 36px;"><!--<span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; -->LIVE MESSENGER</h6>
+                    </div>
+                    <h3 class="htxt_medium_20 dark_800" >Contacts </h3>
+
+                    <div class="bbot btop contact_sort pt15 pb15 mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <div class="tdropdown ml0">
+                                    <a style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">All (39)</a>
+                                    <ul style="right: 0px!important; margin-top: 18px; left: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown">
+                                        <li><strong><a class="active" href="#"><img class="small" src="assets/images/cd_icon1.png"> All (39) </a></strong></li>
+                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon2.png">Open (13) </a></strong></li>
+                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon3.png">Resolved (172) </a></strong></li>
+                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon4.png">Favorite (5) </a></strong></li>
+                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon5.png">Snoozed (28)</a></strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="tdropdown ml0 pull-right">
+                                    <a style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">Waiting longest</a>
+                                    <ul style="margin-top: 18px; right: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown width_170">
+                                        <li><strong><a class="active" href="#">Newest </a></strong></li>
+                                        <li><strong><a href="#">Waiting longest </a></strong></li>
+                                        <li><strong><a href="#">Oldest </a></strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar_search_big mt10">
+                        <input type="text" name="" value="" placeholder="Search">
+                        <button class="sidebar_search_submit"><img src="assets/images/filter-3-line.svg"></button>
+                    </div>
+                </div>
+
+
+
+                <div class="p20 pt0">
+                    <ul class="nav nav-pills chat_contact_tab" role="tablist">
+                        <li class="mr10"><a class="htxt_bold_13 active" data-toggle="pill" href="#All">All (40)</a></li>
+                        <li class="mr10"><a class="htxt_bold_13" data-toggle="pill" href="#Unassigned">Unassigned (15)</a></li>
+                        <li class=""><a class="htxt_bold_13" data-toggle="pill" href="#You">You (12)</a></li>
+                    </ul>
+                </div>
+
+
+
+
+
+                <div class="tab-content">
+                    <!--======Tab 1====-->
+                    <div id="All" class="tab-pane active">
+                        <div class="p20 pt0 pb0 bkg_light_050">
+                            <ul class="list_with_icons">
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/02.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">5m</span>
+                                        <!--<span class="badge badge-grey chatlist">28</span>-->
+                                    </div>
+                                </li>
+
+
+
+                                <li class="d-flex active">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/07.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Eduardo Williamson</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">2m</span>
+                                        <span class="badge badge-grey chatlist">8</span>
+                                    </div>
+                                </li>
+
+
+
+
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/03.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Lily Pena</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">1h</span>
+                                        <span class="badge badge-grey chatlist">5</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/04.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Theresa Fox</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">3m</span>
+                                        <span class="badge badge-grey chatlist">2</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/05.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Brooklyn Nguyen</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">4m</span>
+                                        <!--<span class="badge badge-grey chatlist">7</span>-->
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="fl_name bkg_green_light green_300">fg</span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">10s</span>
+                                        <span class="badge badge-grey chatlist">3</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/06.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Nathan Simmmons</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">1m</span>
+                                        <!--<span class="badge badge-grey chatlist">8</span>-->
+                                    </div>
+                                </li>
+
+
+
+
+                            </ul>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <!--======Tab 2=====-->
+                    <div id="Unassigned" class="tab-pane fade">
+                        <div class="p20 pt0 pb0 bkg_light_050">
+                            <ul class="list_with_icons">
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/02.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">5m</span>
+                                        <!--<span class="badge badge-grey chatlist">28</span>-->
+                                    </div>
+                                </li>
+
+
+
+                                <li class="d-flex active">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/07.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Eduardo Williamson</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">2m</span>
+                                        <span class="badge badge-grey chatlist">8</span>
+                                    </div>
+                                </li>
+
+
+
+
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/03.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Lily Pena</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">1h</span>
+                                        <span class="badge badge-grey chatlist">5</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/04.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Theresa Fox</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">3m</span>
+                                        <span class="badge badge-grey chatlist">2</span>
+                                    </div>
+                                </li>
+
+
+
+
+
+
+                            </ul>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--======Tab 3=====-->
+                    <div id="You" class="tab-pane fade">
+                        <div class="p20 pt0 pb0 bkg_light_050">
+                            <ul class="list_with_icons">
+
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/03.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Lily Pena</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">1h</span>
+                                        <span class="badge badge-grey chatlist">5</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/04.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Theresa Fox</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">3m</span>
+                                        <span class="badge badge-grey chatlist">2</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/05.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Brooklyn Nguyen</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">4m</span>
+                                        <!--<span class="badge badge-grey chatlist">7</span>-->
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="fl_name bkg_green_light green_300">fg</span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">10s</span>
+                                        <span class="badge badge-grey chatlist">3</span>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <div class="media_left">
+                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/06.png"/></span>
+                                    </div>
+                                    <div class="media_left">
+                                        <p class="htxt_bold_14 dark_600 mb-2">Nathan Simmmons</p>
+                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
+                                    </div>
+                                    <div class="time_badge">
+                                        <span class="time fsize10 light_800">1m</span>
+                                        <!--<span class="badge badge-grey chatlist">8</span>-->
+                                    </div>
+                                </li>
+
+
+
+
+                            </ul>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div class="clearfix"></div>
+            </div>
+
+            <!--******************
+              Create Contact Sliding Smart Popup
+             **********************-->
+            <div class="box d-block" style="width: 280px; top: 129px!important; height: calc(100% - 129px); max-height: 798px; position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8">
+                <div style="width: 280px;overflow: hidden; height: 100%;">
                     <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
                         <div class="p25 pl20 pr20">
 
@@ -29,7 +381,7 @@
                                         <h3 class="fsize18 dark_800 fw500">Profile</h3>
                                     </div>
                                     <div class="col-md-6">
-                                        <a class="slidebox float-right"><i class=""><img width="24" src="assets/images/cross@2x.png"/></i></a>
+                                        <!--<a class="slidebox float-right"><i class=""><img width="24" src="assets/images/cross@2x.png"/></i></a>-->
                                     </div>
                                 </div>
                             </div>
@@ -79,14 +431,12 @@
                                 </div>
                             </div>
 
-
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
+
+
 
             <div class="p25 pl30 pr30 bbot">
                 <div class="row">
@@ -118,7 +468,7 @@
             </div>
 
             <div class="p0 bbot position-relative chat_mis_sec">
-                <a class="slidebox user_profile_show" href="#"><img src="assets/images/user_profile_show.svg"/></a>
+                <!--<a class="slidebox user_profile_show" href="#"><img src="assets/images/user_profile_show.svg"/></a>-->
 
                 <div class="tab-content">
                     <!--======Tab 1====-->
@@ -203,15 +553,13 @@
                 </div>
             </div>
 
-
-
             <div class="p30 pb0 bbot" style="min-height: 120px;">
      	<textarea class="p0 w-100 border-0 fsize16 dark_200" style="height: 85px; resize: none;">Shift + Enter to add a new line
 Start with ‘/’ to select a  Saved Message
      	</textarea>
             </div>
 
-            <div class="p30 bbot">
+            <div class="p30">
                 <div class="row">
                     <div class="col-md-7">
                         <ul class="nav nav-pills messanger_tab" role="tablist">
@@ -223,11 +571,106 @@ Start with ‘/’ to select a  Saved Message
                     </div>
                     <div class="col-md-5">
                         <div class="action_list">
+                            <!--*****EMOJI*****-->
+                            <div class="chat_emoji_box">
+                                <div class="form-group">
+                                    <input type="text" class="form-control search fsize13 h48" placeholder="Search template" />
+                                </div>
+                                <div class="emoji_box mb20">
+                                    <p class="htxt_medium_15 dark_800 mb-1 fw500">Recent</p>
+                                    <ul class="emojisec">
+                                        <li><a href="#"><img src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-hand-medium-skin-tone-v-victory-37773.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-face-mouth-open-sympathy-emoji-37685.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-bright-cool-eye-eyewear-face-glasses-smile-sun-sunglasses-emoji-37654.svg"/></a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="emoji_box mb20">
+                                    <p class="htxt_medium_15 dark_800 mb-1 fw500">Smiles & People</p>
+                                    <ul class="emojisec">
+                                        <li><a href="#"><img src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-face-unamused-unhappy-angry-emoji-37702.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-face-sleep-emoji-tired-37692.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-face-sleep-zzz-tired-bore-emoji-37691.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-face-tongue-stuck-out-emoji-37695.svg"/></a></li>
+
+
+                                        <li><a href="#"><img src="assets/images/emojie-face-kiss-flirt-emoji-37697.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-with-smiling-eyes-happy-emoji-37710.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-delicious-face-savouring-smile-um-yum-eye-emoji-37671.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-dizzy-face-error-emoji-37670.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-confounded-face-sad-cry-unhappy-emoji-37707.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-cold-face-open-smile-sweat-happy-emoji-37709.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-disappointed-face-sad-emoji-37669.svg"/></a></li>
+
+
+                                        <li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-eye-face-love-smile-heart-emoji-37674.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-angry-face-mad-emoji-37652.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-hand-medium-skin-tone-wave-waving-37774.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-clenched-fist-hand-medium-light-skin-tone-punch-37735.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-backhand-down-finger-hand-index-medium-light-skin-tone-point-37723.svg"/></a></li>
+
+
+                                        <li><a href="#"><img src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-backhand-finger-hand-index-medium-light-skin-tone-point-up-37722.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-clap-hand-medium-skin-tone-37733.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-hand-medium-light-skin-tone-thumb-up-37775.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-cat-face-joy-tear-happy-emoji-37666.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
+                                        <li><a href="#"><img src="assets/images/emojie-cat-face-ironic-smile-wry-emoji-37662.svg"/></a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--*****SAVED MESSAGE*****-->
+                            <div class="chat_saved_temp">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <input type="text" class="form-control search fsize13 h48" placeholder="Search template" />
+                                        </div>
+                                        <div class="col-md-1 pl-0"><button class="btn_plus_icon slidebox"><img src="assets/images/add-fill.svg"/></button></div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+                                <div class="savedchat mb-2">
+                                    <p class="htxt_medium_16 dark_800 mb-2">Review invite</p>
+                                    <p class="htxt_regular_14 dark_200">Hi, :contact:! Thank you for choosing :location:. Could you take a 30 seconds to leave us a review...</p>
+                                </div>
+                                <div class="savedchat mb-2">
+                                    <p class="htxt_medium_16 dark_800 mb-2">Say friendly thanks</p>
+                                    <p class="htxt_regular_14 dark_200">Thanks so much for the review :contact:! Feel free to text this number anytime and we’ll be happy to...</p>
+                                </div>
+                                <div class="savedchat">
+                                    <p class="htxt_medium_16 dark_800 mb-2">Feedback invite</p>
+                                    <p class="htxt_regular_14 dark_200">Hi, :contact:! On scale from 1-10, how satisfied were you with your product or service?</p>
+                                </div>
+                            </div>
                             <ul>
-                                <li><a href="#"><img src="assets/images/emoticon.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/image_12.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/attachment.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/pluscircle_12.svg"></a></li>
+                                <li><a class="active show_emoji" href="#"><img src="assets/images/user-smile-line.svg"></a></li>
+                                <li><a class="show_saved_chat" href="#"><img src="assets/images/clipboard-line.svg"></a></li>
+                                <li><a href="#"><img src="assets/images/Image_18.svg"></a></li>
+                                <li><a href="#"><img src="assets/images/attachment-line.svg"></a></li>
+                                <li><a href="#"><img src="assets/images/add-circle-line.svg"></a></li>
                                 <li><a href="#"><img src="assets/images/submit_btn_icon.svg"></a></li>
                             </ul>
                         </div>
@@ -236,58 +679,53 @@ Start with ‘/’ to select a  Saved Message
             </div>
 
 
-            <!--******************
-             PAGE SIDEBAR
-            **********************-->
-            <div class="page_sidebar bkg_light_000 absl">
-                <div class="inner2 pb0">
-                    <div class="title-box">
-                        <h6 class="menu-title" style="line-height: 36px;"><span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; Open Menu</h6>
-                    </div>
-                    <h3 class="htxt_medium_20 dark_800" >Chats </h3>
-                    <hr />
 
-                    <div class="sidebar_search_big">
-                        <input type="text" name="" value="" placeholder="Search">
-                        <button class="sidebar_search_submit"><img src="assets/images/submit_grey.svg"></button>
+
+
+
+        </div>
+
+        <div class="box" style="width: 424px;">
+            <div style="width: 424px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <div class="p40">
+                        <div class="row">
+                            <div class="col-md-12"> <img src="assets/images/saved_reply_forum.svg"/>
+                                <h3 class="htxt_medium_24 dark_800 mt20">Create Saved Reply </h3>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <form action="/action_page.php">
+                                    <div class="form-group">
+                                        <label class="fsize11" for="fname">REPLY NAME</label>
+                                        <input type="text" class="form-control h56 fsize13" id="fname" placeholder="Name (Internal only)" name="fname">
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label class="fsize11" for="desc">REPLY CONTENT</label>
+                                        <textarea class="form-control min_h_185 p20 pt10 fsize13" id="desc" placeholder="Reply content goes here..."></textarea>
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row bottom-position">
+                            <div class="col-md-12 mb15">
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Save Reply</button>
+                                <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
+                        </div>
                     </div>
                 </div>
-
-
-
-
-                <div class="p20 pt0 pb0">
-
-                    <ul class="list_with_icons">
-
-                        <li v-for="subscriber in allSubscribers" class="d-flex active">
-                            <div class="media_left">
-                                <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/07.png"/></span>
-                            </div>
-                            <div class="media_left">
-                                <p class="htxt_bold_14 dark_600 mb-2">{{subscriber.firstname+' '+subscriber.lastname}}</p>
-                                <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                            </div>
-                            <div class="time_badge">
-                                <span class="time fsize10 light_800">2m</span>
-                                <span class="badge badge-grey chatlist">8</span>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                    <div class="clearfix"></div>
-                </div>
-
-
-
-
-                <div class="clearfix"></div>
             </div>
-
-            <!--******************
-             END PAGE SIDEBAR
-            **********************-->
         </div>
     </div>
 </template>
@@ -406,66 +844,32 @@ Start with ‘/’ to select a  Saved Message
         }
 
     };
+    $(document).ready(function(){
+        $(".slidebox").click(function(){
+            $(".box").animate({
+                width: "toggle"
+            });
+        });
+    });
+
+    $(document).ready(function(){
+        $(".show_emoji").click(function(){
+            $(".chat_emoji_box").toggle();
+        });
+    });
+
+    $(document).ready(function(){
+        $(".show_saved_chat").click(function(){
+            $(".chat_saved_temp").toggle();
+        });
+    });
+    //side nav active script
+    $(".nav-link.livechat").addClass("active");
+    $(".nav-link.people").removeClass("active");
+    $(".main-icon-menu-pane.livechat").addClass("active");
+    $(".main-icon-menu-pane.people").removeClass("active");
 
 </script>
-<style scoped>
-    .navbar-custom{background: #ffffff!important; padding-left: 320px}
-    .top-bar-top-section{padding-left: 310px}
-    .content-area.chat_messanger_area{padding:0 0 0 280px;}
 
-    .chat_messanger_area .chat_user_list {max-width: 225px; border-right: 2px solid #d5dfef; padding-right: 15px; float: right}
-    .chat_messanger_area .chat_user_list ul{margin: 0; padding: 0;}
-    .chat_messanger_area .chat_user_list ul li{display: inline-block;  margin: 0 2px; padding: 0; line-height: 28px;}
-    .chat_messanger_area .chat_user_list ul li img{width: 28px; height: 28px;}
-
-
-    .chat_messanger_area .action_list {max-width: 207px; float: right; margin-left: 10px}
-    .chat_messanger_area .action_list ul{margin: 0; padding: 0;}
-    .chat_messanger_area .action_list ul li{display: inline-block;  margin: 0 6px; padding: 0; line-height: 28px;}
-    .chat_messanger_area .action_list ul li img{}
-
-    .chat_messanger_area .messanger_tab {margin: 8px 0px 0 0}
-    .chat_messanger_area .messanger_tab li{margin: 0 30px 0 0}
-    .chat_messanger_area .nav.nav-pills.messanger_tab a{color: #687693; font-size: 14px;}
-    .chat_messanger_area .nav.nav-pills.messanger_tab a.active{color: #4F8AF4; border-top: 2px solid #4F8AF4; padding-top: 39px;}
-
-
-
-
-    .media-body {position: relative;}
-    .chat-list{padding: 30px 0 30px 30px; margin: 0}
-    .chat-list .media.reversed .media-content:not([class*="bg-"]) {border-radius: 6px!important; border: none!important; background-color: #edf5ff!important; float:right;}
-    .chat-list .media.reversed .media-content {text-align: left;	color: #242B3D!important; font-size:14px; font-weight:400; clear: both;}
-    .chat-list .media.reversed .media-content:before {display: none;}
-    .chat-list .media-content:not([class*="bg-"]) {	background-color: #eff3fc;	border:none; border-radius: 6px!important;}
-    .chat-list .media-content:before {display: none; }
-    .chat-list .media-content{padding: 18px 25px!important; font-size: 14px; font-weight: 400!important; max-width: 500px; color:#242B3D!important; display:table!important; margin-bottom: 8px !important;position: relative; width: auto; clear: both}
-    .chat-list .media{ margin-left:50px;}
-    .chat-list .media.reversed{ margin-right:50px;}
-    .chat-list .media .media-annotation.user_icon{ position:absolute; left:-50px; width: 36px;height: 36px;right: auto; top: 0;}
-    .chat-list .media.reversed .media-annotation.user_icon{  right:-50px;left: auto;}
-    .circle_green_status.status-mark{ border:2px solid #ffffff; background:#00CC00; position:absolute; bottom:0; width:9px; height:9px; right:-3px; display: none}
-    a.icons.fl_letters.s24 {width: 36px;height: 36px;box-shadow: none !important;background: #fff;text-align: center;text-transform: uppercase;line-height: 36px;color: #fff;border-radius: 100px;
-        font-size: 9px;	font-weight: 500;background: #333;display: block}
-    .mainchatsvroll2  {height: 500px; overflow-x: hidden; overflow-y: auto; padding-right: 30px}
-    .chat_mis_sec{min-height: 500px;}
-
-    @media (max-width:1440px) {
-        .mainchatsvroll2{height: 350px;}
-        .chat_mis_sec{min-height: 350px; max-height: 350px!important}
-    }
-
-
-
-    .profile_image_bkg{width: 108px; height: 108px; text-align: center; line-height: 108px; background: url(/assets/images/profile_bkg.png)center center no-repeat; margin: auto}
-    .profile_social_icon {padding: 0; margin: 0}
-    .profile_social_icon li{list-style: none; display: inline-block; margin: 0 5px;}
-
-    .user_details_list{margin: 0; padding: 0}
-    .user_details_list li{list-style: none; color: #242B3D; font-size: 14px; line-height: 30px; margin: 0; padding: 0}
-    .user_profile_show{position: absolute; right: 0; top: 30px;}
-
-    .box::after{display: none}
-</style>
 
 

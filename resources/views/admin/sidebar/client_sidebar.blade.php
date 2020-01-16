@@ -55,11 +55,11 @@
                 <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
                 <a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a>
                 <a href="#people" id="loadContactTheme" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a>
-                <a href="#live_messanger" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a>
+                <a href="#live_messanger" id="loadChatTheme" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a>
                 <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
                 <a href="#BrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <img src="assets/images/window-2-fill.svg"/> </a>
-                <a href="#ReviewSystem" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a>
+                <a href="#ReviewSystem" id="loadReviewsTheme" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a>
                 <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
                 <a href="#EmailMarketing" id="loadEmailTheme" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a>
@@ -156,10 +156,10 @@
                     <h6 class="menu-title">Live Messanger</h6>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/dashbaord') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/web') }}"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Web Chat</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/sms') }}"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">SMS Chat</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/chat/shortcuts') }}"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Chat Shortcut</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadChatTheme" href="{{ url('#/chat/dashbaord') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadChatTheme" href="{{ url('#/chat/web') }}"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Web Chat</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadChatTheme" href="{{ url('#/chat/sms') }}"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">SMS Chat</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadChatTheme" href="{{ url('#/chat/shortcuts') }}"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Chat Shortcut</span></a></li>
                 </ul>
             </div>
 
@@ -202,17 +202,17 @@
                     <h6 class="menu-title">REVIEWS</h6>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link active" href="{{ url('#/reviews/dashboard') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/onsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Onsite Campaigns</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/onsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Onsite Review Requests</span></a></li>
+                    <li class="nav-item"><a class="nav-link active loadReviewsTheme" href="{{ url('#/reviews/dashboard') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/reviews/onsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Onsite Campaigns</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/brandboost/review_request/onsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Onsite Review Requests</span></a></li>
                     {{--<li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_feedback') }}"><i><img src="assets/images/star-line-dark.svg"/></i><span class="menu-item-text">Reviews Feed</span></a></li>--}}
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/offsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Offsite Campaigns</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/review_request/offsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Review Requests</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/brandboost/offsite/feedbacks/') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Feedbacks</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/reviews/onsite/media') }}"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Media</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/pie-chart-line.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/reviews/offsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Offsite Campaigns</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/brandboost/review_request/offsite') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Review Requests</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/brandboost/offsite/feedbacks/') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Offsite Feedbacks</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/reviews/onsite/media') }}"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Media</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="javascript:void(0)"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="javascript:void(0)"><i><img src="assets/images/pie-chart-line.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="javascript:void(0)"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
                 </ul>
                 <div class="title-box-mid">
                     <h6 class="menu-title">CAMPAIGNS</h6>
