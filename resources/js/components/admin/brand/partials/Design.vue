@@ -68,7 +68,7 @@
                 </label>
             </h3>
             <div class="form-group" v-show="brandData.area_type=='1' && brandData.header_color_solid">
-                <input type="text" name="clrpkr_solid1" class="form-control clrpkr_solid1" v-model="brandData.header_solid_color" />
+                <input type="text" name="clrpkr_solid1" class="form-control clrpkr_solid1" v-model="brandData.header_solid_color" @click="testme" />
             </div>
 
 
@@ -248,6 +248,9 @@
             }, 500);
         },
         methods:{
+            testme: function(){
+              alert('triggered');
+            },
             saveMainGradient: function(color){
                 this.brandData.header_color=color;
                 this.saveChanges();
@@ -462,6 +465,7 @@
         $(".clrpkr_solid1").spectrum({
             change: function (color) {
                 $('.clrpkr_solid1').val(color.toHexString());
+                /*$('.clrpkr_solid1').trigger('click');*/
                 /*alert(color.toHexString() + '~~~~~' + $('.clrpkr_solid1').val());
                 alert(document.querySelector('input[name="clrpkr_solid1"]').value);*/
             },

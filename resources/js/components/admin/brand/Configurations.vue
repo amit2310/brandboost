@@ -112,16 +112,16 @@
                                                             <p class="fsize17 dark_600 mb-1">
                                                                 {{brandData.company_info_name}}</p>
                                                             <p class="mb-1" v-show="brandData.customer_experiance">
-                                                                <a href="#"><i
+                                                                <a href="javascript:void(0)"><i
                                                                     class="fa fa-star yellow_400 fsize14"></i></a>
-                                                                <a href="#"><i
+                                                                <a href="javascript:void(0)"><i
                                                                     class="fa fa-star yellow_400 fsize14"></i></a>
-                                                                <a href="#"><i
+                                                                <a href="javascript:void(0)"><i
                                                                     class="fa fa-star yellow_400 fsize14"></i></a>
-                                                                <a href="#"><i
+                                                                <a href="javascript:void(0)"><i
                                                                     class="fa fa-star yellow_400 fsize14"></i></a>
-                                                                <a href="#"><i class="fa fa-star dark_400 fsize14"></i></a>
-                                                                <a href="#" class="fsize14 fw500">4.2</a>
+                                                                <a href="javascript:void(0)"><i class="fa fa-star dark_400 fsize14"></i></a>
+                                                                <a href="javascript:void(0)" class="fsize14 fw500">4.2</a>
                                                             </p>
                                                             <p class="fsize13 dark_200 mb-3">139 customer reviews<br>
                                                                 742 questions & answers</p>
@@ -131,16 +131,12 @@
                                                                v-html="brandData.company_info_description"></p>
 
                                                             <div class="brand_btn_sec" v-show="brandData.services">
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important">Design Agency</a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important">Design &amp;
+                                                                <a href="javascript:void(0)" :style="customColor">Design Agency</a>
+                                                                <a href="javascript:void(0)" :style="customColor">Design &amp;
                                                                     Development</a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important">User Expirience
+                                                                <a href="javascript:void(0)" :style="customColor">User Expirience
                                                                     Design</a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important">Logo</a>
+                                                                <a href="javascript:void(0)" :style="customColor">Logo</a>
                                                             </div>
                                                             <div class="clearfix"></div>
 
@@ -175,34 +171,20 @@
                                                             </div>
 
                                                             <div class="brand_social" v-show="brandData.socials">
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="fa fa-facebook"
-                                                                    style="color:#AB256F!important"></i></a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="icon-bubble"
-                                                                    style="color:#AB256F!important"></i></a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="icon-paperplane"
-                                                                    style="color:#AB256F!important"></i></a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="icon-youtube"
-                                                                    style="color:#AB256F!important"></i></a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="icon-twitter"
-                                                                    style="color:#AB256F!important"></i></a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="icon-instagram"
-                                                                    style="color:#AB256F!important"></i></a>
-                                                                <a href="#" class="customColor"
-                                                                   style="color:#AB256F!important"><i
-                                                                    class="fa fa-google"
-                                                                    style="color:#AB256F!important"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="fa fa-facebook" :style="customColor"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="icon-bubble" :style="customColor"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="icon-paperplane" :style="customColor"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="icon-youtube" :style="customColor"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="icon-twitter" :style="customColor"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="icon-instagram" :style="customColor"></i></a>
+                                                                <a href="javascript:void(0)" :style="customColor"><i
+                                                                    class="fa fa-google" :style="customColor"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -328,6 +310,12 @@
                 });
         },
         mounted() {
+        },
+        computed:{
+            customColor: function(){
+                let color = this.brandData.header_solid_color;
+                return 'color:'+color+'!important';
+            },
         },
         methods: {
             syncConfigure: function (param1) {
