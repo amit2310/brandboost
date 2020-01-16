@@ -21,12 +21,21 @@ class Profile extends Controller {
         $mReviews = new ReviewsModel();
         $oReviews = $mReviews->getUserReviews($userID);
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'User Profile' => '#/user/profile'
+        );
+
         $aData = array(
+            'title' => 'User Profile',
+            'breadcrumb' => $aBreadcrumb,
         	'aUInfo' => $aUInfo,
         	'oReviews' => $oReviews
         );
 
-    	return view('user.profile', $aData);
+    	//return view('user.profile', $aData);
+        echo json_encode($aData);
+        exit();
     }
 
 }

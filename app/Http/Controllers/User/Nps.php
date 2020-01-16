@@ -19,6 +19,11 @@ class Nps extends Controller {
         $userID = $aUInfo->id;
         $mNPS = new NpsModel();
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'My NPS Feedback' => '#/user/nps'
+        );
+
     	if (!empty($userID)) {
             $oFeedback = $mNPS->getNPSScoreByUserId($userID);
         }else{
@@ -26,13 +31,15 @@ class Nps extends Controller {
 		}
 
 		$aPageData = array(
+            'title' => 'My NPS Feedback',
+            'breadcrumb' => $aBreadcrumb,
             'oFeedbacks' => $oFeedback
         );
 
     	return view('user.nps', $aPageData);
     }
-	
-    
+
+
      /**
      * get Nps reports
      * @param type $npsId
@@ -54,7 +61,7 @@ class Nps extends Controller {
         );
 
     	return view('user.nps_reports', $aPageData);
-		
+
 	}
 
 }
