@@ -124,6 +124,7 @@ import Settings from './components/admin/Settings';
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
 import UserMedia from './components/user/Media';
+import UserNps from './components/user/Nps';
 
 const routes = [
 
@@ -272,6 +273,7 @@ const routes = [
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
     { path: '/user/media', component: UserMedia, meta: { title: 'My Media - Brand Boost'} },
+    { path: '/user/nps', component: UserNps, meta: { title: 'My NPS Feedback - Brand Boost'} },
 ];
 
 export default routes;

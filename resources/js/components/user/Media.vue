@@ -14,9 +14,9 @@
                         <p>Basic information that you use in BrandBoost services.</p>
                     </div>
 
-                    <!--<div class="p20">
+                    <div class="p20">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div class="tdropdown ml0"><a style="margin:0!important;"
                                                               class="dropdown-toggle fsize12 txt_grey"
                                                               data-toggle="dropdown" aria-expanded="false"> Sort by date
@@ -37,7 +37,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
                                 <a class="pull-right txt_grey fsize12" href="#"><i><img
                                     style="vertical-align: top; margin-top: 4px"
                                     src="/assets/profile_images/edit_icon.png" width="12"></i>
@@ -46,7 +46,7 @@
                         </div>
 
 
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,88 +116,6 @@
     }
 
     $(document).ready(function () {
-        $(document).on('click', '.uploadAvatar', function () {
-            $('#myDropzone_avatar').trigger('click');
-        });
+
     });
-
-    /*Dropzone.autoDiscover = false;
-
-    var myDropzoneLogoImg = new Dropzone(
-        '#myDropzone_avatar', //id of drop zone element 1
-        {
-            url: "webchat/dropzone/upload_profile_image",
-            uploadMultiple: false,
-            maxFiles: 1,
-            maxFilesize: 60000,
-            acceptedFiles: 'image/!*',
-            addRemoveLinks: false,
-            success: function (response) {
-                $('.media-left .icons').removeClass('fl_letters');
-                $('.media-left .icons').html('<img class="img-circle" src="" >');
-                $('.img-circle').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + response.xhr.responseText);
-                var logoImage = response.xhr.responseText;
-                $.ajax({
-                    url: 'user/setting/updateProfile',
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                    type: "POST",
-                    data: {avatar: logoImage},
-                    dataType: "json",
-                    success: function (response) {
-
-                        if (response.status == 'ok') {
-
-                        } else {
-
-                        }
-                    },
-                    error: function (response) {
-                        /!*alertMessage(response.msg);
-                        $('.overlaynew').hide();*!/
-                    }
-                });
-
-                /!* setTimeout(function(){
-                     $('#myDropzone_avatar .dz-preview').hide();
-                 }, 3500);*!/
-            }
-        });
-
-    myDropzoneLogoImg.on("complete", function (file) {
-        myDropzoneLogoImg.removeFile(file);
-    });*/
-
-    //Dropzone.autoDiscover = false;
-
 </script>
-<style type="text/css">
-    /*.icons.fl_letters { background-image: linear-gradient(79deg, #5869eb, #6190fa)!important; }*/
-
-    .icons.fl_letters {
-        background-image: linear-gradient(259deg, #9b83ff, #6145d4) !important;
-    }
-
-    span.icons.fl_letters {
-        width: 32px;
-        height: 32px;
-        box-shadow: none !important;
-        background: #7a8dae;
-        background-image: none;
-        text-align: center;
-        text-transform: uppercase;
-        line-height: 32px;
-        color: #fff;
-        border-radius: 100px;
-        font-size: 12px;
-        font-weight: 500;
-        display: block;
-    }
-
-    .user_sections p {
-        max-width: 700px!important;
-        margin: 50px;
-    }
-    .profile_avatar {
-        height: auto!important;
-    }
-</style>
