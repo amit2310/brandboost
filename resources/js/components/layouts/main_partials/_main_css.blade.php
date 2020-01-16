@@ -59,7 +59,7 @@
         animation: ball-scale-multiple 1s 0s linear infinite;
     }
     .bg-teal-400 {border-color:transparent; color: #fff; font-weight: 700; background: none; padding:0;  font-size: 16px; background-color: transparent;}
-    .btn:hover, .btn:focus, .btn.focus { -webkit-box-shadow: none; box-shadow: none;} 
+    .btn:hover, .btn:focus, .btn.focus { -webkit-box-shadow: none; box-shadow: none;}
 
 
     .logout_notifications{ width: 337px;
