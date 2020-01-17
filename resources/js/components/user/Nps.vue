@@ -48,7 +48,7 @@
         </div>
 
         <div v-if="oFeedbacks" class="row profile_media_outer">
-            <div v-for="oFeedback in oFeedbacks" class="col-md-3">
+            <div class="col-md-3">
                 <table style="width: 100%;">
 
                     <thead>
@@ -58,7 +58,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr v-for="oFeedback in oFeedbacks" >
                         <td style="display: none;">{{ oFeedback.id }}</td>
                         <td>
                             <ul class="nps_feedback">
@@ -90,14 +90,14 @@
                                             <strong>{{ oFeedback.title != ''?oFeedback.title:'N/A' }}</strong></p>
                                             <p> {{ oFeedback.feedback != ''?oFeedback.feedback:'N/A' }} </p></div>
                                         <div class="media-left text-right pr30"><p>{{ displayDateFormat('M d, h:i A', oFeedback.created_at) }}</p></div>
-                                        <div class="media-left p0">
+                                        <div class="media-left p0 text-right">
                                             <div class="tdropdown mt5"><a class="table_more dropdown-toggle"
                                                                           data-toggle="dropdown"><img
                                                 src="/assets/images/more.svg"></a>
                                                 <ul style="right: 0;"
                                                     class="dropdown-menu dropdown-menu-right status">
 
-                                                    <li><a :href="`#/user/nps/reports/{ oFeedback.id }`"><i
+                                                    <li><a :href="'#/user/nps/reports/'+oFeedback.id"><i
                                                         class="icon-primitive-dot txt_green"></i> Report</a>
                                                     </li>
                                                 </ul>
@@ -132,7 +132,7 @@
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     export default {
-        title: 'My Media - Brand Boost',
+        title: 'My Feedbacks - Brand Boost',
         components: {UserAvatar, Pagination},
         data() {
             return {

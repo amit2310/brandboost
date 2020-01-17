@@ -36,7 +36,9 @@ class Nps extends Controller {
             'oFeedbacks' => $oFeedback
         );
 
-    	return view('user.nps', $aPageData);
+    	//return view('user.nps', $aPageData);
+        echo json_encode($aPageData);
+        exit();
     }
 
 
