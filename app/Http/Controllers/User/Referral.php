@@ -19,13 +19,22 @@ class Referral extends Controller {
         $userID = $aUInfo->id;
         $mReferral = new ReferralModel();
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'My Referrals' => '#/user/referral'
+        );
+
     	$referralData = $mReferral->getReferralDataBySId($userID);
 
 		$aPageData = array(
+            'title' => 'My Referrals',
+            'breadcrumb' => $aBreadcrumb,
             'referralData' => $referralData
         );
 
-    	return view('user.referral', $aPageData);
+    	//return view('user.referral', $aPageData);
+        echo json_encode($aPageData);
+        exit();
     }
 
 	public function updateReferralUser(Request $request) {
