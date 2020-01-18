@@ -38,6 +38,16 @@ class WebChat extends Controller {
         $unassignedChat = $mWebChat->getTeamAssignData(0);
         $unassignedChatData = $unassignedChat;
 
+
+        //Active Web Chat
+        $allChat = activeOnlyweb($loggedYou);
+        if($allChat->isNotEmpty()){
+            foreach($allChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+            }
+        }
+
         $aData = [
             'title' => 'Web Chat',
             'breadcrumb' => $aBreadcrumb,
@@ -49,6 +59,7 @@ class WebChat extends Controller {
             'assignedChat' => $assignedChat,
             'assignedChatData' => $assignedChatData,
             'unassignedChatData' => $unassignedChatData,
+            'allChat' => $allChat,
             'loggedYou' => $loggedYou
         ];
         //return view('admin.web_chat.index', $data);
@@ -1518,6 +1529,27 @@ class WebChat extends Controller {
                     </ul>';
 
         return view('admin.chat_app.chat_overview', array('title' => 'Chat Overview', 'pagename' => $breadcrumb, 'getChatThread' => $getChatThread, 'getWebChatCurrentThread' => $getWebChatCurrentThread, 'supportChat' => $supportChat, 'supportChatGroupByDate' => $supportChatGroupByDate, 'supportChatCurrent' => $supportChatCurrent, 'supportChatGroupByCountry' => $supportChatGroupByCountry, 'supportChatCompleted' => $supportChatCompleted, 'lastfifteendayschat' => $lastfifteendayschat));
+    }
+
+    public function getLastChatMessage($token){
+        $oMsg = getLastMessage($token);
+        $sMessage = $oMsg->message;
+        $created = usaDate($oMsg->created);
+        $fileext = explode('.', $sMessage);
+        $fileext = end($fileext);
+        if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
+            $userMessage = "File Attachment";
+        }
+        else if (strpos($sMessage, '/Media/') !== false) {
+            $userMessage="File Attachment";
+        }
+        else if (strpos($sMessage, 'amazonaws') !== false) {
+            $userMessage="File Attachment";
+        }
+        else {
+            $userMessage = setStringLimit($sMessage, 80);
+        }
+        return ['lastMessage'=>$userMessage, 'messageTime' => $created];
     }
 
 
