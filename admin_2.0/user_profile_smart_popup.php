@@ -18,7 +18,8 @@
        <div class="row">
        	<div class="col-md-12 text-center">
        	<div class="profile_image_bkg mb20">
-       		<img width="72" src="assets/images/avatar/02.png"/>
+       		<!--<img width="72" src="assets/images/avatar/02.png"/>-->
+            <span class="fl_name">AM</span>
        	</div>
        	<div class="bkg_green_light green_400 fsize10 pl10 pr10 pt-1 pb-0 br8 d-inline-block">Lead</div>
        	<h3 class="fsize16 fw500 dark_700 mb0 mt10">Norma Alexander</h3>
