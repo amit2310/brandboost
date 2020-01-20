@@ -127,6 +127,8 @@ import UserMedia from './components/user/Media';
 import UserNps from './components/user/Nps';
 import UserReferral from './components/user/Referral';
 import UserReview from './components/user/Review';
+import UserSetting from './components/user/Setting';
+import UserSupport from './components/user/Support';
 
 const routes = [
 
@@ -278,6 +280,8 @@ const routes = [
     { path: '/user/nps', component: UserNps, meta: { title: 'My NPS Feedback - Brand Boost'} },
     { path: '/user/referral', component: UserReferral, meta: { title: 'My Referrals - Brand Boost'} },
     { path: '/user/review', component: UserReview, meta: { title: 'My Review - Brand Boost'} },
+    { path: '/user/setting', component: UserSetting, meta: { title: 'Personal Data - Brand Boost'} },
+    { path: '/user/help', component: UserSupport, meta: { title: 'Help Desk - Brand Boost'} },
 ];
 
 export default routes;
