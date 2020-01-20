@@ -54,6 +54,7 @@ class Review extends Controller {
                 $aReviewData[$reviewID]['product_data'] = $aProductData;
                 unset($aCommentsData);
             }
+            $oReview->aReviewData = $aReviewData;
         }
 
         $aBreadcrumb = array(
@@ -64,7 +65,7 @@ class Review extends Controller {
         $aData = array(
             'title' => 'My Reviews',
             'breadcrumb' => $aBreadcrumb,
-            'myReview' => $aReviewData
+            'myReview' => $oReview
         );
         //return view('user.review', $aData);
         echo json_encode($aData);

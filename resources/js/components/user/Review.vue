@@ -76,16 +76,8 @@
                 </div>
             </div>
         </div>
-<div>
-    <div class="col-md-12 text-center">
-        <ul class="nps_feedback">
-            <li>
-                No Review Found
-            </li>
-        </ul>
-    </div>
-</div>
-        <div v-if="myReview" class="row profile_media_outer hidden">
+
+        <div v-if="myReview.length > 0" class="row profile_media_outer ">
             <div class="col-md-3">
                 <table style="width: 100%;">
 
@@ -387,11 +379,11 @@
             </div>
         </div>
 
-        <div v-else class="row profile_media_outer hidden">
+        <div v-else class="row profile_media_outer ">
             <div class="col-md-12 text-center">
                 <ul class="nps_feedback">
                     <li>
-                        No Referral Found
+                        No Review Found
                     </li>
                 </ul>
             </div>
