@@ -16,7 +16,7 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <style>
-
+	
 .review_source_new{max-width: 210px; width: 100%; margin-bottom: 10px;}
 .review_source_new label{width: 100%;}
 .review_source_new .inner{text-align: center;  border-radius: 5px;  box-shadow: 0 2px 4px 0 rgba(1, 21, 64, 0.06);  background-color: #ffffff;  /*border: solid 1px #e3e9f3;*/ min-height: 248px; position: relative; padding: 15px; border: 1px solid #eeeeee!important}
@@ -37,8 +37,8 @@
 .review_source_new :hover .inner:after{display: block; cursor: pointer; }
 .review_source_new .custmo_checkbox.checkboxs{position: absolute; width: 17px; right: 5px!important; top: 11px; z-index: 9; display: inline-block;}
 .review_source_new .custmo_checkbox.checkboxs input:checked .inner:after{display: block; cursor: pointer;}
-
-
+	
+	
 	</style>
 </head>
 <body id="PeopleSection">
@@ -48,15 +48,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
-
+ 
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-
-
+  
+  
  <!--******************
   Top Heading area
  **********************-->
@@ -75,16 +75,16 @@
    </div>
     <div class="clearfix"></div>
 </div>
-
-
-
-
+	 
+	  
+	  
+	  
  <!--******************
   Content Area
  **********************-->
    <div class="content-area">
-
-
+   
+   
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-3 col-lg-4">
@@ -101,14 +101,14 @@
 			   <!--======Tab 1====-->
 				<div id="Configurations" class="tab-pane active">
 					<div class="p20 bbot pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Template <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+					 <p class="text-uppercase m-0 fw400 dark_200">Template <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20">
 					 <button class="btn br6 border p15 w-100 shadow-none slidebox fw400">Horizontal Popup</button>
 					</div>
-
+					
 					<div class="p20 bbot btop pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Company info  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+					 <p class="text-uppercase m-0 fw400 dark_200">Company info  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20">
 						<h3 class="dark_500 mb0 fsize14 fw400">Avatar
@@ -141,7 +141,7 @@
 							<span class="toggle email"></span>
 						  </label>
 						 </h3>
-
+						 
 						 <h3 class="dark_500 mb0 fsize14 fw400">Socials
 						  <label class="custom-form-switch float-right">
 							<input class="field" type="checkbox">
@@ -155,9 +155,9 @@
 						  </label>
 						 </h3>
 					</div>
-
+					
 					<div class="p20 bbot btop pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Position on page  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+					 <p class="text-uppercase m-0 fw400 dark_200">Position on page  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20">
 						<div class="p0 m-0">
@@ -192,9 +192,9 @@
                                                 <div class="clearfix"></div>
                                             </div>
 					</div>
-
+					
 					<div class="p20 bbot btop pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Company info  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+					 <p class="text-uppercase m-0 fw400 dark_200">Company info  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20">
 						<h3 class="dark_500 mb0 fsize14 fw400">Show chat widget
@@ -213,18 +213,18 @@
 					<div class="p20 btop">
 						<button class="btn btn-md bkg_blue_200 light_000 w-100">Save </button>
 					</div>
-
-
-
-
-
-
-
+					
+					
+					
+					
+					
+					
+					
 				</div>
 				<!--======Tab 2=====-->
 				<div id="Design" class="tab-pane fade">
 					<div class="p20 bbot pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Page appearance <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+					 <p class="text-uppercase m-0 fw400 dark_200">Page appearance <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20 bbot">
 						<img class="circle-icon-64" width="65" src="assets/images/avatar/01.png"/>
@@ -239,7 +239,7 @@
 					</div>
 					</label>
 				  </div>
-
+				  
 				  	<div class="form-group">
 					<label class="fsize12">Header Avatar:</label>
 					<label class="m0 w-100" for="upload">
@@ -248,21 +248,21 @@
 					</div>
 					</label>
 				  </div>
-
+				  
 				  <div class="form-group">
 					<label class="fsize12">Company info:</label>
 					<div class="card border p-0">
 					<div class="p-2 bbot">
 						<input style="border: none;" type="text" class="form-control fsize14" placeholder="" value="Company" />
-					</div>
+					</div>	
 					<div class="p-2">
 						<textarea class="form-control fsize13 dark_600" style="border: none; min-height: 120px; ">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</textarea>
 					</div>
 					</div>
 				  </div>
-
+				  
 				  <div class="form-group">
-
+                                           
                                         <select class="form-control h56 fsize14" name="brand_themes" id="brand_themes">
                                         <option value="">Choose Brand Theme</option>
                                                                                          <option value="42">Default 1</option>
@@ -279,18 +279,18 @@
                                                                                          <option value="53">theme9</option>
                                                                                       </select>
                                         </div>
-
-
-
-
-
-
-
-
-
+                                        
+                                        
+                                        
+                                        
+				  
+				  
+				  
+				  
+				  		
 					</div>
-
-
+					
+					
 								<!---------------Dual Pane Design----------------->
 									<div class="p20 bbot btop pt10 pb10 bkg_light_050">
 									  <h3 class="text-uppercase m-0 fw400 dark_200 fsize13">Dual Pane Design
@@ -308,10 +308,10 @@
 										  </label>
 										 </h3>
 										 <div class="form-group">
-										 <input type="text" class="form-control" value="#ffffff" />
+										 <input type="text" class="form-control" value="#ffffff" />	
 										 </div>
-
-
+										 
+										
 										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">MAIN Gradient color <small class="text-lowercase dark_200">Gradient</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
@@ -343,8 +343,8 @@
                                                 			<li class="circle"><a class="" color-orientation="circle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
                                                 		</ul>
                                     	</div>
-
-
+                                    
+                                     
                                        <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Gradient Color picker <small class="text-lowercase dark_200">Custom Gradient color</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
@@ -376,10 +376,10 @@
                                                 		</ul>
                                     	</div>
                                         </div>
-
-
-
-                                     <!---------------Single Pane Design----------------->
+                                        
+                                        
+                                        
+                                     <!---------------Single Pane Design----------------->   
                                     <div class="p20 bbot btop pt10 pb10 bkg_light_050">
 									  <h3 class="text-uppercase m-0 fw400 dark_200 fsize13">Single Pane Design
 									  <label class="custom-form-switch float-right">
@@ -388,7 +388,7 @@
 									  </label>
 									 </h3>
 									</div>
-
+									
 									<div class="p20">
 										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Single Color picker <small class="text-lowercase dark_200">Solid color</small>
 										  <label class="custom-form-switch float-right">
@@ -397,10 +397,10 @@
 										  </label>
 										 </h3>
 										 <div class="form-group">
-										 <input type="text" class="form-control" value="#ffffff" />
+										 <input type="text" class="form-control" value="#ffffff" />	
 										 </div>
-
-
+										 
+										
 										 <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">MAIN Gradient color <small class="text-lowercase dark_200">Gradient</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
@@ -432,8 +432,8 @@
                                                 			<li class="circle"><a class="" color-orientation="circle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
                                                 		</ul>
                                     	</div>
-
-
+                                    
+                                     
                                        <h3 class="dark_500 mb0 fsize12 fw400 text-uppercase">Gradient Color picker <small class="text-lowercase dark_200">Custom Gradient color</small>
 										  <label class="custom-form-switch float-right">
 											<input class="field" type="checkbox" checked="">
@@ -465,15 +465,15 @@
                                                 		</ul>
                                     	</div>
                                         </div>
-
-
-
-
-
-
-
+									
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <div class="p20 bbot btop pt10 pb10">
-										 <p class="text-uppercase m-0 fw400 dark_200">Save Brand Theme Settings <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+										 <p class="text-uppercase m-0 fw400 dark_200">Save Brand Theme Settings <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 										</div>
 										<div class="p20">
 										<div class="form-group">
@@ -481,14 +481,14 @@
 										  </div>
 										<button class="btn btn-md bkg_blue_200 light_000 w-100">Save Brand Theme </button>
                                         </div>
-
-
-
+                                        
+                                        
+                                        
 				</div>
 				<!--======Tab 3=====-->
 				<div id="Campaign" class="tab-pane fade">
 					<div class="p20 bbot pt10 pb10">
-					 <p class="text-uppercase m-0 fw400 dark_200">Select Campaign  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>
+					 <p class="text-uppercase m-0 fw400 dark_200">Select Campaign  <a class="float-right" href="#"><i class="icon-arrow-down12 fsize15"></i></a></p>	
 					</div>
 					<div class="p20">
 						<h3 class="dark_500 mb0 fsize14 fw400">Select All
@@ -521,7 +521,7 @@
 							<span class="toggle email"></span>
 						  </label>
 						 </h3>
-
+						 
 						 <h3 class="dark_500 mb0 fsize14 fw400">Test
 						  <label class="custom-form-switch float-right">
 							<input class="field" type="checkbox">
@@ -558,7 +558,7 @@
 							<span class="toggle email"></span>
 						  </label>
 						 </h3>
-
+						 
 						 <h3 class="dark_500 mb0 fsize14 fw400">Test
 						  <label class="custom-form-switch float-right">
 							<input class="field" type="checkbox">
@@ -576,34 +576,34 @@
 						<button class="btn btn-md bkg_blue_200 light_000 w-100">Save </button>
 					</div>
 				</div>
-
+				
 			  </div>
         	</div>
         </div>
-
-
-
+        
+        
+        
         <div class="card p0 animate_top">
         <div class="p20 bbot">
         	<span class="fsize14 fw400 dark_600">Help</span>
         </div>
         <div class="p30 text-center">
         	<div class="max_w_225 m-auto">
-    			<img class="mb-3" src="assets/images/smiley_optimization.svg">
+    			<img class="mb-3" src="assets/images/smiley_optimization.svg">	
 				<h3 class="htxt_medium_16 dark_700 mb-3">Company info</h3>
    				<p class="htxt_regular_14 dark_400 lh_20">Your can change your company
 				description, services and contact info
-				on Brand Settings page</p>
+				on Brand Settings page</p>	
    				<a class="htxt_medium_12 email_500" href="#">Change company info</a>
     			</div>
         </div>
     		</div>
-
-
-
-
+    		
+    		
+    		
+    		
       </div>
-
+      
       <div class="col-xl-9 col-lg-8">
         <div class="card p-0">
         	<div class="p20 bbot">
@@ -612,7 +612,7 @@
         	<div class="p20">
         		<img src="http://brandboost.io/new_pages/assets/images/browser_top.png"/>
         		<!--<img src="http://brandboost.io/new_pages/assets/images/brand_page2.jpg"/>-->
-
+        		
         		<div class="brand_page_main">
  	<div class="brand_page_gr brand_page_pr">
    	<div class="page_header">
@@ -622,9 +622,9 @@
    	</div>
    </div>
    </div>
-
-
-
+   
+   
+   
    <div class="container">
    	<div class="row">
    		<div class="col-md-12">
@@ -645,18 +645,18 @@
 						</p>
  						<p class="fsize13 dark_200 mb-3">139 customer reviews<br>   742 questions & answers</p>
  						<p class="fsize13 dark_200" style="max-width: 280px;">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-
+ 						
  							<div class="brand_btn_sec">
-									<a href="#" class="customColor" style="color:#AB256F!important">Design Agency</a>
-									<a href="#" class="customColor" style="color:#AB256F!important">Design &amp; Development</a>
-									<a href="#" class="customColor" style="color:#AB256F!important">User Expirience Design</a>
+									<a href="#" class="customColor" style="color:#AB256F!important">Design Agency</a> 
+									<a href="#" class="customColor" style="color:#AB256F!important">Design &amp; Development</a> 
+									<a href="#" class="customColor" style="color:#AB256F!important">User Expirience Design</a> 
 									<a href="#" class="customColor" style="color:#AB256F!important">Logo</a>
 								</div>
 								<div class="clearfix"></div>
-
+								
 								<button class="btn btn-md bkg_sms_400 light_000 mt10 br6"> Contact Us</button>
-
-
+  						
+   						
    					</div>
    					<div class="col-md-5">
 							<div class="interactions mb30">
@@ -668,14 +668,14 @@
 									<li><small><i class="icon-mail5 mr10"></i>Email</small> <strong>info@wakers.co</strong></li>
 								</ul>
 							</div>
-
+							
 							<div class="brand_social">
-								<a href="#" class="customColor" style="color:#AB256F!important"><i class="fa fa-facebook" style="color:#AB256F!important"></i></a>
-								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-bubble" style="color:#AB256F!important"></i></a>
-								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-paperplane" style="color:#AB256F!important"></i></a>
-								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-youtube" style="color:#AB256F!important"></i></a>
-								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-twitter" style="color:#AB256F!important"></i></a>
-								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-instagram" style="color:#AB256F!important"></i></a>
+								<a href="#" class="customColor" style="color:#AB256F!important"><i class="fa fa-facebook" style="color:#AB256F!important"></i></a> 
+								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-bubble" style="color:#AB256F!important"></i></a> 
+								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-paperplane" style="color:#AB256F!important"></i></a> 
+								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-youtube" style="color:#AB256F!important"></i></a> 
+								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-twitter" style="color:#AB256F!important"></i></a> 
+								<a href="#" class="customColor" style="color:#AB256F!important"><i class="icon-instagram" style="color:#AB256F!important"></i></a> 
 								<a href="#" class="customColor" style="color:#AB256F!important"><i class="fa fa-google" style="color:#AB256F!important"></i></a>
 							</div>
 						</div>
@@ -683,7 +683,7 @@
    			</div>
    		</div>
    	</div>
-
+   	
    	<div class="row">
    		<div class="col-md-4">
    			<div class="card p-0">
@@ -692,7 +692,7 @@
    				</div>
    				<div class="p20">
    					<div class="p0">
-
+    		
     		<p class="fsize24 fw500 dark_800 mb-1">4.2</p>
     		<p class="mb-1">
     			<a href="#"><i class="fa fa-star yellow_400 fsize18"></i></a>
@@ -702,9 +702,9 @@
     			<a href="#"><i class="fa fa-star yellow_400 fsize18"></i></a>
     		</p>
     		<p class="fsize13 fw400 dark_200 mb-3 bbot pb-3">137 reviews - Based On 2,382 Review over the past year.</p>
-
-
-
+    		
+    		
+    		
     					<div class="pb-3 pl-3 ratings bbot">
 								<div class="row inner">
 									<div class="col-1 pr-0 pl-0">
@@ -717,7 +717,7 @@
 									</div>
 									<div class="col-1 pr-0 pl-0"><p>37</p></div>
 								</div>
-
+								
 								<div class="row inner">
 									<div class="col-1 pr-0 pl-0">
 									<p>4 <i><img src="assets/images/star-fill-12.png"> </i></p>
@@ -729,7 +729,7 @@
 									</div>
 									<div class="col-1 pr-0 pl-0"><p>57</p></div>
 								</div>
-
+								
 								<div class="row inner">
 									<div class="col-1 pr-0 pl-0">
 									<p>3 <i><img src="assets/images/star-fill-12.png"> </i></p>
@@ -741,7 +741,7 @@
 									</div>
 									<div class="col-1 pr-0 pl-0"><p>5</p></div>
 								</div>
-
+								
 								<div class="row inner">
 									<div class="col-1 pr-0 pl-0">
 									<p>2 <i><img src="assets/images/star-fill-12.png"> </i></p>
@@ -753,7 +753,7 @@
 									</div>
 									<div class="col-1 pr-0 pl-0"><p>7</p></div>
 								</div>
-
+								
 								<div class="row inner">
 									<div class="col-1 pr-0 pl-0">
 									<p>1 <i><img src="assets/images/star-fill-12.png"> </i></p>
@@ -765,37 +765,37 @@
 									</div>
 									<div class="col-1 pr-0 pl-0"><p>125</p></div>
 								</div>
-
-
-
-
-
-
-
-
-
-
+								
+								
+								
+								
+								
+								
+								
+							
+								
+								
 								</div>
-
-
-
+								
+								
+								
 				<p class="fsize14 dark_600 mt-3 mb-0"><i><img src="assets/images/chat-1-fill.svg"></i> &nbsp;  Powered by BrandBoost  </p>
-
-
-
+    		
+    		
+    		
     	</div>
    				</div>
    			</div>
-
-
-
+   			
+   			
+   			
    			<div class="p-0 brand_reviews">
    				<div class="card p-0 mb-1">
    					<div class="p15 bbot">
    						<figure class="float-left mr-3 mb-0">
-   						<img width="38" src="assets/images/avatar/02.png"/>
+   						<img width="38" src="assets/images/avatar/02.png"/>	
    						</figure>
-
+   						
    						<p class="fsize12 fw500 dark_400 m-0">Dora Weber &nbsp;  <span class="fw400 dark_200">bought iPhone 8 Plus</span></p>
    						<p class="mb-0">
 							<a href="#"><i class="fa fa-star yellow_400 fsize12"></i></a>
@@ -809,23 +809,23 @@
    					<div class="p15">
    						<p class="fsize13 dark_400 m-0">Showcase your customer's photos directly on the product page and throughout your site. Social proof is the most powerful trust signal that helps site visitors see how well your customers love your products.</p>
    					</div>
-
+   					
    					<div class="p15 btop">
    						<p class="m-0 fsize12 dark_200">
-   							<a class="mr-2" href="#"><i class="icon-comment fsize11"></i> 3 Comments</a>
+   							<a class="mr-2" href="#"><i class="icon-comment fsize11"></i> 3 Comments</a> 
    							<a class="mr-2" href="#">4.0 Our of 5 Stars</a>
    							<a class="mr-2" href="#"><i class="icon-thumbs-up3 fsize10 green_400"></i></a>
    							<a href="#"><i class="icon-thumbs-down3 fsize10 red_400"></i></a>
-
+   							
    						</p>
    					</div>
    				</div>
    				<div class="card p-0 mb-1">
    					<div class="p15 bbot">
    						<figure class="float-left mr-3 mb-0">
-   						<img width="38" src="assets/images/avatar/06.png"/>
+   						<img width="38" src="assets/images/avatar/06.png"/>	
    						</figure>
-
+   						
    						<p class="fsize12 fw500 dark_400 m-0">Dora Weber &nbsp;  <span class="fw400 dark_200">bought iPhone 8 Plus</span></p>
    						<p class="mb-0">
 							<a href="#"><i class="fa fa-star yellow_400 fsize12"></i></a>
@@ -839,23 +839,23 @@
    					<div class="p15">
    						<p class="fsize13 dark_400 m-0">Showcase your customer's photos directly on the product page and throughout your site. Social proof is the most powerful trust signal that helps site visitors see how well your customers love your products.</p>
    					</div>
-
+   					
    					<div class="p15 btop">
    						<p class="m-0 fsize12 dark_200">
-   							<a class="mr-2" href="#"><i class="icon-comment fsize11"></i> 3 Comments</a>
+   							<a class="mr-2" href="#"><i class="icon-comment fsize11"></i> 3 Comments</a> 
    							<a class="mr-2" href="#">4.0 Our of 5 Stars</a>
    							<a class="mr-2" href="#"><i class="icon-thumbs-up3 fsize10 green_400"></i></a>
    							<a href="#"><i class="icon-thumbs-down3 fsize10 red_400"></i></a>
-
+   							
    						</p>
    					</div>
    				</div>
    				<div class="card p-0 mb-1">
    					<div class="p15 bbot">
    						<figure class="float-left mr-3 mb-0">
-   						<img width="38" src="assets/images/avatar/04.png"/>
+   						<img width="38" src="assets/images/avatar/04.png"/>	
    						</figure>
-
+   						
    						<p class="fsize12 fw500 dark_400 m-0">Dora Weber &nbsp;  <span class="fw400 dark_200">bought iPhone 8 Plus</span></p>
    						<p class="mb-0">
 							<a href="#"><i class="fa fa-star yellow_400 fsize12"></i></a>
@@ -869,20 +869,20 @@
    					<div class="p15">
    						<p class="fsize13 dark_400 m-0">Showcase your customer's photos directly on the product page and throughout your site. Social proof is the most powerful trust signal that helps site visitors see how well your customers love your products.</p>
    					</div>
-
+   					
    					<div class="p15 btop">
    						<p class="m-0 fsize12 dark_200">
-   							<a class="mr-2" href="#"><i class="icon-comment fsize11"></i> 3 Comments</a>
+   							<a class="mr-2" href="#"><i class="icon-comment fsize11"></i> 3 Comments</a> 
    							<a class="mr-2" href="#">4.0 Our of 5 Stars</a>
    							<a class="mr-2" href="#"><i class="icon-thumbs-up3 fsize10 green_400"></i></a>
    							<a href="#"><i class="icon-thumbs-down3 fsize10 red_400"></i></a>
-
+   							
    						</p>
    					</div>
    				</div>
    			</div>
-
-
+   			
+   			
    		</div>
    		<div class="col-md-8">
    			<div class="card p-0">
@@ -896,7 +896,7 @@
    					<a class="sms_400" href="#">Learn More</a>
    				</div>
    			</div>
-
+   			
    			<div class="card p-0">
    				<div class="p20 bbot">
    					<p class="m-0 fsize14 fw500 dark_500">Media</p>
@@ -935,55 +935,55 @@
    						</div>
    					</div>
    				</div>
-
+   				
    				<div class="p20 btop">
    					<a class="sms_400 float-left" href="#">View all Review</a>
    					<a class="sms_400 float-right" href="#">></a>
    				</div>
    			</div>
-
-
-
+   			
+   			
+   			
    		</div>
    	</div>
    </div>
-
-
-
+   
+   
+   
  </div>
-
-
+       	
+       	
        	
         	</div>
         </div>
       </div>
-
-
+      
+      
     </div>
   </div>
 </div>
 
-
+      
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-
-
-
-
-
-
+  
+  
+ 
+ 
+ 
+ 
  <!--******************
   Create Contact Sliding Smart Popup
  **********************-->
  <?php include("choose_template_smart_popup.php"); ?>
-
-
-
-
-
+ 
+    
+ 
+ 
+ 
  <!--******************
   jQuery
  **********************-->

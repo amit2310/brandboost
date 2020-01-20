@@ -3627,6 +3627,8 @@ Live Chat Messangers
 		
 
 .chat_messanger_area .profile_image_bkg{width: 108px; height: 108px; text-align: center; line-height: 108px; background: url(../images/profile_bkg.png)center center no-repeat; margin: auto}
+.chat_messanger_area .profile_image_bkg img{ border-radius:100px!important; width:72px; height:72px;}
+.chat_messanger_area .profile_image_bkg span.fl_name{ width:72px; height:72px; border:1px solid #eee; border-radius:100px; text-align:center; font-size:24px; font-weight:500; line-height:60px; color:#3970D9}
 .chat_messanger_area .profile_social_icon {padding: 0; margin: 0}
 .chat_messanger_area .profile_social_icon li{list-style: none; display: inline-block; margin: 0 5px;}
 .chat_messanger_area .user_details_list{margin: 0; padding: 0}
