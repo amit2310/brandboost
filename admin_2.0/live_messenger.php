@@ -90,8 +90,8 @@
 				<div class="row">
 					<div class="col">
 						<div class="tdropdown ml0">
-										<a style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">All (39)</a>
-										<ul style="right: 0px!important; margin-top: 18px; left: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown">
+										<a id="options" style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">All (39)</a>
+										<ul style="right: 0px!important; margin-top: 18px; left: -20px;" class="dropdown-menu left dropdown-menu-left chat_dropdown">
 										  <li><strong><a class="active" href="#"><img class="small" src="assets/images/cd_icon1.png"> All (39) </a></strong></li>
 										  <li><strong><a href="#"><img class="small" src="assets/images/cd_icon2.png">Open (13) </a></strong></li>
 										  <li><strong><a href="#"><img class="small" src="assets/images/cd_icon3.png">Resolved (172) </a></strong></li>
@@ -102,8 +102,8 @@
 					</div>
 					<div class="col">
 						<div class="tdropdown ml0 pull-right">
-										<a style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">Waiting longest</a>
-										<ul style="margin-top: 18px; right: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown width_170">
+										<a id="options2" style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">Waiting longest</a>
+										<ul style="margin-top: 18px; right: -20px;" class="dropdown-menu right dropdown-menu-left chat_dropdown width_170">
 											<li><strong><a class="active" href="#">Newest </a></strong></li>
 											<li><strong><a href="#">Waiting longest </a></strong></li>
 											<li><strong><a href="#">Oldest </a></strong></li>
@@ -741,6 +741,16 @@ $(document).ready(function(){
 	$(".main-icon-menu-pane.livechat").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
 </script>
-
+<script>
+        $(document).ready(function(){
+            $(".dropdown-menu.left li a").click(function(){
+            $("#options").text($(this).text());
+            });
+			
+			$(".dropdown-menu.right li a").click(function(){
+            $("#options2").text($(this).text());
+            });
+        });
+    </script>
 </body>
 </html>
