@@ -27,15 +27,31 @@ class WebChat extends Controller {
         $mWebChat = new WebChatModel();
         $favoriteChatData = $mWebChat->getFavouriteUsers($oUser->id);
         $isLoggedInTeam = Session::get("team_user_id");
+        if(!empty($isLoggedInTeam)){
+            $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $oUser->id);
+            $teamMemberId = $aTeamInfo->id;
+        }
 
         //Assigned Chat
-        $id = (!empty($isLoggedInTeam)) ? $isLoggedInTeam : $oUser->id;
-        $assignedChat = $mWebChat->getTeamAssignData($id);
+        $id = (!empty($teamMemberId)) ? $teamMemberId : $oUser->id;
+        $assignedChat = $mWebChat->getTeamAssignData($id, true);
+        if($assignedChat->isNotEmpty()){
+            foreach($assignedChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+            }
+        }
         $assignedChatData = $assignedChat;
         $loggedYou = $id;
 
         //Unassigned Chat
         $unassignedChat = $mWebChat->getTeamAssignData(0);
+        if($unassignedChat->isNotEmpty()){
+            foreach($unassignedChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+            }
+        }
         $unassignedChatData = $unassignedChat;
 
 
@@ -69,8 +85,38 @@ class WebChat extends Controller {
      * This function is used to get userinformation based on the client/user id
      * @return type
      */
-
     public function getUserinfo(Request $request) {
+        $chatUserid = $request->chatUserid;
+        $token = $request->room;
+        if (strlen($chatUserid) > 10 && $chatUserid != '' && $token != '') {
+            $userDetail = getSubscriberDetails($chatUserid);
+            $assignto = assignto($token);
+            $taglist = getTagsByReviewID($chatUserid);
+            $userId_encode = base64_url_encode($chatUserid);
+            $user_name_ex = explode(" ", $userDetail[0]->user_name);
+            $avatar = showUserAvtar('', $user_name_ex[0], $user_name_ex[1], 84, 84, 24);
+            $email = !empty($userDetail[0]->email) ? $userDetail[0]->email : 'Add Email';
+            $aData = [
+                'email' => $email,
+                'name' => ucwords($user_name_ex[0] . ' ' . $user_name_ex[1]),
+                'phone' => $userDetail[0]->phone != '' ? $userDetail[0]->phone : 'Add Phone',
+                'avatar' => $avatar,
+                'avatar_url' => '',
+                'chatUserid' => $chatUserid,
+                'city' => '',
+                'code' => '',
+                'gender' => '',
+                'avfinder' => '',
+                'userId_encode' => $userId_encode,
+                'taglist' => $taglist,
+                'assign_to' => $assignto,
+                'assign_team_member' => $userDetail[0]->assign_team_member
+            ];
+            return $aData;
+
+        }
+    }
+    public function getUserinfoOld(Request $request) {
         $chatUserid = $request->chatUserid;
         $token = $request->token;
         if (strlen($chatUserid) > 10 && $chatUserid != '' && $token != '') {
@@ -165,9 +211,9 @@ class WebChat extends Controller {
                     $supportUser = getSupportUser($get_value->user_form);
                     if (!empty($supportUser[0]->user_name)) {
                         $supportUserName = explode(" ", $supportUser[0]->user_name);
-                        $avatarHtml = showUserAvtar("", $supportUserName[0], $supportUserName[1], 28, 28, 11);
+                        $avatarHtml = showUserAvtar("", $supportUserName[0], $supportUserName[1], 40, 40, 13);
                     } else {
-                        $avatarHtml = showUserAvtar("", "A", "", 28, 28, 11);
+                        $avatarHtml = showUserAvtar("", "A", "", 40, 40, 13);
                     }
 
                     $get_value->user_form = (string)$uFrom;
@@ -177,12 +223,17 @@ class WebChat extends Controller {
                     $avatar = !empty($avatar) ? $avatar : '';
                     $firstname = !empty($oUserDetails[0]->firstname) ? $oUserDetails[0]->firstname : '';
                     $lastname = !empty($oUserDetails[0]->lastname) ? $oUserDetails[0]->lastname : '';
-                    $avatarHtml = showUserAvtar($avatar, $firstname, $lastname, 28, 28, 11);
+                    $avatarHtml = showUserAvtar($avatar, $firstname, $lastname, 36, 36, 13);
 
                     $get_value->user_to = (string)$uTo;
                 }
                 $get_value->created = timeAgo($get_value->created);
                 $get_value->avatarImage = $avatarHtml;
+                //$get_value->avatarImage = $avatar;
+                $get_value->blankAvatar = $avatarHtml;
+                $get_value->hasAvatar = $avatar ? true : false;
+
+
 
             }
         }

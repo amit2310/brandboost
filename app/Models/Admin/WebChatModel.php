@@ -29,11 +29,14 @@ class WebChatModel extends Model {
      * @param type $teamId
      * @return type object
      */
-    public function getTeamAssignData($teamId) {
+    public function getTeamAssignData($teamId, $isOrderBy=false) {
 
-        $oResult = DB::table('tbl_chat_supportuser')
-                ->where('assign_team_member', $teamId)
-                ->get();
+        $query = DB::table('tbl_chat_supportuser')
+                ->where('assign_team_member', $teamId);
+        if($isOrderBy == true){
+            $query->orderBy('id', 'desc');
+        }
+        $oResult = $query->get();
         return $oResult;
     }
 
@@ -60,7 +63,7 @@ class WebChatModel extends Model {
         $oData = DB::table('tbl_chat_message')
         ->where('token', $token)
         ->where('status', 1)
-        ->orderBy('id', 'desc')
+        ->orderBy('id', 'asc')
         ->get();
         return $oData;
     }

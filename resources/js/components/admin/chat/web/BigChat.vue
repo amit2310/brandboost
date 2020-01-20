@@ -16,9 +16,24 @@
             <div class="clearfix"></div>
         </div>
         <div class="content-area chat_messanger_area">
-            <web-side-bar :allChat="allChat"></web-side-bar>
-            <web-profile-bar></web-profile-bar>
-            <chat-area></chat-area>
+            <web-side-bar
+                :allChat="allChat"
+                :unassignedChat="unassignedChat"
+                :assignedChat="assignedChat"
+                @loadWebChat="loadWebChat"
+            ></web-side-bar>
+            <web-profile-bar
+                :currentTokenId="currentTokenId"
+                :loggedId="loggedId"
+                :participantId="participantId"
+                :participantInfo="participantInfo"
+            ></web-profile-bar>
+            <chat-area
+                :currentTokenId="currentTokenId"
+                :loggedId="loggedId"
+                :participantId="participantId"
+                :participantInfo="participantInfo"
+            ></chat-area>
         </div>
         <SaveReplyPopup></SaveReplyPopup>
     </div>
@@ -45,6 +60,9 @@
                 allChat: '',
                 loggedId: '',
                 selectedCampaigns: '',
+                currentTokenId:'',
+                participantId: '',
+                participantInfo: '',
                 user: {},
                 breadcrumb: ''
             }
@@ -72,9 +90,25 @@
 
         },
         methods: {
+            loadWebChat: function(roomId, userid){
+                this.currentTokenId = roomId;
+                this.participantId = userid;
+                //Get Paticipant's details
+                this.loadParticipantInfo(roomId,userid);
+
+            },
+            loadParticipantInfo: function(roomId, userid){
+                axios.post('/admin/webchat/getUserinfo', {
+                    room: roomId,
+                    chatUserid: userid,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.participantInfo = response.data;
+                    });
+            },
             syncConfigure: function(param1){
                 this.brandData = param1;
-
             },
             setSource: function(source){
                 this.loading = true;
