@@ -1,9 +1,10 @@
 <template>
     <div>
+        <loading :isLoading="loading"></loading>
         <div class="p25 pl30 pr30 bbot">
             <div class="row">
                 <div class="col-md-3">
-                    <h3 class="fsize18 dark_800 fw500"><img src="assets/images/atrate_28.svg" /> &nbsp; Norma Alexanderrr</h3>
+                    <h3 class="fsize18 dark_800 fw500"><img src="assets/images/atrate_28.svg" /> &nbsp; {{participantInfo.name}}</h3>
                 </div>
                 <div class="col-md-9">
 
@@ -38,56 +39,13 @@
                     <div class="mainchatsvroll2">
                         <ul class="media-list chat-list">
 
-                            <li class="media">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
-                                </div>
-                            </li>
-                            <li class="media reversed">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/01.png" class="img-circle img-xxs" alt="">
-                                    <!--<a href="#" class="icons fl_letters m0 s24">as</a>--></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
-                                </div>
-                            </li>
-                            <li class="media reversed">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/01.png" class="img-circle img-xxs" alt="">
-                                    <!--<a href="#" class="icons fl_letters m0 s24">as</a>--></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
-                                </div>
-                            </li>
-                            <li class="media reversed">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/01.png" class="img-circle img-xxs" alt="">
-                                    <!--<a href="#" class="icons fl_letters m0 s24">as</a>--></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                    <div class="media-content">Hey y’all! <br><br>
-                                        We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                    <div class="media-content">thanks you for work list</div>
+                            <li class="media" v-for="row in chatData" :class="{reversed: row.user_form == loggedId}">
+                                <div class="media-body">
+                                    <span class="media-annotation user_icon" v-html="row.avatarImage">
+                                        <span class="circle_green_status status-mark"></span>
+                                        <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${row.avatarImage}`" class="img-circle img-xxs" alt="">
+                                    </span>
+                                    <div class="media-content" v-html="row.message"></div>
                                 </div>
                             </li>
                         </ul>
@@ -241,5 +199,47 @@ Start with ‘/’ to select a  Saved Message
     </div>
 </template>
 <script>
-    export default {};
+    export default {
+        props: ['currentTokenId', 'loggedId', 'participantId', 'participantInfo'],
+        data(){
+            return {
+                refreshMessage: 1,
+                successMsg: '',
+                errorMsg: '',
+                loading: false,
+                chatData: '',
+
+            }
+        },
+        watch:{
+            currentTokenId: function () {
+                this.loading = true;
+                axios.post('/webchat/getMessages', {
+                    room: this.currentTokenId,
+                    offset: '0',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status =='ok'){
+                            this.chatData = response.data.res;
+                        }
+                        this.loading = false;
+                        let el = this;
+                        setTimeout(function () {
+                            el.scrollToEnd();
+                        },500);
+                    });
+
+            },
+            participantInfo: function(){
+
+            },
+        },
+        methods:{
+            scrollToEnd: function() {
+                let container = this.$el.querySelector(".mainchatsvroll2");
+                container.scrollTop = container.scrollHeight;
+            },
+        }
+    };
 </script>
