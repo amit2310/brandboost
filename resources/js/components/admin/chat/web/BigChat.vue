@@ -20,6 +20,7 @@
                 :allChat="allChat"
                 :unassignedChat="unassignedChat"
                 :assignedChat="assignedChat"
+                :favoriteChat="favoriteChat"
                 @loadWebChat="loadWebChat"
             ></web-side-bar>
             <web-profile-bar

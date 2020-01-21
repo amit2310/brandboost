@@ -81,6 +81,42 @@ class WebChat extends Controller {
         //return view('admin.web_chat.index', $data);
         return $aData;
     }
+
+    /**
+     * Used to get Sorted Web Chat Contact list
+     * @param Request $request
+     * @return array
+     */
+    public function sortWebChatContactList(Request $request){
+        $oUser = getLoggedUser();
+        $sortType = $request->sort;
+        if($sortType == 'new'){
+            $sortVal = 'desc';
+        }else if($sortType == 'old'){
+            $sortVal = 'asc';
+        }else if($sortType == 'wait'){
+            $sortVal = 'desc';
+        }
+        $mWebChat = new WebChatModel();
+        $isLoggedInTeam = Session::get("team_user_id");
+        if(!empty($isLoggedInTeam)){
+            $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $oUser->id);
+            $teamMemberId = $aTeamInfo->id;
+        }
+        //Assigned Chat
+        $id = (!empty($teamMemberId)) ? $teamMemberId : $oUser->id;
+        $allChat = $mWebChat->sortWebChat($id, 'last_chat_time', $sortVal);
+        if($allChat->isNotEmpty()){
+            foreach($allChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+            }
+        }
+        $aData = [
+            'allChat' => $allChat
+        ];
+        return $aData;
+    }
     /**
      * This function is used to get userinformation based on the client/user id
      * @return type
@@ -99,6 +135,8 @@ class WebChat extends Controller {
             $aData = [
                 'email' => $email,
                 'name' => ucwords($user_name_ex[0] . ' ' . $user_name_ex[1]),
+                'firstname' => ucwords($user_name_ex[0]),
+                'lastname' => ucwords($user_name_ex[1]),
                 'phone' => $userDetail[0]->phone != '' ? $userDetail[0]->phone : 'Add Phone',
                 'avatar' => $avatar,
                 'avatar_url' => '',

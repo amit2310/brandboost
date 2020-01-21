@@ -408,6 +408,21 @@ FROM
         return $oFavorite;
     }
 
+    /**
+     * This method used to sort Web Chat Contact list
+     * @param $userID
+     * @param string $sortField
+     * @param string $sortValue
+     * @return mixed
+     */
+    public function sortWebChat($userID, $sortField='last_chat_time', $sortValue='desc') {
+        $oData = DB::table('tbl_chat_supportuser')
+            ->where('supp_user', $userID)
+            ->orderBy($sortField, $sortValue)
+            ->get();
+        return $oData;
+    }
+
 
 
 
