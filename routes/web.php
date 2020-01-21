@@ -73,6 +73,7 @@ Route::post('webchat/readMessages', 'Admin\WebChat@readMessages');
 
 
 
+
 // Company
 Route::post('company/saveHelpful', 'Company@saveHelpful');
 Route::post('company/saveComment', 'Company@saveComment');
@@ -372,6 +373,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/webchat/showYoutabAjaxSmallbox', 'Admin\WebChat@showYoutabAjaxSmallbox');
     Route::post('admin/webchat/setChatboxstatus', 'Admin\WebChat@setChatboxstatus');
     Route::post('admin/webchat/removeBoxStatus', 'Admin\WebChat@removeBoxStatus');
+    Route::post('admin/webchat/sortWebChatContactList', 'Admin\WebChat@sortWebChatContactList');
 
 
 //Setting
