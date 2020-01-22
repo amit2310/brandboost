@@ -41,6 +41,24 @@ class Review extends Controller {
                 //Get Comments Block
                 $oComments = $mReviews->getComments($reviewID, $aSettings);
 
+                $oReview->reviewCommentsData = $mReviews->getReviewAllParentsComments($reviewID, $start = 0);
+                if(!empty($oReview->reviewCommentsData)) {
+                    foreach ($oReview->reviewCommentsData as $commentData) {
+                        $oReview->likeData = $mReviews->getCommentLSByCommentID($commentData->id, 1);
+                        $oReview->disLikeData = $mReviews->getCommentLSByCommentID($commentData->id, 0);
+                        $oReview->childComments = $mReviews->getReviewAllChildComments($aReview['id'], $commentData->id);
+
+                        if (!empty($oReview->childComments)) {
+                            foreach ($oReview->childComments as $childComment) {
+                                $oReview->avtarImageChild = $childComment->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $childComment->avatar;
+
+                                $oReview->likeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 1);
+                                $oReview->disLikeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 0);
+                            }
+                        }
+                    }
+                }
+
                 $aProductData = BrandboostModel::getProductDataById($oReview->product_id);
                 $aCommentsData = array();
                 if (!empty($oComments)) {
@@ -53,8 +71,9 @@ class Review extends Controller {
                 $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
                 $aReviewData[$reviewID]['product_data'] = $aProductData;
                 unset($aCommentsData);
+
+                $oReview->aReviewData = $aReviewData;
             }
-            $oReview->aReviewData = $aReviewData;
         }
 
         $aBreadcrumb = array(
@@ -65,7 +84,7 @@ class Review extends Controller {
         $aData = array(
             'title' => 'My Reviews',
             'breadcrumb' => $aBreadcrumb,
-            'myReview' => $oReview
+            'myReview' => $oReviews
         );
         //return view('user.review', $aData);
         echo json_encode($aData);
