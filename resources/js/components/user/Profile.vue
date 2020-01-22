@@ -17,9 +17,9 @@
                                         :avatar="aUInfo.avatar"
                                         :firstname="aUInfo.firstname"
                                         :lastname="aUInfo.lastname"
-                                        :width="48"
-                                        :height="48"
-                                        :fontsize="11"
+                                        :width="80"
+                                        :height="40"
+                                        :fontsize="12"
                                     ></user-avatar>
                                 </a>
                             </div>
