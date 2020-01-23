@@ -374,6 +374,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/webchat/setChatboxstatus', 'Admin\WebChat@setChatboxstatus');
     Route::post('admin/webchat/removeBoxStatus', 'Admin\WebChat@removeBoxStatus');
     Route::post('admin/webchat/sortWebChatContactList', 'Admin\WebChat@sortWebChatContactList');
+    Route::post('admin/webchat/listShortcuts', 'Admin\WebChat@listShortcuts');
 
 
 //Setting
