@@ -18,7 +18,7 @@ BB = function (t) {
         l.href = e;
         a.appendChild(l);
     }
-	
+
     function h(e) {
 		hostURL = this.userSettings.host;
 		setTimeout(function(){
@@ -49,7 +49,7 @@ BB = function (t) {
         }
 
     }
-	
+
 	 t.prototype.njs = function () {
         var e = this.userSettings.host + "/node_modules/socket.io-client/dist/socket.io.js";
         var a = document.getElementsByTagName("head")[0];
@@ -62,7 +62,7 @@ BB = function (t) {
     t.prototype.hola = function () {
         alert('called, hola amigo');
     }
-	
+
 	t.prototype.getTime = function () {
         var date = new Date();
 		var hours = date.getHours();
@@ -74,7 +74,7 @@ BB = function (t) {
 		var strTime = hours + ':' + minutes + ' ' + ampm;
 		return strTime;
     }
-	
+
     t.prototype.init_widget = function () {
         if (this.userSettings.widget === 'chat') {
             var t = document.createElement("div");
@@ -97,75 +97,75 @@ BB = function (t) {
         };
         t.ajax(bbsrc, i, 'POST', a);
     }
-	
-	t.prototype.hide_bb_chat_box = function (e) {	
+
+	t.prototype.hide_bb_chat_box = function (e) {
 		var x = document.getElementById('bbchatpopup');
 		if (x.style.display === "none") {
-			
+
 			t.show(x);
-			
+
 			showbbchatpopup = 1;
-			
+
 			var bc = document.getElementById('bb_chat_unread_counter');
 			t.hide(bc);
-			
+
 			unreadmsgCounter = 0;
 			document.getElementById('bb_chat_unread_counter').innerHTML = unreadmsgCounter;
-			
+
 			var b = document.getElementById('bbopenbtn');
 			t.hide(b);
-			
+
 			var c = document.getElementById('bbclosebtn');
 			t.show(c);
-			
+
 		} else {
-			
+
 			t.hide(x);
-			
+
 			showbbchatpopup = '';
-			
+
 			var b = document.getElementById('bbopenbtn');
 			t.show(b);
-			
+
 			var c = document.getElementById('bbclosebtn');
 			t.hide(c);
 		}
 	}
-	
+
 	t.prototype.show_bb_chat = function (e) {
 		var msgBG;
 		var x = document.getElementById('bbchatpopup');
 		if (x.style.display === "none") {
-			
+
 			t.show(x);
-			
+
 			showbbchatpopup = 1;
-			
+
 			var bc = document.getElementById('bb_chat_unread_counter');
 			t.hide(bc);
-			
+
 			unreadmsgCounter = 0;
 			document.getElementById('bb_chat_unread_counter').innerHTML = unreadmsgCounter;
-			
+
 			var b = document.getElementById('bbopenbtn');
 			t.hide(b);
-			
+
 			var c = document.getElementById('bbclosebtn');
 			t.show(c);
-			
+
 		} else {
-			
+
 			t.hide(x);
-			
+
 			showbbchatpopup = '';
-			
+
 			var b = document.getElementById('bbopenbtn');
 			t.show(b);
-			
+
 			var c = document.getElementById('bbclosebtn');
 			t.hide(c);
 		}
-		
+
 		if(bbvisitortoken !== null){
 			console.log(bbvisitortoken, 'test 1');
 			bb_chat_socket.emit('subscribe', bbvisitortoken);
@@ -175,7 +175,7 @@ BB = function (t) {
 			//t.show(ch);
 			t.show(cb);
 			t.hide(ub);
-			
+
 			var bbsrc = this.userSettings.host + "/webchat/getUserMessages";
 			var a = 'room=' + bbvisitortoken + '&offset=0';
 			//i = call back function
@@ -186,7 +186,7 @@ BB = function (t) {
 
 					//console.log(rsp);
 					showbbdata = 1;
-					
+
 					currentUser = rsp.current_user_id;
                     currentSupportName = currentUsername = rsp.currentUsername;
 
@@ -198,7 +198,7 @@ BB = function (t) {
 						var newUserFrom = row.user_form;
 						var newMessage = row.message;
 						var created = row.created;
-						
+
 
 						var messageSmilies = newMessage.match(smileyReg) || [];
 						for(var i=0; i<messageSmilies.length; i++) {
@@ -206,7 +206,7 @@ BB = function (t) {
 							messageSmileyLower = messageSmiley.toLowerCase();
 							if(smiliesMap[messageSmileyLower]) {
 								msgBG = '';
-								newMessage = newMessage.replace(messageSmiley, "<img src='http://brandboostx.com/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+								newMessage = newMessage.replace(messageSmiley, "<img src='http://vue.brandboostx.com/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
 							}
 						}
 
@@ -217,7 +217,7 @@ BB = function (t) {
 							msgBG = '';
 							if(fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
 								newMessage = "<a href='javascript:void(0)' class='bb_image_preview_btn' img-data='"+newMessage+"'><img src='"+newMessage+"' style='width:150px; height:auto;' /></a>";
-																
+
 							}else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
 								newMessage = "<a href='"+newMessage+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
 							}
@@ -225,7 +225,7 @@ BB = function (t) {
 								newMessage = "<video class='media_file' controls><source src='"+newMessage+"' type='video/"+fileext[0]+"'></video>";
 							}
 						}
-						
+
 						var imgBgColor = '';
 						var imgClass = '';
 						if(msgBG != 1){
@@ -239,19 +239,19 @@ BB = function (t) {
 						else {
 							document.getElementsByClassName('bb_msg_push')[0].innerHTML += '<div class="bb_msg"><div class="msg-right '+imgClass+' '+bbcp_bg_color+'" '+imgBgColor+'><div class="msg_time">'+created+'</div> ' + newMessage + '</div></div>';
 						}
-						
+
 						var msgHeight = document.getElementById("bb_msg_body").scrollHeight;
 						document.getElementById("bb_msg_body").scrollTop = msgHeight;
 					}
 				}
 			};
-			
+
 			if(showbbdata == ''){
 				t.ajax(bbsrc, showchatdata, 'POST', a);
 			}
 		}
 	}
-		
+
 	t.prototype.show_bb_smiley = function (e) {
 		var x = document.getElementById('bb_smiley_box');
 		if (x.style.display === "none") {
@@ -260,7 +260,7 @@ BB = function (t) {
 			t.hide(x);
 		}
 	}
-	
+
 	t.prototype.bb_show_image_modal_popup = function (e, imageURL) {
 		var x = document.getElementById('bb_chat_modal');
 		document.getElementById('bb_preview_image').innerHTML = '<img src="'+imageURL+'" style="width:100%; height:auto;">';
@@ -270,36 +270,36 @@ BB = function (t) {
 			t.hide(x);
 		}
 	}
-	
+
 	t.prototype.bb_close_modal_popup = function (e) {
 		var x = document.getElementById('bb_chat_modal');
 		t.hide(x);
 	}
-	
+
 	t.prototype.bb_get_smiley_value = function (e) {
 		var smileyVal = e.getAttribute('smiley-data');
 		document.getElementById('bb_chat_msg_input').value = smileyVal;
 		document.getElementById('bb_smiley_box').style.display = "none";
 		document.getElementById('bb_chat_msg_input').focus();
 	}
-	
+
 	t.prototype.get_bb_attechment_value = function (e) {
 		document.getElementById("bb_attechment_file").click();
 	}
-	
-	t.prototype.get_bb_attechment_file = function (e) {	
+
+	t.prototype.get_bb_attechment_file = function (e) {
 		document.getElementById("bb_chat_loading").style.display = 'block';
 		const files = document.querySelector('[id=bb_attechment_file]').files;
 		const bb_client_id = document.getElementById('bb_client_id').value;
 		//console.log(files);
 		const formData = new FormData();
-		
+
 		for (let i = 0; i < files.length; i++) {
 			let file = files[i];
 			formData.append('files[]', file);
 		}
-		
-		fetch(this.userSettings.host + '/webchat/dropzone/upload_s3_attachment/'+ bb_client_id +'/webchat', { 
+
+		fetch(this.userSettings.host + '/webchat/dropzone/upload_s3_attachment/'+ bb_client_id +'/webchat', {
 			method: 'POST',
 			body: formData // This is your file object
 		}).then(
@@ -311,11 +311,11 @@ BB = function (t) {
 				var fileext = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
 				var msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+filename;
 				var newMessage = '';
-				
+
 				if(typeof fileext != 'undefined'){
 					if(fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
 						newMessage = "<a href='javascript:void(0)' class='bb_image_preview_btn' img-data='"+msg+"'><img src='"+msg+"' style='width:150px; height:auto;' /></a>";
-						
+
 						setTimeout(function(){
 							if(document.getElementsByClassName('bb_image_preview_btn').length > 0){
 								for(var imageCounter = 0; imageCounter < document.getElementsByClassName('bb_image_preview_btn').length; imageCounter++){
@@ -326,16 +326,16 @@ BB = function (t) {
 								}
 							}
 						}, 1000);
-						
+
 					}else if(fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
 						newMessage = "<a href='"+msg+"' target='_blank'>Download '"+fileext[0].toUpperCase()+"' File</a>";
 					}else if(fileext[0] == 'mp4' || fileext[0] == 'webm' || fileext[0] == 'ogg') {
 						newMessage = "<video class='media_file' controls><source src='"+msg+"' type='video/"+fileext[0]+"'></video>";
 					}
-	
+
 				}
 				//console.log(localStorage.getItem("bb_user_chat_token"), 'bbvisitortoken');
-				
+
 				//var newBBvisitortoken = (bbvisitortoken == '' || bbvisitortoken == null) ? localStorage.getItem("bb_user_chat_token") : bbvisitortoken;
 				var newBBvisitortoken = localStorage.getItem("bb_user_chat_token");
 				//console.log(newBBvisitortoken, 'newBBvisitortoken');
@@ -368,13 +368,13 @@ BB = function (t) {
 
 		bb_chat_socket.emit('wait_message', {room:newToken,chatTo:bbClientId, currentUser:currentUser, wait:wait});
 	}
-	
+
 	t.prototype.send_bb_msg = function (e) {
-		
+
 		var msg = e.value;
-		
+
 		/*if(bbvisitortoken === null){
-			
+
 		}else{
 			newToken = bbvisitortoken;
 		}*/
@@ -386,7 +386,7 @@ BB = function (t) {
 			var sToken = Number(currentUser) - Number(bbClientId);
 		}
 		var newToken = aToken+'n'+sToken;
-		
+
 		var msg = msg.trim();
 		if(msg.length > 0 ){
 			setTimeout(() => {
@@ -397,7 +397,7 @@ BB = function (t) {
 				//i = call back function
 				//a = POST data
 				var i = function (o) {
-					
+
 				};
 				t.ajax(bbsrc, i, 'POST', a);
 			}, 500);
@@ -405,11 +405,11 @@ BB = function (t) {
 		}
 		return false;
 	}
-	
+
 	t.prototype.start_new_bb_widget_chat = function (e) {
-		
+
 		startingChatMsg = e.value;
-		
+
 		startingChatMsg = startingChatMsg.trim();
 
 		if(startingChatMsg.length > 0 ){
@@ -432,7 +432,7 @@ BB = function (t) {
 	}
 
 	t.prototype.bb_chat_end = function (e) {
-	
+
 		bbvisitortoken = localStorage.getItem("bb_user_chat_token");
 		bb_chat_socket.emit('leaveroom', bbvisitortoken);
 		//localStorage.removeItem("bb_user_chat_token");
@@ -447,7 +447,7 @@ BB = function (t) {
 		chatReplyByAdmin = '';
 
 	}
-	
+
 	t.prototype.bb_submit_user_details = function (e) {
 		var username = document.getElementById('bb_chat_username').value;
 		var email = document.getElementById('bb_chat_email').value;
@@ -473,16 +473,16 @@ BB = function (t) {
 			document.getElementById('bb_chat_username').style.border = 'none';
 			document.getElementById('bb_chat_email').style.border = 'none';
 			document.getElementById('bb_chat_message').style.border = 'none';
-			
+
 			var cb = document.getElementById('bb_msg_wrap');
 			var ub = document.getElementById('bb_msg_wrap2');
 			t.show(cb);
 			t.hide(ub);
-			
+
 			greattingMessage = document.getElementById('greattingMessageArray').innerHTML;
 			greattingMsgTime = document.getElementById('greattingMsgTimeArray').innerHTML;
 			bbClientAvtarImg = document.getElementById('bbClientAvtarImg').innerHTML;
-			
+
 			var greattingMessageArray = greattingMessage.split('||');
 			var greattingMsgTimeArray = greattingMsgTime.split('||');
 			var q, greattingTime='', greatingMsgCounter=0;
@@ -494,22 +494,22 @@ BB = function (t) {
 					if(chatReplyByAdmin == ''){
 						//console.log(bbClientAvtarImg, 'bbClientAvtarImg');
 						bb_chat_socket.emit('chat_message', {room:newToken, avatar:bbClientAvtarImg, msg:greattingMessageArray[greatingMsgCounter],currentUserName:currentSupportName, chatTo:currentUser, currentUser:bbClientId, greatingMsg:'default' });
-						
+
 						var bbsrc = hostURL + "/webchat/addChatMsg";
 						var a = 'room=' + newToken + '&msg=' + greattingMessageArray[greatingMsgCounter] + '&chatTo=' + currentUser + '&currentUser=' + bbClientId;
 						//e.value = '';
 						var i = function (o) {
-							
+
 						};
 						t.ajax(bbsrc, i, 'POST', a);
-						
+
 						greatingMsgCounter++;
 					}
 				}, sentMsgTime);
 			}
-			
+
 			checknewuser = 1;
-			
+
 			//var support_name = 'New User';
 			var currentDay = new Date();
 			var currentDate = currentDay.getFullYear()+'-'+((currentDay.getMonth() + 1) < 10 ? '0' : '') + (currentDay.getMonth() + 1)+'-'+(currentDay.getDate() < 10 ? '0' : '') + currentDay.getDate();
@@ -539,7 +539,7 @@ BB = function (t) {
 
 			//console.log(newToken, 'test 2');
 			bb_chat_socket.emit('subscribe', newToken);
-			
+
 			var bbsrc = this.userSettings.host + "/webchat/supportUser";
 			var a = 'room=' + newToken + '&userID=' + bbClientId + '&currentUser=' + currentUser + '&support_name=' + username + '&email=' + email;
 			//i = call back function
@@ -549,11 +549,11 @@ BB = function (t) {
 				//ch.call(e, o), e.trigger("ready"), cf.call(e);
 			};
 			t.ajax(bbsrc, i, 'POST', a);
-			
+
 			//var msg = message;
-			
-			
-			
+
+
+
 			if(msg.length > 0 ){
 				bb_chat_socket.emit('chat_message', {room:newToken, msg:msg, chatTo:bbClientId, currentUser:currentUser,currentUserName:currentSupportName });
 				var bbsrc = this.userSettings.host + "/webchat/addChatMsg";
@@ -562,30 +562,30 @@ BB = function (t) {
 				//i = call back function
 				//a = POST data
 				var i = function (o) {
-					
+
 				};
 				t.ajax(bbsrc, i, 'POST', a);
 			}
 			return false;
 		}
 	}
-	
+
 	t.prototype.bb_submit_username = function (e) {
-        		
+
 		//var ch = document.getElementById('bb_msg_head');
 		var cb = document.getElementById('bb_msg_wrap');
 		var ub = document.getElementById('bb_msg_wrap1');
 		//t.show(ch);
 		t.show(cb);
 		t.hide(ub);
-		
+
 		var support_name = document.getElementById('bb_chat_username').value;
         var email = document.getElementById('bb_chat_email').value;
 		var timeStamp = Math.floor(Date.now() / 1000);
 		var randumNum = Math.floor((Math.random() * 1000000) + 1);
 		var support_id = timeStamp+'0'+randumNum;
 		currentUser = support_id;
-		
+
 		bb_chat_socket.emit('support_user', {name: support_name, id: support_id, suppUserID:bbClientId,email:email});
 
 
@@ -603,7 +603,7 @@ BB = function (t) {
 
 		//console.log(newToken, 'test 3');
 		bb_chat_socket.emit('subscribe', newToken);
-		
+
 		var bbsrc = this.userSettings.host + "/webchat/supportUser";
 		var a = 'room=' + newToken + '&userID=' + bbClientId + '&currentUser=' + currentUser + '&support_name=' + support_name;
         //i = call back function
@@ -614,7 +614,7 @@ BB = function (t) {
         };
         t.ajax(bbsrc, i, 'POST', a);
 	}
-	
+
     function f() {
         var e = this;
 		if (this.userSettings.widget == 'chat') {
@@ -622,14 +622,14 @@ BB = function (t) {
 			//e.bb_chat_event('click', 'bb_un_submit_btn', 'bb_submit_chat_username');
 			//e.bb_chat_event('keypress', 'bb_chat_username', 'bb_enter_chat_username');
 			e.bb_chat_event('click', 'bb_smiley_btn', 'bb_smiley_popup_box');
-			
+
 			//e.bb_chat_event('keypress', 'bb_chat_msg_input2', 'bb_chat_popup_msg_input2');
 			//e.bb_chat_event('keypress', 'bb_chat_msg_input3', 'bb_chat_popup_msg_input3');
-			
+
 			e.bb_chat_event('keypress', 'bb_chat_msg_input2', 'start_new_bb_chat');
 			e.bb_chat_event('keypress', 'bb_chat_msg_input3', 'start_new_bb_chat');
 			e.bb_chat_event('click', 'bb_un_submit_btn', 'bb_submit_user_details');
-			
+
 			e.bb_chat_event('keypress', 'bb_chat_msg_input', 'bb_chat_popup_msg_input');
 			e.bb_chat_event('click', 'bb_smiley_icon_value', 'bb_get_smiley_value');
 			e.bb_chat_event('click', 'bb_attechment_btn', 'bb_get_attechment_value');
@@ -653,7 +653,7 @@ BB = function (t) {
 		bindPopupThisVal = this;
         var col = document.getElementsByClassName(c);
         var i = document.getElementsByClassName(c)[0];
-		
+
         if (ev == 'click') {
             if (an == 'bb_display_chat_popup') {
                 i.addEventListener(ev, function () {
@@ -700,118 +700,118 @@ BB = function (t) {
                 i.addEventListener(ev, function (event) {
 					e.bb_submit_user_details(this);
                 });
-            } 
+            }
 			else if (an == 'bb_get_smiley_value') {
                 document.getElementById('bb_smiley_icon_value1').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value2').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value3').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value4').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value5').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value6').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value7').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value8').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value9').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value10').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value11').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value12').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value13').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value14').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value15').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value16').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value17').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value18').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value19').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value20').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value21').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value22').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value23').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value24').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value25').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value26').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
-				
+
 				document.getElementById('bb_smiley_icon_value27').addEventListener(ev, function () {
                     e.bb_get_smiley_value(this);
                 });
             }
         }else if (ev == 'keypress') {
-			if (an == 'bb_chat_popup_msg_input') {	
+			if (an == 'bb_chat_popup_msg_input') {
 
 				i.addEventListener(ev, function (event) {
 
@@ -1044,17 +1044,17 @@ BB = function (t) {
         this.element.style[this.displayDirection] = -(this.position * this.percentage + this.offset) + "%"
 
     }
-	
+
     function inisl(t) {
 
         this.position = 0;
 
     }
-	
+
 	function isAnchor(str){
 		return /^\<a.*\>.*\<\/a\>/i.test(str);
 	}
-	
+
     var a = 3e3,
             l = "left",
             c = "y-slide-left-animations",
@@ -1109,7 +1109,7 @@ var bbwidget = document.getElementById("bbscriptloader").getAttribute("data-widg
 var bbvisitortoken = localStorage.getItem("bb_user_chat_token");
 //var bbchatgeattingdata = localStorage.getItem("bb_chat_geatting_data");
 var bb_chat_socket;
-bb_chat_socket = io('http://brandboostx.com:3000');
+bb_chat_socket = io('http://vue.brandboostx.com:3000');
 var currentUser = '';
 var currentUserName ='';
 var unreadmsgCounter = 0;
@@ -1132,10 +1132,10 @@ var bbContactConfig = '';
 var currentSupportName = '';
 var bbClientAvtarImg = '';
 
-function bbpwValidateEmail(email) { 
+function bbpwValidateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
-} 
+}
 
 setTimeout(function(){
 	if(bbvisitortoken !== null){
@@ -1143,7 +1143,7 @@ setTimeout(function(){
 		bb_chat_socket.emit('subscribe', bbvisitortoken);
 	}
 }, 500);
-	
+
 var smiliesMap = {
             ":)" : "1",
             ":(" : "2",
@@ -1173,17 +1173,17 @@ var smiliesMap = {
             ":t": "104",
             ":q": "112"
         }, smileyReg = /[:;#@]{1,2}[\)\/\(\&\$\>\|xXbBcCdDpPoOhHsStTqQwW*?]{1,2}/g;
-  
-if (bbkey != 'undefined' && bbwidget != 'undefined') { 
+
+if (bbkey != 'undefined' && bbwidget != 'undefined') {
 
     var oBB = new BB(bbkey, {
-        "host": "http://brandboostx.com",
+        "host": "http://vue.brandboostx.com",
         "widget": bbwidget
     });
 
     BB.ready(function () {
         oBB.init_widget();
-		
+
         if (bbwidget == 'chat') {
             oBB.display_widget();
         }
@@ -1200,7 +1200,7 @@ bb_chat_socket.on('wait_widget_message', function(data) {
 	var typing_messsage = document.getElementsByClassName('typing_messsage');
 	if(typing_messsage.length > 0) {
 
- 	} 
+ 	}
  	else {
 
  		setTimeout(function() {
@@ -1209,7 +1209,7 @@ bb_chat_socket.on('wait_widget_message', function(data) {
 		}, data.wait);
 
  		document.getElementsByClassName('bb_msg_push')[0].innerHTML += `<div class="bb_msg loading_message_li"><div class="msg-left "><img src="assets/images/messageloading.gif" style="height: 25px;"></div></div>`;
-	 	
+
 		var msgHeight = document.getElementById("bb_msg_body").scrollHeight;
 		document.getElementById("bb_msg_body").scrollTop = msgHeight;
  	}
@@ -1234,7 +1234,7 @@ bb_chat_socket.on('chat message', function(data){
 		document.getElementById('bb_msg_wrap1').style.display='none';
 	}
 
-	/*------ remove the loading message -----*/ 
+	/*------ remove the loading message -----*/
 
 	//console.log(bbClientId);
 	//console.log(data);
@@ -1246,11 +1246,11 @@ bb_chat_socket.on('chat message', function(data){
 			document.getElementsByClassName('bb_msg_push')[0].classList.remove('typing_messsage');
 		}
 	}
-	
-	
+
+
 	//$('#msg_box_show_'+data.currentUser).removeClass('typing_messsage');
 	/*---- end remove the loading message ---*/
-	
+
 	var imgBgColor = '';
 	var messageSmilies = msg.match(smileyReg) || [];
 
@@ -1259,32 +1259,32 @@ bb_chat_socket.on('chat message', function(data){
 		messageSmileyLower = messageSmiley.toLowerCase();
 		if(smiliesMap[messageSmileyLower]) {
 			//imgBgColor = 'style="background:none; padding: 10px; box-shadow:none;"';
-			msg = msg.replace(messageSmiley, "<img src='http://brandboostx.com/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
+			msg = msg.replace(messageSmiley, "<img src='http://vue.brandboostx.com/assets/img-smile/"+smiliesMap[messageSmileyLower]+".gif' alt='smiley' />");
 		}
 	}
 
 	var strTime = oBB.getTime();
 	var imageClass = '';
 	if ( msg.trim().length != 0 ) {
-		
+
 		if(data.msgType == 'file'){
 			imageClass = 'bb_img_msg_row';
 		}
-		
+
 		if(checknewuser == ''){
-			
+
 			if(currentUser == data.currentUser) {
-				
+
 				document.getElementsByClassName('bb_msg_push')[0].innerHTML += '<div class="bb_msg"><div class="msg-right '+imageClass+' '+bbcp_bg_color+'" '+imgBgColor+'><div class="msg_time">'+strTime+'</div> ' + msg + '</div></div>';
-				
+
 			}else{
 				if(data.greatingMsg != 'default'){
 					chatReplyByAdmin = 1;
 				}
-				
-				document.getElementsByClassName('bb_msg_push')[0].innerHTML += '<div class="bb_msg"><div class="msg-left '+imageClass+'" '+imgBgColor+'><div class="msg_time">'+strTime+'</div> ' + msg + '</div></div>'; 
+
+				document.getElementsByClassName('bb_msg_push')[0].innerHTML += '<div class="bb_msg"><div class="msg-left '+imageClass+'" '+imgBgColor+'><div class="msg_time">'+strTime+'</div> ' + msg + '</div></div>';
 				//sound.play();
-				
+
 				/*newImgCount = document.getElementsByClassName('bb_image_preview_btn').length;
 				//alert(newImgCount);
 				document.getElementsByClassName('bb_image_preview_btn')[newImgCount].addEventListener('click', function () {
@@ -1294,26 +1294,26 @@ bb_chat_socket.on('chat message', function(data){
 			}
 
 			var typing_messsage = document.getElementsByClassName('typing_messsage');
-			if(typing_messsage.length > 0) { 
+			if(typing_messsage.length > 0) {
 
 				document.getElementsByClassName('bb_msg_push')[0].innerHTML += `<div class="bb_msg loading_message_li"><div class="msg-left "><img src="assets/images/messageloading.gif" style="height: 25px;"></div></div>`;
 			}
-			
+
 			var msgHeight = document.getElementById("bb_msg_body").scrollHeight;
 			document.getElementById("bb_msg_body").scrollTop = msgHeight;
 		}else{
-			
-			document.getElementsByClassName('bb_msg_push')[0].innerHTML += '<div class="bb_msg"><div class="msg-right '+bbcp_bg_color+'" '+imgBgColor+'><div class="msg_time">'+strTime+'</div> ' + msg + '</div></div>'; 
-			
+
+			document.getElementsByClassName('bb_msg_push')[0].innerHTML += '<div class="bb_msg"><div class="msg-right '+bbcp_bg_color+'" '+imgBgColor+'><div class="msg_time">'+strTime+'</div> ' + msg + '</div></div>';
+
 			//document.getElementsByClassName('bb_msg_push')[2].innerHTML += '<div class="bb_msg"><div class="msg-right '+bbcp_bg_color+'" '+imgBgColor+'><div class="msg_time">'+strTime+'</div> ' + msg + '</div></div>';
-			
+
 			document.getElementsByClassName('bb_msg_push')[1].innerHTML += '<div class="bb_white_box '+bbcp_bg_color+'" '+imgBgColor+'><p style="color: #fff;">Me</p><p><span style="color: #fff; font-size: 13px;">' + msg + '</span></p></div>';
-			
+
 			var msgHeight = document.getElementById("bb_msg_body2").scrollHeight;
 			document.getElementById("bb_msg_body2").scrollTop = msgHeight;
 		}
 	}
-	
+
 	if(showbbchatpopup == ''){
 		++unreadmsgCounter;
 		//console.log(unreadmsgCounter, 'unreadmsgCounter');

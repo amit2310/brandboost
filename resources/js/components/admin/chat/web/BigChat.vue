@@ -8,8 +8,10 @@
                         <h3 class="htxt_medium_24 dark_700">Messenger</h3>
                     </div>
                     <div class="col-md-9 col-9 text-right">
-                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img
+                            src="assets/images/filter.svg"/></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img
+                            src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -32,11 +34,13 @@
             <chat-area
                 :currentTokenId="currentTokenId"
                 :loggedId="loggedId"
+                :loggedUserInfo="user"
                 :participantId="participantId"
                 :participantInfo="participantInfo"
+                :shortcuts="shortcuts"
             ></chat-area>
         </div>
-        <SaveReplyPopup></SaveReplyPopup>
+        <SaveReplyPopup @updateShortcuts="fetchShortcuts"></SaveReplyPopup>
     </div>
 </template>
 <script>
@@ -44,8 +48,9 @@
     import WebProfileBar from "./partials/WebProfileBar";
     import ChatArea from "./partials/ChatArea";
     import SaveReplyPopup from "./partials/SaveReplyPopup";
+
     export default {
-        components: {WebSideBar,WebProfileBar,ChatArea,SaveReplyPopup},
+        components: {WebSideBar, WebProfileBar, ChatArea, SaveReplyPopup},
         data() {
             return {
                 refreshMessage: 1,
@@ -61,44 +66,56 @@
                 allChat: '',
                 loggedId: '',
                 selectedCampaigns: '',
-                currentTokenId:'',
+                currentTokenId: '',
                 participantId: '',
                 participantInfo: '',
+                shortcuts: '',
                 user: {},
                 breadcrumb: ''
             }
         },
         created() {
-            axios.get('/admin/webchat')
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.allSubscribers = response.data.usersdata;
-                    this.favoriteChat = response.data.favouriteUserData;
-                    this.user = response.data.loginUserData;
-                    this.assignedChat = response.data.assignedChat;
-                    this.assignedChatData = response.data.assignedChatData;
-                    this.unassignedChat = response.data.unassignedChat;
-                    this.unassignedChatData = response.data.unassignedChatData;
-                    this.allChat = response.data.allChat;
-                    this.loggedId = response.data.loggedYou;
-                    this.loading = false;
-                    //loadJQScript(this.user.id);
-
-                });
+            this.getChatContacts();
+            this.fetchShortcuts();
         },
         mounted() {
 
         },
         methods: {
-            loadWebChat: function(roomId, userid){
+            getChatContacts: function () {
+                axios.get('/admin/webchat')
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.allSubscribers = response.data.usersdata;
+                        this.favoriteChat = response.data.favouriteUserData;
+                        this.user = response.data.loginUserData;
+                        this.assignedChat = response.data.assignedChat;
+                        this.assignedChatData = response.data.assignedChatData;
+                        this.unassignedChat = response.data.unassignedChat;
+                        this.unassignedChatData = response.data.unassignedChatData;
+                        this.allChat = response.data.allChat;
+                        this.loggedId = response.data.loggedYou;
+                        this.user = response.data.loginUserData;
+                        this.loading = false;
+                        //loadJQScript(this.user.id);
+
+                    });
+            },
+            fetchShortcuts: function () {
+                axios.post('/admin/webchat/listShortcuts')
+                    .then(response => {
+                        this.shortcuts = response.data;
+                    });
+            },
+            loadWebChat: function (roomId, userid) {
                 this.currentTokenId = roomId;
                 this.participantId = userid;
                 //Get Paticipant's details
-                this.loadParticipantInfo(roomId,userid);
+                this.loadParticipantInfo(roomId, userid);
 
             },
-            loadParticipantInfo: function(roomId, userid){
+            loadParticipantInfo: function (roomId, userid) {
                 axios.post('/admin/webchat/getUserinfo', {
                     room: roomId,
                     chatUserid: userid,
@@ -108,10 +125,10 @@
                         this.participantInfo = response.data;
                     });
             },
-            syncConfigure: function(param1){
+            syncConfigure: function (param1) {
                 this.brandData = param1;
             },
-            setSource: function(source){
+            setSource: function (source) {
                 this.loading = true;
                 this.campaign.source_type = source;
                 axios.post('/admin/modules/referral/updateSource', {
@@ -126,28 +143,28 @@
 
 
             },
-            displayStep: function(step){
+            displayStep: function (step) {
                 let path = '';
-                if(!step){
+                if (!step) {
                     path = '/admin#/referral/';
-                }else{
-                    path = '/admin#/referral/setup/'+this.campaignId+'/'+step;
+                } else {
+                    path = '/admin#/referral/setup/' + this.campaignId + '/' + step;
                 }
 
                 window.location.href = path;
             },
-            updateSettings: function (fieldName, fieldValue,  type) {
+            updateSettings: function (fieldName, fieldValue, type) {
                 this.loading = true;
 
-                if(type =='expiry'){
-                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
+                if (type == 'expiry') {
+                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName == 'txtInteger' || fieldName == 'exp_duration' ? true : false;
                 }
                 axios.post('/admin/brandboost/saveOnsiteSettings', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
                     fieldVal: fieldValue,
                     brandboostId: this.campaignId,
-                    linkExpiryData : this.campaign.link_expire_custom,
+                    linkExpiryData: this.campaign.link_expire_custom,
                     requestType: type
 
                 }).then(response => {
@@ -157,7 +174,7 @@
                 });
 
             },
-            saveDraft: function(){
+            saveDraft: function () {
                 this.loading = true;
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
@@ -167,9 +184,9 @@
                 })
                     .then(response => {
                         this.loading = false;
-                        if(response.data.status == 'success'){
+                        if (response.data.status == 'success') {
                             this.successMsg = 'Campaign saved as a draft successfully';
-                        }else{
+                        } else {
                             this.errorMsg = 'Something went wrong';
                         }
                     });
@@ -177,22 +194,22 @@
         }
 
     };
-    $(document).ready(function(){
-        $(".slidebox").click(function(){
+    $(document).ready(function () {
+        $(".saveReplyBox").click(function () {
             $(".box").animate({
                 width: "toggle"
             });
         });
     });
 
-    $(document).ready(function(){
-        $(".show_emoji").click(function(){
+    $(document).ready(function () {
+        $(".show_emoji").click(function () {
             $(".chat_emoji_box").toggle();
         });
     });
 
-    $(document).ready(function(){
-        $(".show_saved_chat").click(function(){
+    $(document).ready(function () {
+        $(".show_saved_chat").click(function () {
             $(".chat_saved_temp").toggle();
         });
     });

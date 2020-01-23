@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueSocketIO from 'vue-socket.io';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -23,6 +24,12 @@ commonComponents.forEach(component => {
 
 
 window.axios = axios;
+
+Vue.use(new VueSocketIO({
+        debug: true,
+        connection: 'http://vue.brandboostx.com:3000'
+    })
+);
 Vue.use(VueRouter);
 
 Vue.mixin(helpers);

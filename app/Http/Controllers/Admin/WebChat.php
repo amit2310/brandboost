@@ -131,6 +131,7 @@ class WebChat extends Controller {
             $userId_encode = base64_url_encode($chatUserid);
             $user_name_ex = explode(" ", $userDetail[0]->user_name);
             $avatar = showUserAvtar('', $user_name_ex[0], $user_name_ex[1], 84, 84, 24);
+            $avatarSmall = showUserAvtar('', $user_name_ex[0], $user_name_ex[1], 40, 40, 13);
             $email = !empty($userDetail[0]->email) ? $userDetail[0]->email : 'Add Email';
             $aData = [
                 'email' => $email,
@@ -139,6 +140,7 @@ class WebChat extends Controller {
                 'lastname' => ucwords($user_name_ex[1]),
                 'phone' => $userDetail[0]->phone != '' ? $userDetail[0]->phone : 'Add Phone',
                 'avatar' => $avatar,
+                'avatarSmall' =>$avatarSmall,
                 'avatar_url' => '',
                 'chatUserid' => $chatUserid,
                 'city' => '',
@@ -245,10 +247,15 @@ class WebChat extends Controller {
                 $avatar = "";
                 if (strlen($get_value->user_form) > 10) {
                     $avatar = "";
+                    $firstname = 'New';
+                    $lastname = 'User';
 
                     $supportUser = getSupportUser($get_value->user_form);
                     if (!empty($supportUser[0]->user_name)) {
+
                         $supportUserName = explode(" ", $supportUser[0]->user_name);
+                        $firstname = $supportUserName[0];
+                        $lastname = $supportUserName[1];
                         $avatarHtml = showUserAvtar("", $supportUserName[0], $supportUserName[1], 40, 40, 13);
                     } else {
                         $avatarHtml = showUserAvtar("", "A", "", 40, 40, 13);
@@ -270,9 +277,9 @@ class WebChat extends Controller {
                 //$get_value->avatarImage = $avatar;
                 $get_value->blankAvatar = $avatarHtml;
                 $get_value->hasAvatar = $avatar ? true : false;
-
-
-
+                $get_value->avatar = $avatar;
+                $get_value->firstname = $firstname;
+                $get_value->lastname = $lastname;
             }
         }
         //pre($result); die;
@@ -1620,6 +1627,11 @@ class WebChat extends Controller {
         return view('admin.chat_app.chat_overview', array('title' => 'Chat Overview', 'pagename' => $breadcrumb, 'getChatThread' => $getChatThread, 'getWebChatCurrentThread' => $getWebChatCurrentThread, 'supportChat' => $supportChat, 'supportChatGroupByDate' => $supportChatGroupByDate, 'supportChatCurrent' => $supportChatCurrent, 'supportChatGroupByCountry' => $supportChatGroupByCountry, 'supportChatCompleted' => $supportChatCompleted, 'lastfifteendayschat' => $lastfifteendayschat));
     }
 
+    /**
+     * Used to get last message of chat contacts
+     * @param $token
+     * @return array
+     */
     public function getLastChatMessage($token){
         $oMsg = getLastMessage($token);
         $sMessage = $oMsg->message;
@@ -1639,6 +1651,16 @@ class WebChat extends Controller {
             $userMessage = setStringLimit($sMessage, 80);
         }
         return ['lastMessage'=>$userMessage, 'messageTime' => $created];
+    }
+
+    /**
+     * Get list of shortcusts available for the chat
+     * @return \App\Models\Admin\type
+     */
+    public function listShortcuts() {
+        $oUser = getLoggedUser();
+        $shortCuts = SubscriberModel::getchatshortcutlisting($oUser->id);
+        return $shortCuts;
     }
 
 
