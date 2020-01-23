@@ -1732,6 +1732,11 @@ class Brandboost extends Controller
 
         $oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Onsite Widgets' => '#/brandboost/widgets'
+        );
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -1745,14 +1750,17 @@ class Brandboost extends Controller
 
         $aData = array(
             'title' => 'Onsite Widgets',
+            'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
-            'oWidgetsList' => $oWidgetsList,
+            'allData' => $oWidgetsList,
+            'oWidgetsList' => $oWidgetsList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'oStats' => $oStats,
             'user_role' => $user_role
         );
 
-        return view('admin.brandboost.widget_list', $aData);
+        //return view('admin.brandboost.widget_list', $aData);
+        return $aData;
     }
 
 

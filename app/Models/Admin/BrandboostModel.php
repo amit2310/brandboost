@@ -85,7 +85,8 @@ class BrandboostModel extends Model {
                 })
                 ->where('tbl_brandboost_widgets.delete_status', 0)
                 ->orderBy('tbl_brandboost_widgets.id', 'desc')
-                ->get();
+                //->get();
+                ->paginate();
         return $oData;
     }
 
