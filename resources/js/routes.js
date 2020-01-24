@@ -88,6 +88,10 @@ import ChatDashboard from './components/admin/chat/Dashboard';
 import ChatWeb from './components/admin/chat/web/BigChat';
 import ChatSMS from './components/admin/chat/sms/BigChat';
 import ChatShortcut from './components/admin/chat/Shortcuts';
+/*Widget Section*/
+import WidgetOverview from './components/admin/brandboost/WidgetOverview';
+import OnsiteWidgets from './components/admin/brandboost/Widgets';
+
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
 import NpsScore from './components/admin/modules/nps/Score';
@@ -274,6 +278,10 @@ const routes = [
     { path: '/chat/web', component: ChatWeb, meta: { title: 'Web Chat'} },
     { path: '/chat/sms', component: ChatSMS, meta: { title: 'SMS Chat'} },
     { path: '/chat/shortcuts', component: ChatShortcut, meta: { title: 'Chat Shortcuts'} },
+
+    /*Widget Section*/
+    { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
+    { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
 
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
