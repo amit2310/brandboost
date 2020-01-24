@@ -56,7 +56,15 @@
                                     <span class="media-annotation user_icon" v-else>
                                         <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{row.firstname.charAt(0)+ '' +row.lastname.charAt(0)}}</span>
                                     </span>
-                                    <div class="media-content" v-html="row.message"></div>
+                                    <div class="media-content" v-html="parseMessage(row.message)"></div>
+                                </div>
+                            </li>
+                            <li class="media" v-show="isTyping">
+                                <div class="media-body">
+                                    <span class="media-annotation user_icon">
+                                        <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">NU</span>
+                                    </span>
+                                    <div class="media-content"><img src="assets/images/messageloading.gif" style="height: 25px;"></div>
                                 </div>
                             </li>
                         </ul>
@@ -76,7 +84,6 @@
                 </div>
                 <!--======Tab 4=====-->
                 <div id="TextMessageView" class="tab-pane fade">
-
                     <div class="p20">
                         Text Message View
                     </div>
@@ -86,6 +93,7 @@
         <div class="p30 pb0 bbot" style="min-height: 120px;">
      	<textarea
             class="p0 w-100 border-0 fsize16 dark_200"
+            id="webChatTextarea"
             v-model="enteredMessage"
             style="height: 85px; resize: none;"
             @keypress="submitMessage($event)"
@@ -111,7 +119,7 @@
                 <div class="col-md-5">
                     <div class="action_list">
                         <!--*****EMOJI*****-->
-                        <div class="chat_emoji_box">
+                        <div class="chat_emoji_box" v-show="showSmilies" style="display: block;">
                             <div class="form-group">
                                 <input type="text" class="form-control search fsize13 h48"
                                        placeholder="Search template"/>
@@ -119,6 +127,19 @@
                             <div class="emoji_box mb20">
                                 <p class="htxt_medium_15 dark_800 mb-1 fw500">Recent</p>
                                 <ul class="emojisec">
+                                    <li><a href="javascript:void(0);" title=";)" @click="applySmily(';)')"><img
+                                        src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a>
+                                    </li>
+                                    <li><a href="javascript:void(0);" title=":S" @click="applySmily(':S')"><img
+                                        src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a>
+                                    </li>
+                                    <li><a href="javascript:void(0);" title=":(" @click="applySmily(':(')"><img
+                                        src="assets/images/emojie-face-unamused-unhappy-angry-emoji-37702.svg"/></a>
+                                    </li>
+                                    <li><a href="javascript:void(0);" title=":*" @click="applySmily(':*')"><img
+                                        src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
+                                    <li><a href="javascript:void(0);" title="#O" @click="applySmily('#O')"><img
+                                        src="assets/images/emojie-face-sleep-emoji-tired-37692.svg"/></a></li>
                                     <li><a href="javascript:void(0);"><img
                                         src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a>
                                     </li>
@@ -145,90 +166,90 @@
                             <div class="emoji_box mb20">
                                 <p class="htxt_medium_15 dark_800 mb-1 fw500">Smiles & People</p>
                                 <ul class="emojisec">
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=";)" @click="applySmily(';)')"><img
                                         src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":S" @click="applySmily(':S')"><img
                                         src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":(" @click="applySmily(':(')"><img
                                         src="assets/images/emojie-face-unamused-unhappy-angry-emoji-37702.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":*" @click="applySmily(':*')"><img
                                         src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title="#O" @click="applySmily('#O')"><img
                                         src="assets/images/emojie-face-sleep-emoji-tired-37692.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-face-sleep-zzz-tired-bore-emoji-37691.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":D" @click="applySmily(':D')"><img
                                         src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-face-tongue-stuck-out-emoji-37695.svg"/></a></li>
 
 
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-face-kiss-flirt-emoji-37697.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-grinning-face-with-smiling-eyes-happy-emoji-37710.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-delicious-face-savouring-smile-um-yum-eye-emoji-37671.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-dizzy-face-error-emoji-37670.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-confounded-face-sad-cry-unhappy-emoji-37707.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-cold-face-open-smile-sweat-happy-emoji-37709.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-disappointed-face-sad-emoji-37669.svg"/></a></li>
 
 
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-eye-face-love-smile-heart-emoji-37674.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-angry-face-mad-emoji-37652.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-hand-medium-skin-tone-wave-waving-37774.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-clenched-fist-hand-medium-light-skin-tone-punch-37735.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-backhand-down-finger-hand-index-medium-light-skin-tone-point-37723.svg"/></a>
                                     </li>
 
 
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-backhand-finger-hand-index-medium-light-skin-tone-point-up-37722.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-clap-hand-medium-skin-tone-37733.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-hand-medium-light-skin-tone-thumb-up-37775.svg"/></a>
                                     </li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-cat-face-joy-tear-happy-emoji-37666.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
-                                    <li><a href="javascript:void(0);"><img
+                                    <li><a href="javascript:void(0);" title=":P" @click="applySmily(':P')"><img
                                         src="assets/images/emojie-cat-face-ironic-smile-wry-emoji-37662.svg"/></a></li>
 
                                 </ul>
@@ -252,20 +273,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="savedchat mb-2" v-for="sc in filteredListShortcut">
+                            <div class="savedchat mb-2" v-for="sc in filteredListShortcut" style="cursor:pointer" @click="applyShortcut(sc.conversatation)">
                                 <p class="htxt_medium_16 dark_800 mb-2" v-html="sc.name"></p>
                                 <p class="htxt_regular_14 dark_200" v-html="setStringLimit(sc.conversatation,100)"></p>
                             </div>
                         </div>
+                        <!--*****Small footer buttons*****-->
                         <ul>
-                            <li><a class="active show_emoji" href="javascript:void(0);"><img
+                            <li><a class="active show_emoji" href="javascript:void(0);" @click="showSmilies= !showSmilies"><img
                                 src="assets/images/user-smile-line.svg"></a></li>
                             <li><a class="show_saved_chat" href="javascript:void(0);"><img
                                 src="assets/images/clipboard-line.svg"></a></li>
-                            <li><a href="javascript:void(0);"><img src="assets/images/Image_18.svg"></a></li>
-                            <li><a href="javascript:void(0);"><img src="assets/images/attachment-line.svg"></a></li>
+                            <li><a href="javascript:void(0);" @click="triggerImageUploadButton"><img src="assets/images/Image_18.svg"></a></li>
+                            <li><a href="javascript:void(0);" @click="triggerMediaUploadButton"><img src="assets/images/attachment-line.svg"></a></li>
                             <li><a href="javascript:void(0);"><img src="assets/images/add-circle-line.svg"></a></li>
                             <li><a href="javascript:void(0);"><img src="assets/images/submit_btn_icon.svg"></a></li>
+                            <input type="file" name="image" @change="uploadImage($event.target.files)" id="uploadWebchatImage" accept="image/*" style="display: none;">
+                            <input type="file" name="media" @change="uploadMedia($event.target.files)" id="uploadWebchatMedia" style="display: none;">
                         </ul>
                     </div>
                 </div>
@@ -286,12 +310,26 @@
                 searchShortcut: '',
                 enteredMessage: '',
                 loggedAvatar: '',
-                showShortcuts: false
+                showShortcuts: false,
+                showSmilies: false,
+                isTyping: false,
+                smileyReg: /[:;#@]{1,2}[\)\/\(\&\$\>\|xXbBcCdDpPoOhHsStTqQwW*?]{1,2}/g,
+                smileyMap: '',
+                objImage: '',
+                objMedia: '',
             }
         },
         sockets:{
             connect: function () {
                 this.$socket.emit('subscribe', this.currentTokenId);
+            },
+            'wait_new_message': function(data){
+                let el = this;
+                this.isTyping = true;
+                this.scrollToEnd();
+                setTimeout(function() {
+                    el.isTyping = false;
+                }, data.wait);
             },
             'receiveMessage': function(data){
                 //alert('Hello I recived something');
@@ -303,6 +341,7 @@
                     lastname: 'User'
                 };
                 this.chatData.push(newObj);
+                this.isTyping = false;
                 let el = this;
                 setTimeout(function () {
                     el.scrollToEnd();
@@ -310,7 +349,6 @@
             }
         },
         mounted() {
-
         },
         computed: {
             filteredListShortcut() {
@@ -328,6 +366,7 @@
                 this.loggedAvatar = this.loggedUserInfo.avatar;
             },
             currentTokenId: function () {
+                this.smileyMap = this.getSmilyCollection();
                 this.$socket.emit('subscribe', this.currentTokenId);
                 this.loading = true;
                 axios.post('/webchat/getMessages', {
@@ -355,9 +394,9 @@
             submitMessage: function (ev) {
                 this.showAuthorTyping();
                 this.hideSaveMessages();
+                this.hideSmilyPan();
                 if (ev.keyCode == 13 && ev.shiftKey) {
                     //Add New Line
-                    //alert('Adding new line');
                     return false;
                 }
                 if (ev.keyCode === 13) {
@@ -367,6 +406,10 @@
                 if (ev.keyCode === 47) {
                     //Pressed slash(/)
                     this.listSaveMessages();
+                }
+                if (ev.keyCode === 58) {
+                    //Pressed slash(:)
+                    this.showSmilyPan();
                 }
             },
             showAuthorTyping: function () {
@@ -402,8 +445,7 @@
                     //Pressed backspace(/)
                     this.hideSaveMessages();
                 }
-            }
-            ,
+            },
             sendMessage: function () {
                 this.transmitMessage();
                 axios.post('/admin/webchat/addChatMsg', {
@@ -418,21 +460,85 @@
                             this.enteredMessage = '';
                         }
                     });
-            }
-            ,
+            },
+            parseMessage: function(msg){
+                let parsedMessage = msg;
+                parsedMessage = this.parseSmilies(parsedMessage); //Parse Smilies
+                parsedMessage = this.parseMedia(parsedMessage); //Parse Images/Videos/Docs/Audio etc
+                return parsedMessage;
+            },
+            parseMedia: function(msg){
+                let parsedMessage = msg;
+                let fileext = (/[.]/.exec(parsedMessage)) ? /[^.]+$/.exec(parsedMessage) : undefined;
+                if (typeof fileext != 'undefined' && fileext !== null) {
+                    if (fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
+                        parsedMessage = "<a href='" + parsedMessage + "' class='previewImage' target='_blank'><img src='" + parsedMessage + "' height='auto' width='100%' /></a>";
+                    }else if (fileext[0] == 'mp4') {
+                        parsedMessage = "<video class='media_file' controls><source src='" + parsedMessage + "' type='video/" + fileext[0] + "'></video>";
+                    }else if (fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
+                        parsedMessage = "<a href='" + parsedMessage + "' target='_blank'>Download '" + fileext[0].toUpperCase() + "' File</a>";
+                    }
+                }
+                return parsedMessage;
+            },
+            parseSmilies: function(msg){
+                let parsedMessage = msg;
+                let messageSmilies = msg.match(this.smileyReg) || [];
+                let el = this;
+                if(messageSmilies.length>0){
+                    messageSmilies.forEach(function(item){
+                        let smilyIcon = el.smileyMap[item.toLowerCase()];
+                        if(smilyIcon){
+                            parsedMessage = parsedMessage.replace(item, "<img src='/assets/img-smile/" + smilyIcon + ".gif' alt='smiley' />");
+                        }
+                    });
+                }
+                return parsedMessage;
+            },
             listSaveMessages: function () {
                 this.showShortcuts = true;
-            }
-            ,
+            },
             hideSaveMessages: function () {
                 this.showShortcuts = false;
-            }
-            ,
+            },
+            showSmilyPan: function () {
+                this.showSmilies = true;
+            },
+            hideSmilyPan: function () {
+                this.showSmilies = false;
+            },
+            applyShortcut:function(msg){
+                this.enteredMessage = (this.enteredMessage.length>0) ? (this.enteredMessage.substring(0, (this.enteredMessage.length-1)) + msg) : msg;
+                this.showShortcuts = false;
+                document.querySelector("#webChatTextarea").focus();
+            },
+            applySmily:function(msg){
+                this.enteredMessage = this.enteredMessage + msg;
+                this.showSmilies = false;
+                document.querySelector("#webChatTextarea").focus();
+            },
             scrollToEnd: function () {
                 let container = this.$el.querySelector(".mainchatsvroll2");
                 container.scrollTop = container.scrollHeight;
+            },
+            triggerImageUploadButton: function(){
+                document.querySelector("#uploadWebchatImage").click();
+            },
+            triggerMediaUploadButton: function(){
+                document.querySelector("#uploadWebchatMedia").click();
+            },
+            uploadImage: function(res){
+                this.objImage = res;
+            },
+            uploadMedia: function(res){
+                alert("uploading video");
+                this.objMedia = res;
             }
-            ,
         }
     };
 </script>
+<style>
+    .media_file{
+        width: 250px !important;
+    }
+</style>
