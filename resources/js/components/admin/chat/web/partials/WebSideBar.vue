@@ -83,7 +83,7 @@
                             <div class="media_left">
                                 <p class="htxt_bold_14 dark_600 mb-2">
                                     {{setStringLimit(getName(contact.user_name).fullName, 20)}}</p>
-                                <p class="dark_300 fw300 fsize12 lh_16">{{contact.lastMessageInfo.lastMessage}}</p>
+                                <p class="dark_300 fw300 fsize12 lh_16">{{setStringLimit(contact.lastMessageInfo.lastMessage,20)}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
                             <div class="time_badge">

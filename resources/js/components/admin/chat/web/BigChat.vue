@@ -202,11 +202,11 @@
         });
     });
 
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         $(".show_emoji").click(function () {
             $(".chat_emoji_box").toggle();
         });
-    });
+    });*/
 
     $(document).ready(function () {
         $(".show_saved_chat").click(function () {

@@ -61,7 +61,9 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('wait_message', function(data) {
 		//console.log(data);
-		io.sockets.to(data.room).emit('wait_new_message', {chatTo:data.chatTo, currentUser:data.currentUser, wait:data.wait});
+        if(roomName == data.room){
+            io.sockets.to(data.room).emit('wait_new_message', {chatTo:data.chatTo, currentUser:data.currentUser, wait:data.wait});
+        }
 	});
 
 	socket.on('wait_message_widget', function(data) {
