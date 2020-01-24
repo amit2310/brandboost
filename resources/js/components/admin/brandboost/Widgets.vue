@@ -22,7 +22,194 @@
               Content Area
              **********************-->
             <div class="content-area">
-                <div class="container-fluid">
+                <div v-if="widgets" class="container-fluid">
+                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                    <loading :isLoading="loading"></loading>
+                    <div class="table_head_action">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="htxt_medium_16 dark_400">Onsite Widgets</h3>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="table_action">
+                                    <div class="float-right">
+                                        <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                            <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Link 1</a>
+                                            <a class="dropdown-item" href="#">Link 2</a>
+                                            <a class="dropdown-item" href="#">Link 3</a>
+                                        </div>
+                                    </div>
+                                    <div class="float-right ml10 mr10">
+                                        <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                            <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Link 1</a>
+                                            <a class="dropdown-item" href="#">Link 2</a>
+                                            <a class="dropdown-item" href="#">Link 3</a>
+                                        </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <input class="table_search" type="text" placeholder="Search" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div v-for="widget in widgets" class="col-md-3 text-center">
+                            <div class="card  h235 animate_top" style="padding:10px!important;">
+                                <div class="dot_dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a v-if="widget.countSubscribers > 0" class="dropdown-item" href="javascript:void(0);" @click="showListSubscribers(widget.id)"><i class="dripicons-user text-muted mr-2"></i> View Contacts</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareListUpdate(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                        <a v-if="widget.status == 'inactive' && widget.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, 'active')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                        <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, 'inactive')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                        <a v-if="widget.status != 'archive'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, 'archive')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="deleteList(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                    </div>
+                                </div>
+                                <div @click="showListSubscribers(widget.id)" style="cursor:pointer;">
+                                    <img class="mt20" src="assets/images/subs-icon_big.svg">
+                                    <h3 class="htxt_bold_16 dark_700">
+                                        <span>{{capitalizeFirstLetter(setStringLimit(widget.widget_title, 20))}}</span>
+                                    </h3>
+                                    <p v-if="widget.brand_title"><em>({{ widget.brand_title }})</em></p>
+                                    <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ widget.countSubscribers }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 text-center js-list-slidebox" style="cursor: pointer;">
+                            <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
+                                <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
+                                <p class="htxt_regular_16 dark_100 mb15">Create<br>contacts list</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4">
+                    </pagination>
+
+                    <!--<div class="table_head_action mt10">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="htxt_medium_16 dark_400">Latest contacts</h3>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="table_action">
+                                    <div class="float-right">
+                                        <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                            <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Link 1</a>
+                                            <a class="dropdown-item" href="#">Link 2</a>
+                                            <a class="dropdown-item" href="#">Link 3</a>
+                                        </div>
+                                    </div>
+                                    <div class="float-right ml10 mr10">
+                                        <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                            <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Link 1</a>
+                                            <a class="dropdown-item" href="#">Link 2</a>
+                                            <a class="dropdown-item" href="#">Link 3</a>
+                                        </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <input class="table_search" type="text" placeholder="Search" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                    <tr>
+                                        <td><span class="table-img mr15"><img src="assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
+                                        <td class="text-right">nina.hernandez@example.com</td>
+                                        <td># lead, subscriber</td>
+                                        <td><span class="badge badge-dark">+4</span></td>
+                                        <td>Customer</td>
+                                        <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
+                                        <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><span class="table-img mr15"><img src="assets/images/table_user2.png"/></span> <span class="htxt_medium_14 dark_900">Savannah Webb</span></td>
+                                        <td class="text-right">ivan.carter@example.com</td>
+                                        <td># lead, subscriber</td>
+                                        <td><span class="badge badge-dark">+4</span></td>
+                                        <td>Ticket</td>
+                                        <td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
+                                        <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><span class="table-img mr15"><img src="assets/images/table_user3.png"/></span> <span class="htxt_medium_14 dark_900">Bessie Flores</span></td>
+                                        <td class="text-right">tim.jennings@example.com</td>
+                                        <td># lead, subscriber</td>
+                                        <td><span class="badge badge-dark">+4</span></td>
+                                        <td>Customer</td>
+                                        <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
+                                        <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td><span class="table-img mr15"><img src="assets/images/table_user4.png"/></span> <span class="htxt_medium_14 dark_900">Dianne Mckinney</span></td>
+                                        <td class="text-right">logan.hopkins@example.com</td>
+                                        <td># lead, subscriber</td>
+                                        <td><span class="badge badge-dark">+4</span></td>
+                                        <td>Ticket</td>
+                                        <td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
+                                        <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><span class="table-img mr15"><img src="assets/images/table_user2.png"/></span> <span class="htxt_medium_14 dark_900">Dianne Mckinney</span></td>
+                                        <td class="text-right">logan.hopkins@example.com</td>
+                                        <td># lead, subscriber</td>
+                                        <td><span class="badge badge-dark">+4</span></td>
+                                        <td>Ticket</td>
+                                        <td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
+                                        <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
+                                        </td>
+                                    </tr>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>-->
+
+                </div>
+
+                <div v-else class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card card_shadow min-h-280">
