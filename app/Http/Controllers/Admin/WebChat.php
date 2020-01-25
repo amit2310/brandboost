@@ -198,6 +198,20 @@ class WebChat extends Controller {
         $chatUserid = $request->NotesTo;
         $WebChatObj = new WebChatModel();
         $oNotes = $WebChatObj->getWebNotes($chatUserid);
+        foreach ($oNotes as $oNote) {
+            $oNote->assignTo = assignto($oNote->room);
+            $oNote->avatar = $oUser->avatar;
+            $oNote->firstname = $oUser->firstname;
+            $oNote->lastname = $oUser->lastname;
+        }
+        return $oNotes;
+    }
+
+    public function listingNotesOld(Request $request) {
+        $oUser = getLoggedUser();
+        $chatUserid = $request->NotesTo;
+        $WebChatObj = new WebChatModel();
+        $oNotes = $WebChatObj->getWebNotes($chatUserid);
         foreach ($oNotes as $NotesData) {
 
             $fileext = explode('.', $NotesData->message);
