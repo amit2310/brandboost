@@ -393,6 +393,7 @@
                 this.loading = true;
                 this.getMessageList();
                 this.getNotesList();
+                this.markRead();
             },
             participantInfo: function () {
 
@@ -445,6 +446,16 @@
                         setTimeout(function () {
                             el.scrollToEndNotes();
                         }, 2000);
+                    });
+            },
+            markRead: function(){
+                axios.post('/webchat/markRead', {
+                    room: this.currentTokenId,
+                    userid: this.participantId,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //Do nothing!
                     });
             },
             submitMessage: function (ev) {

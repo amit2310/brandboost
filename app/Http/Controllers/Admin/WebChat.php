@@ -39,6 +39,7 @@ class WebChat extends Controller {
             foreach($assignedChat as $oUserChat){
                 $lastMessage = $this->getLastChatMessage($oUserChat->room);
                 $oUserChat->lastMessageInfo = $lastMessage;
+                $oUserChat->unreadCount = $mWebChat->getUnreadCount($oUserChat->room, $oUserChat->user);
             }
         }
         $assignedChatData = $assignedChat;
@@ -50,6 +51,7 @@ class WebChat extends Controller {
             foreach($unassignedChat as $oUserChat){
                 $lastMessage = $this->getLastChatMessage($oUserChat->room);
                 $oUserChat->lastMessageInfo = $lastMessage;
+                $oUserChat->unreadCount = $mWebChat->getUnreadCount($oUserChat->room, $oUserChat->user);
             }
         }
         $unassignedChatData = $unassignedChat;
@@ -61,6 +63,7 @@ class WebChat extends Controller {
             foreach($allChat as $oUserChat){
                 $lastMessage = $this->getLastChatMessage($oUserChat->room);
                 $oUserChat->lastMessageInfo = $lastMessage;
+                $oUserChat->unreadCount = $mWebChat->getUnreadCount($oUserChat->room, $oUserChat->user);
             }
         }
 
@@ -1676,6 +1679,34 @@ class WebChat extends Controller {
         $shortCuts = SubscriberModel::getchatshortcutlisting($oUser->id);
         return $shortCuts;
     }
+
+    /**
+     * This function used to get the list of unread message belonging to a chat conversation
+     * @param $Request
+     * @param $request
+     * @return mixed
+     */
+    public function getUnreadMsgs(Request $request){
+        $roomId = $request->room;
+        $userId = $request->userid;
+        $mChatModel =  new WebChatModel();
+        $unreadCount = $mChatModel->getUnreadCount($roomId, $userId);
+        return $unreadCount;
+    }
+
+    /**
+     * Update read status of a conversation
+     * @param $Request
+     * @param $request
+     * @return mixed
+     */
+    public function markRead(Request $request){
+            $roomId = $request->room;
+            $userId = $request->userid;
+            $mChatModel =  new WebChatModel();
+            $result = $mChatModel->updateReadStatus($roomId, $userId);
+            return $result;
+        }
 
 
 

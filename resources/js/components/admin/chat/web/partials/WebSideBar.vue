@@ -71,7 +71,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in allChat" class="d-flex" :class="{ 'active': selContacts == contact.user }"
                             :userid="contact.user" style="cursor:pointer;"
-                            @click="loadChatArea(contact.room, contact.user)">
+                            @click="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -87,21 +87,7 @@
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
                             <div class="time_badge">
-                                <!--<span class="badge badge-grey chatlist">28</span>-->
-                            </div>
-                        </li>
-                        <li class="d-flex active">
-                            <div class="media_left">
-                                <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/07.png"/></span>
-                            </div>
-                            <div class="media_left">
-                                <p class="htxt_bold_14 dark_600 mb-2">Eduardo Williamson</p>
-                                <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut
-                                    tortor sed...</p>
-                            </div>
-                            <div class="time_badge">
-                                <span class="time fsize10 light_800">2m</span>
-                                <span class="badge badge-grey chatlist">8</span>
+                                <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
                     </ul>
@@ -114,7 +100,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in unassignedChat" class="d-flex"
                             :class="{ 'active': selContacts == contact.user }" :userid="contact.user"
-                            style="cursor:pointer;" @click="loadChatArea(contact.room, contact.user)">
+                            style="cursor:pointer;" @click="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -130,7 +116,7 @@
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
                             <div class="time_badge">
-                                <!--<span class="badge badge-grey chatlist">28</span>-->
+                                <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
                     </ul>
@@ -143,7 +129,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in assignedChat" class="d-flex"
                             :class="{ 'active': selContacts == contact.user }" :userid="contact.user"
-                            style="cursor:pointer;" @click="loadChatArea(contact.room, contact.user)">
+                            style="cursor:pointer;" @click="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -159,7 +145,7 @@
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
                             <div class="time_badge">
-                                <!--<span class="badge badge-grey chatlist">28</span>-->
+                                <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
                     </ul>
@@ -189,7 +175,7 @@
             let el = this;
             setTimeout(function () {
                 if (el.allChat.length > 0) {
-                    el.loadChatArea(el.allChat[0].room, el.allChat[0].user);
+                    el.loadChatArea(el.allChat[0].room, el.allChat[0].user, el.allChat[0]);
                     el.selTabTitle= 'All ('+el.allChat.length+')';
                 }
             }, 500);
@@ -216,9 +202,10 @@
                     fullName: this.capitalizeFirstLetter(aName[0]) + ' ' + this.capitalizeFirstLetter(aName[1])
                 }
             },
-            loadChatArea: function (roomId, userid) {
+            loadChatArea: function (roomId, userid, obj) {
                 this.$emit('loadWebChat', roomId, userid);
                 this.selContacts = userid;
+                obj.unreadCount = 0;
             }
         }
     };
