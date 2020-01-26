@@ -70,6 +70,7 @@ Route::post('webchat/supportUser', 'Admin\WebChat@supportUser');
 Route::post('webchat/getMessages', 'Admin\WebChat@getMessages');
 Route::post('webchat/readChatMsg', 'Admin\WebChat@readChatMsg');
 Route::post('webchat/readMessages', 'Admin\WebChat@readMessages');
+Route::post('webchat/markRead', 'Admin\WebChat@markRead');
 
 
 
