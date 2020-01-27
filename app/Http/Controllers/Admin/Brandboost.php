@@ -1729,8 +1729,32 @@ class Brandboost extends Controller
         } else {
             $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite');
         }
+        foreach($oWidgetsList->items() as $wData) {
+            $wid = $wData->id;
+            //$oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
+            $oStats = BrandboostModel::getBBWidgetStats($wid);
 
-        $oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
+            if (!empty($oStats)) {
+                $aViews = $aClicks = $aComments = $aHelpful = [];
+                foreach ($oStats as $oStat) {
+                    if ($oStat->track_type == 'view') {
+                        $aViews[] = $oStat;
+                    } else if ($oStat->track_type == 'click') {
+                        $aClicks[] = $oStat;
+                    } else if ($oStat->track_type == 'comment') {
+                        $aComments[] = $oStat;
+                    } else if ($oStat->track_type == 'helpful') {
+                        $aHelpful[] = $oStat;
+                    }
+                }
+            }
+
+            $wData->totalRecords = count($oStats) > 0 ? count($oStats) : 0;
+            $wData->totalViews = count($aViews) > 0 ? count($aViews) : 0;
+            $wData->totalClicks = count($aClicks) > 0 ? count($aClicks) : 0;
+            $wData->totalComments = count($aComments) > 0 ? count($aComments) : 0;
+            $wData->totalHelpful = count($aHelpful) > 0 ? count($aHelpful) : 0;
+        }
 
         $aBreadcrumb = array(
             'Home' => '#/',
@@ -2837,6 +2861,10 @@ class Brandboost extends Controller
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
 
+        $validatedData = $request->validate([
+            'campaignName' => ['required']
+        ]);
+
         $campaignName = $request->campaignName;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $hashcode = '';
@@ -2886,7 +2914,7 @@ class Brandboost extends Controller
                 'created' => date("Y-m-d H:i:s")
             );
             $eventName = 'added_onsite_widget';
-            add_notifications($notificationData, $eventName, $userID);
+            //add_notifications($notificationData, $eventName, $userID);
         } else {
             $response['status'] = "Error";
         }
