@@ -42,12 +42,6 @@
 
                             <li class="media" v-for="row in chatData" :class="{reversed: row.user_form == loggedId}">
                                 <div class="media-body">
-                                    <!--<span class="media-annotation user_icon" v-html="row.avatarImage">
-                                        <span class="circle_green_status status-mark"></span>
-                                        <img
-                                            :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${row.avatarImage}`"
-                                            class="img-circle img-xxs" alt="">
-                                    </span>-->
                                     <span class="media-annotation user_icon" v-if="row.avatar">
                                         <span class="icons s32">
                                             <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${row.avatar}`" onerror="this.src='/assets/images/default_avt.jpeg'" class="img-circle" alt="" width="36" height="36">
@@ -72,9 +66,32 @@
                 </div>
                 <!--======Tab 2=====-->
                 <div id="NoteView" class="tab-pane fade">
-                    <div class="p20">
-                        Note Section
+                    <div class="mainnotesvroll2" style="height:500px;overflow:auto;padding-right:30px;">
+                        <div class="p20">
+                            <ul class="media-list chat-list">
+
+                                <li class="media reversed" v-for="row in notesData">
+                                    <div class="media-body">
+                                        <span class="media-annotation user_icon" v-if="row.avatar">
+                                            <span class="icons s32">
+                                                <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${row.avatar}`" onerror="this.src='/assets/images/default_avt.jpeg'" class="img-circle" alt="" width="36" height="36">
+                                            </span>
+                                        </span>
+                                        <span class="media-annotation user_icon" v-else>
+                                            <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{row.firstname.charAt(0)+ '' +row.lastname.charAt(0)}}
+                                            </span>
+                                        </span>
+                                        <div class="media-content" v-html="parseMessage(row.message)" ></div>
+                                        <span style="font-size:12px;clear:both;" class="text-muted text-size-small pull-right mb-3">
+                                            Added By {{row.assignTo + ' ' + row.created}}
+                                        </span>
+                                        <div style="height:10px" class="clearfix">&nbsp;</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
                 <!--======Tab 3=====-->
                 <div id="EmailView" class="tab-pane fade">
@@ -106,13 +123,13 @@
             <div class="row">
                 <div class="col-md-7">
                     <ul class="nav nav-pills messanger_tab" role="tablist">
-                        <li><a class="active" data-toggle="pill" href="#MessageView"><img
+                        <li><a class="active" data-toggle="pill" @click="makeTabActive('chat')" href="#MessageView"><img
                             src="assets/images/message-2-line.svg"/> &nbsp; Message</a></li>
-                        <li><a data-toggle="pill" href="#NoteView"><img src="assets/images/file-3-line-grey.svg"/>
+                        <li><a data-toggle="pill" @click="makeTabActive('note')" href="#NoteView"><img src="assets/images/file-3-line-grey.svg"/>
                             &nbsp; Note</a></li>
-                        <li><a data-toggle="pill" href="#EmailView"><img src="assets/images/mail-open-line.svg"/> &nbsp;
+                        <li><a data-toggle="pill" @click="makeTabActive('email')" href="#EmailView" ><img src="assets/images/mail-open-line.svg"/> &nbsp;
                             Email</a></li>
-                        <li><a data-toggle="pill" href="#TextMessageView"><img
+                        <li><a data-toggle="pill" @click="makeTabActive('text')" href="#TextMessageView"><img
                             src="assets/images/message-3-line-grey.svg"/> &nbsp; Text Message</a></li>
                     </ul>
                 </div>
@@ -288,8 +305,8 @@
                             <li><a href="javascript:void(0);" @click="triggerMediaUploadButton"><img src="assets/images/attachment-line.svg"></a></li>
                             <li><a href="javascript:void(0);"><img src="assets/images/add-circle-line.svg"></a></li>
                             <li><a href="javascript:void(0);"><img src="assets/images/submit_btn_icon.svg"></a></li>
-                            <input type="file" name="image" @change="uploadImage($event.target.files)" id="uploadWebchatImage" accept="image/*" style="display: none;">
-                            <input type="file" name="media" @change="uploadMedia($event.target.files)" id="uploadWebchatMedia" style="display: none;">
+                            <input type="file" ref="chatImg" name="image" @change="uploadImage" id="uploadWebchatImage" accept="image/*" style="display: none;">
+                            <input type="file" ref="chatMedia" name="media" @change="uploadMedia" id="uploadWebchatMedia" style="display: none;">
                         </ul>
                     </div>
                 </div>
@@ -307,6 +324,7 @@
                 errorMsg: '',
                 loading: false,
                 chatData: '',
+                notesData: '',
                 searchShortcut: '',
                 enteredMessage: '',
                 loggedAvatar: '',
@@ -317,6 +335,10 @@
                 smileyMap: '',
                 objImage: '',
                 objMedia: '',
+                chatTab: true,
+                noteTab: false,
+                emailTab: false,
+                textTab: false
             }
         },
         sockets:{
@@ -326,7 +348,7 @@
             'wait_new_message': function(data){
                 let el = this;
                 this.isTyping = true;
-                this.scrollToEnd();
+                this.scrollToEndChat();
                 setTimeout(function() {
                     el.isTyping = false;
                 }, data.wait);
@@ -344,7 +366,7 @@
                 this.isTyping = false;
                 let el = this;
                 setTimeout(function () {
-                    el.scrollToEnd();
+                    el.scrollToEndChat();
                 }, 10);
             }
         },
@@ -369,6 +391,32 @@
                 this.smileyMap = this.getSmilyCollection();
                 this.$socket.emit('subscribe', this.currentTokenId);
                 this.loading = true;
+                this.getMessageList();
+                this.getNotesList();
+                this.markRead();
+            },
+            participantInfo: function () {
+
+            },
+        },
+        methods: {
+            makeTabActive: function(tab){
+              this.chatTab = false;
+              this.noteTab = false;
+              this.emailTab = false;
+              this.textTab = false;
+              if(tab == 'chat'){
+                  this.chatTab = true;
+              }else if(tab == 'note'){
+                  this.noteTab = true;
+                  this.scrollToEndNotes();
+              }else if(tab == 'email'){
+                  this.emailTab = true;
+              }else if(tab == 'text'){
+                  this.textTab = true;
+              }
+            },
+            getMessageList: function(){
                 axios.post('/webchat/getMessages', {
                     room: this.currentTokenId,
                     offset: '0',
@@ -381,18 +429,39 @@
                         this.loading = false;
                         let el = this;
                         setTimeout(function () {
-                            el.scrollToEnd();
+                            el.scrollToEndChat();
                         }, 500);
                     });
-
             },
-            participantInfo: function () {
-
+            getNotesList: function(){
+                axios.post('/admin/webchat/listingNotes', {
+                    NotesTo: this.participantId,
+                    notes_from: 'web',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.notesData = response.data;
+                        this.loading = false;
+                        let el = this;
+                        setTimeout(function () {
+                            el.scrollToEndNotes();
+                        }, 2000);
+                    });
             },
-        },
-        methods: {
+            markRead: function(){
+                axios.post('/webchat/markRead', {
+                    room: this.currentTokenId,
+                    userid: this.participantId,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //Do nothing!
+                    });
+            },
             submitMessage: function (ev) {
-                this.showAuthorTyping();
+                if(this.chatTab){
+                    this.showAuthorTyping();
+                }
                 this.hideSaveMessages();
                 this.hideSmilyPan();
                 if (ev.keyCode == 13 && ev.shiftKey) {
@@ -401,7 +470,13 @@
                 }
                 if (ev.keyCode === 13) {
                     //Pressed Enter
-                    this.sendMessage();
+                    if(this.chatTab){
+                        this.sendMessage();
+                    }
+                    if(this.noteTab){
+                        this.saveNote();
+                    }
+
                 }
                 if (ev.keyCode === 47) {
                     //Pressed slash(/)
@@ -437,7 +512,7 @@
                         message:this.enteredMessage
                     };
                     this.chatData.push(newObj);
-                    this.scrollToEnd();*/
+                    this.scrollToEndChat();*/
                 }
             },
             cleanManager: function (ev) {
@@ -459,6 +534,20 @@
                         if (response.data.status == 'ok') {
                             this.enteredMessage = '';
                         }
+                    });
+            },
+            saveNote: function () {
+                axios.post('/admin/webchat/addWebNotes', {
+                    room: this.currentTokenId,
+                    msg: this.enteredMessage,
+                    chatTo: this.participantId,
+                    currentUser: this.loggedId,
+                    notes: '1',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.enteredMessage = '';
+                        this.getNotesList();
                     });
             },
             parseMessage: function(msg){
@@ -517,8 +606,12 @@
                 this.showSmilies = false;
                 document.querySelector("#webChatTextarea").focus();
             },
-            scrollToEnd: function () {
+            scrollToEndChat: function () {
                 let container = this.$el.querySelector(".mainchatsvroll2");
+                container.scrollTop = container.scrollHeight;
+            },
+            scrollToEndNotes: function () {
+                let container = this.$el.querySelector(".mainnotesvroll2");
                 container.scrollTop = container.scrollHeight;
             },
             triggerImageUploadButton: function(){
@@ -527,12 +620,44 @@
             triggerMediaUploadButton: function(){
                 document.querySelector("#uploadWebchatMedia").click();
             },
-            uploadImage: function(res){
-                this.objImage = res;
+            uploadImage: function(){
+                this.loading = true;
+                let res = this.$refs.chatImg.files[0];
+                this.saveFile(res);
             },
-            uploadMedia: function(res){
-                alert("uploading video");
-                this.objMedia = res;
+            uploadMedia: function(){
+                this.loading = true;
+                let res = this.$refs.chatMedia.files[0];
+                this.saveFile(res);
+            },
+            saveFile: function(files){
+                let formData = new FormData();
+                formData.append('files[]', files);
+                formData.append('_token', this.csrf_token());
+                axios.post('/dropzone/upload_s3_attachment/'+this.loggedId+'/webchat', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(response => {
+                        if (response.data.error == '') {
+                            let fileName = response.data.result;
+                            let msg = 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + fileName;
+                            this.enteredMessage = msg;
+                            if(this.chatTab){
+                                this.sendMessage();
+                            }
+                            if(this.noteTab){
+                                this.saveNote();
+                            }
+
+                            this.loading = false;
+                            let el = this;
+                            setTimeout(function(){ el.scrollToEndChat()}, 5000);
+                        }else{
+                            this.loading = true;
+                        }
+                    });
             }
         }
     };

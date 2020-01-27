@@ -423,6 +423,36 @@ FROM
         return $oData;
     }
 
+    /**
+     * This function used to get unread messages belonging to a conversation
+     * @param $token
+     * @param $user
+     * @return mixed
+     */
+    public function getUnreadCount($token, $user){
+        $oData = DB::table('tbl_chat_message')
+            ->where('token', $token)
+            ->where('read_status', 0)
+            ->where('user_form', $user)
+            ->count();
+        return $oData;
+    }
+
+    /**
+     * This function used to update read status of chat conversation
+     * @param $token
+     * @param $user
+     * @return mixed
+     */
+    public function updateReadStatus($token, $user){
+        $oData = DB::table('tbl_chat_message')
+            ->where('token', $token)
+            ->where('read_status', 0)
+            ->where('user_form', $user)
+            ->update(['read_status' => 1]);
+        return $oData;
+    }
+
 
 
 
