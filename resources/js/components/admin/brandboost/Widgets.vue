@@ -77,7 +77,7 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="navigateStats(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Statistics</a>
                                     </div>
                                 </div>
-                                <div @click="showListSubscribers(widget.id)" style="cursor:pointer;">
+                                <div style="cursor:pointer;">
                                     <img class="mt20" src="assets/images/subs-icon_big.svg">
                                     <h3 class="htxt_bold_16 dark_700">
                                         <span>{{capitalizeFirstLetter(setStringLimit(widget.widget_title, 20))}}</span>
@@ -89,10 +89,10 @@
                                     <p v-else-if="widget.widget_type == 'rfw'"><em>(Embeded Reviews)</em></p>
                                     <p v-else><em>[No Data]</em></p>
 
-                                    <p v-if="widget.brandboost_id" class="htxt_regular_12">{{ widget.bbBrandTitle != '' ? 'Campaign: ' + setStringLimit(widget.bbBrandTitle, 20) : '[No Data]' }}</p>
+                                    <!--<p v-if="widget.brandboost_id" class="htxt_regular_12">{{ widget.bbBrandTitle != '' ? 'Campaign: ' + setStringLimit(widget.bbBrandTitle, 20) : '[No Data]' }}</p>
                                     <p v-else class="htxt_regular_12">{{ widget.bbBrandTitle }}</p>
 
-                                    <p class="htxt_regular_12">{{ setStringLimit(widget.bbBrandDesc, 40) }}</p>
+                                    <p class="htxt_regular_12">{{ setStringLimit(widget.bbBrandDesc, 40) }}</p>-->
 
                                     <p class="htxt_regular_12">
                                         <span v-if="widget.status  == '1'">Published</span>
@@ -159,7 +159,7 @@
              **********************-->
 
             <!--******************
-              Create Contact Sliding Smart Popup
+              Create Sliding Smart Popup
              **********************-->
             <div class="box" style="width: 424px;">
                 <div style="width: 424px;overflow: hidden; height: 100%;">
@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="campaignName">List name</label>
+                                            <label for="campaignName">Widget name</label>
                                             <input type="text" class="form-control h56" id="campaignName" placeholder="Enter campaign name" name="campaignName"
                                                    v-model="form.campaignName">
                                         </div>
@@ -299,7 +299,6 @@
                 }
                 axios.post(formActionSrc , this.form)
                     .then(response => {
-                        console.log(response.data);
                         if (response.data.status == 'success') {
                             this.loading = false;
                             this.form.wid ='';

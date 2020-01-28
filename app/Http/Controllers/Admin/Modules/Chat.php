@@ -34,14 +34,22 @@ class Chat extends Controller {
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Chat Widgets" class="sidebar-control active hidden-xs ">Chat Widgets</a></li>
                     </ul>';
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Chat Widgets' => '#/modules/chat'
+        );
+
         $aData = array(
             'title' => 'Chat Module',
+            'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
-            'oPrograms' => $oPrograms,
+            'allData' => $oPrograms,
+            'oPrograms' => $oPrograms->items(),
             'bActiveSubsription' => $bActiveSubsription
         );
 
-		return view('admin.modules.chat.index', $aData);
+		//return view('admin.modules.chat.index', $aData);
+        return $aData;
     }
 
 	/**
@@ -50,7 +58,9 @@ class Chat extends Controller {
 	*/
     public function addChat(Request $request) {
         $response = array('status' => 'error', 'msg' => 'Something went wrong');
-
+        $validatedData = $request->validate([
+            'title' => ['required']
+        ]);
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $title = $request->title;
@@ -87,7 +97,7 @@ class Chat extends Controller {
 
             $eventName = 'sys_chat_configured';
 
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
         echo json_encode($response);
         exit;

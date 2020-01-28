@@ -8,7 +8,7 @@ use Cookie;
 use Session;
 
 class ChatsModel extends Model {
-    
+
     /**
      * Used to get member chat list
      */
@@ -18,12 +18,14 @@ class ChatsModel extends Model {
             ->select('tbl_chat_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
             ->when(($userRole != 1), function ($query) use ($userID) {
                     return $query->where('tbl_chat_main.user_id', $userID);
-                })    
-            ->get();
-        
+                })
+            ->orderBy('id', 'desc')
+            //->get();
+            ->paginate(10);
+
         return $oData;
     }
-	
+
 	/**
      * Used to add chat widget data
 	 * @param type $recordId
@@ -37,7 +39,7 @@ class ChatsModel extends Model {
             return false;
         }
     }
-	
+
 	/**
      * Used to get chat widget data by user id
 	 * @param type $userID
@@ -53,7 +55,7 @@ class ChatsModel extends Model {
 			->first();
         return $oData;
     }
-	
+
 	/**
      * Used to update chat widget data by chat id
 	 * @param type $userID
@@ -65,14 +67,14 @@ class ChatsModel extends Model {
            ->where('id', $id)
            ->where('user_id', $userID)
            ->update($aData);
-		   
+
         if ($result > -1) {
             return $id;
         } else {
             return false;
         }
     }
-	
+
 	/**
      * Used to delete chat widget
 	 * @param type $userID
@@ -90,16 +92,16 @@ class ChatsModel extends Model {
 			return false;
 		}
     }
-	
-	
-	
-	
-	
-	
-	
-	
 
-    
+
+
+
+
+
+
+
+
+
 
     public function saveNPSEvents($eData, $npsID) {
         if ($npsID != '') {
