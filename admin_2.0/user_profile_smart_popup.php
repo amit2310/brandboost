@@ -22,8 +22,11 @@
             <span class="fl_name">AM</span>
        	</div>
        	<div class="bkg_green_light green_400 fsize10 pl10 pr10 pt-1 pb-0 br8 d-inline-block">Lead</div>
-       	<h3 class="fsize16 fw500 dark_700 mb0 mt10">Norma Alexander</h3>
-       	<p class="fsize14 fw400 dark_300 mb20">terra.hamilton@example.com</p>
+        <div class="clearfix"></div>
+       	<h3 style="display:inline-block" class="fsize16 fw500 dark_700 mb0 mt10">Norma Alexander</h3>
+        <span style="display:inline-block"><input class="editable_input" type="text" name="" value="" /></span>
+       	<p style="display:inline-block" class="fsize14 fw400 dark_300 mb20">terra.hamilton@example.com</p>
+        <span style="display:inline-block"><input class="editable_input" type="text" name="" value="" /></span>
        	<ul class="profile_social_icon">
        		<li><a href="#"><img src="assets/images/Facebook.svg"/></a></li>
        		<li><a href="#"><img src="assets/images/twitter.svg"/></a></li>
@@ -38,14 +41,21 @@
        	<div class="col-md-12">
        	<h3 class="fsize16 fw500 dark_700 mb-2 mt0">Details</h3>
        	<ul class="user_details_list">
-       		<li>(239) 555-0108</li>
-       		<li>435036</li>
+       		<li><span style="display:inline-block;">(239) 555-0108</span>
+            <span style="display:inline-block"><input class="editable_input" type="text" name="" value="" /></span>
+            </li>
+       		<li><span style="display:inline-block;">435036</span>
+            <span style="display:inline-block"><input class="editable_input" type="text" name="" value="" /></span>
+            </li>
        		<li>3 days ago</li>
        		<li>1 year ago</li>
        		<li>Paris, France</li>
        		
        	</ul>
        	</div>
+        
+        
+        
        </div>
        </div>
        

@@ -3636,7 +3636,7 @@ Live Chat Messangers
 .chat_messanger_area .user_profile_show{position: absolute; right: 0; top: 30px;}
 .chat_messanger_area .box::after{display: none}
 
-
+.editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px; display:none;}
 
 .chat_dropdown{width: 220px; background: #fff!important; padding:15px 20px; box-shadow: 0 0px 10px 0 rgba(1, 21, 64, 0.16) !important; margin-top: 20px;}
 .chat_dropdown li{line-height: 30px; font-size: 12px;}
