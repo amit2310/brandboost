@@ -71,7 +71,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in allChat" class="d-flex" :class="{ 'active': selContacts == contact.user }"
                             :userid="contact.user" style="cursor:pointer;"
-                            @click="loadChatArea(contact.room, contact.user, contact)">
+                            @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -86,7 +86,7 @@
                                 <p class="dark_300 fw300 fsize12 lh_16">{{setStringLimit(contact.lastMessageInfo.lastMessage,20)}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
-                            <div class="time_badge">
+                            <div class="time_badge" :ref="`all${contact.room}`" @click="refreshUnreadCount(contact)">
                                 <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
@@ -115,7 +115,7 @@
                                 <p class="dark_300 fw300 fsize12 lh_16">{{contact.lastMessageInfo.lastMessage}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
-                            <div class="time_badge">
+                            <div class="time_badge" :ref="`unassign${contact.room}`" @click="refreshUnreadCount(contact)">
                                 <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
@@ -144,7 +144,7 @@
                                 <p class="dark_300 fw300 fsize12 lh_16">{{contact.lastMessageInfo.lastMessage}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
-                            <div class="time_badge">
+                            <div class="time_badge" :ref="`assign${contact.room}`" @click="refreshUnreadCount(contact)">
                                 <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
@@ -168,20 +168,69 @@
                 sortType: 'new',
                 sortTitle: 'Newest',
                 selTab: 'all',
-                selTabTitle: ''
+                selTabTitle: '',
+                allChatRoom: [],
+                unassignedChatRoom: [],
+                assignedChatRoom: [],
+                favoriteChatRoom: [],
+
+            }
+        },
+        sockets:{
+            newMessageLineup: function (data) {
+                if(this.allChatRoom.includes(data.room)){
+                    let key = 'all'+data.room;
+                    this.$refs[key][0].click();
+                }
             }
         },
         mounted() {
-            let el = this;
-            setTimeout(function () {
-                if (el.allChat.length > 0) {
-                    el.loadChatArea(el.allChat[0].room, el.allChat[0].user, el.allChat[0]);
-                    el.selTabTitle= 'All ('+el.allChat.length+')';
-                }
-            }, 500);
-
+            this.loadDefaultChat();
         },
         methods: {
+            refreshUnreadCount: function(data){
+                if(this.selContacts != data.user){
+                    axios.post('/admin/webchat/getUnreadMsgs', {room:data.room,userid:data.user,_token:this.csrf_token()})
+                        .then(response => {
+                            data.unreadCount = response.data;
+                        });
+                }
+
+            },
+            loadDefaultChat: function(){
+                if (this.allChat.length > 0 && !this.selContacts) {
+                    if (this.allChat.length > 0) {
+                        //All Data has loaded now
+                        //All Chat Room array
+                        let el = this;
+                        this.allChat.forEach(function(data){
+                            el.allChatRoom.push(data.room);
+                        });
+
+                        //unassignedChat Chat Room array
+                        this.unassignedChat.forEach(function(data){
+                            el.unassignedChatRoom.push(data.room);
+                        });
+
+                        //assignedChat Chat Room array
+                        this.assignedChat.forEach(function(data){
+                            el.assignedChatRoom.push(data.room);
+                        });
+
+                        //favoriteChat Chat Room array
+                        this.favoriteChat.forEach(function(data){
+                            el.favoriteChatRoom.push(data.room);
+                        });
+                    }
+                    this.loadChatArea(this.allChat[0].room, this.allChat[0].user, this.allChat[0]);
+                    this.selTabTitle= 'All ('+this.allChat.length+')';
+                }else{
+                    let el = this;
+                    setTimeout(function(){
+                        el.loadDefaultChat();
+                    },500);
+                }
+            },
             updateSelectedTab: function(ev, name, title){
                 this.selTab = name;
                 this.selTabTitle = title;

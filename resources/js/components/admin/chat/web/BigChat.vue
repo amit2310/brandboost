@@ -74,6 +74,9 @@
                 breadcrumb: ''
             }
         },
+        sockets:{
+
+        },
         created() {
             this.getChatContacts();
             this.fetchShortcuts();
