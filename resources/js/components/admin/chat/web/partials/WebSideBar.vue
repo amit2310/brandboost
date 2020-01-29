@@ -15,16 +15,16 @@
                                data-toggle="dropdown" aria-expanded="false">{{selTabTitle}}</a>
                             <ul style="right: 0px!important; margin-top: 18px; left: -20px;"
                                 class="dropdown-menu dropdown-menu-left chat_dropdown">
-                                <li><strong><a class="chatdropdown" @click="updateSelectedTab($event, 'all', 'All ('+allChat.length+')')" data-toggle="pill" href="#All"><img class="small"
+                                <li><strong><a href="javascript:void(0);" class="chatdropdown" :class="{'active': this.selTab == 'all'}" @click="changeTab('all')"><img class="small"
                                                                                                   src="assets/images/cd_icon1.png">
                                     All ({{allChat.length}}) </a></strong></li>
-                                <li><strong><a class="chatdropdown" @click="updateSelectedTab($event, 'unassinged', 'Unassigned ('+unassignedChat.length+')')" data-toggle="pill" href="#Unassigned"><img class="small"
+                                <li><strong><a href="javascript:void(0);" class="chatdropdown" :class="{'active': this.selTab == 'unassign'}" @click="changeTab('unassign')"><img class="small"
                                                                                           src="assets/images/cd_icon2.png">Unassigned
                                     ({{unassignedChat.length}}) </a></strong></li>
-                                <li><strong><a class="chatdropdown" @click="updateSelectedTab($event, 'you', 'You ('+assignedChat.length+')')" data-toggle="pill" href="#You"><img class="small"
+                                <li><strong><a href="javascript:void(0);" class="chatdropdown" :class="{'active': this.selTab == 'you'}" @click="changeTab('you')"><img class="small"
                                                                                    src="assets/images/cd_icon3.png">You
                                     ({{assignedChat.length}}) </a></strong></li>
-                                <li><strong><a class="chatdropdown" @click="updateSelectedTab($event, 'favorite', 'Favorite ('+favoriteChat.length+')')" data-toggle="pill" href="#Favorite"><img class="small"
+                                <li><strong><a href="javascript:void(0);" class="chatdropdown" :class="{'active': this.selTab == 'favorite'}" @click="changeTab('favorite')"><img class="small"
                                                                                         src="assets/images/cd_icon4.png">Favorite
                                     ({{favoriteChat.length}}) </a></strong></li>
 
@@ -56,11 +56,11 @@
         </div>
         <div class="p20 pt0">
             <ul class="nav nav-pills chat_contact_tab" role="tablist">
-                <li class="mr10"><a class="htxt_bold_13 chatdropdown active" @click="updateSelectedTab($event, 'all', 'All ('+allChat.length+')')" data-toggle="pill" href="#All">All
+                <li class="mr10"><a class="htxt_bold_13 chatdropdown active" ref="all" @click="updateSelectedTab($event, 'all', 'All ('+allChat.length+')')" data-toggle="pill" href="#All">All
                     ({{allChat.length}})</a></li>
-                <li class="mr10"><a class="htxt_bold_13 chatdropdown" @click="updateSelectedTab($event, 'unassinged', 'Unassigned ('+unassignedChat.length+')')" data-toggle="pill" href="#Unassigned">Unassigned
+                <li class="mr10"><a class="htxt_bold_13 chatdropdown" ref="unassign"  @click="updateSelectedTab($event, 'unassign', 'Unassigned ('+unassignedChat.length+')')" data-toggle="pill" href="#Unassigned">Unassigned
                     ({{unassignedChat.length}})</a></li>
-                <li class=""><a class="htxt_bold_13 chatdropdown" @click="updateSelectedTab($event, 'you', 'You ('+assignedChat.length+')')" data-toggle="pill" href="#You">You ({{assignedChat.length}})</a>
+                <li class=""><a class="htxt_bold_13 chatdropdown" ref="you"  @click="updateSelectedTab($event, 'you', 'You ('+assignedChat.length+')')" data-toggle="pill" href="#You">You ({{assignedChat.length}})</a>
                 </li>
             </ul>
         </div>
@@ -71,7 +71,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in allChat" class="d-flex" :class="{ 'active': selContacts == contact.user }"
                             :userid="contact.user" style="cursor:pointer;"
-                            @click="loadChatArea(contact.room, contact.user, contact)">
+                            @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -83,10 +83,10 @@
                             <div class="media_left">
                                 <p class="htxt_bold_14 dark_600 mb-2">
                                     {{setStringLimit(getName(contact.user_name).fullName, 20)}}</p>
-                                <p class="dark_300 fw300 fsize12 lh_16">{{setStringLimit(contact.lastMessageInfo.lastMessage,20)}}</p>
+                                <p class="dark_300 fw300 fsize12 lh_16" :ref="`allLastMsg${contact.room}`">{{setStringLimit(contact.lastMessageInfo.lastMessage,20)}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
-                            <div class="time_badge">
+                            <div class="time_badge" :ref="`all${contact.room}`" @click="refreshUnreadCount(contact)">
                                 <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
@@ -100,7 +100,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in unassignedChat" class="d-flex"
                             :class="{ 'active': selContacts == contact.user }" :userid="contact.user"
-                            style="cursor:pointer;" @click="loadChatArea(contact.room, contact.user, contact)">
+                            style="cursor:pointer;" @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -112,10 +112,10 @@
                             <div class="media_left">
                                 <p class="htxt_bold_14 dark_600 mb-2">
                                     {{setStringLimit(getName(contact.user_name).fullName, 20)}}</p>
-                                <p class="dark_300 fw300 fsize12 lh_16">{{contact.lastMessageInfo.lastMessage}}</p>
+                                <p class="dark_300 fw300 fsize12 lh_16" :ref="`unassignLastMsg${contact.room}`">{{contact.lastMessageInfo.lastMessage}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
-                            <div class="time_badge">
+                            <div class="time_badge" :ref="`unassign${contact.room}`" @click="refreshUnreadCount(contact)">
                                 <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
@@ -129,7 +129,7 @@
                     <ul class="list_with_icons">
                         <li v-for="contact in assignedChat" class="d-flex"
                             :class="{ 'active': selContacts == contact.user }" :userid="contact.user"
-                            style="cursor:pointer;" @click="loadChatArea(contact.room, contact.user, contact)">
+                            style="cursor:pointer;" @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
                                 <user-avatar
                                     :avatar="''"
@@ -141,10 +141,10 @@
                             <div class="media_left">
                                 <p class="htxt_bold_14 dark_600 mb-2">
                                     {{setStringLimit(getName(contact.user_name).fullName, 20)}}</p>
-                                <p class="dark_300 fw300 fsize12 lh_16">{{contact.lastMessageInfo.lastMessage}}</p>
+                                <p class="dark_300 fw300 fsize12 lh_16" :ref="`assignLastMsg${contact.room}`">{{contact.lastMessageInfo.lastMessage}}</p>
                                 <span class="time fsize10 light_800">{{contact.lastMessageInfo.messageTime}}</span>
                             </div>
-                            <div class="time_badge">
+                            <div class="time_badge" :ref="`assign${contact.room}`" @click="refreshUnreadCount(contact)">
                                 <span class="badge badge-grey chatlist" v-if="contact.unreadCount">{{contact.unreadCount}}</span>
                             </div>
                         </li>
@@ -160,7 +160,7 @@
     import UserAvatar from "@/components/helpers/UserAvatar";
 
     export default {
-        props: ['allChat', 'unassignedChat', 'assignedChat', 'favoriteChat'],
+        props: ['allChat', 'unassignedChat', 'assignedChat', 'favoriteChat', 'participantInfo'],
         components: {UserAvatar},
         data() {
             return {
@@ -168,23 +168,142 @@
                 sortType: 'new',
                 sortTitle: 'Newest',
                 selTab: 'all',
-                selTabTitle: ''
+                selTabTitle: '',
+                allChatRoom: [],
+                unassignedChatRoom: [],
+                assignedChatRoom: [],
+                favoriteChatRoom: [],
+                smileyReg: /[:;#@]{1,2}[\)\/\(\&\$\>\|xXbBcCdDpPoOhHsStTqQwW*?]{1,2}/g,
+                smileyMap: '',
+                objImage: '',
+                objMedia: '',
+            }
+        },
+        sockets:{
+            newMessageLineup: function (data) {
+                //All Chat Room List
+                if(this.allChatRoom.includes(data.room)){
+                    let key = 'all'+data.room;
+                    this.$refs[key][0].click();
+                    //Update Last Message
+                    let keyLast = 'allLastMsg'+data.room;
+                    this.$refs[keyLast][0].innerHTML= this.parseMsg(this.setStringLimit(data.msg, 20));
+                }
+                //All Unassigned List
+                if(this.unassignedChatRoom.includes(data.room)){
+                    let key = 'unassign'+data.room;
+                    this.$refs[key][0].click();
+                    //Update Last Message
+                    let keyLast = 'unassignLastMsg'+data.room;
+                    this.$refs[keyLast][0].innerHTML= this.parseMsg(this.setStringLimit(data.msg, 20));
+                }
+                //All Assigned List
+                if(this.assignedChatRoom.includes(data.room)){
+                    let key = 'assign'+data.room;
+                    this.$refs[key][0].click();
+                    //Update Last Message
+                    let keyLast = 'assignLastMsg'+data.room;
+                    this.$refs[keyLast][0].innerHTML= this.parseMsg(this.setStringLimit(data.msg, 20));
+                }
+                //All Favorite List
+                if(this.favoriteChatRoom.includes(data.room)){
+                    let key = 'favorite'+data.room;
+                    this.$refs[key][0].click();
+                    //Update Last Message
+                    let keyLast = 'favoriteLastMsg'+data.room;
+                    this.$refs[keyLast][0].innerHTML= this.parseMsg(this.setStringLimit(data.msg, 20));
+                }
             }
         },
         mounted() {
-            let el = this;
-            setTimeout(function () {
-                if (el.allChat.length > 0) {
-                    el.loadChatArea(el.allChat[0].room, el.allChat[0].user, el.allChat[0]);
-                    el.selTabTitle= 'All ('+el.allChat.length+')';
-                }
-            }, 500);
-
+            this.loadDefaultChat();
+            this.smileyMap = this.getSmilyCollection();
         },
         methods: {
+            parseMsg: function(msg){
+                let parsedMessage = msg;
+                //parsedMessage = this.parseEmojis(parsedMessage); //Parse Smilies
+                parsedMessage = this.parseRich(parsedMessage); //Parse Images/Videos/Docs/Audio etc
+                return parsedMessage;
+            },
+            parseRich: function(msg){
+                let parsedMessage = msg;
+                let fileext = (/[.]/.exec(parsedMessage)) ? /[^.]+$/.exec(parsedMessage) : undefined;
+                if (typeof fileext != 'undefined' && fileext !== null) {
+                    if (fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
+                        parsedMessage = "Image Attachement";
+                    }else if (fileext[0] == 'mp4') {
+                        parsedMessage = "Video Attachement";
+                    }else if (fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
+                        parsedMessage = "File Attachement";
+                    }
+                }
+                return parsedMessage;
+            },
+            parseEmojis: function(msg){
+                let parsedMessage = msg;
+                let messageSmilies = msg.match(this.smileyReg) || [];
+                let el = this;
+                if(messageSmilies.length>0){
+                    messageSmilies.forEach(function(item){
+                        let smilyIcon = el.smileyMap[item.toLowerCase()];
+                        if(smilyIcon){
+                            parsedMessage = parsedMessage.replace(item, "<img src='/assets/img-smile/" + smilyIcon + ".gif' alt='smiley' />");
+                        }
+                    });
+                }
+                return parsedMessage;
+            },
+            refreshUnreadCount: function(data){
+                if(this.selContacts != data.user){
+                    axios.post('/admin/webchat/getUnreadMsgs', {room:data.room,userid:data.user,_token:this.csrf_token()})
+                        .then(response => {
+                            data.unreadCount = response.data;
+                        });
+                }
+
+            },
+            loadDefaultChat: function(){
+                if (this.allChat.length > 0 && !this.selContacts) {
+                    if (this.allChat.length > 0) {
+                        //All Data has loaded now
+                        //All Chat Room array
+                        let el = this;
+                        this.allChat.forEach(function(data){
+                            el.allChatRoom.push(data.room);
+                        });
+
+                        //unassignedChat Chat Room array
+                        this.unassignedChat.forEach(function(data){
+                            el.unassignedChatRoom.push(data.room);
+                        });
+
+                        //assignedChat Chat Room array
+                        this.assignedChat.forEach(function(data){
+                            el.assignedChatRoom.push(data.room);
+                        });
+
+                        //favoriteChat Chat Room array
+                        this.favoriteChat.forEach(function(data){
+                            el.favoriteChatRoom.push(data.room);
+                        });
+                    }
+                    this.loadChatArea(this.allChat[0].room, this.allChat[0].user, this.allChat[0]);
+                    this.selTabTitle= 'All ('+this.allChat.length+')';
+                }else{
+                    let el = this;
+                    setTimeout(function(){
+                        el.loadDefaultChat();
+                    },500);
+                }
+            },
             updateSelectedTab: function(ev, name, title){
                 this.selTab = name;
                 this.selTabTitle = title;
+            },
+            changeTab: function(name){
+                let key = name;
+                this.$refs[key].click();
             },
             sortChatContacts: function (sortType, title) {
                 this.sortType = sortType;
@@ -206,6 +325,41 @@
                 this.$emit('loadWebChat', roomId, userid);
                 this.selContacts = userid;
                 obj.unreadCount = 0;
+            }
+        },
+        watch: {
+            participantInfo: function(){
+                let el = this;
+                if(this.allChat.length>0){
+                    this.allChat.forEach(function(item){
+                        if(item.user == el.participantInfo.chatUserid){
+                            item.user_name = el.participantInfo.name;
+                            item.email = el.participantInfo.email;
+                            item.phone = el.participantInfo.phone;
+                        }
+                    });
+                }
+
+                if(this.unassignedChat.length>0){
+                    this.unassignedChat.forEach(function(item){
+                        if(item.user == el.participantInfo.chatUserid){
+                            item.user_name = el.participantInfo.name;
+                            item.email = el.participantInfo.email;
+                            item.phone = el.participantInfo.phone;
+                        }
+                    });
+                }
+
+                if(this.assignedChat.length>0){
+                    this.assignedChat.forEach(function(item){
+                        if(item.user == el.participantInfo.chatUserid){
+                            item.user_name = el.participantInfo.name;
+                            item.email = el.participantInfo.email;
+                            item.phone = el.participantInfo.phone;
+                        }
+                    });
+                }
+
             }
         }
     };

@@ -346,28 +346,33 @@
                 this.$socket.emit('subscribe', this.currentTokenId);
             },
             'wait_new_message': function(data){
-                let el = this;
-                this.isTyping = true;
-                this.scrollToEndChat();
-                setTimeout(function() {
-                    el.isTyping = false;
-                }, data.wait);
+                if(data.room == this.currentTokenId){
+                    let el = this;
+                    this.isTyping = true;
+                    this.scrollToEndChat();
+                    setTimeout(function() {
+                        el.isTyping = false;
+                    }, data.wait);
+                }
+
             },
             'receiveMessage': function(data){
-                //alert('Hello I recived something');
-                let newObj = {
-                    user_form: data.currentUser,
-                    avatar: (data.currentUser == this.loggedId) ? this.loggedAvatar : '',//data.avatar,
-                    message:data.msg,
-                    firstname: 'New',
-                    lastname: 'User'
-                };
-                this.chatData.push(newObj);
-                this.isTyping = false;
-                let el = this;
-                setTimeout(function () {
-                    el.scrollToEndChat();
-                }, 10);
+                if(data.room == this.currentTokenId){
+                    let newObj = {
+                        user_form: data.currentUser,
+                        avatar: (data.currentUser == this.loggedId) ? this.loggedAvatar : '',//data.avatar,
+                        message:data.msg,
+                        firstname: 'New',
+                        lastname: 'User'
+                    };
+                    this.chatData.push(newObj);
+                    this.isTyping = false;
+                    let el = this;
+                    setTimeout(function () {
+                        el.scrollToEndChat();
+                    }, 10);
+                }
+
             }
         },
         mounted() {
@@ -396,7 +401,7 @@
                 this.markRead();
             },
             participantInfo: function () {
-
+                 this.getMessageList();
             },
         },
         methods: {
@@ -506,13 +511,7 @@
                         currentUserName: '',
                         avatar: this.loggedAvatar
                     });
-                    /*let newObj = {
-                        user_form: this.participantId,
-                        avatarImage: this.loggedAvatar,
-                        message:this.enteredMessage
-                    };
-                    this.chatData.push(newObj);
-                    this.scrollToEndChat();*/
+                    //Update Last Message Info
                 }
             },
             cleanManager: function (ev) {
