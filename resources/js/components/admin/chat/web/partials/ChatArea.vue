@@ -401,7 +401,7 @@
                 this.markRead();
             },
             participantInfo: function () {
-
+                 this.getMessageList();
             },
         },
         methods: {
@@ -511,13 +511,7 @@
                         currentUserName: '',
                         avatar: this.loggedAvatar
                     });
-                    /*let newObj = {
-                        user_form: this.participantId,
-                        avatarImage: this.loggedAvatar,
-                        message:this.enteredMessage
-                    };
-                    this.chatData.push(newObj);
-                    this.scrollToEndChat();*/
+                    //Update Last Message Info
                 }
             },
             cleanManager: function (ev) {
