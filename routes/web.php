@@ -232,6 +232,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
 
 
+    Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
     Route::get('admin/modules/referral/{id}', 'Admin\Modules\Referral@index');
     Route::post('admin/modules/chat/addChat', 'Admin\Modules\Chat@addChat');
@@ -275,7 +276,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/referral/publishReferralStatus', 'Admin\Modules\Referral@publishReferralStatus');
     Route::post('admin/modules/referral/saveRewards', 'Admin\Modules\Referral@saveRewards');
     Route::post('admin/modules/referral/saveCoupons', 'Admin\Modules\Referral@saveCoupons');
-    Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
     Route::post('admin/modules/referral/updatReferralWidgetStatus', 'Admin\Modules\Referral@updatReferralWidgetStatus');
     Route::post('admin/modules/referral/delete_referral_widget', 'Admin\Modules\Referral@deleteReferralWidget');
     Route::post('admin/modules/referral/getReferralWidgetEmbedCode', 'Admin\Modules\Referral@getReferralWidgetEmbedCode');

@@ -22,7 +22,9 @@ class ReferralModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
-                ->get();
+                ->orderBy('id', 'desc')
+                //->get();
+                ->paginate(10);
 
         return $oWidgets;
     }
