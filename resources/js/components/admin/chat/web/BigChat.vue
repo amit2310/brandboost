@@ -23,6 +23,7 @@
                 :unassignedChat="unassignedChat"
                 :assignedChat="assignedChat"
                 :favoriteChat="favoriteChat"
+                :participantInfo="participantInfo"
                 @loadWebChat="loadWebChat"
             ></web-side-bar>
             <web-profile-bar
@@ -30,6 +31,7 @@
                 :loggedId="loggedId"
                 :participantId="participantId"
                 :participantInfo="participantInfo"
+                @loadWebChat="loadWebChat"
             ></web-profile-bar>
             <chat-area
                 :currentTokenId="currentTokenId"
@@ -73,6 +75,9 @@
                 user: {},
                 breadcrumb: ''
             }
+        },
+        sockets:{
+
         },
         created() {
             this.getChatContacts();

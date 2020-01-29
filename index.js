@@ -50,11 +50,15 @@ io.sockets.on('connection', function(socket){
 
 			io.sockets.to(data.room).emit('chat message main', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName});
 
-			io.sockets.to(data.room).emit('receiveMessage', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName});
+			io.sockets.to(data.room).emit('receiveMessage', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName, room:data.room});
+
+            io.sockets.to(data.room).emit('newMessageLineup', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName, room:data.room});
 			//io.sockets.emit('chat message', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar});
 			//console.log(data);
 		}else{
+		    //Notify about a new message or show unread messages count
             console.log("I am in the wrong path");
+
         }
 
 	});
