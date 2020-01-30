@@ -24,6 +24,7 @@
                 :assignedChat="assignedChat"
                 :favoriteChat="favoriteChat"
                 :participantInfo="participantInfo"
+                :loggedUser="user"
                 @loadWebChat="loadWebChat"
             ></web-side-bar>
             <web-profile-bar
@@ -31,6 +32,7 @@
                 :loggedId="loggedId"
                 :participantId="participantId"
                 :participantInfo="participantInfo"
+                :loggedUser="user"
                 @loadWebChat="loadWebChat"
             ></web-profile-bar>
             <chat-area
@@ -40,6 +42,7 @@
                 :participantId="participantId"
                 :participantInfo="participantInfo"
                 :shortcuts="shortcuts"
+                :loggedUser="user"
             ></chat-area>
         </div>
         <SaveReplyPopup @updateShortcuts="fetchShortcuts"></SaveReplyPopup>
@@ -50,7 +53,6 @@
     import WebProfileBar from "./partials/WebProfileBar";
     import ChatArea from "./partials/ChatArea";
     import SaveReplyPopup from "./partials/SaveReplyPopup";
-
     export default {
         components: {WebSideBar, WebProfileBar, ChatArea, SaveReplyPopup},
         data() {
@@ -76,15 +78,9 @@
                 breadcrumb: ''
             }
         },
-        sockets:{
-
-        },
         created() {
             this.getChatContacts();
             this.fetchShortcuts();
-        },
-        mounted() {
-
         },
         methods: {
             getChatContacts: function () {
@@ -104,7 +100,6 @@
                         this.user = response.data.loginUserData;
                         this.loading = false;
                         //loadJQScript(this.user.id);
-
                     });
             },
             fetchShortcuts: function () {
@@ -118,7 +113,6 @@
                 this.participantId = userid;
                 //Get Paticipant's details
                 this.loadParticipantInfo(roomId, userid);
-
             },
             loadParticipantInfo: function (roomId, userid) {
                 axios.post('/admin/webchat/getUserinfo', {
@@ -145,8 +139,6 @@
                         this.successMsg = 'Source has been updated successfully';
                         this.loading = false;
                     });
-
-
             },
             displayStep: function (step) {
                 let path = '';
@@ -155,7 +147,6 @@
                 } else {
                     path = '/admin#/referral/setup/' + this.campaignId + '/' + step;
                 }
-
                 window.location.href = path;
             },
             updateSettings: function (fieldName, fieldValue, type) {
@@ -171,13 +162,11 @@
                     brandboostId: this.campaignId,
                     linkExpiryData: this.campaign.link_expire_custom,
                     requestType: type
-
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
                 });
-
             },
             saveDraft: function () {
                 this.loading = true;
@@ -197,7 +186,6 @@
                     });
             }
         }
-
     };
     $(document).ready(function () {
         $(".saveReplyBox").click(function () {
@@ -206,13 +194,6 @@
             });
         });
     });
-
-    /*$(document).ready(function () {
-        $(".show_emoji").click(function () {
-            $(".chat_emoji_box").toggle();
-        });
-    });*/
-
     $(document).ready(function () {
         $(".show_saved_chat").click(function () {
             $(".chat_saved_temp").toggle();
@@ -223,8 +204,4 @@
     $(".nav-link.people").removeClass("active");
     $(".main-icon-menu-pane.livechat").addClass("active");
     $(".main-icon-menu-pane.people").removeClass("active");
-
 </script>
-
-
-
