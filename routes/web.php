@@ -355,6 +355,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/mediagallery/updateWidgetType', 'Admin\Mediagallery@updateWidgetType');
     Route::post('admin/mediagallery/getReviewData', 'Admin\Mediagallery@getReviewData');
     Route::post('admin/mediagallery/updateGallery', 'Admin\Mediagallery@updateGallery');
+    Route::post('admin/mediagallery/getGalleryImages', 'Admin\Mediagallery@getGalleryImages');
 
     //chat module
     Route::get('admin/webchat', 'Admin\WebChat@index');

@@ -93,6 +93,7 @@ import WidgetOverview from './components/admin/brandboost/WidgetOverview';
 import OnsiteWidgets from './components/admin/brandboost/Widgets';
 import ChatWidgets from './components/admin/modules/chat/Index';
 import ReferralWidgets from './components/admin/modules/referral/Widgets';
+import MediaGalleryWidget from './components/admin/MediaGallery';
 
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
@@ -286,6 +287,7 @@ const routes = [
     { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
     { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
     { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
+    { path: '/mediagallery', component: MediaGalleryWidget, meta: { title: 'Media Gallery Widgets'} },
 
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
