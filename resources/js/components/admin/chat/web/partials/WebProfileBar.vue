@@ -31,11 +31,9 @@
                                     v-show="!editableUserName"
                                     @click="editableUserName=true"
                                 >{{participantInfo.name}}</h3>
-
                                 <span style="display:inline-block" v-show="editableUserName">
                                     <input class="editable_input" type="text" v-model="participantInfo.name" @blur="updateProfile('support_name')" /></span>
                                 <div class="clearfix"></div>
-
                                 <p
                                     style="display:inline-block;cursor:pointer;"
                                     class="fsize14 fw400 dark_300 mb20"
@@ -86,7 +84,7 @@
 </template>
 <script>
     export default {
-        props: ['participantInfo', 'currentTokenId'],
+        props: ['participantInfo', 'currentTokenId', 'loggedUser'],
         data(){
             return {
                 refreshMessage: 1,
@@ -146,8 +144,6 @@
                             this.$emit('loadWebChat', this.currentTokenId, this.participantInfo.chatUserid);
                         });
                 }
-
-
             }
         }
     };

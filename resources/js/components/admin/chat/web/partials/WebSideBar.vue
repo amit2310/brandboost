@@ -27,7 +27,6 @@
                                 <li><strong><a href="javascript:void(0);" class="chatdropdown" :class="{'active': this.selTab == 'favorite'}" @click="changeTab('favorite')"><img class="small"
                                                                                         src="assets/images/cd_icon4.png">Favorite
                                     ({{favoriteChat.length}}) </a></strong></li>
-
                             </ul>
                         </div>
                     </div>
@@ -50,7 +49,7 @@
                 </div>
             </div>
             <div class="sidebar_search_big mt10">
-                <input type="text" name="" value="" placeholder="Search">
+                <input type="text" v-model="searchContact" placeholder="Search">
                 <button class="sidebar_search_submit"><img src="assets/images/filter-3-line.svg"></button>
             </div>
         </div>
@@ -69,7 +68,7 @@
             <div id="All" class="tab-pane active">
                 <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons">
-                        <li v-for="contact in allChat" class="d-flex" :class="{ 'active': selContacts == contact.user }"
+                        <li v-for="contact in filteredListContact('all')" class="d-flex" :class="{ 'active': selContacts == contact.user }"
                             :userid="contact.user" style="cursor:pointer;"
                             @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
@@ -98,7 +97,7 @@
             <div id="Unassigned" class="tab-pane fade">
                 <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons">
-                        <li v-for="contact in unassignedChat" class="d-flex"
+                        <li v-for="contact in filteredListContact('unassign')" class="d-flex"
                             :class="{ 'active': selContacts == contact.user }" :userid="contact.user"
                             style="cursor:pointer;" @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
@@ -127,7 +126,7 @@
             <div id="You" class="tab-pane fade">
                 <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons">
-                        <li v-for="contact in assignedChat" class="d-flex"
+                        <li v-for="contact in filteredListContact('assign')" class="d-flex"
                             :class="{ 'active': selContacts == contact.user }" :userid="contact.user"
                             style="cursor:pointer;" @mouseup="loadChatArea(contact.room, contact.user, contact)">
                             <div class="media_left">
@@ -158,9 +157,8 @@
 </template>
 <script>
     import UserAvatar from "@/components/helpers/UserAvatar";
-
     export default {
-        props: ['allChat', 'unassignedChat', 'assignedChat', 'favoriteChat', 'participantInfo'],
+        props: ['allChat', 'unassignedChat', 'assignedChat', 'favoriteChat', 'participantInfo', 'loggedUser'],
         components: {UserAvatar},
         data() {
             return {
@@ -177,6 +175,7 @@
                 smileyMap: '',
                 objImage: '',
                 objMedia: '',
+                searchContact: ''
             }
         },
         sockets:{
@@ -219,7 +218,66 @@
             this.loadDefaultChat();
             this.smileyMap = this.getSmilyCollection();
         },
+        watch: {
+            participantInfo: function(){
+                let el = this;
+                if(this.allChat.length>0){
+                    this.allChat.forEach(function(item){
+                        if(item.user == el.participantInfo.chatUserid){
+                            item.user_name = el.participantInfo.name;
+                            item.email = el.participantInfo.email;
+                            item.phone = el.participantInfo.phone;
+                        }
+                    });
+                }
+
+                if(this.unassignedChat.length>0){
+                    this.unassignedChat.forEach(function(item){
+                        if(item.user == el.participantInfo.chatUserid){
+                            item.user_name = el.participantInfo.name;
+                            item.email = el.participantInfo.email;
+                            item.phone = el.participantInfo.phone;
+                        }
+                    });
+                }
+
+                if(this.assignedChat.length>0){
+                    this.assignedChat.forEach(function(item){
+                        if(item.user == el.participantInfo.chatUserid){
+                            item.user_name = el.participantInfo.name;
+                            item.email = el.participantInfo.email;
+                            item.phone = el.participantInfo.phone;
+                        }
+                    });
+                }
+
+            }
+        },
         methods: {
+            filteredListContact: function(type){
+                let dataSet;
+                if(type == 'all'){
+                    dataSet = this.allChat;
+                }
+                if(type == 'unassign'){
+                    dataSet = this.unassignedChat;
+                }
+                if(type == 'assign'){
+                    dataSet = this.assignedChat;
+                }
+                if (dataSet) {
+                    return dataSet.filter(contact => {
+                        let firstname = this.getName(contact.user_name).firstName;
+                        let lastname = this.getName(contact.user_name).lastName;
+                        let initials = firstname.charAt(0) + '' + lastname.charAt(0);
+                        return (contact.user_name.toLowerCase().includes(this.searchContact.toLowerCase()) ||
+                            firstname.toLowerCase().includes(this.searchContact.toLowerCase()) ||
+                            lastname.toLowerCase().includes(this.searchContact.toLowerCase()) ||
+                            initials.toLowerCase().includes(this.searchContact.toLowerCase())
+                        );
+                    });
+                }
+            },
             parseMsg: function(msg){
                 let parsedMessage = msg;
                 //parsedMessage = this.parseEmojis(parsedMessage); //Parse Smilies
@@ -325,41 +383,6 @@
                 this.$emit('loadWebChat', roomId, userid);
                 this.selContacts = userid;
                 obj.unreadCount = 0;
-            }
-        },
-        watch: {
-            participantInfo: function(){
-                let el = this;
-                if(this.allChat.length>0){
-                    this.allChat.forEach(function(item){
-                        if(item.user == el.participantInfo.chatUserid){
-                            item.user_name = el.participantInfo.name;
-                            item.email = el.participantInfo.email;
-                            item.phone = el.participantInfo.phone;
-                        }
-                    });
-                }
-
-                if(this.unassignedChat.length>0){
-                    this.unassignedChat.forEach(function(item){
-                        if(item.user == el.participantInfo.chatUserid){
-                            item.user_name = el.participantInfo.name;
-                            item.email = el.participantInfo.email;
-                            item.phone = el.participantInfo.phone;
-                        }
-                    });
-                }
-
-                if(this.assignedChat.length>0){
-                    this.assignedChat.forEach(function(item){
-                        if(item.user == el.participantInfo.chatUserid){
-                            item.user_name = el.participantInfo.name;
-                            item.email = el.participantInfo.email;
-                            item.phone = el.participantInfo.phone;
-                        }
-                    });
-                }
-
             }
         }
     };

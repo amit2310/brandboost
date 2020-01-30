@@ -33,6 +33,38 @@ class SmsChat extends Controller {
             return;
             exit();
         }
+        $SubscriberPhone = trim(numberForamt($request->SubscriberPhone));
+        $offsetValue = $request->offsetValue > 0 ? 0 : $request->offsetValue;
+        $isLoggedInTeam = Session::get("team_user_id");
+        if ($isLoggedInTeam) {
+            $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+            if ($hasweb_access > 0 && $hasweb_access->sms_chat == 1) {
+                if ($hasweb_access->bb_number != "") {
+                    $Twilionumber = numberForamt($hasweb_access->bb_number);
+                } else {
+                    $Twilionumber = numberForamt(getClientTwilioAccount($oUser->id));
+                }
+            } else {
+                $Twilionumber = numberForamt(getClientTwilioAccount($oUser->id));
+            }
+        } else {
+            $Twilionumber = numberForamt(getClientTwilioAccount($oUser->id));
+        }
+        $chatThreadsData = '';
+        if($SubscriberPhone>0){
+            $chatThreadsData = SmsChatModel::getSMSThreadsByPhoneNo($Twilionumber, $SubscriberPhone, $offsetValue);
+        }
+
+        return $chatThreadsData;
+
+}
+
+    public function showSmsThreadsOld(Request $request) {
+        $oUser = getLoggedUser($redirect = false);
+        if (empty($oUser)) {
+            return;
+            exit();
+        }
         $response = array();
         $userId = $request->userId;
         $SubscriberPhone = trim(numberForamt($request->SubscriberPhone));
@@ -139,9 +171,9 @@ class SmsChat extends Controller {
      * this function is used to return Subscriber information
      * @return type
      */
-    public function getSubsinfo() {
-        $userId = Request::input("userId");
-        $SubscriberPhone = Request::input("SubscriberPhone");
+    public function getSubsinfo(Request $request) {
+        $userId = $request->input("userId");
+        $SubscriberPhone = $request->input("SubscriberPhone");
         if (empty($userId)) {
             $usersdata = getUserbyPhone($SubscriberPhone);
             $usersdata = $usersdata[0];
@@ -161,7 +193,7 @@ class SmsChat extends Controller {
         $arr[2]['phone'] = $userData->phone;
         $arr[3]['avatar'] = $avatar;
         $arr[4]['avatar_url'] = $avatar;
-        $arr[5]['em_sub_id'] = Request::input("userId");
+        $arr[5]['em_sub_id'] = $request->input("userId");
         $arr[6]['city'] = $userData->cityName;
         $arr[7]['code'] = $userData->country_code;
         $arr[8]['gender'] = $userData->gender;
@@ -217,6 +249,7 @@ class SmsChat extends Controller {
         $moduleName = $request->moduleName;
         $media_type = $request->media_type;
         $videoUrl = $request->videoUrl;
+        $smstoken = $request->smstoken;//Added by Umair at 30/jan/2020
         $oUser = getLoggedUser();
         $aTwilioAc = getTwilioAccountCustom($oUser->id);
         $sid = $aTwilioAc->account_sid;
@@ -276,8 +309,9 @@ class SmsChat extends Controller {
             $sData = array('to' => $phoneNo, 'from' => $from, 'twilio_token' => $token, 'token' => $tokenResponse, 'msg' => $messageContent, 'media_type' => $media_type, 'module_name' => $moduleName, 'created' => date("Y-m-d H:i:s"), 'team_id' => $isLoggedInTeam, 'media_url_show' => $media_url_show);
             $smsChat = new SmsChatModel();
             $smsChat->addSmsChatData($sData);
+            return ['status'=> 'ok'];
         } else {
-            echo 'ERROR!';
+            return ['status'=> 'error'];
         }
     }
     /**
