@@ -26,7 +26,7 @@ commonComponents.forEach(component => {
 window.axios = axios;
 
 Vue.use(new VueSocketIO({
-        debug: true,
+        debug: false,
         connection: 'http://vue.brandboostx.com:3000'
     })
 );
