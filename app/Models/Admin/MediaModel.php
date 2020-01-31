@@ -7,7 +7,7 @@ use Cookie;
 use Session;
 
 class MediaModel extends Model {
-	
+
 	/**
      * Used to get all media gallery data by user id
      * @param type $userId
@@ -18,10 +18,11 @@ class MediaModel extends Model {
                 ->where('user_id', $userId)
                 ->where('deleted', 0)
                 ->orderBy('id', 'desc')
-                ->get();
+                //->get();
+                ->paginate(10);
         return $oData;
 	}
-	
+
 	/**
      * Used to get all media gallery data by user id
      * @param type $userId
@@ -33,7 +34,7 @@ class MediaModel extends Model {
                 ->first();
         return $oData;
 	}
-	
+
 	/**
      * Used to get all media gallery data by user id
      * @param type $userId
@@ -47,7 +48,7 @@ class MediaModel extends Model {
                 ->first();
         return $oData;
 	}
-	
+
 	/**
      * Used to add media gallery data
      * @return type
@@ -60,14 +61,14 @@ class MediaModel extends Model {
             return false;
         }
     }
-	
+
 	/**
      * Used to update media gallery data
      * @param type $galleryId
      * @return type
      */
 	public static function updateGallery($galleryId, $aData) {
-        
+
 		$result = DB::table('tbl_gallery')
            ->where('id', $galleryId)
            ->update($aData);
@@ -93,5 +94,5 @@ class MediaModel extends Model {
             return false;
         }
     }
-	
+
 }

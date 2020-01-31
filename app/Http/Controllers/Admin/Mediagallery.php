@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\UsersModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ReviewsModel;
@@ -17,17 +18,47 @@ class Mediagallery extends Controller {
      * @return type
      */
     public function index() {
-		$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+
+        $mUser = new UsersModel();
+        $aUser = getLoggedUser();
+        $userId = $aUser->id;
+        $userRole = $aUser->user_role;
+        $bActiveSubsription = $mUser->isActiveSubscription();
+
+		$allGallery = MediaModel::getAllGallerys($userId);
+
+		foreach ($allGallery->items() as $galleryData) {
+            if ($galleryData->team_id != '') {
+                $galleryData->createdByData = getTeamMemberById($galleryData->team_id);
+            } else {
+                $galleryData->createdByData = getUserDetailsByUserID($galleryData->user_id);
+            }
+        }
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Media Gallery" class="sidebar-control active hidden-xs ">Media Gallery</a></li>
 			</ul>';
 
-        $aUser = getLoggedUser();
-        $userId = $aUser->id;
-		$allGallery = MediaModel::getAllGallerys($userId);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Media Widgets' => '#/mediagallery'
+        );
 
-		return view('admin.media-gallery.index', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'allGallery' => $allGallery, 'userId' => $userId));
+        $aData = array(
+            'title' => 'Media Widgets',
+            'breadcrumb' => $aBreadcrumb,
+            'pagename' => $breadcrumb,
+            'allData' => $allGallery,
+            'oWidgetsList' => $allGallery->items(),
+            'bActiveSubsription' => $bActiveSubsription,
+            'user_role' => $userRole
+        );
+
+		//return view('admin.media-gallery.index', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'allGallery' => $allGallery, 'userId' => $userId));
+
+        return $aData;
     }
 
 	/**
@@ -400,7 +431,7 @@ class Mediagallery extends Controller {
 					<h5 class="modal-title">'.$reviewData[0]->brand_title.'</h5>
 				</div>
 				<div class="modal-body">
-				   
+
 				<div class="box_inner">
 			<div class="left_box showCropImagePopup" data-img-name="'.$imageUrl.'" data-review-id="'.$reviewId.'" data-img="data:image/jpg;base64,'.base64_encode(file_get_contents('https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'')).'" title="Click To Crop Image" style="cursor:pointer;"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'" ></div><!--left_box--->
 			<div class="right_box">
@@ -415,7 +446,7 @@ class Mediagallery extends Controller {
 							<span>'.dataFormat($reviewData[0]->created).'</span></div>
 						</div>
 					</div>
-					
+
 					<div class="bottom_div">
 						<p>'.$reviewData[0]->comment_text.'</p>
 					</div>
