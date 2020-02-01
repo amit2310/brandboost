@@ -578,6 +578,30 @@ class Mediagallery extends Controller {
 		$galleryData = $mMedia->getGalleryData($galleryId);
 		//$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
 
+        $reviewIDArray = unserialize($galleryData->reviews_id);
+        if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0) {
+            foreach ($reviewIDArray as $reviewId) {
+                $reviewData = ReviewsModel::getReviewDetailsByReviewID($reviewId);
+
+                $reviewImageArray = unserialize($reviewData[0]->media_url);
+                if(count($reviewImageArray)>0)
+                {
+                    $imageUrl = $reviewImageArray[0]['media_url'];
+                    $cropedImageUrl = $reviewData[0]->croped_image_url;
+                }
+                else
+                {
+                    $imageUrl = "";
+                    $cropedImageUrl = "";
+                }
+
+                if($cropedImageUrl == ''){
+                    $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
+                }else{
+                    $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
+                }
+            }
+        }
 		$response = array(
 			'status' => 'success',
 			/*'sliderView' => utf8_encode($sliderData)*/
