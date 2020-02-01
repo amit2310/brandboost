@@ -27,7 +27,7 @@ window.axios = axios;
 
 Vue.use(new VueSocketIO({
         debug: false,
-        connection: 'http://vue.brandboostx.com:3000'
+        connection: 'http://brandboostx.com:3000'
     })
 );
 Vue.use(VueRouter);

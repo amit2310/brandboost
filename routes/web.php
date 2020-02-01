@@ -377,6 +377,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/webchat/sortWebChatContactList', 'Admin\WebChat@sortWebChatContactList');
     Route::post('admin/webchat/listShortcuts', 'Admin\WebChat@listShortcuts');
     Route::post('admin/webchat/getUnreadMsgs', 'Admin\WebChat@getUnreadMsgs');
+    Route::post('admin/webchat/sendEmail', 'Admin\WebChat@sendEmail');
 
 
 //Setting

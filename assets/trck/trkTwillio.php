@@ -1,7 +1,7 @@
 <?php
 /*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL); 
+error_reporting(E_ALL);
 */
 
 
@@ -30,7 +30,7 @@ $_REQUEST['Body']='Hey';
 
 try {
       if (!empty($to) && !empty($from)) {
-            
+
            $msg = $_REQUEST['Body'];
 
           if(!empty($_REQUEST['Body']))
@@ -51,14 +51,14 @@ try {
             }
         }
         //Get latest activity
-       
+
         if (!empty($to) && !empty($from)) {
 
 
             $oLatestActivity = getLatestActivity($from, $to);
 
-            
-            
+
+
             $moduleName =  $oLatestActivity['module_name']!='' ? $oLatestActivity['module_name'] : '0';
             $subcriberID =  $oLatestActivity['subscriber_id']!='' ? $oLatestActivity['subscriber_id'] : '0';
             $eventID = $oLatestActivity['event_id']!='' ? $oLatestActivity['event_id'] : '0';
@@ -71,7 +71,7 @@ try {
             $brandboostID =  $oLatestActivity['brandboost_id']!='' ? $oLatestActivity['brandboost_id'] : '0';
 
 
- 
+
             $aStoreSMS = array(
                 'to' => db_in($to),
                 'from' => db_in($from),
@@ -88,7 +88,7 @@ try {
                 'created' => date("Y-m-d H:i:s")
                     //'created' => date("Y-m-d H:i:s", strtotime('+5 hours')) //earlier it was hosted on pleasereviewmehere.com site
             );
-            
+
             //Now process module wise data
             if (!empty($to)) {
                 $oTwilioDetails = getTwilioAccount($to);
@@ -220,7 +220,7 @@ try {
                     }
                 }
             } else {
-              
+
                 //Send message straight to the chat module
                 $aStoreSMS['to'] = $to;
                 $aStoreSMS['from'] = $from;
@@ -235,7 +235,7 @@ try {
 
 
                 //$tokenResponse = getSmsToken($from, $to);
-                
+
                 $msgExplode = explode('/', $msg);
 
                 $mm_id = $msgExplode[7];
@@ -287,7 +287,7 @@ try {
                 $aStoreSMS['response'] = json_encode($_REQUEST);
                 $aStoreSMS['media_type'] = $media_type;
 
-             
+
                 saveTrackingData('tbl_chat_sms_thread', $aStoreSMS);
                 $totatMessageCount = ceil($charCount / 160);
                 if ($clientID > 0) {
