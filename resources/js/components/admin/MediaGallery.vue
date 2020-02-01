@@ -12,7 +12,7 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 js-referral-widget-slidebox">New Media Widgets<span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 js-media-widget-slidebox">New Media Widgets<span><img src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -68,12 +68,11 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                         <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void(0);" @click="navigateToWidgetSetup(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                        <a v-if="(widget.status == '0' || widget.status == '2') && widget.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Start</a>
-                                        <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
-                                        <a v-if="widget.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                        <a v-if="widget.status == '0' && widget.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                        <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                        <a v-if="widget.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
-                                        <a class="dropdown-item viewECode" href="javascript:void(0);" :widgetID="widget.id"><i class="dripicons-user text-muted mr-2"></i> Get Embedded Code</a>
                                     </div>
                                 </div>
                                 <div style="cursor:pointer;">
@@ -115,10 +114,10 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 text-center js-referral-widget-slidebox" style="cursor: pointer;">
+                        <div class="col-md-3 text-center js-media-widget-slidebox" style="cursor: pointer;">
                             <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                                 <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Referral Widgets</p>
+                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Media Widgets</p>
                             </div>
                         </div>
 
@@ -140,7 +139,7 @@
                                         <img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
                                         <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any Media widgets</h3>
                                         <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import!</h3>
-                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-referral-widget-slidebox">Add Media Widget</button>
+                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-media-widget-slidebox">Add Media Widget</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -165,19 +164,19 @@
              **********************-->
             <div class="box" style="width: 424px;">
                 <div style="width: 424px;overflow: hidden; height: 100%;">
-                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-referral-widget-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-media-widget-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                         <form method="post" @submit.prevent="processForm">
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Referral Widget</h3>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Media Gallery</h3>
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="referralTitle">Widget name</label>
-                                            <input type="text" class="form-control h56" id="referralTitle" placeholder="Enter widget name" name="referralTitle"
-                                                   v-model="form.referralTitle">
+                                            <input type="text" class="form-control h56" id="title" placeholder="Enter widget name" name="title"
+                                                   v-model="form.title">
                                         </div>
                                         <div class="form-group">
                                             <label for="desc">Description</label>
@@ -193,6 +192,7 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
+                                        <input type="hidden" name="editGalleryId" id="editGalleryId" value=""/>
                                         <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                         <input type="hidden" name="module_account_id" id="module_account_id"
                                                :value="moduleAccountID">
@@ -209,9 +209,9 @@
                 <div class="modal-dialog" style="width:1200px;">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
                             <h5 class="modal-title"><img src="/assets/images/menu_icons/List_Color.svg"/> Gallery Images &nbsp;
                                 <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
                         <div class="modal-body" id="mediaGalleryPreview">
                             <div class="gallery_slider_widget"></div>
@@ -237,8 +237,9 @@
         data() {
             return {
                 form: {
-                    referralTitle: '',
-                    description: ''
+                    title: '',
+                    description: '',
+                    editGalleryId: ''
                 },
                 formLabel: 'Create',
                 successMsg: '',
@@ -272,14 +273,14 @@
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-referral-widget-slidebox').click();
+                document.querySelector('.js-media-widget-slidebox').click();
             },
             prepareUpdate: function(wId) {
-                this.navigateToOnsiteWidgetSetup(wId);
+                this.getInfo(wId);
             },
             getInfo: function(wId){
-                axios.post('/admin/lists/getList', {
-                    wid:wId,
+                axios.post('/admin/mediagallery/getMediaInfo', {
+                    gallery_id:wId,
                     moduleName: this.moduleName,
                     _token: this.csrf_token()
                 })
@@ -287,8 +288,9 @@
                         if(response.data.status == 'success'){
                             //Fill up the form fields
                             let formData = response.data;
-                            this.form.campaignName = formData.campaignName;
-                            this.form.wid = formData.wid;
+                            this.form.editGalleryId = formData.gallery_id;
+                            this.form.title = formData.title;
+                            this.form.description = formData.description;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
@@ -299,24 +301,21 @@
                 this.loading = true;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
-                if(this.form.wid>0){
-                    formActionSrc = '/admin/lists/updatePeopleList';
+                if(this.form.editGalleryId>0){
+                    formActionSrc = '/admin/mediagallery/updateGallery';
                 }else{
-                    formActionSrc = '/admin/modules/referral/addReferralWidget';
+                    formActionSrc = '/admin/mediagallery/addList';
                     this.form.module_account_id = this.moduleAccountID;
                 }
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
                             this.loading = false;
-                            this.form.wid ='';
-                            document.querySelector('.js-referral-widget-slidebox').click();
+                            this.form.editGalleryId ='';
+                            document.querySelector('.js-media-widget-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
 
-                            var elem = this;
-                            setTimeout(function () {
-                                elem.loadPaginatedData();
-                            }, 500);
+                            this.navigateToMediaSetup(response.data.gallery_id);
 
                             syncContactSelectionSources();
                         }
@@ -356,8 +355,8 @@
             changeStatus: function(wID, status) {
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/modules/referral/updatReferralWidgetStatus', {
-                        widgetID:wID,
+                    axios.post('/admin/mediagallery/updateStatus', {
+                        gallery_id:wID,
                         status:status,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
@@ -375,8 +374,8 @@
             deleteItem: function(wId) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
-                    axios.post('/admin/modules/referral/delete_referral_widget', {
-                        widget_id:wId,
+                    axios.post('/admin/mediagallery/deleteGallery', {
+                        gallery_id:wId,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
@@ -432,6 +431,14 @@
     /* Slideshow */
 
     $(document).ready(function () {
+        $(document).on('click', '.js-media-widget-slidebox', function () {
+            $(".box").animate({
+                width: "toggle"
+            });
+        });
+
+        /*$('[name=tags]').tagify();*/
+
         $(document).on('click', '.getGalleryImage', function (e) {
             $('.overlaynew').show();
             var galleryId = $(this).attr('gallery-id');
@@ -444,9 +451,11 @@
                 data: {'gallery_id': galleryId},
                 dataType: "json",
                 success: function (data) {
+                    console.log(data);
                     $('.overlaynew').hide();
                     if (data.status == "success") {
-                        $('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides' + sliderBoxCount + '">' + data.sliderView + '</div>');
+                        //$('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides' + sliderBoxCount + '">' + data.sliderView + '</div>');
+                        $('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides' + sliderBoxCount + '"></div>');
                         slideIndex = 0;
                         $('#showGalleryImages').modal();
                     } else {
