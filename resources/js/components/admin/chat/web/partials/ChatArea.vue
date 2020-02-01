@@ -90,8 +90,29 @@
                 </div>
                 <!--======Tab 3=====-->
                 <div id="EmailView" class="tab-pane fade">
-                    <div class="p20">
-                        Email Section
+                    <div class="mainemailsvroll2" style="height:500px;overflow:auto;padding-right:30px;">
+                        <div class="p20">
+                            <ul class="media-list chat-list">
+                                <li class="media reversed" v-for="row in emailData">
+                                    <div class="media-body">
+                                        <span class="media-annotation user_icon" v-if="row.avatar">
+                                            <span class="icons s32">
+                                                <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${row.avatar}`" onerror="this.src='/assets/images/default_avt.jpeg'" class="img-circle" alt="" width="36" height="36">
+                                            </span>
+                                        </span>
+                                        <span class="media-annotation user_icon" v-else>
+                                            <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{row.firstname.charAt(0)+ '' +row.lastname.charAt(0)}}
+                                            </span>
+                                        </span>
+                                        <div class="media-content" v-html="parseMessage(row.message)" ></div>
+                                        <span style="font-size:12px;clear:both;" class="text-muted text-size-small pull-right mb-3">
+                                            Added By {{row.firstname + ' ' + row.lastname}}
+                                        </span>
+                                        <div style="height:10px" class="clearfix">&nbsp;</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <!--======Tab 4=====-->
@@ -355,6 +376,7 @@
                 loading: false,
                 chatData: '',
                 notesData: '',
+                emailData: [],
                 smsData:'',
                 searchShortcut: '',
                 enteredMessage: '',
@@ -402,7 +424,14 @@
                         el.scrollToEndChat();
                     }, 10);
                 }
-            }
+            },
+            'messageTresponse': function(data){
+                let msgFrom = data.from;
+                let msgTo = data.to;
+                if((formatNumber(msgFrom) == formatNumber(this.participantInfo.phone)) && (formatNumber(msgTo) == formatNumber(this.loggedUserInfo.mobile))){
+                    this.getSmsList();
+                }
+            },
         },
        computed: {
             filteredListShortcut() {
@@ -423,6 +452,7 @@
                 this.smileyMap = this.getSmilyCollection();
                 this.$socket.emit('subscribe', this.currentTokenId);
                 this.loading = true;
+                this.emailData = [];
                 //this.getMessageList();
                 this.getNotesList();
                 this.markRead();
@@ -537,6 +567,9 @@
                     if(this.noteTab){
                         this.saveNote();
                     }
+                    if(this.emailTab){
+                        this.sendEmail();
+                    }
                     if(this.textTab){
                         this.sendSms();
                     }
@@ -613,6 +646,27 @@
                             this.getSmsList();
                             this.loading = false;
                         }
+                    });
+            },
+            sendEmail: function () {
+                this.loading = true;
+                let msg = this.enteredMessage;
+                this.enteredMessage = '';
+                axios.post('/admin/webchat/sendEmail', {
+                    email: this.participantInfo.email,
+                    messageContent: msg,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.loading = false;
+                        let newObj = {
+                            avatar: this.loggedAvatar,
+                            message:msg,
+                            firstname: this.loggedUserInfo.firstname,
+                            lastname: this.loggedUserInfo.lastname
+                        };
+                        this.emailData.push(newObj);
+                        this.enteredMessage = '';
                     });
             },
             saveNote: function () {

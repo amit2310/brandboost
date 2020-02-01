@@ -1706,7 +1706,60 @@ class WebChat extends Controller {
             $mChatModel =  new WebChatModel();
             $result = $mChatModel->updateReadStatus($roomId, $userId);
             return $result;
-        }
+    }
+
+    /**
+     * This function used to send email from chat module
+     * @param Request $request
+     * @return bool
+     */
+    public function sendEmail(Request $request){
+        $oUser = getLoggedUser();
+        $toAddress = $request->email;
+        $fromAddress = $oUser->email;
+        $msg = $request->messageContent;
+        $plainText = convertHtmlToPlain($msg);
+        $subject = "Brandboost: you got new email";
+        $aSendgridData = getSendgridAccount($oUser->id);
+        $user = $aSendgridData->sg_username;
+        $password = $aSendgridData->sg_password;
+        $host = 'smtp.sendgrid.net';
+        $port = '2525';
+        $type = 'html';
+        $url = 'https://api.sendgrid.com/';
+        $params = array(
+            'api_user' => $user,
+            'api_key' => $password,
+            'to' => $toAddress,
+            'subject' => ($subject) ? $subject : config('bbconfig.blank_subject'),
+            'html' => $msg,
+            'text' => $plainText,
+            'from' => $fromAddress
+        );
+
+        $request = $url . 'api/mail.send.json';
+        $session = curl_init($request);
+        curl_setopt($session, CURLOPT_POST, true);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($session, CURLOPT_HEADER, false);
+        curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($session);
+        /*$aUsage = array(
+            'client_id' => $oUser->id,
+            'usage_type' => 'email',
+            'content' => $msg,
+            'spend_to' => $toAddress,
+            'spend_from' => '',
+            'module_name' => 'chat',
+            'module_unit_id' => ''
+        );
+        updateCreditUsage($aUsage);
+        //Todoo: Save Email Data into the database if required*/
+        return ['status' =>'ok'];
+
+    }
+
 
 
 
