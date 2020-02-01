@@ -149,5 +149,5 @@
     };
 </script>
 <style scoped>
-    .editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px;}
+    .editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px;display:block!important;}
 </style>
