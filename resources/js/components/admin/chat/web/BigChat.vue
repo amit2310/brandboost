@@ -25,6 +25,7 @@
                 :favoriteChat="favoriteChat"
                 :participantInfo="participantInfo"
                 :loggedUser="user"
+                :twilioNumber="twilioNumber"
                 @loadWebChat="loadWebChat"
             ></web-side-bar>
             <web-profile-bar
@@ -33,6 +34,7 @@
                 :participantId="participantId"
                 :participantInfo="participantInfo"
                 :loggedUser="user"
+                :twilioNumber="twilioNumber"
                 @loadWebChat="loadWebChat"
             ></web-profile-bar>
             <chat-area
@@ -43,6 +45,7 @@
                 :participantInfo="participantInfo"
                 :shortcuts="shortcuts"
                 :loggedUser="user"
+                :twilioNumber="twilioNumber"
             ></chat-area>
         </div>
         <SaveReplyPopup @updateShortcuts="fetchShortcuts"></SaveReplyPopup>
@@ -73,6 +76,7 @@
                 currentTokenId: '',
                 participantId: '',
                 participantInfo: '',
+                twilioNumber: '',
                 shortcuts: '',
                 user: {},
                 breadcrumb: ''
@@ -98,6 +102,7 @@
                         this.allChat = response.data.allChat;
                         this.loggedId = response.data.loggedYou;
                         this.user = response.data.loginUserData;
+                        this.twilioNumber = response.data.twilioNumber;
                         this.loading = false;
                         //loadJQScript(this.user.id);
                     });
