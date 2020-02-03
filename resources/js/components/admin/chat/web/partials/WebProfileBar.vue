@@ -84,7 +84,7 @@
 </template>
 <script>
     export default {
-        props: ['participantInfo', 'currentTokenId', 'loggedUser'],
+        props: ['participantInfo', 'currentTokenId', 'loggedUser', 'twilioNumber'],
         data(){
             return {
                 refreshMessage: 1,

@@ -28,8 +28,16 @@ class WebChat extends Controller {
         $favoriteChatData = $mWebChat->getFavouriteUsers($oUser->id);
         $isLoggedInTeam = Session::get("team_user_id");
         if(!empty($isLoggedInTeam)){
+            $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+            if ($hasweb_access->bb_number != "") {
+                $twilioNumber = $hasweb_access->bb_number;
+            } else {
+                $twilioNumber = getClientTwilioAccount($oUser->id);
+            }
             $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $oUser->id);
             $teamMemberId = $aTeamInfo->id;
+        }else{
+            $twilioNumber = getClientTwilioAccount($oUser->id);
         }
 
         //Assigned Chat
@@ -73,6 +81,7 @@ class WebChat extends Controller {
             'usersdata' => $oContacts,
             'favouriteUserData' => $favoriteChatData,
             'loginUserData' => $oUser,
+            'twilioNumber' => $twilioNumber,
             'totalSubscriber' => count($oContacts),
             'unassignedChat' => $unassignedChat,
             'assignedChat' => $assignedChat,
@@ -1715,6 +1724,7 @@ class WebChat extends Controller {
      */
     public function sendEmail(Request $request){
         $oUser = getLoggedUser();
+        $isLoggedInTeam = Session::get("team_user_id");
         $toAddress = $request->email;
         $fromAddress = $oUser->email;
         $msg = $request->messageContent;
@@ -1745,6 +1755,16 @@ class WebChat extends Controller {
         curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($session);
+        //Store Data into the database
+        $aData = [
+            'from' => $fromAddress,
+            'to' => $toAddress,
+            'msg' => $msg,
+            'team_id' => $isLoggedInTeam ? $isLoggedInTeam : '',
+            'created' => date("Y-m-d H:i:s")
+        ];
+        $mChatModel =  new WebChatModel();
+        $mChatModel->saveEmailChat($aData);
         /*$aUsage = array(
             'client_id' => $oUser->id,
             'usage_type' => 'email',
@@ -1757,6 +1777,20 @@ class WebChat extends Controller {
         updateCreditUsage($aUsage);
         //Todoo: Save Email Data into the database if required*/
         return ['status' =>'ok'];
+
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function showEmailThread(Request $request){
+        $oUser = getLoggedUser();
+        $fromAddress = $oUser->email;
+        $to = $request->to;
+        $mWebChat = new WebChatModel();
+        $aData = $mWebChat->getEmailThread($fromAddress, $to);
+        return $aData;
 
     }
 

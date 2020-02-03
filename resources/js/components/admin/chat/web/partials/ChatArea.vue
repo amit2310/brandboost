@@ -95,18 +95,18 @@
                             <ul class="media-list chat-list">
                                 <li class="media reversed" v-for="row in emailData">
                                     <div class="media-body">
-                                        <span class="media-annotation user_icon" v-if="row.avatar">
+                                        <span class="media-annotation user_icon" v-if="loggedUserInfo.avatar">
                                             <span class="icons s32">
-                                                <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${row.avatar}`" onerror="this.src='/assets/images/default_avt.jpeg'" class="img-circle" alt="" width="36" height="36">
+                                                <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${loggedUserInfo.avatar}`" onerror="this.src='/assets/images/default_avt.jpeg'" class="img-circle" alt="" width="36" height="36">
                                             </span>
                                         </span>
                                         <span class="media-annotation user_icon" v-else>
-                                            <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{row.firstname.charAt(0)+ '' +row.lastname.charAt(0)}}
+                                            <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{loggedUserInfo.firstname.charAt(0)+ '' +loggedUserInfo.lastname.charAt(0)}}
                                             </span>
                                         </span>
-                                        <div class="media-content" v-html="parseMessage(row.message)" ></div>
+                                        <div class="media-content" v-html="parseMessage(row.msg)" ></div>
                                         <span style="font-size:12px;clear:both;" class="text-muted text-size-small pull-right mb-3">
-                                            Added By {{row.firstname + ' ' + row.lastname}}
+                                            Added By {{loggedUserInfo.firstname + ' ' + loggedUserInfo.lastname}}
                                         </span>
                                         <div style="height:10px" class="clearfix">&nbsp;</div>
                                     </div>
@@ -367,7 +367,7 @@
 </template>
 <script>
     export default {
-        props: ['currentTokenId', 'loggedId', 'loggedUserInfo', 'participantId', 'participantInfo', 'shortcuts', 'loggedUser'],
+        props: ['currentTokenId', 'loggedId', 'loggedUserInfo', 'participantId', 'participantInfo', 'shortcuts', 'loggedUser', 'twilioNumber'],
         data() {
             return {
                 refreshMessage: 1,
@@ -428,7 +428,7 @@
             'messageTresponse': function(data){
                 let msgFrom = data.from;
                 let msgTo = data.to;
-                if((formatNumber(msgFrom) == formatNumber(this.participantInfo.phone)) && (formatNumber(msgTo) == formatNumber(this.loggedUserInfo.mobile))){
+                if((formatNumber(msgFrom) == formatNumber(this.participantInfo.phone)) && (formatNumber(msgTo) == formatNumber(this.twilioNumber))){
                     this.getSmsList();
                 }
             },
@@ -461,6 +461,7 @@
             participantInfo: function () {
                  this.getMessageList();
                  this.getSmsList();
+                 this.getEmailList();
             },
         },
         methods: {
@@ -521,6 +522,20 @@
                         let el = this;
                         setTimeout(function () {
                             el.scrollToEndSms();
+                        }, 500);
+                    });
+            },
+            getEmailList: function(){
+                axios.post('/admin/webchat/showEmailThread', {
+                    to: this.participantInfo.email,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.emailData = response.data;
+                        this.loading = false;
+                        let el = this;
+                        setTimeout(function () {
+                            el.scrollToEndEmail();
                         }, 500);
                     });
             },
@@ -661,9 +676,7 @@
                         this.loading = false;
                         let newObj = {
                             avatar: this.loggedAvatar,
-                            message:msg,
-                            firstname: this.loggedUserInfo.firstname,
-                            lastname: this.loggedUserInfo.lastname
+                            msg:msg
                         };
                         this.emailData.push(newObj);
                         this.enteredMessage = '';
@@ -749,6 +762,10 @@
             },
             scrollToEndSms: function () {
                 let container = this.$el.querySelector(".mainsmssvroll2");
+                container.scrollTop = container.scrollHeight;
+            },
+            scrollToEndEmail: function () {
+                let container = this.$el.querySelector(".mainemailsvroll2");
                 container.scrollTop = container.scrollHeight;
             },
             triggerImageUploadButton: function(){
