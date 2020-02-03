@@ -84,7 +84,7 @@
 </template>
 <script>
     export default {
-        props: ['participantInfo', 'currentTokenId', 'loggedUser'],
+        props: ['participantInfo', 'currentTokenId', 'loggedUser', 'twilioNumber'],
         data(){
             return {
                 refreshMessage: 1,
@@ -149,5 +149,5 @@
     };
 </script>
 <style scoped>
-    .editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px;}
+    .editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px;display:block!important;}
 </style>

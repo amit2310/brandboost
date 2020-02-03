@@ -90,8 +90,29 @@
                 </div>
                 <!--======Tab 3=====-->
                 <div id="EmailView" class="tab-pane fade">
-                    <div class="p20">
-                        Email Section
+                    <div class="mainemailsvroll2" style="height:500px;overflow:auto;padding-right:30px;">
+                        <div class="p20">
+                            <ul class="media-list chat-list">
+                                <li class="media reversed" v-for="row in emailData">
+                                    <div class="media-body">
+                                        <span class="media-annotation user_icon" v-if="loggedUserInfo.avatar">
+                                            <span class="icons s32">
+                                                <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${loggedUserInfo.avatar}`" onerror="this.src='/assets/images/default_avt.jpeg'" class="img-circle" alt="" width="36" height="36">
+                                            </span>
+                                        </span>
+                                        <span class="media-annotation user_icon" v-else>
+                                            <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{loggedUserInfo.firstname.charAt(0)+ '' +loggedUserInfo.lastname.charAt(0)}}
+                                            </span>
+                                        </span>
+                                        <div class="media-content" v-html="parseMessage(row.msg)" ></div>
+                                        <span style="font-size:12px;clear:both;" class="text-muted text-size-small pull-right mb-3">
+                                            Added By {{loggedUserInfo.firstname + ' ' + loggedUserInfo.lastname}}
+                                        </span>
+                                        <div style="height:10px" class="clearfix">&nbsp;</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <!--======Tab 4=====-->
@@ -346,7 +367,7 @@
 </template>
 <script>
     export default {
-        props: ['currentTokenId', 'loggedId', 'loggedUserInfo', 'participantId', 'participantInfo', 'shortcuts', 'loggedUser'],
+        props: ['currentTokenId', 'loggedId', 'loggedUserInfo', 'participantId', 'participantInfo', 'shortcuts', 'loggedUser', 'twilioNumber'],
         data() {
             return {
                 refreshMessage: 1,
@@ -355,6 +376,7 @@
                 loading: false,
                 chatData: '',
                 notesData: '',
+                emailData: [],
                 smsData:'',
                 searchShortcut: '',
                 enteredMessage: '',
@@ -402,7 +424,14 @@
                         el.scrollToEndChat();
                     }, 10);
                 }
-            }
+            },
+            'messageTresponse': function(data){
+                let msgFrom = data.from;
+                let msgTo = data.to;
+                if((formatNumber(msgFrom) == formatNumber(this.participantInfo.phone)) && (formatNumber(msgTo) == formatNumber(this.twilioNumber))){
+                    this.getSmsList();
+                }
+            },
         },
        computed: {
             filteredListShortcut() {
@@ -423,6 +452,7 @@
                 this.smileyMap = this.getSmilyCollection();
                 this.$socket.emit('subscribe', this.currentTokenId);
                 this.loading = true;
+                this.emailData = [];
                 //this.getMessageList();
                 this.getNotesList();
                 this.markRead();
@@ -431,6 +461,7 @@
             participantInfo: function () {
                  this.getMessageList();
                  this.getSmsList();
+                 this.getEmailList();
             },
         },
         methods: {
@@ -494,6 +525,20 @@
                         }, 500);
                     });
             },
+            getEmailList: function(){
+                axios.post('/admin/webchat/showEmailThread', {
+                    to: this.participantInfo.email,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.emailData = response.data;
+                        this.loading = false;
+                        let el = this;
+                        setTimeout(function () {
+                            el.scrollToEndEmail();
+                        }, 500);
+                    });
+            },
             getNotesList: function(){
                 axios.post('/admin/webchat/listingNotes', {
                     NotesTo: this.participantId,
@@ -536,6 +581,9 @@
                     }
                     if(this.noteTab){
                         this.saveNote();
+                    }
+                    if(this.emailTab){
+                        this.sendEmail();
                     }
                     if(this.textTab){
                         this.sendSms();
@@ -613,6 +661,25 @@
                             this.getSmsList();
                             this.loading = false;
                         }
+                    });
+            },
+            sendEmail: function () {
+                this.loading = true;
+                let msg = this.enteredMessage;
+                this.enteredMessage = '';
+                axios.post('/admin/webchat/sendEmail', {
+                    email: this.participantInfo.email,
+                    messageContent: msg,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.loading = false;
+                        let newObj = {
+                            avatar: this.loggedAvatar,
+                            msg:msg
+                        };
+                        this.emailData.push(newObj);
+                        this.enteredMessage = '';
                     });
             },
             saveNote: function () {
@@ -695,6 +762,10 @@
             },
             scrollToEndSms: function () {
                 let container = this.$el.querySelector(".mainsmssvroll2");
+                container.scrollTop = container.scrollHeight;
+            },
+            scrollToEndEmail: function () {
+                let container = this.$el.querySelector(".mainemailsvroll2");
                 container.scrollTop = container.scrollHeight;
             },
             triggerImageUploadButton: function(){

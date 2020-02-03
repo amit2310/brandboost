@@ -158,7 +158,7 @@
 <script>
     import UserAvatar from "@/components/helpers/UserAvatar";
     export default {
-        props: ['allChat', 'unassignedChat', 'assignedChat', 'favoriteChat', 'participantInfo', 'loggedUser'],
+        props: ['allChat', 'unassignedChat', 'assignedChat', 'favoriteChat', 'participantInfo', 'loggedUser', 'twilioNumber'],
         components: {UserAvatar},
         data() {
             return {

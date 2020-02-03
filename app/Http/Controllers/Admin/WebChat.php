@@ -28,8 +28,16 @@ class WebChat extends Controller {
         $favoriteChatData = $mWebChat->getFavouriteUsers($oUser->id);
         $isLoggedInTeam = Session::get("team_user_id");
         if(!empty($isLoggedInTeam)){
+            $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+            if ($hasweb_access->bb_number != "") {
+                $twilioNumber = $hasweb_access->bb_number;
+            } else {
+                $twilioNumber = getClientTwilioAccount($oUser->id);
+            }
             $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $oUser->id);
             $teamMemberId = $aTeamInfo->id;
+        }else{
+            $twilioNumber = getClientTwilioAccount($oUser->id);
         }
 
         //Assigned Chat
@@ -73,6 +81,7 @@ class WebChat extends Controller {
             'usersdata' => $oContacts,
             'favouriteUserData' => $favoriteChatData,
             'loginUserData' => $oUser,
+            'twilioNumber' => $twilioNumber,
             'totalSubscriber' => count($oContacts),
             'unassignedChat' => $unassignedChat,
             'assignedChat' => $assignedChat,
@@ -1706,7 +1715,85 @@ class WebChat extends Controller {
             $mChatModel =  new WebChatModel();
             $result = $mChatModel->updateReadStatus($roomId, $userId);
             return $result;
-        }
+    }
+
+    /**
+     * This function used to send email from chat module
+     * @param Request $request
+     * @return bool
+     */
+    public function sendEmail(Request $request){
+        $oUser = getLoggedUser();
+        $isLoggedInTeam = Session::get("team_user_id");
+        $toAddress = $request->email;
+        $fromAddress = $oUser->email;
+        $msg = $request->messageContent;
+        $plainText = convertHtmlToPlain($msg);
+        $subject = "Brandboost: you got new email";
+        $aSendgridData = getSendgridAccount($oUser->id);
+        $user = $aSendgridData->sg_username;
+        $password = $aSendgridData->sg_password;
+        $host = 'smtp.sendgrid.net';
+        $port = '2525';
+        $type = 'html';
+        $url = 'https://api.sendgrid.com/';
+        $params = array(
+            'api_user' => $user,
+            'api_key' => $password,
+            'to' => $toAddress,
+            'subject' => ($subject) ? $subject : config('bbconfig.blank_subject'),
+            'html' => $msg,
+            'text' => $plainText,
+            'from' => $fromAddress
+        );
+
+        $request = $url . 'api/mail.send.json';
+        $session = curl_init($request);
+        curl_setopt($session, CURLOPT_POST, true);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($session, CURLOPT_HEADER, false);
+        curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($session);
+        //Store Data into the database
+        $aData = [
+            'from' => $fromAddress,
+            'to' => $toAddress,
+            'msg' => $msg,
+            'team_id' => $isLoggedInTeam ? $isLoggedInTeam : '',
+            'created' => date("Y-m-d H:i:s")
+        ];
+        $mChatModel =  new WebChatModel();
+        $mChatModel->saveEmailChat($aData);
+        /*$aUsage = array(
+            'client_id' => $oUser->id,
+            'usage_type' => 'email',
+            'content' => $msg,
+            'spend_to' => $toAddress,
+            'spend_from' => '',
+            'module_name' => 'chat',
+            'module_unit_id' => ''
+        );
+        updateCreditUsage($aUsage);
+        //Todoo: Save Email Data into the database if required*/
+        return ['status' =>'ok'];
+
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function showEmailThread(Request $request){
+        $oUser = getLoggedUser();
+        $fromAddress = $oUser->email;
+        $to = $request->to;
+        $mWebChat = new WebChatModel();
+        $aData = $mWebChat->getEmailThread($fromAddress, $to);
+        return $aData;
+
+    }
+
 
 
 

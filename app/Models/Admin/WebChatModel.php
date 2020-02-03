@@ -453,6 +453,25 @@ FROM
         return $oData;
     }
 
+    /**
+     * Save Email Chat into the database
+     * @param $aData
+     * @return mixed
+     */
+    public function saveEmailChat($aData){
+        $insert_id = DB::table('tbl_chat_email_thread')->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Get Email thread Data
+     * @param $from
+     * @return mixed
+     */
+    public function getEmailThread($from, $to){
+        return DB::table('tbl_chat_email_thread')->where('from', $from)->where('to', $to)->get();
+    }
+
 
 
 

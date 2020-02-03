@@ -122,6 +122,11 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('support_user_created', {support_name: data.name, support_id: data.id, UserID:data.suppUserID,email:data.email, msg:data.msg, currentTime:data.currentTime});
 	});
 
+    socket.on('sms-incoming', function(data){
+        io.sockets.emit('sms-received', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName, room:data.room});
+        console.log(data);
+    });
+
 	/*-- End support chat --*/
 
 	/*socket.on("disconnect", function(){
