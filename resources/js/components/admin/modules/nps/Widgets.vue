@@ -120,16 +120,16 @@
 
                                     <div class="col-md-12 text-center">
                                         <img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
-                                        <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any Referral widgets</h3>
+                                        <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any NPS widgets</h3>
                                         <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import!</h3>
-                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-nps-widget-slidebox">Add Referral Widget</button>
+                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-nps-widget-slidebox">Add NPS Widget</button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 text-right">
                                         <a class="lh_32 htxt_regular_14 dark_200" href="#">
                                             <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
-                                            Learn how to use referral widgets
+                                            Learn how to use NPS widgets
                                         </a>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Referral Widget</h3>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} NPS Widget</h3>
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
@@ -312,9 +312,9 @@
             },
             loadPaginatedData: function () {
                 //getData
-                axios.get('/admin/modules/referral/widgets?page='+this.current_page)
+                axios.get('/admin/modules/nps/widgets?page='+this.current_page)
                     .then(response => {
-                        //console.log(response.data);
+                        console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -325,6 +325,7 @@
                         this.widgets = response.data.oWidgetsList;
                         this.bActiveSubsription = response.data.bActiveSubsription;
                         this.user_role = response.data.user_role;
+                        //console.log(this.widgets);
                     });
             },
             showPaginationData: function (current_page) {

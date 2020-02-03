@@ -233,6 +233,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
+    Route::get('admin/modules/nps/widgets', 'Admin\Modules\Nps@widgets');
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
     Route::get('admin/modules/referral/{id}', 'Admin\Modules\Referral@index');
     Route::post('admin/modules/chat/addChat', 'Admin\Modules\Chat@addChat');
@@ -742,7 +743,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/nps/overview', 'Admin\Modules\Nps@overview');
     Route::get('admin/modules/nps/setup/{npsID}', 'Admin\Modules\Nps@setup');
     Route::post('admin/modules/nps/updateNPSCustomize', 'Admin\Modules\Nps@updateNPSCustomize');
-    Route::get('admin/modules/nps/widgets', 'Admin\Modules\Nps@widgets');
     Route::post('admin/modules/nps/addNPSWidget', 'Admin\Modules\Nps@addNPSWidget');
     Route::post('admin/modules/nps/updatNPSWidgetStatus', 'Admin\Modules\Nps@updatNPSWidgetStatus');
     Route::post('admin/modules/nps/delete_nps_widget', 'Admin\Modules\Nps@delete_nps_widget');

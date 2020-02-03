@@ -501,6 +501,7 @@ class Nps extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
+
         $oWidgetsList = $mNPS->getNPSWidgets($userID);
         //$oStats = $mNPS->getNPSWidgetStats($userID);
 
@@ -512,16 +513,26 @@ class Nps extends Controller {
 			<li><a data-toggle="tooltip" data-placement="bottom" title="NPS Widgets" class="sidebar-control active hidden-xs ">NPS Widgets</a></li>
 			</ul>';
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'NPS Widgets' => '#/modules/nps/widgets'
+        );
+
         $bActiveSubsription = UsersModel::isActiveSubscription();
         Session::put('setTab', '');
+
         $aData = array(
             'title' => 'NPS Widgets',
+            'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
-            'oWidgetsList' => $oWidgetsList,
+            'allData' => $oWidgetsList,
+            'oWidgetsList' => $oWidgetsList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role
         );
-        return view('admin.modules.nps.widget_list', $aData)->with(['mNPS'=>$mNPS]);
+        //return view('admin.modules.nps.widget_list', $aData)->with(['mNPS'=>$mNPS]);
+
+        return $aData;
     }
 
     /**
