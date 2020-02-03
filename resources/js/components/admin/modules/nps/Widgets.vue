@@ -8,11 +8,11 @@
                 <div class="row">
                     <div class="col-md-6 col-6">
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Media Gallery Widgets</h3>
+                        <h3 class="htxt_medium_24 dark_700">NPS Widgets</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 js-media-widget-slidebox">New Media Widgets<span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 js-nps-widget-slidebox">New NPS Widget<span><img src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <div class="table_head_action">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 class="htxt_medium_16 dark_400">{{ widgets.length }} Referral Widgets</h3>
+                                <h3 class="htxt_medium_16 dark_400">{{ widgets.length }} NPS Widgets</h3>
                             </div>
                             <div class="col-md-6">
                                 <div class="table_action">
@@ -68,56 +68,39 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                         <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                        <a v-if="widget.status == '0' && widget.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                        <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                        <a v-if="widget.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="navigateToWidgetSetup(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                        <a v-if="(widget.status == '0' || widget.status == '2') && widget.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Start</a>
+                                        <a v-else class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
+                                        <a v-if="widget.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(widget.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                        <a class="dropdown-item viewECode" href="javascript:void(0);" :widgetID="widget.id"><i class="dripicons-user text-muted mr-2"></i> Get Embedded Code</a>
                                     </div>
                                 </div>
                                 <div style="cursor:pointer;">
-                                    <span v-if="widget.gallery_logo != ''"><a class="icons" href="javascript:void(0);" @click="navigateToMediaSetup(widget.id)">
-                                        <img :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/${widget.gallery_logo}`"
-                                        onerror="this.src='/assets/images/wakerslogo.png'" class="img-circle br5 img-xs mt20 mb20" alt=""></a></span>
-                                    <span v-else><img class="mt20 mb20" src="assets/images/subs-icon_big.svg"></span>
-
-                                    <h3 class="htxt_bold_16 dark_700" @click="navigateToMediaSetup(widget.id)" style="cursor: pointer;">
-                                        <span>{{capitalizeFirstLetter(setStringLimit(widget.name, 20))}}</span>
+                                    <img class="mt20" src="assets/images/subs-icon_big.svg">
+                                    <h3 class="htxt_bold_16 dark_700">
+                                        <span>{{capitalizeFirstLetter(setStringLimit(widget.widget_title, 20))}}</span>
                                     </h3>
-                                    <p class="getGalleryImage" :gallery-type="widget.gallery_type" :gallery-id="widget.id"><em>{{ widget.gallery_type < 3 ? '[Grid]' : '['+widget.gallery_type + ' Images]' }}</em></p>
+                                    <p v-if="widget.widget_desc != ''"><em>{{capitalizeFirstLetter(setStringLimit(widget.widget_desc, 40))}}</em></p>
+
+                                    <p v-if="widget.referralData.title != ''" class="htxt_regular_12" @click="navigateToReferralSetup(widget.referral_id)" style="cursor: pointer;">{{ setStringLimit(widget.referralData.title, 40) }}</p>
 
                                     <p class="htxt_regular_12">
-                                        <span v-if="widget.status  == '1'">Active</span>
-                                        <span v-else-if="widget.status == '2'">Archived</span>
-                                        <span v-else>Inactive</span>
+                                        <span v-if="widget.status  == '1'">Published</span>
+                                        <span v-else-if="widget.status == '2'">Paused</span>
+                                        <span v-else-if="widget.status == '3'">Archived</span>
+                                        <span v-else>Draft</span>
                                         &nbsp;|&nbsp;
                                         {{ displayDateFormat('M d, h:i A', widget.created) }}
-                                    </p>
-
-                                    <p>
-                                        Created By:
-                                        <!--<span class="table-img mr15">
-                                            <user-avatar
-                                                :avatar="widget.createdByData.avatar"
-                                                :firstname="widget.createdByData.firstname"
-                                                :lastname="widget.createdByData.lastname"
-                                                :width="32"
-                                                :height="32"
-                                                :fontsize="12"
-                                            ></user-avatar>
-                                        </span>-->
-                                        {{ capitalizeFirstLetter(widget.createdByData.firstname) }} {{ capitalizeFirstLetter(widget.createdByData.lastname) }}
-                                        <br />
-                                        {{ widget.createdByData.email!='' ? '(' + capitalizeFirstLetter(widget.createdByData.email) + ')' : '' }}
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-3 text-center js-media-widget-slidebox" style="cursor: pointer;">
+                        <div class="col-md-3 text-center js-nps-widget-slidebox" style="cursor: pointer;">
                             <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                                 <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Media Widgets</p>
+                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Referral Widgets</p>
                             </div>
                         </div>
 
@@ -137,16 +120,16 @@
 
                                     <div class="col-md-12 text-center">
                                         <img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
-                                        <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any Media widgets</h3>
+                                        <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any NPS widgets</h3>
                                         <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import!</h3>
-                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-media-widget-slidebox">Add Media Widget</button>
+                                        <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-nps-widget-slidebox">Add NPS Widget</button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 text-right">
                                         <a class="lh_32 htxt_regular_14 dark_200" href="#">
                                             <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
-                                            Learn how to use Media widgets
+                                            Learn how to use NPS widgets
                                         </a>
                                     </div>
                                 </div>
@@ -164,19 +147,19 @@
              **********************-->
             <div class="box" style="width: 424px;">
                 <div style="width: 424px;overflow: hidden; height: 100%;">
-                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-media-widget-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-nps-widget-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                         <form method="post" @submit.prevent="processForm">
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Media Gallery</h3>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} NPS Widget</h3>
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="referralTitle">Widget name</label>
-                                            <input type="text" class="form-control h56" id="title" placeholder="Enter widget name" name="title"
-                                                   v-model="form.title">
+                                            <input type="text" class="form-control h56" id="referralTitle" placeholder="Enter widget name" name="referralTitle"
+                                                   v-model="form.referralTitle">
                                         </div>
                                         <div class="form-group">
                                             <label for="desc">Description</label>
@@ -192,7 +175,6 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="hidden" name="editGalleryId" id="editGalleryId" value=""/>
                                         <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                         <input type="hidden" name="module_account_id" id="module_account_id"
                                                :value="moduleAccountID">
@@ -205,19 +187,19 @@
                 </div>
             </div>
 
-            <div id="showGalleryImages" class="modal fade in">
-                <div class="modal-dialog" style="width:1200px;">
+            <div id="viewEModel" class="modal fade in">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title"><img src="/assets/images/menu_icons/List_Color.svg"/> Gallery Images &nbsp;
-                                <i class="icon-info22 fsize12 txt_grey"></i></h5>
+                            <h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Embedded Widget Code</h5>
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
-                        <div class="modal-body" id="mediaGalleryPreview">
-                            <div class="gallery_slider_widget"></div>
+                        <div class="modal-body">
+                            <div class="col-md-12" id="embeddedCode" style="border:1px #ccc solid; padding:10px; margin:0 5px 10px;"></div>
                         </div>
+                        <hr>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link h52" data-dismiss="modal">Close</button>
+                            <button class="btn btn-link" data-dismiss="modal"><i class="icon-cross"></i> Close</button>
                         </div>
                     </div>
                 </div>
@@ -232,14 +214,13 @@
     import Pagination from '@/components/helpers/Pagination';
 
     export default {
-        title: 'Media Gallery Widgets - Brand Boost',
+        title: 'Onsite Widgets - Brand Boost',
         components: {UserAvatar, Pagination},
         data() {
             return {
                 form: {
-                    title: '',
-                    description: '',
-                    editGalleryId: ''
+                    referralTitle: '',
+                    description: ''
                 },
                 formLabel: 'Create',
                 successMsg: '',
@@ -262,8 +243,8 @@
             console.log('Component mounted')
         },
         methods: {
-            navigateToMediaSetup(wId) {
-                window.location.href = '#/mediagallery/setup/'+wId;
+            navigateToReferralSetup(wId) {
+                window.location.href = '#/modules/referral/setup/'+wId;
             },
             navigateToWidgetSetup(wId) {
                 window.location.href = '#/modules/referral/referral_widget_setup/'+wId;
@@ -273,14 +254,14 @@
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-media-widget-slidebox').click();
+                document.querySelector('.js-nps-widget-slidebox').click();
             },
             prepareUpdate: function(wId) {
-                this.getInfo(wId);
+                this.navigateToOnsiteWidgetSetup(wId);
             },
             getInfo: function(wId){
-                axios.post('/admin/mediagallery/getMediaInfo', {
-                    gallery_id:wId,
+                axios.post('/admin/lists/getList', {
+                    wid:wId,
                     moduleName: this.moduleName,
                     _token: this.csrf_token()
                 })
@@ -288,9 +269,8 @@
                         if(response.data.status == 'success'){
                             //Fill up the form fields
                             let formData = response.data;
-                            this.form.editGalleryId = formData.gallery_id;
-                            this.form.title = formData.title;
-                            this.form.description = formData.description;
+                            this.form.campaignName = formData.campaignName;
+                            this.form.wid = formData.wid;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
@@ -301,21 +281,24 @@
                 this.loading = true;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
-                if(this.form.editGalleryId>0){
-                    formActionSrc = '/admin/mediagallery/updateGallery';
+                if(this.form.wid>0){
+                    formActionSrc = '/admin/lists/updatePeopleList';
                 }else{
-                    formActionSrc = '/admin/mediagallery/addList';
+                    formActionSrc = '/admin/modules/referral/addReferralWidget';
                     this.form.module_account_id = this.moduleAccountID;
                 }
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
                             this.loading = false;
-                            this.form.editGalleryId ='';
-                            document.querySelector('.js-media-widget-slidebox').click();
+                            this.form.wid ='';
+                            document.querySelector('.js-nps-widget-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
 
-                            this.navigateToMediaSetup(response.data.gallery_id);
+                            var elem = this;
+                            setTimeout(function () {
+                                elem.loadPaginatedData();
+                            }, 500);
 
                             syncContactSelectionSources();
                         }
@@ -329,9 +312,9 @@
             },
             loadPaginatedData: function () {
                 //getData
-                axios.get('/admin/mediagallery?page='+this.current_page)
+                axios.get('/admin/modules/nps/widgets?page='+this.current_page)
                     .then(response => {
-                        //console.log(response.data);
+                        console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -342,6 +325,7 @@
                         this.widgets = response.data.oWidgetsList;
                         this.bActiveSubsription = response.data.bActiveSubsription;
                         this.user_role = response.data.user_role;
+                        //console.log(this.widgets);
                     });
             },
             showPaginationData: function (current_page) {
@@ -355,8 +339,8 @@
             changeStatus: function(wID, status) {
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/mediagallery/updateStatus', {
-                        gallery_id:wID,
+                    axios.post('/admin/modules/referral/updatReferralWidgetStatus', {
+                        widgetID:wID,
                         status:status,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
@@ -374,8 +358,8 @@
             deleteItem: function(wId) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
-                    axios.post('/admin/mediagallery/deleteGallery', {
-                        gallery_id:wId,
+                    axios.post('/admin/modules/referral/delete_referral_widget', {
+                        widget_id:wId,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
@@ -392,46 +376,8 @@
         }
     }
 
-    /* Slideshow */
-    var sliderBoxCount = 6;
-    var slideIndex = 0;
-
-    function showSlides(n = 1) {
-        var i;
-        var slides = document.getElementsByClassName("sliderImage");
-        if (n > 0) {
-            if (slides.length > sliderBoxCount + slideIndex) {
-                slides[slideIndex].style.display = "none";
-                slides[sliderBoxCount + slideIndex].style.display = "block";
-                slideIndex++;
-                document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
-                document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
-                if (slides.length == sliderBoxCount + slideIndex) {
-                    document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
-                }
-            } else {
-                document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
-            }
-        } else {
-            if ((slides.length >= sliderBoxCount + slideIndex) && (slideIndex > 0)) {
-                --slideIndex;
-                slides[slideIndex].style.display = "block";
-                slides[sliderBoxCount + slideIndex].style.display = "none";
-                document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
-                document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
-
-                if (sliderBoxCount == sliderBoxCount + slideIndex) {
-                    document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
-                }
-            } else {
-                document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
-            }
-        }
-    }
-    /* Slideshow */
-
     $(document).ready(function () {
-        $(document).on('click', '.js-media-widget-slidebox', function () {
+        $(document).on('click', '.js-nps-widget-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });
@@ -439,30 +385,28 @@
 
         /*$('[name=tags]').tagify();*/
 
-        $(document).on('click', '.getGalleryImage', function (e) {
-            $('.overlaynew').show();
-            var galleryId = $(this).attr('gallery-id');
-            sliderBoxCount = $(this).attr('gallery-type');
-            e.preventDefault();
+        $(document).on('click', '.viewECode', function () {
+            var widgetID = $(this).attr('widgetID');
+            alert(widgetID)
             $.ajax({
-                url: "/admin/mediagallery/getGalleryImages",
+                url: 'admin/modules/referral/getReferralWidgetEmbedCode',
                 headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                method: "POST",
-                data: {'gallery_id': galleryId},
+                type: "POST",
+                data: {widget_id: widgetID},
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
-                    $('.overlaynew').hide();
-                    if (data.status == "success") {
-                        //$('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides' + sliderBoxCount + '">' + data.sliderView + '</div>');
-                        $('#mediaGalleryPreview .gallery_slider_widget').html('<div class="slides' + sliderBoxCount + '"></div>');
-                        slideIndex = 0;
-                        $('#showGalleryImages').modal();
-                    } else {
-                        alert('error');
+                    if (data.status == 'success') {
+                        var embeddedCode = data.result;
+                        $('#embeddedCode').html(embeddedCode);
+                        $("#viewEModel").modal();
                     }
                 }
             });
         });
+
     });
 </script>
+
+<style>
+
+</style>
