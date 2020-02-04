@@ -81,9 +81,9 @@
                                     <h3 class="htxt_bold_16 dark_700">
                                         <span>{{capitalizeFirstLetter(setStringLimit(widget.widget_title, 20))}}</span>
                                     </h3>
-                                    <p v-if="widget.widget_desc != ''"><em>{{capitalizeFirstLetter(setStringLimit(widget.widget_desc, 40))}}</em></p>
-
-                                    <p v-if="widget.referralData.title != ''" class="htxt_regular_12" @click="navigateToReferralSetup(widget.referral_id)" style="cursor: pointer;">{{ setStringLimit(widget.referralData.title, 40) }}</p>
+                                    <p v-if="widget.npsData.platform != null"><em>[ {{ capitalizeFirstLetter(widget.npsData.platform) }} ]</em></p>
+                                    <p v-if="(widget.widget_desc != '' || widget.widget_desc != null)"><em>{{capitalizeFirstLetter(setStringLimit(widget.widget_desc, 40))}}</em></p>
+                                    <p v-if="(widget.npsData.title != '')" @click="navigateToNPSSetup(widget.id)" style="cursor: pointer;"><em>{{capitalizeFirstLetter(setStringLimit(widget.npsData.title, 40))}}</em></p>
 
                                     <p class="htxt_regular_12">
                                         <span v-if="widget.status  == '1'">Published</span>
@@ -157,13 +157,13 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="referralTitle">Widget name</label>
-                                            <input type="text" class="form-control h56" id="referralTitle" placeholder="Enter widget name" name="referralTitle"
-                                                   v-model="form.referralTitle">
+                                            <label for="title">Widget name</label>
+                                            <input type="text" class="form-control h56" id="title" placeholder="Enter widget name" name="title"
+                                                   v-model="form.title">
                                         </div>
                                         <div class="form-group">
-                                            <label for="desc">Description</label>
-                                            <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Description"
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control min_h_185 p20 pt10" id="description" placeholder="Description"
                                                       name="description"
                                                       v-model="form.description"></textarea>
                                         </div>
@@ -219,7 +219,7 @@
         data() {
             return {
                 form: {
-                    referralTitle: '',
+                    title: '',
                     description: ''
                 },
                 formLabel: 'Create',
@@ -243,11 +243,11 @@
             console.log('Component mounted')
         },
         methods: {
-            navigateToReferralSetup(wId) {
-                window.location.href = '#/modules/referral/setup/'+wId;
+            navigateToNPSSetup(wId) {
+                window.location.href = '#/modules/nps/setup/'+wId;
             },
             navigateToWidgetSetup(wId) {
-                window.location.href = '#/modules/referral/referral_widget_setup/'+wId;
+                window.location.href = '#/nps/nps_widget_setup/'+wId;
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
@@ -284,7 +284,7 @@
                 if(this.form.wid>0){
                     formActionSrc = '/admin/lists/updatePeopleList';
                 }else{
-                    formActionSrc = '/admin/modules/referral/addReferralWidget';
+                    formActionSrc = '/admin/modules/nps/addNPSWidget';
                     this.form.module_account_id = this.moduleAccountID;
                 }
                 axios.post(formActionSrc , this.form)
@@ -295,10 +295,12 @@
                             document.querySelector('.js-nps-widget-slidebox').click();
                             this.successMsg = 'Action completed successfully.';
 
-                            var elem = this;
+                            this.navigateToWidgetSetup(response.data.widgetId);
+
+                            /*var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();
-                            }, 500);
+                            }, 500);*/
 
                             syncContactSelectionSources();
                         }
@@ -314,7 +316,6 @@
                 //getData
                 axios.get('/admin/modules/nps/widgets?page='+this.current_page)
                     .then(response => {
-                        console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -339,7 +340,7 @@
             changeStatus: function(wID, status) {
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/modules/referral/updatReferralWidgetStatus', {
+                    axios.post('/admin/modules/nps/updatNPSWidgetStatus', {
                         widgetID:wID,
                         status:status,
                         moduleName: this.moduleName,
@@ -358,7 +359,7 @@
             deleteItem: function(wId) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
-                    axios.post('/admin/modules/referral/delete_referral_widget', {
+                    axios.post('/admin/modules/nps/delete_nps_widget', {
                         widget_id:wId,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
@@ -387,9 +388,9 @@
 
         $(document).on('click', '.viewECode', function () {
             var widgetID = $(this).attr('widgetID');
-            alert(widgetID)
+
             $.ajax({
-                url: 'admin/modules/referral/getReferralWidgetEmbedCode',
+                url: 'admin/modules/nps/getNPSWidgetEmbedCode',
                 headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                 type: "POST",
                 data: {widget_id: widgetID},
