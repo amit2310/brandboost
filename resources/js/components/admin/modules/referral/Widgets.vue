@@ -386,7 +386,7 @@
 
         $(document).on('click', '.viewECode', function () {
             var widgetID = $(this).attr('widgetID');
-            alert(widgetID)
+
             $.ajax({
                 url: 'admin/modules/referral/getReferralWidgetEmbedCode',
                 headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },

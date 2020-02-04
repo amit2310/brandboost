@@ -505,6 +505,12 @@ class Nps extends Controller {
         $oWidgetsList = $mNPS->getNPSWidgets($userID);
         //$oStats = $mNPS->getNPSWidgetStats($userID);
 
+        if(!empty($oWidgetsList->items())) {
+            foreach ($oWidgetsList->items() as $data) {
+                $data->npsData = $mNPS->getNps($userID, $data->nps_id);
+            }
+        }
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 			<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -545,9 +551,19 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        $npsTitle = $request->npsTitle;
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $title = $request->title;
+        $description = $request->description;
+
+        $npsTitle = (!empty($title) ? $title : $request->npsTitle);
+
         $aData = array(
             'widget_title' => $npsTitle,
+            'widget_desc' => $description,
             'user_id' => $userID,
             'created' => date("Y-m-d H:i:s")
         );
