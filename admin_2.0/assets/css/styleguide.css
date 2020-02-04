@@ -25,8 +25,27 @@ SHADOWS STYLES
 /******************************
 SMART POPUP SLIDING BOX
 ******************************/
-.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }
-.box > div {position: relative!important;	background: #fff!important;	z-index: 999!important;}
+/*.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }*/
+
+.box {
+	float: left;
+	display: none;
+	top: 16px !important;
+	height: calc(100% - 32px);
+	width: 424px;
+	position: fixed !important;
+	box-sizing: border-box;
+	right: 16px !important;
+	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;
+	padding: 0px;
+	background: #fff !important;
+	z-index: 99999;
+	border-radius: 6px;
+	border-top: 6px solid #5893FF;
+}
+
+
+.box > div {position: relative!important;	background: #fff!important;	z-index: 999!important; border-radius: 6px;}
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
 .box hr{border-color: #edf1f6!important}
@@ -224,7 +243,6 @@ List Styles Classes
 .templates_list li a strong{font-size: 14px; color: #333D54; font-weight: 400!important; float: left}
 .templates_list li a strong img{float: left; margin: 3px 10px 0 0}
 .templates_list li a span{text-align: right; float: right; color: #7B89A6}
-
 .templates_list li a.active strong{color: #4F8AF4; }
 .templates_list li a.active span{color: #4F8AF4}
 
@@ -238,17 +256,13 @@ List Styles Classes
 .email_config_list{margin: 0 ;padding: 0;}
 .email_config_list li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 36px; display: inline-block; width: 24.5%}
 .email_config_list li a{margin: 0 ;padding: 0 0px 0 0px; font-weight: 500;font-size: 12px; color: #687693; letter-spacing: 0.04em; display: inline-block; position: relative; text-transform: uppercase;}
-
 .email_config_list li a span.num_circle{width: 36px; height: 36px; display: block; text-align: center; line-height: 36px; background: #fff;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4); border-radius: 100%; float: left; margin-right: 11px;}
 .email_config_list li a.active span.num_circle{color: #56ACD8}
 .email_config_list li a span.num_circle span.check_img{display: none}
-
 .email_config_list li a.active{color: #242B3D; font-weight: 500 }
 .email_config_list li a.done{ color: #687693; font-weight: 500  }
 .email_config_list li a.done span.num_circle span.check_img{display: block}
 .email_config_list li a.done span.num_circle span.num{display: none}
-
-
 .email_config_list li a:hover{color: #242B3D; font-weight: 500 }
 
 
@@ -262,8 +276,8 @@ Accordion Panel
 
 .panel-heading {  padding: 0;	border:0;background: #fff; border-radius: 4px; margin-bottom: 2px;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);}
 .panel-title>a, .panel-title>a:active{	display:block;	padding:15px 15px 15px 40px;  color:#7B89A6;  font-size:14px;  font-weight:400;	text-transform:uppercase;	letter-spacing:0.02em;;
-	text-decoration:none;	position: relative;}
-.panel-heading  a:before {   content: "";   float: right;   transition: all 0.5s;	background: url(../images/acc_icon.svg) no-repeat;	position: absolute;	top: 17px; right: 40px; width: 20px; height: 20px;}
+text-decoration:none;	position: relative;}
+.panel-heading  a:before {content: "";   float: right;   transition: all 0.5s;	background: url(../images/acc_icon.svg) no-repeat;	position: absolute;	top: 17px; right: 40px; width: 20px; height: 20px;}
 .panel-heading.active a:before {	-webkit-transform: rotate(180deg);	-moz-transform: rotate(180deg);	transform: rotate(180deg);} 
 .panel-body{background: #fff; border-radius: 4px; margin-bottom: 2px;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);margin-top: -5px;padding: 40px;}
 .panel-heading.active a{border-bottom: 1px solid #e9eff8;}

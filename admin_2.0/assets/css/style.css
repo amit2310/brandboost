@@ -3623,6 +3623,16 @@ Live Chat Messangers
 	.chat_messanger_area .mainchatsvroll2{height: 350px;}
 	.chat_messanger_area .chat_mis_sec{min-height: 350px; max-height: 350px!important}
 }
+
+@media (min-height:1100px) {
+	.chat_messanger_area .mainchatsvroll2{height:800px;  max-height:inherit;}
+	.chat_messanger_area .chat_mis_sec{height: auto!important; border: none!important}
+	.chat_bot_area{position: absolute; bottom: 0; width: 100%; border-top: 1px solid #e9eff8!important; background: #ffffff;}
+}
+@media (min-height:1500px) {
+	.chat_messanger_area .mainchatsvroll2{height:1000px;  max-height:inherit;}
+	
+}
 		
 		
 
