@@ -544,6 +544,10 @@
 		  </div>
      </div>
      
+     <div class="chat_bot_area" style="">
+     	
+     
+     
      <div class="p30 pb0 bbot" style="min-height: 120px;">
      	<textarea class="p0 w-100 border-0 fsize16 dark_200" style="height: 85px; resize: none;">Shift + Enter to add a new line
 Start with ‘/’ to select a  Saved Message
@@ -669,7 +673,7 @@ Start with ‘/’ to select a  Saved Message
      	</div>
      </div>
   
-
+	</div>
   
 	
   
