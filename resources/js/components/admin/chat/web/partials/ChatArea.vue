@@ -428,7 +428,7 @@
             'messageTresponse': function(data){
                 let msgFrom = data.from;
                 let msgTo = data.to;
-                if((formatNumber(msgFrom) == formatNumber(this.participantInfo.phone)) && (formatNumber(msgTo) == formatNumber(this.twilioNumber))){
+                if((this.formatNumber(msgFrom) == this.formatNumber(this.participantInfo.phone)) && (this.formatNumber(msgTo) == this.formatNumber(this.twilioNumber))){
                     this.getSmsList();
                 }
             },
