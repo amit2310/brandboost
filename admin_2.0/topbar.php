@@ -5,11 +5,11 @@
    <span class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>
    
     <ul class="list-unstyled topbar-nav float-right mb-0" >
-      <li class="hide-phone app-search">
+      <!--<li class="hide-phone app-search">
         <form role="search" class="">
           <input type="text" placeholder="Search..." class="form-control">
         </form>
-      </li>
+      </li>-->
       
       
       <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993" src="assets/images/book-next-page.svg" alt="profile-user"> <img class="visible_993" src="assets/images/book-next-page-white.svg" alt="profile-user"> </a>
@@ -45,10 +45,10 @@
     <!--end topbar-nav-->
     <ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">
       <li>
-        <a href="#"><img src="assets/images/mail-open-line.svg"/> &nbsp;Home</a>
+        <a href="#"><img src="assets/images/chevron-left.svg"/>&nbsp;List</a>
       </li>
       
-      <li class="ml10 mr10"><img src="assets/images/chevron-left.svg"/></li>
+      <!--<li class="ml10 mr10"><img src="assets/images/chevron-left.svg"/></li>
       
       <li>
         <a href="#"><img src="assets/images/mail-open-line.svg"/> &nbsp;Email</a>
@@ -58,7 +58,7 @@
        
       <li>
         <a href="#">Campaigns</a>
-      </li>
+      </li>-->
     </ul>
     <div class="clearfix"></div>
     </div>

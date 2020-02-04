@@ -7,7 +7,7 @@ CARD CLASSES
 .card.card_shadow:before{position: absolute; height: 11px; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius:0 0 4px 4px; width: 90%; left: 5%; bottom: -11px; content: ''; background:url(../images/shadow_bkg.png) left top repeat-x #fff; z-index: 0;}
 .card .dot_dropdown{position: absolute; right: 15px; top: 20px; z-index: 8}
 .card .dot_dropdown .dropdown-toggle:after{display: none;}
-
+.card .dot_dropdown .dropdown-toggle img{width: 16px; height: 16px!important;}
 
 
 
@@ -25,8 +25,27 @@ SHADOWS STYLES
 /******************************
 SMART POPUP SLIDING BOX
 ******************************/
-.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }
-.box > div {position: relative!important;	background: #fff!important;	z-index: 999!important;}
+/*.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }*/
+
+.box {
+	float: left;
+	display: none;
+	top: 16px !important;
+	height: calc(100% - 32px);
+	width: 424px;
+	position: fixed !important;
+	box-sizing: border-box;
+	right: 16px !important;
+	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;
+	padding: 0px;
+	background: #fff !important;
+	z-index: 99999;
+	border-radius: 6px;
+	border-top: 6px solid #5893FF;
+}
+
+
+.box > div {position: relative!important;	background: #fff!important;	z-index: 999!important; border-radius: 6px;}
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
 .box hr{border-color: #edf1f6!important}
@@ -152,21 +171,30 @@ CUSTOM SWITCH STYLES
 /******************************
 TABLES STYLES
 ******************************/
-.table_head_action{margin-bottom: 30px}
+.table_head_action{margin-bottom: 20px}
+.table_head_action .table_filter{margin: 0; padding: 0;}
+.table_head_action .table_filter li{margin: 0; padding: 0; list-style: none; display: inline-block;}
+.table_head_action .table_filter li a{margin: 0 20px 0 0; padding: 0; display: inline-block; font-weight: 500;font-size: 12px;line-height: 120%;letter-spacing: 0.04em;text-transform: uppercase;color: #7B89A6;}
+.table_head_action .table_filter li a.active, .table_head_action .table_filter li a:hover{color: #5998F8;}
 .table_head_action.calendar{margin-bottom: 30px; padding: 0 0px;}
-.table.table-borderless tbody tr{border-bottom: 2px solid #edf1fb; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
+.table.table-borderless{margin: 0!important}
+.table.table-borderless tbody tr{border-bottom: 1px solid #edf1fb; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
 .table.table-borderless tbody tr:last-child{border: none!important; }
-.table.table-borderless tbody tr td{background: #fff;  color: #687693; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
+.table.table-borderless tbody tr td{background: #fff;  color: #56627F!important; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
+.table.table-borderless tbody tr.headings td{padding: 10px 12px}
+.table.table-borderless tbody tr.headings td span{font-weight: 500;font-size: 10px!important;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6!important;}
 .table.table-borderless.big tbody tr td{padding: 24px 12px; }
-.table.table-borderless tbody tr td:first-child{padding-left: 40px ; border-radius: 2px 0 0 2px; }
-.table.table-borderless tbody tr td:last-child{padding-right: 40px ; border-radius: 0 2px 2px 0;}
+.table.table-borderless tbody tr td:first-child{padding-left: 25px ; border-radius: 0px 0 0 0px; }
+.table.table-borderless tbody tr td:last-child{padding-right: 25px ; border-radius: 0 0px 0px 0;}
+.table.table-borderless tbody tr.headings td:first-child{padding-left: 25px ; border-radius: 6px 0 0 0px; }
+.table.table-borderless tbody tr.headings td:last-child{padding-right: 25px ; border-radius: 0 6px 0px 0;}
 .table.table-borderless tbody tr:hover td{background: #fcfdff;}
 .table.table-borderless span.icons{margin: 0 5px;}
+.table.table-borderless .custmo_checkmark{border-radius: 30px;}
 .table.table-borderless .badge.badge-dark{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
 .table_action_dropdown{background: none; border: none; color: #7B89A6; font-size: 14px; font-weight: 400;}
 .table_search{border: none; padding-left: 25px; background: url(../images/search_icon_16.svg) left 4px no-repeat; color: #7B89A6; font-size: 14px; font-weight: 400; max-width: 90px; height: 20px}
 .table_search::placeholder {color: #7B89A6; opacity: 1;}
-
 .table.table-borderless tbody tr td p{color: #242B3D; font-size: 14px; font-weight: 500; margin-bottom: 10px; line-height: 120%;}
 .table.table-borderless tbody tr td p.small{color: #687693; font-size: 12px; font-weight: 400; margin: 0!important}
 
@@ -174,6 +202,15 @@ TABLES STYLES
 
 .table_dots_dd{border: none; background: none; box-shadow: none; padding: 0!important }
 .table_dots_dd:after{display: none}
+.table-responsive{background: #fff; box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04)!important; border-radius: 6px;}
+.custom_pagination {border-radius:0 0 6px 6px; height:auto; background: #ffffff;  border-top: 1px solid #edf1fb; padding: 15px 25px 12px; font-weight: 500;font-size: 10px;line-height: 120%;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6;}
+.custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 3px no-repeat #fff; width: 25px; margin-left: 5px;}
+
+.page_list {margin: 0; padding: 0;}
+.page_list li {margin: 0; padding: 0; display: inline-block;}
+.page_list li a{margin: 0; padding: 0; display: inline-block; width: 18px; height: 18px; line-height: 21px; text-align: center}
+.page_list li a.active, .page_list li a:hover{background: #eff3fc; border-radius: 4px;}
+
 
 
 @media only screen and (max-width:1366px){
@@ -224,7 +261,6 @@ List Styles Classes
 .templates_list li a strong{font-size: 14px; color: #333D54; font-weight: 400!important; float: left}
 .templates_list li a strong img{float: left; margin: 3px 10px 0 0}
 .templates_list li a span{text-align: right; float: right; color: #7B89A6}
-
 .templates_list li a.active strong{color: #4F8AF4; }
 .templates_list li a.active span{color: #4F8AF4}
 
@@ -238,17 +274,13 @@ List Styles Classes
 .email_config_list{margin: 0 ;padding: 0;}
 .email_config_list li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 36px; display: inline-block; width: 24.5%}
 .email_config_list li a{margin: 0 ;padding: 0 0px 0 0px; font-weight: 500;font-size: 12px; color: #687693; letter-spacing: 0.04em; display: inline-block; position: relative; text-transform: uppercase;}
-
 .email_config_list li a span.num_circle{width: 36px; height: 36px; display: block; text-align: center; line-height: 36px; background: #fff;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4); border-radius: 100%; float: left; margin-right: 11px;}
 .email_config_list li a.active span.num_circle{color: #56ACD8}
 .email_config_list li a span.num_circle span.check_img{display: none}
-
 .email_config_list li a.active{color: #242B3D; font-weight: 500 }
 .email_config_list li a.done{ color: #687693; font-weight: 500  }
 .email_config_list li a.done span.num_circle span.check_img{display: block}
 .email_config_list li a.done span.num_circle span.num{display: none}
-
-
 .email_config_list li a:hover{color: #242B3D; font-weight: 500 }
 
 
@@ -262,8 +294,8 @@ Accordion Panel
 
 .panel-heading {  padding: 0;	border:0;background: #fff; border-radius: 4px; margin-bottom: 2px;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);}
 .panel-title>a, .panel-title>a:active{	display:block;	padding:15px 15px 15px 40px;  color:#7B89A6;  font-size:14px;  font-weight:400;	text-transform:uppercase;	letter-spacing:0.02em;;
-	text-decoration:none;	position: relative;}
-.panel-heading  a:before {   content: "";   float: right;   transition: all 0.5s;	background: url(../images/acc_icon.svg) no-repeat;	position: absolute;	top: 17px; right: 40px; width: 20px; height: 20px;}
+text-decoration:none;	position: relative;}
+.panel-heading  a:before {content: "";   float: right;   transition: all 0.5s;	background: url(../images/acc_icon.svg) no-repeat;	position: absolute;	top: 17px; right: 40px; width: 20px; height: 20px;}
 .panel-heading.active a:before {	-webkit-transform: rotate(180deg);	-moz-transform: rotate(180deg);	transform: rotate(180deg);} 
 .panel-body{background: #fff; border-radius: 4px; margin-bottom: 2px;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06);margin-top: -5px;padding: 40px;}
 .panel-heading.active a{border-bottom: 1px solid #e9eff8;}
@@ -535,6 +567,7 @@ Background COLOR CLASSES
 .bkg_reviews_500{background: #5F67C7}
 
 
+.bkg_brand_000{background: #9dc4ff}
 .bkg_brand_100{background: #E5C7EF}
 .bkg_brand_200{background: #C8B2F0}
 .bkg_brand_300{background: #B5A4F0}
@@ -819,7 +852,7 @@ Line Height CLASSES
 .lh_22{line-height: 22px!important;}
 
 
-
+.ls_4{letter-spacing: 0.04em!important;}
 
 
 
