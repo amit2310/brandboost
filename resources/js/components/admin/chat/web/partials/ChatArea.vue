@@ -1,6 +1,5 @@
 <template>
     <div>
-        <loading :isLoading="loading"></loading>
         <div class="p25 pl30 pr30 bbot">
             <div class="row">
                 <div class="col-md-3">
@@ -33,6 +32,7 @@
         <div class="p0 bbot position-relative chat_mis_sec">
             <!--<a class="slidebox user_profile_show" href="javascript:void(0);"><img src="assets/images/user_profile_show.svg"/></a>-->
             <div class="tab-content">
+                <loading :isLoading="loading" style="position:relative;top:20px;"></loading>
                 <!--======Tab 1====-->
                 <div id="MessageView" class="tab-pane active">
                     <div class="mainchatsvroll2">
@@ -158,6 +158,7 @@
                 </div>
             </div>
         </div>
+        <div class="chat_bot_area" style="">
         <div class="p30 pb0 bbot" style="min-height: 120px;">
      	<textarea
             class="p0 w-100 border-0 fsize16 dark_200"
@@ -363,6 +364,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </template>
 <script>
@@ -452,6 +454,7 @@
                 this.smileyMap = this.getSmilyCollection();
                 this.$socket.emit('subscribe', this.currentTokenId);
                 this.loading = true;
+                this.chatData= '';
                 this.emailData = [];
                 //this.getMessageList();
                 this.getNotesList();
@@ -705,6 +708,7 @@
             parseMedia: function(msg){
                 let parsedMessage = msg;
                 let fileext = (/[.]/.exec(parsedMessage)) ? /[^.]+$/.exec(parsedMessage) : undefined;
+                let mmsFile = parsedMessage.split('/Media/');
                 if (typeof fileext != 'undefined' && fileext !== null) {
                     if (fileext[0] == 'png' || fileext[0] == 'jpg' || fileext[0] == 'jpeg' || fileext[0] == 'gif') {
                         parsedMessage = "<a href='" + parsedMessage + "' class='previewImage' target='_blank'><img src='" + parsedMessage + "' height='auto' width='100%' /></a>";
@@ -713,6 +717,9 @@
                     }else if (fileext[0] == 'doc' || fileext[0] == 'docx' || fileext[0] == 'odt' || fileext[0] == 'csv' || fileext[0] == 'pdf' || fileext[0] == 'txt') {
                         parsedMessage = "<a href='" + parsedMessage + "' target='_blank'>Download '" + fileext[0].toUpperCase() + "' File</a>";
                     }
+                }
+                if(mmsFile.length>1){
+                    parsedMessage = "<a href='" + parsedMessage + "' class='previewImage' target='_blank'><img src='" + parsedMessage + "' height='auto' width='100%' /></a>";
                 }
                 return parsedMessage;
             },

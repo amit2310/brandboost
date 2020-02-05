@@ -204,7 +204,7 @@ TABLES STYLES
 .table_dots_dd:after{display: none}
 .table-responsive{background: #fff; box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04)!important; border-radius: 6px;}
 .custom_pagination {border-radius:0 0 6px 6px; height:auto; background: #ffffff;  border-top: 1px solid #edf1fb; padding: 15px 25px 12px; font-weight: 500;font-size: 10px;line-height: 120%;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6;}
-.custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 3px no-repeat #fff; width: 25px; margin-left: 5px;}
+.custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 3px no-repeat #fff; width: 32px; margin-left: 5px;}
 
 .page_list {margin: 0; padding: 0;}
 .page_list li {margin: 0; padding: 0; display: inline-block;}
