@@ -13,7 +13,10 @@
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
-
+<style>
+	
+	
+	</style>
 </head>
 <body id="PeopleSection">
 
@@ -80,40 +83,7 @@
     </div>
     </div>
     
-   <!-- <div class="table_head_action">
-    <div class="row">
-    	<div class="col-md-6">
-    		<h3 class="htxt_medium_16 dark_400">Contact Lists</h3>
-    	</div>
-    	<div class="col-md-6">
-    	<div class="table_action">
-			<div class="float-right">
-			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Link 1</a>
-			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
-		  </div>
-			<div class="float-right ml10 mr10">
-			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Link 1</a>
-			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
-		  </div>
-		  <div class="float-right">
-			<input class="table_search" type="text" placeholder="Serch" />
-		  </div>
-    	</div>
-    	</div>
-    </div>
-    </div>-->
+   
     
     
     <div class="row">
@@ -149,11 +119,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> Pizza Hut</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"/></span></span> Pizza Hut</td>
 					<td>1,492</td>
-					<td><span class="mr-3"><img src="assets/images/people_active.svg"/></span>People CRM</td>
+					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>People CRM</td>
 					<td>Nov 11, 2014</td>
-					<td><span class="mr-3"><img src="assets/images/active_green_icon_12.svg"/></span>Active</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -177,11 +147,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> Bank of America</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/folder_white_12.svg"/></span></span> Bank of America</td>
 					<td>412</td>
-					<td><span class="mr-3"><img src="assets/images/people_active.svg"/></span>People CRM</td>
+					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>People CRM</td>
 					<td>Mar 7, 2019</td>
-					<td><span class="mr-3"><img src="assets/images/active_green_icon_12.svg"/></span>Active</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -205,11 +175,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> Johnson & Johnson</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">m</span></span> Johnson & Johnson</td>
 					<td>302</td>
-					<td><span class="mr-3"><img src="assets/images/reviews_icon_12.svg"/></span>Reviews</td>
+					<td><span class="mr-3"><span class="status_icon bkg_reviews_400"></span></span>Reviews</td>
 					<td>May 11, 2017</td>
-					<td><span class="mr-3"><img src="assets/images/active_green_icon_12.svg"/></span>Active</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -233,11 +203,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> Gillette</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/avatar/01.png"/></span></span> Gillette</td>
 					<td>412</td>
-					<td><span class="mr-3"><img src="assets/images/people_active.svg"/></span>People CRM</td>
+					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>People CRM</td>
 					<td>Feb 25, 2017</td>
-					<td><span class="mr-3"><img src="assets/images/disable_grey_12.svg"/></span>Disable</td>
+					<td><span class="mr-3"><span class="status_icon bkg_dark_100"></span></span>Disable</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -264,11 +234,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> Pizza Hut</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/avatar/02.png"/></span></span> Pizza Hut</td>
 					<td>1,492</td>
-					<td><span class="mr-3"><img src="assets/images/people_active.svg"/></span>People CRM</td>
+					<td><span class="mr-3"><span class="status_icon bkg_red_300"></span></span>People CRM</td>
 					<td>Aug 9, 2019</td>
-					<td><span class="mr-3"><img src="assets/images/active_green_icon_12.svg"/></span>Active</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -292,11 +262,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> eBay</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/avatar/03.png"/></span></span> eBay</td>
 					<td>35</td>
-					<td><span class="mr-3"><img src="assets/images/email_icon_12.svg"/></span>Email Marketing</td>
+					<td><span class="mr-3"><span class="status_icon bkg_email_400"></span></span>Email Marketing</td>
 					<td>Feb 19, 2019</td>
-					<td><span class="mr-3"><img src="assets/images/active_green_icon_12.svg"/></span>Active</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -320,11 +290,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> Johnson & Johnson</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_sms_200"><img src="assets/images/folder_white_12.svg"/></span></span> Johnson & Johnson</td>
 					<td>54</td>
-					<td><span class="mr-3"><img src="assets/images/reviews_icon_12.svg"/></span>Reviews</td>
+					<td><span class="mr-3"><span class="status_icon bkg_reviews_400"></span></span>Reviews</td>
 					<td>Dec 9, 2016</td>
-					<td><span class="mr-3"><img src="assets/images/active_green_icon_12.svg"/></span>Active</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -348,11 +318,11 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><img src="assets/images/folder_blue_24.svg"/></span> McDonald's</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_red_300"><img src="assets/images/folder_white_12.svg"/></span></span> McDonald's</td>
 					<td>752</td>
-					<td><span class="mr-3"><img src="assets/images/email_icon_12.svg"/></span>Email Marketing</td>
+					<td><span class="mr-3"><span class="status_icon bkg_yellow_500"></span></span>Email Marketing</td>
 					<td>Nov 11, 2014</td>
-					<td><span class="mr-3"><img src="assets/images/disable_grey_12.svg"/></span>Disable</td>
+					<td><span class="mr-3"><span class="status_icon bkg_dark_100"></span></span>Disable</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">

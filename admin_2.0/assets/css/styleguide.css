@@ -17,6 +17,7 @@ SHADOWS STYLES
 ******************************/
 .shadow1{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
 .shadow2{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06)!important;}
+.shadow3{box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05)!important;}
 .shadow_none{box-shadow: none!important;}
 
 
@@ -64,6 +65,8 @@ Misc
 .min_w_160{min-width: 160px;}
 .h100{height: 100vh}
 .h235{height: 235px;}
+.min_h_56{min-height: 56px;}
+
 .min_h_185{min-height: 185px;}
 .min_h_240{min-height: 240px;}
 .min_h_275{min-height: 275px;}
@@ -178,16 +181,16 @@ TABLES STYLES
 .table_head_action .table_filter li a.active, .table_head_action .table_filter li a:hover{color: #5998F8;}
 .table_head_action.calendar{margin-bottom: 30px; padding: 0 0px;}
 .table.table-borderless{margin: 0!important}
-.table.table-borderless tbody tr{border-bottom: 1px solid #edf1fb; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
+.table.table-borderless tbody tr{border-bottom: 1px solid #edf1fb; /*box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);*/}
 .table.table-borderless tbody tr:last-child{border: none!important; }
 .table.table-borderless tbody tr td{background: #fff;  color: #56627F!important; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
 .table.table-borderless tbody tr.headings td{padding: 10px 12px}
 .table.table-borderless tbody tr.headings td span{font-weight: 500;font-size: 10px!important;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6!important;}
 .table.table-borderless.big tbody tr td{padding: 24px 12px; }
-.table.table-borderless tbody tr td:first-child{padding-left: 25px ; border-radius: 0px 0 0 0px; }
-.table.table-borderless tbody tr td:last-child{padding-right: 25px ; border-radius: 0 0px 0px 0;}
-.table.table-borderless tbody tr.headings td:first-child{padding-left: 25px ; border-radius: 6px 0 0 0px; }
-.table.table-borderless tbody tr.headings td:last-child{padding-right: 25px ; border-radius: 0 6px 0px 0;}
+.table.table-borderless tbody tr td:first-child{padding-left: 0px ; border-radius: 0px 0 0 0px; }
+.table.table-borderless tbody tr td:last-child{padding-right: 5px ; border-radius: 0 0px 0px 0;}
+.table.table-borderless tbody tr.headings td:first-child{padding-left: 0px ; border-radius: 6px 0 0 0px; }
+.table.table-borderless tbody tr.headings td:last-child{padding-right: 5px ; border-radius: 0 6px 0px 0;}
 .table.table-borderless tbody tr:hover td{background: #fcfdff;}
 .table.table-borderless span.icons{margin: 0 5px;}
 .table.table-borderless .custmo_checkmark{border-radius: 30px;}
@@ -199,17 +202,29 @@ TABLES STYLES
 .table.table-borderless tbody tr td p.small{color: #687693; font-size: 12px; font-weight: 400; margin: 0!important}
 
 
+.tags_btn{background: #FFFFFF;border: 1px solid #DBE4F3;box-sizing: border-box;box-shadow: 0px 1px 1px rgba(0, 39, 115, 0.02);border-radius: 6px; font-size: 13px;line-height: 110%;
+text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-right: 5px;}
+.tags_btn.blue{border-color: #A5CEFF; color: #5998F8;}
+.tags_btn.review{border-color: #C6CAFC; color: #717CEF;}
+.tags_btn.email{border-color: #A8E0EE; color: #5CA5DA;}
+
 
 .table_dots_dd{border: none; background: none; box-shadow: none; padding: 0!important }
 .table_dots_dd:after{display: none}
-.table-responsive{background: #fff; box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04)!important; border-radius: 6px;}
-.custom_pagination {border-radius:0 0 6px 6px; height:auto; background: #ffffff;  border-top: 1px solid #edf1fb; padding: 15px 25px 12px; font-weight: 500;font-size: 10px;line-height: 120%;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6;}
-.custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 3px no-repeat #fff; width: 32px; margin-left: 5px;}
+.table-responsive{background: #fff; box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04)!important; border-radius: 6px; padding: 5px 23px;}
+.custom_pagination {border-radius:0 0 6px 6px; height:auto; background: #ffffff;  border-top: 1px solid #edf1fb; padding: 20px 0px 10px; font-weight: 500;font-size: 10px;line-height: 18px;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6;}
+.custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 5px no-repeat #fff; width: 32px; margin-left: 5px;}
 
 .page_list {margin: 0; padding: 0;}
 .page_list li {margin: 0; padding: 0; display: inline-block;}
 .page_list li a{margin: 0; padding: 0; display: inline-block; width: 18px; height: 18px; line-height: 21px; text-align: center}
 .page_list li a.active, .page_list li a:hover{background: #eff3fc; border-radius: 4px;}
+
+.status_icon{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 5px;}
+.status_icon:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
+.circle_icon_24{width: 24px; height: 24px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; text-align: center; line-height: 22px; font-weight: 500;
+font-size: 12px;letter-spacing: 0.02em;color: #FFFFFF; text-transform: uppercase}
+
 
 
 
