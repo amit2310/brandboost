@@ -76,14 +76,14 @@
                                         <a class="dropdown-item viewECode" href="javascript:void(0);" :widgetID="widget.id"><i class="dripicons-user text-muted mr-2"></i> Get Embedded Code</a>
                                     </div>
                                 </div>
-                                <div style="cursor:pointer;">
+                                <div>
                                     <img class="mt20" src="assets/images/subs-icon_big.svg">
-                                    <h3 class="htxt_bold_16 dark_700">
+                                    <h3 class="htxt_bold_16 dark_700" @click="navigateToWidgetSetup(widget.id)" style="cursor: pointer;">
                                         <span>{{capitalizeFirstLetter(setStringLimit(widget.widget_title, 20))}}</span>
                                     </h3>
                                     <p v-if="widget.widget_desc != ''"><em>{{capitalizeFirstLetter(setStringLimit(widget.widget_desc, 40))}}</em></p>
 
-                                    <p v-if="widget.referralData.title != ''" class="htxt_regular_12" @click="navigateToReferralSetup(widget.referral_id)" style="cursor: pointer;">{{ setStringLimit(widget.referralData.title, 40) }}</p>
+                                    <p v-if="widget.referralData.title != ''" class="htxt_regular_12" @click="navigateToReferralSetup(widget.referralData.id)" style="cursor: pointer;">{{ setStringLimit(widget.referralData.title, 40) }}</p>
 
                                     <p class="htxt_regular_12">
                                         <span v-if="widget.status  == '1'">Published</span>
