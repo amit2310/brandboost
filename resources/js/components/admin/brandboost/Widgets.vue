@@ -77,9 +77,9 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="navigateStats(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Statistics</a>
                                     </div>
                                 </div>
-                                <div style="cursor:pointer;">
+                                <div>
                                     <img class="mt20" src="assets/images/subs-icon_big.svg">
-                                    <h3 class="htxt_bold_16 dark_700">
+                                    <h3 class="htxt_bold_16 dark_700" @click="navigateToOnsiteWidgetSetup(widget.id)" style="cursor:pointer;">
                                         <span>{{capitalizeFirstLetter(setStringLimit(widget.widget_title, 20))}}</span>
                                     </h3>
                                     <p v-if="widget.widget_type == 'cpw'"><em>(Center Popup)</em></p>
