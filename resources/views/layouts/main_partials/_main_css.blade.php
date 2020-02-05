@@ -7,5 +7,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
 <!-- Sub User Css -->
+@if($userRole == '2')
 <link href="{{ URL::asset('assets/profile_css/profile.css') }}" rel="stylesheet" type="text/css">
+@endif
 

@@ -63,7 +63,7 @@
                 </li>
             </ul>
         </div>
-        <div class="tab-content" style="height:600px;overflow-y:auto;overflow-x:hidden;">
+        <div class="tab-content" style="height:70%;overflow-y:auto;overflow-x:hidden;">
             <!--======Tab 1====-->
             <div id="All" class="tab-pane active">
                 <div class="p20 pt0 pb0 bkg_light_050">
