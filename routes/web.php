@@ -194,6 +194,10 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/widget_overview', 'Admin\Brandboost@widgetOverview');
     Route::get('admin/brandboost/widgets', 'Admin\Brandboost@widgets');
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
+//    Written By Pavan
+    Route::get('admin/brandboost/get-widget', 'Admin\Brandboost@getWidget');
+    Route::post('admin/brandboost/set-widget-type', 'Admin\Brandboost@setWidgetType');
+
 
     Route::post('admin/brandboost/switchTemplate', 'Admin\Brandboost@switchTemplate');
     Route::post('admin/brandboost/campaignPreferences', 'Admin\Brandboost@campaignPreferences');

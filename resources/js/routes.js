@@ -95,6 +95,7 @@ import ChatWidgets from './components/admin/modules/chat/Index';
 import ReferralWidgets from './components/admin/modules/referral/Widgets';
 import NPSWidgets from './components/admin/modules/nps/Widgets';
 import MediaGalleryWidget from './components/admin/MediaGallery';
+import OnsiteWidgetSetup from './components/admin/brandboost/onsite/widget_setup/ReviewWidgets';
 
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
@@ -288,6 +289,7 @@ const routes = [
     { path: '/modules/nps/widgets', component: NPSWidgets, meta: { title: 'NPS Surveys'} },
     { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
     { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
+    { path: '/brandboost/onsite_widget_setup/:id', component: OnsiteWidgetSetup, meta: { title: 'Onsite Widget Setup'} },
     { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
     { path: '/mediagallery', component: MediaGalleryWidget, meta: { title: 'Media Gallery Widgets'} },
 

@@ -2301,14 +2301,89 @@ class Brandboost extends Controller
 
         return view('admin.brandboost.onsite_widget_setup', $aData);
     }
-
-
     /**
      * Used to set onsite widget
      * @return type
      */
-    public
-    function setOnsiteWidget(Request $request)
+    public function getWidget(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        $selectedTab = '';
+        $widgetID = $request->widgetID;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+        $breadcrumb ='';
+        $aData = array(
+            'title' => 'Onsite Widget',
+            'pagename' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+
+
+        if (!empty($widgetID)) {
+//            Session::put("selectedOnsiteWidget", $widgetID);
+
+            $response = $aData;
+            echo json_encode($response);
+            exit;
+        }
+    }
+    public function setWidgetType(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $widgetTypeID = $request->widgetTypeID;
+        $widgetID = $request->widgetID;
+        $aData = array(
+            'widget_type' => $widgetTypeID
+        );
+
+        if (!empty($widgetID)) {
+            Session::put("selectedOnsiteWidget", $widgetID);
+            $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+            $response = array("status" => "success", "msg" => "Okay");
+            echo json_encode($response);
+            exit;
+        }
+    }
+    /**
+     * Used to set onsite widget
+     * @return type
+     */
+    public function setOnsiteWidget(Request $request)
     {
         $response = array("status" => "error", "msg" => "Something went wrong");
 
