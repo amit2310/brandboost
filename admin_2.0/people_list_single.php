@@ -17,16 +17,14 @@
 
 
 <style>
-#PeopleSection .navbar-custom{padding-left: 320px}
-#PeopleSection .top-bar-top-section{padding-left: 310px}
-#PeopleSection .content-area.single_list_area{padding:28px 64px 0 310px; position: inherit}
+
 	
 </style>
 </head>
 
 
 
-<body id="PeopleSection">
+<body id="PeopleSection" class="pagewithleftsidebar">
 
 <div class="page-wrapper ">
  <!--******************
@@ -76,7 +74,7 @@
  <!--******************
   Content Area
  **********************-->
-   <div class="content-area single_list_area">
+   <div class="content-area withsidebar">
      <div class="container-fluid">
 	<!--******************
 	 PAGE LEFT SIDEBAR
