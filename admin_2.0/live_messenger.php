@@ -23,8 +23,7 @@
 
 
 
-<body id="LiveChatSection">
-<!--<body id="PeopleSection" class="enlarge-menu">-->
+<body id="LiveChatSection" class="pagewithleftsidebar">
 
 <div class="page-wrapper ">
  <!--******************
@@ -65,14 +64,11 @@
    </div>
     <div class="clearfix"></div>
 </div>
-	 
-	  
-	  
 	  
  <!--******************
   Content Area
  **********************-->
-   <div class="content-area chat_messanger_area">
+   <div class="content-area chat_messanger_area withsidebar">
    
    
      

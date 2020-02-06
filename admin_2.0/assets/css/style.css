@@ -1276,6 +1276,10 @@ color:#7989b4
 /********************
 PAGE WITH SIDEBAR CSS
 *********************/
+.pagewithleftsidebar .navbar-custom{padding-left: 320px}
+.pagewithleftsidebar .top-bar-top-section{padding-left: 310px}
+.pagewithleftsidebar .content-area.withsidebar{padding:28px 64px 0 310px; position: inherit}
+
 .page_sidebar{float: left; width: 280px; height: 100vh; background: #f9fbff; border-right: 1px solid #e9eff8; padding:0px;/*position: fixed*/}
 .page_sidebar.absl{float: left; width: 280px; height: 100vh; /*background: #ffffff;*/ background: #F9FBFF!important;  padding:0px; position: absolute; top: 0px; left: 0px;}
 .page_sidebar.width_360{width: 360px;}
@@ -3590,9 +3594,10 @@ Live Chat Messangers
 *************/
 
 
-#LiveChatSection .navbar-custom{background: #ffffff!important; padding-left: 320px}
+/*#LiveChatSection .navbar-custom{background: #ffffff!important; padding-left: 320px}
 #LiveChatSection .top-bar-top-section{padding-left: 310px}
-#LiveChatSection .content-area.chat_messanger_area{padding:0 280px 0 280px; position: inherit}
+#LiveChatSection .content-area.chat_messanger_area{padding:0 280px 0 280px; position: inherit}*/
+.pagewithleftsidebar .content-area.withsidebar.chat_messanger_area{padding:0 297px 0 280px; position: inherit}
 
 .chat_messanger_area .chat_user_list {max-width: 225px; border-right: 2px solid #d5dfef; padding-right: 15px; float: right}
 .chat_messanger_area .chat_user_list ul{margin: 0; padding: 0;}
