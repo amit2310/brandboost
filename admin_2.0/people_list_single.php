@@ -428,6 +428,10 @@
 			    
     		</div>
     	</div>
+    	
+    	<div class="col-md-12 text-center mt-3">
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+    	</div>
     </div>
    
   

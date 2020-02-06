@@ -65,18 +65,18 @@
     		<div class="card card_shadow min-h-280">
     		
     		<div class="row mb65">
-     		<div class="col-md-6 text-left">
+     		<div class="col-md-12 text-left">
      			<a class="lh_32 blue_400 htxt_bold_14" href="#">
      				<span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
      				Import segment
      			</a>
      		</div>
-     		<div class="col-md-6 text-right">
+     		<!--<div class="col-md-6 text-right">
      			<a class="lh_32 htxt_regular_14 dark_200" href="#">
      				<span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
      				Learn how to use segments
      			</a>
-     		</div>
+     		</div>-->
      		</div>
      		
     		
@@ -95,6 +95,9 @@
      		
      			
      		</div>
+    	</div>
+    	<div class="col-md-12 text-center mt-2">
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
     	</div>
     </div>
      
