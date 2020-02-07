@@ -17,7 +17,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="content-area chat_messanger_area withsidebar">
+        <div class="content-area chat_messanger_area withsidebar" style="background-color: #FFFFFF;">
             <web-side-bar
                 :allChat="allChat"
                 :unassignedChat="unassignedChat"
