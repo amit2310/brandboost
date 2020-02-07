@@ -15,7 +15,7 @@ class SmsChat extends Controller {
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a class="sidebar-control hidden-xs slace">/</a></li>
-                        <li><a data-toggle="tooltip" data-placement="bottom" title="Live Chat" class="sidebar-control active hidden-xs ">Live Chat</a></li>
+                        <li><a data-toggle="tooltip" shdata-placement="bottom" title="Live Chat" class="sidebar-control active hidden-xs ">Live Chat</a></li>
                       </ul>';
         $oUser = getLoggedUser();
         $favouriteUserData = SmsChatModel::getSMSFavouriteByUserId($oUser->id);
