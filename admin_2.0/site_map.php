@@ -80,10 +80,16 @@
      			<li><a target="_blank" href="people_list1.php">People List 1</a></li>
      			<li><a target="_blank" href="people_list2.php">People List 2</a></li>
      			<li><a target="_blank" href="people_list3.php">People List 3</a></li>
-     			<li><a target="_blank" href="people_tag1.php">People Tag 1</a></li>
-     			<li><a target="_blank" href="people_tag2.php">People Tag 2</a></li>
+     			<li><a target="_blank" href="people_list_single.php">People List 4</a></li>
+     			
      			<li><a target="_blank" href="people_segment1.php">People Segment 1</a></li>
      			<li><a target="_blank" href="people_segment2.php">People Segment 2</a></li>
+     			<li><a target="_blank" href="people_segment3.php">People Segment 3</a></li>
+     			<li><a target="_blank" href="people_segment4.php">People Segment 4</a></li>
+     			
+     			<li><a target="_blank" href="people_tag1.php">People Tag 1</a></li>
+     			<li><a target="_blank" href="people_tag2.php">People Tag 2</a></li>
+     			
      			<li><a target="_blank" href="people_deals1.php">People Deals 1</a></li>
      			<li><a target="_blank" href="people_deals2.php">People Deals 2</a></li>
      			

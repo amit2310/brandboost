@@ -1276,6 +1276,10 @@ color:#7989b4
 /********************
 PAGE WITH SIDEBAR CSS
 *********************/
+.pagewithleftsidebar .navbar-custom{padding-left: 320px}
+.pagewithleftsidebar .top-bar-top-section{padding-left: 310px}
+.pagewithleftsidebar .content-area.withsidebar{padding:28px 64px 0 310px; position: inherit}
+
 .page_sidebar{float: left; width: 280px; height: 100vh; background: #f9fbff; border-right: 1px solid #e9eff8; padding:0px;/*position: fixed*/}
 .page_sidebar.absl{float: left; width: 280px; height: 100vh; /*background: #ffffff;*/ background: #F9FBFF!important;  padding:0px; position: absolute; top: 0px; left: 0px;}
 .page_sidebar.width_360{width: 360px;}
@@ -1300,6 +1304,11 @@ PAGE WITH SIDEBAR CSS
 
 .sidebar_headings{background: rgba(196, 207, 225, 0.1); border-top: 1px solid #eef1f7; border-bottom: 1px solid #eef1f7; padding: 7px 24px; font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #687693; line-height: 23px;}
 
+
+.page_sidebar .top_headings{height: 57px;}
+.page_sidebar .top_headings p, .page_sidebar .top_headings a{ font-weight: 500;font-size: 12px;letter-spacing: 0.02em;text-transform: uppercase;color: #7B89A6;}
+
+
 .list_with_icons{margin: 0; padding: 0;}
 .list_with_icons li{padding: 15px 0; border-bottom: 1px solid #eef2f9; border-top: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px; position: relative; z-index: 9}
 .list_with_icons li p{margin: 0; padding: 0; line-height: 23px;}
@@ -1312,6 +1321,15 @@ PAGE WITH SIDEBAR CSS
 .list_with_icons2 li{padding: 15px 0; border-bottom: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px; position: relative; z-index: 9}
 .list_with_icons2 li:last-child{border: none}
 .list_with_icons2 li p{margin: 0; padding: 0; line-height: 32px;}
+
+.list_with_icons3{margin: 0; padding: 0;}
+.list_with_icons3 li{padding: 15px 0; border-bottom: 1px solid #eef2f9; border-top: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px; position: relative; z-index: 9; line-height: 24px;}
+.list_with_icons3 li p{margin: 0; padding: 0; line-height: 23px;}
+.list_with_icons3 li.active:after{ position: absolute; background: #EFF3FC; content: ''; top: 0; left: -20px; height: 100%; width: 100%; z-index: -1; border-right: 2px solid #8faefc; min-width: 279px;}
+.list_with_icons3 li:hover:after{ position: absolute; background: #EFF3FC; content: ''; top: 0; left: -20px; height: 100%; width: 100%; z-index: -1; border-right: 2px solid #8faefc; min-width: 279px;}
+.list_with_icons3 li span{float: left;}
+.list_with_icons3 li span.circle_icon_24{margin-right: 13px;}
+.list_with_icons3 li strong{float: right; text-align: right; color: #7B89A6; font-size: 14px; font-weight: 400!important; position: absolute; right: 0;}
 
 
 .circle_32{width: 32px; height: 32px; background: #333;  line-height: 32px; display: block; text-align: center; border-radius: 50px; margin-top: 6px;} 
@@ -3576,9 +3594,10 @@ Live Chat Messangers
 *************/
 
 
-#LiveChatSection .navbar-custom{background: #ffffff!important; padding-left: 320px}
+/*#LiveChatSection .navbar-custom{background: #ffffff!important; padding-left: 320px}
 #LiveChatSection .top-bar-top-section{padding-left: 310px}
-#LiveChatSection .content-area.chat_messanger_area{padding:0 280px 0 280px; position: inherit}
+#LiveChatSection .content-area.chat_messanger_area{padding:0 280px 0 280px; position: inherit}*/
+.pagewithleftsidebar .content-area.withsidebar.chat_messanger_area{padding:0 297px 0 280px; position: inherit}
 
 .chat_messanger_area .chat_user_list {max-width: 225px; border-right: 2px solid #d5dfef; padding-right: 15px; float: right}
 .chat_messanger_area .chat_user_list ul{margin: 0; padding: 0;}
