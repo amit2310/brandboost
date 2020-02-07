@@ -793,9 +793,16 @@
             },
             saveFile: function(files){
                 let formData = new FormData();
+                let formSrc = '';
+                if(this.chatTab || this.noteTab || this.emailTab){
+                    formSrc = '/dropzone/upload_s3_attachment/'+this.loggedId+'/webchat';
+                }
+                if(this.textTab){
+                    formSrc = '/dropzone/upload_s3_attachment/'+this.loggedId+'/smschat';
+                }
                 formData.append('files[]', files);
                 formData.append('_token', this.csrf_token());
-                axios.post('/dropzone/upload_s3_attachment/'+this.loggedId+'/webchat', formData, {
+                axios.post(formSrc, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
