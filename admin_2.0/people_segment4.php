@@ -55,7 +55,7 @@
    <div class="row">
    	<div class="col-md-6 col-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">General Electric</h3>
+   	<h3 class="htxt_medium_24 dark_700">Gillete Segment</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
    		<button class="circle-icon-40 mr15"><img src="assets/images/download-line.svg"/></button>
@@ -82,14 +82,14 @@
 	<div class="page_sidebar bkg_light_000 absl">
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
-	 			<div class="col"><p>People</p></div>
+	 			<div class="col"><p>PEOPLE</p></div>
 	 			<div class="col text-right"><p><a href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"/></a></p></div>
 	 		</div>
 	 	</div>
        
        <div class="p20 pt30 pb10">
 	 		<div class="row">
-	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Lists</h3></div>
+	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Segment</h3></div>
 	 			<div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/download-line.svg"></button></div>
 	 		</div>
 	 	</div>
@@ -459,8 +459,7 @@
  <!--******************
   Create Saved Reply Sliding Smart Popup
  **********************-->
- <?php include("saved_reply_create_smart_popup.php"); ?>
- 
+<?php include("people_contact_create_smart_popup.php"); ?> 
     
 
  
@@ -485,6 +484,19 @@
 	});
 
 </script>
-
+<script>
+var color_picker = $('.colorpickerplus-dropdown .colorpickerplus-container');
+        color_picker.colorpickerembed();
+        color_picker.on('changeColor', function(e,color){
+			var el = $('.color-fill-icon', $('#color_picker'));
+			if(color==null) {
+			  //when select transparent color
+			  el.addClass('colorpicker-color');
+			} else {
+			  el.removeClass('colorpicker-color');
+        	  el.css('background-color', color);
+			}
+        });
+</script>
 </body>
 </html>
