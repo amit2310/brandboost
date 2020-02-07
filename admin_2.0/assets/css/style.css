@@ -1405,7 +1405,8 @@ PAGE WITH SIDEBAR CSS
 .rotate-45{transform: rotate(-45deg);}
 .workflow_list{margin: 0; padding: 0;}
 .workflow_list li{margin: 0; padding: 0; list-style: none; display: inline-block;}
-.workflow_list li a{margin: 0; padding: 0 5px;display: inline-block; color: #687693; font-size: 12px; font-weight: 400; letter-spacing: 0.04em;}
+.workflow_list li a{margin: 0; padding: 0 10px;display: inline-block; color: #687693; font-size: 12px; font-weight: 400; letter-spacing: 0.04em; border-right: 1px solid #eee}
+.workflow_list li:last-child a{ border-right: 1px solid #fff}
 
 
 .edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
@@ -3659,6 +3660,9 @@ Live Chat Messangers
 	.chat_messanger_area .mainchatsvroll2{height:1000px;  max-height:inherit;}
 	
 }
+
+
+
 		
 		
 

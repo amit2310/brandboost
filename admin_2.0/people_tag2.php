@@ -45,7 +45,7 @@
    	</div>
    	<div class="col-md-6 col-6 text-right">
    		<button class="circle-icon-40 mr15 back_btn"><img class="back_img_icon" src="assets/images/filter.svg"/></button>
-   		<button class="btn btn-md bkg_blue_200 light_000 slidebox">New Tag <span><img src="assets/images/blue-plus.svg"/></span></button>
+   		<button class="btn btn-md bkg_blue_200 light_000 slidebox">ADD New Contact <span><img src="assets/images/blue-plus.svg"/></span></button>
    	</div>
    </div>
    </div>
@@ -64,101 +64,191 @@
     <div class="table_head_action">
     <div class="row">
     	<div class="col-md-6">
-    		<h3 class="htxt_medium_16 dark_400">Tags</h3>
+    		<ul class="table_filter">
+    			<li><a class="active" href="#">ALL</a></li>
+    			<li><a href="#">ACTIVE</a></li>
+    			<li><a href="#">DRAFT</a></li>
+    			<li><a href="#">ARCHIVE</a></li>
+    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+    		</ul>
     	</div>
     	<div class="col-md-6">
-    	<div class="table_action">
-			<div class="float-right">
-			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Link 1</a>
-			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
-		  </div>
-			<div class="float-right ml10 mr10">
-			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Link 1</a>
-			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
-		  </div>
-		  <div class="float-right">
-			<input class="table_search" type="text" placeholder="Serch" />
-		  </div>
-    	</div>
+    		<ul class="table_filter text-right">
+    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+    		</ul>
     	</div>
     </div>
     </div>
     
+    
+    
+    
+    
+    
     <div class="row">
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">contact</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">brownpeacock574</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">redladybug753</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">yellowbear776</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">organicbear529</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">sadpanda176</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 h235 animate_top">
-     		<img class="mt20" src="assets/images/tag_icon_circle.svg">
-     		<h3 class="htxt_bold_16 dark_700 mt25 mb15">My List</h3>
-     		<p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> 1,356</p>
-     		</div>
-    	</div>
-    	
-    	
-    	
-    	<div class="col-md-3 text-center">
-    		<div class="card p30 bkg_none border_dashed shadow_none h235 animate_top">
-     		<img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-     		<p class="htxt_regular_16 dark_100 mb15">Create<br>Tag list</p>
-     		</div>
-    	</div>
+      <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">id</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">duis</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">lorem</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_email_300 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">dolore</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
     </div>
     
 
+    <div class="row">
+      <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">magna</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">ipsum</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          <div class="dot_dropdown"> 
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+          </div>
+          <a href="#" class="circle-icon-64 bkg_green_400 m0auto"><img src="assets/images/price-tag-3-fill-white.svg"> </a>
+          <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">lorem</h3>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">TAG</p>
+          <div class="p20 btop">
+            <ul class="workflow_list">
+              <li><a href="#"><span><img src="assets/images/account-circle-fill-grey.svg"></span> 39</a></li>
+              <li><a href="#"><span><img src="assets/images/building-fill.svg"></span> 17</a></li>
+              <li><a href="#"><span><img src="assets/images/money.svg"></span> 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3 d-flex">
+        <div class="card p0 pt40 text-center animate_top col">
+          
+          <a href="#" class="circle-icon-64 bkg_light_200 m0auto mt-4"><img src="assets/images/plus03.svg"> </a>
+          <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4 mt-4">CREATE new <br> TAG</p>
+          
+        </div>
+      </div>
+      
+    </div>
      
    
       </div>
