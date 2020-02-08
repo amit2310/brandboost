@@ -170,7 +170,7 @@
         methods: {
             loadData: function () {
                 //getData
-                axios.get('/user/review')
+                axios.get('/user/setting')
                     .then(response => {
                         //console.log(response.data);
                         this.loading = false;
