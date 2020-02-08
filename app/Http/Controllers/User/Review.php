@@ -34,9 +34,9 @@ class Review extends Controller {
 
                 // Get Helpful
                 $aHelpful = ReviewsModel::countHelpful($reviewID);
-                $aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
-                $aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
-                $aReviewData[$reviewID]['user_data'] = (array) $userData;
+                $aReviewData['total_helpful'] = $aHelpful['yes'];
+                $aReviewData['total_helpful_no'] = $aHelpful['no'];
+                $aReviewData['user_data'] = (array) $userData;
 
                 //Get Comments Block
                 $oComments = $mReviews->getComments($reviewID, $aSettings);
