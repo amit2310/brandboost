@@ -155,7 +155,8 @@
                                             <a style="cursor: pointer;" class="comment_show"><i><img
                                                 src="/assets/images/widget/comment_icon_grey.png"
                                                 width="15"></i>
-                                                &nbsp; {{ review.comment_block > 0 ? review.comment_block : '0' }}
+                                                <!--&nbsp; {{ review.comment_block > 0 ? review.comment_block : '0' }}-->
+                                                &nbsp; {{ review.reviewCommentsData.length > 0 ? review.reviewCommentsData.length : '0' }}
                                                 Comments</a>
 
                                             <span class="`review_helpful_${review.id} `">{{ (review.aReviewData.total_helpful) ? review.aReviewData.total_helpful : 0 }} Found this helpful</span>
@@ -175,10 +176,147 @@
                                         </div>
 
                                         <!-- **********Comment area********* -->
+                                        <!--<div class="p20 pt0 commentarea">-->
                                         <div class="p20 pt0 commentarea">
                                             <div v-if="review.reviewCommentsData" class="commentarea_inner p0">
 
+                                                <div v-for="comment in review.reviewCommentsData" class="bbot pb20 mb20" :id="`parComment${comment.id}`">
+                                                    <div class="comment_sec">
+                                                        <ul>
+                                                            <li class="bbot">
+                                                                <div
+                                                                    class="media-left">
+                                                                    <div
+                                                                        class="media-left media-middle pr10 commentPar">
+                                                                        <user-avatar
+                                                                            :avatar="comment.avatar"
+                                                                            :firstname="comment.firstname"
+                                                                            :lastname="comment.lastname"
+                                                                            :width="32"
+                                                                            :height="32"
+                                                                            :fontsize="12"
+                                                                        ></user-avatar>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media-left pr0">
+                                                                    <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ comment.firstname }} {{ comment.lastname }}
+                                                                        <span
+                                                                            class="dot">.</span> {{ displayDateFormat('M d, h:i A', comment.created) }}
+                                                                        <span class="dot">.</span>
+                                                                        <span v-if="comment.status == '1'" class="txt_green"><i
+                                                                            class="icon-checkmark3 fsize12 txt_green"></i> Approve</span>
+                                                                        <span v-else class="txt_yellow"><i
+                                                                            class="icon-checkmark3 fsize12 txt_yellow"></i> Pending</span>
+                                                                    </p>
+                                                                    <p class="fsize13 mb10 lh23 txt_grey2">
+                                                                        {{ comment.content != '' ? comment.content : 'N/A' }}
+                                                                    </p>
 
+                                                                    <div class="button_sec">
+                                                                        <button
+                                                                            class="btn btn-link pl0 txt_green">{{ comment.likeData.length }}</button>
+                                                                        <a class="btn comment_btn p7"
+                                                                           href="javascript:void(0);"
+                                                                           @click="saveCommentLikeStatus(comment.id, '1')"><i
+                                                                            class="icon-thumbs-up2 txt_green"></i></a>
+                                                                        <!--  <button class="btn btn-link pl0 txt_red">{{ count($disLikeData) }}</button> -->
+                                                                        <a class="btn comment_btn p7"
+                                                                           href="javascript:void(0);"
+                                                                           @click="saveCommentLikeStatus(comment.id, '0')"><i
+                                                                            class="icon-thumbs-down2 txt_red"></i></a>
+                                                                        <a style="cursor: pointer;"
+                                                                           class="btn comment_btn txt_purple replyCommentAction">Reply</a>
+
+                                                                        <a v-if="comment.user_id" href="javascript:void(0);"
+                                                                           class="btn comment_btn txt_purple editComment"
+                                                                           :commentid="comment.id">Edit</a>
+
+                                                                    </div>
+
+                                                                    <div class="replyCommentBox"
+                                                                         style="display:none;">
+                                                                        <form method="post" class="form-horizontal"
+                                                                              action="javascript:void();">
+                                                                            <div class="mt10 mb10">
+                                                                                    <textarea name="comment_content"
+                                                                                              class="form-control comment_content"
+                                                                                              style="padding: 15px; height: 75px;"
+                                                                                              placeholder="Comment Reply..."
+                                                                                              required></textarea>
+                                                                            </div>
+
+                                                                            <div class="text-right">
+                                                                                <input name="reviweId"
+                                                                                       class="reviweId"
+                                                                                       :value="comment.review_id"
+                                                                                       type="hidden">
+                                                                                <input name="parent_comment_id"
+                                                                                       class="parent_comment_id"
+                                                                                       :value="comment.id"
+                                                                                       type="hidden">
+                                                                                <button style="width: 128px;"
+                                                                                        type="button"
+                                                                                        class="btn dark_btn addReplyComment">
+                                                                                    Reply
+                                                                                </button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                                    <!-- ******** comment child ********* -->
+                                                                    <div v-for="childComment in comment.childComments" class="reply_sec mt30">
+                                                                        <div
+                                                                            class="media-left">
+                                                                            <div
+                                                                                class="media-left media-middle pr10 commentPar">
+                                                                                <user-avatar
+                                                                                    :avatar="childComment.avatar"
+                                                                                    :firstname="childComment.firstname"
+                                                                                    :lastname="childComment.lastname"
+                                                                                    :width="32"
+                                                                                    :height="32"
+                                                                                    :fontsize="12"
+                                                                                ></user-avatar>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media-left pr0">
+                                                                            <p class="fsize14 txt_grey2 lh14 mb10 ">{{ childComment.firstname }} {{ childComment.lastname }}
+                                                                                <span
+                                                                                    class="dot">.</span> {{ displayDateFormat('M d, h:i A', childComment.created) }}
+                                                                            </p>
+                                                                            <p class="fsize13 mb10 lh23 txt_grey2">
+                                                                                {{ childComment.content != '' ? childComment.content : 'N/A' }}
+                                                                            </p>
+
+                                                                            <div class="button_sec">
+                                                                                <button
+                                                                                    class="btn btn-link pl0 txt_green">{{ childComment.likeChildData.length }}</button>
+                                                                                <a href="javascript:void(0);"
+                                                                                   @click="saveCommentLikeStatus(childComment.id, '1')"
+                                                                                   class="btn comment_btn p7"><i
+                                                                                    class="icon-thumbs-up2 txt_green"></i></a>
+                                                                                <!-- <button class="btn btn-link pl0 txt_red">{{ count($disLikeChildData) }}</button> -->
+                                                                                <a href="javascript:void(0);"
+                                                                                   @click="saveCommentLikeStatus(childComment.id, '0')"
+                                                                                   class="btn comment_btn p7"><i
+                                                                                    class="icon-thumbs-down2 txt_red"></i></a>
+
+                                                                                <a v-if="childComment.user_id" href="javascript:void(0);"
+                                                                                   :commentid="childComment.id"
+                                                                                   class="btn comment_btn txt_purple editComment">Edit</a>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- ******** comment child end ********* -->
+
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
 
                                                 <!--=========Add Comment===========-->
                                                 <div class="p20">
@@ -203,6 +341,7 @@
 
                                             </div>
                                         </div>
+                                        <!-- **********Comment area********* -->
 
                                     </div>
                                 </div>
