@@ -2403,8 +2403,41 @@ class Brandboost extends Controller
             exit;
         }
     }
-
     /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    public function widgetStatisticDetails(Request $request){
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $widgetTypeID = $request->widgetTypeID;
+        $widgetID = $request->widgetID;
+        $mBrandboost = new BrandboostModel();
+        $oWidgets = $mBrandboost->getBBWidgets();
+        $oStats = $mBrandboost->getBBWidgetStats($widgetID);
+        //pre($oStats);
+
+        $aData = array(
+            'title' => 'Widget Statistics',
+            'pagename' => 0,
+            'oWidget' => $oWidgets,
+            'oStats' => $oStats,
+            "status" => "success", "msg" => "Okay"
+        );
+        $response = $aData;
+        echo json_encode($response);
+        exit;
+    }
+    /**
+     * -------------------------------------End-------------------------------------
+    */
+
+     /**
+     *
+     *
      * Used to add onsite brandboost widget data
      * @return type
      */
