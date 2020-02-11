@@ -1,0 +1,26 @@
+<svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0)">
+<g filter="url(#filter0_dd)">
+<path d="M9.83333 1.16669L12.75 4.08335V12.2547C12.7498 12.4082 12.6887 12.5554 12.5801 12.6639C12.4715 12.7724 12.3243 12.8334 12.1707 12.8334H2.82925C2.67605 12.8323 2.52943 12.771 2.42104 12.6627C2.31266 12.5544 2.25122 12.4079 2.25 12.2547V1.74535C2.25 1.42569 2.50958 1.16669 2.82925 1.16669H9.83333ZM7.5 6.70835C7.88677 6.70835 8.25771 6.55471 8.5312 6.28122C8.80469 6.00773 8.95833 5.63679 8.95833 5.25002C8.95833 4.86325 8.80469 4.49231 8.5312 4.21882C8.25771 3.94533 7.88677 3.79169 7.5 3.79169C7.11323 3.79169 6.74229 3.94533 6.4688 4.21882C6.19531 4.49231 6.04167 4.86325 6.04167 5.25002C6.04167 5.63679 6.19531 6.00773 6.4688 6.28122C6.74229 6.55471 7.11323 6.70835 7.5 6.70835ZM4.89075 9.91669H10.1092C10.0385 9.27409 9.73318 8.68018 9.2517 8.24878C8.77022 7.81737 8.14648 7.57881 7.5 7.57881C6.85352 7.57881 6.22978 7.81737 5.7483 8.24878C5.26682 8.68018 4.96146 9.27409 4.89075 9.91669Z" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_dd" x="0.25" y="-0.833313" width="14.5" height="16.6667" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.153 0 0 0 0 0.45 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.152941 0 0 0 0 0.45098 0 0 0 0.05 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
+</filter>
+<clipPath id="clip0">
+<path d="M0.5 0H14.5V14H0.5V0Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>
