@@ -137,6 +137,7 @@ import UserNps from './components/user/Nps';
 import UserReferral from './components/user/Referral';
 import UserReview from './components/user/Review';
 import ReviewDetail from './components/user/ReviewDetail';
+import EditReview from './components/user/EditReview';
 import UserSetting from './components/user/Setting';
 import UserSupport from './components/user/Support';
 
@@ -300,6 +301,7 @@ const routes = [
     { path: '/user/referral', component: UserReferral, meta: { title: 'My Referrals - Brand Boost'} },
     { path: '/user/review', component: UserReview, meta: { title: 'My Review - Brand Boost'} },
     { path: '/user/review/:id', component: ReviewDetail, meta: { title: 'My Review Detail- Brand Boost'} },
+    { path: '/user/review/edit/:id', component: EditReview, meta: { title: 'Edit Review - Brand Boost'} },
     { path: '/user/setting', component: UserSetting, meta: { title: 'Personal Data - Brand Boost'} },
     { path: '/user/help', component: UserSupport, meta: { title: 'Help Desk - Brand Boost'} },
 ];

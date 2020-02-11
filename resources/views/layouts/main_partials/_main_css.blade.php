@@ -7,9 +7,10 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
 <!-- Sub User Css -->
-@if(!$isLoginPage || true)
+@if(!$isLoginPage)
 @if($userRole == '2' || true)
 <link href="{{ URL::asset('assets/profile_css/profile.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ URL::asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
 @endif
 @endif
 

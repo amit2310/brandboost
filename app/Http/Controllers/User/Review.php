@@ -147,10 +147,23 @@ class Review extends Controller {
         if($aReviewData->count() == 0) {
             return redirect('user/review');
         }
-        $aData = array(
-            'myReview' => $aReviewData[0]
+
+        $starRating = array(1=>'Poor', 2=>'Fair', 3=>'Good', 4=>'Excellent', 5=>'WOW!!!');
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Edit Review' => '#/user/review/edit/'.$reviewId
         );
-        return view('user.review_edit', $aData);
+
+        $aData = array(
+            'title' => 'Edit Review',
+            'breadcrumb' => $aBreadcrumb,
+            'myReview' => $aReviewData[0],
+            'starRating' => $starRating
+        );
+        //return view('user.review_edit', $aData);
+
+        return $aData;
     }
 
 }

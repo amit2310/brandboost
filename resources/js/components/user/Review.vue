@@ -17,7 +17,8 @@
 
                     <div class="p20">
                         <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
                                 <div class="tdropdown ml0"><a style="margin:0!important;"
                                                               class ="dropdown-toggle fsize12 txt_grey"
                                                               data-toggle="dropdown" aria-expanded="false"><img
@@ -44,7 +45,7 @@
                                     </ul>
                                 </div>
                             </div>
-                             <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
                                  <div class="tdropdown ml0 pull-right"><a style="margin:0!important;"
                                                                           class="dropdown-toggle fsize12 txt_grey"
                                                                           data-toggle="dropdown" aria-expanded="false">
@@ -69,16 +70,17 @@
                                      </ul>
                                  </div>
                               </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
                         </div>
-
-
                     </div>
+
                 </div>
             </div>
         </div>
 
-        <div class="row profile_media_outer ">
-            <div class="col-md-3">{{myReview.length}}
+        <div v-if="myReview.length > 0" class="row profile_media_outer ">
+            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6">
                 <table style="width: 100%;">
 
                     <thead>
@@ -351,9 +353,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col-md-3">&nbsp;</div>
         </div>
 
-        <!--<div v-else class="row profile_media_outer ">
+        <div v-else class="row profile_media_outer ">
             <div class="col-md-12 text-center">
                 <ul class="nps_feedback">
                     <li>
@@ -361,7 +364,7 @@
                     </li>
                 </ul>
             </div>
-        </div>-->
+        </div>
 
     </div>
 
@@ -397,7 +400,6 @@
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.myReview = response.data.myReview;
-                        console.log("----------"+this.myReview.length)
                     });
             }
         }
@@ -405,7 +407,7 @@
 
     $(document).ready(function () {
 
-        $(".comment_show").click(function () {
+        $(".comment_show").click(function () { alert("here");
             $(this).parent().parent().find('.commentarea').slideToggle();
         });
 
