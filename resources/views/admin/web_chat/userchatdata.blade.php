@@ -97,7 +97,7 @@ $teamMembers = getAllteam($aUInfo->id);
 					<ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right chat_dropdown">
 
 						<li class="forceunassign" style="display: block;"><strong><a href="javascript:void(0)"><img src="/assets/images/user_img_blank.png"/> Unassigned</a></strong> </li>
-						<li style="display: none;"> class="team_list" team_member_id="{{ $aUInfo->id }}" team_member_name="{{ $aUInfo->firstname.' '.$aUInfo->lastname }}" style="display: block;"><strong><a class="default team_active_{{ $loginMember }}" href="javascript:void(0)"><img src="/assets/images/user-06-a.png"/> Me</a></strong> </li>
+						<li style="display: none;" class="team_list" team_member_id="{{ $aUInfo->id }}" team_member_name="{{ $aUInfo->firstname.' '.$aUInfo->lastname }}" style="display: block;"><strong><a class="default team_active_{{ $loginMember }}" href="javascript:void(0)"><img src="/assets/images/user-06-a.png"/> Me</a></strong> </li>
 
                         @php
                         if($c_id == "") {

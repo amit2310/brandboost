@@ -38,6 +38,7 @@ import VueApexCharts from 'vue-apexcharts';
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
 
+
 /*Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard-reivews', require('./components/admin/dashboard/DashReviews.vue').default);*/
 
