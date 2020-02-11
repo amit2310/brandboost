@@ -8,8 +8,9 @@
 
 <!-- Sub User Css -->
 @if(!$isLoginPage)
-@if($userRole == '2')
+@if($userRole == '2' || true)
 <link href="{{ URL::asset('assets/profile_css/profile.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ URL::asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
 @endif
 @endif
 
