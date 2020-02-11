@@ -17,12 +17,24 @@
                         </ul>
                     </div>
                     <div class="chat_user_list">
-                        <ul>
-                            <li><a href="javascript:void(0);"><img src="assets/images/avatar/01.png"/></a></li>
-                            <li><a href="javascript:void(0);"><img src="assets/images/avatar/02.png"/></a></li>
+                        <ul class="listTeamMembers">
+                            <li v-for="(tm, idx) in teamMembers" v-if="idx<=3" :class="{'active': tm.id == activeThread.assign_team_member}">
+                                <a href="javascript:void(0);" @click="assignChatToMember(tm.id)">
+                                    <user-avatar
+                                        :avatar="tm.avatar"
+                                        :firstname="tm.firstname"
+                                        :lastname="tm.lastname"
+                                        :width="28"
+                                        :height="28"
+                                        :title="tm.firstname+ ' ' +tm.lastname"
+                                    ></user-avatar>
+                                    <!--<img src="assets/images/avatar/01.png"/>-->
+                                </a>
+                            </li>
+                            <!--<li><a href="javascript:void(0);"><img src="assets/images/avatar/02.png"/></a></li>
                             <li><a href="javascript:void(0);"><img src="assets/images/avatar/03.png"/></a></li>
-                            <li><a href="javascript:void(0);"><img src="assets/images/avatar/04.png"/></a></li>
-                            <li><a href="javascript:void(0);"><img src="assets/images/Plus_grey_circle.svg"/></a></li>
+                            <li><a href="javascript:void(0);"><img src="assets/images/avatar/04.png"/></a></li>-->
+                            <li><a href="javascript:void(0);" @click="showModal=true"><img src="assets/images/Plus_grey_circle.svg"/></a></li>
                         </ul>
                     </div>
 
@@ -141,7 +153,6 @@
                                         <span class="icons fl_letters s32" style="width:40px!important;height:40px!important;line-height:40px;font-size:13px;">{{participantInfo.firstname.charAt(0)+ '' +participantInfo.lastname.charAt(0)}}</span>
                                     </span>
                                     </template>
-
                                     <div class="media-content" v-html="parseMessage(row.msg)"></div>
                                 </div>
                             </li>
@@ -365,11 +376,41 @@
             </div>
         </div>
         </div>
+        <modal-popup v-if="showModal" width="sm" @close="showModal = false" >
+            <div slot="header">
+                <h3>Assign chat to team members <button type="button" class="close pull-right" data-dismiss="modal" @click="showModal = false">&times;</button></h3>
+            </div>
+            <div slot="body" class="pt0 pb0">
+                <div class="chat_user_list m-2 pb-5"  style="max-width: 400px!important;width:400px;border-right:none;">
+                    <ul class="listTeamMembers">
+                        <li v-for="(tm, idx) in teamMembers" :class="{'active': tm.id == activeThread.assign_team_member}">
+                            <a href="javascript:void(0);" class="p-1" @click="assignChatToMember(tm.id)">
+                                <user-avatar
+                                    :avatar="tm.avatar"
+                                    :firstname="tm.firstname"
+                                    :lastname="tm.lastname"
+                                    :width="40"
+                                    :height="40"
+                                    :fontsize="14"
+                                    :title="tm.firstname+ ' ' +tm.lastname"
+                                ></user-avatar>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div slot="footer">
+                <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20" @click="showModal = false">Close</a>
+            </div>
+        </modal-popup>
     </div>
 </template>
 <script>
+    import UserAvatar from "@/components/helpers/UserAvatar";
+    import ModalPopup from "@/components/helpers/Common/ModalPopup";
     export default {
-        props: ['currentTokenId', 'loggedId', 'loggedUserInfo', 'participantId', 'participantInfo', 'shortcuts', 'loggedUser', 'twilioNumber'],
+        components: {ModalPopup, UserAvatar},
+        props: ['currentTokenId', 'loggedId', 'loggedUserInfo', 'participantId', 'participantInfo', 'shortcuts', 'loggedUser', 'twilioNumber', 'teamMembers', 'allChat', 'unassignedChat', 'assignedChat', 'favoriteChat'],
         data() {
             return {
                 refreshMessage: 1,
@@ -393,7 +434,9 @@
                 chatTab: true,
                 noteTab: false,
                 emailTab: false,
-                textTab: false
+                textTab: false,
+                showModal: false,
+                activeThread: ''
             }
         },
         sockets:{
@@ -435,11 +478,33 @@
                 }
             },
         },
-       computed: {
+        computed: {
             filteredListShortcut() {
                 if (this.shortcuts) {
                     return this.shortcuts.filter(shortcut => {
                         return (shortcut.name.toLowerCase().includes(this.searchShortcut.toLowerCase()) || shortcut.conversatation.toLowerCase().includes(this.searchShortcut.toLowerCase()))
+                    });
+                }
+            },
+            filteredContact(){
+                if (this.allChat) {
+                    return this.allChat.filter(contact => {
+                        return contact.room.toLowerCase().includes(this.currentTokenId.toLowerCase());
+                    });
+                }
+                if (this.unassignedChat) {
+                    return this.unassignedChat.filter(contact => {
+                        return contact.room.toLowerCase().includes(this.currentTokenId.toLowerCase());
+                    });
+                }
+                if (this.assignedChat) {
+                    return this.assignedChat.filter(contact => {
+                        return contact.room.toLowerCase().includes(this.currentTokenId.toLowerCase());
+                    });
+                }
+                if (this.favoriteChat) {
+                    return this.favoriteChat.filter(contact => {
+                        return contact.room.toLowerCase().includes(this.currentTokenId.toLowerCase());
                     });
                 }
             }
@@ -459,6 +524,7 @@
                 //this.getMessageList();
                 this.getNotesList();
                 this.markRead();
+                this.refreshThreadInfo();
                 //this.getSmsList();
             },
             participantInfo: function () {
@@ -468,6 +534,29 @@
             },
         },
         methods: {
+            assignChatToMember: function(userid, fullname){
+                axios.post('/admin/webchat/reassignChat', {
+                    room: this.currentTokenId,
+                    assign_to: userid,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.refreshThreadInfo();
+                        this.$socket.emit('reassign_post_data', {room:this.currentTokenId, assign_to:userid, assign_from:response.data.preTeamId,assign_to_name:fullname ,user_id:this.loggedUserInfo.id});
+                    });
+
+            },
+            refreshThreadInfo: function(){
+                axios.post('/admin/webchat/getThreadInfo', {
+                    room: this.currentTokenId,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.activeThread = response.data.room;
+                    });
+            },
             formatNumber: function(number){
                 let parsedNumber = number.trim().replace('+', '').replace('-', '').replace('(','').replace(')', '');
                 return parsedNumber.substring(parsedNumber.length-10);
@@ -641,14 +730,14 @@
                 })
                     .then(response => {
                         if (response.data.status == 'ok') {
-                            this.enteredMessage = '';
+                            this.enteredMessage = null;
                         }
                     });
             },
             sendSms: function () {
                 this.loading = true;
                 let msg = this.enteredMessage;
-                this.enteredMessage = '';
+                this.enteredMessage = null;
                 axios.post('/admin/smschat/sendMsg', {
                     smstoken: this.currentTokenId,
                     phoneNo: this.participantInfo.phone,
@@ -660,7 +749,28 @@
                 })
                     .then(response => {
                         if (response.data.status == 'ok') {
-                            this.enteredMessage = '';
+                            this.enteredMessage = null;
+                            this.getSmsList();
+                            this.loading = false;
+                        }
+                    });
+            },
+            sendMms: function () {
+                this.loading = true;
+                let msg = this.enteredMessage;
+                this.enteredMessage = null;
+                axios.post('/admin/smschat/sendMMS', {
+                    smstoken: this.currentTokenId,
+                    phoneNo: this.participantInfo.phone,
+                    messageContent: msg,
+                    moduleName: 'chat',
+                    media_type: 'image/video',
+                    videoUrl: '',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if (response.data.status == 'ok') {
+                            this.enteredMessage = null;
                             this.getSmsList();
                             this.loading = false;
                         }
@@ -669,7 +779,7 @@
             sendEmail: function () {
                 this.loading = true;
                 let msg = this.enteredMessage;
-                this.enteredMessage = '';
+                this.enteredMessage = null;
                 axios.post('/admin/webchat/sendEmail', {
                     email: this.participantInfo.email,
                     messageContent: msg,
@@ -682,7 +792,7 @@
                             msg:msg
                         };
                         this.emailData.push(newObj);
-                        this.enteredMessage = '';
+                        this.enteredMessage = null;
                     });
             },
             saveNote: function () {
@@ -695,7 +805,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.enteredMessage = '';
+                        this.enteredMessage = null;
                         this.getNotesList();
                     });
             },
@@ -818,6 +928,9 @@
                             if(this.noteTab){
                                 this.saveNote();
                             }
+                            if(this.textTab){
+                                this.sendMms();
+                            }
 
                             this.loading = false;
                             let el = this;
@@ -833,5 +946,13 @@
 <style>
     .media_file{
         width: 250px !important;
+    }
+    .listTeamMembers li.active:after {
+        content: '✓';
+        position: fixed;
+        font-size: 33px;
+        font-weight: bold;
+        margin-left: -20px;
+        margin-top: -7px;
     }
 </style>
