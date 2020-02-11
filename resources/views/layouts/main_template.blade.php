@@ -303,6 +303,7 @@ function helloTest(){
         });
         $(".loadChatTheme").click(function(){
             document.querySelector("body").id="LiveChatSection";
+            document.querySelector("body").classList.add("pagewithleftsidebar");
             document.querySelector(".page-content").classList.add("bkg_light_000");
         });
         $(".loadReviewsTheme").click(function(){

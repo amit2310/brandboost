@@ -194,10 +194,21 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/widget_overview', 'Admin\Brandboost@widgetOverview');
     Route::get('admin/brandboost/widgets', 'Admin\Brandboost@widgets');
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
-//    Written By Pavan
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
     Route::get('admin/brandboost/get-widget', 'Admin\Brandboost@getWidget');
     Route::post('admin/brandboost/set-widget-type', 'Admin\Brandboost@setWidgetType');
-
+    Route::get('admin/widgets/statistics-details', 'Admin\Brandboost@widgetStatisticDetails');
+    /**
+     * --------------------------------------------------------------------------
+     *                                 End
+     * --------------------------------------------------------------------------
+     */
 
     Route::post('admin/brandboost/switchTemplate', 'Admin\Brandboost@switchTemplate');
     Route::post('admin/brandboost/campaignPreferences', 'Admin\Brandboost@campaignPreferences');
@@ -386,6 +397,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/webchat/getUnreadMsgs', 'Admin\WebChat@getUnreadMsgs');
     Route::post('admin/webchat/sendEmail', 'Admin\WebChat@sendEmail');
     Route::post('admin/webchat/showEmailThread', 'Admin\WebChat@showEmailThread');
+    Route::post('admin/webchat/getThreadInfo', 'Admin\WebChat@getThreadInfo');
 
 
 //Setting

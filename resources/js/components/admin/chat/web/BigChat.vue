@@ -28,6 +28,21 @@
                 :twilioNumber="twilioNumber"
                 @loadWebChat="loadWebChat"
             ></web-side-bar>
+            <chat-area
+                :allChat="allChat"
+                :unassignedChat="unassignedChat"
+                :assignedChat="assignedChat"
+                :favoriteChat="favoriteChat"
+                :currentTokenId="currentTokenId"
+                :loggedId="loggedId"
+                :loggedUserInfo="user"
+                :participantId="participantId"
+                :participantInfo="participantInfo"
+                :teamMembers="teamMembers"
+                :shortcuts="shortcuts"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
+            ></chat-area>
             <web-profile-bar
                 :currentTokenId="currentTokenId"
                 :loggedId="loggedId"
@@ -37,16 +52,6 @@
                 :twilioNumber="twilioNumber"
                 @loadWebChat="loadWebChat"
             ></web-profile-bar>
-            <chat-area
-                :currentTokenId="currentTokenId"
-                :loggedId="loggedId"
-                :loggedUserInfo="user"
-                :participantId="participantId"
-                :participantInfo="participantInfo"
-                :shortcuts="shortcuts"
-                :loggedUser="user"
-                :twilioNumber="twilioNumber"
-            ></chat-area>
         </div>
         <SaveReplyPopup @updateShortcuts="fetchShortcuts"></SaveReplyPopup>
     </div>
@@ -71,6 +76,7 @@
                 unassignedChat: '',
                 unassignedChatData: '',
                 allChat: '',
+                teamMembers: '',
                 loggedId: '',
                 selectedCampaigns: '',
                 currentTokenId: '',
@@ -103,6 +109,7 @@
                         this.loggedId = response.data.loggedYou;
                         this.user = response.data.loginUserData;
                         this.twilioNumber = response.data.twilioNumber;
+                        this.teamMembers = response.data.teamMembers;
                         this.loading = false;
                         //loadJQScript(this.user.id);
                     });

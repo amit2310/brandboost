@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Cookie;
 use Session;
-
+use Carbon;
 class BrandboostModel extends Model {
 
     /**
@@ -440,7 +440,31 @@ class BrandboostModel extends Model {
      * @param type $param
      * @return type
      */
-    public static function getBBWidgetStats($fieldVal, $filedName = 'widget_id', $type = '') {
+    public static function getBBWidgetStats($fieldVal, $filedName = 'widget_id', $type = '',$req='all') {
+        DB::enableQueryLog();
+          $startDate=Carbon\Carbon::now()->subDays(1)->endOfDay();
+          $endDate  =Carbon\Carbon::now()->endOfDay();
+        switch ($req){
+            case 'all':
+                $startDate =Carbon\Carbon::now()->startOfDay();
+                break;
+            case 'today':
+                $startDate =Carbon\Carbon::now()->startOfDay();
+                break;
+            case 'yest':
+                $startDate =Carbon\Carbon::now()->subDays(1)->startOfDay();
+                break;
+            case 'week':
+                $startDate =Carbon\Carbon::now()->startOfWeek();
+                break;
+            case 'month':
+                $startDate =Carbon\Carbon::now()->startOfMonth();
+                break;
+            case '3month':
+                $startDate =Carbon\Carbon::now()->subMonth(3)->endOfDay();
+                break;
+
+        }
         $oData = DB::table('tbl_brandboost_widget_tracking_log')
 			->select('tbl_brandboost_widget_tracking_log.*', 'tbl_brandboost.brand_title as bbBrandTitle', 'tbl_brandboost.brand_desc as bbBrandDesc', 'tbl_brandboost.brand_img', 'tbl_brandboost_widgets.widget_title', 'tbl_brandboost_widgets.widget_img', 'tbl_brandboost_widgets.widget_desc')
 			->when(($filedName == 'widget_id'), function ($query) use ($fieldVal) {
@@ -458,9 +482,17 @@ class BrandboostModel extends Model {
 			->when(($type != ''), function ($query) use ($type) {
 				return $query->where('track_type', $type);
 			})
+            ->when(($req != 'all'), function ($query) use ($startDate,$endDate) {
+                return $query->whereBetween('created_at', [$startDate,$endDate]);
+
+
+
+            })
 			->leftJoin('tbl_brandboost', 'tbl_brandboost_widget_tracking_log.brandboost_id', '=', 'tbl_brandboost.id')
 			->leftJoin('tbl_brandboost_widgets', 'tbl_brandboost_widget_tracking_log.widget_id', '=', 'tbl_brandboost_widgets.id')
-			->get();
+//			->get();
+            ->paginate(10);
+        //dd(DB::getQueryLog());
         return $oData;
     }
 
