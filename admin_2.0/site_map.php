@@ -89,6 +89,8 @@
      			
      			<li><a target="_blank" href="people_tag1.php">People Tag 1</a></li>
      			<li><a target="_blank" href="people_tag2.php">People Tag 2</a></li>
+     			<li><a target="_blank" href="people_tag3.php">People Tag 3</a></li>
+     			<li><a target="_blank" href="people_tag4.php">People Tag 4</a></li>
      			
      			<li><a target="_blank" href="people_deals1.php">People Deals 1</a></li>
      			<li><a target="_blank" href="people_deals2.php">People Deals 2</a></li>
