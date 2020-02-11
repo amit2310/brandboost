@@ -103,10 +103,8 @@
                                     <p class="fsize14 mb-0"><span class="red_400">{{ widget.totalViewsPre }}%</span> &nbsp;
 <!--                                        <span class="dark_400"> / week</span>-->
                                     </p>
-                                    <div id="basiclinechart_view" style="margin-left: -25px;">
-
-                                    </div>
                                 </div>
+                                <widget-event-graph></widget-event-graph>
                             </div>
                         </div>
                         <div class="col-md-3 d-flex">
@@ -119,26 +117,24 @@
                                     <p class="fsize14 mb-0"><span class="green_400">{{ widget.totalClicksPre }}%</span> &nbsp;
                                         <!--                                        <span class="dark_400"> / week</span>-->
                                     </p>
-                                    <div id="basiclinechart_clicks" style="margin-left: -25px;">
 
-                                    </div>
                                 </div>
+                                <widget-event-graph></widget-event-graph>
                             </div>
                         </div>
                         <div class="col-md-3 d-flex">
                             <div class="card p0 col">
                                 <div class="p15 pl30 bbot">
-                                    <a href="#" class="fsize12 dark_200 fw500">Comments</a>
+                                    <a href="#" class="fsize12 dark_200 fw500">Commentshhhhh</a>
                                 </div>
                                 <div class="p30 pl40 pb0">
                                     <h3 class="htxt_regular_28 dark_700 mb10">{{ widget.totalComments }}</h3>
                                     <p class="fsize14 mb-0"><span class="green_400">{{ widget.totalCommentsPre }}%</span> &nbsp;
                                         <!--                                        <span class="dark_400"> / week</span>-->
                                     </p>
-                                    <div id="basiclinechart_comments" style="margin-left: -25px;">
 
-                                    </div>
                                 </div>
+                                <widget-event-graph></widget-event-graph>
                             </div>
                         </div>
                         <div class="col-md-3 d-flex">
@@ -151,10 +147,9 @@
                                     <p class="fsize14 mb-0"><span class="green_400">{{ widget.totalHelpfulPre }}%</span> &nbsp;
                                         <!--                                        <span class="dark_400"> / week</span>-->
                                     </p>
-                                    <div id="basiclinechart_helpful" style="margin-left: -25px;">
 
-                                    </div>
                                 </div>
+                                <widget-event-graph></widget-event-graph>
                             </div>
                         </div>
 
@@ -227,11 +222,14 @@
 <!--    </div>-->
 </template>
 
+
 <script>
+
+    import WidgetEventGraph from '@/components/admin/modules/widgets/onsite/WidgetEventGraph.vue';
     import Pagination from '@/components/helpers/Pagination';
     export default {
         title: 'Onsite Widgets - Brand Boost',
-        components: {Pagination},
+        components: {Pagination,WidgetEventGraph},
         data() {
             return {
                 form: {
