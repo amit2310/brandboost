@@ -90,7 +90,7 @@ import ChatSMS from './components/admin/chat/sms/BigChat';
 import ChatShortcut from './components/admin/chat/Shortcuts';
 /*Widget Section*/
 import WidgetOverview from './components/admin/brandboost/WidgetOverview';
-import OnsiteWidgets from './components/admin/brandboost/Widgets';
+// import OnsiteWidgets from './components/admin/brandboost/Widgets';
 import ChatWidgets from './components/admin/modules/chat/Index';
 import ReferralWidgets from './components/admin/modules/referral/Widgets';
 import NPSWidgets from './components/admin/modules/nps/Widgets';
@@ -140,7 +140,34 @@ import ReviewDetail from './components/user/ReviewDetail';
 import UserSetting from './components/user/Setting';
 import UserSupport from './components/user/Support';
 
+/**
+ * --------------------------------------------------------------------------
+ *  Import component for widget onsite section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+import WidgetsOnsiteList from './components/admin/modules/widgets/widgetsList';
+import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
+import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
+
 const routes = [
+
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    { path: '/widgets/onsite', component: WidgetsOnsiteList, meta: { title: 'Onsite Widgets'} },
+    { path: '/widgets/onsite/setup/:id/1', component: WidgetsOnsiteSetup, meta: { title: 'Onsite Widget Setup'} },
+    { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
+
+    /**
+     * --------------------------------------------------------------------------
+     *                              End
+     * --------------------------------------------------------------------------
+     */
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
@@ -288,7 +315,7 @@ const routes = [
     { path: '/modules/referral/widgets', component: ReferralWidgets, meta: { title: 'Referral Programs'} },
     { path: '/modules/nps/widgets', component: NPSWidgets, meta: { title: 'NPS Surveys'} },
     { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
-    { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
+    // { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
     { path: '/brandboost/onsite_widget_setup/:id', component: OnsiteWidgetSetup, meta: { title: 'Onsite Widget Setup'} },
     { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
     { path: '/mediagallery', component: MediaGalleryWidget, meta: { title: 'Media Gallery Widgets'} },
