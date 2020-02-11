@@ -75,6 +75,9 @@ class WebChat extends Controller {
             }
         }
 
+        //Get All Team members
+        $teamMembers = getAllteam($oUser->id);
+
         $aData = [
             'title' => 'Web Chat',
             'breadcrumb' => $aBreadcrumb,
@@ -88,7 +91,8 @@ class WebChat extends Controller {
             'assignedChatData' => $assignedChatData,
             'unassignedChatData' => $unassignedChatData,
             'allChat' => $allChat,
-            'loggedYou' => $loggedYou
+            'loggedYou' => $loggedYou,
+            'teamMembers' => $teamMembers,
         ];
         //return view('admin.web_chat.index', $data);
         return $aData;
@@ -1792,6 +1796,18 @@ class WebChat extends Controller {
         $aData = $mWebChat->getEmailThread($fromAddress, $to);
         return $aData;
 
+    }
+
+    /**
+     * This function used to get Chat room info
+     * @param Request $request
+     * @return \App\Models\Admin\type
+     */
+    public function getThreadInfo(Request $request){
+        $tokenId = $request->room;
+        $mWebChat = new WebChatModel();
+        $oData = $mWebChat->checkTeamAssign($tokenId);
+        return ['room'=>$oData];
     }
 
 

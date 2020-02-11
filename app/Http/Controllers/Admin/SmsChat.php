@@ -362,9 +362,11 @@ class SmsChat extends Controller {
             $sData = array('to' => $phoneNo, 'from' => $from, 'token' => $tokenResponse, 'twilio_token' => $token, 'msg' => $messageContent, 'media_type' => $media_type, 'module_name' => $moduleName, 'created' => date("Y-m-d H:i:s"));
             $smsChat = new SmsChatModel();
             $smsChat->addSmsChatData($sData);
+
         } else {
             echo 'sdf';
         }
+        return ['status'=> 'ok'];
     }
     /**
      * this function is used to return subscriber list based on the input provided
