@@ -1936,7 +1936,18 @@ class Brandboost extends Controller
         exit;
     }
 
+public function widgetStatisticDetailsStatsGraph(){
 
+    $result =[];
+    if ($result) {
+        Session::put("setTab", 'Statistics');
+        $response['status'] = 'success';
+    } else {
+        $response['status'] = "Error";
+    }
+    echo json_encode($response);
+    exit;
+}
     /**
      * Used to add offsite resources
      * @return type

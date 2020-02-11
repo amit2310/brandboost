@@ -204,6 +204,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/get-widget', 'Admin\Brandboost@getWidget');
     Route::post('admin/brandboost/set-widget-type', 'Admin\Brandboost@setWidgetType');
     Route::get('admin/widgets/statistics-details', 'Admin\Brandboost@widgetStatisticDetails');
+    Route::get('admin/widgets/statistics-details-stats-graph', 'Admin\Brandboost@widgetStatisticDetailsStatsGraph');
     /**
      * --------------------------------------------------------------------------
      *                                 End
