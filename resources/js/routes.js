@@ -129,7 +129,6 @@ import PeopleDeals from './components/admin/deals/Deals';
 import Profile from './components/admin/Profile';
 import Settings from './components/admin/Settings';
 
-
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
 import UserMedia from './components/user/Media';
