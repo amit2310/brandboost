@@ -209,6 +209,8 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .tags_btn.blue{border-color: #A5CEFF; color: #5998F8;}
 .tags_btn.review{border-color: #C6CAFC; color: #717CEF;}
 .tags_btn.email{border-color: #A8E0EE; color: #5CA5DA;}
+.tags_btn.green{border-color: rgba(156, 228, 175, 0.4); color: #65C692;}
+.tags_btn.yellow{border-color: #F4AF5E; color: #F4AF5E;}
 
 
 .table_dots_dd{border: none; background: none; box-shadow: none; padding: 0!important }
