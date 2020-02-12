@@ -129,7 +129,6 @@ import PeopleDeals from './components/admin/deals/Deals';
 import Profile from './components/admin/Profile';
 import Settings from './components/admin/Settings';
 
-
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
 import UserMedia from './components/user/Media';
@@ -146,7 +145,7 @@ import UserSupport from './components/user/Support';
  *  @Pavan
  * --------------------------------------------------------------------------
  */
-import WidgetsOnsiteList from './components/admin/modules/widgets/widgetsList';
+import WidgetsOnsiteList from './components/admin/modules/widgets/WidgetsList';
 import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
 import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
 
