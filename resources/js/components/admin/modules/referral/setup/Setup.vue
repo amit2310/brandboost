@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">
@@ -21,7 +20,6 @@
         <div class="content-area">
             <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
             <loading :isLoading="loading"></loading>
-
             <div class="container-fluid">
                 <div class="table_head_action">
                     <div class="row">
@@ -42,99 +40,94 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mb30">
+                    <div class="col-md-12 text-center mt30">
+                        <h3 class="fsize16 fw400 dark_500">How do you want to create a referral campaign?</h3>
+                        <p class="fsize13 dark_200">Choose Template</p>
+                    </div>
+                </div>
                 <div class="row">
-                    <div class="col-md-4 text-center animate_top">
-                        <label for="opt1" class="d-block mylablel"
+                    <div class="col-md-4 text-center">
+                        <label for="opt1" class="m0 w-100"
                                :class="{active: campaign.source_type=='email'}"
                                @click="setSource('email')"
                         >
-                            <div class="card br8 p0 m-0">
-
-                                <label class="custmo_checkbox email_config">
-                                    <input id="opt1" type="radio" name="source_type" :checked="campaign.source_type=='email'">
-                                    <span class="custmo_checkmark"></span>
-
+                            <div class="broadcast_select_contact">
+                                <label class="custmo_checkbox">
+                                    <input class="check" id="opt1" type="radio" name="source_type" :checked="campaign.source_type=='email'">
+                                    <span class="custmo_checkmark green_tr"></span>
                                 </label>
-
-                                <div class="p40 pb20">
-                                    <img class="mt20" src="/assets/images/send-right-now.svg"/>
-                                    <h3 class="htxt_medium_16 dark_700 mb30 mt30">Email</h3>
+                                <div class="img_box img_active" v-if="campaign.source_type=='email'">
+                                    <img class="mt20" src="http://brandboost.io/assets/images/ref_email_act.png"/>
                                 </div>
-                                <div class="p20 btop">
-                                    <a class="fsize14 fw500 email_500" href="javascript:void(0);">Refer through Emails</a>
+                                <div class="img_box img_inactive" v-else>
+                                    <img class="mt20" src="http://brandboost.io/assets/images/ref_email.png"/>
                                 </div>
+                                <p class="fsize14 txt_dark fw500">Email</p>
+                                <p class="fsize12 txt_grey fw300">Refer through Emails</p>
                             </div>
                         </label>
                     </div>
-                    <div class="col-md-4 text-center animate_top">
-                        <label for="opt2" class="d-block mylablel"
+                    <div class="col-md-4 text-center">
+                        <label for="opt2" class="m0 w-100"
                                :class="{active: campaign.source_type=='sms'}"
                                @click="setSource('sms')"
                         >
-                            <div class="card br8 p0 m-0">
-                                <label class="custmo_checkbox email_config">
-                                    <input id="opt2" type="radio" name="source_type" :checked="campaign.source_type=='sms'">
-                                    <span class="custmo_checkmark"></span>
+                            <div class="broadcast_select_contact">
+                                <label class="custmo_checkbox">
+                                    <input class="check" id="opt2" type="radio" name="source_type" :checked="campaign.source_type=='sms'">
+                                    <span class="custmo_checkmark green_tr"></span>
                                 </label>
-                                <div class="p40 pb20">
-                                    <img class="mt20" src="/assets/images/schedule.svg"/>
-                                    <h3 class="htxt_medium_16 dark_700 mb30 mt30">SMS</h3>
+                                <div class="img_box img_active" v-if="campaign.source_type=='sms'">
+                                    <img class="mt20" src="http://brandboost.io/assets/images/ref_social_act.png"/>
                                 </div>
-                                <div class="p20 btop">
-                                    <a class="fsize14 fw500 email_500" href="javascript:void(0);">Refer through SMS</a>
+                                <div class="img_box img_inactive" v-else>
+                                    <img class="mt20" src="http://brandboost.io/assets/images/ref_social.png"/>
                                 </div>
+                                <p class="fsize14 txt_dark fw500">SMS</p>
+                                <p class="fsize12 txt_grey fw300">Refer through SMS</p>
                             </div>
                         </label>
-
-
                     </div>
-                    <div class="col-md-4 text-center animate_top">
-                        <label for="opt3" class="d-block mylablel"
+                    <div class="col-md-4 text-center">
+                        <label for="opt3" class="m0 w-100"
                                :class="{active: campaign.source_type=='widget'}"
                                @click="setSource('widget')"
                         >
-                            <div class="card br8 p0 m-0">
-                                <label class="custmo_checkbox email_config">
-                                    <input id="opt3" type="radio" name="source_type" :checked="campaign.source_type=='widget'">
-                                    <span class="custmo_checkmark"></span>
+                            <div class="broadcast_select_contact">
+                                <label class="custmo_checkbox">
+                                    <input class="check" id="opt3" type="radio" name="source_type" :checked="campaign.source_type=='widget'">
+                                    <span class="custmo_checkmark green_tr"></span>
                                 </label>
-                                <div class="p40 pb20">
-                                    <img class="mt20" src="/assets/images/schedule.svg"/>
-                                    <h3 class="htxt_medium_16 dark_700 mb30 mt30">Widgets</h3>
+                                <div class="img_box img_active" v-if="campaign.source_type=='widget'">
+                                    <img class="mt20" src="http://brandboost.io/assets/images/ref_widget_act.png"/>
                                 </div>
-                                <div class="p20 btop">
-                                    <a class="fsize14 fw500 email_500" href="javascript:void(0);">Refer through Widgets</a>
+                                <div class="img_box img_inactive" v-else>
+                                    <img class="mt20" src="http://brandboost.io/assets/images/ref_widget.png"/>
                                 </div>
+                                <p class="fsize14 txt_dark fw500">Widgets</p>
+                                <p class="fsize12 txt_grey fw300">Refer through Widgets</p>
                             </div>
                         </label>
-
-
                     </div>
-
                 </div>
-
-
                 <div class="row mt40">
                     <div class="col-md-12">
                         <hr class="mb25">
                     </div>
                     <div class="col-6">
-
                     </div>
                     <div class="col-6">
                         <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(2)">Save and continue <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <!--Content Area End-->
     </div>
 </template>
 <script>
-
     export default {
         data() {
             return {
@@ -162,12 +155,7 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oReferral;
                     this.loading = false;
-                    //loadJQScript(this.user.id);
-
                 });
-        },
-        mounted() {
-
         },
         methods: {
             setSource: function(source){
@@ -182,8 +170,6 @@
                         this.successMsg = 'Source has been updated successfully';
                         this.loading = false;
                     });
-
-
             },
             displayStep: function(step){
                 let path = '';
@@ -192,12 +178,10 @@
                 }else{
                     path = '/admin#/referral/setup/'+this.campaignId+'/'+step;
                 }
-
                 window.location.href = path;
             },
             updateSettings: function (fieldName, fieldValue,  type) {
                 this.loading = true;
-
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
                 }
@@ -208,13 +192,11 @@
                     brandboostId: this.campaignId,
                     linkExpiryData : this.campaign.link_expire_custom,
                     requestType: type
-
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
                 });
-
             },
             saveDraft: function(){
                 this.loading = true;
@@ -234,15 +216,10 @@
                     });
             }
         }
-
     };
-
 </script>
 <style scoped>
     .email_config_list li{
         width: 19.5% !important;
     }
 </style>
-
-
-

@@ -44,16 +44,16 @@ class Review extends Controller {
                 $oReview->reviewCommentsData = $mReviews->getReviewAllParentsComments($reviewID, $start = 0);
                 if(!empty($oReview->reviewCommentsData)) {
                     foreach ($oReview->reviewCommentsData as $commentData) {
-                        $oReview->likeData = $mReviews->getCommentLSByCommentID($commentData->id, 1);
-                        $oReview->disLikeData = $mReviews->getCommentLSByCommentID($commentData->id, 0);
-                        $oReview->childComments = $mReviews->getReviewAllChildComments($aReview['id'], $commentData->id);
+                        $commentData->likeData = $mReviews->getCommentLSByCommentID($commentData->id, 1);
+                        $commentData->disLikeData = $mReviews->getCommentLSByCommentID($commentData->id, 0);
+                        $commentData->childComments = $mReviews->getReviewAllChildComments($aReview['id'], $commentData->id);
 
                         if (!empty($oReview->childComments)) {
                             foreach ($oReview->childComments as $childComment) {
-                                $oReview->avtarImageChild = $childComment->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $childComment->avatar;
+                                $childComment->avtarImageChild = $childComment->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $childComment->avatar;
 
-                                $oReview->likeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 1);
-                                $oReview->disLikeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 0);
+                                $childComment->likeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 1);
+                                $childComment->disLikeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 0);
                             }
                         }
                     }
@@ -68,8 +68,8 @@ class Review extends Controller {
                         unset($aComment);
                     }
                 }
-                $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
-                $aReviewData[$reviewID]['product_data'] = $aProductData;
+                $aReviewData['comment_block'] = $aCommentsData;
+                $aReviewData['product_data'] = $aProductData;
                 unset($aCommentsData);
 
                 $oReview->aReviewData = $aReviewData;
@@ -147,10 +147,23 @@ class Review extends Controller {
         if($aReviewData->count() == 0) {
             return redirect('user/review');
         }
-        $aData = array(
-            'myReview' => $aReviewData[0]
+
+        $starRating = array(1=>'Poor', 2=>'Fair', 3=>'Good', 4=>'Excellent', 5=>'WOW!!!');
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Edit Review' => '#/user/review/edit/'.$reviewId
         );
-        return view('user.review_edit', $aData);
+
+        $aData = array(
+            'title' => 'Edit Review',
+            'breadcrumb' => $aBreadcrumb,
+            'myReview' => $aReviewData[0],
+            'starRating' => $starRating
+        );
+        //return view('user.review_edit', $aData);
+
+        return $aData;
     }
 
 }

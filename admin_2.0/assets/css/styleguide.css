@@ -49,6 +49,7 @@ SMART POPUP SLIDING BOX
 .box > div {position: relative!important;	background: #fff!important;	z-index: 999!important; border-radius: 6px;}
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
+.cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
 .box hr{border-color: #edf1f6!important}
 @media only screen and (min-height:900px){
 	.bottom-position{position: absolute; bottom: 40px; width: 100%; max-width: 368px;}
@@ -82,6 +83,7 @@ Misc
 .max_h_260{max-height: 260px!important}
 .close_x_icon{width: 24px; height: 24px; position: absolute; right: 20px; top: 20px;}
 .max_w_225{max-width: 225px;}
+.max_w_250{max-width: 250px;}
 
 
 
@@ -371,6 +373,14 @@ Animate Btn CLASSES
 .animate_left:hover{-webkit-transform: translateX(10px);-ms-transform: translateX(10px);transform: translateX(10px);-webkit-transition: transform 0.5s;transition: transform 0.5s;}
 
 
+/******************************
+MODAL POPUP CLASSES
+******************************/
+.modal-content{border: none; border-top: 4px solid #5893FF; padding: 40px; background: #FFFFFF;box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05);border-radius: 6px;}
+.modal-content hr{border-color: #f4f7fb!important; margin: 25px 0}
+.modal-backdrop.show {opacity: .1;}
+
+
 
 /******************************
 BORDER CLASSES
@@ -378,6 +388,7 @@ BORDER CLASSES
 .border{border: 1px solid #e9eff8!important;}
 .border2{border: 1px solid #D5DFEF!important;}
 .border.active{border: 1px solid #67BAE4!important;}
+.border.active2{border: 1px solid #5998F8!important;}
 .bbot{border-bottom: 1px solid #e9eff8;}
 .btop{border-top: 1px solid #e9eff8;}
 .brig{border-right: 1px solid #e9eff8;}
@@ -389,9 +400,9 @@ BORDER CLASSES
 /******************************
 BORDER RADIUS CLASSES
 ******************************/
-.br4{border-radius: 4px;}
+.br4{border-radius: 4px!important;}
 .br5{border-radius: 5px;}
-.br6{border-radius: 6px;}
+.br6{border-radius: 6px!important;}
 .br7{border-radius: 7px;}
 .br8{border-radius: 8px;}
 .br9{border-radius: 9px;}
@@ -444,7 +455,7 @@ COLOR CLASSES
 .dark_300{color: #687693}
 .dark_400{color: #56627F}
 .dark_500{color: #445069}
-.dark_600{color: #333D54}
+.dark_600{color: #333D54!important}
 .dark_700{color: #242B3D}
 .dark_800{color: #151A25}
 .dark_900{color: #07080A}
