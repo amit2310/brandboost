@@ -38,7 +38,7 @@
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     export default {
-        title: 'Help Desk - Brand Boost',
+        title: 'Review Details - Brand Boost',
         components: {UserAvatar, Pagination},
         data() {
             return {
