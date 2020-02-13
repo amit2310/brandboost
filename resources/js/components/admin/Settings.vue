@@ -31,6 +31,7 @@
          **********************-->
         <div v-if="(seletedTab === '' || seletedTab === 1)" class="tab-pane " id="right-icon-tab0">
             <div class="row">
+                <br />
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
                         <form id="frmGeneralBusinessInfo" name="frmGeneralBusinessInfo" method="post">
