@@ -267,6 +267,20 @@
      
      
      
+     <div class="row text-center">
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     	<div class="col"><div class="card w-100 p20">22</div></div>
+     </div>
+     
+     
+     
      
       </div>
       </div>

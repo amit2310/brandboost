@@ -49,11 +49,11 @@
   <div class="container-fluid">
    <div class="row">
    	<div class="col-md-6">
-   	<h3 class="htxt_medium_24 dark_700">Chat Bots </h3>
+   	<h3 class="htxt_medium_24 dark_700">Auto Messages </h3>
    	</div>
    	<div class="col-md-6 text-right">
    		<button class="circle-icon-40 mr15"><img style="width: 14px!important" src="assets/images/settings-3-fill.svg"/></button>
-   		<button class="btn btn-md bkg_blue_300 light_000" data-toggle="modal" data-target="#CREATEFORM">CREATE NEW BOT<span><img src="assets/images/blue-plus.svg"/></span></button>
+   		<button class="btn btn-md bkg_blue_300 light_000" data-toggle="modal" data-target="#CREATEFORM">CREATE NEW MESSAGE<span><img src="assets/images/blue-plus.svg"/></span></button>
    	</div>
    </div>
    </div>
@@ -111,10 +111,11 @@
 					</span>
 				    </td>
 					<td><span class="fsize10 fw500">NAME </span></td>
-					<td><span class="fsize10 fw500">TYPE</span></td>
-					<td><span class="fsize10 fw500">USAGE</span></td>
-					<td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"> </span></td>
-					<td><span class="fsize10 fw500">STATUS</span></td>
+					<td><span class="fsize10 fw500">SENDER</span></td>
+					<td><span class="fsize10 fw500">ACTION</span></td>
+					<td><span class="fsize10 fw500">TRIGER</span></td>
+					<td><span class="fsize10 fw500">AUDIENCE</span></td>
+					<td><span class="fsize10 fw500">viewed <img src="assets/images/arrow-down-line-14.svg"> </span></td>
 					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
 				  </tr>
 				  
@@ -129,23 +130,13 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img width="18" src="assets/images/bot_18_white.svg"></span></span> Customer Service Bot</td>
-					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Customer Bot</td>
-					<td>492</td>
-					<td>Nov 11, 2014</td>
-					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-							  <span><img src="assets/images/more-2-fill.svg"></span>
-							</button>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img width="12" src="assets/images/chat-2-fill-white.svg"></span></span> Welcome message</td>
+					<td><span class="table-img mr10"><img class="" width="20" src="assets/images/avatar/02.png"></span> Courtney</td>
+					<td>Go to a URL</td>
+					<td>On the first visit</td>
+					<td>All</td>
+					<td>2 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
 				  </tr>
 				  
 				  <tr>
@@ -157,26 +148,16 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_600"><img width="18" src="assets/images/bot_18_white.svg"></span></span> Operator Bot</td>
-					<td><span class="mr-3"><span class="status_icon bkg_email_300"></span></span>Task Bot</td>
-					<td>78</td>
-					<td>Jan 1, 2020</td>
-					<td><span class="mr-3"><span class="status_icon bkg_light_600"></span></span>Paused</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-							  <span><img src="assets/images/more-2-fill.svg"></span>
-							</button>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img width="12" src="assets/images/chat-2-fill-white.svg"></span></span> Website feature announcement</td>
+					<td><span class="table-img mr10"><img class="" width="20" src="assets/images/avatar/03.png"></span> Calvin</td>
+					<td>Go to a URL</td>
+					<td>Custom</td>
+					<td>Segment</td>
+					<td>17 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
 				  
-				    <tr>
+				  <tr>
 				   <td width="20">
 						<span>
 							<label class="custmo_checkbox pull-left">
@@ -185,23 +166,31 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_green_300"><img width="18" src="assets/images/bot_18_white.svg"></span></span> Marketing Bot</td>
-					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Task Bot</td>
-					<td>321</td>
-					<td>Oct 18, 2020</td>
-					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-							  <span><img src="assets/images/more-2-fill.svg"></span>
-							</button>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img width="12" src="assets/images/chat-2-fill-white.svg"></span></span> New Review Request</td>
+					<td><span class="table-img mr10"><img class="" width="20" src="assets/images/avatar/04.png"></span> Courtney</td>
+					<td>Review</td>
+					<td>On the first visit</td>
+					<td>Tag</td>
+					<td>1 hr ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
 					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img width="12" src="assets/images/chat-2-fill-white.svg"></span></span> Marketing Call to Action</td>
+					<td><span class="table-img mr10"><img class="" width="20" src="assets/images/avatar/05.png"></span> Brandon</td>
+					<td>Go to a URL</td>
+					<td>Timer</td>
+					<td>Segment</td>
+					<td>12 hr ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_yellow_300"></span></span></td>
 				  </tr>
 				  
 				  
@@ -214,80 +203,17 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img width="18" src="assets/images/bot_18_white.svg"></span></span> Customer Service Bot</td>
-					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Customer Bot</td>
-					<td>492</td>
-					<td>Nov 11, 2014</td>
-					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-							  <span><img src="assets/images/more-2-fill.svg"></span>
-							</button>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img width="12" src="assets/images/chat-2-fill-white.svg"></span></span> Book meeting</td>
+					<td><span class="table-img mr10"><img class="" width="20" src="assets/images/avatar/06.png"></span> Theresa</td>
+					<td>Booking</td>
+					<td>On the first visit</td>
+					<td>All</td>
+					<td>3 month ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
 				  </tr>
 				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_600"><img width="18" src="assets/images/bot_18_white.svg"></span></span> Operator Bot</td>
-					<td><span class="mr-3"><span class="status_icon bkg_email_300"></span></span>Task Bot</td>
-					<td>78</td>
-					<td>Jan 1, 2020</td>
-					<td><span class="mr-3"><span class="status_icon bkg_light_600"></span></span>Paused</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-							  <span><img src="assets/images/more-2-fill.svg"></span>
-							</button>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
-				  </tr>
 				  
-				    <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_green_300"><img width="18" src="assets/images/bot_18_white.svg"></span></span> Marketing Bot</td>
-					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Task Bot</td>
-					<td>321</td>
-					<td>Oct 18, 2020</td>
-					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
-					<td>
-						<div class="float-right">
-							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-							  <span><img src="assets/images/more-2-fill.svg"></span>
-							</button>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="#">Link 1</a>
-							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
-				  </tr>
+				  
 				  
 				  
 				 
