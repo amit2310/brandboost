@@ -42,7 +42,7 @@ import offsiteStep4 from './components/admin/brandboost/offsite/setup/Setup4';
 import offsiteStep5 from './components/admin/brandboost/offsite/setup/Setup5';
 
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
-import Media from './components/admin/brandboost/Media.vue';
+import MediaTable from './components/admin/brandboost/MediaTable';
 import Tags from './components/admin/tags/Index';
 import TagGroups from './components/admin/tags/TagGroups';
 import TagList from './components/admin/tags/TagList';
@@ -212,7 +212,7 @@ const routes = [
     { path: '/brandboost/offsite/feedbacks', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
     { path: '/feedback/:id', component: OffsiteFeedbackDetails, props: { pageColor:'offsite_sec', title: 'Feedback Details'} },
 
-    { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
+    { path: '/brandboost/media', component: MediaTable, props: {title : 'On Site Brand Boost Media'} },
 
     /* Templates Module */
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
