@@ -57,7 +57,7 @@ class SmsChatModel extends Model {
 
     }
 
-    
+
     /**
      * This function will return fav sms user
      * @param type $currentUserId
@@ -72,11 +72,11 @@ class SmsChatModel extends Model {
                  ->where('curr_user_id', $currentUserId)
                 ->where('fav_user_id', $number)
                 ->first();
-                return $oData;   
-       
+                return $oData;
+
     }
 
-    
+
 
 
     public function addSMSFavouriteUser($data) {
@@ -100,7 +100,7 @@ class SmsChatModel extends Model {
 
 
      /**
-    * This function is used to add the sms notes 
+    * This function is used to add the sms notes
     * @return type
     */
 
@@ -158,7 +158,7 @@ class SmsChatModel extends Model {
 
 
     /**
-     * this function is used to return the sms threads For Phone numbers 
+     * this function is used to return the sms threads For Phone numbers
      * @param type $fromNo
      * @param type $toNo
      * @param type $offsetVal
@@ -166,7 +166,9 @@ class SmsChatModel extends Model {
      */
 
     public static function getSMSThreadsByPhoneNo($fromNo, $toNo, $offsetVal) {
-      $oData = DB::select(DB::raw(" select * from tbl_chat_sms_thread where ((`from` LIKE '%" . $fromNo . "%' AND `to` LIKE '%" . $toNo . "%') OR (`to` LIKE '%" . $fromNo . "%' AND `from` LIKE '%" . $toNo . "%')) "));
+        $fromNumber = substr($fromNo, -10);
+        $toNumber = substr($toNo, -10);
+      $oData = DB::select(DB::raw(" select * from tbl_chat_sms_thread where ((`from` LIKE '%" . $fromNumber . "%' AND `to` LIKE '%" . $toNumber . "%') OR (`to` LIKE '%" . $fromNumber . "%' AND `from` LIKE '%" . $toNumber . "%')) "));
 
          return $oData;
 
@@ -174,7 +176,7 @@ class SmsChatModel extends Model {
 
 
      /**
-     * this function is used to return subscriber list based on the input provided 
+     * this function is used to return subscriber list based on the input provided
      * @param type $loginId
      * @param type $inVar
      * @return type
@@ -182,7 +184,7 @@ class SmsChatModel extends Model {
 
 
     public function getlivesearchData($loginId, $inVar) {
-         $oData = DB::select(DB::raw(" select * from tbl_subscribers where (( `phone` LIKE '" . $inVar . "%')) 
+         $oData = DB::select(DB::raw(" select * from tbl_subscribers where (( `phone` LIKE '" . $inVar . "%'))
             AND owner_id='".$loginId."'  "));
 
          return $oData;
@@ -192,7 +194,7 @@ class SmsChatModel extends Model {
     public function getSMSThreadsByPhoneNoByFilter($fromNo, $toNo, $offsetVal, $dateStartFilter, $dateEndFilter) {
         $result = array();
         if ($fromNo != '' && $toNo != '') {
-            $where = "((`from` LIKE '%" . $fromNo . "%' AND `to` LIKE '%" . $toNo . "%') 
+            $where = "((`from` LIKE '%" . $fromNo . "%' AND `to` LIKE '%" . $toNo . "%')
 				OR (`to` LIKE '%" . $fromNo . "%' AND `from` LIKE '%" . $toNo . "%'))
 				AND DATE(tbl_chat_sms_thread.created) >='$dateStartFilter' AND DATE(tbl_chat_sms_thread.created) <= '$dateEndFilter'";
             $this->db->where($where);
@@ -257,10 +259,10 @@ class SmsChatModel extends Model {
         ->orWhere('user_form',$userID)
         ->groupBy(DB::raw('DATE(created)'))->get();
         return $oData;
-        
+
     }
 
-    
+
     /**
     * This function is used for support chat
     * @param type $userID
@@ -271,7 +273,7 @@ class SmsChatModel extends Model {
      $aData =  DB::table('tbl_chat_supportuser')
       ->where('supp_user', $userID)->get();
       return $aData;
-        
+
     }
 
 
@@ -288,7 +290,7 @@ class SmsChatModel extends Model {
         return $aData;
     }
 
-    
+
     /**
     * This function will return chat summary date wise
     * @param type $userID
@@ -317,10 +319,10 @@ class SmsChatModel extends Model {
         ->where('supp_user', $userID)
         ->groupBy(DB::raw('DATE(created)'))->get();
         return $oData;
-        
+
     }
 
- 
+
     /**
     * This function is used to get support chat by countrywise
     * @param type $clientID
@@ -334,10 +336,10 @@ class SmsChatModel extends Model {
         ->orderBy('countryTotal', 'desc')
          ->groupBy('country')->get();
          return $oData;
-        
+
     }
 
-   
+
     /**
     * This function is used to current support chat
     * @param type $userID
@@ -349,12 +351,12 @@ class SmsChatModel extends Model {
         ->where('supp_user', $userID)
         ->where(DB::raw('DATE(created)'), date('Y-m-d'))->get();
         return $aData;
-       
+
     }
 
-  
+
     /**
-    * This function will return current web thread 
+    * This function will return current web thread
     * @param type $userID
     * @return type
     */

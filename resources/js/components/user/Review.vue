@@ -17,7 +17,8 @@
 
                     <div class="p20">
                         <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
                                 <div class="tdropdown ml0"><a style="margin:0!important;"
                                                               class ="dropdown-toggle fsize12 txt_grey"
                                                               data-toggle="dropdown" aria-expanded="false"><img
@@ -44,7 +45,7 @@
                                     </ul>
                                 </div>
                             </div>
-                             <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
                                  <div class="tdropdown ml0 pull-right"><a style="margin:0!important;"
                                                                           class="dropdown-toggle fsize12 txt_grey"
                                                                           data-toggle="dropdown" aria-expanded="false">
@@ -69,16 +70,17 @@
                                      </ul>
                                  </div>
                               </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">&nbsp;</div>
                         </div>
-
-
                     </div>
+
                 </div>
             </div>
         </div>
 
         <div v-if="myReview.length > 0" class="row profile_media_outer ">
-            <div class="col-md-3">
+            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6">
                 <table style="width: 100%;">
 
                     <thead>
@@ -93,9 +95,7 @@
                             {{ index }}
                         </td>
                         <td>
-
                             <!--================Review 1=================-->
-
                             <div class="white_box p0" :id="`review${review.id}`">
                                 <div class="bb_rw01">
                                     <div class="bb_white_box">
@@ -133,18 +133,18 @@
                                                 </p>
                                             </div>
 
-                                            <div class="bb_fleft">
-                                                <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span>
-                                                    <span class="bb_thingrey"> {{ capitalizeFirstLetter(review.review_type) }} -
-                                                            <span v-if="review.aReviewData.product_data.product_name !== ''">{{ review.aReviewData.product_data.product_name }}</span>
-                                                            <span v-else>{{ review.aReviewData.brand_title }}</span>
-                                                        </span>
-                                                </p>
-                                                <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span>
-                                                    <span
-                                                        class="bb_thingrey">{{ displayDateFormat(review.created) }}</span>
-                                                </p>
-                                            </div>
+                                            <!-- <div class="bb_fleft">
+                                                 <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span>
+                                                     <span class="bb_thingrey"> {{ capitalizeFirstLetter(review.review_type) }} -
+                                                             <span v-if="review.aReviewData.product_data.product_name !== ''">{{ review.aReviewData.product_data.product_name }}</span>
+                                                             <span v-else>{{ review.aReviewData.brand_title }}</span>
+                                                         </span>
+                                                 </p>
+                                                 <p class="bb_para"><span class="bb_dot"><i class="fa fa-circle"></i></span>
+                                                     <span
+                                                         class="bb_thingrey">{{ displayDateFormat(review.created) }}</span>
+                                                 </p>
+                                             </div>-->
                                             <div class="bb_clear"></div>
                                         </div>
 
@@ -152,14 +152,16 @@
                                             <p class="bb_para heading_txt">{{ review.review_title }}<!-- Widget heading text... --></p>
                                             <p class="bb_para">{{ review.comment_text }}<!-- But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. --></p>
                                         </div>
+
                                         <div class="bb_comment_area">
                                             <a style="cursor: pointer;" class="comment_show"><i><img
                                                 src="/assets/images/widget/comment_icon_grey.png"
                                                 width="15"></i>
-                                                &nbsp; {{ review.comment_block > 0 ? review.comment_block : '0' }}
+                                                <!--&nbsp; {{ review.comment_block > 0 ? review.comment_block : '0' }}-->
+                                                &nbsp; {{ review.reviewCommentsData.length > 0 ? review.reviewCommentsData.length : '0' }}
                                                 Comments</a>
 
-                                            <span class="`review_helpful_${review.id} `">{{ (review.aReviewData.index.total_helpful) ? review.aReviewData.index.total_helpful : 0 }} Found this helpful</span>
+                                            <span class="`review_helpful_${review.id} `">{{ (review.aReviewData.total_helpful) ? review.aReviewData.total_helpful : 0 }} Found this helpful</span>
 
                                             <span class="ml-10">
                                                     <a style="cursor: pointer;"
@@ -176,8 +178,10 @@
                                         </div>
 
                                         <!-- **********Comment area********* -->
+                                        <!--<div class="p20 pt0 commentarea">-->
                                         <div class="p20 pt0 commentarea">
                                             <div v-if="review.reviewCommentsData" class="commentarea_inner p0">
+
                                                 <div v-for="comment in review.reviewCommentsData" class="bbot pb20 mb20" :id="`parComment${comment.id}`">
                                                     <div class="comment_sec">
                                                         <ul>
@@ -230,7 +234,6 @@
                                                                            :commentid="comment.id">Edit</a>
 
                                                                     </div>
-
 
                                                                     <div class="replyCommentBox"
                                                                          style="display:none;">
@@ -340,6 +343,7 @@
 
                                             </div>
                                         </div>
+                                        <!-- **********Comment area********* -->
 
                                     </div>
                                 </div>
@@ -349,6 +353,7 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col-md-3">&nbsp;</div>
         </div>
 
         <div v-else class="row profile_media_outer ">
@@ -395,7 +400,6 @@
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.myReview = response.data.myReview;
-                        console.log("----------"+this.myReview.length)
                     });
             }
         }
@@ -403,7 +407,7 @@
 
     $(document).ready(function () {
 
-        $(".comment_show").click(function () {
+        $(".comment_show").click(function () { alert("here");
             $(this).parent().parent().find('.commentarea').slideToggle();
         });
 

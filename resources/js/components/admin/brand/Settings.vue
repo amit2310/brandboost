@@ -198,6 +198,7 @@
                     </div>
                 </div>
             </div>
+
             <!--===========TAB 2===========-->
             <div class="tab-pane" id="Statistic">
                 <div class="row">
@@ -233,6 +234,7 @@
                     </div>
                 </div>
             </div>
+
             <!--===========TAB 3===========-->
             <div class="tab-pane" id="Configuration">
                 Configuration

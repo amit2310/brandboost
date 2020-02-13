@@ -1444,9 +1444,11 @@ class Referral extends Controller {
 	public function widgets() {
 		$mReferral = new ReferralModel();
 		$mUser = new UsersModel();
+
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $userRole = $oUser->user_role;
+
         if ($userID > 0) {
             $oWidgetsList = $mReferral->getReferralWidgets($userID);
 
@@ -1458,18 +1460,32 @@ class Referral extends Controller {
 				<li><a data-toggle="tooltip" data-placement="bottom" title="Referral Widgets" class="sidebar-control active hidden-xs ">Referral Widgets</a></li>
 				</ul>';
 
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Referral Widgets' => '#/modules/referral/widgets'
+            );
+
             $bActiveSubsription = $mUser->isActiveSubscription();
             Session::put('setTab', '');
 
+            if(!empty($oWidgetsList->items())) {
+                foreach ($oWidgetsList->items() as $data) {
+                    $data->referralData = $mReferral->getReferral($userID, $data->referral_id);
+                }
+            }
+
             $aData = array(
                 'title' => 'Referral Widgets',
+                'breadcrumb' => $aBreadcrumb,
                 'pagename' => $breadcrumb,
-                'oWidgetsList' => $oWidgetsList,
+                'allData' => $oWidgetsList,
+                'oWidgetsList' => $oWidgetsList->items(),
                 'bActiveSubsription' => $bActiveSubsription,
                 'user_role' => $userRole
             );
 
-			return view('admin.modules.referral.widget_list', $aData);
+			//return view('admin.modules.referral.widget_list', $aData);
+            return $aData;
         }
     }
 
@@ -1698,9 +1714,17 @@ class Referral extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $validatedData = $request->validate([
+            'referralTitle' => ['required'],
+            'description' => ['required']
+        ]);
+
         $referralTitle = $request->referralTitle;
+        $description = $request->description;
+
         $aData = array(
             'widget_title' => $referralTitle,
+            'widget_desc' => $description,
             'user_id' => $userID,
             'created' => date("Y-m-d H:i:s")
         );

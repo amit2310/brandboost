@@ -1936,7 +1936,18 @@ class Brandboost extends Controller
         exit;
     }
 
+public function widgetStatisticDetailsStatsGraph(){
 
+    $result =[];
+    if ($result) {
+        Session::put("setTab", 'Statistics');
+        $response['status'] = 'success';
+    } else {
+        $response['status'] = "Error";
+    }
+    echo json_encode($response);
+    exit;
+}
     /**
      * Used to add offsite resources
      * @return type
@@ -2301,14 +2312,65 @@ class Brandboost extends Controller
 
         return view('admin.brandboost.onsite_widget_setup', $aData);
     }
-
-
     /**
      * Used to set onsite widget
      * @return type
      */
-    public
-    function setOnsiteWidget(Request $request)
+    public function getWidget(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        $selectedTab = '';
+        $widgetID = $request->widgetID;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+        $breadcrumb ='';
+        $aData = array(
+            'title' => 'Onsite Widget',
+            'pagename' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+
+
+        if (!empty($widgetID)) {
+//            Session::put("selectedOnsiteWidget", $widgetID);
+
+            $response = $aData;
+            echo json_encode($response);
+            exit;
+        }
+    }
+    public function setWidgetType(Request $request)
     {
         $response = array("status" => "error", "msg" => "Something went wrong");
 
@@ -2328,8 +2390,97 @@ class Brandboost extends Controller
             exit;
         }
     }
-
     /**
+     * Used to set onsite widget
+     * @return type
+     */
+    public function setOnsiteWidget(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $widgetTypeID = $request->widgetTypeID;
+        $widgetID = $request->widgetID;
+        $aData = array(
+            'widget_type' => $widgetTypeID
+        );
+
+        if (!empty($widgetID)) {
+            Session::put("selectedOnsiteWidget", $widgetID);
+            $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+            $response = array("status" => "success", "msg" => "Okay");
+            echo json_encode($response);
+            exit;
+        }
+    }
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    public function widgetStatisticDetails(Request $request){
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $widgetTypeID = $request->widgetTypeID;
+        $widgetID = $request->widgetID;
+        $req= $request->req;
+        $mBrandboost = new BrandboostModel();
+        $oWidgets = $mBrandboost->getBBWidgets();
+        $oStats = $mBrandboost->getBBWidgetStats($widgetID,'widget_id','',$req);
+        //pre($oStats);
+        if (!empty($oStats)) {
+            $aViews = $aClicks = $aComments = $aHelpful = [];
+            $totalRecords=0;
+            foreach ($oStats as $oStat) {
+                $totalRecords++;
+                if ($oStat->track_type == 'view') {
+                    $aViews[] = $oStat;
+                } else if ($oStat->track_type == 'click') {
+                    $aClicks[] = $oStat;
+                } else if ($oStat->track_type == 'comment') {
+                    $aComments[] = $oStat;
+                } else if ($oStat->track_type == 'helpful') {
+                    $aHelpful[] = $oStat;
+                }
+
+            }
+            $widgetStats['totalViewsPre'] = 0;
+            $widgetStats['totalClicksPre'] = 0;
+            $widgetStats['totalCommentsPre'] = 0;
+            $widgetStats['totalHelpfulPre'] = 0;
+            $widgetStats['totalViews'] = count($aViews) > 0 ? count($aViews) : 0;
+            $widgetStats['totalClicks'] = count($aClicks) > 0 ? count($aClicks) : 0;
+            $widgetStats['totalComments'] = count($aComments) > 0 ? count($aComments) : 0;
+            $widgetStats['totalHelpful'] = count($aHelpful) > 0 ? count($aHelpful) : 0;
+            if($totalRecords){
+                $widgetStats['totalViewsPre'] = (count($aViews)*100)/$totalRecords;
+            }
+        }
+
+//        $widgetStats['totalRecords'] = ($oStats->total) > 0 ? $oStats->total : 0;
+
+
+        $aData = array(
+            'title' => 'Widget Statistics',
+            'pagename' => 0,
+            'oWidget' => $widgetStats,
+            'oStats' => $oStats,
+            "status" => "success", "msg" => "Okay"
+        );
+        $response = $aData;
+        echo json_encode($response);
+        exit;
+    }
+    /**
+     * -------------------------------------End-------------------------------------
+    */
+
+     /**
+     *
+     *
      * Used to add onsite brandboost widget data
      * @return type
      */

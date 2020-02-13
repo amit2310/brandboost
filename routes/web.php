@@ -194,6 +194,22 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/widget_overview', 'Admin\Brandboost@widgetOverview');
     Route::get('admin/brandboost/widgets', 'Admin\Brandboost@widgets');
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    Route::get('admin/brandboost/get-widget', 'Admin\Brandboost@getWidget');
+    Route::post('admin/brandboost/set-widget-type', 'Admin\Brandboost@setWidgetType');
+    Route::get('admin/widgets/statistics-details', 'Admin\Brandboost@widgetStatisticDetails');
+    Route::get('admin/widgets/statistics-details-stats-graph', 'Admin\Brandboost@widgetStatisticDetailsStatsGraph');
+    /**
+     * --------------------------------------------------------------------------
+     *                                 End
+     * --------------------------------------------------------------------------
+     */
 
     Route::post('admin/brandboost/switchTemplate', 'Admin\Brandboost@switchTemplate');
     Route::post('admin/brandboost/campaignPreferences', 'Admin\Brandboost@campaignPreferences');
@@ -232,6 +248,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
 
 
+    Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
+    Route::get('admin/modules/nps/widgets', 'Admin\Modules\Nps@widgets');
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
     Route::get('admin/modules/referral/{id}', 'Admin\Modules\Referral@index');
     Route::post('admin/modules/chat/addChat', 'Admin\Modules\Chat@addChat');
@@ -275,7 +293,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/referral/publishReferralStatus', 'Admin\Modules\Referral@publishReferralStatus');
     Route::post('admin/modules/referral/saveRewards', 'Admin\Modules\Referral@saveRewards');
     Route::post('admin/modules/referral/saveCoupons', 'Admin\Modules\Referral@saveCoupons');
-    Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
     Route::post('admin/modules/referral/updatReferralWidgetStatus', 'Admin\Modules\Referral@updatReferralWidgetStatus');
     Route::post('admin/modules/referral/delete_referral_widget', 'Admin\Modules\Referral@deleteReferralWidget');
     Route::post('admin/modules/referral/getReferralWidgetEmbedCode', 'Admin\Modules\Referral@getReferralWidgetEmbedCode');
@@ -355,6 +372,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/mediagallery/updateWidgetType', 'Admin\Mediagallery@updateWidgetType');
     Route::post('admin/mediagallery/getReviewData', 'Admin\Mediagallery@getReviewData');
     Route::post('admin/mediagallery/updateGallery', 'Admin\Mediagallery@updateGallery');
+    Route::post('admin/mediagallery/getGalleryImages', 'Admin\Mediagallery@getGalleryImages');
+    Route::post('admin/mediagallery/getMediaInfo', 'Admin\Mediagallery@getMediaInfo');
 
     //chat module
     Route::get('admin/webchat', 'Admin\WebChat@index');
@@ -377,6 +396,9 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/webchat/sortWebChatContactList', 'Admin\WebChat@sortWebChatContactList');
     Route::post('admin/webchat/listShortcuts', 'Admin\WebChat@listShortcuts');
     Route::post('admin/webchat/getUnreadMsgs', 'Admin\WebChat@getUnreadMsgs');
+    Route::post('admin/webchat/sendEmail', 'Admin\WebChat@sendEmail');
+    Route::post('admin/webchat/showEmailThread', 'Admin\WebChat@showEmailThread');
+    Route::post('admin/webchat/getThreadInfo', 'Admin\WebChat@getThreadInfo');
 
 
 //Setting
@@ -740,7 +762,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/nps/overview', 'Admin\Modules\Nps@overview');
     Route::get('admin/modules/nps/setup/{npsID}', 'Admin\Modules\Nps@setup');
     Route::post('admin/modules/nps/updateNPSCustomize', 'Admin\Modules\Nps@updateNPSCustomize');
-    Route::get('admin/modules/nps/widgets', 'Admin\Modules\Nps@widgets');
     Route::post('admin/modules/nps/addNPSWidget', 'Admin\Modules\Nps@addNPSWidget');
     Route::post('admin/modules/nps/updatNPSWidgetStatus', 'Admin\Modules\Nps@updatNPSWidgetStatus');
     Route::post('admin/modules/nps/delete_nps_widget', 'Admin\Modules\Nps@delete_nps_widget');

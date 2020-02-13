@@ -26,13 +26,18 @@ commonComponents.forEach(component => {
 window.axios = axios;
 
 Vue.use(new VueSocketIO({
-        debug: true,
-        connection: 'http://vue.brandboostx.com:3000'
+        debug: false,
+        connection: 'http://brandboostx.com:3000'
     })
 );
 Vue.use(VueRouter);
 
 Vue.mixin(helpers);
+
+import VueApexCharts from 'vue-apexcharts';
+Vue.use(VueApexCharts);
+Vue.component('apexchart', VueApexCharts);
+
 
 /*Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard-reivews', require('./components/admin/dashboard/DashReviews.vue').default);*/

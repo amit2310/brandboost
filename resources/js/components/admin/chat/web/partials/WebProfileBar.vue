@@ -1,5 +1,5 @@
 <template>
-    <div class="box d-block" style="width: 280px; top: 129px!important; height: calc(100% - 129px); max-height: 798px; position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8">
+    <div class="box d-block" style="width: 280px; top: 129px!important; height: calc(100% - 129px); max-height: 798px; position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8;border-top:none!important;z-index:999!important;">
         <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
         <div style="width: 280px;overflow: hidden; height: 100%;">
             <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
@@ -31,11 +31,9 @@
                                     v-show="!editableUserName"
                                     @click="editableUserName=true"
                                 >{{participantInfo.name}}</h3>
-
                                 <span style="display:inline-block" v-show="editableUserName">
                                     <input class="editable_input" type="text" v-model="participantInfo.name" @blur="updateProfile('support_name')" /></span>
                                 <div class="clearfix"></div>
-
                                 <p
                                     style="display:inline-block;cursor:pointer;"
                                     class="fsize14 fw400 dark_300 mb20"
@@ -86,7 +84,7 @@
 </template>
 <script>
     export default {
-        props: ['participantInfo', 'currentTokenId'],
+        props: ['participantInfo', 'currentTokenId', 'loggedUser', 'twilioNumber'],
         data(){
             return {
                 refreshMessage: 1,
@@ -146,12 +144,10 @@
                             this.$emit('loadWebChat', this.currentTokenId, this.participantInfo.chatUserid);
                         });
                 }
-
-
             }
         }
     };
 </script>
 <style scoped>
-    .editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px;}
+    .editable_input{ border:1px solid #ddd; height:30px; padding:0 10px; border-radius:3px;display:block!important;}
 </style>

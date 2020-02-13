@@ -17,30 +17,41 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="content-area chat_messanger_area">
+        <div class="content-area chat_messanger_area withsidebar" style="background-color: #FFFFFF;">
             <web-side-bar
                 :allChat="allChat"
                 :unassignedChat="unassignedChat"
                 :assignedChat="assignedChat"
                 :favoriteChat="favoriteChat"
                 :participantInfo="participantInfo"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
                 @loadWebChat="loadWebChat"
             ></web-side-bar>
-            <web-profile-bar
-                :currentTokenId="currentTokenId"
-                :loggedId="loggedId"
-                :participantId="participantId"
-                :participantInfo="participantInfo"
-                @loadWebChat="loadWebChat"
-            ></web-profile-bar>
             <chat-area
+                :allChat="allChat"
+                :unassignedChat="unassignedChat"
+                :assignedChat="assignedChat"
+                :favoriteChat="favoriteChat"
                 :currentTokenId="currentTokenId"
                 :loggedId="loggedId"
                 :loggedUserInfo="user"
                 :participantId="participantId"
                 :participantInfo="participantInfo"
+                :teamMembers="teamMembers"
                 :shortcuts="shortcuts"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
             ></chat-area>
+            <web-profile-bar
+                :currentTokenId="currentTokenId"
+                :loggedId="loggedId"
+                :participantId="participantId"
+                :participantInfo="participantInfo"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
+                @loadWebChat="loadWebChat"
+            ></web-profile-bar>
         </div>
         <SaveReplyPopup @updateShortcuts="fetchShortcuts"></SaveReplyPopup>
     </div>
@@ -50,7 +61,6 @@
     import WebProfileBar from "./partials/WebProfileBar";
     import ChatArea from "./partials/ChatArea";
     import SaveReplyPopup from "./partials/SaveReplyPopup";
-
     export default {
         components: {WebSideBar, WebProfileBar, ChatArea, SaveReplyPopup},
         data() {
@@ -66,25 +76,21 @@
                 unassignedChat: '',
                 unassignedChatData: '',
                 allChat: '',
+                teamMembers: '',
                 loggedId: '',
                 selectedCampaigns: '',
                 currentTokenId: '',
                 participantId: '',
                 participantInfo: '',
+                twilioNumber: '',
                 shortcuts: '',
                 user: {},
                 breadcrumb: ''
             }
         },
-        sockets:{
-
-        },
         created() {
             this.getChatContacts();
             this.fetchShortcuts();
-        },
-        mounted() {
-
         },
         methods: {
             getChatContacts: function () {
@@ -102,9 +108,10 @@
                         this.allChat = response.data.allChat;
                         this.loggedId = response.data.loggedYou;
                         this.user = response.data.loginUserData;
+                        this.twilioNumber = response.data.twilioNumber;
+                        this.teamMembers = response.data.teamMembers;
                         this.loading = false;
                         //loadJQScript(this.user.id);
-
                     });
             },
             fetchShortcuts: function () {
@@ -118,7 +125,6 @@
                 this.participantId = userid;
                 //Get Paticipant's details
                 this.loadParticipantInfo(roomId, userid);
-
             },
             loadParticipantInfo: function (roomId, userid) {
                 axios.post('/admin/webchat/getUserinfo', {
@@ -145,8 +151,6 @@
                         this.successMsg = 'Source has been updated successfully';
                         this.loading = false;
                     });
-
-
             },
             displayStep: function (step) {
                 let path = '';
@@ -155,7 +159,6 @@
                 } else {
                     path = '/admin#/referral/setup/' + this.campaignId + '/' + step;
                 }
-
                 window.location.href = path;
             },
             updateSettings: function (fieldName, fieldValue, type) {
@@ -171,13 +174,11 @@
                     brandboostId: this.campaignId,
                     linkExpiryData: this.campaign.link_expire_custom,
                     requestType: type
-
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
                 });
-
             },
             saveDraft: function () {
                 this.loading = true;
@@ -197,7 +198,6 @@
                     });
             }
         }
-
     };
     $(document).ready(function () {
         $(".saveReplyBox").click(function () {
@@ -206,13 +206,6 @@
             });
         });
     });
-
-    /*$(document).ready(function () {
-        $(".show_emoji").click(function () {
-            $(".chat_emoji_box").toggle();
-        });
-    });*/
-
     $(document).ready(function () {
         $(".show_saved_chat").click(function () {
             $(".chat_saved_temp").toggle();
@@ -223,8 +216,4 @@
     $(".nav-link.people").removeClass("active");
     $(".main-icon-menu-pane.livechat").addClass("active");
     $(".main-icon-menu-pane.people").removeClass("active");
-
 </script>
-
-
-

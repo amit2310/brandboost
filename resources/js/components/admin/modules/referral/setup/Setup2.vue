@@ -62,69 +62,187 @@
                     </ul>
                     <div class="tab-content">
                         <div id="advocateTabSetup" class="select_section tab-pane fade in active show mt-10 mb-10">
-                            <div class="row">
+                            <div class="row mb30">
                                 <div class="col-md-4 text-center">
-                                    <label for="temp1" class="m0 advocateGift" option-type="#advocate-discount-new">
+                                    <label for="temp1" class="m0 w-100">
                                         <div class="broadcast_select_contact ref">
                                             <label class="custmo_checkbox">
-                                                <input class="checkAdvocateGift" type="radio" name="advocateGiftType"
-                                                       value="coupon" id="temp1" :checked="settings.adv_coupon_id>0">
+                                                <input class="check" type="radio" id="temp1" v-model="advocateGiftType" value="coupon" name="advocateGiftType" :checked="settings.adv_coupon_id>0" @change="">
                                                 <span class="custmo_checkmark green_tr"></span>
                                             </label>
+                                            <div class="img_box img_active" v-if="settings.adv_coupon_id>0  || advocateGiftType == 'coupon'"> <img src="http://brandboost.io/assets/images/ref_reward_1_act.png"> </div>
+                                            <div class="img_box img_inactive" v-else> <img src="http://brandboost.io/assets/images/ref_reward_1.png"> </div>
 
-                                            <div class="img_box img_inactive" v-show="!(settings.adv_coupon_id>0)">
-                                                <img src="/assets/images/ref_reward_1.png"/>
-                                            </div>
-
-                                            <div class="img_box img_active" v-show="settings.adv_coupon_id>0">
-                                                <img src="/assets/images/ref_reward_1_act.png"/>
-                                            </div>
                                             <p class="fsize14 txt_dark fw500">Coupon</p>
                                             <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
                                         </div>
                                     </label>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <label for="temp2" class="m0 advocateGift" option-type="#advocate-cash-new">
+                                    <label for="temp2" class="m0 w-100">
                                         <div class="broadcast_select_contact ref">
                                             <label class="custmo_checkbox">
-                                                <input class="checkAdvocateGift" type="radio" name="advocateGiftType"
-                                                       value="cash" id="temp2" :checked="settings.cast_id>0">
+                                                <input class="check" type="radio" :checked="settings.cast_id>0" id="temp2" value="cash" v-model="advocateGiftType" name="advocateGiftType">
                                                 <span class="custmo_checkmark green_tr"></span>
                                             </label>
-                                            <div class="img_box img_inactive" v-show="!(settings.cash_id > 0)">
-                                                <img src="/assets/images/ref_reward_2.png"/>
-                                            </div>
-                                            <div class="img_box img_active" v-show="settings.cash_id>0">
-                                                <img src="/assets/images/ref_reward_2_act.png"/>
-                                            </div>
+                                            <div class="img_box img_active" v-if="settings.cash_id>0  || advocateGiftType == 'cash'"> <img src="http://brandboost.io/assets/images/ref_reward_2_act.png"></div>
+                                            <div class="img_box img_inactive" v-else> <img src="http://brandboost.io/assets/images/ref_reward_2.png"> </div>
                                             <p class="fsize14 txt_dark fw500">Cash</p>
-                                            <p class="fsize12 txt_grey fw300">Cash discount for advocate</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
                                         </div>
                                     </label>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <label for="temp3" class="m0 advocateGift" option-type="#advocate-custom-new">
+                                    <label for="temp3" class="m0 w-100">
                                         <div class="broadcast_select_contact ref">
                                             <label class="custmo_checkbox">
-                                                <input class="checkAdvocateGift" type="radio" name="advocateGiftType"
-                                                       value="custom" id="temp3" :checked="settings.custom_id>0">
-                                                <span class="custmo_checkmark green_tr"></span>
-                                            </label>
-                                            <div class="img_box img_inactive" v-show="!(settings.custom_id>0)">
-                                                <img src="/assets/images/ref_reward_3.png"/>
-                                            </div>
-                                            <div class="img_box img_active" v-show="settings.custom_id>0">
-                                                <img src="/assets/images/ref_reward_3_act.png"/>
-                                            </div>
+                                                <input class="check" type="radio" id="temp3" name="advocateGiftType" value="custom" v-model="advocateGiftType" :checked="settings.custom_id>0" >
+                                                <span class="custmo_checkmark green_tr"></span> </label>
+                                            <div class="img_box img_active" v-if="settings.custom_id>0 || advocateGiftType == 'custom'"> <img src="http://brandboost.io/assets/images/ref_reward_3_act.png"> </div>
+                                            <div class="img_box img_inactive" v-else> <img src="http://brandboost.io/assets/images/ref_reward_3.png"> </div>
                                             <p class="fsize14 txt_dark fw500">Custom</p>
-                                            <p class="fsize12 txt_grey fw300">Custom discount for advocate</p>
+                                            <p class="fsize12 txt_grey fw300">Coupon discount for advocate</p>
                                         </div>
                                     </label>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card p40 min_h_240">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3 class="htxt_bold_16 dark_700 mb10">Gift Configuration</h3>
+                                                <p class="fsize12 fw300 dark_300 mb20">This text will be displayed in the ‘Subject’ field in your recepient’s email client.</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Amount</label>
+                                                    <div class="">
+                                                        <input type="hidden" name="rewardType" value="advocate_discount">
+                                                        <input name="advocate_discount_price" class="form-control" type="text" value="12" required="" placeholder="10">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label class="control-label">&nbsp;</label>
+                                                    <div class="">
+                                                        <!--<div class="input-group">
+                                                                      <input type="hidden" name="advocate_discount_type" class="form-control advocate_discount_type" value="percent" placeholder="%">
+                                                                      <input type="text" name="" value="%" id="adCouponVal" class="form-control" readonly="">
+                                                                      <span style="display: none;" class="input-group-addon bkg_dgreen bor_n adCouponType" amtsign="%" amttext="percent"><i class="icon-percent txt_white"></i></span>
+                                                                      <span style="display: table-cell;" class="input-group-addon bkg_dgreen bor_n adCouponType" amtsign="$" amttext="dollar"><i class="icon-coin-dollar txt_white"></i></span>
+                                                                  </div>-->
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" class="form-control" placeholder="%" id="demo" name="email">
+                                                            <div class="input-group-append"> <span class="input-group-text">$</span> </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="control-label">Reward Message</label>
+                                                    <div class="">
+                                                        <input type="text" name="advocate_discount" class="form-control" value="12% off" placeholder="e.g. 20% off" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card border p20 bkg_light_050 shadow-none mt30 mb0">
+                                            <div class="radio">
+                                                <label> <span class="float-left" style="margin: 2px 8px 0 0">
+                    <input type="radio" name="advCouponCode" option-type="adv_single_use_coupons" class="control-primary advocate_options">
+                    </span> <strong>Single Use Coupons</strong> Unique coupon codes for every advocate </label>
+                                            </div>
+                                            <div class="coupon_desc p20" id="advocate-single-use_code" style="display: block;">
+                                                <form name="frmAdvSingleUseCodes" id="frmAdvSingleUseCodes" data-container-id="advocate-coupon-details" method="post">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Paste your coupon codes here</label>
+                                                                <div class="">
+                                                                    <textarea name="singleCouponCodes" class="form-control fsize13 p20" placeholder="list of coupon codes" required></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 text-right">
+                                                            <div class="form-group">
+                                                                <label class="control-label">&nbsp;</label>
+                                                                <div>
+                                                                    <input type="hidden" name="couponType" value="advocate_single_coupons">
+                                                                    <input type="hidden" name="rewardID" value="25">
+                                                                    <button type="submit" class="btn btn-md bkg_email_300 light_000 pl20 pr20 singleCouponCodesSubmit">Save Changes</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="radio">
+                                                <label> <span class="float-left" style="margin: 2px 8px 0 0">
+                    <input type="radio" name="advCouponCode" option-type="adv_multiple_use_coupons" checked="checked" class="control-primary advocate_options">
+                    </span> <strong>Multiple Use Coupons</strong> Reusable coupon code for all advocates </label>
+                                            </div>
+                                            <div class="coupon_desc p20" id="advocate-multiple-use_code" style="display: block;">
+                                                <form name="frmAdvMultipleUseCodes" id="frmAdvMultipleUseCodes" data-container-id="advocate-coupon-details" method="post">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Paste your coupon code</label>
+                                                                <div class="">
+                                                                    <input type="text" class="form-control" name="multipleCouponCodes" value="Test1" id="multipleCouponCodes" placeholder="e.g. REWARD10">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Expiry</label>
+                                                                <div class="">
+                                                                    <select class="form-control" id="adv_coupon_expiry" name="coupon_expiry">
+                                                                        <option value="never">Never(Recommended)</option>
+                                                                        <option value="6" selected="selected">6 Months</option>
+                                                                        <option value="5">5 Months</option>
+                                                                        <option value="4">4 Months</option>
+                                                                        <option value="3">3 Months</option>
+                                                                        <option value="2">2 Months</option>
+                                                                        <option value="1">1 Months</option>
+                                                                        <option value="specific-date">Specific Date</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label class="control-label">&nbsp;</label>
+                                                                <div class="">
+                                                                    <input type="text" name="specific_expiry_picker" class="form-control daterange-single" id="adv_specific_expiry_picker" value="" >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 text-right">
+                                                            <div class="form-group">
+                                                                <label class="control-label">&nbsp;</label>
+                                                                <div>
+                                                                    <input type="hidden" name="couponType" value="advocate_multiple_coupons">
+                                                                    <input type="hidden" name="rewardID" value="25">
+                                                                    <button type="submit" class="btn btn-md bkg_email_300 light_000 pl20 pr20  multipalCouponCodesSubmit"><span>Save Changes</span> </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="row mt20">
+
+                            <div class="row mt20" style="display:none;">
                                 <div class="col-md-12">
                                     <div class="white_box p20 pl30 pr30">
                                         <div class="row advocateGiftHeading">
@@ -542,6 +660,7 @@
                 campaign: {},
                 settings: '',
                 advocateCouponsCollection: '',
+                advocateGiftType:'',
                 user: {},
                 breadcrumb: '',
                 feedbackResponse: '',

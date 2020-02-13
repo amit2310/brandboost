@@ -303,6 +303,7 @@ function helloTest(){
         });
         $(".loadChatTheme").click(function(){
             document.querySelector("body").id="LiveChatSection";
+            document.querySelector("body").classList.add("pagewithleftsidebar");
             document.querySelector(".page-content").classList.add("bkg_light_000");
         });
         $(".loadReviewsTheme").click(function(){
@@ -338,7 +339,8 @@ function helloTest(){
             $("#live_messanger").addClass("active");
             $("#loadChatTheme").addClass("active");
             document.querySelector("body").id="LiveChatSection";
-            document.querySelector(".page-content").classList.add("bkg_light_000");
+            document.querySelector("body").classList.add("pagewithleftsidebar");
+            /*document.querySelector(".page-content").classList.add("bkg_light_000");*/
         }
 
     }

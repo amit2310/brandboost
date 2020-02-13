@@ -31,6 +31,7 @@
          **********************-->
         <div v-if="(seletedTab === '' || seletedTab === 1)" class="tab-pane " id="right-icon-tab0">
             <div class="row">
+                <br />
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
                         <form id="frmGeneralBusinessInfo" name="frmGeneralBusinessInfo" method="post">
@@ -615,6 +616,7 @@
                                 <div class="p30">
                                     <div class="row">
                                         <div class="col-md-12 text-right">
+                                            <input type="hidden" id="settingsUserId" :value="oUser.id" />
                                             <button type="submit" class="btn dark_btn ml20 bkg_purple" ><span>Save</span> </button>
                                         </div>
                                     </div>
@@ -697,8 +699,9 @@
         },
         mounted() {
             this.loadData();
-
-            console.log('Component mounted')
+            setTimeout(function(){
+                loadJQCode();
+            },2000);
         },
         methods: {
             loadData: function () {
@@ -726,100 +729,106 @@
         }
     }
 
-    $(document).ready(function () {
-        $(".token-field").on('tokenfield:createdtoken tokenfield:removedtoken change', function (e) {
-            if($(this).parent().children().hasClass('token')) {
-                $(this).parent().find('.token-input').attr('placeholder', '');
-            }
-            else {
-                $(this).parent().find('.token-input').attr('placeholder', '- Tokenfield');
-            }
-        }).trigger('change');
+    function loadJQCode(){
+        $(document).ready(function () {
+            $(".token-field").on('tokenfield:createdtoken tokenfield:removedtoken change', function (e) {
+                if($(this).parent().children().hasClass('token')) {
+                    $(this).parent().find('.token-input').attr('placeholder', '');
+                }
+                else {
+                    $(this).parent().find('.token-input').attr('placeholder', '- Tokenfield');
+                }
+            }).trigger('change');
 
-        $('.showSubPage').click(function(){
-            $('.nav-tabs a[href="#right-icon-tab2"]').tab('show');
-        });
-
-
-        $('.changeBA1').click(function(){
-            $('.changeBA1').removeClass('txt_purple');
-            $(this).addClass('txt_purple');
-        });
-
-        $('.changeBA2').click(function(){
-            $('.changeBA2').removeClass('txt_purple');
-            $(this).addClass('txt_purple');
-        });
-
-        $('#public_publish_page').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="public_publish_page"]').attr("value", 1);
-            } else {
-                $('input[name="public_publish_page"]').attr("value", 0);
-            }
-        });
-
-        $('#business_address_dppa').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="business_address_dppa"]').attr("value", 1);
-            } else {
-                $('input[name="business_address_dppa"]').attr("value", 0);
-            }
-        });
-
-        $('#phone_no_dppa').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="phone_no_dppa"]').attr("value", 1);
-            } else {
-                $('input[name="phone_no_dppa"]').attr("value", 0);
-            }
-        });
-
-        $('#website_dppa').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="website_dppa"]').attr("value", 1);
-            } else {
-                $('input[name="website_dppa"]').attr("value", 0);
-            }
-        });
+            $('.showSubPage').click(function(){
+                $('.nav-tabs a[href="#right-icon-tab2"]').tab('show');
+            });
 
 
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone(
-            '#myDropzone', //id of drop zone element 1
-            {
-                url: '/webchat/dropzone/upload_s3_attachment/'+oUser.id+'/onsite',
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
+            $('.changeBA1').click(function(){
+                $('.changeBA1').removeClass('txt_purple');
+                $(this).addClass('txt_purple');
+            });
 
-                    if(response.xhr.responseText != "") {
+            $('.changeBA2').click(function(){
+                $('.changeBA2').removeClass('txt_purple');
+                $(this).addClass('txt_purple');
+            });
 
-                        $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
-                        var dropImage = $('#company_logo').val();
-                        $.ajax({
-                            url: 'admin/brandboost/deleteObjectFromS3',
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                            type: "POST",
-                            data: {dropImage: dropImage},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-
-                        $('#company_logo').val(response.xhr.responseText);
-                        $('.saveUserOtherInfo').trigger('click');
-                    }
+            $('#public_publish_page').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="public_publish_page"]').attr("value", 1);
+                } else {
+                    $('input[name="public_publish_page"]').attr("value", 0);
                 }
             });
 
-        myDropzone.on("complete", function(file) {
-            myDropzone.removeFile(file);
+            $('#business_address_dppa').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="business_address_dppa"]').attr("value", 1);
+                } else {
+                    $('input[name="business_address_dppa"]').attr("value", 0);
+                }
+            });
+
+            $('#phone_no_dppa').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="phone_no_dppa"]').attr("value", 1);
+                } else {
+                    $('input[name="phone_no_dppa"]').attr("value", 0);
+                }
+            });
+
+            $('#website_dppa').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="website_dppa"]').attr("value", 1);
+                } else {
+                    $('input[name="website_dppa"]').attr("value", 0);
+                }
+            });
+
+
+            Dropzone.autoDiscover = false;
+            var settingUserId = $("#settingsUserId").val();
+            var myDropzone = new Dropzone(
+                '#myDropzone', //id of drop zone element 1
+                {
+                    url: '/webchat/dropzone/upload_s3_attachment/'+settingUserId+'/onsite',
+                    uploadMultiple: false,
+                    maxFiles: 1,
+                    maxFilesize: 600,
+                    acceptedFiles: 'image/*',
+                    addRemoveLinks: false,
+                    success: function (response) {
+
+                        if(response.xhr.responseText != "") {
+
+                            $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
+                            var dropImage = $('#company_logo').val();
+                            $.ajax({
+                                url: 'admin/brandboost/deleteObjectFromS3',
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                                type: "POST",
+                                data: {dropImage: dropImage},
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log(data);
+                                }
+                            });
+
+                            $('#company_logo').val(response.xhr.responseText);
+                            $('.saveUserOtherInfo').trigger('click');
+                        }
+                    }
+                });
+
+            myDropzone.on("complete", function(file) {
+                myDropzone.removeFile(file);
+            });
         });
-    });
+
+    }
+
+
 
 </script>
