@@ -252,6 +252,12 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/nps/widgets', 'Admin\Modules\Nps@widgets');
 	Route::get('admin/modules/nps/{id}', 'Admin\Modules\Nps@index');
     Route::get('admin/modules/referral/{id}', 'Admin\Modules\Referral@index');
+    /**
+     * --------------------------------------------------------------------------
+     *  Add Route of widget chat section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
     Route::post('admin/modules/chat/addChat', 'Admin\Modules\Chat@addChat');
     Route::get('admin/modules/chat/setup/{id}', 'Admin\Modules\Chat@setup');
     Route::post('admin/modules/chat/updateChatPreferences', 'Admin\Modules\Chat@updateChatPreferences');

@@ -138,18 +138,20 @@ class Chat extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
         $aData = array(
             'bActiveSubsription' => $bActiveSubsription,
-            'title' => 'Survery Setup',
-            'pagename' => $breadcrumb,
+            'title' => 'Chat Widget',
+//            'breadcrumb' => $breadcrumb,
             'defalutTab' => $defaultTab,
             'programID' => $programID,
             //'campaignTemplates' => $campaignTemplates,
+            'setupPreview' => 'dddddd',
             'oChat' => $oChat,
             'userID' => $userID,
             'userData' => $aUser,
             'user_role' => $user_role
         );
-
-		return view('admin.modules.chat.set-up', $aData);
+        echo json_encode($aData);
+        exit;
+//		return view('admin.modules.chat.set-up', $aData);
     }
 
 	/**
