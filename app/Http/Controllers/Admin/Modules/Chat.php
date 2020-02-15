@@ -138,18 +138,20 @@ class Chat extends Controller {
         $bActiveSubsription = UsersModel::isActiveSubscription();
         $aData = array(
             'bActiveSubsription' => $bActiveSubsription,
-            'title' => 'Survery Setup',
-            'pagename' => $breadcrumb,
+            'title' => 'Chat Widget',
+//            'breadcrumb' => $breadcrumb,
             'defalutTab' => $defaultTab,
             'programID' => $programID,
             //'campaignTemplates' => $campaignTemplates,
+            'setupPreview' => 'dddddd',
             'oChat' => $oChat,
             'userID' => $userID,
             'userData' => $aUser,
             'user_role' => $user_role
         );
-
-		return view('admin.modules.chat.set-up', $aData);
+        echo json_encode($aData);
+        exit;
+//		return view('admin.modules.chat.set-up', $aData);
     }
 
 	/**
@@ -186,7 +188,7 @@ class Chat extends Controller {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $chatID = $request->chat_id;
+        $chatID = $request->id;
         $title = $request->title;
         $description = $request->description;
         $domain = $request->domain;
@@ -374,7 +376,63 @@ class Chat extends Controller {
         echo json_encode($response);
         exit;
     }
+    /**
+     * Used to update chat preferences page data
+     * @return type
+     */
+    public function updateSingleField(Request $request) {
 
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $chatID = $request->chatID;
+        $fieldName = $request->fieldName;
+        $fieldVal = $request->fieldVal;
+        $aData[$fieldName] = $fieldVal;
+        if ($chatID > 0) {
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }/**
+     * Used to update chat preferences page data
+     * @return type
+     */
+    public function updateChatWidgetInfo(Request $request) {
+
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+//        print_r($request->all());
+//        exit;
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $chatID = $request->id;
+        $contactDetails = $request->contact_details_config;
+        $messages = ($request->messages)?serialize($request->messages):'';
+        $time = ($request->time)?serialize($request->time):'';
+        $automated_message = $request->automated_message != '' ? '1' : '0';
+        $aData['automated_message'] = $automated_message;
+        $aData['messages'] = $messages;
+        $aData['time'] = $time;
+        $aData['contact_details_config'] = ($contactDetails != '0' || $contactDetails != 0) ? 1 : 0;
+//        print_r($request->all());
+//        print_r($aData);
+//        exit;
+        if ($chatID > 0) {
+            $bUpdateID = ChatsModel::updateChat($aData, $userID, $chatID);
+//            print_r($bUpdateID);
+//        exit;
+            if ($bUpdateID) {
+                $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
 	/**
 	* Used to update chat preferences page data
 	* @return type

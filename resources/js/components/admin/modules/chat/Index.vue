@@ -222,7 +222,7 @@
         },
         methods: {
             navigateToChatWidgetSetup(wId) {
-                window.location.href = '#/modules/chat/setup/'+wId;
+                window.location.href = '#/modules/chat/setup/'+wId+'/1';
             },
             navigateStats(wId) {
                 window.location.href = '#/brandboost/onsite_widget_stats/'+wId;
