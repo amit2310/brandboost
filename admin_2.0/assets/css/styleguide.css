@@ -9,7 +9,7 @@ CARD CLASSES
 .card .dot_dropdown .dropdown-toggle:after{display: none;}
 .card .dot_dropdown .dropdown-toggle img{width: 16px; height: 16px!important;}
 
-
+.card .status_icon{position: absolute; left: 15px; top: 15px; z-index: 8}
 
 
 /******************************
@@ -209,6 +209,8 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .tags_btn.blue{border-color: #A5CEFF; color: #5998F8;}
 .tags_btn.review{border-color: #C6CAFC; color: #717CEF;}
 .tags_btn.email{border-color: #A8E0EE; color: #5CA5DA;}
+.tags_btn.green{border-color: rgba(156, 228, 175, 0.4); color: #65C692;}
+.tags_btn.yellow{border-color: #F4AF5E; color: #F4AF5E;}
 
 
 .table_dots_dd{border: none; background: none; box-shadow: none; padding: 0!important }
@@ -216,6 +218,11 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .table-responsive{background: #fff; box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04)!important; border-radius: 6px; padding: 5px 23px;}
 .custom_pagination {border-radius:0 0 6px 6px; height:auto; background: #ffffff;  border-top: 1px solid #edf1fb; padding: 20px 0px 10px; font-weight: 500;font-size: 10px;line-height: 18px;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6;}
 .custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 5px no-repeat #fff; width: 32px; margin-left: 5px;}
+
+.custom_pagination.grey{ background: #ebf0fa; border-radius: 76px; height: 32px; padding: 8px 20px;}
+.custom_pagination.grey select{ background: url(../images/select_bkg.svg) 100% 5px no-repeat #ebf0fa; }
+
+
 
 .page_list {margin: 0; padding: 0;}
 .page_list li {margin: 0; padding: 0; display: inline-block;}
