@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Set working hours
                                         <label class="custom-form-switch float-right">
-                                            <input class="field" type="checkbox" v-model="campaign.logo_show" :checked="campaign.logo_show" @change="toggleLogoDisplay($event)">
+                                            <input class="field" type="checkbox" v-model="campaign.company_info" :checked="campaign.company_info" @change="synCompanyInfo($event)">
                                             <span class="toggle email"></span> </label>
                                     </h3>
                                 </div>
@@ -72,7 +72,7 @@
                             <div class="p0 ">
                                 <div class="form-group">
                                     <label class="fsize12" for="sender_name">SMS Sender Name:</label>
-                                    <input type="text" v-model="campaign.from_email" class="form-control h40" id="sender_name" placeholder="Mr Anderson" name="sender_name">
+                                    <input type="text" v-model="campaign.sender_name" class="form-control h40" id="sender_name" placeholder="Mr Anderson" name="sender_name">
                                 </div>
                             </div>
                             <div class="p0 bbot">
@@ -127,7 +127,7 @@
                                 <div class="form-group">
                                     <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Activite automated messages
                                         <label class="custom-form-switch float-right">
-                                            <input class="field" type="checkbox" v-model="campaign.automated_message" :checked="campaign.automated_message" @change="toggleLogoDisplay($event)">
+                                            <input class="field" type="checkbox" v-model="campaign.automated_message" :checked="campaign.automated_message" @change="synAutomatedMessage($event)">
                                             <span class="toggle email"></span> </label>
                                     </h3>
                                 </div>
@@ -159,7 +159,7 @@
                                 <div class="form-group">
                                     <h3 class="dark_400 mb0 fsize13 fw300">New Chat Button
                                         <label class="custom-form-switch float-right">
-                                            <input class="field" type="checkbox" v-model="campaign.chat_icon" :checked="campaign.chat_icon" @change="toggleLogoDisplay($event)">
+                                            <input class="field" type="checkbox" v-model="campaign.chat_icon == '4'"  @change="synChatIcon($event)">
                                             <span class="toggle email"></span> </label>
                                     </h3>
                                 </div>
@@ -168,7 +168,7 @@
                                 <div class="form-group">
                                     <h3 class="dark_400 mb0 fsize13 fw300">Show Contact Details
                                         <label class="custom-form-switch float-right">
-                                            <input class="field" type="checkbox" v-model="campaign.contact_details_config" :checked="campaign.contact_details_config" @change="toggleLogoDisplay($event)">
+                                            <input class="field" type="checkbox" v-model="campaign.contact_details_config" :checked="campaign.contact_details_config" @change="synContactDetailsConfig($event)">
                                             <span class="toggle email"></span> </label>
                                     </h3>
                                 </div>
@@ -244,14 +244,46 @@
         computed: {
 
         },
-        methods: {
-            toggleLogoDisplay: function(e){
-                if(e.target.checked){
-                    jq(".logo_img").parent().show();
-                    jq(".product_icon").show();
+        watch :{
+            selectChatIcon : function () {
+                if(this.campaign.chat_icon == 4){
+                    return true;
                 }else{
-                    jq(".product_icon").hide();
-                    jq(".logo_img").parent().hide();
+                    return false;
+                }
+            }
+        },
+        methods: {
+            synCompanyInfo: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('company_info',1);
+
+                }else{
+                    this.updateSingleField('company_info',0);
+                }
+            },
+            synAutomatedMessage: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('automated_message',1);
+
+                }else{
+                    this.updateSingleField('automated_message',0);
+                }
+            },
+            synChatIcon: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('chat_icon',4);
+
+                }else{
+                    this.updateSingleField('chat_icon',3);
+                }
+            },
+            synContactDetailsConfig: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('contact_details_config',1);
+
+                }else{
+                    this.updateSingleField('contact_details_config',0);
                 }
             },
             toggleQuestionDisplay: function(e){
@@ -282,27 +314,9 @@
             updateConfigurations: function(){
                 this.loading = true;
                 //Grab color related values
-                let elem1 = document.querySelector('input[name="web_text_color"]');
-                let elem2 = document.querySelector('input[name="web_int_text_color"]');
-                let elem3 = document.querySelector('input[name="web_button_text_color"]');
-                let elem4 = document.querySelector('input[name="web_button_over_text_color"]');
-                let elem5 = document.querySelector('input[name="web_button_color"]');
-                let web_text_color = (elem1 != null) ? elem1.value : null;
-                let web_int_text_color = (elem2 != null) ? elem2.value : null;
-                let web_button_text_color = (elem3 != null) ? elem3.value : null;
-                let web_button_over_text_color = (elem4 != null) ? elem4.value : null;
-                let web_button_color = (elem5 != null) ? elem5.value : null;
-                this.campaign.web_text_color = web_text_color ? web_text_color : this.campaign.web_text_color;
-                this.campaign.web_int_text_color = web_int_text_color ? web_int_text_color : this.campaign.web_int_text_color;
-                this.campaign.web_button_text_color = web_button_text_color ? web_button_text_color : this.campaign.web_button_text_color;
-                this.campaign.web_button_over_text_color = web_button_over_text_color ? web_button_over_text_color : this.campaign.web_button_over_text_color;
-                this.campaign.web_button_color = web_button_color ? web_button_color : this.campaign.web_button_color;
-
-                //Brand logo
-                let brandlogo = document.querySelector('input[name="brand_logo"]');
-                this.campaign.brand_logo = (brandlogo != null) ? brandlogo.value : this.campaign.brand_logo;
-
-                axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
+                // this.campaign.from_email = this.campaign.from_email;
+                // this.campaign.from_name = this.campaign.from_name;
+                axios.post('/admin/modules/chat/updateChatWidgetInfo', this.campaign)
                     .then(response => {
                         this.loading = false;
                     });
@@ -318,30 +332,14 @@
 
                 window.location.href = path;
             },
-            applyDefaultInfo: function (e) {
-                if (e.target.checked) {
-                    this.campaign.from_email = this.user.email;
-                    this.campaign.from_name = this.user.firstname + ' ' + this.user.lastname;
-                    this.updateSettings('from_email');
-                    this.updateSettings('from_name');
-                } else {
 
-                }
-            },
-            updateSettings: function (fieldName, fieldValue,  type) {
+            updateSingleField: function (fieldName, fieldValue) {
                 this.loading = true;
-
-                if(type =='expiry'){
-                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
-                }
-                axios.post('/admin/brandboost/saveOnsiteSettings', {
+                axios.post('admin/modules/chat/updateSingleField', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
                     fieldVal: fieldValue,
-                    brandboostId: this.campaignId,
-                    linkExpiryData : this.campaign.link_expire_custom,
-                    requestType: type
-
+                    chatID: this.campaignId,
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
@@ -351,8 +349,8 @@
             },
             changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/modules/nps/changeStatus', {
-                    npsId: this.campaignId,
+                axios.post('/admin/modules/chat/changeStatus', {
+                    chatID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
@@ -360,10 +358,10 @@
                         this.loading = false;
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
-                                this.successMsg = 'Campaign saved as a draft successfully';
+                                this.successMsg = 'Chat Widget saved as a draft successfully';
                             }
                             if(status == 'active'){
-                                this.successMsg = 'Campaign is active now';
+                                this.successMsg = 'Chat Widget is active now';
                             }
 
                         }else{

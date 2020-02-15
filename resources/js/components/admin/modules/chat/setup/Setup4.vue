@@ -95,17 +95,17 @@
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/nps/';
+                    path = '/admin#/modules/chat/';
                 }else{
-                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
+                    path = '/admin#/modules/chat/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
             },
             changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/modules/nps/changeStatus', {
-                    npsId: this.campaignId,
+                axios.post('/admin/modules/chat/changeStatus', {
+                    chatID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })

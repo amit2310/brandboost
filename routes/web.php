@@ -260,8 +260,10 @@ Route::group(['middleware' => ['bb_authorize']], function () {
      */
     Route::post('admin/modules/chat/addChat', 'Admin\Modules\Chat@addChat');
     Route::get('admin/modules/chat/setup/{id}', 'Admin\Modules\Chat@setup');
+    Route::post('/admin/modules/chat/updateSingleField', 'Admin\Modules\Chat@updateSingleField');
+    Route::post('/admin/modules/chat/updateChatWidgetInfo', 'Admin\Modules\Chat@updateChatWidgetInfo');
+    Route::post('/admin/modules/chat/updateChatCustomize', 'Admin\Modules\Chat@updateChatCustomize');
     Route::post('admin/modules/chat/updateChatPreferences', 'Admin\Modules\Chat@updateChatPreferences');
-    Route::post('admin/modules/chat/updateChatCustomize', 'Admin\Modules\Chat@updateChatCustomize');
     Route::post('admin/modules/chat/publishChatCampaign', 'Admin\Modules\Chat@publishChatCampaign');
     Route::post('admin/modules/chat/changeStatus', 'Admin\Modules\Chat@changeStatus');
     Route::post('admin/modules/chat/getChat', 'Admin\Modules\Chat@getChat');

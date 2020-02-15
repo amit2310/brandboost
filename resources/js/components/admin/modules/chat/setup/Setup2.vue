@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="email_config_list">
-                                <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">1</span><span
+                                <li><a class="" href="javascript:void(0);" @click="displayStep(1)"><span class="num_circle"><span class="num">1</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Campaign info</a></li>
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(2)"><span class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Workflow</a></li>
@@ -53,158 +53,192 @@
                             <div class="p0">
                                 <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Logo / company avatar
                                     <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.logo_show" :checked="campaign.logo_show" @change="toggleLogoDisplay($event)">
+                                        <input class="field" type="checkbox" v-model="campaign.logo_show" :checked="campaign.logo_show" @change="synLogoShow($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Title &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.title_show" :checked="campaign.title_show" @change="toggleIntroDisplay($event)">
+                                        <input class=" field" type="checkbox" v-model="campaign.title_show" :checked="campaign.title_show" @change="synTitleShow($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Sub Title
                                     <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.subtitle_show" :checked="campaign.subtitle_show" @change="toggleIntroDisplay($event)">
+                                        <input class=" field" type="checkbox" v-model="campaign.subtitle_show" :checked="campaign.subtitle_show" @change="synSubtitleShow($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Attachment
                                     <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.atttachment_show" :checked="campaign.atttachment_show" @change="toggleIntroDisplay($event)">
+                                        <input class=" field" type="checkbox" v-model="campaign.atttachment_show" :checked="campaign.atttachment_show" @change="synAtttachmentShow($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Smily
                                     <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.smilie_show" :checked="campaign.smilie_show" @change="toggleIntroDisplay($event)">
+                                        <input class=" field" type="checkbox" v-model="campaign.smilie_show" :checked="campaign.smilie_show" @change="synSmilieShow($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                             </div>
                             <div>
                                 <div class="bbot btop pb10 pt10 mb15 mt15">
-                                    <p class="fsize11 text-uppercase dark_200 m-0">Automation</p>
+                                    <p class="fsize11 text-uppercase dark_200 m-0">Auto Message</p>
                                 </div>
-                                <h3 class="dark_400 mb0 fsize13 fw300">Activite automated messages
+                                <div class="p0">
+                                     <div class="form-group">
+
+                                          <div class="form-group">
+                                              <label class="fsize12" for="gift_message">Message:</label>
+                                              <textarea
+                                                   rows="4"
+                                                    class="form-control text"
+                                                     id="gift_message"
+                                                      name="gift_message"
+                                                      :placeholder="`How likely are you to recommend ${campaign.gift_message ? campaign.gift_message : 'My Store'} to a friend?`"
+                                                       v-model="campaign.gift_message"
+                                                        @keypress="syncGiftMessage"
+                                                       ></textarea>
+                                           </div>
+                                     </div>
+                                </div>
+
+                                <h3 class="dark_400 mb0 fsize13 fw300">Gift Message
                                     <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.automated_message" :checked="campaign.automated_message" @change="toggleIntroDisplay($event)">
+                                        <input class=" field" type="checkbox" v-model="campaign.allow_gift_message" :checked="campaign.allow_gift_message" @change="synAllowGiftMessage($event)">
+                                        <span class="toggle email"></span> </label>
+                                </h3>
+                            </div>
+                            <div>
+                                <div class="bbot btop pb10 pt10 mb15 mt15">
+                                    <p class="fsize11 text-uppercase dark_200 m-0">Other</p>
+                                </div>
+                                <h3 class="dark_400 mb0 fsize13 fw300">Show on desktop
+                                    <label class="custom-form-switch float-right">
+                                        <input class=" field" type="checkbox" v-model="campaign.desktop_visiable" :checked="campaign.desktop_visiable" @change="synDesktopVisiable($event)">
+                                        <span class="toggle email"></span> </label>
+                                </h3>
+                                <h3 class="dark_400 mb0 fsize13 fw300">Show on mobile
+                                    <label class="custom-form-switch float-right">
+                                        <input class=" field" type="checkbox" v-model="campaign.mobile_visiable" :checked="campaign.mobile_visiable" @change="synMobileVisiable($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                             </div>
 
-                            <div class="bbot btop pb10 pt10 mb15 mt15">
-                                <p class="fsize11 text-uppercase dark_200 m-0">Popup Details</p>
-                            </div>
-                            <div class="p0">
-                                <div class="form-group">
-                                    <label class="fsize12" for="fname">Brand / Product Name:</label>
-                                    <input type="text" v-model="campaign.brand_name" class="form-control h40" id="fname" placeholder="Enter Brand/Product Name" name="brand_name">
-                                </div>
-                                <div class="form-group">
-                                    <label class="fsize12" for="Questions">Questions:</label>
-                                    <textarea
-                                        rows="4"
-                                        class="form-control text"
-                                        id="Questions"
-                                        name="question"
-                                        :placeholder="`How likely are you to recommend ${campaign.brand_name ? campaign.brand_name : 'My Store'} to a friend?`"
-                                        v-model="campaign.question"
-                                        @keypress="syncQuestion"
-                                    ></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="fsize12" for="Introduction">Introduction:</label>
-                                    <textarea
-                                        class="form-control text"
-                                        rows="4"
-                                        id="Introduction"
-                                        placeholder="Placeholder Text"
-                                        name="description"
-                                        v-model="campaign.description"
-                                        @keypress="syncIntro"
-                                    ></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" name="brand_logo" id="npsBrandLogo" :value="campaign.brand_logo" >
-                                    <label class="m0 w-100" for="uploadNPSBrandLogo">
-                                        <div class="img_vid_upload_medium">
-                                            <input class="d-none" type="file" name="brand_logo" id="uploadNPSBrandLogo">
-                                        </div>
-                                    </label>
 
-                                </div>
-                            </div>
-                            <div class="bbot btop pb10 pt10 mb15 mt15">
-                                <p class="fsize11 text-uppercase dark_200 m-0">Settings</p>
-                            </div>
-                            <div class="p0 pb30">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="fsize13 dark_400 mt-2">Question Text Color :</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text"
-                                               class="form-control colorpicker-basic1"
-                                               name="web_text_color"
-                                               v-model="campaign.web_text_color"
+<!--                            <div class="bbot btop pb10 pt10 mb15 mt15">-->
+<!--                                <p class="fsize11 text-uppercase dark_200 m-0">Popup Details</p>-->
+<!--                            </div>-->
+<!--                            <div class="p0">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label class="fsize12" for="fname">Brand / Product Name:</label>-->
+<!--                                    <input type="text" v-model="campaign.brand_name" class="form-control h40" id="fname" placeholder="Enter Brand/Product Name" name="brand_name">-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label class="fsize12" for="Questions">Questions:</label>-->
+<!--                                    <textarea-->
+<!--                                        rows="4"-->
+<!--                                        class="form-control text"-->
+<!--                                        id="Questions"-->
+<!--                                        name="question"-->
+<!--                                        :placeholder="`How likely are you to recommend ${campaign.brand_name ? campaign.brand_name : 'My Store'} to a friend?`"-->
+<!--                                        v-model="campaign.question"-->
+<!--                                        @keypress="syncQuestion"-->
+<!--                                    ></textarea>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label class="fsize12" for="Introduction">Introduction:</label>-->
+<!--                                    <textarea-->
+<!--                                        class="form-control text"-->
+<!--                                        rows="4"-->
+<!--                                        id="Introduction"-->
+<!--                                        placeholder="Placeholder Text"-->
+<!--                                        name="description"-->
+<!--                                        v-model="campaign.description"-->
+<!--                                        @keypress="syncIntro"-->
+<!--                                    ></textarea>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <input type="hidden" name="brand_logo" id="npsBrandLogo" :value="campaign.brand_logo" >-->
+<!--                                    <label class="m0 w-100" for="uploadNPSBrandLogo">-->
+<!--                                        <div class="img_vid_upload_medium">-->
+<!--                                            <input class="d-none" type="file" name="brand_logo" id="uploadNPSBrandLogo">-->
+<!--                                        </div>-->
+<!--                                    </label>-->
 
-                                        >
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="bbot btop pb10 pt10 mb15 mt15">-->
+<!--                                <p class="fsize11 text-uppercase dark_200 m-0">Settings</p>-->
+<!--                            </div>-->
+<!--                            <div class="p0 pb30">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-8">-->
+<!--                                        <p class="fsize13 dark_400 mt-2">Question Text Color :</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control colorpicker-basic1"-->
+<!--                                               name="web_text_color"-->
+<!--                                               v-model="campaign.web_text_color"-->
 
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="fsize13 dark_400 mt-2">Introduction Text Color:</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text"
-                                               class="form-control colorpicker-basic2"
-                                               name="web_int_text_color"
-                                               v-model="campaign.web_int_text_color"
-                                        >
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="fsize13 dark_400 mt-2">Button Text Color :</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text"
-                                               class="form-control colorpicker-basic3"
-                                               name="web_button_text_color"
-                                               v-model="campaign.web_button_text_color"
-                                        >
-                                    </div>
-                                </div>
+<!--                                        >-->
 
-                                <div class="row" v-if="campaign.platform=='web'">
-                                    <div class="col-md-8">
-                                        <p class="fsize13 dark_400 mt-2">Button Over Text Color :</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text"
-                                               class="form-control colorpicker-basic3"
-                                               name="web_button_over_text_color"
-                                               v-model="campaign.web_button_over_text_color"
-                                        >
-                                    </div>
-                                </div>
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-8">-->
+<!--                                        <p class="fsize13 dark_400 mt-2">Introduction Text Color:</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control colorpicker-basic2"-->
+<!--                                               name="web_int_text_color"-->
+<!--                                               v-model="campaign.web_int_text_color"-->
+<!--                                        >-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-8">-->
+<!--                                        <p class="fsize13 dark_400 mt-2">Button Text Color :</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control colorpicker-basic3"-->
+<!--                                               name="web_button_text_color"-->
+<!--                                               v-model="campaign.web_button_text_color"-->
+<!--                                        >-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="fsize13 dark_400 mt-2">Button Background Color :</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text"
-                                               class="form-control colorpicker-basic4"
-                                               name="web_button_color"
-                                               v-model="campaign.web_button_color"
-                                        >
-                                    </div>
-                                </div>
+<!--                                <div class="row" v-if="campaign.platform=='web'">-->
+<!--                                    <div class="col-md-8">-->
+<!--                                        <p class="fsize13 dark_400 mt-2">Button Over Text Color :</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control colorpicker-basic3"-->
+<!--                                               name="web_button_over_text_color"-->
+<!--                                               v-model="campaign.web_button_over_text_color"-->
+<!--                                        >-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                                <!--<div class="row">
-                                    <div class="col-md-12">
-                                        <input type="button" @click="updateConfigurations" class="btn btn-success btn-sm bkg_green_300 light_000 mt-5 ml-3" value="Save Configurations">
-                                    </div>
-                                </div>-->
-                            </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-8">-->
+<!--                                        <p class="fsize13 dark_400 mt-2">Button Background Color :</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control colorpicker-basic4"-->
+<!--                                               name="web_button_color"-->
+<!--                                               v-model="campaign.web_button_color"-->
+<!--                                        >-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash;<div class="row">-->
+<!--                                    <div class="col-md-12">-->
+<!--                                        <input type="button" @click="updateConfigurations" class="btn btn-success btn-sm bkg_green_300 light_000 mt-5 ml-3" value="Save Configurations">-->
+<!--                                    </div>-->
+<!--                                </div>&ndash;&gt;-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -290,39 +324,94 @@
 
         },
         methods: {
-            toggleLogoDisplay: function(e){
-                if(e.target.checked){
-                    jq(".logo_img").parent().show();
-                    jq(".product_icon").show();
-                }else{
-                    jq(".product_icon").hide();
-                    jq(".logo_img").parent().hide();
-                }
-            },
-            toggleQuestionDisplay: function(e){
-                if(e.target.checked){
-                    jq(".questionText").show();
-                    jq(".questionEamilText").show();
-                }else{
-                    jq(".questionText").hide();
-                    jq(".questionEamilText").hide();
-                }
-            },
-            toggleIntroDisplay: function(e){
-                if(e.target.checked){
-                    jq(".introductionText").show();
-                }else{
-                    jq(".introductionText").hide();
-                }
-            },
-            syncQuestion: function(){
-                document.querySelector('.questionEamilText').innerHTML=this.campaign.question;
-                document.querySelector('.questionText').innerHTML=this.campaign.question;
-                document.querySelector('.questionSMSText').innerHTML=this.campaign.question + '<br><br>Please Reply with a number from "0" (not likely) to "10" (very likely)';
-            },
-            syncIntro: function(){
-                document.querySelector('.introductionText').innerHTML=this.campaign.description;
+            updateSingleField: function (fieldName, fieldValue) {
+                this.loading = true;
+                axios.post('admin/modules/chat/updateSingleField', {
+                    _token: this.csrf_token(),
+                    fieldName: fieldName,
+                    fieldVal: fieldValue,
+                    chatID: this.campaignId,
+                }).then(response => {
+                    this.refreshMessage = Math.random();
+                    this.successMsg = 'Updated the changes successfully!!';
+                    this.loading = false;
+                });
 
+            },
+            synAutomatedMessage: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('automated_message',1);
+
+                }else{
+                    this.updateSingleField('automated_message',0);
+                }
+            },
+            synMobileVisiable: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('mobile_visiable',1);
+
+                }else{
+                    this.updateSingleField('mobile_visiable',0);
+                }
+            },
+            synAllowGiftMessage: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_gift_message',1);
+
+                }else{
+                    this.updateSingleField('allow_gift_message',0);
+                }
+            },
+            syncGiftMessage: function(e){
+                this.updateSingleField('gift_message',this.campaign.gift_message);
+            },
+            synDesktopVisiable: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('desktop_visiable',1);
+
+                }else{
+                    this.updateSingleField('desktop_visiable',0);
+                }
+            },
+            synSmilieShow: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('smilie_show',1);
+
+                }else{
+                    this.updateSingleField('smilie_show',0);
+                }
+            },
+            synAtttachmentShow: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('atttachment_show',1);
+
+                }else{
+                    this.updateSingleField('atttachment_show',0);
+                }
+            },
+            synLogoShow: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('logo_show',1);
+
+                }else{
+                    this.updateSingleField('logo_show',0);
+                }
+            },
+            synTitleShow: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('title_show',1);
+
+                }else{
+                    this.updateSingleField('title_show',0);
+                }
+            },
+            synSubtitleShow: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('subtitle_show',1);
+
+                }else{
+                    this.updateSingleField('subtitle_show',0);
+                }
             },
             updateConfigurations: function(){
                 this.loading = true;
@@ -347,7 +436,7 @@
                 let brandlogo = document.querySelector('input[name="brand_logo"]');
                 this.campaign.brand_logo = (brandlogo != null) ? brandlogo.value : this.campaign.brand_logo;
 
-                axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
+                axios.post('/admin/modules/chat/updateChatCustomize', this.campaign)
                     .then(response => {
                         this.loading = false;
                     });
@@ -356,9 +445,9 @@
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/nps/';
+                    path = '/admin#/modules/chat/';
                 }else{
-                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
+                    path = '/admin#/modules/chat/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
