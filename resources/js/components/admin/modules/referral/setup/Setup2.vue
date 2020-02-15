@@ -65,12 +65,10 @@
                             <advocate-rewards></advocate-rewards>
                         </div>
                         <div id="friendTabSetup" class="tab-pane fade">
-                            <h3>Friend setup goes here</h3>
+                            <friend-rewards></friend-rewards>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row mt40">
                     <div class="col-md-12">
                         <hr class="mb25">
@@ -86,8 +84,6 @@
                                 src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <!--Content Area End-->
@@ -95,14 +91,15 @@
 </template>
 <script>
     import AdvocateRewards from "./partials/AdvocateRewards";
+    import FriendRewards from "./partials/FriendRewards";
     export default {
-        components: {AdvocateRewards},
+        components: {AdvocateRewards, FriendRewards},
         data() {
             return {
                 refreshMessage: 1,
                 successMsg: '',
                 errorMsg: '',
-                loading: true,
+                loading: false,
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
@@ -118,75 +115,7 @@
                 displayCustomLinkExpiry: false
             }
         },
-        created() {
-            axios.get('/admin/modules/referral/setup/' + this.campaignId)
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.moduleName = response.data.moduleName;
-                    this.campaign = response.data.oReferral;
-                    this.settings = response.data.oSettings;
-                    this.advocateCouponsCollection = response.data.oAdvCouponCodes;
-                    this.loading = false;
-                    //loadJQScript(this.user.id);
-
-                });
-        },
-        mounted() {
-
-        },
-        computed: {
-            advocateCoupons: function () {
-                if (this.advocateCouponsCollection != '') {
-                    let advocateSingleCouponArray = [];
-                    let advocateMultipleCouponArray = [];
-                    this.advocateCouponsCollection.forEach(function (val, index) {
-                        if (val.usage_type == 'single') {
-                            advocateSingleCouponArray.push(val.coupon_code);
-                        }
-                        if (val.usage_type == 'multiple') {
-                            advocateMultipleCouponArray = val;
-                        }
-                    });
-                    return {
-                        'single': advocateSingleCouponArray.join(","),
-                        'multiple': advocateMultipleCouponArray
-                    }
-                }
-            }
-        },
         methods: {
-            advocateGiftProps: function (fieldName) {
-                let param = '';
-                let advData='';
-                if (fieldName == 'advocate_discount_type') {
-                    param = this.settings.advocate_discount_type;
-                }
-
-                if (fieldName == 'amount_type') {
-                    param = this.settings.amount_type;
-                }
-                if (param == 'dollar') {
-                    advData = {
-                        unit: '$',
-                        dollar: 'table-cell',
-                        percent: 'none'
-                    };
-                } else if (param == 'percent') {
-                    advData = {
-                        unit: '%',
-                        dollar: 'none',
-                        percent: 'table-cell'
-                    };
-                } else {
-                    advData = {
-                        unit: '%',
-                        dollar: 'none',
-                        percent: 'table-cell'
-                    };
-                }
-                return advData;
-            },
             displayStep: function (step) {
                 let path = '';
                 if (!step) {
