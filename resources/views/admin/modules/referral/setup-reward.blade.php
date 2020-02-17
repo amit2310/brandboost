@@ -89,7 +89,6 @@ if (!empty($oRefCouponCodes)) {
     </div>
     <!--==================Broadcasts content============-->
     <div class="select_section" style="max-width: 100%;">
-
         <!--------------------------Give advocates a free gift------------------------------------->
         <div class="row mt10 mb10">
             <div class="col-md-6">
@@ -524,7 +523,7 @@ if (!empty($oRefCouponCodes)) {
                             <img src="{{ base_url() }}assets/images/ref_reward_2.png"/>
                         </div>
 
-                        <div class="img_box img_active" style="{{ ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' }}">
+                            <div class="img_box img_active" style="{{ ($oSettings->promo_id > 0) ? 'display:block;' : 'display:none;' }}">
                             <img src="{{ base_url() }}assets/images/ref_reward_2_act.png"/>
                         </div>
 
