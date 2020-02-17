@@ -1009,7 +1009,7 @@ class ReferralModel extends Model {
                 foreach ($oCoupons as $oCoupon) {
                     $aExistingCoupons[] = $oCoupon->coupon_code;
                     if (!in_array($oCoupon->coupon_code, $aCoupons)) {
-                        Self::deleteReferredCoupon($oCoupon->id);
+                        (new self)->deleteReferredCoupon($oCoupon->id);
                     }
                 }
             }

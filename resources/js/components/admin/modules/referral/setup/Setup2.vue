@@ -56,9 +56,9 @@
                 </div>
                 <div class="row">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#advocateTabSetup"><strong>Advocates
+                        <li :class="{'active' : activeTab == 'advocate'}"><a data-toggle="tab" href="#advocateTabSetup" @click="activeTab='advocate'" style="display:block;width:100%;"><strong>Advocates
                             Reward</strong></a></li>
-                        <li><a data-toggle="tab" href="#friendTabSetup"><strong>Friends Reward</strong></a></li>
+                        <li :class="{'active' : activeTab == 'referred'}"><a data-toggle="tab" href="#friendTabSetup" @click="activeTab='referred'" style="display:block;width:100%;"><strong>Friends Reward</strong></a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="advocateTabSetup" class="select_section tab-pane fade in active show mt-10 mb-10">
@@ -112,7 +112,8 @@
                 breadcrumb: '',
                 feedbackResponse: '',
                 fromNumber: '',
-                displayCustomLinkExpiry: false
+                displayCustomLinkExpiry: false,
+                activeTab: 'advocate'
             }
         },
         methods: {
