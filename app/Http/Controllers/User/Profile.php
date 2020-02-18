@@ -14,7 +14,7 @@ class Profile extends Controller {
      *
      */
     public function Index() {
-
+die("1111111");
     	$aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
 

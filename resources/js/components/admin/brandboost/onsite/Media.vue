@@ -32,7 +32,7 @@
                     <loading :isLoading="loading"></loading>
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ allData.total }}&nbsp;reviews</h3>
+                            <h3 class="htxt_medium_16 dark_400">{{ allData.total }}&nbsp;Media</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="table_action">

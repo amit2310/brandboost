@@ -1,5 +1,4 @@
 <template>
-
     <div class="h-100">
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
@@ -8,731 +7,62 @@
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">Messenger</h3>
                     </div>
-
                     <div class="col-md-9 col-9 text-right">
-                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img src="assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img src="assets/images/blue-plus.svg"/></span></button>
+                        <button class="circle-icon-40 mr15 bkg_light_300 shadow_none"><img
+                            src="assets/images/filter.svg"/></button>
+                        <button class="btn btn-md bkg_blue_200 light_000 slidebox">Main Action <span><img
+                            src="assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="content-area chat_messanger_area">
-
-
-
-            <!--******************
-             PAGE SIDEBAR
-            **********************-->
-            <div class="page_sidebar bkg_light_000 absl">
-                <div class="inner2 pb0">
-                    <div class="title-box">
-                        <h6 class="menu-title" style="line-height: 36px;"><!--<span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; -->LIVE MESSENGER</h6>
-                    </div>
-                    <h3 class="htxt_medium_20 dark_800" >Contacts </h3>
-
-                    <div class="bbot btop contact_sort pt15 pb15 mt-3">
-                        <div class="row">
-                            <div class="col">
-                                <div class="tdropdown ml0">
-                                    <a style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">All (39)</a>
-                                    <ul style="right: 0px!important; margin-top: 18px; left: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown">
-                                        <li><strong><a class="active" href="#"><img class="small" src="assets/images/cd_icon1.png"> All (39) </a></strong></li>
-                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon2.png">Open (13) </a></strong></li>
-                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon3.png">Resolved (172) </a></strong></li>
-                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon4.png">Favorite (5) </a></strong></li>
-                                        <li><strong><a href="#"><img class="small" src="assets/images/cd_icon5.png">Snoozed (28)</a></strong></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="tdropdown ml0 pull-right">
-                                    <a style="margin:0!important;" class="dropdown-toggle fsize12 txt_grey" data-toggle="dropdown" aria-expanded="true">Waiting longest</a>
-                                    <ul style="margin-top: 18px; right: -20px;" class="dropdown-menu dropdown-menu-left chat_dropdown width_170">
-                                        <li><strong><a class="active" href="#">Newest </a></strong></li>
-                                        <li><strong><a href="#">Waiting longest </a></strong></li>
-                                        <li><strong><a href="#">Oldest </a></strong></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sidebar_search_big mt10">
-                        <input type="text" name="" value="" placeholder="Search">
-                        <button class="sidebar_search_submit"><img src="assets/images/filter-3-line.svg"></button>
-                    </div>
-                </div>
-
-
-
-                <div class="p20 pt0">
-                    <ul class="nav nav-pills chat_contact_tab" role="tablist">
-                        <li class="mr10"><a class="htxt_bold_13 active" data-toggle="pill" href="#All">All (40)</a></li>
-                        <li class="mr10"><a class="htxt_bold_13" data-toggle="pill" href="#Unassigned">Unassigned (15)</a></li>
-                        <li class=""><a class="htxt_bold_13" data-toggle="pill" href="#You">You (12)</a></li>
-                    </ul>
-                </div>
-
-
-
-
-
-                <div class="tab-content">
-                    <!--======Tab 1====-->
-                    <div id="All" class="tab-pane active">
-                        <div class="p20 pt0 pb0 bkg_light_050">
-                            <ul class="list_with_icons">
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/02.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">5m</span>
-                                        <!--<span class="badge badge-grey chatlist">28</span>-->
-                                    </div>
-                                </li>
-
-
-
-                                <li class="d-flex active">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/07.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Eduardo Williamson</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">2m</span>
-                                        <span class="badge badge-grey chatlist">8</span>
-                                    </div>
-                                </li>
-
-
-
-
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/03.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Lily Pena</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">1h</span>
-                                        <span class="badge badge-grey chatlist">5</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/04.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Theresa Fox</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">3m</span>
-                                        <span class="badge badge-grey chatlist">2</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/05.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Brooklyn Nguyen</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">4m</span>
-                                        <!--<span class="badge badge-grey chatlist">7</span>-->
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="fl_name bkg_green_light green_300">fg</span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">10s</span>
-                                        <span class="badge badge-grey chatlist">3</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/06.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Nathan Simmmons</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">1m</span>
-                                        <!--<span class="badge badge-grey chatlist">8</span>-->
-                                    </div>
-                                </li>
-
-
-
-
-                            </ul>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-
-                    <!--======Tab 2=====-->
-                    <div id="Unassigned" class="tab-pane fade">
-                        <div class="p20 pt0 pb0 bkg_light_050">
-                            <ul class="list_with_icons">
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/02.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">5m</span>
-                                        <!--<span class="badge badge-grey chatlist">28</span>-->
-                                    </div>
-                                </li>
-
-
-
-                                <li class="d-flex active">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/07.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Eduardo Williamson</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">2m</span>
-                                        <span class="badge badge-grey chatlist">8</span>
-                                    </div>
-                                </li>
-
-
-
-
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/03.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Lily Pena</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">1h</span>
-                                        <span class="badge badge-grey chatlist">5</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/04.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Theresa Fox</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">3m</span>
-                                        <span class="badge badge-grey chatlist">2</span>
-                                    </div>
-                                </li>
-
-
-
-
-
-
-                            </ul>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <!--======Tab 3=====-->
-                    <div id="You" class="tab-pane fade">
-                        <div class="p20 pt0 pb0 bkg_light_050">
-                            <ul class="list_with_icons">
-
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/03.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Lily Pena</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">1h</span>
-                                        <span class="badge badge-grey chatlist">5</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/04.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Theresa Fox</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">3m</span>
-                                        <span class="badge badge-grey chatlist">2</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/05.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Brooklyn Nguyen</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">4m</span>
-                                        <!--<span class="badge badge-grey chatlist">7</span>-->
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="fl_name bkg_green_light green_300">fg</span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Bruce Robertson</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">10s</span>
-                                        <span class="badge badge-grey chatlist">3</span>
-                                    </div>
-                                </li>
-
-                                <li class="d-flex">
-                                    <div class="media_left">
-                                        <span class="circle_32 bkg_light_000"><img src="assets/images/avatar/06.png"/></span>
-                                    </div>
-                                    <div class="media_left">
-                                        <p class="htxt_bold_14 dark_600 mb-2">Nathan Simmmons</p>
-                                        <p class="dark_300 fw300 fsize12 lh_16">Adipiscing id vel donec non iaculis est tris. Ut tortor sed...</p>
-                                    </div>
-                                    <div class="time_badge">
-                                        <span class="time fsize10 light_800">1m</span>
-                                        <!--<span class="badge badge-grey chatlist">8</span>-->
-                                    </div>
-                                </li>
-
-
-
-
-                            </ul>
-
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-                <div class="clearfix"></div>
-            </div>
-
-            <!--******************
-              Create Contact Sliding Smart Popup
-             **********************-->
-            <div class="box d-block" style="width: 280px; top: 129px!important; height: calc(100% - 129px); max-height: 798px; position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8">
-                <div style="width: 280px;overflow: hidden; height: 100%;">
-                    <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
-                        <div class="p25 pl20 pr20">
-
-                            <div class="pt0 pb20 bbot">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h3 class="fsize18 dark_800 fw500">Profile</h3>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <!--<a class="slidebox float-right"><i class=""><img width="24" src="assets/images/cross@2x.png"/></i></a>-->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pt30 pb30 bbot">
-                                <div class="row">
-                                    <div class="col-md-12 text-center">
-                                        <div class="profile_image_bkg mb20">
-                                            <img width="72" src="assets/images/avatar/02.png"/>
-                                        </div>
-                                        <div class="bkg_green_light green_400 fsize10 pl10 pr10 pt-1 pb-0 br8 d-inline-block">Lead</div>
-                                        <h3 class="fsize16 fw500 dark_700 mb0 mt10">Norma Alexander</h3>
-                                        <p class="fsize14 fw400 dark_300 mb20">terra.hamilton@example.com</p>
-                                        <ul class="profile_social_icon">
-                                            <li><a href="#"><img src="assets/images/Facebook.svg"/></a></li>
-                                            <li><a href="#"><img src="assets/images/twitter.svg"/></a></li>
-                                            <li><a href="#"><img src="assets/images/linkedin.svg"/></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pt20 pb20 bbot">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="fsize16 fw500 dark_700 mb-2 mt0">Details</h3>
-                                        <ul class="user_details_list">
-                                            <li>(239) 555-0108</li>
-                                            <li>435036</li>
-                                            <li>3 days ago</li>
-                                            <li>1 year ago</li>
-                                            <li>Paris, France</li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pt20 pb20">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="fsize16 fw500 dark_700 mt0 mb-2">Tags</h3>
-                                        <button class="tag_btn br8">Chat</button>
-                                        <button class="tag_btn br8">Website visitor</button>
-                                        <button class="btn-link" style="border: none; background: none;"><img src="assets/images/plus_grey.svg"/></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="p25 pl30 pr30 bbot">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h3 class="fsize18 dark_800 fw500"><img src="assets/images/atrate_28.svg" /> &nbsp; Norma Alexander</h3>
-                    </div>
-                    <div class="col-md-9">
-
-                        <div class="action_list">
-                            <ul>
-                                <li><a href="#"><img src="assets/images/bookmark-line.svg"/></a></li>
-                                <li><a href="#"><img src="assets/images/price-tag-line.svg"/></a></li>
-                                <li><a href="#"><img src="assets/images/time-line.svg"/></a></li>
-                                <li><a href="#"><img src="assets/images/checklineGroup.svg"/></a></li>
-                            </ul>
-                        </div>
-                        <div class="chat_user_list">
-                            <ul>
-                                <li><a href="#"><img src="assets/images/avatar/01.png"/></a></li>
-                                <li><a href="#"><img src="assets/images/avatar/02.png"/></a></li>
-                                <li><a href="#"><img src="assets/images/avatar/03.png"/></a></li>
-                                <li><a href="#"><img src="assets/images/avatar/04.png"/></a></li>
-                                <li><a href="#"><img src="assets/images/Plus_grey_circle.svg"/></a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="p0 bbot position-relative chat_mis_sec">
-                <!--<a class="slidebox user_profile_show" href="#"><img src="assets/images/user_profile_show.svg"/></a>-->
-
-                <div class="tab-content">
-                    <!--======Tab 1====-->
-                    <div id="MessageView" class="tab-pane active">
-                        <div class="mainchatsvroll2">
-                            <ul class="media-list chat-list">
-
-                                <li class="media">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                                <li class="media reversed">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/01.png" class="img-circle img-xxs" alt="">
-                                        <!--<a href="#" class="icons fl_letters m0 s24">as</a>--></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                                <li class="media reversed">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/01.png" class="img-circle img-xxs" alt="">
-                                        <!--<a href="#" class="icons fl_letters m0 s24">as</a>--></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                                <li class="media reversed">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/01.png" class="img-circle img-xxs" alt="">
-                                        <!--<a href="#" class="icons fl_letters m0 s24">as</a>--></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-body"> <span class="media-annotation user_icon"><span class="circle_green_status status-mark"></span><img src="assets/images/avatar/02.png" class="img-circle img-xxs" alt=""></span>
-                                        <div class="media-content">Hey y’all! <br><br>
-                                            We own Hidden Lake Forest which is in a private lake community. We wanted to see how others handle a waiver of liability to use of Kayaks, boats.</div>
-                                        <div class="media-content">thanks you for work list</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--======Tab 2=====-->
-                    <div id="NoteView" class="tab-pane fade">
-                        <div class="p20">
-                            Note Section
-                        </div>
-                    </div>
-                    <!--======Tab 3=====-->
-                    <div id="EmailView" class="tab-pane fade">
-                        <div class="p20">
-                            Email Section
-                        </div>
-                    </div>
-                    <!--======Tab 4=====-->
-                    <div id="TextMessageView" class="tab-pane fade">
-
-                        <div class="p20">
-                            Text Message View
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p30 pb0 bbot" style="min-height: 120px;">
-     	<textarea class="p0 w-100 border-0 fsize16 dark_200" style="height: 85px; resize: none;">Shift + Enter to add a new line
-Start with ‘/’ to select a  Saved Message
-     	</textarea>
-            </div>
-
-            <div class="p30">
-                <div class="row">
-                    <div class="col-md-7">
-                        <ul class="nav nav-pills messanger_tab" role="tablist">
-                            <li><a class="active" data-toggle="pill" href="#MessageView"><img src="assets/images/message-2-line.svg" /> &nbsp; Message</a></li>
-                            <li><a data-toggle="pill" href="#NoteView"><img src="assets/images/file-3-line-grey.svg" /> &nbsp; Note</a></li>
-                            <li><a data-toggle="pill" href="#EmailView"><img src="assets/images/mail-open-line.svg" /> &nbsp; Email</a></li>
-                            <li><a data-toggle="pill" href="#TextMessageView"><img src="assets/images/message-3-line-grey.svg" /> &nbsp; Text Message</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="action_list">
-                            <!--*****EMOJI*****-->
-                            <div class="chat_emoji_box">
-                                <div class="form-group">
-                                    <input type="text" class="form-control search fsize13 h48" placeholder="Search template" />
-                                </div>
-                                <div class="emoji_box mb20">
-                                    <p class="htxt_medium_15 dark_800 mb-1 fw500">Recent</p>
-                                    <ul class="emojisec">
-                                        <li><a href="#"><img src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-hand-medium-skin-tone-v-victory-37773.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-face-mouth-open-sympathy-emoji-37685.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-bright-cool-eye-eyewear-face-glasses-smile-sun-sunglasses-emoji-37654.svg"/></a></li>
-
-                                    </ul>
-                                </div>
-                                <div class="emoji_box mb20">
-                                    <p class="htxt_medium_15 dark_800 mb-1 fw500">Smiles & People</p>
-                                    <ul class="emojisec">
-                                        <li><a href="#"><img src="assets/images/emojie-eye-face-joke-tongue-wink-emoji-stuckout-37676.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-face-unamused-unhappy-angry-emoji-37702.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-face-sleep-emoji-tired-37692.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-face-sleep-zzz-tired-bore-emoji-37691.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-face-tongue-stuck-out-emoji-37695.svg"/></a></li>
-
-
-                                        <li><a href="#"><img src="assets/images/emojie-face-kiss-flirt-emoji-37697.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-with-smiling-eyes-happy-emoji-37710.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-grinning-face-smile-emoji-happy-37705.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-delicious-face-savouring-smile-um-yum-eye-emoji-37671.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-dizzy-face-error-emoji-37670.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-confounded-face-sad-cry-unhappy-emoji-37707.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-cold-face-open-smile-sweat-happy-emoji-37709.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-disappointed-face-sad-emoji-37669.svg"/></a></li>
-
-
-                                        <li><a href="#"><img src="assets/images/emojie-blush-eye-face-smile-flirt-emoji-37658.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-expressionless-face-inexpressive-unexpressive-emoji-37678.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-eye-face-love-smile-heart-emoji-37674.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-angry-face-mad-emoji-37652.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-angry-face-mad-pouting-rage-red-emoji-37653.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-hand-medium-skin-tone-wave-waving-37774.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-clenched-fist-hand-medium-light-skin-tone-punch-37735.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-backhand-down-finger-hand-index-medium-light-skin-tone-point-37723.svg"/></a></li>
-
-
-                                        <li><a href="#"><img src="assets/images/emojie-biceps-comic-flex-medium-skin-tone-muscle-37748.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-backhand-finger-hand-index-medium-light-skin-tone-point-up-37722.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-clap-hand-medium-skin-tone-37733.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-hand-medium-light-skin-tone-thumb-up-37775.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-cat-face-joy-tear-happy-emoji-37666.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-cat-face-mouth-open-smile-emoji-37664.svg"/></a></li>
-                                        <li><a href="#"><img src="assets/images/emojie-cat-face-ironic-smile-wry-emoji-37662.svg"/></a></li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                            <!--*****SAVED MESSAGE*****-->
-                            <div class="chat_saved_temp">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-11">
-                                            <input type="text" class="form-control search fsize13 h48" placeholder="Search template" />
-                                        </div>
-                                        <div class="col-md-1 pl-0"><button class="btn_plus_icon slidebox"><img src="assets/images/add-fill.svg"/></button></div>
-                                    </div>
-
-                                </div>
-
-
-
-
-
-
-                                <div class="savedchat mb-2">
-                                    <p class="htxt_medium_16 dark_800 mb-2">Review invite</p>
-                                    <p class="htxt_regular_14 dark_200">Hi, :contact:! Thank you for choosing :location:. Could you take a 30 seconds to leave us a review...</p>
-                                </div>
-                                <div class="savedchat mb-2">
-                                    <p class="htxt_medium_16 dark_800 mb-2">Say friendly thanks</p>
-                                    <p class="htxt_regular_14 dark_200">Thanks so much for the review :contact:! Feel free to text this number anytime and we’ll be happy to...</p>
-                                </div>
-                                <div class="savedchat">
-                                    <p class="htxt_medium_16 dark_800 mb-2">Feedback invite</p>
-                                    <p class="htxt_regular_14 dark_200">Hi, :contact:! On scale from 1-10, how satisfied were you with your product or service?</p>
-                                </div>
-                            </div>
-                            <ul>
-                                <li><a class="active show_emoji" href="#"><img src="assets/images/user-smile-line.svg"></a></li>
-                                <li><a class="show_saved_chat" href="#"><img src="assets/images/clipboard-line.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/Image_18.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/attachment-line.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/add-circle-line.svg"></a></li>
-                                <li><a href="#"><img src="assets/images/submit_btn_icon.svg"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
+        <div class="content-area chat_messanger_area withsidebar" style="background-color: #FFFFFF;">
+            <web-side-bar
+                :allChat="allChat"
+                :unassignedChat="unassignedChat"
+                :assignedChat="assignedChat"
+                :favoriteChat="favoriteChat"
+                :participantInfo="participantInfo"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
+                @loadWebChat="loadWebChat"
+            ></web-side-bar>
+            <chat-area
+                :allChat="allChat"
+                :unassignedChat="unassignedChat"
+                :assignedChat="assignedChat"
+                :favoriteChat="favoriteChat"
+                :currentTokenId="currentTokenId"
+                :loggedId="loggedId"
+                :loggedUserInfo="user"
+                :participantId="participantId"
+                :participantInfo="participantInfo"
+                :teamMembers="teamMembers"
+                :shortcuts="shortcuts"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
+            ></chat-area>
+            <web-profile-bar
+                :currentTokenId="currentTokenId"
+                :loggedId="loggedId"
+                :participantId="participantId"
+                :participantInfo="participantInfo"
+                :loggedUser="user"
+                :twilioNumber="twilioNumber"
+                @loadWebChat="loadWebChat"
+            ></web-profile-bar>
         </div>
-
-        <div class="box" style="width: 424px;">
-            <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
-                    <div class="p40">
-                        <div class="row">
-                            <div class="col-md-12"> <img src="assets/images/saved_reply_forum.svg"/>
-                                <h3 class="htxt_medium_24 dark_800 mt20">Create Saved Reply </h3>
-                                <hr>
-                            </div>
-                            <div class="col-md-12">
-                                <form action="/action_page.php">
-                                    <div class="form-group">
-                                        <label class="fsize11" for="fname">REPLY NAME</label>
-                                        <input type="text" class="form-control h56 fsize13" id="fname" placeholder="Name (Internal only)" name="fname">
-                                    </div>
-
-
-
-
-                                    <div class="form-group">
-                                        <label class="fsize11" for="desc">REPLY CONTENT</label>
-                                        <textarea class="form-control min_h_185 p20 pt10 fsize13" id="desc" placeholder="Reply content goes here..."></textarea>
-                                    </div>
-
-
-
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="row bottom-position">
-                            <div class="col-md-12 mb15">
-                                <hr>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Save Reply</button>
-                                <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <SaveReplyPopup @updateShortcuts="fetchShortcuts"></SaveReplyPopup>
     </div>
 </template>
-
 <script>
-
+    import WebSideBar from "./partials/WebSideBar";
+    import WebProfileBar from "./partials/WebProfileBar";
+    import ChatArea from "./partials/ChatArea";
+    import SaveReplyPopup from "./partials/SaveReplyPopup";
     export default {
+        components: {WebSideBar, WebProfileBar, ChatArea, SaveReplyPopup},
         data() {
             return {
                 refreshMessage: 1,
@@ -745,40 +75,71 @@ Start with ‘/’ to select a  Saved Message
                 assignedChatData: '',
                 unassignedChat: '',
                 unassignedChatData: '',
+                allChat: '',
+                teamMembers: '',
                 loggedId: '',
                 selectedCampaigns: '',
+                currentTokenId: '',
+                participantId: '',
+                participantInfo: '',
+                twilioNumber: '',
+                shortcuts: '',
                 user: {},
                 breadcrumb: ''
-
             }
         },
         created() {
-            axios.get('/admin/webchat')
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.allSubscribers = response.data.usersdata;
-                    this.favoriteChat = response.data.favouriteUserData;
-                    this.user = response.data.loginUserData;
-                    this.assignedChat = response.data.assignedChat;
-                    this.assignedChatData = response.data.assignedChatData;
-                    this.unassignedChat = response.data.unassignedChat;
-                    this.unassignedChatData = response.data.unassignedChatData;
-                    this.loggedId = response.data.loggedYou;
-                    this.loading = false;
-                    //loadJQScript(this.user.id);
-
-                });
-        },
-        mounted() {
-
+            this.getChatContacts();
+            this.fetchShortcuts();
         },
         methods: {
-            syncConfigure: function(param1){
-                this.brandData = param1;
-
+            getChatContacts: function () {
+                axios.get('/admin/webchat')
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.allSubscribers = response.data.usersdata;
+                        this.favoriteChat = response.data.favouriteUserData;
+                        this.user = response.data.loginUserData;
+                        this.assignedChat = response.data.assignedChat;
+                        this.assignedChatData = response.data.assignedChatData;
+                        this.unassignedChat = response.data.unassignedChat;
+                        this.unassignedChatData = response.data.unassignedChatData;
+                        this.allChat = response.data.allChat;
+                        this.loggedId = response.data.loggedYou;
+                        this.user = response.data.loginUserData;
+                        this.twilioNumber = response.data.twilioNumber;
+                        this.teamMembers = response.data.teamMembers;
+                        this.loading = false;
+                        //loadJQScript(this.user.id);
+                    });
             },
-            setSource: function(source){
+            fetchShortcuts: function () {
+                axios.post('/admin/webchat/listShortcuts')
+                    .then(response => {
+                        this.shortcuts = response.data;
+                    });
+            },
+            loadWebChat: function (roomId, userid) {
+                this.currentTokenId = roomId;
+                this.participantId = userid;
+                //Get Paticipant's details
+                this.loadParticipantInfo(roomId, userid);
+            },
+            loadParticipantInfo: function (roomId, userid) {
+                axios.post('/admin/webchat/getUserinfo', {
+                    room: roomId,
+                    chatUserid: userid,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.participantInfo = response.data;
+                    });
+            },
+            syncConfigure: function (param1) {
+                this.brandData = param1;
+            },
+            setSource: function (source) {
                 this.loading = true;
                 this.campaign.source_type = source;
                 axios.post('/admin/modules/referral/updateSource', {
@@ -790,41 +151,36 @@ Start with ‘/’ to select a  Saved Message
                         this.successMsg = 'Source has been updated successfully';
                         this.loading = false;
                     });
-
-
             },
-            displayStep: function(step){
+            displayStep: function (step) {
                 let path = '';
-                if(!step){
+                if (!step) {
                     path = '/admin#/referral/';
-                }else{
-                    path = '/admin#/referral/setup/'+this.campaignId+'/'+step;
+                } else {
+                    path = '/admin#/referral/setup/' + this.campaignId + '/' + step;
                 }
-
                 window.location.href = path;
             },
-            updateSettings: function (fieldName, fieldValue,  type) {
+            updateSettings: function (fieldName, fieldValue, type) {
                 this.loading = true;
 
-                if(type =='expiry'){
-                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
+                if (type == 'expiry') {
+                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName == 'txtInteger' || fieldName == 'exp_duration' ? true : false;
                 }
                 axios.post('/admin/brandboost/saveOnsiteSettings', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
                     fieldVal: fieldValue,
                     brandboostId: this.campaignId,
-                    linkExpiryData : this.campaign.link_expire_custom,
+                    linkExpiryData: this.campaign.link_expire_custom,
                     requestType: type
-
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
                 });
-
             },
-            saveDraft: function(){
+            saveDraft: function () {
                 this.loading = true;
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
@@ -834,32 +190,24 @@ Start with ‘/’ to select a  Saved Message
                 })
                     .then(response => {
                         this.loading = false;
-                        if(response.data.status == 'success'){
+                        if (response.data.status == 'success') {
                             this.successMsg = 'Campaign saved as a draft successfully';
-                        }else{
+                        } else {
                             this.errorMsg = 'Something went wrong';
                         }
                     });
             }
         }
-
     };
-    $(document).ready(function(){
-        $(".slidebox").click(function(){
+    $(document).ready(function () {
+        $(".saveReplyBox").click(function () {
             $(".box").animate({
                 width: "toggle"
             });
         });
     });
-
-    $(document).ready(function(){
-        $(".show_emoji").click(function(){
-            $(".chat_emoji_box").toggle();
-        });
-    });
-
-    $(document).ready(function(){
-        $(".show_saved_chat").click(function(){
+    $(document).ready(function () {
+        $(".show_saved_chat").click(function () {
             $(".chat_saved_temp").toggle();
         });
     });
@@ -868,8 +216,4 @@ Start with ‘/’ to select a  Saved Message
     $(".nav-link.people").removeClass("active");
     $(".main-icon-menu-pane.livechat").addClass("active");
     $(".main-icon-menu-pane.people").removeClass("active");
-
 </script>
-
-
-

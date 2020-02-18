@@ -1,10 +1,10 @@
-var express = require('express');  
+var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var bodyParser = require('body-parser');  
-// Create application/x-www-form-urlencoded parser  
-var urlencodedParser = bodyParser.urlencoded({ extended: false })  
+var bodyParser = require('body-parser');
+// Create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var port = 3000;
 
 
@@ -36,8 +36,8 @@ io.sockets.on('connection', function(socket){
 	    //console.log('user disconnected '+user_id);
 	    io.sockets.emit('userLogoutStatus', {userId:user_id, user_name:user_name, user_avatar:user_avatar});
 	});
- 
-    socket.on('subscribe', function(room) { 
+
+    socket.on('subscribe', function(room) {
     	roomName = room;
         socket.join(room);
     });
@@ -45,19 +45,29 @@ io.sockets.on('connection', function(socket){
 	socket.on('chat_message', function(data){
 		//console.log(data, 'console new data');
 		if(roomName == data.room){
-
+            console.log("I am in the correct path");
 			io.sockets.to(data.room).emit('chat message', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, support_name: data.name, teamId:data.teamId, teamName:data.teamName});
-			
+
 			io.sockets.to(data.room).emit('chat message main', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName});
+
+			io.sockets.to(data.room).emit('receiveMessage', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName, room:data.room});
+
+            io.sockets.to(data.room).emit('newMessageLineup', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName, room:data.room});
 			//io.sockets.emit('chat message', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar});
 			//console.log(data);
-		}
+		}else{
+		    //Notify about a new message or show unread messages count
+            console.log("I am in the wrong path");
+
+        }
 
 	});
 
 	socket.on('wait_message', function(data) {
 		//console.log(data);
-		io.sockets.to(data.room).emit('wait_new_message', {chatTo:data.chatTo, currentUser:data.currentUser, wait:data.wait});
+        if(roomName == data.room){
+            io.sockets.to(data.room).emit('wait_new_message', {chatTo:data.chatTo, currentUser:data.currentUser, wait:data.wait});
+        }
 	});
 
 	socket.on('wait_message_widget', function(data) {
@@ -73,7 +83,7 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('chat_message_status_show', {msg:data.msg, chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, status:data.status});
 	});
 
-   
+
     socket.on('team_post_data', function(data){
    	    //console.log(data);
  		io.sockets.to(data.room).emit('team_data_show', {room:data.room, chatTo:data.chatTo, currentUser:data.currentUser,teamName:data.teamName,msg:data.msg});
@@ -89,7 +99,7 @@ io.sockets.on('connection', function(socket){
  		io.sockets.to(data.room).emit('forceunassign_post_data_show', {user_id:data.user_id,room:data.room,preTeamId:data.preTeamId});
 	});
 
-	
+
 
 
 
@@ -111,6 +121,11 @@ io.sockets.on('connection', function(socket){
 		//console.log(data);
 		io.sockets.emit('support_user_created', {support_name: data.name, support_id: data.id, UserID:data.suppUserID,email:data.email, msg:data.msg, currentTime:data.currentTime});
 	});
+
+    socket.on('sms-incoming', function(data){
+        io.sockets.emit('sms-received', {msg:data.msg , chatTo:data.chatTo, currentUser:data.currentUser, currentUserName:data.currentUserName, avatar:data.avatar, greatingMsg:data.greatingMsg, msgType:data.msgType, teamId:data.teamId, teamName:data.teamName, room:data.room});
+        console.log(data);
+    });
 
 	/*-- End support chat --*/
 

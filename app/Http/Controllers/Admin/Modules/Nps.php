@@ -501,8 +501,15 @@ class Nps extends Controller {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
+
         $oWidgetsList = $mNPS->getNPSWidgets($userID);
         //$oStats = $mNPS->getNPSWidgetStats($userID);
+
+        if(!empty($oWidgetsList->items())) {
+            foreach ($oWidgetsList->items() as $data) {
+                $data->npsData = $mNPS->getNps($userID, $data->nps_id);
+            }
+        }
 
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -512,16 +519,26 @@ class Nps extends Controller {
 			<li><a data-toggle="tooltip" data-placement="bottom" title="NPS Widgets" class="sidebar-control active hidden-xs ">NPS Widgets</a></li>
 			</ul>';
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'NPS Widgets' => '#/modules/nps/widgets'
+        );
+
         $bActiveSubsription = UsersModel::isActiveSubscription();
         Session::put('setTab', '');
+
         $aData = array(
             'title' => 'NPS Widgets',
+            'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
-            'oWidgetsList' => $oWidgetsList,
+            'allData' => $oWidgetsList,
+            'oWidgetsList' => $oWidgetsList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role
         );
-        return view('admin.modules.nps.widget_list', $aData)->with(['mNPS'=>$mNPS]);
+        //return view('admin.modules.nps.widget_list', $aData)->with(['mNPS'=>$mNPS]);
+
+        return $aData;
     }
 
     /**
@@ -534,9 +551,19 @@ class Nps extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-        $npsTitle = $request->npsTitle;
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $title = $request->title;
+        $description = $request->description;
+
+        $npsTitle = (!empty($title) ? $title : $request->npsTitle);
+
         $aData = array(
             'widget_title' => $npsTitle,
+            'widget_desc' => $description,
             'user_id' => $userID,
             'created' => date("Y-m-d H:i:s")
         );

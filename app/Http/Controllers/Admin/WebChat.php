@@ -27,16 +27,56 @@ class WebChat extends Controller {
         $mWebChat = new WebChatModel();
         $favoriteChatData = $mWebChat->getFavouriteUsers($oUser->id);
         $isLoggedInTeam = Session::get("team_user_id");
+        if(!empty($isLoggedInTeam)){
+            $hasweb_access = getMemberchatpermission($isLoggedInTeam);
+            if ($hasweb_access->bb_number != "") {
+                $twilioNumber = $hasweb_access->bb_number;
+            } else {
+                $twilioNumber = getClientTwilioAccount($oUser->id);
+            }
+            $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $oUser->id);
+            $teamMemberId = $aTeamInfo->id;
+        }else{
+            $twilioNumber = getClientTwilioAccount($oUser->id);
+        }
 
         //Assigned Chat
-        $id = (!empty($isLoggedInTeam)) ? $isLoggedInTeam : $oUser->id;
-        $assignedChat = $mWebChat->getTeamAssignData($id);
+        $id = (!empty($teamMemberId)) ? $teamMemberId : $oUser->id;
+        $assignedChat = $mWebChat->getTeamAssignData($id, true);
+        if($assignedChat->isNotEmpty()){
+            foreach($assignedChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+                $oUserChat->unreadCount = $mWebChat->getUnreadCount($oUserChat->room, $oUserChat->user);
+            }
+        }
         $assignedChatData = $assignedChat;
         $loggedYou = $id;
 
         //Unassigned Chat
         $unassignedChat = $mWebChat->getTeamAssignData(0);
+        if($unassignedChat->isNotEmpty()){
+            foreach($unassignedChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+                $oUserChat->unreadCount = $mWebChat->getUnreadCount($oUserChat->room, $oUserChat->user);
+            }
+        }
         $unassignedChatData = $unassignedChat;
+
+
+        //Active Web Chat
+        $allChat = activeOnlyweb($loggedYou);
+        if($allChat->isNotEmpty()){
+            foreach($allChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+                $oUserChat->unreadCount = $mWebChat->getUnreadCount($oUserChat->room, $oUserChat->user);
+            }
+        }
+
+        //Get All Team members
+        $teamMembers = getAllteam($oUser->id);
 
         $aData = [
             'title' => 'Web Chat',
@@ -44,22 +84,95 @@ class WebChat extends Controller {
             'usersdata' => $oContacts,
             'favouriteUserData' => $favoriteChatData,
             'loginUserData' => $oUser,
+            'twilioNumber' => $twilioNumber,
             'totalSubscriber' => count($oContacts),
             'unassignedChat' => $unassignedChat,
             'assignedChat' => $assignedChat,
             'assignedChatData' => $assignedChatData,
             'unassignedChatData' => $unassignedChatData,
-            'loggedYou' => $loggedYou
+            'allChat' => $allChat,
+            'loggedYou' => $loggedYou,
+            'teamMembers' => $teamMembers,
         ];
         //return view('admin.web_chat.index', $data);
+        return $aData;
+    }
+
+    /**
+     * Used to get Sorted Web Chat Contact list
+     * @param Request $request
+     * @return array
+     */
+    public function sortWebChatContactList(Request $request){
+        $oUser = getLoggedUser();
+        $sortType = $request->sort;
+        if($sortType == 'new'){
+            $sortVal = 'desc';
+        }else if($sortType == 'old'){
+            $sortVal = 'asc';
+        }else if($sortType == 'wait'){
+            $sortVal = 'desc';
+        }
+        $mWebChat = new WebChatModel();
+        $isLoggedInTeam = Session::get("team_user_id");
+        if(!empty($isLoggedInTeam)){
+            $aTeamInfo = TeamModel::getTeamMember($isLoggedInTeam, $oUser->id);
+            $teamMemberId = $aTeamInfo->id;
+        }
+        //Assigned Chat
+        $id = (!empty($teamMemberId)) ? $teamMemberId : $oUser->id;
+        $allChat = $mWebChat->sortWebChat($id, 'last_chat_time', $sortVal);
+        if($allChat->isNotEmpty()){
+            foreach($allChat as $oUserChat){
+                $lastMessage = $this->getLastChatMessage($oUserChat->room);
+                $oUserChat->lastMessageInfo = $lastMessage;
+            }
+        }
+        $aData = [
+            'allChat' => $allChat
+        ];
         return $aData;
     }
     /**
      * This function is used to get userinformation based on the client/user id
      * @return type
      */
-
     public function getUserinfo(Request $request) {
+        $chatUserid = $request->chatUserid;
+        $token = $request->room;
+        if (strlen($chatUserid) > 10 && $chatUserid != '' && $token != '') {
+            $userDetail = getSubscriberDetails($chatUserid);
+            $assignto = assignto($token);
+            $taglist = getTagsByReviewID($chatUserid);
+            $userId_encode = base64_url_encode($chatUserid);
+            $user_name_ex = explode(" ", $userDetail[0]->user_name);
+            $avatar = showUserAvtar('', $user_name_ex[0], $user_name_ex[1], 84, 84, 24);
+            $avatarSmall = showUserAvtar('', $user_name_ex[0], $user_name_ex[1], 40, 40, 13);
+            $email = !empty($userDetail[0]->email) ? $userDetail[0]->email : 'Add Email';
+            $aData = [
+                'email' => $email,
+                'name' => ucwords($user_name_ex[0] . ' ' . $user_name_ex[1]),
+                'firstname' => ucwords($user_name_ex[0]),
+                'lastname' => ucwords($user_name_ex[1]),
+                'phone' => $userDetail[0]->phone != '' ? $userDetail[0]->phone : 'Add Phone',
+                'avatar' => $avatar,
+                'avatarSmall' =>$avatarSmall,
+                'avatar_url' => '',
+                'chatUserid' => $chatUserid,
+                'city' => '',
+                'code' => '',
+                'gender' => '',
+                'avfinder' => '',
+                'userId_encode' => $userId_encode,
+                'taglist' => $taglist,
+                'assign_to' => $assignto,
+                'assign_team_member' => $userDetail[0]->assign_team_member
+            ];
+            return $aData;
+
+        }
+    }
+    public function getUserinfoOld(Request $request) {
         $chatUserid = $request->chatUserid;
         $token = $request->token;
         if (strlen($chatUserid) > 10 && $chatUserid != '' && $token != '') {
@@ -97,6 +210,20 @@ class WebChat extends Controller {
      * @return type
      */
     public function listingNotes(Request $request) {
+        $oUser = getLoggedUser();
+        $chatUserid = $request->NotesTo;
+        $WebChatObj = new WebChatModel();
+        $oNotes = $WebChatObj->getWebNotes($chatUserid);
+        foreach ($oNotes as $oNote) {
+            $oNote->assignTo = assignto($oNote->room);
+            $oNote->avatar = $oUser->avatar;
+            $oNote->firstname = $oUser->firstname;
+            $oNote->lastname = $oUser->lastname;
+        }
+        return $oNotes;
+    }
+
+    public function listingNotesOld(Request $request) {
         $oUser = getLoggedUser();
         $chatUserid = $request->NotesTo;
         $WebChatObj = new WebChatModel();
@@ -150,13 +277,18 @@ class WebChat extends Controller {
                 $avatar = "";
                 if (strlen($get_value->user_form) > 10) {
                     $avatar = "";
+                    $firstname = 'New';
+                    $lastname = 'User';
 
                     $supportUser = getSupportUser($get_value->user_form);
                     if (!empty($supportUser[0]->user_name)) {
+
                         $supportUserName = explode(" ", $supportUser[0]->user_name);
-                        $avatarHtml = showUserAvtar("", $supportUserName[0], $supportUserName[1], 28, 28, 11);
+                        $firstname = $supportUserName[0];
+                        $lastname = $supportUserName[1];
+                        $avatarHtml = showUserAvtar("", $supportUserName[0], $supportUserName[1], 40, 40, 13);
                     } else {
-                        $avatarHtml = showUserAvtar("", "A", "", 28, 28, 11);
+                        $avatarHtml = showUserAvtar("", "A", "", 40, 40, 13);
                     }
 
                     $get_value->user_form = (string)$uFrom;
@@ -166,13 +298,18 @@ class WebChat extends Controller {
                     $avatar = !empty($avatar) ? $avatar : '';
                     $firstname = !empty($oUserDetails[0]->firstname) ? $oUserDetails[0]->firstname : '';
                     $lastname = !empty($oUserDetails[0]->lastname) ? $oUserDetails[0]->lastname : '';
-                    $avatarHtml = showUserAvtar($avatar, $firstname, $lastname, 28, 28, 11);
+                    $avatarHtml = showUserAvtar($avatar, $firstname, $lastname, 36, 36, 13);
 
                     $get_value->user_to = (string)$uTo;
                 }
                 $get_value->created = timeAgo($get_value->created);
                 $get_value->avatarImage = $avatarHtml;
-
+                //$get_value->avatarImage = $avatar;
+                $get_value->blankAvatar = $avatarHtml;
+                $get_value->hasAvatar = $avatar ? true : false;
+                $get_value->avatar = $avatar;
+                $get_value->firstname = $firstname;
+                $get_value->lastname = $lastname;
             }
         }
         //pre($result); die;
@@ -1519,6 +1656,160 @@ class WebChat extends Controller {
 
         return view('admin.chat_app.chat_overview', array('title' => 'Chat Overview', 'pagename' => $breadcrumb, 'getChatThread' => $getChatThread, 'getWebChatCurrentThread' => $getWebChatCurrentThread, 'supportChat' => $supportChat, 'supportChatGroupByDate' => $supportChatGroupByDate, 'supportChatCurrent' => $supportChatCurrent, 'supportChatGroupByCountry' => $supportChatGroupByCountry, 'supportChatCompleted' => $supportChatCompleted, 'lastfifteendayschat' => $lastfifteendayschat));
     }
+
+    /**
+     * Used to get last message of chat contacts
+     * @param $token
+     * @return array
+     */
+    public function getLastChatMessage($token){
+        $oMsg = getLastMessage($token);
+        $sMessage = $oMsg->message;
+        $created = usaDate($oMsg->created);
+        $fileext = explode('.', $sMessage);
+        $fileext = end($fileext);
+        if ($fileext == 'png' || $fileext == 'jpg' || $fileext == 'jpeg' || $fileext == 'gif') {
+            $userMessage = "File Attachment";
+        }
+        else if (strpos($sMessage, '/Media/') !== false) {
+            $userMessage="File Attachment";
+        }
+        else if (strpos($sMessage, 'amazonaws') !== false) {
+            $userMessage="File Attachment";
+        }
+        else {
+            $userMessage = setStringLimit($sMessage, 80);
+        }
+        return ['lastMessage'=>$userMessage, 'messageTime' => $created];
+    }
+
+    /**
+     * Get list of shortcusts available for the chat
+     * @return \App\Models\Admin\type
+     */
+    public function listShortcuts() {
+        $oUser = getLoggedUser();
+        $shortCuts = SubscriberModel::getchatshortcutlisting($oUser->id);
+        return $shortCuts;
+    }
+
+    /**
+     * This function used to get the list of unread message belonging to a chat conversation
+     * @param $Request
+     * @param $request
+     * @return mixed
+     */
+    public function getUnreadMsgs(Request $request){
+        $roomId = $request->room;
+        $userId = $request->userid;
+        $mChatModel =  new WebChatModel();
+        $unreadCount = $mChatModel->getUnreadCount($roomId, $userId);
+        return $unreadCount;
+    }
+
+    /**
+     * Update read status of a conversation
+     * @param $Request
+     * @param $request
+     * @return mixed
+     */
+    public function markRead(Request $request){
+            $roomId = $request->room;
+            $userId = $request->userid;
+            $mChatModel =  new WebChatModel();
+            $result = $mChatModel->updateReadStatus($roomId, $userId);
+            return $result;
+    }
+
+    /**
+     * This function used to send email from chat module
+     * @param Request $request
+     * @return bool
+     */
+    public function sendEmail(Request $request){
+        $oUser = getLoggedUser();
+        $isLoggedInTeam = Session::get("team_user_id");
+        $toAddress = $request->email;
+        $fromAddress = $oUser->email;
+        $msg = $request->messageContent;
+        $plainText = convertHtmlToPlain($msg);
+        $subject = "Brandboost: you got new email";
+        $aSendgridData = getSendgridAccount($oUser->id);
+        $user = $aSendgridData->sg_username;
+        $password = $aSendgridData->sg_password;
+        $host = 'smtp.sendgrid.net';
+        $port = '2525';
+        $type = 'html';
+        $url = 'https://api.sendgrid.com/';
+        $params = array(
+            'api_user' => $user,
+            'api_key' => $password,
+            'to' => $toAddress,
+            'subject' => ($subject) ? $subject : config('bbconfig.blank_subject'),
+            'html' => $msg,
+            'text' => $plainText,
+            'from' => $fromAddress
+        );
+
+        $request = $url . 'api/mail.send.json';
+        $session = curl_init($request);
+        curl_setopt($session, CURLOPT_POST, true);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($session, CURLOPT_HEADER, false);
+        curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($session);
+        //Store Data into the database
+        $aData = [
+            'from' => $fromAddress,
+            'to' => $toAddress,
+            'msg' => $msg,
+            'team_id' => $isLoggedInTeam ? $isLoggedInTeam : '',
+            'created' => date("Y-m-d H:i:s")
+        ];
+        $mChatModel =  new WebChatModel();
+        $mChatModel->saveEmailChat($aData);
+        /*$aUsage = array(
+            'client_id' => $oUser->id,
+            'usage_type' => 'email',
+            'content' => $msg,
+            'spend_to' => $toAddress,
+            'spend_from' => '',
+            'module_name' => 'chat',
+            'module_unit_id' => ''
+        );
+        updateCreditUsage($aUsage);
+        //Todoo: Save Email Data into the database if required*/
+        return ['status' =>'ok'];
+
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function showEmailThread(Request $request){
+        $oUser = getLoggedUser();
+        $fromAddress = $oUser->email;
+        $to = $request->to;
+        $mWebChat = new WebChatModel();
+        $aData = $mWebChat->getEmailThread($fromAddress, $to);
+        return $aData;
+
+    }
+
+    /**
+     * This function used to get Chat room info
+     * @param Request $request
+     * @return \App\Models\Admin\type
+     */
+    public function getThreadInfo(Request $request){
+        $tokenId = $request->room;
+        $mWebChat = new WebChatModel();
+        $oData = $mWebChat->checkTeamAssign($tokenId);
+        return ['room'=>$oData];
+    }
+
 
 
 

@@ -22,7 +22,9 @@ class ReferralModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
                 })
-                ->get();
+                ->orderBy('id', 'desc')
+                //->get();
+                ->paginate(10);
 
         return $oWidgets;
     }
@@ -1007,7 +1009,7 @@ class ReferralModel extends Model {
                 foreach ($oCoupons as $oCoupon) {
                     $aExistingCoupons[] = $oCoupon->coupon_code;
                     if (!in_array($oCoupon->coupon_code, $aCoupons)) {
-                        Self::deleteReferredCoupon($oCoupon->id);
+                        (new self)->deleteReferredCoupon($oCoupon->id);
                     }
                 }
             }

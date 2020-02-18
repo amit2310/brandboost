@@ -1,5 +1,8 @@
 export default {
     methods: {
+        siteUrl(){
+            return 'http://brandboostx.com/';
+        },
         capitalizeFirstLetter(str) {
             if (typeof str !== 'string') return str;
             return str.charAt(0).toUpperCase() + str.slice(1);
@@ -264,6 +267,38 @@ export default {
                 document.getElementById("breadcrumb").innerHTML = breadcrumbString;
 
             }
+        },
+        getSmilyCollection(){
+            let smiliesMap = {
+                    ":)" : "1",
+                    ":(" : "2",
+                    ";)" : "3",
+                    ":d" : "4",
+                    ";;)": "5",
+                    ":/" : "7",
+                    ":x" : "8",
+                    ":p" : "10",
+                    ":*" : "11",
+                    ":o" : "13",
+                    ":>" : "15",
+                    ":s" : "17",
+                    ":((": "20",
+                    ":))": "21",
+                    ":|": "22",
+                    ":b": "26",
+                    ":&": "31",
+                    ":$": "32",
+                    ":?" : "39",
+                    "#o": "40",
+                    ":ss": "42",
+                    "@)": "43",
+                    ":w": "45",
+                    ":c": "101",
+                    ":h": "103",
+                    ":t": "104",
+                    ":q": "112"
+                };
+            return smiliesMap;
         }
 
     }

@@ -29,11 +29,14 @@ class WebChatModel extends Model {
      * @param type $teamId
      * @return type object
      */
-    public function getTeamAssignData($teamId) {
+    public function getTeamAssignData($teamId, $isOrderBy=false) {
 
-        $oResult = DB::table('tbl_chat_supportuser')
-                ->where('assign_team_member', $teamId)
-                ->get();
+        $query = DB::table('tbl_chat_supportuser')
+                ->where('assign_team_member', $teamId);
+        if($isOrderBy == true){
+            $query->orderBy('id', 'desc');
+        }
+        $oResult = $query->get();
         return $oResult;
     }
 
@@ -60,7 +63,7 @@ class WebChatModel extends Model {
         $oData = DB::table('tbl_chat_message')
         ->where('token', $token)
         ->where('status', 1)
-        ->orderBy('id', 'desc')
+        ->orderBy('id', 'asc')
         ->get();
         return $oData;
     }
@@ -403,6 +406,70 @@ FROM
             ->where('curr_user_id', $userId)
             ->get();
         return $oFavorite;
+    }
+
+    /**
+     * This method used to sort Web Chat Contact list
+     * @param $userID
+     * @param string $sortField
+     * @param string $sortValue
+     * @return mixed
+     */
+    public function sortWebChat($userID, $sortField='last_chat_time', $sortValue='desc') {
+        $oData = DB::table('tbl_chat_supportuser')
+            ->where('supp_user', $userID)
+            ->orderBy($sortField, $sortValue)
+            ->get();
+        return $oData;
+    }
+
+    /**
+     * This function used to get unread messages belonging to a conversation
+     * @param $token
+     * @param $user
+     * @return mixed
+     */
+    public function getUnreadCount($token, $user){
+        $oData = DB::table('tbl_chat_message')
+            ->where('token', $token)
+            ->where('read_status', 0)
+            ->where('user_form', $user)
+            ->count();
+        return $oData;
+    }
+
+    /**
+     * This function used to update read status of chat conversation
+     * @param $token
+     * @param $user
+     * @return mixed
+     */
+    public function updateReadStatus($token, $user){
+        $oData = DB::table('tbl_chat_message')
+            ->where('token', $token)
+            ->where('read_status', 0)
+            ->where('user_form', $user)
+            ->update(['read_status' => 1]);
+        return $oData;
+    }
+
+    /**
+     * Save Email Chat into the database
+     * @param $aData
+     * @return mixed
+     */
+    public function saveEmailChat($aData){
+        $insert_id = DB::table('tbl_chat_email_thread')->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Get Email thread Data
+     * @param $from
+     * @return mixed
+     */
+    public function getEmailThread($from, $to){
+        return DB::table('tbl_chat_email_thread')->where('from', $from)->where('to', $to)->get();
     }
 
 

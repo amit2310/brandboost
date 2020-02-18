@@ -12,12 +12,12 @@
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">Brand Settings</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer;">General&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer;">Billing&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 5 ? 'active' : '' ]"><a v-on:click="seletedTab=5" data-toggle="tab" style="cursor:pointer;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 6 ? 'active' : '' ]"><a v-on:click="seletedTab=6" data-toggle="tab" style="cursor:pointer;">Import&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 10px;">General&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 10px;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 10px;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 10px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 5 ? 'active' : '' ]"><a v-on:click="seletedTab=5" data-toggle="tab" style="cursor:pointer; padding: 10px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 6 ? 'active' : '' ]"><a v-on:click="seletedTab=6" data-toggle="tab" style="cursor:pointer; padding: 10px;">Import&nbsp;</a></li>&nbsp;&nbsp;
                             <li :class="[ seletedTab === 7 ? 'active' : '' ]"><a v-on:click="seletedTab=7" data-toggle="tab" style="cursor:pointer;">Export</a></li>
                         </ul>
                     </div>
@@ -30,11 +30,12 @@
           Content Area
          **********************-->
         <div v-if="(seletedTab === '' || seletedTab === 1)" class="tab-pane " id="right-icon-tab0">
+            <div class="clearfix">&nbsp;</div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
                         <form id="frmGeneralBusinessInfo" name="frmGeneralBusinessInfo" method="post">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="padding: 10px;">
                                 <h4  class="panel-title">Brand Info</h4>
                             </div>
                             <div class="panel-body p0">
@@ -199,7 +200,7 @@
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
                         <form id="frmGeneralBusinessInfo2" name="frmGeneralBusinessInfo2" method="post">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="padding: 10px;">
                                 <h4 class="panel-title">Public Profile</h4>
                             </div>
                             <div class="panel-body p0">
@@ -326,10 +327,11 @@
         </div>
 
         <div v-if="seletedTab === 2" class="tab-pane " id="right-icon-tab1">
+            <div class="clearfix">&nbsp;</div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
-                        <div class="panel-heading">
+                        <div class="panel-heading" style="padding: 10px;">
                             <h4 class="panel-title">General Preferences</h4>
                         </div>
                         <form id="frmGeneralBusinessInfo3" name="frmGeneralBusinessInfo3" method="post">
@@ -615,6 +617,7 @@
                                 <div class="p30">
                                     <div class="row">
                                         <div class="col-md-12 text-right">
+                                            <input type="hidden" id="settingsUserId" :value="oUser.id" />
                                             <button type="submit" class="btn dark_btn ml20 bkg_purple" ><span>Save</span> </button>
                                         </div>
                                     </div>
@@ -626,7 +629,7 @@
 
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
-                        <div class="panel-heading">
+                        <div class="panel-heading" style="padding: 10px;">
                             <h4 class="panel-title">Help Card</h4>
                         </div>
                         <div class="panel-body min_h405 p40 pt60 info_card text-center">
@@ -641,7 +644,216 @@
         </div>
 
         <div v-if="seletedTab === 3" class="tab-pane " id="right-icon-tab1">
-            Subscription & Credits TAB HERE
+            <div class="clearfix">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
+                            <h6 class="panel-title">Subscription</h6>
+                        </div>
+                        <div class="panel-body p0">
+
+                            <!--====GENERAL SETTINGS====-->
+                            <div class="bbot p30">
+                                <div class="row" style="margin-bottom:60px !important;">
+                                    <div class="col-md-9 col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Account Plans</strong><br>
+                                            <span class="text-muted fsize13">Pick an account plan that fits your workflow. Add a credits<br>
+                                        plan to any project when it's ready to go live.</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <p class="pull-left text-muted fsize13 mr-20">Billing Type:</p>
+                                        <div class="btn-group display-inline-block">
+                                            <button id="grid" type="button" class="btn btn-xs btn-default dispUpgradePlan" data-cycle="yearly">Annual</button>
+                                            <button id="list" type="button" class="btn btn-xs btn-default dispUpgradePlan" data-cycle="monthly">Monthly</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <!--@include('admin.modals.upgrade.partial.plan_list')-->
+                            </div>
+
+                            <div class="p30">
+                                <div class="row">
+                                    <div class="col-md-9 col-xs-9"><p class="m0">All plans come with basic Brand Boost features</p></div>
+                                    <div class="col-md-3 col-xs-3"><a class="txt_purple" href="#">Explore all features</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
+                            <h6 class="panel-title">Brand Boost Credits</h6>
+                        </div>
+                        <div class="panel-body p0">
+
+
+                            <!--====GENERAL SETTINGS====-->
+                            <div class="bbot p30">
+                                <div class="row mb40">
+                                    <div class="col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Credits Plans</strong><br>
+                                            <span class="text-muted fsize13">All projects on your plan come with Staging. Upgrade to a paid credit<br>
+                                        plan to send emails & SMS and unlock other features.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <!--<div class="row mt40">
+                                    @if (!empty($oMemberships))
+                                    @foreach ($oMemberships as $oMembership)
+                                    @php
+                                    if ($oMembership->type == 'topup-membership'):
+                                    if ($oMembership->plan_id == $oUser->topup_plan_id) {
+                                    $oCurrentTopupMembership = $oMembership;
+                                    }
+                                    @endphp
+
+                                    <div class="col-xs-4" style="margin-top:20px;">
+                                        <div class="price_plan">
+                                            <div class="imgicon"><img src="/assets/images/icon_credit.png"/></div>
+                                            <div class="bbot p30 text-center">
+                                                <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
+                                                <h3>${{ $oMembership->price }}<span>/
+														@if ($oMembership->subs_cycle == 'week')
+															{{ 'week' }}
+														@elseif ($oMembership->subs_cycle == 'month')
+															{{ 'Mo' }}
+														@elseif ($oMembership->subs_cycle == 'year')
+															{{ 'Yr' }}
+														@endif
+														</span>
+                                                </h3>
+                                                <p class="text-muted fsize13 m0">Billed
+                                                    @if ($oMembership->subs_cycle == 'week')
+                                                    {{ 'Weekly' }}
+                                                    @elseif ($oMembership->subs_cycle == 'month')
+                                                    {{ 'Monthly' }}
+                                                    @elseif ($oMembership->subs_cycle == 'year')
+                                                    {{ 'Yearly' }}
+                                                    @endif
+                                                </p>
+                                            </div>
+
+
+                                            <div class="p30">
+                                                @php
+                                                if ($oUser->topup_plan_id == $oMembership->plan_id) {
+                                                $isTopupMembershipActive = true;
+                                                @endphp
+                                                <button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
+                                                @php } else { @endphp
+                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" data-toggle="modal" data-target="#confirm_topup_level_upgrade"><span>@if (empty($isTopupMembershipActive)) Buy @elseif ($isTopupMembershipActive) Upgrade @else Downgrade @endif</span> </button>
+                                                @php } @endphp
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="panel panel-flat review_ratings">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Addon Credits</h6>
+                            <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
+                        </div>
+                        <div class="panel-body p0">
+
+                            &lt;!&ndash;====GENERAL SETTINGS====&ndash;&gt;
+                            <div class="bbot p30">
+                                <div class="row mb40">
+                                    <div class="col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Addon Credits Pack</strong><br>
+                                            <span class="text-muted fsize13">All projects on your plan come with Staging. Upgrade to a paid credit<br>
+                                        plan to send emails & SMS and unlock other features.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+
+                                <div class="row mt40">
+                                    @if (!empty($oMemberships))
+                                    @foreach ($oMemberships as $oMembership)
+                                    @if ($oMembership->type == 'topup' && $oMembership->level_name != 'Custom Pack')
+                                    <div class="col-xs-4" style="margin-top:20px;">
+                                        <div class="price_plan">
+                                            <div class="imgicon"><img src="/assets/images/icon_credit.png"/></div>
+                                            <div class="bbot p30 text-center">
+                                                <p><strong>{{ $oMembership->level_name }}</strong></p>
+                                                <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
+                                                <h3>${{ $oMembership->price }}<span></span></h3>
+                                                <p class="text-muted fsize13 m0">Flat Fee</p>
+                                            </div>
+
+                                            <div class="p30">
+                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyAddon" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" topup_plan_price="{{ $oMembership->price }}" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            @if (!empty($oMemberships))
+                            @foreach ($oMemberships as $oMembership)
+                            @php
+                            $unitprice = 0;
+                            if ($oMembership->type == 'topup' && $oMembership->level_name == 'Custom Pack'):
+                            $unitprice = $oMembership->price;
+                            @endphp
+                            <div class="p30">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Buy Additional Brand Boost Credits</strong><br>
+                                            <span class="text-muted fsize13">All projects on your plan come with Staging. </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-xs-2">
+                                        <p class="fsize13">Credits</p>
+                                        <div class="input-group input-group-xlg pull-left">
+                                            <input class="form-control" value="1000" name="txtCustomQty"id="txtCustomQty" type="text" title="Enter quantity of credits" placeholder="1000">
+                                            <span class="input-group-addon" id="customprice">${{ ($oMembership->price * 1000) }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-1">
+                                        <p class="fsize13">&nbsp;</p>
+                                        <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyCustomAddon" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" topup_plan_price="{{ $oMembership->price }}" data-toggle="modal" data-target="#confirm_buy_custom_addon_plan"  class="btn dark_btn"><span>Buy</span> </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            @endforeach
+                            @endif
+                        </div>
+                    </div>-->
+                </div>
+
+                <div class="col-md-3">
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
+                            <h6 class="panel-title">Info Card</h6>
+                        </div>
+                        <div class="panel-body min_h405 p40 pt60 info_card text-center">
+                            <div class="img_icon mb20"><img src="/assets/images/icon_credit.png" width="35"></div>
+                            <p class="mb20"><strong>Learn more about Brand Boost Credits</strong></p>
+                            <p class="mb20"><span>Being the savage's bowsman, that <br>is, the person who pulled.</span></p>
+                            <a class="txt_purple" href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div v-if="seletedTab === 4" class="tab-pane " id="right-icon-tab1">
@@ -697,8 +909,9 @@
         },
         mounted() {
             this.loadData();
-
-            console.log('Component mounted')
+            setTimeout(function(){
+                loadJQCode();
+            },2000);
         },
         methods: {
             loadData: function () {
@@ -726,100 +939,106 @@
         }
     }
 
-    $(document).ready(function () {
-        $(".token-field").on('tokenfield:createdtoken tokenfield:removedtoken change', function (e) {
-            if($(this).parent().children().hasClass('token')) {
-                $(this).parent().find('.token-input').attr('placeholder', '');
-            }
-            else {
-                $(this).parent().find('.token-input').attr('placeholder', '- Tokenfield');
-            }
-        }).trigger('change');
+    function loadJQCode(){
+        $(document).ready(function () {
+            $(".token-field").on('tokenfield:createdtoken tokenfield:removedtoken change', function (e) {
+                if($(this).parent().children().hasClass('token')) {
+                    $(this).parent().find('.token-input').attr('placeholder', '');
+                }
+                else {
+                    $(this).parent().find('.token-input').attr('placeholder', '- Tokenfield');
+                }
+            }).trigger('change');
 
-        $('.showSubPage').click(function(){
-            $('.nav-tabs a[href="#right-icon-tab2"]').tab('show');
-        });
-
-
-        $('.changeBA1').click(function(){
-            $('.changeBA1').removeClass('txt_purple');
-            $(this).addClass('txt_purple');
-        });
-
-        $('.changeBA2').click(function(){
-            $('.changeBA2').removeClass('txt_purple');
-            $(this).addClass('txt_purple');
-        });
-
-        $('#public_publish_page').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="public_publish_page"]').attr("value", 1);
-            } else {
-                $('input[name="public_publish_page"]').attr("value", 0);
-            }
-        });
-
-        $('#business_address_dppa').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="business_address_dppa"]').attr("value", 1);
-            } else {
-                $('input[name="business_address_dppa"]').attr("value", 0);
-            }
-        });
-
-        $('#phone_no_dppa').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="phone_no_dppa"]').attr("value", 1);
-            } else {
-                $('input[name="phone_no_dppa"]').attr("value", 0);
-            }
-        });
-
-        $('#website_dppa').change(function () {
-            if ($(this).is(":checked") == true) {
-                $('input[name="website_dppa"]').attr("value", 1);
-            } else {
-                $('input[name="website_dppa"]').attr("value", 0);
-            }
-        });
+            $('.showSubPage').click(function(){
+                $('.nav-tabs a[href="#right-icon-tab2"]').tab('show');
+            });
 
 
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone(
-            '#myDropzone', //id of drop zone element 1
-            {
-                url: '/webchat/dropzone/upload_s3_attachment/'+oUser.id+'/onsite',
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
+            $('.changeBA1').click(function(){
+                $('.changeBA1').removeClass('txt_purple');
+                $(this).addClass('txt_purple');
+            });
 
-                    if(response.xhr.responseText != "") {
+            $('.changeBA2').click(function(){
+                $('.changeBA2').removeClass('txt_purple');
+                $(this).addClass('txt_purple');
+            });
 
-                        $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
-                        var dropImage = $('#company_logo').val();
-                        $.ajax({
-                            url: 'admin/brandboost/deleteObjectFromS3',
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                            type: "POST",
-                            data: {dropImage: dropImage},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-
-                        $('#company_logo').val(response.xhr.responseText);
-                        $('.saveUserOtherInfo').trigger('click');
-                    }
+            $('#public_publish_page').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="public_publish_page"]').attr("value", 1);
+                } else {
+                    $('input[name="public_publish_page"]').attr("value", 0);
                 }
             });
 
-        myDropzone.on("complete", function(file) {
-            myDropzone.removeFile(file);
+            $('#business_address_dppa').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="business_address_dppa"]').attr("value", 1);
+                } else {
+                    $('input[name="business_address_dppa"]').attr("value", 0);
+                }
+            });
+
+            $('#phone_no_dppa').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="phone_no_dppa"]').attr("value", 1);
+                } else {
+                    $('input[name="phone_no_dppa"]').attr("value", 0);
+                }
+            });
+
+            $('#website_dppa').change(function () {
+                if ($(this).is(":checked") == true) {
+                    $('input[name="website_dppa"]').attr("value", 1);
+                } else {
+                    $('input[name="website_dppa"]').attr("value", 0);
+                }
+            });
+
+
+            Dropzone.autoDiscover = false;
+            var settingUserId = $("#settingsUserId").val();
+            var myDropzone = new Dropzone(
+                '#myDropzone', //id of drop zone element 1
+                {
+                    url: '/webchat/dropzone/upload_s3_attachment/'+settingUserId+'/onsite',
+                    uploadMultiple: false,
+                    maxFiles: 1,
+                    maxFilesize: 600,
+                    acceptedFiles: 'image/*',
+                    addRemoveLinks: false,
+                    success: function (response) {
+
+                        if(response.xhr.responseText != "") {
+
+                            $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
+                            var dropImage = $('#company_logo').val();
+                            $.ajax({
+                                url: 'admin/brandboost/deleteObjectFromS3',
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                                type: "POST",
+                                data: {dropImage: dropImage},
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log(data);
+                                }
+                            });
+
+                            $('#company_logo').val(response.xhr.responseText);
+                            $('.saveUserOtherInfo').trigger('click');
+                        }
+                    }
+                });
+
+            myDropzone.on("complete", function(file) {
+                myDropzone.removeFile(file);
+            });
         });
-    });
+
+    }
+
+
 
 </script>

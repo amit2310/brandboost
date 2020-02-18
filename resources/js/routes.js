@@ -42,7 +42,7 @@ import offsiteStep4 from './components/admin/brandboost/offsite/setup/Setup4';
 import offsiteStep5 from './components/admin/brandboost/offsite/setup/Setup5';
 
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
-import Media from './components/admin/brandboost/Media.vue';
+import MediaTable from './components/admin/brandboost/MediaTable';
 import Tags from './components/admin/tags/Index';
 import TagGroups from './components/admin/tags/TagGroups';
 import TagList from './components/admin/tags/TagList';
@@ -88,6 +88,15 @@ import ChatDashboard from './components/admin/chat/Dashboard';
 import ChatWeb from './components/admin/chat/web/BigChat';
 import ChatSMS from './components/admin/chat/sms/BigChat';
 import ChatShortcut from './components/admin/chat/Shortcuts';
+/*Widget Section*/
+import WidgetOverview from './components/admin/brandboost/WidgetOverview';
+// import OnsiteWidgets from './components/admin/brandboost/Widgets';
+
+import ReferralWidgets from './components/admin/modules/referral/Widgets';
+import NPSWidgets from './components/admin/modules/nps/Widgets';
+import MediaGalleryWidget from './components/admin/MediaGallery';
+import OnsiteWidgetSetup from './components/admin/brandboost/onsite/widget_setup/ReviewWidgets';
+
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
 import NpsScore from './components/admin/modules/nps/Score';
@@ -120,15 +129,74 @@ import PeopleDeals from './components/admin/deals/Deals';
 import Profile from './components/admin/Profile';
 import Settings from './components/admin/Settings';
 
-
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
 import UserMedia from './components/user/Media';
 import UserNps from './components/user/Nps';
 import UserReferral from './components/user/Referral';
 import UserReview from './components/user/Review';
+import ReviewDetail from './components/user/ReviewDetail';
+import EditReview from './components/user/EditReview';
+import UserSetting from './components/user/Setting';
+import UserSupport from './components/user/Support';
 
+/**
+ * --------------------------------------------------------------------------
+ *  Import component for widget onsite section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+import WidgetsOnsiteList from './components/admin/modules/widgets/WidgetsList';
+import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
+import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
+/**
+ * --------------------------------------------------------------------------
+ *  Add component of Chat Widgets section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+import ChatWidgets from './components/admin/modules/chat/Index';
+import ChatWidgetsSetup1 from './components/admin/modules/chat/setup/Setup';
+import ChatWidgetsSetup2 from './components/admin/modules/chat/setup/Setup2';
+import ChatWidgetsSetup3 from './components/admin/modules/chat/setup/Setup3';
+import ChatWidgetsSetup4 from './components/admin/modules/chat/setup/Setup4';
+// import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
+// import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
 const routes = [
+
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    { path: '/widgets/onsite', component: WidgetsOnsiteList, meta: { title: 'Onsite Widgets'} },
+    { path: '/widgets/onsite/setup/:id/1', component: WidgetsOnsiteSetup, meta: { title: 'Onsite Widget Setup'} },
+    { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
+
+    /**
+     * -----------------------------------End---------------------------------------
+     */
+
+
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of Chat Widgets section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
+    { path: '/modules/chat/setup/:id/1', component: ChatWidgetsSetup1, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/2', component: ChatWidgetsSetup2, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/3', component: ChatWidgetsSetup3, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/4', component: ChatWidgetsSetup4, meta: { title: 'Chat Widget Setup'} },
+    // { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
+
+    /**
+     * ---------------------------------End-----------------------------------------
+     */
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
@@ -173,7 +241,7 @@ const routes = [
     { path: '/brandboost/offsite/feedbacks', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
     { path: '/feedback/:id', component: OffsiteFeedbackDetails, props: { pageColor:'offsite_sec', title: 'Feedback Details'} },
 
-    { path: '/brandboost/media', component: Media, props: {title : 'On Site Brand Boost Media'} },
+    { path: '/brandboost/media', component: MediaTable, props: {title : 'On Site Brand Boost Media'} },
 
     /* Templates Module */
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
@@ -272,12 +340,25 @@ const routes = [
     { path: '/chat/sms', component: ChatSMS, meta: { title: 'SMS Chat'} },
     { path: '/chat/shortcuts', component: ChatShortcut, meta: { title: 'Chat Shortcuts'} },
 
+    /*Widget Section*/
+    { path: '/modules/referral/widgets', component: ReferralWidgets, meta: { title: 'Referral Programs'} },
+    { path: '/modules/nps/widgets', component: NPSWidgets, meta: { title: 'NPS Surveys'} },
+    { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
+    // { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
+    { path: '/brandboost/onsite_widget_setup/:id', component: OnsiteWidgetSetup, meta: { title: 'Onsite Widget Setup'} },
+    // { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
+    { path: '/mediagallery', component: MediaGalleryWidget, meta: { title: 'Media Gallery Widgets'} },
+
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
     { path: '/user/media', component: UserMedia, meta: { title: 'My Media - Brand Boost'} },
     { path: '/user/nps', component: UserNps, meta: { title: 'My NPS Feedback - Brand Boost'} },
     { path: '/user/referral', component: UserReferral, meta: { title: 'My Referrals - Brand Boost'} },
     { path: '/user/review', component: UserReview, meta: { title: 'My Review - Brand Boost'} },
+    { path: '/user/review/:id', component: ReviewDetail, meta: { title: 'My Review Detail- Brand Boost'} },
+    { path: '/user/review/edit/:id', component: EditReview, meta: { title: 'Edit Review - Brand Boost'} },
+    { path: '/user/setting', component: UserSetting, meta: { title: 'Personal Data - Brand Boost'} },
+    { path: '/user/help', component: UserSupport, meta: { title: 'Help Desk - Brand Boost'} },
 ];
 
 export default routes;

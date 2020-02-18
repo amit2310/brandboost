@@ -34,12 +34,30 @@ class Review extends Controller {
 
                 // Get Helpful
                 $aHelpful = ReviewsModel::countHelpful($reviewID);
-                $aReviewData[$reviewID]['total_helpful'] = $aHelpful['yes'];
-                $aReviewData[$reviewID]['total_helpful_no'] = $aHelpful['no'];
-                $aReviewData[$reviewID]['user_data'] = (array) $userData;
+                $aReviewData['total_helpful'] = $aHelpful['yes'];
+                $aReviewData['total_helpful_no'] = $aHelpful['no'];
+                $aReviewData['user_data'] = (array) $userData;
 
                 //Get Comments Block
                 $oComments = $mReviews->getComments($reviewID, $aSettings);
+
+                $oReview->reviewCommentsData = $mReviews->getReviewAllParentsComments($reviewID, $start = 0);
+                if(!empty($oReview->reviewCommentsData)) {
+                    foreach ($oReview->reviewCommentsData as $commentData) {
+                        $commentData->likeData = $mReviews->getCommentLSByCommentID($commentData->id, 1);
+                        $commentData->disLikeData = $mReviews->getCommentLSByCommentID($commentData->id, 0);
+                        $commentData->childComments = $mReviews->getReviewAllChildComments($aReview['id'], $commentData->id);
+
+                        if (!empty($oReview->childComments)) {
+                            foreach ($oReview->childComments as $childComment) {
+                                $childComment->avtarImageChild = $childComment->avatar == 'avatar_image.png' ? base_url('assets/images/userp.png') : 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $childComment->avatar;
+
+                                $childComment->likeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 1);
+                                $childComment->disLikeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 0);
+                            }
+                        }
+                    }
+                }
 
                 $aProductData = BrandboostModel::getProductDataById($oReview->product_id);
                 $aCommentsData = array();
@@ -50,9 +68,11 @@ class Review extends Controller {
                         unset($aComment);
                     }
                 }
-                $aReviewData[$reviewID]['comment_block'] = $aCommentsData;
-                $aReviewData[$reviewID]['product_data'] = $aProductData;
+                $aReviewData['comment_block'] = $aCommentsData;
+                $aReviewData['product_data'] = $aProductData;
                 unset($aCommentsData);
+
+                $oReview->aReviewData = $aReviewData;
             }
         }
 
@@ -64,7 +84,7 @@ class Review extends Controller {
         $aData = array(
             'title' => 'My Reviews',
             'breadcrumb' => $aBreadcrumb,
-            'myReview' => $aReviewData
+            'myReview' => $oReviews
         );
         //return view('user.review', $aData);
         echo json_encode($aData);
@@ -127,10 +147,23 @@ class Review extends Controller {
         if($aReviewData->count() == 0) {
             return redirect('user/review');
         }
-        $aData = array(
-            'myReview' => $aReviewData[0]
+
+        $starRating = array(1=>'Poor', 2=>'Fair', 3=>'Good', 4=>'Excellent', 5=>'WOW!!!');
+
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Edit Review' => '#/user/review/edit/'.$reviewId
         );
-        return view('user.review_edit', $aData);
+
+        $aData = array(
+            'title' => 'Edit Review',
+            'breadcrumb' => $aBreadcrumb,
+            'myReview' => $aReviewData[0],
+            'starRating' => $starRating
+        );
+        //return view('user.review_edit', $aData);
+
+        return $aData;
     }
 
 }

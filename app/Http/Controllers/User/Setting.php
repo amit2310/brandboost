@@ -18,11 +18,19 @@ class Setting extends Controller {
     	$aUInfo = getLoggedUser();
         $userID = $aUInfo->id;
 
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'My Setting' => '#/user/setting'
+        );
+
         $aData = array(
+            'title' => 'My Setting',
+            'breadcrumb' => $aBreadcrumb,
         	'aUInfo' => $aUInfo
         );
 
-    	return view('user.setting', $aData);
+    	//return view('user.setting', $aData);
+        return $aData;
     }
 
 

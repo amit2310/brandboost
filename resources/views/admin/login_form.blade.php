@@ -1,3 +1,6 @@
+@php
+$isLoginPage = 1;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>

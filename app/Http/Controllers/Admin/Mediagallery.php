@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\UsersModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ReviewsModel;
@@ -17,17 +18,47 @@ class Mediagallery extends Controller {
      * @return type
      */
     public function index() {
-		$breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
+
+        $mUser = new UsersModel();
+        $aUser = getLoggedUser();
+        $userId = $aUser->id;
+        $userRole = $aUser->user_role;
+        $bActiveSubsription = $mUser->isActiveSubscription();
+
+		$allGallery = MediaModel::getAllGallerys($userId);
+
+		foreach ($allGallery->items() as $galleryData) {
+            if ($galleryData->team_id != '') {
+                $galleryData->createdByData = getTeamMemberById($galleryData->team_id);
+            } else {
+                $galleryData->createdByData = getUserDetailsByUserID($galleryData->user_id);
+            }
+        }
+
+        $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 			<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Media Gallery" class="sidebar-control active hidden-xs ">Media Gallery</a></li>
 			</ul>';
 
-        $aUser = getLoggedUser();
-        $userId = $aUser->id;
-		$allGallery = MediaModel::getAllGallerys($userId);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Media Widgets' => '#/mediagallery'
+        );
 
-		return view('admin.media-gallery.index', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'allGallery' => $allGallery, 'userId' => $userId));
+        $aData = array(
+            'title' => 'Media Widgets',
+            'breadcrumb' => $aBreadcrumb,
+            'pagename' => $breadcrumb,
+            'allData' => $allGallery,
+            'oWidgetsList' => $allGallery->items(),
+            'bActiveSubsription' => $bActiveSubsription,
+            'user_role' => $userRole
+        );
+
+		//return view('admin.media-gallery.index', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'allGallery' => $allGallery, 'userId' => $userId));
+
+        return $aData;
     }
 
 	/**
@@ -49,6 +80,8 @@ class Mediagallery extends Controller {
         $result = MediaModel::updateGallery($galleryId, $aData);
 
 		if($result){
+            $response = array('status' => 'success');
+
 			$notificationData = array(
 				'event_type' => 'update_gallery_status',
 				'event_id' => 0,
@@ -61,15 +94,30 @@ class Mediagallery extends Controller {
 
 			$eventName = 'sys_gallery_status';
 
-			add_notifications($notificationData, $eventName, $userID);
+			@add_notifications($notificationData, $eventName, $userID);
 		}
-
-        if ($result == true) {
-            $response = array('status' => 'success');
-        }
 
         echo json_encode($response);
         exit;
+    }
+
+    /**
+     * Used to get Media Widget Info
+     * @return type
+     */
+    public function getMediaInfo(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $galleryId = $request->gallery_id;
+
+        $galleryData = MediaModel::getGalleryData($galleryId);
+
+        $response = array('status' => 'success', 'gallery_id' => $galleryId, 'title' => $galleryData->name, 'description' => $galleryData->description);
+
+        return $response;
     }
 
 	/**
@@ -78,19 +126,33 @@ class Mediagallery extends Controller {
      */
 	public function updateGallery(Request $request) {
 
-        $galleryId = $request->editGalleryId;
-        $galleryName = $request->editGalleryName;
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+
+        $title = $request->title;
+        $description = $request->description;
+
+        $galleryId = $request->editGalleryId;
+        $galleryName = (!empty($title) ? $title : $request->editGalleryName);
+        $description = (!empty($description) ? $description : '');
+
 		$aData = array(
-            'name' => $galleryName
+            'name' => $galleryName,
+            'description' => $description,
         );
 
         $result = MediaModel::updateGallery($galleryId, $aData);
 
 		if($result){
+            $response = array('gallery_id' => $galleryId, 'status' => 'success');
+
 			$notificationData = array(
 				'event_type' => 'update_gallery_data',
 				'event_id' => 0,
@@ -105,10 +167,6 @@ class Mediagallery extends Controller {
 
 			add_notifications($notificationData, $eventName, $userID);
 		}
-
-        if ($result == true) {
-            $response = array('status' => 'success');
-        }
 
         echo json_encode($response);
         exit;
@@ -166,7 +224,13 @@ class Mediagallery extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+
         $title = $request->title;
+        $description = $request->description;
         $dateTime = date("Y-m-d H:i:s");
 
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -180,6 +244,7 @@ class Mediagallery extends Controller {
 
         $aData = array(
             'name' => $title,
+            'description' => $description,
             'user_id' => $userID,
             'team_id' => $isLoggedInTeam,
 			'hashcode' => md5($hashcode),
@@ -189,6 +254,8 @@ class Mediagallery extends Controller {
         $insertID = MediaModel::addGallery($aData);
 
         if ($insertID > 0) {
+            $response = array('status' => 'success', 'gallery_id' => $insertID, 'msg' => "Gallery has been added successfully!");
+
             $aActivityData = array(
                 'user_id' => $userID,
                 'event_type' => 'manage_gallery',
@@ -203,9 +270,7 @@ class Mediagallery extends Controller {
                 'activity_created' => date("Y-m-d H:i:s")
             );
 
-            logUserActivity($aActivityData);
-
-            $response = array('status' => 'success', 'gallery_id' => $insertID, 'msg' => "Gallery has been added successfully!");
+            @logUserActivity($aActivityData);
 
             $notificationData = array(
                 'event_type' => 'added_new_gallery',
@@ -219,7 +284,7 @@ class Mediagallery extends Controller {
 
             $eventName = 'sys_gallery_added';
 
-            add_notifications($notificationData, $eventName, $userID);
+            @add_notifications($notificationData, $eventName, $userID);
         }
 
         echo json_encode($response);
@@ -400,7 +465,7 @@ class Mediagallery extends Controller {
 					<h5 class="modal-title">'.$reviewData[0]->brand_title.'</h5>
 				</div>
 				<div class="modal-body">
-				   
+
 				<div class="box_inner">
 			<div class="left_box showCropImagePopup" data-img-name="'.$imageUrl.'" data-review-id="'.$reviewId.'" data-img="data:image/jpg;base64,'.base64_encode(file_get_contents('https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'')).'" title="Click To Crop Image" style="cursor:pointer;"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/'.$imageUrl.'" ></div><!--left_box--->
 			<div class="right_box">
@@ -415,7 +480,7 @@ class Mediagallery extends Controller {
 							<span>'.dataFormat($reviewData[0]->created).'</span></div>
 						</div>
 					</div>
-					
+
 					<div class="bottom_div">
 						<p>'.$reviewData[0]->comment_text.'</p>
 					</div>
@@ -497,7 +562,7 @@ class Mediagallery extends Controller {
 
 	public function getGalleryImages(Request $request) {
 
-
+        $mMedia = new MediaModel();
 
         if (empty($request)) {
             $response = array('status' => 'error', 'msg' => 'Request header is empty');
@@ -510,12 +575,37 @@ class Mediagallery extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
-		$galleryData = $this->mMedia->getGalleryData($galleryId);
-		$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
+		$galleryData = $mMedia->getGalleryData($galleryId);
+		//$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
 
+        $reviewIDArray = unserialize($galleryData->reviews_id);
+        if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0) {
+            foreach ($reviewIDArray as $reviewId) {
+                $reviewData = ReviewsModel::getReviewDetailsByReviewID($reviewId);
+
+                $reviewImageArray = unserialize($reviewData[0]->media_url);
+                if(count($reviewImageArray)>0)
+                {
+                    $imageUrl = $reviewImageArray[0]['media_url'];
+                    $cropedImageUrl = $reviewData[0]->croped_image_url;
+                }
+                else
+                {
+                    $imageUrl = "";
+                    $cropedImageUrl = "";
+                }
+
+                if($cropedImageUrl == ''){
+                    $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
+                }else{
+                    $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
+                }
+            }
+        }
 		$response = array(
 			'status' => 'success',
-			'sliderView' => utf8_encode($sliderData)
+			/*'sliderView' => utf8_encode($sliderData)*/
+			'sliderView' => $galleryData
 		);
 
         echo json_encode($response);
