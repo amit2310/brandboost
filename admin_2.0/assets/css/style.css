@@ -1343,7 +1343,7 @@ PAGE WITH SIDEBAR CSS
 .circle_32.green{background: #e1f2e7; color: #83CE86} 
 .circle_32.red{background: #f5e7e5; color: #E4977F} 
 .circle_32 span.text{ opacity:1; }
-.circle_32.img{line-height: 30px;}
+.circle_32.img{line-height: 24px;}
 
 
 .profile_icons a{display: inline-block!important; margin: 0 10px 10px 0}
