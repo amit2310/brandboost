@@ -86,6 +86,7 @@
 
                                           <div class="form-group">
                                               <label class="fsize12" for="gift_message">Message:</label>
+                                              <p class="fsize11 text-uppercase dark_200 m-20">From Max Ive</p>
                                               <textarea
                                                    rows="4"
                                                     class="form-control text"

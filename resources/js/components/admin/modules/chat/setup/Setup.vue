@@ -122,7 +122,6 @@
                             <div class="bbot pb10 mb15">
                                 <p class="fsize11 text-uppercase dark_200 m-0">Automation</p>
                             </div>
-
                             <div class="p0">
                                 <div class="form-group">
                                     <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Activite automated messages
@@ -132,23 +131,113 @@
                                     </h3>
                                 </div>
                             </div>
-                            <div class="bbot pb10 mb15">
-                                <p class="fsize11 text-uppercase dark_200 m-0">Greeting</p>
-                            </div>
-                            <div class="p0 ">
-                                <div class="form-group">
-                                    <label class="fsize12">Message:</label>
-                                    <textarea class="form-control"  v-model="campaign.messages"
-                                              placeholder="Hi! We are ready to help you. Ask us anything or share your feedback."></textarea>
-                                </div>
-                            </div>
-                            <div class="p0 ">
-                                <div class="form-group">
-                                    <label class="fsize12" for="from_name">Time:</label>
-                                    <input type="text" v-model="campaign.time" class="form-control h40" id="time" placeholder="Wait for 5 sec" name="brand_name">
-                                </div>
-                            </div>
                         </div>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                            <div class="panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            <i><img src="/assets/images/time-fill-grey.svg"/></i>GREETING
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <div class="inputArea" v-for="(msgsec, index) in message_sec">
+                                            <div class="sec-wrap">
+                                                <div class="p0 ">
+                                                    <div class="form-group">
+                                                        <label class="fsize12">Message:</label>
+                                                        <textarea class="form-control"  v-model="msgsec.message"
+                                                                  placeholder="Hi! We are ready to help you. Ask us anything or share your feedback."></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="p0 ">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="fsize12" for="from_name">Time:</label>
+                                                                <input type="text" v-model="msgsec.time" class="form-control h40" id="time" placeholder="Wait for 5 sec" name="brand_name">
+                                                            </div>
+                                                            <div class="col-ms-6">
+                                                                <br/>
+                                                                <button type="button" class="btn white_btn ml20 h40 p10 removeMessage" v-if="index != 0 "  v-on:click="removeMessageSec(index)"><i class="icon-minus3"></i></button>
+                                                                <button type="button" class="btn white_btn ml20 h40 p10 addMessage" v-if="index == (message_sec.length-1) " v-on:click="addMessageSec()"><i class="icon-plus3"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <i><img src="/assets/images/apps-2-fill.svg"/></i>After 120 sec.
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        Content Goes here...
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="panel-default">
+                                <div class="panel-heading" role="tab" id="headingFour">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            <i><img src="/assets/images/palette-fill.svg"/></i>Open "About Us" page
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                    <div class="panel-body">
+                                        Content Goes here...
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-default">
+                                <div class="panel-heading" role="tab" id="headingFive">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            <i><img src="/assets/images/settings-2-fill.svg"/></i>Previous visits: 3
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                    <div class="panel-body">
+                                        Content Goes here...
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-default">
+                                <div class="panel-heading" role="tab" id="headingSix">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseFive">
+                                            <i><img src="/assets/images/settings-2-fill.svg"/></i>Click button
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                                    <div class="panel-body">
+                                        Content Goes here...
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                     <div class="col-md-3">
                         <div class="email_review_config p20">
@@ -205,6 +294,11 @@
     export default {
         data() {
             return {
+                counter: 0,
+                message_sec: [{
+                    message: '',
+                    time: '',
+                }],
                 refreshMessage: 1,
                 successMsg: '',
                 errorMsg: '',
@@ -229,6 +323,7 @@
                     // this.makeBreadcrumb(this.breadcrumb);
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oChat;
+                    this.message_sec =this.campaign.messages;
                     this.preview = response.data.setupPreview;
                     this.user = response.data.userData;
                     this.loading = false;
@@ -254,6 +349,15 @@
             }
         },
         methods: {
+            addMessageSec: function(){
+                this.message_sec.push({
+                    message: '',
+                    time: '',
+                });
+            },
+            removeMessageSec: function(index){
+                this.message_sec.splice(index, 1);
+            },
             synCompanyInfo: function(e){
                 if(e.target.checked){
                     this.updateSingleField('company_info',1);
@@ -316,6 +420,7 @@
                 //Grab color related values
                 // this.campaign.from_email = this.campaign.from_email;
                 // this.campaign.from_name = this.campaign.from_name;
+                this.campaign.messages =this.message_sec;
                 axios.post('/admin/modules/chat/updateChatWidgetInfo', this.campaign)
                     .then(response => {
                         this.loading = false;
