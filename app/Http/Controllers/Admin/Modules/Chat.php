@@ -11,7 +11,7 @@ use App\Models\Admin\SubscriberModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Session;
-
+use View;
 class Chat extends Controller {
 
 	/**
@@ -129,13 +129,20 @@ class Chat extends Controller {
        if (!empty($oChat)) {
             // Do nothing for now
             $programID = $oChat->id;
+           $widgetSettings =$oChat;
             $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
+           $oChat->messages = \Opis\Closure\unserialize($oChat->messages);
         }
         $defaultTab = !empty($selectedTab) ? $selectedTab : 'customize';
         //List of Advocates related data
         $hashCode = $oChat->hashcode;
 
         $bActiveSubsription = UsersModel::isActiveSubscription();
+
+        $view = View::make('admin.chat_widget.embed_chat_preview', [
+            'widgetSettings' =>$widgetSettings,
+            '$userDataDetail' =>''
+        ]);
         $aData = array(
             'bActiveSubsription' => $bActiveSubsription,
             'title' => 'Chat Widget',
@@ -143,7 +150,7 @@ class Chat extends Controller {
             'defalutTab' => $defaultTab,
             'programID' => $programID,
             //'campaignTemplates' => $campaignTemplates,
-            'setupPreview' => 'dddddd',
+            'setupPreview' => $view->render(),
             'oChat' => $oChat,
             'userID' => $userID,
             'userData' => $aUser,
