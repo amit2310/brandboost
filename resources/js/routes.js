@@ -91,7 +91,7 @@ import ChatShortcut from './components/admin/chat/Shortcuts';
 /*Widget Section*/
 import WidgetOverview from './components/admin/brandboost/WidgetOverview';
 // import OnsiteWidgets from './components/admin/brandboost/Widgets';
-import ChatWidgets from './components/admin/modules/chat/Index';
+
 import ReferralWidgets from './components/admin/modules/referral/Widgets';
 import NPSWidgets from './components/admin/modules/nps/Widgets';
 import MediaGalleryWidget from './components/admin/MediaGallery';
@@ -149,7 +149,19 @@ import UserSupport from './components/user/Support';
 import WidgetsOnsiteList from './components/admin/modules/widgets/WidgetsList';
 import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
 import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
-
+/**
+ * --------------------------------------------------------------------------
+ *  Add component of Chat Widgets section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+import ChatWidgets from './components/admin/modules/chat/Index';
+import ChatWidgetsSetup1 from './components/admin/modules/chat/setup/Setup';
+import ChatWidgetsSetup2 from './components/admin/modules/chat/setup/Setup2';
+import ChatWidgetsSetup3 from './components/admin/modules/chat/setup/Setup3';
+import ChatWidgetsSetup4 from './components/admin/modules/chat/setup/Setup4';
+// import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
+// import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
 const routes = [
 
     /**
@@ -164,9 +176,26 @@ const routes = [
     { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
 
     /**
+     * -----------------------------------End---------------------------------------
+     */
+
+
+    /**
      * --------------------------------------------------------------------------
-     *                              End
+     *  Add component of Chat Widgets section.
+     *  @Pavan
      * --------------------------------------------------------------------------
+     */
+
+    { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
+    { path: '/modules/chat/setup/:id/1', component: ChatWidgetsSetup1, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/2', component: ChatWidgetsSetup2, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/3', component: ChatWidgetsSetup3, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/4', component: ChatWidgetsSetup4, meta: { title: 'Chat Widget Setup'} },
+    // { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
+
+    /**
+     * ---------------------------------End-----------------------------------------
      */
 
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
@@ -317,7 +346,7 @@ const routes = [
     { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
     // { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
     { path: '/brandboost/onsite_widget_setup/:id', component: OnsiteWidgetSetup, meta: { title: 'Onsite Widget Setup'} },
-    { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
+    // { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
     { path: '/mediagallery', component: MediaGalleryWidget, meta: { title: 'Media Gallery Widgets'} },
 
     /* Sub User Section */

@@ -63,6 +63,8 @@ class ChatsModel extends Model {
      * @return type
      */
 	public static function updateChat($aData, $userID, $id) {
+//	    print_r($aData);
+//	    exit;
 		$result = DB::table('tbl_chat_main')
            ->where('id', $id)
            ->where('user_id', $userID)
