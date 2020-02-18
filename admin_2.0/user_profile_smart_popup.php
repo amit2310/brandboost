@@ -1,4 +1,4 @@
-<div class="box d-block" style="width: 280px; top: 129px!important; height: calc(100% - 129px); max-height: 798px; position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8">
+<div class="box d-block" style="width: 280px; top: 129px!important; height: calc(100% - 129px);  position: absolute!important; box-shadow: none!important; border-left: 1px solid #f5f6f8; border-top: none!important">
   <div style="width: 280px;overflow: hidden; height: 100%;">
     <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> 
       <div class="p25 pl20 pr20">

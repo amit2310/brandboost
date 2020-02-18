@@ -23,8 +23,7 @@
 
 
 
-<body id="LiveChatSection">
-<!--<body id="PeopleSection" class="enlarge-menu">-->
+<body id="LiveChatSection" class="pagewithleftsidebar">
 
 <div class="page-wrapper ">
  <!--******************
@@ -65,14 +64,11 @@
    </div>
     <div class="clearfix"></div>
 </div>
-	 
-	  
-	  
 	  
  <!--******************
   Content Area
  **********************-->
-   <div class="content-area chat_messanger_area">
+   <div class="content-area chat_messanger_area withsidebar">
    
    
      
@@ -544,6 +540,10 @@
 		  </div>
      </div>
      
+     <div class="chat_bot_area" style="">
+     	
+     
+     
      <div class="p30 pb0 bbot" style="min-height: 120px;">
      	<textarea class="p0 w-100 border-0 fsize16 dark_200" style="height: 85px; resize: none;">Shift + Enter to add a new line
 Start with ‘/’ to select a  Saved Message
@@ -669,7 +669,7 @@ Start with ‘/’ to select a  Saved Message
      	</div>
      </div>
   
-
+	</div>
   
 	
   

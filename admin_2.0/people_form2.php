@@ -40,13 +40,13 @@
   <div class="top-bar-top-section bbot">
   <div class="container-fluid">
    <div class="row">
-   	<div class="col-md-6 col-6">
+   	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">People Subscribers List</h3>
+   	<h3 class="htxt_medium_24 dark_700">Forms </h3>
    	</div>
-   	<div class="col-md-6 col-6 text-right">
-   		<button class="circle-icon-40 mr15"><img src="assets/images/filter.svg"/></button>
-   		<button class="btn btn-md bkg_blue_200 light_000 slidebox">ADD New Contact <span><img src="assets/images/blue-plus.svg"/></span></button>
+   	<div class="col-md-6 text-right">
+   		<button class="circle-icon-40 mr15"><img src="assets/images/settings-3-line.svg"/></button>
+   		<button class="btn btn-md bkg_blue_200 light_000 slidebox" data-toggle="modal" data-target="#CREATEFORM">CREATE FORM<span><img src="assets/images/blue-plus.svg"/></span></button>
    	</div>
    </div>
    </div>
@@ -70,6 +70,7 @@
     			<li><a href="#">ACTIVE</a></li>
     			<li><a href="#">DRAFT</a></li>
     			<li><a href="#">ARCHIVE</a></li>
+    			<li><a href="#">DISABLE</a></li>
     			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"/></i> &nbsp; FILTER</a></li>
     		</ul>
     	</div>
@@ -100,9 +101,9 @@
 						</label>
 					</span>
 				    </td>
-					<td><span class="fsize10 fw500">LIST </span></td>
-					<td><span class="fsize10 fw500">CONTACTS</span></td>
-					<td><span class="fsize10 fw500">SOURCE</span></td>
+					<td><span class="fsize10 fw500">FORM </span></td>
+					<td><span class="fsize10 fw500">SUBSCRIBERS</span></td>
+					<td><span class="fsize10 fw500">LIST</span></td>
 					<td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"/> </span></td>
 					<td><span class="fsize10 fw500">STATUS</span></td>
 					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"/></span></td>
@@ -119,7 +120,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"/></span></span> Pizza Hut</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/file_list_2.svg"/></span></span> Amet voluptate cupidatat </td>
 					<td>1,492</td>
 					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>People CRM</td>
 					<td>Nov 11, 2014</td>
@@ -147,7 +148,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/folder_white_12.svg"/></span></span> Bank of America</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/file_list_2.svg"/></span></span> Duis consectetur velit ad sit id dolor.</td>
 					<td>412</td>
 					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>People CRM</td>
 					<td>Mar 7, 2019</td>
@@ -175,7 +176,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">m</span></span> Johnson & Johnson</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/file_list_2.svg"/></span></span> Culpa id aliqua form </td>
 					<td>302</td>
 					<td><span class="mr-3"><span class="status_icon bkg_reviews_400"></span></span>Reviews</td>
 					<td>May 11, 2017</td>
@@ -203,7 +204,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/avatar/01.png"/></span></span> Gillette</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/file_list_2.svg"/></span></span> Id commodo cupidatat anim  </td>
 					<td>412</td>
 					<td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>People CRM</td>
 					<td>Feb 25, 2017</td>
@@ -234,7 +235,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/avatar/02.png"/></span></span> Pizza Hut</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/file_list_2.svg"/></span></span> Ullamco non occaecat aute cillum .</td>
 					<td>1,492</td>
 					<td><span class="mr-3"><span class="status_icon bkg_red_300"></span></span>People CRM</td>
 					<td>Aug 9, 2019</td>
@@ -262,7 +263,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_email_200"><img src="assets/images/avatar/03.png"/></span></span> eBay</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/file_list_2.svg"/></span></span> Amet voluptate cupidatat </td>
 					<td>35</td>
 					<td><span class="mr-3"><span class="status_icon bkg_email_400"></span></span>Email Marketing</td>
 					<td>Feb 19, 2019</td>
@@ -290,7 +291,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_sms_200"><img src="assets/images/folder_white_12.svg"/></span></span> Johnson & Johnson</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_sms_200"><img src="assets/images/file_list_2.svg"/></span></span> Ullamco non occaecat aute cillum . </td>
 					<td>54</td>
 					<td><span class="mr-3"><span class="status_icon bkg_reviews_400"></span></span>Reviews</td>
 					<td>Dec 9, 2016</td>
@@ -318,7 +319,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_red_300"><img src="assets/images/folder_white_12.svg"/></span></span> McDonald's</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_red_300"><img src="assets/images/file_list_2.svg"/></span></span> Amet voluptate cupidatat </td>
 					<td>752</td>
 					<td><span class="mr-3"><span class="status_icon bkg_yellow_500"></span></span>Email Marketing</td>
 					<td>Nov 11, 2014</td>
@@ -391,9 +392,77 @@
  
  
  <!--******************
-  Create Contact Sliding Smart Popup
+  CREATEFORM  Popup
  **********************-->
- <?php include("people_contact_create_smart_popup.php"); ?>
+ 
+ <!-- The Modal -->
+  <div class="modal fade" id="CREATEFORM">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+      	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+      	<div class="row">
+      		<div class="col-12">
+      			<h3 class="htxt_medium_24 dark_800 mb-3">Contact Form</h3>
+      			<p class="htxt_regular_14 dark_200 m-0">Select a type of form you would like to create and give it a title.</p>
+      			<hr/>
+      		</div>
+      		
+      		<div class="col-12">
+      			<div class="form-group">
+                <label for="fname" class="fsize11 fw500 dark_600">FORM NAME</label>
+                <input type="text" class="form-control h56 fsize12 dark_200 br4" id="fname" placeholder="Enter new form name" name="fname">
+              </div>
+      		</div>
+      		
+      		<div class="col-6">
+      			<div class="form-group m-0">
+                <label for="fname" class="fsize11 fw500 dark_600">FORM NAME</label>
+                <div class="card border text-center shadow-none m-0 active2">
+                	<img class="mb-3" src="assets/images/popup_form_icon.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-3">Popup Form</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Design and customize a popup <br>form that can be triggered <br>on any page</p>
+                </div>
+              </div>
+      		</div>
+      		<div class="col-6">
+      			<div class="form-group m-0">
+                <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
+                <div class="card border text-center shadow-none m-0">
+                	<img class="mb-3" src="assets/images/embed_form_icon.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-3">Embedded Form</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Design and customize a form that<br> can be embeded on your site <br>and convert leads.</p>
+                </div>
+              </div>
+      		</div>
+      		
+      		<div class="col-12">
+      			<hr/>
+      		</div>
+      		
+      		<div class="col-6">
+            <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase">CONTINUE</button>
+            <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a> 
+            </div>
+            
+            <div class="col-6 text-right mt-2">
+           	<a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
+     				<span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+     				LEARN HOW TO USE FORMS
+     			</a>
+            </div>
+            
+            
+      		
+      		
+      	</div>
+      	
+        
+      </div>
+    </div>
+  </div>
+  
+     
+           
  
     
  
@@ -409,33 +478,8 @@
 <script src="assets/js/metisMenu.min.js"></script>
 <script src="assets/js/waves.min.js"></script>
 <script src="assets/js/jquery.slimscroll.min.js"></script>
-
-<script src="assets/js/bootstrap-colorpicker.min.js"></script>
-<script src="assets/js/bootstrap-colorpicker-plus.js"></script> 
 <script src="assets/js/app.js"></script>
-<script>
-$(document).ready(function(){
-	$(".slidebox").click(function(){
-		$(".box").animate({
-			width: "toggle"
-		});
-	});
-});
-</script>
-<script>
-var color_picker = $('.colorpickerplus-dropdown .colorpickerplus-container');
-        color_picker.colorpickerembed();
-        color_picker.on('changeColor', function(e,color){
-			var el = $('.color-fill-icon', $('#color_picker'));
-			if(color==null) {
-			  //when select transparent color
-			  el.addClass('colorpicker-color');
-			} else {
-			  el.removeClass('colorpicker-color');
-        	  el.css('background-color', color);
-			}
-        });
-</script>
+
 
 </body>
 </html>
