@@ -898,6 +898,7 @@ code {
 	
 }
 .top-breadcrumb li a{ font-size: 14px; line-height: 120%; color: #97A4BD}
+.top-breadcrumb li img{float:left; margin:3px 0 0 0!important}
 .top-bar-top-section{padding: 25px 64px 0px; height: 63px }
 .top-bar-top-section.bbot{border: none!important}
 .top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; text-transform: uppercase; font-weight: 400!important; line-height: 32px; padding: 0 15px 0 10px!important; letter-spacing: 0.04em; }
