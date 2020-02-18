@@ -904,9 +904,12 @@ code {
 .top-bar-top-section span.float-left{display: none!important}
 .top-bar-top-section .btn.btn-md span{margin: 0 10px 0 0; float: left;}
 .top-bar-top-section .btn.btn-md img{width: 20px; height: 20px; float: left; margin-top: 6px}
-.top-bar-top-section .circle-icon-32, .top-bar-top-section .circle-icon-40{width: 32px;height: 32px;background: #FFFFFF;border-radius: 100px; border: none; text-align: center; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05)!important;  }
+.top-bar-top-section .circle-icon-32, .top-bar-top-section .circle-icon-40{width: 32px;height: 32px;background: #FFFFFF;border-radius: 100px; border: none; text-align: center; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05)!important; line-height:11px;  }
 
 .top-bar-top-section.bkg_light_000{ background:none!important; box-shadow:none!important;}
+
+.workflowContainer .link_button{ line-height:34px!important;}
+
 
 .navbar-custom .nav-link {
 	padding: 0;
@@ -1390,7 +1393,7 @@ PAGE WITH SIDEBAR CSS
 .nav.nav-pills.sidebar a.active{color: #151A25}
 
 .nav.nav-pills.top_tab a{color: #7B89A6}
-.nav.nav-pills.top_tab a.active{color: #151A25; border-bottom: 2px solid #73abff; padding-bottom: 35px;}
+.nav.nav-pills.top_tab a.active{color: #151A25; border-bottom: 2px solid #73abff; padding-bottom: 15px;}
 
 
 
@@ -1409,7 +1412,7 @@ PAGE WITH SIDEBAR CSS
 .workflow_list li{margin: 0; padding: 0; list-style: none; display: inline-block;}
 .workflow_list li a{margin: 0; padding: 0 10px;display: inline-block; color: #687693; font-size: 12px; font-weight: 400; letter-spacing: 0.04em; border-right: 1px solid #eee}
 .workflow_list li:last-child a{ border-right: 1px solid #fff}
-
+.workflow_list li a img {	float: left!important;	margin: 1px 3px 0 0!important;}
 
 .edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
 .edit_delete a{margin: 0 3px; display: inline-block}
