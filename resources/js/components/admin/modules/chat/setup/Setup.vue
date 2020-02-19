@@ -37,7 +37,7 @@
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
                                 <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Integration</a></li>
                             </ul>
                         </div>
                     </div>

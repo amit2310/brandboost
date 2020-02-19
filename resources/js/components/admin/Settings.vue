@@ -12,12 +12,12 @@
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">Brand Settings</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer;">General&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer;">Billing&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 5 ? 'active' : '' ]"><a v-on:click="seletedTab=5" data-toggle="tab" style="cursor:pointer;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
-                            <li :class="[ seletedTab === 6 ? 'active' : '' ]"><a v-on:click="seletedTab=6" data-toggle="tab" style="cursor:pointer;">Import&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">General&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 5 ? 'active' : '' ]"><a v-on:click="seletedTab=5" data-toggle="tab" style="cursor:pointer; padding: 5px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
+                            <li :class="[ seletedTab === 6 ? 'active' : '' ]"><a v-on:click="seletedTab=6" data-toggle="tab" style="cursor:pointer; padding: 5px;">Import&nbsp;</a></li>&nbsp;&nbsp;
                             <li :class="[ seletedTab === 7 ? 'active' : '' ]"><a v-on:click="seletedTab=7" data-toggle="tab" style="cursor:pointer;">Export</a></li>
                         </ul>
                     </div>
@@ -30,12 +30,12 @@
           Content Area
          **********************-->
         <div v-if="(seletedTab === '' || seletedTab === 1)" class="tab-pane " id="right-icon-tab0">
+            <div class="clearfix">&nbsp;</div>
             <div class="row">
-                <br />
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
                         <form id="frmGeneralBusinessInfo" name="frmGeneralBusinessInfo" method="post">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="padding: 10px;">
                                 <h4  class="panel-title">Brand Info</h4>
                             </div>
                             <div class="panel-body p0">
@@ -200,7 +200,7 @@
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
                         <form id="frmGeneralBusinessInfo2" name="frmGeneralBusinessInfo2" method="post">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="padding: 10px;">
                                 <h4 class="panel-title">Public Profile</h4>
                             </div>
                             <div class="panel-body p0">
@@ -327,10 +327,11 @@
         </div>
 
         <div v-if="seletedTab === 2" class="tab-pane " id="right-icon-tab1">
+            <div class="clearfix">&nbsp;</div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-flat review_ratings">
-                        <div class="panel-heading">
+                        <div class="panel-heading" style="padding: 10px;">
                             <h4 class="panel-title">General Preferences</h4>
                         </div>
                         <form id="frmGeneralBusinessInfo3" name="frmGeneralBusinessInfo3" method="post">
@@ -628,7 +629,7 @@
 
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">
-                        <div class="panel-heading">
+                        <div class="panel-heading" style="padding: 10px;">
                             <h4 class="panel-title">Help Card</h4>
                         </div>
                         <div class="panel-body min_h405 p40 pt60 info_card text-center">
@@ -643,7 +644,345 @@
         </div>
 
         <div v-if="seletedTab === 3" class="tab-pane " id="right-icon-tab1">
-            Subscription & Credits TAB HERE
+            <div class="clearfix">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
+                            <h6 class="panel-title">Subscription</h6>
+                        </div>
+                        <div class="panel-body p0">
+
+                            <!--====GENERAL SETTINGS====-->
+                            <div class="bbot p30">
+                                <div class="row" style="margin-bottom:60px !important;">
+                                    <div class="col-md-9 col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Account Plans</strong><br>
+                                            <span class="text-muted fsize13">Pick an account plan that fits your workflow. Add a credits<br>
+                                        plan to any project when it's ready to go live.</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <p class="pull-left text-muted fsize13 mr-20">Billing Type:</p>
+                                        <div class="btn-group display-inline-block">
+                                            <button id="grid" type="button" class="btn btn-xs btn-default dispUpgradePlan" data-cycle="yearly">Annual</button>
+                                            <button id="list" type="button" class="btn btn-xs btn-default dispUpgradePlan" data-cycle="monthly">Monthly</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <!--@include('admin.modals.upgrade.partial.plan_list')-->
+                                <div class="row monthly_pricing_plan" v-if="(oCurrentPlanData != '' && (oCurrentPlanData.subs_cycle != 'month' || oCurrentPlanData.subs_cycle != 'monthly') && oCurrentPlanData.level_name != 'Pro')">
+                                    <!-- Pricing -->
+                                    <div v-if="((oMembership.type == 'membership') && (oMembership.subs_cycle == 'monthly' || oMembership.subs_cycle == 'month'))" v-for="oMembership in oMemberships" class="col-xs-4">
+                                        <div class="price_plan">
+                                            <div class="imgicon">
+                                                <img v-if="oMembership.level_name == 'Starter'" src="/assets/images/starter_icon.png"/>
+                                                <img v-else-if="oMembership.level_name == 'Business'" src="/assets/images/business_icon.png"/>
+                                                <img v-else-if="oMembership.level_name == 'Pro'" src="/assets/images/pro_icon.png"/>
+                                                <img v-else src="/assets/images/pro_icon.png"/>
+                                            </div>
+                                            <div class="bbot p30 text-center">
+                                                <p class="txt_purple fsize16 mt-5">{{ oMembership.level_name }}</p>
+                                                <h3 class="mt-5 mb0">${{ oMembership.price }}<span>/mo</span></h3>
+                                                <p class="text-muted fsize13 m0">Billed Monthly</p>
+                                            </div>
+
+                                            <div class="bbot p20 text-center">
+                                                <p class="text-muted fsize12 m0">A light plan that lets you export your<br> code for use in other environments<br> or build prototypes.</p>
+                                            </div>
+                                            <div class="p30 pt20 pb20">
+                                                <ul class="mb20">
+                                                    <li><i class="icon-checkmark-circle"></i> {{ number_format(oMembership.credits) }} Credits</li>
+                                                    <li><i class="icon-checkmark-circle"></i> {{ number_format(oMembership.contact_limit) }} Contacts</li>
+                                                    <li><i class="icon-checkmark-circle"></i> Reviews App</li>
+                                                    <li><i class="icon-checkmark-circle"></i> Chat App</li>
+                                                    <li v-if="(oMembership.level_name != 'Pro' && oMembership.level_name != 'Business')" class="disabled" >
+                                                        <i v-if="(oMembership.level_name != 'Pro' && oMembership.level_name != 'Business')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        On Site widgets
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro' && oMembership.level_name != 'Business')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro' && oMembership.level_name != 'Business')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        Automation/Broadcast App
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        NPS App
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        Referral App
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        Analytics
+                                                    </li>
+                                                </ul>
+
+                                                <button v-if="isMembershipActive" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
+
+                                                <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" :plan_id="oMembership.plan_id" :plan_name="oMembership.level_name">
+                                                    <span v-if="oCurrentPlanData == ''">Buy</span>
+                                                    <span v-if="isMembershipActive != ''">Upgrade</span>
+                                                    <span v-else>Downgrade</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--//End Pricing -->
+                                </div>
+
+                                <div class="row yearly_pricing_plan" v-if="(!((oCurrentPlanData.subs_cycle == 'yearly' || oCurrentPlanData.subs_cycle == 'year') || (oCurrentPlanData.level_name == 'Pro')))">
+                                    <!-- Pricing -->
+                                    <div v-for="oMembership in oMemberships" class="col-xs-4" v-if="((oMembership.type == 'membership') && (oMembership.subs_cycle == 'yearly' || oMembership.subs_cycle == 'year'))">
+                                        <div class="price_plan">
+                                            <div class="imgicon">
+                                                <img v-if="oMembership.level_name == 'Starter Yearly'" src="/assets/images/starter_icon.png"/>
+                                                <img v-if="oMembership.level_name == 'Business Yearly'" src="/assets/images/business_icon.png"/>
+                                                <img v-if="oMembership.level_name == 'Pro Yearly'" src="/assets/images/pro_icon.png"/>
+                                                <img v-else src="/assets/images/pro_icon.png"/>
+                                            </div>
+                                            <div class="bbot p30 text-center">
+                                                <p class="txt_purple fsize16 mt-5">{{ oMembership.level_name }}</p>
+                                                <h3 class="mt-5 mb0">${{ oMembership.price }}<span>/yr</span></h3>
+                                                <p class="text-muted fsize13 m0">Billed Yearly</p>
+                                            </div>
+
+                                            <div class="bbot p20 text-center">
+                                                <p class="text-muted fsize12 m0">A light plan that lets you export your<br> code for use in other environments<br> or build prototypes.</p>
+                                            </div>
+                                            <div class="p30 pt20 pb20">
+                                                <ul class="mb20">
+                                                    <li><i class="icon-checkmark-circle"></i> {{ number_format(oMembership.credits) }} Credits</li>
+                                                    <li><i class="icon-checkmark-circle"></i> {{ number_format(oMembership.contact_limit) }} Contacts</li>
+                                                    <li><i class="icon-checkmark-circle"></i> Reviews App</li>
+                                                    <li><i class="icon-checkmark-circle"></i> Chat App</li>
+                                                    <li v-if="(oMembership.level_name != 'Pro Yearly' && oMembership.level_name != 'Business Yearly')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro Yearly' && oMembership.level_name != 'Business Yearly')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        On Site widgets
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro Yearly' && oMembership.level_name != 'Business Yearly')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro Yearly' && oMembership.level_name != 'Business Yearly')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        Automation/Broadcast App
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro Yearly')" class="disabled" >
+                                                        <i v-if="(oMembership.level_name != 'Pro Yearly')" class="icon-cancel-circle2"></i>
+                                                        <i class="icon-checkmark-circle"></i>
+                                                        NPS App
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro Yearly')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro Yearly')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        Referral App
+                                                    </li>
+                                                    <li v-if="(oMembership.level_name != 'Pro Yearly')" class="disabled">
+                                                        <i v-if="(oMembership.level_name != 'Pro Yearly')" class="icon-cancel-circle2"></i>
+                                                        <i v-else class="icon-checkmark-circle"></i>
+                                                        Analytics
+                                                    </li>
+                                                </ul>
+
+                                                <button v-if="isMembershipActive" type="button" class="btn white_btn w100 txt_purple h40"><span>Active</span> </button>
+
+                                                <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" :plan_id="oMembership.plan_id" :plan_name="oMembership.level_name">
+                                                    <span v-if="(isMembershipActive != '' && oCurrentPlanData.level_name == 'Pro')">Upgrade</span>
+                                                    <span v-else>Downgrade</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--//End Pricing -->
+                                </div>
+
+                            </div>
+
+                            <div class="p30">
+                                <div class="row">
+                                    <div class="col-md-9 col-xs-9"><p class="m0">All plans come with basic Brand Boost features</p></div>
+                                    <div class="col-md-3 col-xs-3"><a class="txt_purple" href="#">Explore all features</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
+                            <h6 class="panel-title">Brand Boost Credits</h6>
+                        </div>
+                        <div class="panel-body p0">
+
+
+                            <!--====GENERAL SETTINGS====-->
+                            <div class="bbot p30">
+                                <div class="row mb40">
+                                    <div class="col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Credits Plans</strong><br>
+                                            <span class="text-muted fsize13">All projects on your plan come with Staging. Upgrade to a paid credit<br>
+                                        plan to send emails & SMS and unlock other features.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <!--<div class="row mt40">
+                                    @if (!empty($oMemberships))
+                                    @foreach ($oMemberships as $oMembership)
+                                    @php
+                                    if ($oMembership->type == 'topup-membership'):
+                                    if ($oMembership->plan_id == $oUser->topup_plan_id) {
+                                    $oCurrentTopupMembership = $oMembership;
+                                    }
+                                    @endphp
+
+                                    <div class="col-xs-4" style="margin-top:20px;">
+                                        <div class="price_plan">
+                                            <div class="imgicon"><img src="/assets/images/icon_credit.png"/></div>
+                                            <div class="bbot p30 text-center">
+                                                <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
+                                                <h3>${{ $oMembership->price }}<span>/
+														@if ($oMembership->subs_cycle == 'week')
+															{{ 'week' }}
+														@elseif ($oMembership->subs_cycle == 'month')
+															{{ 'Mo' }}
+														@elseif ($oMembership->subs_cycle == 'year')
+															{{ 'Yr' }}
+														@endif
+														</span>
+                                                </h3>
+                                                <p class="text-muted fsize13 m0">Billed
+                                                    @if ($oMembership->subs_cycle == 'week')
+                                                    {{ 'Weekly' }}
+                                                    @elseif ($oMembership->subs_cycle == 'month')
+                                                    {{ 'Monthly' }}
+                                                    @elseif ($oMembership->subs_cycle == 'year')
+                                                    {{ 'Yearly' }}
+                                                    @endif
+                                                </p>
+                                            </div>
+
+
+                                            <div class="p30">
+                                                @php
+                                                if ($oUser->topup_plan_id == $oMembership->plan_id) {
+                                                $isTopupMembershipActive = true;
+                                                @endphp
+                                                <button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
+                                                @php } else { @endphp
+                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" data-toggle="modal" data-target="#confirm_topup_level_upgrade"><span>@if (empty($isTopupMembershipActive)) Buy @elseif ($isTopupMembershipActive) Upgrade @else Downgrade @endif</span> </button>
+                                                @php } @endphp
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="panel panel-flat review_ratings">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Addon Credits</h6>
+                            <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
+                        </div>
+                        <div class="panel-body p0">
+
+                            &lt;!&ndash;====GENERAL SETTINGS====&ndash;&gt;
+                            <div class="bbot p30">
+                                <div class="row mb40">
+                                    <div class="col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Addon Credits Pack</strong><br>
+                                            <span class="text-muted fsize13">All projects on your plan come with Staging. Upgrade to a paid credit<br>
+                                        plan to send emails & SMS and unlock other features.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+
+                                <div class="row mt40">
+                                    @if (!empty($oMemberships))
+                                    @foreach ($oMemberships as $oMembership)
+                                    @if ($oMembership->type == 'topup' && $oMembership->level_name != 'Custom Pack')
+                                    <div class="col-xs-4" style="margin-top:20px;">
+                                        <div class="price_plan">
+                                            <div class="imgicon"><img src="/assets/images/icon_credit.png"/></div>
+                                            <div class="bbot p30 text-center">
+                                                <p><strong>{{ $oMembership->level_name }}</strong></p>
+                                                <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
+                                                <h3>${{ $oMembership->price }}<span></span></h3>
+                                                <p class="text-muted fsize13 m0">Flat Fee</p>
+                                            </div>
+
+                                            <div class="p30">
+                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyAddon" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" topup_plan_price="{{ $oMembership->price }}" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            @if (!empty($oMemberships))
+                            @foreach ($oMemberships as $oMembership)
+                            @php
+                            $unitprice = 0;
+                            if ($oMembership->type == 'topup' && $oMembership->level_name == 'Custom Pack'):
+                            $unitprice = $oMembership->price;
+                            @endphp
+                            <div class="p30">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <p class="m0"><strong class="fsize16">Buy Additional Brand Boost Credits</strong><br>
+                                            <span class="text-muted fsize13">All projects on your plan come with Staging. </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-xs-2">
+                                        <p class="fsize13">Credits</p>
+                                        <div class="input-group input-group-xlg pull-left">
+                                            <input class="form-control" value="1000" name="txtCustomQty"id="txtCustomQty" type="text" title="Enter quantity of credits" placeholder="1000">
+                                            <span class="input-group-addon" id="customprice">${{ ($oMembership->price * 1000) }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-1">
+                                        <p class="fsize13">&nbsp;</p>
+                                        <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyCustomAddon" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" topup_plan_price="{{ $oMembership->price }}" data-toggle="modal" data-target="#confirm_buy_custom_addon_plan"  class="btn dark_btn"><span>Buy</span> </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            @endforeach
+                            @endif
+                        </div>
+                    </div>-->
+                </div>
+
+                <div class="col-md-3">
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
+                            <h6 class="panel-title">Info Card</h6>
+                        </div>
+                        <div class="panel-body min_h405 p40 pt60 info_card text-center">
+                            <div class="img_icon mb20"><img src="/assets/images/icon_credit.png" width="35"></div>
+                            <p class="mb20"><strong>Learn more about Brand Boost Credits</strong></p>
+                            <p class="mb20"><span>Being the savage's bowsman, that <br>is, the person who pulled.</span></p>
+                            <a class="txt_purple" href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div v-if="seletedTab === 4" class="tab-pane " id="right-icon-tab1">
@@ -832,3 +1171,7 @@
 
 
 </script>
+<style>
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { font-weight: bold; color: #000; }
+    .price_plan { padding: 55px; margin: 10px!important; }
+</style>
