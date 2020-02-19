@@ -147,6 +147,42 @@
 					</div>
 				</div>
      		</div>
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/01.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Calvin Simmmons</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 dark_400 mb0">3 hours ago</p></div>
+					</div>
+				</div>
+     		</div>
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/02.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Debra Mckinney</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 dark_400 mb0">15 min ago</p></div>
+					</div>
+				</div>
+     		</div>
     	</div>
     	
     	<div class="col-md-3">
@@ -158,6 +194,60 @@
     	 </div>
     	
     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/03.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Nathan Henry</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 mb0 green_400">just now</p></div>
+					</div>
+				</div>
+     		</div>
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/04.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Max Miles</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 dark_400 mb0">3 hours ago</p></div>
+					</div>
+				</div>
+     		</div>
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/05.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Johnny Fox</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 dark_400 mb0">4 days ago</p></div>
+					</div>
+				</div>
+     		</div>
+     		
+     		<div class="card p0 shadow3 br6">
 				<div class="p20 bbot">
 					<div class="media_left">
 						<img src="assets/images/avatar/03.png" width="32" height="32">
@@ -257,6 +347,42 @@
 				</div>
      		</div>
      		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/09.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Wendy Mccoy</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 dark_400 mb0">1 day ago</p></div>
+					</div>
+				</div>
+     		</div>
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/10.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Jerome Howard</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 mb0 green_400">just now</p></div>
+					</div>
+				</div>
+     		</div>
+     		
      		
      		
     	</div>
@@ -270,6 +396,42 @@
     	 </div>
     	
      		
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/11.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Jennie Jones</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 mb0 green_400">just now</p></div>
+					</div>
+				</div>
+     		</div>
+     		
+     		<div class="card p0 shadow3 br6">
+				<div class="p20 bbot">
+					<div class="media_left">
+						<img src="assets/images/avatar/12.png" width="32" height="32">
+					</div>
+					<div class="media_left m-0">
+						<h3 class="htxt_medium_14 dark_600 mt-0 mb-1">Irma Alexander</h3>
+						<p class="htxt_regular_12 dark_400 mb0">stanley.baker@example.com</p>
+					</div>
+				</div>
+				<div class="p15">
+					<div class="row">
+						<div class="col"><p class="htxt_regular_12 dark_400 mb0"># customer, user</p></div>
+						<div class="col text-right"><p class="htxt_regular_12 dark_400 mb0">3 hours ago</p></div>
+					</div>
+				</div>
+     		</div>
      		
      		<div class="card p0 shadow3 br6">
 				<div class="p20 bbot">
