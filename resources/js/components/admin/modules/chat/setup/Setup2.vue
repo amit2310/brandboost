@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
-                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(2)"> Next <span style="opacity: 1"><img
+                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(3)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
                                 <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Integration</a></li>
                             </ul>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                         </button>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(2)">Continue <span><img
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(3)">Continue <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
                         <button class="btn btn-success btn-sm bkg_green_300 light_000 float-right mr-3" @click="updateConfigurations">Save Changes <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
@@ -385,7 +385,7 @@
             changeCampaignStatus: function(status){
                 this.loading = true;
                 axios.post('/admin/modules/nps/changeStatus', {
-                    npsId: this.campaignId,
+                    chatID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })

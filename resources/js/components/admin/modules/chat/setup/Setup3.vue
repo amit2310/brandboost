@@ -6,11 +6,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}} </h3>
+                        <h3 class="htxt_medium_24 dark_700">{{campaign.title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
-                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(5)"> Next <span style="opacity: 1"><img
+                        <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(4)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
                 </div>
@@ -35,14 +35,14 @@
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
                                 <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Integration</a></li>
 
                             </ul>
                         </div>
                     </div>
                 </div>
-
-                <onsite-reviews v-if="campaignId" :campaignId="campaignId"></onsite-reviews>
+                    <contacts-list></contacts-list>
+<!--                <onsite-reviews v-if="campaignId" :campaignId="campaignId"></onsite-reviews>-->
 
                 <div class="row mt40">
                     <div class="col-md-12">
@@ -66,9 +66,9 @@
     </div>
 </template>
 <script>
-    import OnsiteReviews from '@/components/admin/brandboost/onsite/OnsiteReviews';
+    import ContactsList from '@/components/admin/modules/chat/setup/ContactsList';
     export default {
-        components: {OnsiteReviews},
+        components: {ContactsList},
         data() {
             return {
                 successMsg: '',
@@ -88,10 +88,23 @@
             }
         },
         mounted() {
-
+            this.getChatWidgetSetup();
             this.loading = false;
         },
         methods: {
+            getChatWidgetSetup : function(){
+                axios.get('/admin/modules/chat/setup/' + this.campaignId)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.campaign = response.data.oChat;
+                        this.preview = response.data.setupPreview;
+                        this.user = response.data.userData;
+                        this.loading = false;
+
+                    });
+            },
             displayStep: function(step){
                 let path = '';
                 if(!step){
@@ -105,7 +118,7 @@
             changeCampaignStatus: function(status){
                 this.loading = true;
                 axios.post('/admin/modules/chat/changeStatus', {
-                    npsId: this.campaignId,
+                    chatID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
