@@ -1,10 +1,9 @@
 <template>
     <div class="container-fluid">
-
         <div class="table_head_action" v-if="showHeader !== false">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="htxt_medium_16 dark_400">{{ activeUsers.length }} Contact Lists</h3>
+                    <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Contact Lists</h3>
                 </div>
                 <div class="col-md-6">
                     <div class="table_action">
@@ -14,9 +13,9 @@
                                 <span><img src="/assets/images/date_created.svg"/></span>&nbsp; Date Created
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Link 1</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                             </div>
                         </div>
                         <div class="float-right ml10 mr10">
@@ -25,9 +24,9 @@
                                 <span><img src="/assets/images/list_view.svg"/></span>&nbsp; List View
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Link 1</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                             </div>
                         </div>
                         <div class="float-right">
@@ -37,20 +36,17 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <tbody>
-
                         <tr>
                             <td colspan="1"><span class="fsize12 fw300">Visitor name </span></td>
                             <td colspan="3"><span class="fsize12 fw300">Preview data</span></td>
                             <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
                         </tr>
-
-                        <tr v-for="contact in activeUsers" v-if="activeUsers.length>0">
+                        <tr v-for="contact in activeUsers" v-if="activeUsers">
                             <td>
                                 <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
                                     <user-avatar
@@ -62,10 +58,8 @@
                                         :fontsize="12"
                                     ></user-avatar>
                                 </a>
-
                                 <span class="htxt_medium_14 dark_900" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
                              </td>
-
                             <td class="text-right">{{ contact.email }}</td>
                             <td>
                                 <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
@@ -106,10 +100,6 @@
                                 </div>
                             </td>
                         </tr>
-
-
-
-
                         </tbody>
                     </table>
                     <pagination
@@ -117,48 +107,33 @@
                         @paginate="showPaginationData"
                         :offset="4">
                     </pagination>
-
                 </div>
             </div>
         </div>
     </div>
-
-
 </template>
-
 <script>
-
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     import ContactTags from '@/components/admin/contact/ContactTags';
-
     export default {
         props: ['showArchived', 'subscribersData', 'allData', 'activeCount', 'archiveCount', 'showHeader', 'moduleName', 'moduleUnitID'],
         components: {UserAvatar, ContactTags, Pagination},
         data() {
             return {
                 current_page: 1,
-                //alert(subscribersData)
             }
         },
-
         computed: {
-
             activeUsers : function(){
-                //alert('size of dataset '+ this.subscribersData.length);
-                if(this.subscribersData.length>0){
+                if(this.subscribersData){
                     return this.subscribersData.filter(function(u){
                         return u.status != 2;
                     })
                 }
-                //return this.subscribersData;
-                //alert(this.activeCount);
-                /*return this.subscribersData.filter(function(u){
-                    return u.active != 2;
-                })*/
             },
             archiveUsers: function(){
-                if(this.subscribersData.length>0){
+                if(this.subscribersData){
                     return this.subscribersData.filter(function(u){
                         return u.status == 2;
                     })
@@ -170,19 +145,14 @@
                 handler: 'setOptimizer'
             }]
         },
-
         methods: {
             setOptimizer(){
-
-                //alert(this.activeCount);
             },
             showPaginationData: function(current_page){
-                /*alert('current Page is '+ t);*/
                 this.$emit('navPage', current_page);
             },
             loadProfile: function(id){
                 window.location.href='/admin#/contacts/profile/'+id;
-                /*alert('Load Profile for '+id);*/
             },
             moveToArchive: function(contactId){
                 if(confirm('Are you sure you want to archive this contact?')){
@@ -197,11 +167,9 @@
                         if(response.data.status == 'success'){
                             this.showPaginationData(this.current_page);
                         }
-
                     });
                 }
             },
-
             changeContactStatus: function(contactId, status){
                 if(confirm('Are you sure you want to change contact status?')){
                     //Do axios
@@ -216,11 +184,9 @@
                         if(response.data.status == 'success'){
                             this.showPaginationData(this.current_page);
                         }
-
                     });
                 }
             },
-
             deleteContact: function(contactId){
                 if(confirm('Are you sure you want to delete this contact?')){
                     //Do axios
@@ -235,7 +201,6 @@
                             syncContactSelectionSources();
                             this.showPaginationData(this.current_page);
                         }
-
                     });
                 }
             },
@@ -243,18 +208,11 @@
                 this.$emit('prepareUpdate', {contactId});
             }
         },
-
         mounted() {
-
             let tableId = 'mySubsContact';
             this.paginate(tableId);
-
             let tableId2 = 'mySubsContact2';
             this.paginate(tableId2);
-
         }
-
     }
 </script>
-
-

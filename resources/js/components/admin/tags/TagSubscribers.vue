@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <!--******************
       Top Heading area
@@ -20,7 +19,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
         <div class="content-area">
             <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
             <loading :isLoading="loading"></loading>
@@ -36,13 +34,10 @@
                 :key="subscribers"
             ></workflow-subscribers>
         </div>
-
     </div>
-
 </template>
 <script>
     import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
-
     export default {
         data() {
             return {
@@ -60,8 +55,6 @@
                 current_page: 1,
                 breadcrumb: '',
                 tagID : this.$route.params.id,
-
-
             }
         },
         components: {'workflow-subscribers': WorkflowSubscribers},
@@ -84,20 +77,13 @@
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
                         this.loading = false;
-
                     });
             },
-
             navigatePagination: function(p){
                 this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
             }
         }
-
     };
-
 </script>
-
-
-

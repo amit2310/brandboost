@@ -12,7 +12,7 @@
                                 9%
                                 bounce rate. We suggest you to send new email
                                 in next 3 days.</p>
-                            <a class="fsize15 blue_300" href="#"><img src="assets/images/editpen.svg"/>&nbsp;
+                            <a class="fsize15 blue_300" href="javascript:void(0);"><img src="assets/images/editpen.svg"/>&nbsp;
                                 Create new email</a>
                         </div>
                         <div class="col-md-6 text-center">
@@ -30,7 +30,7 @@
                          src="assets/images/dashboard_graph0.png"/>
                     <p class="grey-sub-headings mb10">CREDITS BALANCE</p>
                     <p class="fsize14 mb30" style="color: #5a6f80;">You used 408/450 montly credits</p>
-                    <a class="fsize15 dark_600 fw500" href="#">Purchase more credits</a>
+                    <a class="fsize15 dark_600 fw500" href="javascript:void(0);">Purchase more credits</a>
                 </div>
             </div>
         </div>
