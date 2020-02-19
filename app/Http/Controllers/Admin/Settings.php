@@ -69,6 +69,14 @@ class Settings extends Controller {
                 } else {
                     $oPlan->isMembershipActive = false;
                 }
+
+                if ($oUser->topup_plan_id == $oPlan->plan_id) {
+                    $oPlan->isTopupMembershipActive = true;
+                }
+
+                /*if ($oPlan->plan_id == $oUser->topup_plan_id) {
+                    $oPlan->oCurrentTopupMembership = $oPlan;
+                }*/
             }
         }
 
