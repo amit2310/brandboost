@@ -25,7 +25,6 @@ import OnsiteMedia from './components/admin/brandboost/onsite/Media';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import OnsiteReviewCampaigns from './components/admin/brandboost/onsite/ReviewCampaigns.vue';
-
 /*Import Onsite Setup components*/
 import onsiteStep1 from './components/admin/brandboost/onsite/setup/Setup';
 import onsiteStep2 from './components/admin/brandboost/onsite/setup/Setup2';
@@ -40,7 +39,6 @@ import offsiteStep2 from './components/admin/brandboost/offsite/setup/Setup2';
 import offsiteStep3 from './components/admin/brandboost/offsite/setup/Setup3';
 import offsiteStep4 from './components/admin/brandboost/offsite/setup/Setup4';
 import offsiteStep5 from './components/admin/brandboost/offsite/setup/Setup5';
-
 import ReviewFeedback from './components/admin/brandboost/ReviewFeedback.vue';
 import MediaTable from './components/admin/brandboost/MediaTable';
 import Tags from './components/admin/tags/Index';
@@ -91,7 +89,7 @@ import ChatShortcut from './components/admin/chat/Shortcuts';
 /*Widget Section*/
 import WidgetOverview from './components/admin/brandboost/WidgetOverview';
 // import OnsiteWidgets from './components/admin/brandboost/Widgets';
-import ChatWidgets from './components/admin/modules/chat/Index';
+
 import ReferralWidgets from './components/admin/modules/referral/Widgets';
 import NPSWidgets from './components/admin/modules/nps/Widgets';
 import MediaGalleryWidget from './components/admin/MediaGallery';
@@ -149,7 +147,19 @@ import UserSupport from './components/user/Support';
 import WidgetsOnsiteList from './components/admin/modules/widgets/WidgetsList';
 import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
 import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
-
+/**
+ * --------------------------------------------------------------------------
+ *  Add component of Chat Widgets section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+import ChatWidgets from './components/admin/modules/chat/Index';
+import ChatWidgetsSetup1 from './components/admin/modules/chat/setup/Setup';
+import ChatWidgetsSetup2 from './components/admin/modules/chat/setup/Setup2';
+import ChatWidgetsSetup3 from './components/admin/modules/chat/setup/Setup3';
+import ChatWidgetsSetup4 from './components/admin/modules/chat/setup/Setup4';
+// import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
+// import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
 const routes = [
 
     /**
@@ -164,18 +174,25 @@ const routes = [
     { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
 
     /**
+     * -----------------------------------End---------------------------------------
+     */
+    /**
      * --------------------------------------------------------------------------
-     *                              End
+     *  Add component of Chat Widgets section.
+     *  @Pavan
      * --------------------------------------------------------------------------
      */
-
+    { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
+    { path: '/modules/chat/setup/:id/1', component: ChatWidgetsSetup1, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/2', component: ChatWidgetsSetup2, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/3', component: ChatWidgetsSetup3, meta: { title: 'Chat Widget Setup'} },
+    { path: '/modules/chat/setup/:id/4', component: ChatWidgetsSetup4, meta: { title: 'Chat Widget Setup'} },
+    // { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
-
     /*Admin Profi;e*/
     { path: '/profile', component: Profile, meta: { title: 'Admin Settings - Brand Boost'} },
     { path: '/settings', component: Settings, meta: { title: 'Brand Settings - Brand Boost'} },
-
     /*Contacts*/
     { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
     { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },
@@ -192,7 +209,6 @@ const routes = [
     { path: '/contacts/deals', component: PeopleDeals, meta: { title: 'Contact Deals'} },
     { path: '/contacts/companies', component: Companies, meta: { title: 'Companies'} },
     { path: '/contacts/configuration', component: Configurations, meta: { title: 'Contact Configuration'} },
-
     /*Onsite Module*/
     { path: '/brandboost/onsite_overview', component: OnsiteOverview, props:{pageColor: 'onsite_sec'}, meta: {title: 'Onsite overview - Brand Boost'} },
     { path: '/brandboost/onsite', component: OnsiteList, props: {pageColor: 'onsite_sec'} },
@@ -203,7 +219,6 @@ const routes = [
     { path: '/questions/details/:id', component: QuestionsDetails, props: {pageColor: 'onsite_sec'}, meta: { title: 'Question Details - Brand Boost'} },
     { path: '/questions', component: OnsiteQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite questions - Brand Boost'} },
     { path: '/brandboost/review_request/onsite', component: OnsiteReviewRequest, props: {pageColor: 'onsite_sec', title : 'Review Requests', review_type: 'onsite'} },
-
     /*Offsite Module*/
     { path: '/brandboost/offsite_overview', component: OffsiteOverview, props: {pageColor:'offsite_sec', title: 'Offsite overview'} },
     { path: '/brandboost/offsite', component: OffsiteCampaigns, props: {pageColor:'offsite_sec', title: 'Offsite Brand Boost Campaigns'} },
@@ -211,45 +226,37 @@ const routes = [
     { path: '/feedback/listall/', component: FeedbackList, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
     { path: '/brandboost/offsite/feedbacks', component: OffsiteNegativeFeedback, props: { pageColor:'offsite_sec', title: 'Requires Attention'} },
     { path: '/feedback/:id', component: OffsiteFeedbackDetails, props: { pageColor:'offsite_sec', title: 'Feedback Details'} },
-
     { path: '/brandboost/media', component: MediaTable, props: {title : 'On Site Brand Boost Media'} },
-
     /* Templates Module */
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
-
     /* Review Module */
     { path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
     { path: '/brandboost/review_campaigns/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
     { path: '/reviews/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
-
     { path: '/reviews/onsite/setup/:id/1', component: onsiteStep1, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/2', component: onsiteStep2, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/3', component: onsiteStep3, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/4', component: onsiteStep4, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/reviews/:id', component: onsiteReviewDetails, props : {title : 'On Site Reviews'} },
-
-
     { path: '/reviews/offsite', component: OffsiteReviewCampaigns },
     { path: '/reviews/offsite/setup/:id/1', component: offsiteStep1, props : {title : 'Off Site Campaign'} },
     { path: '/reviews/offsite/setup/:id/2', component: offsiteStep2, props : {title : 'Off Site Campaign'} },
     { path: '/reviews/offsite/setup/:id/3', component: offsiteStep3, props : {title : 'Off Site Campaign'} },
     { path: '/reviews/offsite/setup/:id/4', component: offsiteStep4, props : {title : 'Off Site Campaign'} },
     { path: '/reviews/offsite/setup/:id/5', component: offsiteStep5, props : {title : 'Off Site Campaign'} },
-
     { path: '/tags/groups', component: TagGroups, meta: { title: 'Insight Tags - Brand Boost'} },
     { path: '/tags/:id', component: TagList, meta: { title: 'Insight Tag List - Brand Boost'} },
     { path: '/tags/getTagContacts/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
+    { path: '/contacts/tags/subscribers/:id', component: TagSubscribers, meta: { title: 'Tag Subscribers'} },
     { path: '/tagsreview', component: TagsReview, meta: { title: 'Tags Review - Brand Boost'} },
     { path: '/tagsfeedback', component: TagsFeedback, meta: { title: 'Tags Feedback - Brand Boost'} },
-
     /*Segments*/
     { path: '/lists/getListContacts/:id', component: ListSubscribers, meta: { title: 'Segments Subscribers'} },
-    { path: '/broadcast/segmentContacts/:id', component: SegmentSubscribers, meta: { title: 'Segments Subscribers'} },
+    { path: '/contacts/segments/subscribers/:id', component: SegmentSubscribers, meta: { title: 'Segments Subscribers'} },
     { path: '/broadcast/email', component: EmailBroadcasts, meta: { title: 'Email Broadcast - Brand Boost'} },
-
     /*Email Module*/
     { path: '/modules/emails/dashboard', component: EmailDashboard, meta: { title: 'Email Dashboard'} },
     { path: '/modules/emails/broadcast', component: BroadcastCampaigns, meta: { title: 'Email Campaigns'} },
@@ -259,7 +266,6 @@ const routes = [
     { path: '/modules/emails/broadcast/setup/:id/3', component: broadcastStep3, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/4', component: broadcastStep4, props : {title : 'Email Templates', type : 'email' } },
     { path: '/modules/emails/broadcast/setup/:id/5', component: broadcastStep5, props : {title : 'Email Templates', type : 'email' } },
-
     /*SMS Module*/
     { path: '/modules/sms/dashboard', component: SmsDashboard, meta: { title: 'SMS Dashboard'} },
     { path: '/modules/sms/broadcast', component: SmsBroadcastCampaigns, meta: { title: 'SMS Campaigns'} },
@@ -270,7 +276,6 @@ const routes = [
     { path: '/modules/sms/broadcast/setup/:id/5', component: smsBroadcastStep5, props : {title : 'Sms Campaign', type : 'sms' } },
     { path: '/modules/sms/templates', component: ListSMSTemplates, props : {title : 'SMS Templates', type : 'sms' } },
     { path: '/modules/sms/workflow/setup/:id', component: SMSWorkflowSetup, meta: { title: 'Workflow Setup'} },
-
     /*Referral Module*/
     { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
     { path: '/modules/referral/', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
@@ -282,7 +287,6 @@ const routes = [
     { path: '/referral/setup/:id/3', component: ReferralStep3, props : {title : 'Referral Campaign Setup'} },
     { path: '/referral/setup/:id/4', component: ReferralStep4, props : {title : 'Referral Campaign Setup'} },
     { path: '/referral/setup/:id/5', component: ReferralStep5, props : {title : 'Referral Campaign Setup'} },
-
     /* Nps Survey Module */
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
@@ -291,35 +295,26 @@ const routes = [
     { path: '/nps/setup/:id/2', component: npsStep2, props : {title : 'NPS Campaign Setup'} },
     { path: '/nps/setup/:id/3', component: npsStep3, props : {title : 'NPS Campaign Setup'} },
     { path: '/nps/setup/:id/4', component: npsStep4, props : {title : 'NPS Campaign Setup'} },
-
-
     /*Workflow Module*/
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/workflow/setup/:id', component: WorkflowSetup, meta: { title: 'Workflow Setup'} },
     { path: '/modules/emails/templatestest', component: TemplateMaster, meta: { title: 'Workflow Setup'} },
-
     { path: '/modules/sms/workflow', component: SmsAutomationCampaigns, meta: { title: 'SMS Campaigns'} },
-
     /*Brand Page*/
     { path: '/brand/settings', component: BrandSetting, meta: { title: 'Brand Settings'} },
     { path: '/brand/configuration', component: BrandConfiguration, meta: { title: 'Brand Configuration'} },
     { path: '/brand/configuration/single', component: BrandConfigurationSingle, meta: { title: 'Campaign Specific Brand Configuration'} },
-
     /*Chat Module*/
     { path: '/chat/dashboard', component: ChatDashboard, meta: { title: 'Chat Dashboard'} },
     { path: '/chat/web', component: ChatWeb, meta: { title: 'Web Chat'} },
     { path: '/chat/sms', component: ChatSMS, meta: { title: 'SMS Chat'} },
     { path: '/chat/shortcuts', component: ChatShortcut, meta: { title: 'Chat Shortcuts'} },
-
     /*Widget Section*/
     { path: '/modules/referral/widgets', component: ReferralWidgets, meta: { title: 'Referral Programs'} },
     { path: '/modules/nps/widgets', component: NPSWidgets, meta: { title: 'NPS Surveys'} },
     { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
-    // { path: '/brandboost/widgets', component: OnsiteWidgets, meta: { title: 'Onsite Widgets'} },
     { path: '/brandboost/onsite_widget_setup/:id', component: OnsiteWidgetSetup, meta: { title: 'Onsite Widget Setup'} },
-    { path: '/modules/chat', component: ChatWidgets, meta: { title: 'Chat Widgets'} },
     { path: '/mediagallery', component: MediaGalleryWidget, meta: { title: 'Media Gallery Widgets'} },
-
     /* Sub User Section */
     { path: '/user/profile', component: UserProfile, meta: { title: 'User Profile - Brand Boost'} },
     { path: '/user/media', component: UserMedia, meta: { title: 'My Media - Brand Boost'} },
@@ -331,6 +326,4 @@ const routes = [
     { path: '/user/setting', component: UserSetting, meta: { title: 'Personal Data - Brand Boost'} },
     { path: '/user/help', component: UserSupport, meta: { title: 'Help Desk - Brand Boost'} },
 ];
-
 export default routes;
-
