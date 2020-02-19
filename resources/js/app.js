@@ -1,33 +1,28 @@
 import Vue from 'vue';
 import VueSocketIO from 'vue-socket.io';
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 //require('../bootstrap');
-
 window.Vue = require('vue');
 import VueRouter from 'vue-router';
 import routes from './routes';
 import axios from 'axios';
 import helpers from './helpers';
 /*import forms from './forms';*/
-
 import commonComponents from './components/helpers/Common/LoadCommonComponents.js';
 
 commonComponents.forEach(component => {
     Vue.component(component.name, component);
 });
 
-
 window.axios = axios;
 
 Vue.use(new VueSocketIO({
         debug: false,
-        connection: 'http://brandboostx.com:3000'
+        connection: 'http://vue.brandboostx.com:3000'
     })
 );
 Vue.use(VueRouter);
