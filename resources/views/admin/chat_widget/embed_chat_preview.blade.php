@@ -1,114 +1,4 @@
 <style>
-    @php
-        if($widgetSettings->header_color_solid){
-            $solidColor = $widgetSettings->header_solid_color;
-            echo '.bbSolidColor{background: '.$solidColor.'!important;}';
-            echo '.textSolidColor{color: '.$solidColor.'!important;}';
-            $bgClassName = 'bbSolidColor';
-            $textClassName = 'textSolidColor';
-        }
-
-        if($widgetSettings->header_color_custom){
-            $gradientColor1 = $widgetSettings->header_custom_color1;
-            $gradientColor2 = $widgetSettings->header_custom_color2;
-            echo '.bbGradientColor{background-image: linear-gradient(45deg, '.$gradientColor1.' 1%, '.$gradientColor2.')!important;}';
-            echo '.textSolidColor{color: '.$gradientColor2.'!important;}';
-            $bgClassName = 'bbGradientColor';
-            $textClassName = 'textSolidColor';
-        }
-    @endphp
-</style>
-@php
-    //$greatingMSG = $widgetSettings->messages;
-    //$greatingMT = $widgetSettings->time;
-    //$greatingMSGArray = unserialize($greatingMSG);
-    //$greatingMTArray = unserialize($greatingMT);
-
-@endphp
-<style>
-
-    .bb-form-group.new {
-        padding: 25px 30px;
-    }
-
-    .bb-form-group p {
-        margin: 0 20px 15px;
-        text-align: center;
-        font-size: 14px !important;
-        color: #09204f !important;
-        line-height: 1.5;
-    }
-
-    .bb-form-group .form-control {
-        width: 100%;
-        padding: 6px 6px 6px 45px;
-        margin: 0px 0 10px;
-        box-sizing: border-box;
-        border-radius: 5px;
-        height: 52px;
-        box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.08);
-        border: none;
-        background: #fff;
-        font-size: 14px;
-        color: #5e729d !important;
-        font-family: 'Inter UI' !important;
-        font-weight: 300 !important;
-    }
-
-    .bb-form-group .form-control.user {
-        background: url(assets/images/icon_user.png) 20px 21px no-repeat #fff;
-    }
-
-    .bb-form-group .form-control.email {
-        background: url(assets/images/icon_envalope_small.png) 20px 21px no-repeat #fff;
-    }
-
-    .bb-form-group textarea.form-control {
-        font-family: 'Inter UI' !important;
-        padding: 20px !important;
-        height: 165px;
-        resize: none;
-    }
-
-    .bb-form-group input[type=button] {
-        width: 124px;
-        height: 52px;
-        box-shadow: 0 1px 1px 0 rgba(27, 147, 255, 0.2), 0 2px 4px 0 rgba(27, 147, 255, 0.05), inset 0 -1px 0 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-        background-color: #1b93ff;
-        color: #fff !important;
-        padding: 0;
-        margin: 0 !important;
-    }
-
-    span.icons.fl_letters {
-        display: inline-block !important;
-    }
-
-    .company_profile_sec .img_sec img {
-        vertical-align: bottom !important;
-        margin: 0 0 !important;
-    }
-
-    span.icons.fl_letters {
-        width: 32px;
-        height: 32px;
-        box-shadow: none !important;
-        background: {{ $widgetSettings->header_solid_color.'!important' }};
-        text-align: center;
-        text-transform: uppercase;
-        line-height: 32px;
-        color: #fff;
-        border-radius: 100px;
-        font-size: 12px;
-        font-weight: 500;
-        display: block;
-    }
-
-    .bbcw_main_box .media_file {
-        width: 150px;
-    }
-
-
 
     .msg_box_new {
         /*position:absolute;*/
@@ -125,10 +15,11 @@
         font-weight: 400;
         box-shadow: 0 3px 2px 0 rgba(0, 3, 49, 0.03), 0 1px 1px 0 rgba(0, 17, 136, 0.03), 0 10px 20px 0 rgba(0, 0, 54, 0.03);
         border: 1px solid #ddd;
+
     }
     .msg_box_new2 {
         position:absolute;
-        bottom: 100px;
+        /*bottom: 100px;*/
         width: 340px;
         right: 30px;
         z-index: 0;
@@ -137,6 +28,10 @@
         min-height: 560px;
         font-family: 'Inter UI';
         font-weight: 400;
+
+    }
+    .hidden {
+        display: none !important;
     }
     .woGiftChatBox{box-shadow: 0 3px 2px 0 rgba(0, 3, 49, 0.03), 0 1px 1px 0 rgba(0, 17, 136, 0.03), 0 10px 20px 0 rgba(0, 0, 54, 0.03);
         border: 1px solid #ddd;
@@ -455,7 +350,8 @@
 
     .image_icon{position: absolute; top: -16px; left: 25px; width: 32px; height: 32px; background: #fff; border-radius: 100px; box-shadow:  0 8px 8px 0 rgba(0, 27, 96, 0.13), 0 0 1px 0 rgba(0, 0, 0, 0.03);}
     .image_icon img{width: 32px; height: 32px; border-radius: 100px;}
-
+</style>
+<style type="text/css">
     .dropzone .dz-default.dz-message:before { content: ''!important; }
     .dropzone {min-height:40px;}
     .dropzone .dz-default.dz-message{ top: 0%!important; height:40px;  margin-top:0px;}
@@ -563,144 +459,170 @@
 
     .bb_msg_head_new, .bb_chat_action_icon_white, .bb_white_box_main_box{
     }
-
+    .w100 {
+         width: 100%!important;
+        height: 100%;
+    }
+    img {
+        max-width: 100%;
+    }
 </style>
+@php
+     //print_r($widgetSettings);
 
+@endphp
+<div class="panel-body p20">
+    <div class="widget_sec toBottom" id="bbColorOrientationSection">
+        <!--=========================================Chat Widget 1=============================================-->
 
+        <div class="msg_box_new hidden previewWidgetBox" id="bbchatpopup">
+            <div class="bb_msg_head_new green_preview_1" style=" ">
 
-<div class="widget_sec toBottom" id="bbColorOrientationSection">
-    <!--=========================================Chat Widget 1=============================================-->
-
-    <div class="msg_box_new hidden previewWidgetBox" id="bbchatpopup">
-        <div class="bb_msg_head_new green_preview_1" style=" ">
-            <div class="bb_img_icon_new">
-                <img width="32" src="/assets/images/face3.jpg">
+                @if($widgetSettings->logo_show  == 1)
+                <div class="bb_img_icon_new">
+                    <img width="32" src="/assets/images/face3.jpg">
+                </div>
+                @endif;
+                <div class="bb_drop_icon_new"><a href="#"><i class="fa fa-chevron-down"></i></a></div>
+                <p>Garrett Glover</p>
+                <p><span>Typically replies in 15 min</span></p>
             </div>
-            <div class="bb_drop_icon_new"><a href="#"><i class="fa fa-chevron-down"></i></a></div>
-            <p>Garrett Glover</p>
-            <p><span>Typically replies in 15 min</span></p>
-        </div>
-        <div id="bb_msg_wrap">
-            <div class="msg_body_new">
-                <div class="bb_msg_push">
-                    <div class="bb_msg"><div class="msg-left">Hi! I need help with pricing.</div></div>
-                    <div class="bb_msg"><div class="msg-right green_preview_1" style=" ">Hey Max! It looks like you've been chatting with a member of our team, that's awesome</div></div>
-                    <div class="bb_msg"><div class="msg-right green_preview_1" style=" ">Have you checked our price page?</div></div>
-                    <div class="bb_msg"><div class="msg-left">Hey Max! It looks like you've been chatting with a member of our team, that's awesome</div></div>
-                    <div class="bb_msg"><div class="msg-right green_preview_1" style=" ">Thanks!</div></div>
+            <div id="bb_msg_wrap">
+                <div class="msg_body_new">
+                    <div class="bb_msg_push">
+                        <div class="bb_msg"><div class="msg-left">Hi! I need help with pricing.</div></div>
+                        <div class="bb_msg"><div class="msg-right green_preview_1" style=" ">Hey Max! It looks like you've been chatting with a member of our team, that's awesome</div></div>
+                        <div class="bb_msg"><div class="msg-right green_preview_1" style=" ">Have you checked our price page?</div></div>
+                        <div class="bb_msg"><div class="msg-left">Hey Max! It looks like you've been chatting with a member of our team, that's awesome</div></div>
+                        <div class="bb_msg"><div class="msg-right green_preview_1" style=" ">Thanks!</div></div>
 
-                </div>
-            </div>
-            <div class="msg_footer_new">
-                <div id="bb_smiley_box2" class="bb_smg_smiley_new hidden green_preview_1" style=" ">
-                    <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
-                    <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
-
-                </div>
-                <div class="msg_att">
-                    <a onclick="smileyShowHide()" style="cursor: pointer;" class="smilieShow "><i class="fa fa-smile-o"></i></a>
-                    <a style="cursor: pointer;" class="attachmentShow "><i class="fa fa-paperclip"></i></a>
-                </div>
-                <input type="text" class="bb_chat_msg_input msg_input_new" id="bb_chat_msg_input2" placeholder="Type a message...">
-            </div>
-        </div>
-
-        <div class="bb_chat_action_icon_white green_preview_1" style=" ">
-            <div class="bb_iconbox"><a href="#"><img class="bb_iconbox_img" style="width: 20px;" src="/assets/images/chat_design_icon3.png"></a></div>
-        </div>
-
-    </div>
-
-    <!--=========================================Chat Widget 1=============================================-->
-    <div class="msg_box_new2 previewWidgetBox " id="bbchatpopup2">
-        <div class="woGiftChatBox ">
-            <div class="bb_msg_head_new big green_preview_1" style="">
-                <div class="bb_img_icon_new big ">
-                    <img width="53" class="rounded company_avatar" src="/assets/images/wakerslogo.png">
-                </div>
-                <p style="margin-bottom: 10px;" class="company_name ">Hi, we’re Wakers Inc.</p>
-                <p><span class="company_description ">We help startups and business<br> grow by powerful design &amp; <br> marketign</span></p>
-
-                <div class="company_profile_sec">
-                    <div class="img_sec">
-                        <img src="/assets/images/face1.jpg" width="32">
-                        <img src="/assets/images/face2.jpg" width="32">
-                        <img src="/assets/images/face3.jpg" width="32">
                     </div>
-                    <p style="margin-bottom: 10px;">Hi there!</p>
-                    <p><span>Glad to see you! Let us know how we can help, by strating a new conversiation below.</span></p>
-                </div>
-            </div>
-            <div id="bb_msg_wrap2">
-                <div style="height: 220px;" class="msg_body_new">
-                    &nbsp;
                 </div>
                 <div class="msg_footer_new">
+                    <div id="bb_smiley_box2" class="bb_smg_smiley_new hidden green_preview_1" style=" ">
+                        <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-is-pleased-red-cheeks-whatsapp-emoji-1F60A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/angry-smiley-whatsapp-1F620.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/shedding-tears-emoji-whatsapp-1F602.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smile-with-squint-eyes-whatsapp-emoticon-263A.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-drooping-eyebrows-1F622.png"></a>
+                        <a style="cursor: pointer;"><img src="/assets/emojis/smiley-face-is-flushed-whatsapp-emoji-1F633.png"></a>
+
+                    </div>
+                    <div class="msg_att">
+                        <a onclick="smileyShowHide()" style="cursor: pointer;" class="smilieShow "><i class="fa fa-smile-o"></i></a>
+                        <a style="cursor: pointer;" class="attachmentShow "><i class="fa fa-paperclip"></i></a>
+                    </div>
                     <input type="text" class="bb_chat_msg_input msg_input_new" id="bb_chat_msg_input2" placeholder="Type a message...">
                 </div>
             </div>
+
+            <div class="bb_chat_action_icon_white green_preview_1" style=" ">
+                <div class="bb_iconbox"><a href="#"><img class="bb_iconbox_img" style="width: 20px;" src="/assets/images/chat_design_icon3.png"></a></div>
+            </div>
+
         </div>
 
-        <div class="giftChatBox hidden">
-            <div class="chat_widget_bot_right bb_chatbox">
-                <div class="bb_white_box bb_white_box_main_box green_preview_1" style="">
-                    <p style="color: #fff;">Trevor from Grin</p>
-                    <p style="color: #fff;"><span style="color: #fff; font-size: 13px;">Hi! Do you know about our new offer for startups &amp; small business? </span></p>
-                    <div class="image_icon">
-                        <img src="/assets/images/face1.jpg">
+        <!--=========================================Chat Widget 1=============================================-->
+        <div class="msg_box_new2 previewWidgetBox " id="bbchatpopup2">
+            @if($widgetSettings->allow_gift_message  == 1)
+                <div class="woGiftChatBox hidden">
+             @else
+                 <div class="woGiftChatBox">
+            @endif
+
+                <div class="bb_msg_head_new big green_preview_1" style="">
+                    @if($widgetSettings->logo_show  == 1)
+                    <div class="bb_img_icon_new big ">
+                        <img width="53" class="rounded company_avatar" src="/assets/images/wakerslogo.png">
+                    </div>
+                    @endif
+                    @if($widgetSettings->title_show  == 1)
+                        <p style="margin-bottom: 10px;" class="company_name ">Hi, we’re Wakers Inc.</p>
+                    @endif
+                    @if($widgetSettings->subtitle_show  == 1)
+                        <p><span class="company_description ">We help startups and business<br> grow by powerful design &amp; <br> marketign</span></p>
+                    @endif
+                    <div class="company_profile_sec">
+                        <div class="img_sec">
+                            <img src="/assets/images/face1.jpg" width="32">
+                            <img src="/assets/images/face2.jpg" width="32">
+                            <img src="/assets/images/face3.jpg" width="32">
+                        </div>
+                        <p style="margin-bottom: 10px;">Hi there!</p>
+                        <p><span>Glad to see you! Let us know how we can help, by strating a new conversiation below.</span></p>
                     </div>
                 </div>
-
-                <div class="bb_white_box">
-                    <p>Trevor from Grin</p>
-                    <p><span>We give you 3 month free trial!</span></p>
+                <div id="bb_msg_wrap2">
+                    <div style="height: 220px;" class="msg_body_new">
+                        &nbsp;
+                    </div>
+                    <div class="msg_footer_new">
+                        <input type="text" class="bb_chat_msg_input msg_input_new" id="bb_chat_msg_input2" placeholder="Type a message...">
+                    </div>
                 </div>
-                <div class="bb_white_box">
-                    <p>Amit Kumar</p>
-                    <p><span>Hey Max! It looks like you've been chatting with a member of our team, that's awesome</span></p>
-                </div>
+            </div>
 
-                <div class="bb_white_box_input">
-                    <input type="text" name="" class="form-control" placeholder="Type a message here...">
+            @if($widgetSettings->allow_gift_message  == 1)
+                <div class="giftChatBox">
+             @else
+                <div class="giftChatBox hidden">
+             @endif
+                <div class="chat_widget_bot_right bb_chatbox">
+                    <div class="bb_white_box bb_white_box_main_box green_preview_1" style="">
+                        <p style="color: #fff;">Trevor from Grin</p>
+                        <p style="color: #fff;"><span style="color: #fff; font-size: 13px;">Hi! Do you know about our new offer for startups &amp; small business? </span></p>
+                        <div class="image_icon">
+                            <img src="/assets/images/face1.jpg">
+                        </div>
+                    </div>
+
+                    <div class="bb_white_box">
+                        <p>Trevor from Grin</p>
+                        <p><span>We give you 3 month free trial!</span></p>
+                    </div>
+                    <div class="bb_white_box">
+                        <p>Amit Kumar</p>
+                        <p><span>Hey Max! It looks like you've been chatting with a member of our team, that's awesome</span></p>
+                    </div>
+
+                    <div class="bb_white_box_input">
+                        <input type="text" name="" class="form-control" placeholder="Type a message here...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bb_chat_action_icon_white green_preview_1 " style="">
+                <div class="bb_iconbox ">
+                    <span class="chat_badge  ">2</span>
+                    <a style="cursor: pointer;"><img class="bb_iconbox_img" style="width: 20px;" src="/assets/images/chat_design_icon3.png"></a>
                 </div>
             </div>
         </div>
 
-        <div class="bb_chat_action_icon_white green_preview_1 " style="">
-            <div class="bb_iconbox ">
-                <span class="chat_badge  ">2</span>
-                <a style="cursor: pointer;"><img class="bb_iconbox_img" style="width: 20px;" src="/assets/images/chat_design_icon3.png"></a>
-            </div>
-        </div>
+        <img class="w100" src="/assets/images/config_bkg.png">
+
     </div>
-
-    <img class="w100" src="/assets/images/config_bkg.png">
-
 </div>
