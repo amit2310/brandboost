@@ -683,6 +683,84 @@ class Nps extends Controller {
             exit;
         }
     }
+    /**
+     * @Pavan
+     * @param type $widgetIDSetup NPS Survey List
+     */
+    public function npsWidgetSetup(Request $request) {
+        $mNPS = new NpsModel();
+
+        $widgetID = $request->widgetID;
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (empty($widgetID)) {
+            redirect("admin/modules/nps/widgets");
+            exit;
+        }
+        $oNPSList = $mNPS->getAllNpsLists($userID);
+        $widgetData = $mNPS->getNPSWidgets($userID, $widgetID);
+
+        $npsData = $mNPS->getNps($userID,$widgetData[0]->nps_id);
+        $sEmailPreview = view('admin.modules.nps.nps-templates.email.widget_preview', array('oNPS' => $npsData))->render();
+        $aData = array(
+            'widgetID' => $widgetID,
+            'oNPSList' => $oNPSList,
+            'widgetData' => $widgetData[0],
+            'setupPreview' => $sEmailPreview,
+        );
+        echo json_encode($aData);
+        exit;
+    }
+    /**
+     * @Pavan
+     * @param type $widgetIDSetup NPS widget
+     */
+    public function autoSaveNPSWidget(Request $request) {
+            // Instantiate NPS model to get its properties and methods
+            $mNPS = new NpsModel();
+
+            $aUser = getLoggedUser();
+            $userID = $aUser->id;
+            $response = array();
+
+
+            $widgetID = $request->widget_id;
+            $npsId = $request->nps_id;
+            $hashcode = $request->hashcode;
+
+            $aData = array(
+                'nps_id' => $npsId,
+                'hashcode' => $hashcode
+            );
+
+
+            $result = $mNPS->updateNPSWidget($aData, $widgetID);
+            $npsData = $mNPS->getNps($userID, $npsId);
+            //pre($npsData);
+            $sEmailPreview = view('admin.modules.nps.nps-templates.email.widget_preview', array('oNPS' => $npsData))->render();
+            $npsScriptCode = '<pre class="prettyprint" id="prettyprint">
+							&lt;script
+							type="text/javascript"
+							id="bbscriptloader"
+							data-key="' . $npsData->hashcode . '"
+							data-widgets="nps"
+							async=""
+							src="' . base_url('assets/js/nps_widgets.js') . '"&gt;
+							&lt;/script&gt;
+						</pre>
+                        <div style="display: none;" class="prettyprintDiv">&lt;script type="text/javascript" id="bbscriptloader" data-key="' . $npsData->hashcode . '" data-widgets="nps" async="" src="' . base_url('assets/js/nps_widgets.js') . '"&gt; &lt;/script&gt;</div>';
+            if ($result) {
+                $response = array('status' => 'success', 'preview' => $sEmailPreview, 'npsScriptCode' => $npsScriptCode);
+            } else {
+                $response = array('status' => 'error');
+            }
+
+            echo json_encode($response);
+            exit;
+        }
+
     public function nps_widget_List(Request $request) {
         $mNPS = new NpsModel();
 
