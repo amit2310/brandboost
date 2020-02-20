@@ -11,9 +11,10 @@
                         <h3 class="htxt_medium_24 dark_700">Tag Subscribers:: {{capitalizeFirstLetter(setStringLimit(tagName, 14))}}</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
+                        <a :href="`/admin/subscriber/exportSubscriberCSV?module_name=people&module_account_id=${ tagID }`">
+                            <button type="button" class="btn btn-md bkg_blue_200 light_000"><i
+                                class="icon-arrow-down16 bkg_blue_200 light_000"></i><span> &nbsp;  Export Contact</span></button> </a>
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000">Main Action <span><img
-                            src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
