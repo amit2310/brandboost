@@ -398,7 +398,6 @@ class Nps extends Controller {
 
         if ($npsID > 0) {
 
-
             $bUpdateID = $mNPS->updateNPS($aData, $userID, $npsID);
             if ($bUpdateID) {
                 $response = array('status' => 'success', 'id' => $bUpdateID, 'msg' => "Success");
@@ -684,7 +683,28 @@ class Nps extends Controller {
             exit;
         }
     }
+    public function nps_widget_List(Request $request) {
+        $mNPS = new NpsModel();
 
+        $widgetID = $request->widgetID;
+
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (empty($widgetID)) {
+            redirect("admin/modules/nps/widgets");
+            exit;
+        }
+        $oNPSList = $mNPS->getAllNpsLists($userID);
+        $widgetData = $mNPS->getNPSWidgets($userID, $widgetID);
+        $aData = array(
+            'widgetID' => $widgetID,
+            'oNPSList' => $oNPSList,
+            'widgetData' => $widgetData,
+        );
+        echo json_encode($aData);
+        exit;
+    }
     /**
      *
      * @param type $widgetIDSetup NPS widget

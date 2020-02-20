@@ -769,6 +769,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/modules/nps', 'Admin\Modules\Nps@index');
     Route::get('admin/modules/nps/overview', 'Admin\Modules\Nps@overview');
     Route::get('admin/modules/nps/setup/{npsID}', 'Admin\Modules\Nps@setup');
+    Route::get('admin/modules/nps/nps_widget_list/{widgetID}', 'Admin\Modules\Nps@nps_widget_List');
     Route::post('admin/modules/nps/updateNPSCustomize', 'Admin\Modules\Nps@updateNPSCustomize');
     Route::post('admin/modules/nps/addNPSWidget', 'Admin\Modules\Nps@addNPSWidget');
     Route::post('admin/modules/nps/updatNPSWidgetStatus', 'Admin\Modules\Nps@updatNPSWidgetStatus');

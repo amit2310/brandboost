@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}} </h3>
+                        <h3 class="htxt_medium_24 dark_700">{{campaign.title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
@@ -30,12 +30,13 @@
                                 <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">1</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Campaign info</a></li>
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(2)"><span class="num_circle"><span class="num">2</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Workflow</a></li>
-                                <li><a href="javascript:void(0);" @click="displayStep(3)"><span class="num_circle"><span class="num">3</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
-                                </li>
-                                <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>
+                                    Integration</a></li>
+<!--                                <li><a href="javascript:void(0);" @click="displayStep(3)"><span class="num_circle"><span class="num">3</span><span-->
+<!--                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>-->
+<!--                                </li>-->
+<!--                                <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span-->
+<!--                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Scores</a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -46,6 +47,18 @@
                             <div class="bbot pb10 mb15">
                                 <p class="fsize11 text-uppercase dark_200 m-0">Component</p>
                             </div>
+<!--                            {{campaign}}-->
+<!--                            {{oNPSList.widgetData}}-->
+                            <div class="form-group mb10">
+                                <div class="p0" v-for="npl in oNPSList">
+                                    <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">{{npl.title}} &nbsp;
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="radio" v-model="campaign.nps_id" :checked="npl.id ==campaign.nps_id">
+                                            <span class="toggle email"></span> </label>
+                                    </h3>
+                               </div>
+                            </div>
+
                             <div class="p0">
                                 <h3 v-if="campaign.platform !='sms'" class="dark_400 mb0 fsize13 fw300">Logo &nbsp;
                                     <label class="custom-form-switch float-right">
@@ -228,6 +241,7 @@
                 moduleUnitID: '',
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
+                oNPSList: {},
                 campaign: {},
                 user: {},
                 breadcrumb: '',
@@ -238,17 +252,8 @@
             }
         },
         created() {
-            axios.get('/admin/modules/nps/setup/' + this.campaignId)
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.moduleName = response.data.moduleName;
-                    this.campaign = response.data.oNPS;
-                    this.preview = response.data.setupPreview;
-                    this.user = response.data.userData;
-                    this.loading = false;
+            this.getNpsWidgetSetup();
 
-                });
         },
         mounted() {
             setTimeout(function(){
@@ -260,6 +265,24 @@
 
         },
         methods: {
+            getNpsWidgetSetup: function(){
+                axios.get('/admin/modules/nps/nps_widget_list/' + this.campaignId)
+                    .then(response => {
+                        this.oNPSList = response.data.oNPSList;
+                        this.loading = false;
+                    });
+                axios.get('/admin/modules/nps/setup/' + this.campaignId)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.campaign = response.data.oNPS;
+                        this.preview = response.data.setupPreview;
+                        this.user = response.data.userData;
+                        this.loading = false;
+
+                    });
+            },
             toggleLogoDisplay: function(e){
                 if(e.target.checked){
                     jq(".logo_img").parent().show();
@@ -319,6 +342,7 @@
 
                 axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
                     .then(response => {
+                        this.getNpsWidgetSetup();
                         this.loading = false;
                     });
 
@@ -361,6 +385,7 @@
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
+                    this.getNpsWidgetSetup();
                 });
 
             },
