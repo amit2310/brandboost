@@ -137,16 +137,17 @@ class Tags extends Controller {
 
         $aData = array(
             'title' => 'Tags Subscribers',
-            'allData' => $oList,
-            'subscribersData' => $oList->items(),
             'breadcrumb' => $aBreadcrumb,
-            'moduleName' => $moduleName,
-            'moduleUnitID' => $moduleUnitID,
+            'moduleName' => '',
+            'moduleUnitID' => '',
             'moduleAccountID' => '',
             'tagName' => $tagName,
+            'tag_id' => $tagID,
+            'user_id' => $userID,
+            'allData' => $oList,
+            'subscribersData' => $oList->items(),
             'activeCount' => 0,
-            'archiveCount' => 0,
-            'tag_id' => $tagID
+            'archiveCount' => 0
         );
 
         echo json_encode($aData);
