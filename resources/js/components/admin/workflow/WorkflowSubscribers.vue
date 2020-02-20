@@ -96,6 +96,7 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">View Details</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)">Edit</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)">Delete</a>
+                                        <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)">Sync</a>
                                     </div>
                                 </div>
                             </td>
@@ -206,6 +207,9 @@
             },
             prepareContactUpdate: function(contactId) {
                 this.$emit('prepareUpdate', {contactId});
+            },
+            doSyncContacts: function(contactId) {
+                this.$emit('syncContacts', {contactId});
             }
         },
         mounted() {

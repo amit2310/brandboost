@@ -33,6 +33,7 @@
                 :module-name="moduleName"
                 :module-unit-id="moduleUnitID"
                 @navPage ="navigatePagination"
+                @syncContacts="syncContacts"
                 :key="subscribers"
             ></workflow-subscribers>
         </div>
@@ -190,6 +191,31 @@
                 this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            syncContacts: function(segmentID) {
+                if(confirm('Are you sure you want to perform this action?')){
+                    this.loading = true;
+                    //Do axios
+                    axios.post('/admin/segments/syncSegment', {
+                        segmentID:segmentID,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.loading = false;
+                                this.successMsg = 'Segment contacts have been synced successfully!';
+                            }
+
+                        })
+                        .catch(error => {
+                            this.loading = false;
+                            //error.response.data
+                            alert('Something went wrong.');
+                        });
+                }
             }
         }
 
