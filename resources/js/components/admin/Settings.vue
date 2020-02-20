@@ -724,11 +724,11 @@
                                                     </li>
                                                 </ul>
 
-                                                <button v-if="isMembershipActive" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
+                                                <button v-if="oMembership.isMembershipActive" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
 
                                                 <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" :plan_id="oMembership.plan_id" :plan_name="oMembership.level_name">
                                                     <span v-if="oCurrentPlanData == ''">Buy</span>
-                                                    <span v-if="isMembershipActive != ''">Upgrade</span>
+                                                    <span v-else-if="oMembership.isMembershipActive != ''">Upgrade</span>
                                                     <span v-else>Downgrade</span>
                                                 </button>
                                             </div>
@@ -789,10 +789,10 @@
                                                     </li>
                                                 </ul>
 
-                                                <button v-if="isMembershipActive" type="button" class="btn white_btn w100 txt_purple h40"><span>Active</span> </button>
+                                                <button v-if="oMembership.isMembershipActive" type="button" class="btn white_btn w100 txt_purple h40"><span>Active</span> </button>
 
                                                 <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" :plan_id="oMembership.plan_id" :plan_name="oMembership.level_name">
-                                                    <span v-if="(isMembershipActive != '' && oCurrentPlanData.level_name == 'Pro')">Upgrade</span>
+                                                    <span v-if="(oMembership.isMembershipActive != '' && oCurrentPlanData.level_name == 'Pro')">Upgrade</span>
                                                     <span v-else>Downgrade</span>
                                                 </button>
                                             </div>
@@ -832,71 +832,46 @@
                                 </div>
                                 <div class="clearfix"></div>
 
-                                <!--<div class="row mt40">
-                                    @if (!empty($oMemberships))
-                                    @foreach ($oMemberships as $oMembership)
-                                    @php
-                                    if ($oMembership->type == 'topup-membership'):
-                                    if ($oMembership->plan_id == $oUser->topup_plan_id) {
-                                    $oCurrentTopupMembership = $oMembership;
-                                    }
-                                    @endphp
-
-                                    <div class="col-xs-4" style="margin-top:20px;">
+                                <div v-if="oMemberships != ''" class="row mt40">
+                                    <div v-if="oMembership.type == 'topup-membership'" v-for="oMembership in oMemberships" class="col-xs-4" style="margin-top:20px;">
                                         <div class="price_plan">
                                             <div class="imgicon"><img src="/assets/images/icon_credit.png"/></div>
                                             <div class="bbot p30 text-center">
-                                                <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
-                                                <h3>${{ $oMembership->price }}<span>/
-														@if ($oMembership->subs_cycle == 'week')
-															{{ 'week' }}
-														@elseif ($oMembership->subs_cycle == 'month')
-															{{ 'Mo' }}
-														@elseif ($oMembership->subs_cycle == 'year')
-															{{ 'Yr' }}
-														@endif
-														</span>
+                                                <p class="txt_purple fsize16">{{ number_format(oMembership.credits) }} credits</p>
+                                                <h3>${{ oMembership.price }}
+                                                    <span v-if="oMembership.subs_cycle == 'week'"> /week</span>
+                                                    <span v-else-if="oMembership.subs_cycle == 'month'"> /Mo</span>
+                                                    <span v-else="oMembership.subs_cycle == 'year'"> /Yr</span>
                                                 </h3>
                                                 <p class="text-muted fsize13 m0">Billed
-                                                    @if ($oMembership->subs_cycle == 'week')
-                                                    {{ 'Weekly' }}
-                                                    @elseif ($oMembership->subs_cycle == 'month')
-                                                    {{ 'Monthly' }}
-                                                    @elseif ($oMembership->subs_cycle == 'year')
-                                                    {{ 'Yearly' }}
-                                                    @endif
+                                                    <span v-if="oMembership.subs_cycle == 'week'"> Weekly</span>
+                                                    <span v-else-if="oMembership.subs_cycle == 'month'"> Monthly</span>
+                                                    <span v-else="oMembership.subs_cycle == 'year'"> Yearly</span>
                                                 </p>
                                             </div>
 
-
                                             <div class="p30">
-                                                @php
-                                                if ($oUser->topup_plan_id == $oMembership->plan_id) {
-                                                $isTopupMembershipActive = true;
-                                                @endphp
-                                                <button type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
-                                                @php } else { @endphp
-                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" data-toggle="modal" data-target="#confirm_topup_level_upgrade"><span>@if (empty($isTopupMembershipActive)) Buy @elseif ($isTopupMembershipActive) Upgrade @else Downgrade @endif</span> </button>
-                                                @php } @endphp
+                                                <button v-if="(oUser.topup_plan_id == oMembership.plan_id)" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
+                                                <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" data-toggle="modal" data-target="#confirm_topup_level_upgrade">
+                                                    <span v-if="oMembership.isTopupMembershipActive == ''">Buy</span>
+                                                    <span v-if="oMembership.isTopupMembershipActive == 'true'">Upgrade</span>
+                                                    <span v-else>Downgrade</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
-                                    @endforeach
-                                    @endif
-                                </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!--<div class="panel panel-flat review_ratings">
-                        <div class="panel-heading">
+                    <div class="panel panel-flat review_ratings">
+                        <div class="panel-heading" style="padding: 10px;">
                             <h6 class="panel-title">Addon Credits</h6>
-                            <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                         </div>
                         <div class="panel-body p0">
 
-                            &lt;!&ndash;====GENERAL SETTINGS====&ndash;&gt;
+                            <!--====GENERAL SETTINGS====-->
                             <div class="bbot p30">
                                 <div class="row mb40">
                                     <div class="col-xs-9">
@@ -909,65 +884,53 @@
                                 <div class="clearfix"></div>
 
 
-                                <div class="row mt40">
-                                    @if (!empty($oMemberships))
-                                    @foreach ($oMemberships as $oMembership)
-                                    @if ($oMembership->type == 'topup' && $oMembership->level_name != 'Custom Pack')
-                                    <div class="col-xs-4" style="margin-top:20px;">
+                                <div v-if="oMemberships != ''" class="row mt40">
+                                    <div v-for="oMembership in oMemberships" v-if="(oMembership.type == 'topup' && oMembership.level_name != 'Custom Pack')" class="col-xs-4" style="margin-top:20px;">
                                         <div class="price_plan">
                                             <div class="imgicon"><img src="/assets/images/icon_credit.png"/></div>
                                             <div class="bbot p30 text-center">
-                                                <p><strong>{{ $oMembership->level_name }}</strong></p>
-                                                <p class="txt_purple fsize16">{{ number_format($oMembership->credits) }} credits</p>
-                                                <h3>${{ $oMembership->price }}<span></span></h3>
+                                                <p><strong>{{ oMembership.level_name }}</strong></p>
+                                                <p class="txt_purple fsize16">{{ number_format(oMembership.credits) }} credits</p>
+                                                <h3>${{ oMembership.price }}<span></span></h3>
                                                 <p class="text-muted fsize13 m0">Flat Fee</p>
                                             </div>
 
                                             <div class="p30">
-                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyAddon" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" topup_plan_price="{{ $oMembership->price }}" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>
+                                                <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyAddon" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
-                                    @endforeach
-                                    @endif
                                 </div>
                             </div>
-                            @if (!empty($oMemberships))
-                            @foreach ($oMemberships as $oMembership)
-                            @php
-                            $unitprice = 0;
-                            if ($oMembership->type == 'topup' && $oMembership->level_name == 'Custom Pack'):
-                            $unitprice = $oMembership->price;
-                            @endphp
-                            <div class="p30">
+
+                            <div v-if="oMemberships != ''">
+                            <div v-for="oMembership in oMemberships" v-if="(oMembership.type == 'topup' && oMembership.level_name == 'Custom Pack')" class="p30">
                                 <div class="row">
-                                    <div class="col-xs-9">
+                                    <div class="col-md-9 col-xs-9">
                                         <p class="m0"><strong class="fsize16">Buy Additional Brand Boost Credits</strong><br>
                                             <span class="text-muted fsize13">All projects on your plan come with Staging. </span>
                                         </p>
                                     </div>
 
-                                    <div class="col-xs-2">
+                                    <div class="col-md-2 col-xs-2">
                                         <p class="fsize13">Credits</p>
-                                        <div class="input-group input-group-xlg pull-left">
+                                        <div class="input-group input-group-xlg pull-right">
                                             <input class="form-control" value="1000" name="txtCustomQty"id="txtCustomQty" type="text" title="Enter quantity of credits" placeholder="1000">
-                                            <span class="input-group-addon" id="customprice">${{ ($oMembership->price * 1000) }}</span>
+                                            <span class="input-group-addon" id="customprice">${{ (oMembership.price * 1000) }}</span>
                                         </div>
                                     </div>
 
-                                    <div class="col-xs-1">
+                                    <div class="col-md-1 col-xs-1">
                                         <p class="fsize13">&nbsp;</p>
-                                        <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyCustomAddon" topup_plan_name="{{ $oMembership->level_name }}" topup_plan_id="{{ $oMembership->plan_id }}" topup_plan_price="{{ $oMembership->price }}" data-toggle="modal" data-target="#confirm_buy_custom_addon_plan"  class="btn dark_btn"><span>Buy</span> </button>
+                                        <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyCustomAddon" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_custom_addon_plan"><span>Buy</span> </button>
                                     </div>
                                 </div>
                             </div>
-                            @endif
-                            @endforeach
-                            @endif
+                            </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
+
 
                 <div class="col-md-3">
                     <div class="panel panel-flat review_ratings">

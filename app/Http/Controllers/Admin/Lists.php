@@ -287,6 +287,8 @@ class Lists extends Controller {
                     <li><a data-toggle="tooltip" data-placement="bottom" title="' . $listName . '" class="sidebar-control active hidden-xs ">' . $listName . '</a></li>
                 </ul>';
 
+        $countriesList = getCountriesList();
+
         $aData = array(
             'title' => 'List Subscribers',
             'allData' => $subscribersData,
@@ -297,6 +299,7 @@ class Lists extends Controller {
             'moduleUnitID' => $moduleUnitID,
             'moduleAccountID' => '',
             'listName' => $listName,
+            'countriesList' => $countriesList,
             'activeCount' => 0,
             'archiveCount' => 0,
             'list_id' => $listID,
