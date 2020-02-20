@@ -12,8 +12,6 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000">Main Action <span><img
-                            src="/assets/images/blue-plus.svg"/></span></button>
                     </div>
                 </div>
             </div>
