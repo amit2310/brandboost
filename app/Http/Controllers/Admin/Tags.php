@@ -31,7 +31,12 @@ class Tags extends Controller {
                         <li><a data-toggle="tooltip" data-placement="bottom" title="Tags Group" class="sidebar-control active hidden-xs ">Tags Group</a></li>
                     </ul>';
 
-        $aTag = TagsModel::getClientTags($userID);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Tags' => '#/contacts/tags/'
+        );
+
+        $aTag = $mTag->getClientTags($userID);
 
         if (!empty($aTag->items())) {
             foreach ($aTag->items() as $aUnit) {
@@ -52,7 +57,15 @@ class Tags extends Controller {
                 $TagSubscribers[$tid] = $mTag->getSubscriberIDsByTagId($tid);
             }
         }
-        $aData = ['allData' => $aTag, 'aTag' => $aTag->items(), 'aGroupID' => $aGroupID, 'aTagSubscribers' => $TagSubscribers];
+
+        $aData = array(
+            'title' => 'Tags',
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $aTag,
+            'aTag' => $aTag->items(),
+            'aGroupID' => $aGroupID,
+            'aTagSubscribers' => $TagSubscribers
+        );
         //$aTag->aGroupID = $aGroupID;
 //        return view ('admin.tags.index', array('title' => 'Insight Tags', 'pagename' => $breadcrumb, 'aTag' => $aTag));
         return $aData;;
@@ -79,7 +92,7 @@ class Tags extends Controller {
                     </ul>';
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Tags' => '#/tags/groups'
+            'TagGroups' => '#/tags/groups'
         );
 
         $aTagGroups = $mTag->getClientTagGroups($userID);
@@ -206,11 +219,10 @@ class Tags extends Controller {
                     </ul>';
         $aBreadcrumb = array(
             'Home' => '#/',
-            'TagsReview' => '#/tagsreview'
+            'Tags Review' => '#/tagsreview'
         );
 
         $tagData = $mTag->getAllClientTags($userID);
-        //return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
 
         if (!empty($tagData)) {
             foreach ($tagData as $tagDataVal) {
@@ -220,12 +232,14 @@ class Tags extends Controller {
         }
 
         $aData = array(
-            'title' => 'Insight Tag Reviews',
-            'uRole' => $userRole,
+            'title' => 'Tag Reviews',
             'breadcrumb' => $aBreadcrumb,
             'allData' => $tagData,
-            'atagData' => $tagData->items()
+            'atagData' => $tagData->items(),
+            'aTag' => $tagData->items()
         );
+
+        //return view ('admin.tags.tagsreview', array('title' => 'Tags Review', 'pagename' => $breadcrumb, 'tagData' => $tagData));
 
         echo json_encode($aData);
         exit;
