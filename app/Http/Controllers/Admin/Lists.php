@@ -27,7 +27,7 @@ class Lists extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'People' => '#/contacts/dashboard',
-            'Lists' => '#/lists',
+            'Lists' => '#/contacts/lists',
             'Subscribers' => ''
         );
 
@@ -274,7 +274,7 @@ class Lists extends Controller {
         $aBreadcrumb = array(
             'Home' => '#/',
             'People' => '#/contacts/dashboard',
-            'Lists' => '#/lists/',
+            'Lists' => '#/contacts/lists',
             'Subscribers' => ''
         );
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
