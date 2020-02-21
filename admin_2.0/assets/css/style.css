@@ -1479,6 +1479,8 @@ PAGE WITH SIDEBAR CSS
 .review_sites_list li:last-child{margin: 0!important}
 
 
+.reply_sec_link a{ margin-right: 25px; float: left; display: inline-block}
+.reply_sec_link a img{float: left;}
 
 
 .ratingbox{background: #fff9ea;  max-width: 200px; margin: auto;  height: 45px; line-height: 41px; border-radius: 50px;}
