@@ -53,7 +53,7 @@
     <?php //print_r($oNPS); ?>
 	<body width="100%" height="100%" bgcolor="#f3f3fa" style="margin: 0; mso-line-height-rule: exactly;">
 		<center class="wrap" style="width: 100%; text-align:left;">
-			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin:100px auto 0;" class="email-container table_main_mr">
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin:50px auto 0;" class="email-container table_main_mr">
 				<tr>
 					<td>
 						<table style="background:#fff; box-shadow:0px 0px 8px;">
