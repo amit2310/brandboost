@@ -1,8 +1,14 @@
+
+
 <style>
+    .w100 {
+        width: 100% !important;
+    }
 	#nps_widget_preview .buttonStyle{background: {{ $oNPS->web_button_color }}!important; color: {{ $oNPS->web_button_text_color }}!important; border-color:{{ ($oNPS->web_button_color == '#ffffff' || $oNPS->web_button_color == '#FFFFFF' || $oNPS->web_button_color == '') ? '#e7e7f0' : $oNPS->web_button_color }}!important}
 	#nps_widget_preview .buttonStyle:hover{background: {{ $oNPS->web_button_over_color }}!important; color: {{ $oNPS->web_button_over_text_color }}!important; border-color:{{ $oNPS->web_button_over_color }}!important}
 </style>
-<div id="nps_widget_preview" style="position: absolute;width: 485px;height: 240px;top: 50%;left: 50%;margin-left: -240px;margin-top: -120px; font-family: arial;">
+{{--<div id="nps_widget_preview" style="position: absolute;width: 485px;height: 240px;top: 50%;left: 50%;margin-left: -240px;margin-top: -120px; font-family: arial;">--}}
+<div id="nps_widget_preview" style="position: absolute;top:10%;width:100%; margin-top:0px; font-family: arial;">
     <div style="text-align: center; padding: 50px; margin-bottom: 0px; width: 100%;border-radius: 5px;background-color: #ffffff;box-shadow: 0 10px 20px 0 rgba(12, 12, 44, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.03);position: relative; box-sizing: border-box;">
         <div style="width: 66px;height: 66px;position: absolute;padding: 8px;border-radius: 100px;background-color: #fafafd;top: -33px;left: 50%;
              margin-left: -33px; box-sizing: border-box;"><img style="width: 50px; height: 50px; border-radius: 100px; @if ((!$oNPS->display_logo) && $oNPS->brand_logo != '') display:none; @endif" src="https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/{{ $oNPS->brand_logo }}" class="logo_img" /></div>
@@ -24,3 +30,4 @@
         </ul>
     </div>
 </div>
+<img class="w100" src="/assets/images/config_bkg.png">

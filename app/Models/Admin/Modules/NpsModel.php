@@ -46,7 +46,22 @@ class NpsModel extends Model {
 
         return $aData;
     }
+    /**
+     * Used to get nps widget list by user id
+     * @param type $userID
+     * @return type
+     */
+    public function getAllNpsLists($userID) {
+        $aData = DB::table('tbl_nps_main')
+            ->select('tbl_nps_main.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+            ->join('tbl_users', 'tbl_nps_main.user_id', '=', 'tbl_users.id')
+            ->where('tbl_nps_main.user_id', $userID)
+            ->orderBy('id', 'Desc')
+            ->get();
+//            ->paginate();
 
+        return $aData;
+    }
     /**
      * Used to get my user by survey info
      * @param type $accountID

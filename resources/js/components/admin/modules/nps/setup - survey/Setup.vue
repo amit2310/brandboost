@@ -6,10 +6,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">{{campaign.widget_title}} </h3>
+                        <h3 class="htxt_medium_24 dark_700">{{campaign.title}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(2)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
@@ -28,8 +28,7 @@
                         <div class="col-md-12">
                             <ul class="email_config_list">
                                 <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">1</span><span
-                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Configuration
-                                </a></li>
+                                    class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Campaign info</a></li>
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(2)"><span class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>
                                     Integration</a></li>
@@ -46,13 +45,10 @@
                     <div class="col-md-4">
                         <div class="email_review_config p20">
                             <div class="bbot pb10 mb15">
-                                <h2 class="fsize11 text-uppercase dark_200 m-0">NPS Survey</h2>
-                            </div>
-                            <div class="bbot pb10 mb15">
-                                <p class="fsize11 text-uppercase dark_200 m-0">SELECT NPS SURVEY</p>
+                                <p class="fsize11 text-uppercase dark_200 m-0">Component</p>
                             </div>
 <!--                            {{campaign}}-->
-<!--                            {{oNPSList}}-->
+<!--                            {{oNPSList.widgetData}}-->
                             <div class="form-group mb10">
 
                                      <div class="p0" v-for="(npl ,index ) in oNPSList">
@@ -64,7 +60,7 @@
                                              <label class="custom-form-switch float-right">
                                                    <input class="field"
                                                           type="radio"
-                                                          v-bind:value="npl.id" v-model="campaign.nps_id"
+                                                          v-bind:value="npl.id" v-model="campaign.nps_id" :checked="npl.id == campaign.nps_id"
                                                           @change="autoSaveNPSWidget($event)">
                                                     <span class="toggle email"></span> </label>
                                         </h3>
@@ -208,13 +204,8 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="email_review_config p20" style="width: 100%!important;">
-                            <div class="bbot pb10 mb15">
-                                <h2 class="fsize13 text-uppercase dark_200 m-0">Preview</h2>
-                            </div>
-                            <div class="card p0 m-auto text-center" v-html="preview">
+                        <div class="card p0 m-auto text-center" v-html="preview">
 
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -283,40 +274,33 @@
         },
         methods: {
             getNpsWidgetSetup: function(){
-                axios.get('/admin/modules/nps/nps_widget/setup/' + this.campaignId)
+                axios.get('/admin/modules/nps/nps_widget_list/' + this.campaignId)
                     .then(response => {
                         this.oNPSList = response.data.oNPSList;
-                        this.campaign = response.data.widgetData;
-                        this.preview = response.data.setupPreview;
-                        console.log(this.campaign);
-
                         this.loading = false;
                     });
-                // axios.get('/admin/modules/nps/setup/' + this.campaignId)
-                //     .then(response => {
-                //         this.breadcrumb = response.data.breadcrumb;
-                //         this.makeBreadcrumb(this.breadcrumb);
-                //         this.moduleName = response.data.moduleName;
-                //         this.campaign = response.data.oNPS;
-                //         this.preview = response.data.setupPreview;
-                //         this.user = response.data.userData;
-                //         this.loading = false;
-                //
-                //     });
+                axios.get('/admin/modules/nps/setup/' + this.campaignId)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.campaign = response.data.oNPS;
+                        this.preview = response.data.setupPreview;
+                        this.user = response.data.userData;
+                        this.loading = false;
+
+                    });
             },
             autoSaveNPSWidget: function(e){
-                this.loading = true;
-                axios.post('/admin/modules/nps/autoSaveNPSWidget',{
+                axios.post('/admin/modules/nps/addNPSWidgetSurvey',{
                     // params:{
-                        widget_id: this.campaignId,
-                        nps_id: this.campaign.nps_id,
+                        nps_id: this.campaignId,
+                        widget_id: this.campaign.nps_id,
                         hashcode: this.campaign.hashcode,
                     // }
                 })
                     .then(response => {
                         this.preview = response.data.preview;
-                        this.refreshMessage = Math.random();
-                        this.successMsg = 'Updated the changes successfully!!';
                         this.loading = false;
 
                     });
@@ -388,9 +372,9 @@
             displayStep: function(step){
                 let path = '';
                 if(!step){
-                    path = '/admin#/modules/nps/widgets/';
+                    path = '/admin#/nps/';
                 }else{
-                    path = '/admin#/modules/nps/widgets/step/'+this.campaignId+'/'+step;
+                    path = '/admin#/nps/setup/'+this.campaignId+'/'+step;
                 }
 
                 window.location.href = path;
@@ -538,7 +522,6 @@
         width:300px !important;
         position: relative !important;
     }
-
 </style>
 
 

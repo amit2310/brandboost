@@ -247,7 +247,7 @@
                 window.location.href = '#/modules/nps/setup/'+wId;
             },
             navigateToWidgetSetup(wId) {
-                window.location.href = '#/nps/nps_widget_setup/'+wId;
+                window.location.href = '#/modules/nps/widgets/step/'+wId+'/1';
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
