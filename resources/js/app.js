@@ -13,16 +13,19 @@ import axios from 'axios';
 import helpers from './helpers';
 /*import forms from './forms';*/
 import commonComponents from './components/helpers/Common/LoadCommonComponents.js';
+import Form from './forms';
+
 
 commonComponents.forEach(component => {
     Vue.component(component.name, component);
 });
 
 window.axios = axios;
+window.Form = Form;
 
 Vue.use(new VueSocketIO({
         debug: false,
-        connection: 'http://brandboostx.com:3000'
+        connection: 'http://vue.brandboostx.com:3000'
     })
 );
 Vue.use(VueRouter);
