@@ -1,7 +1,5 @@
 <template>
-
     <div class="content" id="masterContainer">
-
         <!--******************
           Top Heading area
          **********************-->
@@ -20,19 +18,17 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
         <!--******************
           Content Area
          **********************-->
         <div class="content-area">
-
             <div v-if="lists" class="container-fluid">
                 <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">Contact lists</h3>
+                            <h3 class="htxt_medium_16 dark_400">{{allData.total}} Contact lists</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="table_action">
@@ -41,9 +37,9 @@
                                         <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                                     </div>
                                 </div>
                                 <div class="float-right ml10 mr10">
@@ -51,9 +47,9 @@
                                         <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                                     </div>
                                 </div>
                                 <div class="float-right">
@@ -63,13 +59,11 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
-
                     <div v-for="list in lists" class="col-md-3 text-center">
                         <div class="card p30 h235 animate_top">
                             <div class="dot_dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a v-if="list.countSubscribers > 0" class="dropdown-item" href="javascript:void(0);" @click="showListSubscribers(list.id)"><i class="dripicons-user text-muted mr-2"></i> View Contacts</a>
@@ -98,135 +92,24 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-3 text-center js-list-slidebox" style="cursor: pointer;">
                         <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>contacts list</p>
                         </div>
                     </div>
-
                 </div>
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
                     :offset="4">
                 </pagination>
-
-                <!--<div class="table_head_action mt10">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">Latest contacts</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="table_action">
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                                <div class="float-right ml10 mr10">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                                <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Search" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
-                                <tbody>
-                                <tr>
-                                    <td><span class="table-img mr15"><img src="assets/images/table_user.png"/></span> <span class="htxt_medium_14 dark_900">Courtney Black</span></td>
-                                    <td class="text-right">nina.hernandez@example.com</td>
-                                    <td># lead, subscriber</td>
-                                    <td><span class="badge badge-dark">+4</span></td>
-                                    <td>Customer</td>
-                                    <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
-                                    <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="table-img mr15"><img src="assets/images/table_user2.png"/></span> <span class="htxt_medium_14 dark_900">Savannah Webb</span></td>
-                                    <td class="text-right">ivan.carter@example.com</td>
-                                    <td># lead, subscriber</td>
-                                    <td><span class="badge badge-dark">+4</span></td>
-                                    <td>Ticket</td>
-                                    <td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
-                                    <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="table-img mr15"><img src="assets/images/table_user3.png"/></span> <span class="htxt_medium_14 dark_900">Bessie Flores</span></td>
-                                    <td class="text-right">tim.jennings@example.com</td>
-                                    <td># lead, subscriber</td>
-                                    <td><span class="badge badge-dark">+4</span></td>
-                                    <td>Customer</td>
-                                    <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
-                                    <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td><span class="table-img mr15"><img src="assets/images/table_user4.png"/></span> <span class="htxt_medium_14 dark_900">Dianne Mckinney</span></td>
-                                    <td class="text-right">logan.hopkins@example.com</td>
-                                    <td># lead, subscriber</td>
-                                    <td><span class="badge badge-dark">+4</span></td>
-                                    <td>Ticket</td>
-                                    <td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
-                                    <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><span class="table-img mr15"><img src="assets/images/table_user2.png"/></span> <span class="htxt_medium_14 dark_900">Dianne Mckinney</span></td>
-                                    <td class="text-right">logan.hopkins@example.com</td>
-                                    <td># lead, subscriber</td>
-                                    <td><span class="badge badge-dark">+4</span></td>
-                                    <td>Ticket</td>
-                                    <td><span class="dot_6 bkg_yellow_500">&nbsp;</span></td>
-                                    <td class="text-right"><span class="icons"><img src="assets/images/message-2-line.svg"/></span> <span class="icons"><img src="assets/images/mail-open-line-16.svg"/></span> <span class="icons"><img src="assets/images/message-3-line-16.svg"/></span> <span class="icons"><img src="assets/images/star-line.svg"/></span>
-                                    </td>
-                                </tr>
-
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>-->
-
             </div>
-
             <div v-else class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card_shadow min-h-280">
                             <div class="row mb65">
-
                                 <div class="col-md-12 text-center">
                                     <img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
                                     <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any List contacts</h3>
@@ -236,36 +119,26 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 blue_400 htxt_bold_14" href="#">
+                                    <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
                                         <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
                                         Import contacts
                                     </a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
                                         <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
                                         Learn how to use contacts
                                     </a>
                                 </div>
                             </div>
-
-
-
-
-
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-
         <!--******************
           Content Area End
          **********************-->
-
         <!--******************
           Create Contact Sliding Smart Popup
          **********************-->
@@ -285,8 +158,6 @@
                                         <input type="text" class="form-control h56" id="fname" placeholder="Enter list name" name="title"
                                                v-model="form.title">
                                     </div>
-
-
                                     <div class="form-group">
                                         <label for="phonenumber">Color</label>
                                         <div class="phonenumber">
@@ -301,7 +172,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="desc">Description</label>
                                         <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="List description"
@@ -310,7 +180,6 @@
                                     </div>
                             </div>
                         </div>
-
                         <div class="row bottom-position">
                             <div class="col-md-12 mb15">
                                 <hr>
@@ -320,23 +189,19 @@
                                 <input type="hidden" name="module_account_id" id="module_account_id"
                                        :value="moduleAccountID">
                                 <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
+                                <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
                         </div>
                     </div>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
-
 </template>
-
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
     import PeopleListCreateSmartPopup from '@/components/helpers/PeopleListCreateSmartPopup';
     import Pagination from '@/components/helpers/Pagination';
-
     export default {
         title: 'Email Lists - Brand Boost',
         components: {UserAvatar, PeopleListCreateSmartPopup, Pagination},
@@ -360,10 +225,8 @@
                 allData: ''
             }
         },
-        mounted() {
+        created() {
             this.loadPaginatedData();
-
-            console.log('Component mounted')
         },
         methods: {
             showListSubscribers: function(listId){
@@ -395,7 +258,6 @@
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
-
                     });
             },
             processForm : function(){
@@ -420,7 +282,6 @@
                             setTimeout(function () {
                                 elem.loadPaginatedData();
                             }, 500);
-
                             syncContactSelectionSources();
                         }
                         else if (response.data.status == 'error') {
@@ -518,18 +379,11 @@
             }
         }
     }
-
-
     $(document).ready(function () {
         $(document).on('click', '.js-list-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });
         });
-
-        /*$('[name=tags]').tagify();*/
-
     });
-
-
 </script>

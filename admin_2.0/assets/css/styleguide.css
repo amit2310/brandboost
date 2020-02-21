@@ -194,6 +194,7 @@ TABLES STYLES
 .table.table-borderless tbody tr.headings td:first-child{padding-left: 0px ; border-radius: 6px 0 0 0px; }
 .table.table-borderless tbody tr.headings td:last-child{padding-right: 5px ; border-radius: 0 6px 0px 0;}
 .table.table-borderless tbody tr:hover td{background: #fcfdff;}
+.table.table-borderless tbody tr.headings.active td{background: #fcfdff;}
 .table.table-borderless span.icons{margin: 0 5px;}
 .table.table-borderless .custmo_checkmark{border-radius: 30px;}
 .table.table-borderless .badge.badge-dark{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
@@ -216,6 +217,11 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .table_dots_dd{border: none; background: none; box-shadow: none; padding: 0!important }
 .table_dots_dd:after{display: none}
 .table-responsive{background: #fff; box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04)!important; border-radius: 6px; padding: 5px 23px;}
+.table-responsive.btop2_yellow{border-top: 2px solid #FFCF72}
+.table-responsive.btop2_blue{border-top: 2px solid #5998F8}
+.table-responsive.btop2_review{border-top: 2px solid #8C95F8}
+.table-responsive.btop2_grey{border-top: 2px solid #B4C0D4}
+
 .custom_pagination {border-radius:0 0 6px 6px; height:auto; background: #ffffff;  border-top: 1px solid #edf1fb; padding: 20px 0px 10px; font-weight: 500;font-size: 10px;line-height: 18px;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6;}
 .custom_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 5px no-repeat #fff; width: 32px; margin-left: 5px;}
 
@@ -527,6 +533,7 @@ Background COLOR CLASSES
 .bkg_blue_400{background: #3970D9}
 .bkg_blue_500{background: #2657B3}
 
+.bkg_green_000{background: #d9efe8}
 .bkg_green_100{background: #9CE4AF}
 .bkg_green_200{background: #8CDAA4}
 .bkg_green_300{background: #7ECD99!important}
@@ -592,7 +599,7 @@ Background COLOR CLASSES
 .bkg_chat_500{background: #3D5DD4}
 
 
-.bkg_reviews_000{background: #f1f2fd}
+.bkg_reviews_000{background: #e1e5fd}
 .bkg_reviews_100{background: #C6CAFC}
 .bkg_reviews_200{background: #AFB4FA}
 .bkg_reviews_300{background: #9AA1F9}
@@ -720,6 +727,7 @@ PADDING CLASSES
 .pl3{padding-left: 3px!important;}
 .pl5{padding-left: 5px!important;}
 .pl10{padding-left: 10px!important;}
+.pl15{padding-left: 15px!important;}
 .pl20{padding-left: 20px!important;}
 .pl25{padding-left: 25px!important;}
 .pl30{padding-left: 30px!important;}

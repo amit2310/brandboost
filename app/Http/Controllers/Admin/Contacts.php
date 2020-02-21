@@ -299,21 +299,14 @@ class Contacts extends Controller
                 );
             }
             array_multisort($result, SORT_DESC, $newArray);
-
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/contacts/mycontacts') . '">Contact</a></li>
-                    <li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Profile" class="sidebar-control active hidden-xs ">Profile</a></li>
-                </ul>';
-
             $oNotes = $mSubscriber->getContactNotes($contactId);
-
-            //'userData' => $getUserById,
-            //'getMyLists' => $getMyLists
-
-            $aData = array(
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'People' => '#/contacts/dashboard',
+                'People List' => '#/contacts/mycontacts',
+                'Profile' => ''
+            );
+            $aData = [
                 'subscribersData' => $subscribersData,
                 'userData' => $subscribersData,
                 'contactId' => $contactId,
@@ -331,10 +324,10 @@ class Contacts extends Controller
                 'subBrandSms' => $subBrandSms,
                 'oNotes' => $oNotes,
                 'result' => $result,
-                'pagename' => $breadcrumb,
                 'oPrograms' => $oPrograms,
-                'notificationSettings' => $notificationSettings
-            );
+                'notificationSettings' => $notificationSettings,
+                'breadcrumb' => $aBreadcrumb
+            ];
         }
 
         //pre($aData);die;
@@ -342,12 +335,12 @@ class Contacts extends Controller
             $popupContent = view('admin.components.smart-popup.contacts', $aData)->render();
             $response['status'] = 'success';
             $response['content'] = $popupContent;
-            echo json_encode($response);
-            exit;
+            return $response;
         } else {
             //return view('admin.contacts.contact_profile', $aData);
-            echo json_encode($aData);
-            exit;
+            return $aData;
+            /*echo json_encode($aData);
+            exit;*/
         }
     }
 

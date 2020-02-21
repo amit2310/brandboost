@@ -1,7 +1,5 @@
 <template>
-
     <div class="content" id="masterContainer">
-
         <!--******************
         Top Heading area
         **********************-->
@@ -20,7 +18,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
         <!--******************
           Content Area
          **********************-->
@@ -31,23 +28,20 @@
                 <div v-if="!oTags" class="row">
                         <div class="col-md-12">
                             <div class="card card_shadow min-h-280">
-
                                 <div class="row mb65">
                                     <div class="col-md-6 text-left">
-                                        <a class="lh_32 blue_400 htxt_bold_14" href="#">
+                                        <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
                                             <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
                                             Import Tag
                                         </a>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <a class="lh_32 htxt_regular_14 dark_200" href="#">
+                                        <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
                                             <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
                                             Learn how to use Tag
                                         </a>
                                     </div>
                                 </div>
-
-
                                 <div class="row mb65">
                                     <div class="col-md-12 text-center">
                                         <img class="mt40" style="max-width: 225px; " src="assets/images/tag_Frame.svg">
@@ -56,21 +50,14 @@
                                         <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-tag-slidebox">Add New Tag</button>
                                     </div>
                                 </div>
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
-
                 <div v-else>
                     <div class="table_head_action">
                     <div class="row">
                     <div class="col-md-6">
-                        <h3 class="htxt_medium_16 dark_400">{{ oTags.length }} Tags</h3>
+                        <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Tags Review</h3>
                     </div>
                     <div class="col-md-6">
                         <div class="table_action">
@@ -79,9 +66,9 @@
                                     <span><img src="assets/images/date_created.svg"/></span>&nbsp; Date Created
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Link 1</a>
-                                    <a class="dropdown-item" href="#">Link 2</a>
-                                    <a class="dropdown-item" href="#">Link 3</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                                 </div>
                             </div>
                             <div class="float-right ml10 mr10">
@@ -89,9 +76,9 @@
                                     <span><img src="assets/images/list_view.svg"/></span>&nbsp; List View
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Link 1</a>
-                                    <a class="dropdown-item" href="#">Link 2</a>
-                                    <a class="dropdown-item" href="#">Link 3</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                                 </div>
                             </div>
                             <div class="float-right">
@@ -101,42 +88,43 @@
                     </div>
                 </div>
                 </div>
-
                 <div class="row">
                     <div v-for="oTag in oTags" class="col-md-3 text-center">
                         <div class="card p30 h235 animate_top">
                             <div class="dot_dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                 <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteTagGroupEntity(oTag.tagid)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <div v-if="oTagSubscribers[oTag.tagid] > 0" @click="showTagSubscribers(oTag.tagid)" style="cursor:pointer;">
+                            <div>
                                 <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                    {{capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20))}}
+                                <h3 class="htxt_bold_16 dark_700 " v-if="oTag.TagDataById > 0" @click="showTagSubscribers(oTag.id)" style="cursor:pointer;">
+                                    {{ capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20)) }}
                                 </h3>
-                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ oTagSubscribers[oTag.tagid] }}</p>
-                            </div>
-                            <div v-else>
-                                <img class="mt20" src="assets/images/tag_icon_circle.svg">
-                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">
-                                    {{capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20))}}
+                                <h3 v-else class="htxt_bold_16 dark_700 ">
+                                    {{ capitalizeFirstLetter(setStringLimit(oTag.tag_name, 20)) }}
                                 </h3>
-                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="assets/images/user_16_grey.svg"/></i> {{ oTagSubscribers[oTag.tagid] }}</p>
+                                <p class="htxt_regular_12 dark_300 mt25 mb15" @click="showTags(oTag.group_id)" style="cursor:pointer;">
+                                    <em> Tag Group: <strong>{{ capitalizeFirstLetter(setStringLimit(oTag.group_name, 20)) }}</strong> </em>
+                                </p>
+                                <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oTag.tag_created) }} </em></p>
+                                <p class="htxt_regular_12 dark_300 mb15" v-if="oTag.TagDataById > 0" @click="showTagSubscribers(oTag.id)" style="cursor:pointer;">
+                                    <i><img src="assets/images/user_16_grey.svg"/></i> Reviews: {{ oTag.TagDataById }}
+                                </p>
+                                <p v-else class="htxt_regular_12 dark_300 mb15">
+                                    <i><img src="assets/images/user_16_grey.svg"/></i> Reviews: {{ oTag.TagDataById }}
+                                </p>
                             </div>
                         </div>
                     </div>
-
-
                     <div class="col-md-3 text-center js-tag-slidebox" style="cursor: pointer;">
                         <div class="card p30 bkg_none border_dashed shadow_none h235 animate_top">
                             <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                             <p class="htxt_regular_16 dark_100 mb15">Create<br>Tag list</p>
                         </div>
                     </div>
-
                 </div>
                     <pagination
                         :pagination="allData"
@@ -145,13 +133,10 @@
                     </pagination>
                 </div>
             </div>
-
         </div>
-
         <!--******************
           Content Area End
          **********************-->
-
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
@@ -164,40 +149,33 @@
                                 <hr>
                             </div>
                             <div class="col-md-12">
-
                                     <div class="form-group">
                                         <label for="fname">Tag name</label>
                                         <input type="text" class="form-control h56" id="fname" placeholder="Enter tag name" name="tagReviewName"
                                                v-model="form.tagReviewName">
                                     </div>
-
-
                                     <div class="form-group">
-                                        <label for="phonenumber">Tag Group</label>
+                                        <label for="tagGroupId">Tag Group</label>
                                         <select class="form-control" name="tagGroupId" v-model="form.tagGroupId" placeholder="Please Select">
                                            <option value="" disabled hidden>Please Select</option>
                                            <option v-for="oGroupID in oGroupIDs" :value="oGroupID.id">{{ oGroupID.group_name }}</option>
                                         </select>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="desc">Description</label>
                                         <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Tag Review Description"
                                                   name="tagReviewDescription"
                                                   v-model="form.tagReviewDescription"></textarea>
                                     </div>
-
-
                             </div>
                         </div>
-
                         <div class="row bottom-position">
                             <div class="col-md-12 mb15">
                                 <hr>
                             </div>
                             <div class="col-md-12">
                                 <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Create</button>
-                                <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a>
+                                <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a>
                             </div>
                         </div>
                     </div>
@@ -205,15 +183,10 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </template>
-
 <script>
-
     import Pagination from '@/components/helpers/Pagination';
-
     export default {
         title: 'Insight Tags - Brand Boost',
         props: ['pageColor'],
@@ -236,26 +209,25 @@
         },
         mounted() {
             this.loadPaginatedData();
-
-            console.log('Component mounted.');
         },
         methods: {
+            showTags: function(groupId){
+                window.location.href='#/tags/'+groupId;
+            },
             showTagSubscribers: function(tagId){
-                window.location.href='#/tags/getTagContacts/'+tagId;
+                window.location.href='#/contacts/tags/subscribers/'+tagId;
             },
             loadPaginatedData: function () {
-                axios.get('/admin/tags/?page=' + this.current_page)
+                axios.get('/admin/tags/tagsreview?page=' + this.current_page)
                     .then(response => {
                         this.loading = false;
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
                         //console.log(response.data);
                         this.allData = response.data.allData;
                         this.oGroupIDs = response.data.aGroupID;
-                        this.oTagSubscribers = response.data.aTagSubscribers;
+                        //this.oTagSubscribers = response.data.aTagSubscribers;
                         this.oTags = response.data.aTag;
-
-                        //console.log(this.oGroupIDs);
-                        //console.log(this.allData);
-
                     });
             },
             showPaginationData: function (current_page) {
@@ -303,7 +275,6 @@
             }
         }
     }
-
     $(document).ready(function(){
         $(document).on('click', '.js-tag-slidebox', function () {
             $(".box").animate({
@@ -311,7 +282,4 @@
             });
         });
     });
-
-
 </script>
-

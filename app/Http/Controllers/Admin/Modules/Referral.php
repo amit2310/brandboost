@@ -1245,7 +1245,7 @@ class Referral extends Controller {
                 );
             }
         } else if ($rewardType == 'referred_no_discount') {
-            $iPrimaryID = 1;  //Just to set any numeric number to make condition true below in order to updte in the main table
+            $iPrimaryID = 1;  //Just to set any numeric number to make condition true below in order to update in the main table
             $aUpdateData = array(
                 'ref_coupon_id' => '',
                 'promo_id' => '',

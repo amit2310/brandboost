@@ -243,6 +243,7 @@
             console.log('Component mounted')
         },
         methods: {
+            
             navigateToNPSSetup(wId) {
                 window.location.href = '#/modules/nps/setup/'+wId;
             },

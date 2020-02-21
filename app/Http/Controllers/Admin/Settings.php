@@ -53,7 +53,7 @@ class Settings extends Controller {
         $oTopupMembership = '';
         $oMemberships = MembershipModel::getActiveMembership();
         if (!empty($oMemberships)) {
-
+            $isMembershipActive = false;
             foreach ($oMemberships as $oPlan) {
                 $planID = $oPlan->plan_id;
                 if ($planID == $pID) {
@@ -63,6 +63,20 @@ class Settings extends Controller {
                 if($planID == $topupPlanID){
                     $oCurrentTopupPlanData = $oPlan;
                 }
+
+                if ($oUser->plan_id == $oPlan->plan_id) {
+                    $oPlan->isMembershipActive = true;
+                } else {
+                    $oPlan->isMembershipActive = false;
+                }
+
+                if ($oUser->topup_plan_id == $oPlan->plan_id) {
+                    $oPlan->isTopupMembershipActive = true;
+                }
+
+                /*if ($oPlan->plan_id == $oUser->topup_plan_id) {
+                    $oPlan->oCurrentTopupMembership = $oPlan;
+                }*/
             }
         }
 

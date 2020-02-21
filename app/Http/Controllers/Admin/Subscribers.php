@@ -621,14 +621,14 @@ class Subscribers extends Controller
         $cityName = $request->cityName;
         $stateName = $request->stateName;
         $zipCode = $request->zipCode;
-        $socialProfile = $request->socialProfile;
-        $facebookProfile = $request->facebook_profile;
-        $twitterProfile = $request->twitter_profile;
-        $linkedInProfile = $request->linkedin_profile;
-        $instagramProfile = $request->instagram_profile;
-        //$tagID = $request->tagID;
+        $socialProfile = (!empty($request->socialProfile) ? $request->socialProfile : '');
+        $facebookProfile = (!empty($request->facebook_profile) ? $request->facebook_profile : '');
+        $twitterProfile = (!empty($request->twitter_profile) ? $request->twitter_profile : '');
+        $linkedInProfile = (!empty($request->linkedin_profile) ? $request->linkedin_profile : '');
+        $instagramProfile = (!empty($request->instagram_profile) ? $request->instagram_profile : '');
+        $list_id = (!empty($request->list_id) ? $request->list_id : '0');
         $moduleName = $request->module_name;
-        $moduleAccountID = $request->module_account_id;
+        $moduleAccountID = (!empty($request->module_account_id) ? $request->module_account_id : $list_id);
 
         //$emailUser = getUserDetailByEmailId($email);
         $oUserAccount = UsersModel::checkEmailExist($email);
@@ -664,7 +664,7 @@ class Subscribers extends Controller
                 'linkedin_profile' => $linkedInProfile,
                 'instagram_profile' => $instagramProfile,
                 'socialProfile' => $socialProfile,
-                //'tagID' => $tagID,
+                //'list_id' => $list_id,
                 'created' => date("Y-m-d H:i:s")
             );
             if (!empty($emailUserId)) {
@@ -681,6 +681,7 @@ class Subscribers extends Controller
             );
 
             if ($moduleName == 'list') {
+                $aData['user_id'] = $userID;
                 $aData['list_id'] = $moduleAccountID;
                 $tableName = 'tbl_automation_users';
             } else if ($moduleName == 'brandboost') {

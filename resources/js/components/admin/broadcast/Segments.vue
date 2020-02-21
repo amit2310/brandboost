@@ -16,8 +16,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
-
         <!--******************
          Content Area
         **********************-->
@@ -28,25 +26,22 @@
                 <div class="row" v-if="!segments">
                     <div class="col-md-12">
                         <div class="card card_shadow min-h-280">
-
                             <div class="row mb65">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 blue_400 htxt_bold_14" href="#">
+                                    <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
                                         <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img
                                             src="/assets/images/download-fill.svg"/></span>
                                         Import segment
                                     </a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
                                         <span class="circle-icon-32 float-right ml10 bkg_light_200"><img
                                             src="/assets/images/question-line.svg"/></span>
                                         Learn how to use segments
                                     </a>
                                 </div>
                             </div>
-
-
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
                                     <img class="mt40" style="max-width: 225px; " src="/assets/images/segment_bkg.png">
@@ -56,17 +51,14 @@
                                     <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
-
                 <div v-else>
                     <div class="table_head_action">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 class="htxt_medium_16 dark_400">{{ segments.length }} Contact lists</h3>
+                                <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Contact lists</h3>
                             </div>
                             <div class="col-md-6">
                                 <div class="table_action">
@@ -76,9 +68,9 @@
                                             <span><img src="/assets/images/date_created.svg"/></span>&nbsp; Date Created
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Link 1</a>
-                                            <a class="dropdown-item" href="#">Link 2</a>
-                                            <a class="dropdown-item" href="#">Link 3</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                                         </div>
                                     </div>
                                     <div class="float-right ml10 mr10">
@@ -87,9 +79,9 @@
                                             <span><img src="/assets/images/list_view.svg"/></span>&nbsp; List View
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Link 1</a>
-                                            <a class="dropdown-item" href="#">Link 2</a>
-                                            <a class="dropdown-item" href="#">Link 3</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
                                         </div>
                                     </div>
                                     <div class="float-right">
@@ -99,19 +91,11 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
-                        <!--<div class="col-md-3 text-center">
-                            <div class="card p30 h235 animate_top">
-                                <img class="mt20" src="/assets/images/subs-icon_big.svg">
-                                <h3 class="htxt_bold_16 dark_700 mt25 mb15">Subscribers List</h3>
-                                <p class="htxt_regular_12 dark_300 mb15"><i><img src="/assets/images/user_16_grey.svg"/></i> 1,356</p>
-                            </div>
-                        </div>-->
                         <div v-for="segment in segments" class="col-md-3 text-center">
                             <div class="card p30 h235 animate_top">
                                 <div class="dot_dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                         <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a v-if="segment.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="moveArchive(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
@@ -149,33 +133,24 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-3 text-center js-segment-slidebox" style="cursor: pointer;">
                             <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
                                 <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                                 <p class="htxt_regular_16 dark_100 mb15">Create<br>Segment</p>
                             </div>
                         </div>
-
                     </div>
                     <pagination
                         :pagination="allData"
                         @paginate="showPaginationData"
                         :offset="4">
                     </pagination>
-
-
                 </div>
-
-
             </div>
-
         </div>
-
         <!--******************
           Content Area End
          **********************-->
-
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-segment-slidebox"><i
@@ -188,15 +163,12 @@
                                     <hr>
                                 </div>
                                 <div class="col-md-12">
-
                                     <div class="form-group">
                                         <label for="fname">Segment name</label>
                                         <input type="text" class="form-control h56" id="fname"
                                                placeholder="Enter segment name" name="segmentName"
                                                v-model="form.segmentName">
                                     </div>
-
-
                                     <div class="form-group">
                                         <label for="phonenumber">Color</label>
                                         <div class="phonenumber">
@@ -215,18 +187,14 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="desc">Description</label>
                                         <textarea class="form-control min_h_185 p20 pt10" id="desc"
                                                   placeholder="List description" name="segmentDescription"
                                                   v-model="form.segmentDescription"></textarea>
                                     </div>
-
-
                                 </div>
                             </div>
-
                             <div class="row bottom-position">
                                 <div class="col-md-12 mb15">
                                     <hr>
@@ -235,26 +203,20 @@
                                     <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                     <input type="hidden" name="module_account_id" id="module_account_id"
                                            :value="moduleAccountID">
-
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">
                                         {{ formLabel }}
                                     </button>
-                                    <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a></div>
+                                    <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a></div>
                             </div>
-
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
     </div>
-
 </template>
 <script>
     import Pagination from '@/components/helpers/Pagination';
-
     export default {
         props: ['pageColor'],
         components: {Pagination},
@@ -308,7 +270,6 @@
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }
-
                     });
             },
             processForm : function(){
@@ -333,7 +294,6 @@
                             setTimeout(function () {
                                 elem.loadPaginatedData();
                             }, 500);
-
                             syncContactSelectionSources();
                         }
                     })
@@ -355,11 +315,10 @@
                         this.loading = false;
                         this.segments = response.data.oSegments;
                         this.allData = response.data.allData;
-
                     });
             },
             showSegmentSubscribers: function(segmentId){
-                window.location.href='#/broadcast/segmentContacts/'+segmentId;
+                window.location.href='#/contacts/segments/subscribers/'+segmentId;
             },
             showPaginationData: function (current_page) {
                 this.navigatePagination(current_page);
@@ -448,24 +407,12 @@
                 }
             }
         }
-
     };
-
     $(document).ready(function () {
         $(document).on('click', '.js-segment-slidebox', function () {
             $(".box").animate({
                 width: "toggle"
             });
         });
-
     });
-
-
-    /*$(document).on('click', '#addContactForm', function () {
-        $('.addModuleContact').trigger('click');
-    });*/
-
 </script>
-
-
-
