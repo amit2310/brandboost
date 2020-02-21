@@ -225,6 +225,8 @@
                 axios.get('/admin/tags/groups?page=' + this.current_page)
                     .then(response => {
                         this.loading = false;
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
                         //console.log(response.data);
                         this.allData = response.data.allData;
                         this.oTagGroups = response.data.aTagGroups;

@@ -4,20 +4,20 @@
         <loading :isLoading="loading"></loading>
         <div class="row mb30">
             <div class="col-md-4 text-center">
-                <label for="temp1" class="m0 w-100">
+                <label for="temp4" class="m0 w-100">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
                             <input
                                 class="check"
                                 type="radio"
-                                id="temp1"
+                                id="temp4"
                                 v-model="form.rewardType"
-                                value="advocate_discount"
-                                name="advocateGiftType"
+                                value="referred_discount"
+                                name="referredGiftType"
                             >
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_active" v-if="form.rewardType == 'advocate_discount'"><img
+                        <div class="img_box img_active" v-if="form.rewardType == 'referred_discount'"><img
                             src="http://brandboost.io/assets/images/ref_reward_1_act.png"></div>
                         <div class="img_box img_inactive" v-else><img
                             src="http://brandboost.io/assets/images/ref_reward_1.png"></div>
@@ -27,53 +27,53 @@
                 </label>
             </div>
             <div class="col-md-4 text-center">
-                <label for="temp2" class="m0 w-100">
+                <label for="temp5" class="m0 w-100">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
                             <input
                                 type="radio"
                                 class="check"
-                                id="temp2"
+                                id="temp5"
                                 v-model="form.rewardType"
-                                value="advocate_cash"
-                                name="advocateGiftType"
+                                value="referred_promo"
+                                name="referredGiftType"
                             >
                             <span class="custmo_checkmark green_tr"></span>
                         </label>
-                        <div class="img_box img_active" v-if="form.rewardType == 'advocate_cash'"><img
+                        <div class="img_box img_active" v-if="form.rewardType == 'referred_promo'"><img
                             src="http://brandboost.io/assets/images/ref_reward_2_act.png"></div>
                         <div class="img_box img_inactive" v-else><img
                             src="http://brandboost.io/assets/images/ref_reward_2.png"></div>
-                        <p class="fsize14 txt_dark fw500">Cash</p>
-                        <p class="fsize12 txt_grey fw300">Coupon discount for friends</p>
+                        <p class="fsize14 txt_dark fw500">Promo Link</p>
+                        <p class="fsize12 txt_grey fw300">Promo link for friends</p>
                     </div>
                 </label>
             </div>
             <div class="col-md-4 text-center">
-                <label for="temp3" class="m0 w-100">
+                <label for="temp6" class="m0 w-100">
                     <div class="broadcast_select_contact ref">
                         <label class="custmo_checkbox">
                             <input
                                 type="radio"
                                 class="check"
-                                id="temp3"
-                                name="advocateGiftType"
+                                id="temp6"
+                                name="referredGiftType"
                                 v-model="form.rewardType"
-                                value="advocate_custom"
+                                value="referred_no_discount"
                             >
                             <span class="custmo_checkmark green_tr"></span></label>
-                        <div class="img_box img_active" v-if="form.rewardType == 'advocate_custom'"><img
+                        <div class="img_box img_active" v-if="form.rewardType == 'referred_no_discount'"><img
                             src="http://brandboost.io/assets/images/ref_reward_3_act.png"></div>
                         <div class="img_box img_inactive" v-else><img
                             src="http://brandboost.io/assets/images/ref_reward_3.png"></div>
                         <p class="fsize14 txt_dark fw500">Custom</p>
-                        <p class="fsize12 txt_grey fw300">Coupon discount for friends</p>
+                        <p class="fsize12 txt_grey fw300">Custom discount for friends</p>
                     </div>
                 </label>
             </div>
         </div>
         <!--Coupons Reward-->
-        <div class="row" v-if="form.rewardType=='advocate_discount'">
+        <div class="row" v-if="form.rewardType=='referred_discount'">
             <div class="col-md-12">
                 <div class="card p40 min_h_240">
                     <div class="row">
@@ -85,50 +85,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">Amount</label>
-                                <div class="">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="settings.advocate_discount"
-                                        required=""
-                                        placeholder="10"
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label class="control-label">&nbsp;</label>
-                                <div class="">
-                                    <div class="input-group mb-3">
-                                        <button
-                                            type="button"
-                                            v-model="settings.advocate_discount_type"
-                                            :class="{'active' : settings.advocate_discount_type == 'percent'}"
-                                            value="percent"
-                                            @click="settings.advocate_discount_type = 'percent'"
-                                            class="form-control">%</button>
-                                        <button
-                                            type="button"
-                                            :class="{'active' : settings.advocate_discount_type == 'dollar'}"
-                                            value="dollar"
-                                            class="form-control"
-                                            @click="settings.advocate_discount_type = 'dollar'"
-                                            style="background-color:#e9ecef;">$</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label class="control-label">Reward Message</label>
                                 <div class="">
                                     <input
                                         type="text"
-                                        v-model="settings.advocate_display_msg"
+                                        v-model="settings.referred_display_msg"
                                         class="form-control"
                                         placeholder="e.g. 20% off"
                                         required="required"
@@ -143,7 +106,7 @@
                                     <button
                                         type="button"
                                         class="btn btn-md bkg_email_300 light_000 pl20 pr20"
-                                        @click="saveAdvocateReward('coupon')"
+                                        @click="saveReferredReward('coupon')"
                                     >
                                         <span>Save Changes</span></button>
                                 </div>
@@ -157,24 +120,24 @@
                                 <span class="float-left" style="margin: 2px 8px 0 0">
                                     <input
                                         type="radio"
-                                        name="advCouponCode"
-                                        v-model="settings.advocate_coupon_type"
+                                        name="refCouponCode"
+                                        v-model="settings.referred_coupon_type"
                                         value="single"
                                         class="control-primary advocate_options"
                                     >
                                     </span>
-                                <strong>Single Use Coupons</strong> Unique coupon codes for every advocate
+                                <strong>Single Use Coupons</strong> Unique coupon codes for every friend
                             </label>
                         </div>
                         <!--Single Use Coupon Form-->
-                        <div class="coupon_desc p20" v-if="settings.advocate_coupon_type == 'single'">
+                        <div class="coupon_desc p20" v-if="settings.referred_coupon_type == 'single'">
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label class="control-label">Paste your coupon codes here</label>
                                         <div class="">
                                                 <textarea
-                                                    v-model="advocateCoupons.single"
+                                                    v-model="referredCoupons.single"
                                                     class="form-control fsize13 p20"
                                                     placeholder="list of coupon codes"
                                                     required>
@@ -189,7 +152,7 @@
                                             <button
                                                 type="button"
                                                 class="btn btn-md bkg_email_300 light_000 pl20 pr20"
-                                                @click.prevent="saveAdvocateCoupon('single')"
+                                                @click.prevent="saveReferredCoupon('single')"
                                             >
                                                 Save Changes
                                             </button>
@@ -204,16 +167,16 @@
                                 <span class="float-left" style="margin: 2px 8px 0 0">
                                     <input
                                         type="radio"
-                                        name="advCouponCode"
-                                        v-model="settings.advocate_coupon_type"
+                                        name="refCouponCode"
+                                        v-model="settings.referred_coupon_type"
                                         value="multiple"
                                         class="control-primary advocate_options"
                                     >
                                     </span>
-                                <strong>Multiple Use Coupons</strong> Reusable coupon code for all advocates
+                                <strong>Multiple Use Coupons</strong> Reusable coupon code for all friends
                             </label>
                         </div>
-                        <div class="coupon_desc p20" v-if="settings.advocate_coupon_type == 'multiple'">
+                        <div class="coupon_desc p20" v-if="settings.referred_coupon_type == 'multiple'">
                             <!--Multiuse Coupon Form-->
                             <div class="row">
                                 <div class="col-md-4">
@@ -224,7 +187,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 name="multipleCouponCodes"
-                                                v-model="advocateCoupons.multiple.coupon_code"
+                                                v-model="referredCoupons.multiple.coupon_code"
                                                 placeholder="e.g. REWARD10"
                                             >
                                         </div>
@@ -237,7 +200,7 @@
                                             <select
                                                 class="form-control"
                                                 name="coupon_expiry"
-                                                v-model ="advocateCoupons.multiple.expiry"
+                                                v-model ="referredCoupons.multiple.expiry"
                                             >
                                                 <option value="never">Never(Recommended)</option>
                                                 <option value="6">6 Months</option>
@@ -257,8 +220,8 @@
                                         <div class="">
                                             <input
                                                 type="text"
-                                                v-if="advocateCoupons.multiple.expiry == 'specific-date'"
-                                                v-model ="advocateCoupons.multiple.specific_expiry_picker"
+                                                v-if="referredCoupons.multiple.expiry == 'specific-date'"
+                                                v-model ="referredCoupons.multiple.specific_expiry_picker"
                                                 class="form-control daterange-single">
                                         </div>
                                     </div>
@@ -270,7 +233,7 @@
                                             <button
                                                 type="button"
                                                 class="btn btn-md bkg_email_300 light_000 pl20 pr20"
-                                                @click.prevent="saveAdvocateCoupon('multiple')"
+                                                @click.prevent="saveReferredCoupon('multiple')"
                                             >
                                                 <span>Save Changes</span></button>
                                         </div>
@@ -285,7 +248,7 @@
         </div>
 
         <!--Cash Reward-->
-        <div class="row" v-if="form.rewardType=='advocate_cash'">
+        <div class="row" v-if="form.rewardType=='referred_promo'">
             <div class="col-md-12">
                 <div class="card p40 min_h_240">
                     <div class="row">
@@ -299,15 +262,50 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="control-label">Amount</label>
+                                <label class="control-label">Promo Link</label>
                                 <div class="">
                                     <input
                                         type="text"
                                         class="form-control"
-                                        v-model="settings.amount"
+                                        v-model="settings.link_url"
                                         required=""
-                                        placeholder="10"
+                                        placeholder="e.g. http://yourstore.com/discount/link"
                                     >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Give Friends</label>
+                                <div class="">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="settings.link_desc"
+                                        required=""
+                                        placeholder="e.g. 20% off"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Expiry</label>
+                                <div class="">
+                                    <select
+                                        class="form-control"
+                                        name="coupon_expiry"
+                                        v-model ="settings.expiry"
+                                    >
+                                        <option value="never">Never(Recommended)</option>
+                                        <option value="6">6 Months</option>
+                                        <option value="5">5 Months</option>
+                                        <option value="4">4 Months</option>
+                                        <option value="3">3 Months</option>
+                                        <option value="2">2 Months</option>
+                                        <option value="1">1 Months</option>
+                                        <option value="specific-date">Specific Date</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -315,47 +313,22 @@
                             <div class="form-group">
                                 <label class="control-label">&nbsp;</label>
                                 <div class="">
-                                    <div class="input-group mb-3">
-                                        <button
-                                            type="button"
-                                            v-model="settings.amount_type"
-                                            :class="{'active' : settings.amount_type == 'percent'}"
-                                            value="percent"
-                                            @click="settings.amount_type = 'percent'"
-                                            class="form-control">%</button>
-                                        <button
-                                            type="button"
-                                            :class="{'active' : settings.amount_type == 'dollar'}"
-                                            value="dollar"
-                                            class="form-control"
-                                            @click="settings.amount_type = 'dollar'"
-                                            style="background-color:#e9ecef;">$</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label class="control-label">Reward Message</label>
-                                <div class="">
                                     <input
                                         type="text"
-                                        v-model="settings.display_msg"
-                                        class="form-control"
-                                        placeholder="e.g. $10 in cash"
-                                        required="required"
-                                    >
+                                        v-if="settings.expiry == 'specific-date'"
+                                        v-model ="settings.specific_expiry_picker"
+                                        class="form-control daterange-single">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 pr-5 text-right">
+                        <div class="col-md-2 pr-5 text-right">
                             <div class="form-group">
                                 <label class="control-label">&nbsp;</label>
                                 <div class="pr-2">
                                     <button
                                         type="button"
                                         class="btn btn-md bkg_email_300 light_000 pl20 pr20"
-                                        @click="saveAdvocateReward('cash')"
+                                        @click="saveReferredReward('cash')"
                                     >
                                         <span>Save Changes</span></button>
                                 </div>
@@ -369,7 +342,7 @@
         </div>
 
         <!--Custom Reward-->
-        <div class="row" v-if="form.rewardType=='advocate_custom'">
+        <div class="row" v-if="form.rewardType=='referred_no_discount'">
             <div class="col-md-12">
                 <div class="card p40 min_h_240">
                     <div class="row">
@@ -402,7 +375,7 @@
                                     <button
                                         type="button"
                                         class="btn btn-md bkg_email_300 light_000 pl20 pr20"
-                                        @click="saveAdvocateReward('custom')"
+                                        @click="saveReferredReward('custom')"
                                     >
                                         <span>Save Changes</span></button>
                                 </div>
@@ -431,8 +404,8 @@
                 campaignId: this.$route.params.id,
                 campaign: {},
                 settings: '',
-                advocateCouponsCollection: '',
-                advocateGiftType: '',
+                referredCouponsCollection: '',
+                referredGiftType: '',
                 user: {},
                 breadcrumb: '',
                 feedbackResponse: '',
@@ -440,7 +413,7 @@
                 displayCustomLinkExpiry: false,
                 form: {
                     rewardType: '',
-                    advocate_discount_price: '',
+                    referred_discount_price: '',
                     couponType: '',
                     singleCouponCodes: '',
                     multipleCouponCodes: '',
@@ -457,51 +430,49 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oReferral;
                     this.settings = response.data.oSettings;
-                    this.advocateCouponsCollection = response.data.oAdvCouponCodes;
+                    this.referredCouponsCollection = response.data.oRefCouponCodes;
                     this.loading = false;
                     this.initializeDefaults();
-                    //loadJQScript(this.user.id);
-
                 });
         },
         computed: {
-            advocateCoupons: function () {
-                if (this.advocateCouponsCollection != '') {
-                    let advocateSingleCouponArray = [];
-                    let advocateMultipleCouponArray = [];
-                    this.advocateCouponsCollection.forEach(function (val, index) {
+            referredCoupons: function () {
+                if (this.referredCouponsCollection != '') {
+                    let referredSingleCouponArray = [];
+                    let referredMultipleCouponArray = [];
+                    this.referredCouponsCollection.forEach(function (val, index) {
                         if (val.usage_type == 'single') {
-                            advocateSingleCouponArray.push(val.coupon_code);
+                            referredSingleCouponArray.push(val.coupon_code);
                         }
                         if (val.usage_type == 'multiple') {
-                            advocateMultipleCouponArray = val;
+                            referredMultipleCouponArray = val;
                         }
                     });
                     return {
-                        'single': advocateSingleCouponArray.join(","),
-                        'multiple': advocateMultipleCouponArray
+                        'single': referredSingleCouponArray.join(","),
+                        'multiple': referredMultipleCouponArray
                     }
                 }
             }
         },
         methods: {
-            saveAdvocateReward: function(rType){
+            saveReferredReward: function(rType){
                 let form = {};
                 form.rewardID = this.settings.rewardID;
                 if(rType == 'coupon'){
-                    form.rewardType = 'advocate_discount';
-                    form.advocate_discount = this.settings.advocate_display_msg; //Reward Message
-                    form.advocate_discount_price = this.settings.advocate_discount;
-                    form.advocate_discount_type = this.settings.advocate_discount_type;
+                    form.rewardType = 'referred_discount';
+                    form.referred_discount = this.settings.referred_display_msg; //Reward Message
+
                 }
                 if(rType == 'cash'){
-                    form.rewardType = 'advocate_cash';
-                    form.advocate_discount_price = this.settings.amount;
-                    form.amount_type = this.settings.amount_type;
-                    form.advocate_cash = this.settings.display_msg;
+                    form.rewardType = 'referred_promo';
+                    form.referred_promo_link = this.settings.link_url;
+                    form.referred_promo_desc = this.settings.link_desc;
+                    form.promo_expiry = this.settings.expiry;
+                    form.specific_expiry_picker = this.settings.specific_expiry_picker;
                 }
                 if(rType == 'custom'){
-                    form.rewardType = 'advocate_custom';
+                    form.rewardType = 'referred_no_discount';
                     form.advocate_custom = this.settings.reward_title;
                 }
                 this.saveRewardSettings(form);
@@ -516,18 +487,18 @@
                         }
                     });
             },
-            saveAdvocateCoupon: function(couponType){
+            saveReferredCoupon: function(couponType){
                 let form = {};
                 form.rewardID = this.settings.rewardID;
                 if(couponType == 'single'){
-                    form.couponType = 'advocate_single_coupons';
-                    form.singleCouponCodes = this.advocateCoupons.single;
+                    form.couponType = 'referred_single_coupons';
+                    form.singleCouponCodes = this.referredCoupons.single;
                 }
                 if(couponType == 'multiple'){
-                    form.couponType = 'advocate_multiple_coupons';
-                    form.multipleCouponCodes = this.advocateCoupons.multiple.coupon_code
-                    form.coupon_expiry = this.advocateCoupons.multiple.expiry;
-                    form.specific_expiry_picker = this.advocateCoupons.multiple.specific_expiry_picker;
+                    form.couponType = 'referred_multiple_coupons';
+                    form.multipleCouponCodes = this.referredCoupons.multiple.coupon_code
+                    form.coupon_expiry = this.referredCoupons.multiple.expiry;
+                    form.specific_expiry_picker = this.referredCoupons.multiple.specific_expiry_picker;
                 }
                 this.saveRewardCoupons(form);
             },
@@ -541,15 +512,15 @@
                         }
                     });
             },
-            /*initializeDefaults: function(){
-                if(this.settings.adv_coupon_id>0){
-                    this.form.rewardType = 'advocate_discount';
-                }else if(this.settings.cash_id>0){
-                    this.form.rewardType = 'advocate_cash';
-                }else if(this.settings.custom_id>0){
-                    this.form.rewardType = 'advocate_custom';
+            initializeDefaults: function(){
+                if(this.settings.ref_coupon_id>0){
+                    this.form.rewardType = 'referred_discount';
+                }else if(this.settings.promo_id>0){
+                    this.form.rewardType = 'referred_promo';
+                }else if(this.settings.no_discount == 'yes'){
+                    this.form.rewardType = 'referred_no_discount';
                 }
-            }*/
+            }
         }
 
     };

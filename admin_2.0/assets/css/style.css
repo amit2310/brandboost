@@ -898,13 +898,19 @@ code {
 	
 }
 .top-breadcrumb li a{ font-size: 14px; line-height: 120%; color: #97A4BD}
+.top-breadcrumb li img{float:left; margin:3px 0 0 0!important}
 .top-bar-top-section{padding: 25px 64px 0px; height: 63px }
 .top-bar-top-section.bbot{border: none!important}
 .top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; text-transform: uppercase; font-weight: 400!important; line-height: 32px; padding: 0 15px 0 10px!important; letter-spacing: 0.04em; }
 .top-bar-top-section span.float-left{display: none!important}
 .top-bar-top-section .btn.btn-md span{margin: 0 10px 0 0; float: left;}
 .top-bar-top-section .btn.btn-md img{width: 20px; height: 20px; float: left; margin-top: 6px}
-.top-bar-top-section .circle-icon-32, .top-bar-top-section .circle-icon-40{width: 32px;height: 32px;background: #FFFFFF;border-radius: 100px; border: none; text-align: center; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05)!important;  }
+.top-bar-top-section .circle-icon-32, .top-bar-top-section .circle-icon-40{width: 32px;height: 32px;background: #FFFFFF;border-radius: 100px; border: none; text-align: center; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05)!important; line-height:11px;  }
+
+.top-bar-top-section.bkg_light_000{ background:none!important; box-shadow:none!important;}
+
+.workflowContainer .link_button{ line-height:34px!important;}
+
 
 .navbar-custom .nav-link {
 	padding: 0;
@@ -1296,7 +1302,7 @@ PAGE WITH SIDEBAR CSS
 
 
 .sidebar_search_big{padding: 10px 0; margin-bottom: 15px;}
-.sidebar_search_big input[type="text"]{border-radius: 4px; height: 44px; border: none; max-width: 185px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); background: url(../images/search-2-line.svg) 10px 12px #fff no-repeat; padding-left: 35px;}
+.sidebar_search_big input[type="text"]{border-radius: 4px; height: 44px; border: none; max-width: 185px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); background: url(../images/search-2-line.svg) 10px 12px #fff no-repeat; padding-left: 35px; float:left;}
 .sidebar_search_big input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
 .sidebar_search_big .sidebar_search_submit{border: none; background:#fff; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); width: 44px; height: 44px; padding: 0; margin: 0 0 0 0px; border-radius: 4px;}
 
@@ -1337,7 +1343,7 @@ PAGE WITH SIDEBAR CSS
 .circle_32.green{background: #e1f2e7; color: #83CE86} 
 .circle_32.red{background: #f5e7e5; color: #E4977F} 
 .circle_32 span.text{ opacity:1; }
-.circle_32.img{line-height: 30px;}
+.circle_32.img{line-height: 24px;}
 
 
 .profile_icons a{display: inline-block!important; margin: 0 10px 10px 0}
@@ -1388,7 +1394,7 @@ PAGE WITH SIDEBAR CSS
 .nav.nav-pills.sidebar a.active{color: #151A25}
 
 .nav.nav-pills.top_tab a{color: #7B89A6}
-.nav.nav-pills.top_tab a.active{color: #151A25; border-bottom: 2px solid #73abff; padding-bottom: 35px;}
+.nav.nav-pills.top_tab a.active{color: #151A25; border-bottom: 2px solid #73abff; padding-bottom: 15px;}
 
 
 
@@ -1407,7 +1413,7 @@ PAGE WITH SIDEBAR CSS
 .workflow_list li{margin: 0; padding: 0; list-style: none; display: inline-block;}
 .workflow_list li a{margin: 0; padding: 0 10px;display: inline-block; color: #687693; font-size: 12px; font-weight: 400; letter-spacing: 0.04em; border-right: 1px solid #eee}
 .workflow_list li:last-child a{ border-right: 1px solid #fff}
-
+.workflow_list li a img {	float: left!important;	margin: 1px 3px 0 0!important;}
 
 .edit_delete{position: absolute; width: 38px; top: 10px; right: 10px;}
 .edit_delete a{margin: 0 3px; display: inline-block}

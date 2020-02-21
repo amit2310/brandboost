@@ -83,7 +83,7 @@
                                     </h3>
                                     <p v-if="widget.npsData.platform != null"><em>[ {{ capitalizeFirstLetter(widget.npsData.platform) }} ]</em></p>
                                     <p v-if="(widget.widget_desc != '' || widget.widget_desc != null)"><em>{{capitalizeFirstLetter(setStringLimit(widget.widget_desc, 40))}}</em></p>
-                                    <p v-if="(widget.npsData.title != '')" @click="navigateToNPSSetup(widget.id)" style="cursor: pointer;"><em>{{capitalizeFirstLetter(setStringLimit(widget.npsData.title, 40))}}</em></p>
+                                    <p v-if="(widget.npsData.title != '')" @click="navigateToNPSSetup(widget.nps_id)" style="cursor: pointer;"><em>{{capitalizeFirstLetter(setStringLimit(widget.npsData.title, 40))}}</em></p>
 
                                     <p class="htxt_regular_12">
                                         <span v-if="widget.status  == '1'">Published</span>
@@ -243,8 +243,9 @@
             console.log('Component mounted')
         },
         methods: {
+
             navigateToNPSSetup(wId) {
-                window.location.href = '#/modules/nps/setup/'+wId;
+                window.location.href = '#/modules/nps/setup/'+wId+'/1';
             },
             navigateToWidgetSetup(wId) {
                 window.location.href = '#/modules/nps/widgets/step/'+wId+'/1';

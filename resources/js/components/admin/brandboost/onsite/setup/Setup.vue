@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">
@@ -21,7 +20,6 @@
         <div class="content-area">
             <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
             <loading :isLoading="loading"></loading>
-
             <div class="container-fluid">
                 <div class="table_head_action">
                     <div class="row">
@@ -45,38 +43,34 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card p40 min_h_240">
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 class="htxt_bold_16 dark_700 mb10">Basic Info</h3>
                                     <p class="fsize12 fw300 dark_300 mb20">Name of the campaign and logo for the same</p>
                                 </div>
-
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="frm_bb_title" class="fsize12 fw300">Brand Boost Name</label>
-                                        <input type="text" class="form-control emoji h50" placeholder="New Product on Site Boost"
+                                        <input type="text" class="form-control emoji h50" placeholder="New Product on Site Boost" id="frm_bb_title"
                                                name="title" v-model="campaign.brand_title"
                                                @change="updateSettings('brand_title', $event.target.value, 'brandboost')">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="frm_bb_title" class="fsize12 fw300">Domain</label>
+                                        <label for="frm_bb_domain" class="fsize12 fw300">Domain</label>
                                         <input type="text" class="form-control emoji h50" placeholder="www.google.com"
-                                               name="domain_name" v-model="campaign.domain_name"
+                                               name="domain_name" v-model="campaign.domain_name" id="frm_bb_domain"
                                                @change="updateSettings('domain_name', $event.target.value, 'brandboost')">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="logo_img" class="fsize12 fw300">Add/Change Brand Logo</label>
-
                                         <input type="hidden" id="logo_img" name="logo_img" @click="updateSettings('logo_img', $event.target.value, 'brandboost')">
                                         <div class="img_vid_upload_small">
                                             <div class="dropzone" id="myDropzone_logo_img"></div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -86,14 +80,8 @@
                                         <img width="64" height="65" class="rounded" id="showLogoImage" onerror="this.src='assets/images/default-logo.png'" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${campaign.logo_img}`">
                                     </div>
                                 </div>
-
-
-
                             </div>
-
                         </div>
-
-
                         <div class="card p40 min_h_240">
                             <div class="row">
                                 <div class="col-md-6">
@@ -102,7 +90,6 @@
                                         field.</p>
                                 </div>
                                 <div class="col-md-6 text-right">
-
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -120,7 +107,6 @@
                                                v-model="feedbackResponse.from_email" @change="updateSettings('from_email', $event.target.value, 'feedback')" required>
                                     </div>
                                 </div>
-
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="frm_sender_phone" class="fsize12 fw300">Review Request SMS "Form" Number</label>
@@ -128,11 +114,8 @@
                                                v-model="fromNumber ? fromNumber : user.mobile"  required>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
                         <div class="card p40 min_h_240">
                             <div class="row">
                                 <div class="col-md-6">
@@ -140,7 +123,6 @@
                                     <p class="fsize12 fw300 dark_300 mb20">This ensure the expiry of the review links</p>
                                 </div>
                                 <div class="col-md-6 text-right">
-
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -153,7 +135,6 @@
                                         </label>
                                         <div class="clearfix"></div>
                                         <label class="custmo_radiobox pull-left mb10">
-
                                             <input name="link_expire_review" value="no" :checked="campaign.link_expire_review == 'no'" type="radio" @change="updateSettings('link_expire_review', $event.target.value, 'brandboost')">
                                             <span class="custmo_radiomark"></span>
                                             No
@@ -171,7 +152,6 @@
                                         </label>
                                         <div class="clearfix"></div>
                                         <label class="custmo_radiobox pull-left mb10">
-
                                             <input name="link_expire_custom" value="custom" type="radio" :checked="checkLinkExpiry.delay_value != 'never'" @change="updateSettings('link_expire_custom', $event.target.value, 'expiry')">
                                             <span class="custmo_radiomark"></span>
                                             Expire After
@@ -192,11 +172,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="card p40 min_h_240">
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <h3 class="htxt_bold_16 dark_700 mb10">Thank you messages</h3>
@@ -204,9 +181,7 @@
                                         customers.</p>
                                 </div>
                                 <div class="col-md-6 text-right">
-
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group mb0">
                                         <label for="frm_positive_title" class="fsize12 fw300">Positive Title</label>
@@ -242,9 +217,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="col-md-6">
                                     <div class="form-group mb0">
                                         <label for="frm_neutral_title" class="fsize12 fw300">Neutral Title</label>
@@ -280,9 +252,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="col-md-6">
                                     <div class="form-group mb0">
                                         <label for="frm_negetive_title" class="fsize12 fw300">Negative Title</label>
@@ -318,13 +287,10 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row mt40">
                     <div class="col-md-12">
                         <hr class="mb25">
@@ -339,15 +305,12 @@
                             src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <!--Content Area End-->
     </div>
 </template>
 <script>
-
     export default {
         data() {
             return {
@@ -367,7 +330,7 @@
                 displayCustomLinkExpiry: false
             }
         },
-        mounted() {
+        created() {
             axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
                 .then(response => {
                     this.breadcrumb = response.data.breadcrumb;
@@ -378,11 +341,11 @@
                     this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
                     this.user = response.data.aUserInfo;
                     this.loading = false;
-                    //loadJQScript(this.user.id);
-
+                    loadJQScript(this.user.id);
                 });
-            loadJQScript(35);
-
+        },
+        mounted() {
+            //loadJQScript(35);
         },
         computed: {
             checkLinkExpiry: function(){
@@ -406,7 +369,6 @@
                         delay_value: 'never'
                     };
                 }
-
             }
         },
         methods: {
@@ -417,7 +379,6 @@
                 }else{
                     path = '/admin#/reviews/onsite/setup/'+this.campaignId+'/'+step;
                 }
-
                 window.location.href = path;
             },
             applyDefaultInfo: function (e) {
@@ -426,13 +387,10 @@
                     this.campaign.from_name = this.user.firstname + ' ' + this.user.lastname;
                     this.updateSettings('from_email');
                     this.updateSettings('from_name');
-                } else {
-
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
                 this.loading = true;
-
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
                 }
@@ -443,13 +401,11 @@
                     brandboostId: this.campaignId,
                     linkExpiryData : this.campaign.link_expire_custom,
                     requestType: type
-
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
                 });
-
             },
             saveDraft: function(){
                 this.loading = true;
@@ -471,7 +427,6 @@
         }
 
     };
-
     function loadJQScript(userid){
         var tkn = $('meta[name="_token"]').attr('content');
         Dropzone.autoDiscover = false;
@@ -485,9 +440,7 @@
                 acceptedFiles: 'image/*',
                 addRemoveLinks: false,
                 success: function (response) {
-
                     if (response.xhr.responseText != "") {
-
                         $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
                         var dropImage = $('#logo_img').val();
                         $.ajax({
@@ -501,16 +454,13 @@
                         });
                         $('#logo_img').val(response.xhr.responseText);
                         $('#logo_img').click();
-
                     }
-
                 }
             });
         myDropzoneLogoImg.on("complete", function (file) {
             myDropzoneLogoImg.removeFile(file);
         });
     }
-
 </script>
 <style scoped>
     .email_config_list li{
@@ -550,6 +500,3 @@
     .dropzone .dz-default.dz-message span {    font-size: 13px;    margin-top: -10px;}
     .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 5px; background:url('/assets/images/upload_bkg2.png') 25px 8px no-repeat #fff; border: 1px solid #dfe5f0;box-shadow: 0 1px 1px 0 rgba(1, 21, 64, 0.04);}
 </style>
-
-
-
