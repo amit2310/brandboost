@@ -168,22 +168,25 @@ class Brandboost extends Controller
      * Used to get onsite brandboost data
      * @return type
      */
-    public function onsite()
+    public function onsite(Request $request)
     {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         $company_name = $aUser->company_name;
         $companyName = strtolower(str_replace(' ', '-', $company_name));
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
 
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
 
         if ($user_role == 1) {
-            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite');
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy);
         } else {
-            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite');
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy);
         }
+
         $moduleName = 'brandboost-onsite';
 
         $aBreadcrumb = array(
@@ -2978,6 +2981,7 @@ public function widgetStatisticDetailsStatsGraph(){
                 }else{
                     $aExpiryData['link_expire_custom'] = json_encode($aLinkExpiryData);
                 }
+                pre($aExpiryData);
 
                 $result = BrandboostModel::updateBrandBoost($userID, $aExpiryData, $brandboostID);
 
@@ -3282,7 +3286,8 @@ public function widgetStatisticDetailsStatsGraph(){
             'OnsitecampaignDescription' => ['required']
         ]);
 
-        $userID = Session::get("current_user_id");
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
         $campaignName = $request->campaignName;
         $OnsitecampaignDescription = $request->OnsitecampaignDescription;
 
@@ -3315,6 +3320,27 @@ public function widgetStatisticDetailsStatsGraph(){
             } else {
                 $result = BrandModel::addBrandConfiguration($aBrandboostData);
             }
+
+            //Add Default Response Data
+            $oTwilio = getTwilioAccountCustom($userID);
+            $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
+            $feedbackData = array(
+                'brandboost_id' => $brandboostID,
+                'feedback_type' => 'public',
+                'ratings_type' => 'happy',
+                'from_name' => $oUser->firstname. ' '. $oUser->lastname,
+                'from_email' => $oUser->email,
+                'sms_sender' => $twilioNumber,
+                'pos_title' => 'Thanks for leaving positive review',
+                'pos_sub_title' => 'We will revert back to you soon',
+                'neg_title' => 'Thanks for leaving your review',
+                'neg_sub_title' => 'We will revert back to you soon',
+                'neu_title' => 'Thanks for leaving your review',
+                'neu_sub_title' => 'We will revert back to you soon',
+                'created' => date("Y-m-d H:i:s")
+            );
+
+            BrandboostModel::addBrandboostFeedbackResponse($feedbackData);
 
             //$this->addDefaultFollowupCampaigns($brandboostID);
             Session::put("setTab", 'Campaign Preferences');

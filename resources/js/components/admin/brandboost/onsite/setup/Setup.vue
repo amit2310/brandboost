@@ -338,7 +338,8 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.brandboostData;
                     this.feedbackResponse = response.data.feedbackResponse;
-                    this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
+                    //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
+                    this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
                     this.user = response.data.aUserInfo;
                     this.loading = false;
                     loadJQScript(this.user.id);
@@ -351,9 +352,16 @@
             checkLinkExpiry: function(){
                 let linkExpiry = this.campaign.link_expire_custom;
                 if(linkExpiry){
-                    let aExpiryData = JSON.parse(linkExpiry);
-                    let delayValue = aExpiryData.delay_value;
-                    let delayUnit = aExpiryData.delay_unit;
+                    let delayValue = '';
+                    let delayUnit = '';
+                    if( typeof linkExpiry === 'object'){
+                        let aExpiryData = JSON.parse(linkExpiry);
+                        delayValue = aExpiryData.delay_value;
+                        delayUnit = aExpiryData.delay_unit;
+                    }else{
+                        delayValue = linkExpiry;
+                    }
+
                     if(delayValue != 'never'){
                         this.displayCustomLinkExpiry = true;
                     }else{
@@ -400,6 +408,7 @@
                     fieldVal: fieldValue,
                     brandboostId: this.campaignId,
                     linkExpiryData : this.campaign.link_expire_custom,
+                    //linkExpiryData :{delay_value: this.checkLinkExpiry.delay_value,delay_unit: this.checkLinkExpiry.delay_unit},
                     requestType: type
                 }).then(response => {
                     this.refreshMessage = Math.random();
