@@ -98,10 +98,7 @@ import OnsiteWidgetSetup from './components/admin/brandboost/onsite/widget_setup
 /*NPS Survey Module*/
 import NpsOverview from './components/admin/modules/nps/Overview';
 import NpsScore from './components/admin/modules/nps/Score';
-import npsStep1 from './components/admin/modules/nps/setup/Setup';
-import npsStep2 from './components/admin/modules/nps/setup/Setup2';
-import npsStep3 from './components/admin/modules/nps/setup/Setup3';
-import npsStep4 from './components/admin/modules/nps/setup/Setup4';
+
 
 import AutomationCampaigns from './components/admin/modules/emails/Workflow';
 import WorkflowSetup from './components/admin/modules/emails/WorkflowSetup';
@@ -171,6 +168,11 @@ import NPSWidgets from './components/admin/modules/nps/Widgets';
 import NPSWidgetsSetup1 from './components/admin/modules/nps/setup/Setup';
 import NPSWidgetsSetup2 from './components/admin/modules/nps/setup/Setup2';
 
+import npsStep1 from './components/admin/modules/nps/Survey/Setup';
+import npsStep2 from './components/admin/modules/nps/Survey/Setup2';
+import npsStep3 from './components/admin/modules/nps/Survey/Setup3';
+import npsStep4 from './components/admin/modules/nps/Survey/Setup4';
+
 
 const routes = [
 
@@ -214,7 +216,17 @@ const routes = [
     { path: '/modules/nps/widgets', component: NPSWidgets, meta: { title: 'NPS Widgets'} },
     { path: '/modules/nps/widgets/step/:id/1', component: NPSWidgetsSetup1, meta: { title: 'Nps Widget Setup'} },
     { path: '/modules/nps/widgets/step/:id/2', component: NPSWidgetsSetup2, meta: { title: 'Nps Widget Setup'} },
-
+    // Survey
+    { path: '/modules/nps/setup/:id/1', component: npsStep1, meta: { title: 'NPS Widgets'} },
+    { path: '/modules/nps/setup/:id/2', component: npsStep2, meta: { title: 'NPS Widgets'} },
+    { path: '/modules/nps/setup/:id/3', component: npsStep3, meta: { title: 'NPS Widgets'} },
+    { path: '/modules/nps/setup/:id/4', component: npsStep4, meta: { title: 'NPS Widgets'} },
+    // { path: '/modules/nps/widgets/step/:id/1', component: NPSWidgetsSetup1, meta: { title: 'Nps Widget Setup'} },
+    // { path: '/modules/nps/widgets/step/:id/2', component: NPSWidgetsSetup2, meta: { title: 'Nps Widget Setup'} },
+    // { path: '/nps/setup/:id/1', component: npsStep1, props : {title : 'NPS Campaign Setup'} },
+    // { path: '/nps/setup/:id/2', component: npsStep2, props : {title : 'NPS Campaign Setup'} },
+    // { path: '/nps/setup/:id/3', component: npsStep3, props : {title : 'NPS Campaign Setup'} },
+    // { path: '/nps/setup/:id/4', component: npsStep4, props : {title : 'NPS Campaign Setup'} },
     /**
      * -----------------------------------End---------------------------------------
      */
@@ -321,10 +333,7 @@ const routes = [
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/score/:hashKey', component: NpsScore, meta: { title: 'NPS Survey Score'} },
-    { path: '/nps/setup/:id/1', component: npsStep1, props : {title : 'NPS Campaign Setup'} },
-    { path: '/nps/setup/:id/2', component: npsStep2, props : {title : 'NPS Campaign Setup'} },
-    { path: '/nps/setup/:id/3', component: npsStep3, props : {title : 'NPS Campaign Setup'} },
-    { path: '/nps/setup/:id/4', component: npsStep4, props : {title : 'NPS Campaign Setup'} },
+
     /*Workflow Module*/
     { path: '/modules/emails/workflow', component: AutomationCampaigns, meta: { title: 'Email Campaigns'} },
     { path: '/modules/emails/workflow/setup/:id', component: WorkflowSetup, meta: { title: 'Workflow Setup'} },
