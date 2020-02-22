@@ -15,19 +15,38 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '') {
-        $oData = DB::table('tbl_brandboost')
+    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='') {
+        $query = DB::table('tbl_brandboost')
                 ->when(($userId > 0), function($query) use ($userId) {
                     return $query->where('user_id', $userId);
                 })
                 ->when((!empty($type)), function($query) use ($type) {
                     return $query->where('review_type', $type);
                 })
-                ->where('delete_status', 0)
-                ->orderBy('id', 'desc')
+                ->where('delete_status', 0);
+                if(!empty($searchBy)){
+                    $query->where('brand_title', 'LIKE',  "%$searchBy%");
+                    //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
+                }
+                if(!empty($sortBy)){
+                    if($sortBy == 'Date Created'){
+                        $query->orderBy('id', 'desc');
+                    }else  if($sortBy == 'Name'){
+                        $query->orderBy('brand_title', 'asc');
+                    }else  if($sortBy == 'Active'){
+                        $query->where('status', '1');
+                    }else  if($sortBy == 'Inactive'){
+                        $query->where('status', '0');
+                    }else  if($sortBy == 'Pending'){
+                        $query->where('status', '2');
+                    }else  if($sortBy == 'Archive'){
+                        $query->where('status', '3');
+                    }
+                }else{
+                    $query->orderBy('id', 'desc');
+                }
                 //->get();
-                ->paginate(10);
-
+        $oData = $query->paginate(10);
         return $oData;
     }
 
@@ -278,20 +297,38 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '') {
+    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='') {
 
-        $oData = DB::table('tbl_brandboost')
+        $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
 				return $query->where('id', $id);
 			})
 			->when((!empty($type)), function ($query) use ($type) {
 				return $query->where('review_type', $type);
 			})
-			->where('delete_status', 0)
-			->orderBy('id', 'desc')
-			//->get();
-            ->paginate(10);
-
+			->where('delete_status', 0);
+        if(!empty($searchBy)){
+            $query->where('brand_title', 'LIKE',  "%$searchBy%");
+            //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
+        }
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('created', 'desc');
+            }else  if($sortBy == 'Name'){
+                $query->orderBy('brand_title', 'desc');
+            }else  if($sortBy == 'Active'){
+                $query->where('status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $query->where('status', '0');
+            }else  if($sortBy == 'Pending'){
+                $query->where('status', '2');
+            }else  if($sortBy == 'Archive'){
+                $query->where('status', '3');
+            }
+        }else{
+            $query->orderBy('id', 'desc');
+        }
+        $oData = $query->paginate(10);
         return $oData;
     }
 
