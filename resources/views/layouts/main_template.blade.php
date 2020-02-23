@@ -310,6 +310,63 @@ function helloTest(){
             document.querySelector("body").id="ReviewSection";
             document.querySelector(".page-content").classList.remove("bkg_light_000");
         });
+        $("#loadDasboard").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadContactTheme").click(function(){
+            window.location.href='#/contacts/dashboard';
+        });
+        $("#loadChatTheme").click(function(){
+            window.location.href='#/chat/dashbaord';
+        });
+        $("#loadEmailInbox").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadBrandPage").click(function(){
+            window.location.href='#/brand/settings';
+        });
+        $("#loadReviewsTheme").click(function(){
+            window.location.href='#/reviews/dashboard';
+        });
+        $("#loadMediaGallery").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadEmailTheme").click(function(){
+            window.location.href='#/modules/emails/dashboard';
+        });
+        $("#loadSMSTheme").click(function(){
+            window.location.href='#/modules/sms/dashboard';
+        });
+        $("#loadReferral").click(function(){
+            window.location.href='#/modules/referral/overview';
+        });
+        $("#loadNps").click(function(){
+            window.location.href='#/modules/nps/overview';
+        });
+        $("#loadWidgets").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadFeedback").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadHelpDesk").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadKnowledgeBase").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadAppointments").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadAnalytics").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+        $("#loadSettings").click(function(){
+            //window.location.href='#/reviews/dashboard';
+        });
+
+
+
     });
 
     function setMenuItemsActive(){
