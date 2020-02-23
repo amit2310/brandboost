@@ -23,7 +23,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-12">
                         <div class="card p40 pt0 pb0">
                             <div class="row">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
@@ -80,8 +80,7 @@
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 text-center animate_top col">
-                            <div class="dot_dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
                                     <a v-if="campaign.status == '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Start</a>
@@ -95,14 +94,21 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <div @click="setupBroadcast(campaign.id)" style="cursor:pointer;">
-                                <a v-if="campaign.status===0" href="javascript:void(0)" class="circle-icon-64 bkg_dark_000 m0auto"><img src="assets/images/star-fill-grey.svg"> </a>
-                                <a v-else href="javascript:void(0)" class="circle-icon-64 bkg_reviews_000 m0auto"><img src="assets/images/star-fill-review-24.svg"> </a>
-                                <h3 class="htxt_bold_16 dark_700 mb-2 mt-4">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
-                                <p class="fsize12 fw500 green_400 mb20">{{ setStringLimit(campaign.brand_desc, 100) }}</p>
-                                <div class="p15 pt15 btop text-uppercase">
-                                    {{ campaign.status === 0 ? 'INACTIVE' : 'RUNNING' }}
-                                </div>
+                            <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)" class="circle-icon-64 bkg_reviews_000 m0auto">
+                                <img v-if="campaign.status == 1" src="assets/images/star-fill-review-24.svg">
+                                <img v-else src="assets/images/star-fill-grey.svg">
+                            </a>
+                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="setupBroadcast(campaign.id)">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 0" @click="setupBroadcast(campaign.id)">INACTIVE</p>
+                            <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="campaign.status == 1" @click="setupBroadcast(campaign.id)">RUNNING</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 2" @click="setupBroadcast(campaign.id)">PENDING</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 3" @click="setupBroadcast(campaign.id)">ARCHIVE</p>
+                            <div class="p15 pt15 btop" @click="setupBroadcast(campaign.id)">
+                                <ul class="workflow_list">
+                                    <li><a href="#"><span><img src="assets/images/send-plane-line.svg"></span> 3k</a></li>
+                                    <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> 28%</a></li>
+                                    <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> 67%</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -110,6 +116,7 @@
                         <div class="card p0 pt50 text-center animate_top col">
                             <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto"><img src="assets/images/plus_grey_24.svg"> </a>
                             <h3 class="htxt_bold_12 dark_200 mb-0 mt-4 text-uppercase">Create<br>new campaign</h3>
+
                         </div>
                     </div>
                 </div>
