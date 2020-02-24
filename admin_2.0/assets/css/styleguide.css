@@ -393,7 +393,7 @@ MODAL POPUP CLASSES
 .modal-content hr{border-color: #f4f7fb!important; margin: 25px 0}
 .modal-backdrop.show {opacity: .1;}
 
-
+.modal-content.review{border-color: #8C95F8!important}
 
 /******************************
 BORDER CLASSES
@@ -402,6 +402,7 @@ BORDER CLASSES
 .border2{border: 1px solid #D5DFEF!important;}
 .border.active{border: 1px solid #67BAE4!important;}
 .border.active2{border: 1px solid #5998F8!important;}
+.border.reviews{border: 1px solid #8C95F8!important;}
 .bbot{border-bottom: 1px solid #e9eff8;}
 .btop{border-top: 1px solid #e9eff8;}
 .brig{border-right: 1px solid #e9eff8;}
