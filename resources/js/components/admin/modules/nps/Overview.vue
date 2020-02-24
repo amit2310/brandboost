@@ -294,7 +294,7 @@
         },
         methods: {
             showNpsSetup: function(npsId){
-                window.location.href='#/nps/setup/'+npsId+'/1';
+                window.location.href='#/modules/nps/setup/'+npsId+'/1';
             },
             showNpsViewScore: function(hashcode) {
                 window.location.href='#/modules/nps/score/'+hashcode;
