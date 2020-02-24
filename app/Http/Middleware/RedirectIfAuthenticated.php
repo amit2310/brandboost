@@ -23,4 +23,18 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+
+    public function login()
+    {
+        Session::put('url.intended',URL::previous());
+        return view('login');
+    }
+    public function loginPost()
+    {
+        if ($this->auth->attempt(array('email' => Input::get('email'), 'password' => Input::get('password')))){
+            return Redirect::to(Session::get('url.intended'));
+        }
+        return back();
+    }
+    
 }
