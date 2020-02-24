@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%;text-align:center;" v-if="isLoading">
+    <div style="width:100%;text-align:center;position:absolute;left:0;" v-if="isLoading">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              x="0px" y="0px"
              width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;display:block;margin:0 auto;" xml:space="preserve">

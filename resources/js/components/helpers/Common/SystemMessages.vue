@@ -1,5 +1,5 @@
 <template>
-    <div class="system-messages sticky-top">
+    <div class="system-messages" style="position:absolute;width:90%;z-index:9;left:5%;">
         <error-message :error="errorMsg"></error-message>
         <success-message :message="successMsg"></success-message>
     </div>

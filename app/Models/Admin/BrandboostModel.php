@@ -225,7 +225,48 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getReviewRequest($brandboostId = '', $type = '') {
+    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='') {
+        /*Todo: Need to fix this function after the cron script*/
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+
+        $query = DB::table('tbl_brandboost_events')
+            ->leftJoin('tbl_campaigns', 'tbl_campaigns.event_id', '=', 'tbl_brandboost_events.id')
+            ->leftJoin('tbl_tracking_log_email_sms', 'tbl_tracking_log_email_sms.campaign_id', '=', 'tbl_campaigns.id')
+            ->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=', 'tbl_tracking_log_email_sms.subscriber_id')
+            ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=', 'tbl_subscribers.id')
+            ->leftJoin('tbl_users', 'tbl_brandboost_users.user_id', '=', 'tbl_users.id')
+            ->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_brandboost_events.brandboost_id')
+            ->select('tbl_subscribers.*', 'tbl_brandboost_users.*', 'tbl_brandboost_users.id as subscriberid',
+                'tbl_brandboost_users.status as subscriberstatus',
+                'tbl_users.id AS uid', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_users.avatar', 'tbl_users.country',
+                'tbl_brandboost.review_type', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img',
+                'tbl_brandboost_events.id as beventid', 'tbl_tracking_log_email_sms.id as trackinglogid',
+                'tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid', 'tbl_tracking_log_email_sms.type as tracksubscribertype',
+                'tbl_tracking_log_email_sms.created as requestdate', 'tbl_campaigns.*')
+            ->when(($brandboostId > 0), function ($query) use ($brandboostId) {
+                return $query->where('tbl_brandboost_events.brandboost_id', $brandboostId);
+            })
+            ->when(($user_role != 1), function ($query) use ($userID) {
+                return $query->where('tbl_brandboost.user_id', $userID);
+            })
+            ->when((!empty($type)), function ($query) use ($type) {
+                return $query->where('tbl_tracking_log_email_sms.type', $type);
+            }, function ($query) {
+                //return $query->where('tbl_tracking_log_email_sms.type', 'email')
+                //->orWhere('tbl_tracking_log_email_sms.type', 'sms');
+            });
+        if(!empty($reviewType)){
+            $query->where('tbl_brandboost.review_type', $reviewType);
+            $query->where('tbl_subscribers.email', '!=',  '');
+        }
+        //->get();
+        $oData = $query->paginate(10);
+        return $oData;
+    }
+
+    public static function getReviewRequestOLD($brandboostId = '', $type = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
