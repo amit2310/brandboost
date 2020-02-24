@@ -540,6 +540,32 @@ class Brandboost extends Controller
     public function reviewRequest(Request $request)
     {
         $aUser = getLoggedUser();
+        $param = $request->type;
+        $moduleName = 'brandboost';
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            ucwords($param).' Review Requests' => ''
+        );
+        $oRequests = $mBrandboost->getReviewRequest('', '', $param);
+        $aData = array(
+            'title' => 'Brand Boost Review Requests',
+            'breadcrumb' => $aBreadcrumb,
+            'param' => $param,
+            'allData' => $oRequests,
+            'oRequest' => $oRequests->items(),
+            'moduleName' => $moduleName
+        );
+        return $aData;
+        //return view('admin.brandboost.review_request', $aData);
+
+    }
+
+    public function reviewRequestOld(Request $request)
+    {
+        $aUser = getLoggedUser();
         $userID = $aUser->id;
 
         $param = $request->type;
