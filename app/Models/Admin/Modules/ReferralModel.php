@@ -28,6 +28,22 @@ class ReferralModel extends Model {
 
         return $oWidgets;
     }
+    /**
+     * Get Member's list of all widgets
+     * @param type $userID
+     * @param type $id
+     * @return type
+     */
+    public static function getReferralAllRewards($userID) {
+        $aData =  DB::table('tbl_referral_rewards')
+            ->select('tbl_referral_rewards.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile')
+            ->leftjoin('tbl_users', 'tbl_referral_rewards.user_id','=','tbl_users.id')
+            ->where('tbl_referral_rewards.user_id', $userID)
+            ->get();
+//            ->paginate(10);
+
+        return $aData;
+    }
 
     /**
      * Get Referral data by userId
@@ -1636,7 +1652,12 @@ class ReferralModel extends Model {
             return false;
         }
     }
-
+    public static function getReferralWidget($referralWidgetId) {
+        $oData = DB::table('tbl_referral_widgets')
+            ->where('id', $referralWidgetId)
+            ->first();
+        return $oData;
+    }
 
 	public function getReferralProgramInfo($accountID) {
 		$oData = DB::table('tbl_referral_rewards')

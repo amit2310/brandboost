@@ -270,7 +270,80 @@ class Referral extends Controller {
         exit;
     }
 
+    public  function widgetSetup(Request $request,$referralWidgetID){
 
+        if (empty($referralWidgetID)) {
+            redirect("admin/modules/referral");
+            exit;
+        }
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Referral Widgets' => '#/modules/referral/widgets',
+//            'Widgets' => '#/referral/',
+            'Setup' => '',
+        );
+        $selectedTab = $request->input('t');
+        $setReferralTab = Session::get("setReferralTab");
+        if (empty($setReferralTab)) {
+            Session::put("setReferralTab", 'config');
+            $setReferralTab = Session::get("setReferralTab");
+        }
+        $defaultTab = !empty($selectedTab) ? $selectedTab : 'config';
+
+        $referralApps = ReferralModel::getReferralAllRewards($userID);
+        $referralWidget = ReferralModel::getReferralWidget($referralWidgetID);
+
+        $referralData = $this->getReferralTagLines($referralWidget->hashcode);
+
+        $sEmailPreview = view('admin.modules.referral.widgets.widget_preview', array('oReferral' => $referralData))->render();
+
+        $aData = array(
+            'title' => 'Referral Settings',
+            'breadcrumb' => $aBreadcrumb,
+            'defalutTab' => $defaultTab,
+            'programID' => $referralWidgetID,
+            'referralApps' => $referralApps,
+            'campaign' => $referralWidget,
+            'preview' => $sEmailPreview,
+            'setReferralTab' => $setReferralTab,
+            'userID' => $userID,
+        );
+       echo json_encode($aData);
+        exit;
+    }
+    public function autoSaveReferralWidget(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mReferral = new ReferralModel();
+        $mUser = new UsersModel();
+
+        $widgetID = $request->referral_widget_id;
+        $referral_app_id = $request->referral_app_id;
+
+        $aData = array(
+            'referral_id' => $referral_app_id
+        );
+
+        $response = $mReferral->updateReferralWidget($aData, $widgetID);
+        $referralWidget = ReferralModel::getReferralWidget($widgetID);
+
+        $referralData = $this->getReferralTagLines($referralWidget->hashcode);
+
+        $sEmailPreview = view('admin.modules.referral.widgets.widget_preview', array('oReferral' => $referralData))->render();
+
+        if ($response) {
+            $response = array(
+                'status' => 'success',
+                'preview'=>$sEmailPreview
+            );
+        } else {
+            $response = array('status' => 'error');
+        }
+        echo json_encode($response);
+        exit;
+    }
 	public function setup(Request $request,$referralID) {
         if (empty($referralID)) {
             redirect("admin/modules/referral");
@@ -289,8 +362,8 @@ class Referral extends Controller {
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Referral' => '#/referral/dashboard',
-            'Campaigns' => '#/referral/',
+            'Referral Widgits' => '#/modules/referral/widgets',
+            'Campaigns' => '#/modules/referral/overview',
             'Setup' => '',
         );
 

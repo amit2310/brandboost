@@ -276,7 +276,14 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/modules/chat/updateChatDesign', 'Admin\Modules\Chat@updateChatDesign') ;
     Route::get('admin/modules/chat', 'Admin\Modules\Chat@index');
 
-
+    /**
+     * --------------------------------------------------------------------------
+     *  Add Route of widget chat section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+    Route::get('admin/modules/referral/widget/setup/{id}', 'Admin\Modules\Referral@widgetSetup');
+    Route::post('admin/modules/referral/auto-save-referral-widget', 'Admin\Modules\Referral@autoSaveReferralWidget');
     Route::get('admin/modules/referral/overview', 'Admin\Modules\Referral@overview');
     Route::get('admin/modules/referral', 'Admin\Modules\Referral@index');
     Route::post('admin/modules/referral/changeStatus', 'Admin\Modules\Referral@changeStatus');

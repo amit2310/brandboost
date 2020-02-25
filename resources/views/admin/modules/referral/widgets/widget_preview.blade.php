@@ -1,9 +1,14 @@
 <style>
 	.msg_box {
-		position:absolute!important;
-		bottom: 40px;
+		/*position:absolute!important;*/
+		/*bottom: 40px;*/
 		width: 340px;
-		right: 40px;
+		/*right: 40px;*/
+        display: inline-block;
+        right: -191px !important;
+        position: relative;
+        top: 1px;
+        margin: 20px;
 		background: white;
 		z-index: 9!important;
 		border-radius: 10px;
@@ -110,7 +115,7 @@
     <div class="bb_drop_icon"><a href="#"><i class="fa fa-close"></i></a></div>
     <p>Get Reward Free</p>
   </div>
-  
+
   <!---- start chat with user name section ---->
   <div id="bb_msg_wrap_new" >
     <div class="bb-form-group new">
