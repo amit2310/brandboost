@@ -67,15 +67,7 @@ import SmsBroadcastCampaigns from './components/admin/modules/sms/Broadcast';
 import SmsAutomationCampaigns from './components/admin/modules/sms/Workflow';
 
 /*Referral Module*/
-import ReferralOverview from './components/admin/modules/referral/Overview';
-import ReferralAdvocates from './components/admin/modules/referral/Advocates';
-import ReferralStats from './components/admin/modules/referral/Stats';
-import ReferralReports from './components/admin/modules/referral/Reports';
-import ReferralStep1 from './components/admin/modules/referral/setup/Setup';
-import ReferralStep2 from './components/admin/modules/referral/setup/Setup2';
-import ReferralStep3 from './components/admin/modules/referral/setup/Setup3';
-import ReferralStep4 from './components/admin/modules/referral/setup/Setup4';
-import ReferralStep5 from './components/admin/modules/referral/setup/Setup5';
+
 
 /*Brand Page*/
 import BrandSetting from './components/admin/brand/Settings';
@@ -90,7 +82,7 @@ import ChatShortcut from './components/admin/chat/Shortcuts';
 import WidgetOverview from './components/admin/brandboost/WidgetOverview';
 // import OnsiteWidgets from './components/admin/brandboost/Widgets';
 
-import ReferralWidgets from './components/admin/modules/referral/Widgets';
+
 
 import MediaGalleryWidget from './components/admin/MediaGallery';
 import OnsiteWidgetSetup from './components/admin/brandboost/onsite/widget_setup/ReviewWidgets';
@@ -155,8 +147,7 @@ import ChatWidgetsSetup1 from './components/admin/modules/chat/setup/Setup';
 import ChatWidgetsSetup2 from './components/admin/modules/chat/setup/Setup2';
 import ChatWidgetsSetup3 from './components/admin/modules/chat/setup/Setup3';
 import ChatWidgetsSetup4 from './components/admin/modules/chat/setup/Setup4';
-// import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
-// import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
+
 
 /**
  * --------------------------------------------------------------------------
@@ -173,12 +164,40 @@ import npsStep2 from './components/admin/modules/nps/Survey/Setup2';
 import npsStep3 from './components/admin/modules/nps/Survey/Setup3';
 import npsStep4 from './components/admin/modules/nps/Survey/Setup4';
 
+/**
+ * --------------------------------------------------------------------------
+ *  Import component for Referral widget section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+
+import ReferralAdvocates from './components/admin/modules/referral/Advocates';
+import ReferralStats from './components/admin/modules/referral/Stats';
+import ReferralReports from './components/admin/modules/referral/Reports';
+import ReferralStep1 from './components/admin/modules/referral/setup/Setup';
+import ReferralStep2 from './components/admin/modules/referral/setup/Setup2';
+import ReferralStep3 from './components/admin/modules/referral/setup/Setup3';
+import ReferralStep4 from './components/admin/modules/referral/setup/Setup4';
+import ReferralStep5 from './components/admin/modules/referral/setup/Setup5';
+
+
+import ReferralWidgets from './components/admin/modules/referral/Widgets';
+import ReferralWidgetsSetup1 from './components/admin/modules/referral/widget/setup/Setup';
+import ReferralWidgetsSetup2 from './components/admin/modules/referral/widget/setup/Setup2';
+
+import ReferralOverview from './components/admin/modules/referral/campaign/Overview';
+import ReferralCampaignSetup1 from './components/admin/modules/referral/campaign/setup/Setup';
+import ReferralCampaignSetup2 from './components/admin/modules/referral/campaign/setup/Setup2';
+import ReferralCampaignSetup3 from './components/admin/modules/referral/campaign/setup/Setup3';
+import ReferralCampaignSetup4 from './components/admin/modules/referral/campaign/setup/Setup4';
+import ReferralCampaignSetup5 from './components/admin/modules/referral/campaign/setup/Setup5';
+// import ReferralWidgetsSetup1 from './components/admin/modules/widgets/referral/setup/Setup';
 
 const routes = [
 
     /**
      * --------------------------------------------------------------------------
-     *  Add component of widget onsite section.
+     *  Add Routes for Onsite Widgets
      *  @Pavan
      * --------------------------------------------------------------------------
      */
@@ -187,12 +206,11 @@ const routes = [
     { path: '/widgets/onsite/setup/:id/1', component: WidgetsOnsiteSetup, meta: { title: 'Onsite Widget Setup'} },
     { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
 
-    /**
-     * -----------------------------------End---------------------------------------
-     */
+    /**-----------------------------------End---------------------------------------*/
+
     /**
      * --------------------------------------------------------------------------
-     *  Add component of Chat Widgets section.
+     *  Add Routes for chat Widgets
      *  @Pavan
      * --------------------------------------------------------------------------
      */
@@ -201,14 +219,11 @@ const routes = [
     { path: '/modules/chat/setup/:id/2', component: ChatWidgetsSetup2, meta: { title: 'Chat Widget Setup'} },
     { path: '/modules/chat/setup/:id/3', component: ChatWidgetsSetup3, meta: { title: 'Chat Widget Setup'} },
     { path: '/modules/chat/setup/:id/4', component: ChatWidgetsSetup4, meta: { title: 'Chat Widget Setup'} },
-    // { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
+    /**-----------------------------------End---------------------------------------*/
 
     /**
-     * ---------------------------------End-----------------------------------------
-     */
-    /**
      * --------------------------------------------------------------------------
-     *  Add component of NPS widget section.
+     *  Add Routes for NPS Widgets
      *  @Pavan
      * --------------------------------------------------------------------------
      */
@@ -221,15 +236,37 @@ const routes = [
     { path: '/modules/nps/setup/:id/2', component: npsStep2, meta: { title: 'NPS Widgets'} },
     { path: '/modules/nps/setup/:id/3', component: npsStep3, meta: { title: 'NPS Widgets'} },
     { path: '/modules/nps/setup/:id/4', component: npsStep4, meta: { title: 'NPS Widgets'} },
-    // { path: '/modules/nps/widgets/step/:id/1', component: NPSWidgetsSetup1, meta: { title: 'Nps Widget Setup'} },
-    // { path: '/modules/nps/widgets/step/:id/2', component: NPSWidgetsSetup2, meta: { title: 'Nps Widget Setup'} },
-    // { path: '/nps/setup/:id/1', component: npsStep1, props : {title : 'NPS Campaign Setup'} },
-    // { path: '/nps/setup/:id/2', component: npsStep2, props : {title : 'NPS Campaign Setup'} },
-    // { path: '/nps/setup/:id/3', component: npsStep3, props : {title : 'NPS Campaign Setup'} },
-    // { path: '/nps/setup/:id/4', component: npsStep4, props : {title : 'NPS Campaign Setup'} },
+    /**-----------------------------------End---------------------------------------*/
     /**
-     * -----------------------------------End---------------------------------------
+     * --------------------------------------------------------------------------
+     *  Add Routes for Referral Widgets.
+     *  @Pavan
+     * --------------------------------------------------------------------------
      */
+    { path: '/modules/referral/widgets', component: ReferralWidgets, meta: { title: 'Referral Widgets'} },
+    { path: '/modules/referral/widget/setup/:id/1', component: ReferralWidgetsSetup1, meta: { title: 'Referral Widgets'} },
+    { path: '/modules/referral/widget/setup/:id/2', component: ReferralWidgetsSetup2, meta: { title: 'Referral Widgets'} },
+
+
+    { path: '/modules/referral/setup/:id/1', component: ReferralCampaignSetup1, meta: { title: 'Referral Campaign Setup'} },
+    { path: '/modules/referral/setup/:id/2', component: ReferralCampaignSetup2, props : {title : 'Referral Campaign Setup'} },
+    { path: '/modules/referral/setup/:id/3', component: ReferralCampaignSetup3, props : {title : 'Referral Campaign Setup'} },
+    { path: '/modules/referral/setup/:id/4', component: ReferralCampaignSetup4, props : {title : 'Referral Campaign Setup'} },
+    { path: '/modules/referral/setup/:id/5', component: ReferralCampaignSetup5, props : {title : 'Referral Campaign Setup'} },
+    // referral/setup/25/1
+    /*Referral Module*/
+    { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
+    { path: '/modules/referral/', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
+    { path: '/modules/referral/advocates/:id', component: ReferralAdvocates, meta: { title: 'Referral Advocates'} },
+    { path: '/modules/referral/stats/:id', component: ReferralStats, meta: { title: 'Referral Statistics'} },
+    { path: '/modules/referral/reports/:id', component: ReferralReports, meta: { title: 'Referral Reports'} },
+    { path: '/referral/setup/:id/1', component: ReferralStep1, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/2', component: ReferralStep2, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/3', component: ReferralStep3, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/4', component: ReferralStep4, props : {title : 'Referral Campaign Setup'} },
+    { path: '/referral/setup/:id/5', component: ReferralStep5, props : {title : 'Referral Campaign Setup'} },
+
+    /**-----------------------------------End---------------------------------------*/
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
     /*Admin Profi;e*/
@@ -318,17 +355,7 @@ const routes = [
     { path: '/modules/sms/broadcast/setup/:id/5', component: smsBroadcastStep5, props : {title : 'Sms Campaign', type : 'sms' } },
     { path: '/modules/sms/templates', component: ListSMSTemplates, props : {title : 'SMS Templates', type : 'sms' } },
     { path: '/modules/sms/workflow/setup/:id', component: SMSWorkflowSetup, meta: { title: 'Workflow Setup'} },
-    /*Referral Module*/
-    { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
-    { path: '/modules/referral/', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
-    { path: '/modules/referral/advocates/:id', component: ReferralAdvocates, meta: { title: 'Referral Advocates'} },
-    { path: '/modules/referral/stats/:id', component: ReferralStats, meta: { title: 'Referral Statistics'} },
-    { path: '/modules/referral/reports/:id', component: ReferralReports, meta: { title: 'Referral Reports'} },
-    { path: '/referral/setup/:id/1', component: ReferralStep1, props : {title : 'Referral Campaign Setup'} },
-    { path: '/referral/setup/:id/2', component: ReferralStep2, props : {title : 'Referral Campaign Setup'} },
-    { path: '/referral/setup/:id/3', component: ReferralStep3, props : {title : 'Referral Campaign Setup'} },
-    { path: '/referral/setup/:id/4', component: ReferralStep4, props : {title : 'Referral Campaign Setup'} },
-    { path: '/referral/setup/:id/5', component: ReferralStep5, props : {title : 'Referral Campaign Setup'} },
+
     /* Nps Survey Module */
     { path: '/modules/nps/overview', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
     { path: '/modules/nps/', component: NpsOverview, meta: { title: 'NPS Survey Dashboard'} },
@@ -349,7 +376,7 @@ const routes = [
     { path: '/chat/sms', component: ChatSMS, meta: { title: 'SMS Chat'} },
     { path: '/chat/shortcuts', component: ChatShortcut, meta: { title: 'Chat Shortcuts'} },
     /*Widget Section*/
-    { path: '/modules/referral/widgets', component: ReferralWidgets, meta: { title: 'Referral Programs'} },
+
     // { path: '/modules/nps/widgets', component: NPSWidgets, meta: { title: 'NPS Surveys'} },
     { path: '/brandboost/widget/overview', component: WidgetOverview, meta: { title: 'Widgets Overview'} },
     { path: '/brandboost/onsite_widget_setup/:id', component: OnsiteWidgetSetup, meta: { title: 'Onsite Widget Setup'} },
