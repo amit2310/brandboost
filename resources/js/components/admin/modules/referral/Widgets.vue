@@ -244,10 +244,11 @@
         },
         methods: {
             navigateToReferralSetup(wId) {
-                window.location.href = '#/modules/referral/setup/'+wId;
+                window.location.href = '#/modules/referral/setup/'+wId+'/1';
             },
             navigateToWidgetSetup(wId) {
-                window.location.href = '#/modules/referral/referral_widget_setup/'+wId;
+                // window.location.href = '#/modules/referral/referral_widget_setup/'+wId;
+                window.location.href = '#/modules/referral/widget/setup/'+wId+'/1';
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
