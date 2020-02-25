@@ -1,329 +1,225 @@
 <template>
 
-    <div class="content" id="masterContainer">
-
-        <div class="">
-
-            <!--&&&&&&&&&&&& PAGE HEADER &&&&&&&&&&-->
-            <div class="page_header">
+    <div class="content">
+        <!--******************
+                Top Heading area
+                **********************-->
+        <div class="top-bar-top-section bbot">
+            <div class="container-fluid">
                 <div class="row">
-                    <!--=============Headings & Tabs menu==============-->
-                    <div class="col-md-7">
-                        <h3><img style="width: 18px;" src="/assets/images/review_icon2.png"/> Reviews</h3>
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="">All</a></li>
-                            <li><a style="javascript:void();" class="filterByColumn" fil="approved">Approved</a></li>
-                            <li><a style="javascript:void();" class="filterByColumn" fil="pending">Pending</a></li>
-                        </ul>
+                    <div class="col-md-6">
+                        <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
+                        <h3 class="htxt_medium_24 dark_700">Reviews</h3>
                     </div>
-                    <!--=============Button Area Right Side==============-->
-                    <div class="col-md-5 text-right btn_area">
-                        <!-- <button type="button" class="btn light_btn ml10"><i class="icon-download4"></i><span> &nbsp;  Import Reviews</span> </button>
-                        <button type="button" class="btn light_btn ml10"><i class="icon-upload4"></i><span> &nbsp;  Export Reviews</span> </button>
-                        <button type="button" class="btn dark_btn ml10"><i class="icon-plus3 txt_purple"></i><span> &nbsp;  Add Review</span> </button> -->
-
+                    <div class="col-md-6 text-right">
+                        &nbsp;
                     </div>
                 </div>
             </div>
-            <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
+            <div class="clearfix"></div>
+        </div>
+        <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
-            <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-            <div class="tab-content">
-                <!--===========TAB 1===========-->
-                <div class="tab-pane active" id="right-icon-tab0">
+        <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
+        <div class="content-area">
+            <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p40 pt0 pb0">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p class="fsize12 fw500 dark_200 mt30 mb30"><i><img src="assets/images/lightbulb-fill.svg"></i> &nbsp; TIPS</p>
+                                    <h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
+                                    <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">Conversational marketing platform that helps companies close more deals by messaging with prospects in real-time &amp; via intelligent chatbots. Qualify leads, book meetings.</p>
+                                </div>
+                                <div class="col-md-5 text-center mt20">
+                                    <img class="mt0" style="max-width: 272px;" src="assets/images/review_campaign.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table_head_action bbot pb30">
+                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                    <loading :isLoading="loading"></loading>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div style="margin: 0!important;" class="panel panel-flat">
-
-                                <!-- ****** Load Smart Popup ***** -->
-                                <!-- @if (!empty($aReviews))
-                                @include('admin.components.smart-popup.smart-review-widget')
-                                @endif -->
-
-                                <div class="panel-heading">
-                                    <span class="pull-left">
-                                        <h6 class="panel-title">
-                                            {{ oReviews.length > 0 ? oReviews.length : '0' }}
-                                            Reviews
-                                        </h6>
-                                    </span>
-                                    <div class="heading_links pull-left">
-                                        <a class="top_links top_links_clk btn btn-xs ml20 btn_white_table" startRate="" style="cursor: pointer;">All</a>
-                                        <a class="top_links top_links_clk" startRate="positive" style="cursor: pointer;">Positive</a>
-                                        <a class="top_links top_links_clk" startRate="neutral" style="cursor: pointer;">Neutral</a>
-                                        <a class="top_links top_links_clk" startRate="negative" style="cursor: pointer;">Negative</a>
-                                        <a class="top_links top_links_clk link" startRate="commentLink" style="cursor: pointer;">With comments only</a>
-                                        <button type="button" class="btn btn-xs ml20 plus_icon"><i class="icon-plus3"></i></button>
-                                    </div>
-
-                                    <div class="heading-elements">
-                                        <div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
-                                            <input class="form-control input-sm cus_search" tableid="onsitereviewQuestion" placeholder="Search by name" type="text">
-                                            <div class="form-control-feedback">
-                                                <i class="icon-search4"></i>
-                                            </div>
-                                        </div>
-                                        <div class="table_action_tool">
-                                            <a href="javascript:void();"><i class="icon-calendar2"></i></a>
-                                            <a href="javascript:void();" class="editDataReview"><i class="icon-pencil4"></i></a>
-                                            <a href="javascript:void();" style="display: none;" id="deleteButtonReviewList" class="custom_action_box"><i class="icon-trash position-left"></i></a>
-                                        </div>
-
+                        <div class="col-md-6">
+                            <h3 class="htxt_medium_16 dark_400">{{ oReviews.length }}&nbsp;Reviews</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table_action">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; {{sortBy}}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
                                     </div>
                                 </div>
-
-                                <div class="panel-body p0">
-
-                                    <table v-if="oReviews.length > 0" class="table datatable-basic-new" id="onsitereviewQuestion">
-                                        <thead>
-                                        <tr>
-                                            <th style="display: none;"></th>
-                                            <th style="display: none;"></th>
-                                            <th style="display: none;" class="nosort editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkAll[]" class="control-primary" id="checkAll" ><span class="custmo_checkmark"></span></label></th>
-                                            <th><i class="icon-user"></i>Name</th>
-                                            <th><i class="icon-star-full2"></i>Rating</th>
-                                            <th><i class="icon-paragraph-left3"></i>Review</th>
-                                            <th><i class="icon-calendar"></i>Created</th>
-                                            <th><i class="icon-hash"></i>Tags</th>
-                                            <th><i class="icon-folder2"></i>Category</th>
-                                            <th><i class="icon-diff-modified"></i>Status</th>
-                                            <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
-                                            <th style="display: none;"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--=======================-->
-                                        <tr v-for="oReview in oReviews" :id="`append-${oReview.reviewid}`" class="selectedClass">
-                                            <td style="display: none;">{{ oReview.review_created }}</td>
-                                            <td style="display: none;">{{ oReview.reviewid }}</td>
-                                            <td style="width: 40px!important; display: none;" class="editAction"><label class="custmo_checkbox pull-left"><input type="checkbox" name="checkRows[]" class="checkRows" :id="`chk${oReview.reviewid}`" :value="`${oReview.reviewid}`" ><span class="custmo_checkmark"></span></label></td>
-
-                                            <td class="viewSmartPopup" :review_id="oReview.reviewid">
-                                                <div class="media-left media-middle">
-                                                    <user-avatar
-                                                        :avatar="oReview.avatar"
-                                                        :firstname="oReview.firstname"
-                                                        :lastname="oReview.lastname"
-                                                    ></user-avatar>
-                                                </div>
-                                                <div class="media-left">
-                                                    <div class="pt-5"><a href="javascript:void();" class="text-default text-semibold bbot">{{ oReview.firstname }} {{ oReview.lastname }}</a><img class="flags" :src="`/assets/images/flags/${oReview.userCountry}.png`" onerror="this.src='/assets/images/flags/us.png'"/> </div>
-                                                    <div class="text-muted text-size-small">{{ oReview.email }}</div>
-                                                </div>
-                                            </td>
-                                            <td class="viewSmartPopup" :review_id="oReview.reviewid">
-                                                <div v-html="oReview.smilyImage"></div>
-                                            </td>
-                                            <td><a :href="`/admin/brandboost/reviewdetails/${oReview.reviewid}`" class="txt_dblack"><div class="text-semibold">{{ oReview.review_title.substring(0,23) }}</div>
-                                                <div class="text-size-small text-muted">{{ oReview.comment_text.substring(0,31) }}</div></a></td>
-                                            <td class="viewSmartPopup" :review_id="oReview.reviewid"><div class="media-left">
-                                                <div class=""><span class="text-default text-semibold">{{ oReview.review_created }}</span> </div>
-                                                <div class="text-muted text-size-small">{{ oReview.review_created }}</div>
-                                            </div>
-                                            </td>
-
-                                            <td :id="`review_tag_${oReview.reviewid}`">
-                                                <div class="media-left pl30 blef">
-                                                    <div class=""><a href="javascript:void(0);" class="text-default text-semibold bbot">{{ oReview.reviewTags.length }} Tags</a> </div>
-                                                </div>
-                                                <div class="media-left pr30 brig">
-                                                    <div class="tdropdown">
-                                                        <button class="btn btn-xs plus_icon dropdown-toggle ml10" data-toggle="dropdown" aria-expanded="false"><i class="icon-plus3"></i></button>
-                                                        <ul style="right: 0px!important;" class="dropdown-menu dropdown-menu-right tagss">
-
-                                                            <button v-if="oReview.reviewTags.length" v-for="oTag in oReview.reviewTags" class="btn btn-xs btn_white_table pr10"> {{ oTag.tag_name }} </button>
-
-                                                            <button class="btn btn-xs plus_icon ml10 applyInsightTagsReviews" :reviewid="`Base64EncodeUrl(oReview.reviewid)`" action_name="review-tag"><i class="icon-plus3"></i></button>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="tdropdown">
-
-                                                    <i v-if="oReview.rating >= 4" class="icon-primitive-dot txt_green fsize16"></i>
-
-                                                    <i v-else-if="oReview.rating >= 3" class="icon-primitive-dot txt_grey fsize16"></i>
-
-                                                    <i v-else class="icon-primitive-dot txt_red fsize16"></i>
-
-
-                                                    <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                        <span v-if="oReview.rating >= 4">Positive</span>
-
-                                                        <span v-else-if="oReview.rating >= 3">Neutral</span>
-
-                                                        <span v-else>Negative</span>
-                                                    </a>
-
-                                                    <ul class="dropdown-menu dropdown-menu-right status">
-
-                                                        <li v-if="oReview.rating >= 4">
-                                                            <a href="javascript:void(0);" :review_id="oReview.reviewid" change_category = '3' class="update_category"><i class="icon-primitive-dot txt_grey"></i> Neutral</a>
-                                                        </li>
-                                                        <li v-if="oReview.rating >= 4">
-                                                            <a href="javascript:void(0);" :review_id="oReview.reviewid" change_category = '1' class="update_category"><i class="icon-primitive-dot txt_red"></i> Negative</a>
-                                                        </li>
-
-                                                        <li v-else-if="oReview.rating >= 3">
-                                                            <a href="javascript:void(0);" :review_id="oReview.reviewid" change_category = '5' class="update_category"><i class="icon-primitive-dot txt_green"></i> Positive</a>
-                                                        </li>
-                                                        <li v-else-if="oReview.rating >= 3">
-                                                            <a href="javascript:void(0);" :review_id="oReview.reviewid" change_category = '1' class="update_category"><i class="icon-primitive-dot txt_red"></i> Negative</a>
-                                                        </li>
-
-                                                        <li v-else>
-                                                            <a href="javascript:void(0);" :review_id="oReview.reviewid" change_category = '5' class="update_category"><i class="icon-primitive-dot txt_green"></i> Positive</a>
-                                                        </li>
-                                                        <li v-else>
-                                                            <a href="javascript:void(0);" :review_id="oReview.reviewid" change_category = '3' class="update_category"><i class="icon-primitive-dot txt_grey"></i> Neutral</a>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="tdropdown">
-
-                                                    <i v-if="oReview.rstatus == 0" class="icon-primitive-dot txt_red fsize16"></i>
-
-                                                    <i v-else-if="oReview.rstatus == 2" class="icon-primitive-dot txt_grey fsize16"></i>
-
-                                                    <i v-else class="icon-primitive-dot txt_green fsize16"></i>
-
-                                                    <a class="text-default text-semibold bbot dropdown-toggle" data-toggle="dropdown">
-                                                        <span v-if="oReview.rstatus == 0">Inactive</span>
-
-                                                        <span v-else-if="oReview.rstatus == 2">Pending</span>
-
-                                                        <span v-else>Active</span>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-right status">
-
-                                                        <li v-if="oReview.rstatus == 1">
-                                                            <a :review_id="oReview.reviewid" change_status = "0"  class="chg_status"><i class='icon-primitive-dot txt_red'></i> Inactive</a>
-                                                        </li>
-
-                                                        <li v-else-if="oReview.rstatus == 2">
-                                                            <a :review_id="oReview.reviewid" change_status = "1" class="chg_status"><i class='icon-primitive-dot txt_green'></i> Active</a>
-                                                        </li>
-                                                        <li v-else-if="oReview.rstatus == 2">
-                                                            <a :review_id="oReview.reviewid" change_status = "0"  class="chg_status"><i class='icon-primitive-dot txt_red'></i> Inactive</a>
-                                                        </li>
-
-                                                        <li v-else>
-                                                            <a :review_id="oReview.reviewid" change_status = "1" class="chg_status"><i class='icon-primitive-dot txt_green'></i> Active</a>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="tdropdown ml10">
-                                                    <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
-                                                    <ul class="dropdown-menu dropdown-menu-right more_act">
-
-                                                        <a href="javascript:void();" class="dropdown_close">X</a>
-
-                                                        <li v-if="oReview.rstatus == 1">
-                                                            <a :review_id="oReview.reviewid" change_status = "0" class="chg_status red"><i class='icon-file-locked'></i> Inactive</a>
-                                                        </li>
-
-                                                        <li v-else-if="oReview.rstatus == 2">
-                                                            <a :review_id="oReview.reviewid" change_status = "1" class="chg_status green"><i class='icon-file-locked'></i> Active</a>
-                                                        </li>
-                                                        <li v-else-if="oReview.rstatus == 2">
-                                                            <a :review_id="oReview.reviewid" change_status = "0" class="chg_status red"><i class='icon-file-locked'></i> Inactive</a>
-                                                        </li>
-
-                                                        <li v-else>
-                                                            <a :review_id="oReview.reviewid" change_status = "1" class="chg_status green"><i class='icon-file-locked'></i> Active</a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a target="_blank" :href="`/admin/brandboost/reviewdetails/${oReview.reviewid}`"><i class="icon-file-locked"></i> View Review</a>
-                                                        </li>
-
-                                                        <li v-if="oReview.review_type == 'text'">
-                                                            <a href="javascript:void(0);" class="editReview" :review_id="oReview.reviewid"><i class="icon-gear"></i> Edit</a>
-                                                        </li>
-
-                                                        <li v-else>
-                                                            <a href="javascript:void(0);" class="editVideoReview" :review_id="oReview.reviewid"><i class="icon-pencil"></i> Edit</a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a href="javascript:void(0);" class="deleteReview" :review_id="oReview.reviewid" ><i class="icon-trash"></i> Delete</a>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td style="display: none;">
-                                                <span v-if="oReview.rstatus == 0">Declined</span>
-                                                <span v-else-if="oReview.rstatus == 2">Pending</span>
-                                                <span v-else>Approved</span>
-                                            </td>
-                                        </tr>
-
-
-                                        </tbody>
-                                    </table>
-
-                                    <table v-else class="table datatable-basic">
-                                        <thead>
-                                        <tr>
-                                            <th><i class="icon-user"></i>Name</th>
-                                            <th><i class="icon-star-full2"></i>Rating</th>
-                                            <th><i class="icon-paragraph-left3"></i>Review</th>
-                                            <th><i class="icon-calendar"></i>Created</th>
-                                            <th><i class="icon-hash"></i>Tags</th>
-                                            <th><i class="icon-folder2"></i>Category</th>
-                                            <th><i class="icon-diff-modified"></i>Status</th>
-                                            <th class="text-center nosort sorting_disabled"><i class="fa fa-dot-circle-o"></i>Action</th>
-
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td colspan="10">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div style="margin: 20px 0px 0;" class="text-center">
-                                                        <h5 class="mb-20 mt40">
-                                                            Looks Like You Don’t Have Any On Site Review Yet <img src="/assets/images/smiley.png"> <br>
-                                                            Lets Create Your First On Site Review.
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        <td style="display: none"></td>
-                                        </tbody>
-                                    </table>
-
+                                <div class="float-right ml10 mr10">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/list_view.svg"></span>&nbsp; {{viewType}}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="row" v-if="viewType == 'Grid View'">
+                    <div class="col-md-3 d-flex" v-for="oReview in oReviews">
+                        <div class="card p0 pt30 text-center animate_top col">
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" @click="setupBroadcast(oReview.id)" class="circle-icon-64 bkg_reviews_000 m0auto">
+                                <img v-if="oReview.rstatus == 1" src="assets/images/review_campaign.png">
+                                <img v-else src="assets/images/review_campaign.png">
+                            </a>
+                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.id)" style="cursor: pointer;">
+                                {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
+                            </h3>
+                            <p>{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 0" @click="setupBroadcast(oReview.id)">INACTIVE</p>
+                            <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="oReview.rstatus == 1" @click="setupBroadcast(oReview.id)">ACTIVE</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 2" @click="setupBroadcast(oReview.id)">PENDING</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 3" @click="setupBroadcast(oReview.id)">ARCHIVED</p>
+                            <div class="p15 pt15 btop">
+                                <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oReview.review_created) }} </em></p>
+                                <p class="htxt_regular_12 dark_300">
+                                    <user-avatar
+                                        :avatar="oReview.avatar"
+                                        :firstname="oReview.firstname"
+                                        :lastname="oReview.lastname"
+                                    ></user-avatar>
+                                    <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
+                                    <span v-if="oReview.email != ''"><br />{{ oReview.email }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row" v-if="viewType == 'List View'">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr>
+                                    <td><span class="fsize12 fw300">Review </span></td>
+                                    <td><span class="fsize12 fw300">Status</span></td>
+                                    <td><span class="fsize12 fw300">Created On</span></td>
+                                    <td><span class="fsize12 fw300">Created By</span></td>
+                                    <td><span class="fsize12 fw300">&nbsp;</span></td>
+                                </tr>
+                                <tr v-for="oReview in oReviews">
+                                    <td>
 
+                                        <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.id)" style="cursor: pointer;">
+                                            <img src="assets/images/review_campaign.png" style="width: 30px;"> {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
+                                        </h3>
+                                        <p class="fsize12 fw500 green_400 ml-4">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger" v-if="oReview.rstatus == 0" @click="setupBroadcast(oReview.id)">INACTIVE</span>
+                                        <span class="text-success" v-if="oReview.rstatus == 1" @click="setupBroadcast(oReview.id)">ACTIVE</span>
+                                        <span class="text-primary" v-if="oReview.rstatus == 2" @click="setupBroadcast(oReview.id)">PENDING</span>
+                                        <span class="text-info" v-if="oReview.rstatus == 3" @click="setupBroadcast(oReview.id)">ARCHIVED</span>
+                                    </td>
+                                    <td>{{ displayDateFormat('M d, h:i A', oReview.review_created) }}</td>
+                                    <td>
+                                        <user-avatar
+                                            :avatar="oReview.avatar"
+                                            :firstname="oReview.firstname"
+                                            :lastname="oReview.lastname"
+                                        ></user-avatar>
+                                        <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
+                                        <span v-if="oReview.email != ''"><br />{{ oReview.email }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+                                                <span><img src="assets/images/more-vertical.svg"/></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                                <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                                <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                                <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    :offset="4"
+                    class="mt-4">
+                </pagination>
 
             </div>
-            <!--================================= CONTENT AFTER TAB===============================-->
 
+            <div class="container-fluid" v-else>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card_shadow min-h-280">
+                            <div class="row mb65">
+                                <div class="col-md-6 text-left">
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
+                                        Learn how to use reviews monitoring
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row mb65">
+                                <div class="col-md-12 text-center">
+                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_campaign.png">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any reviews</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import reviews!</h3>
+                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-review-campaign-slidebox">Create review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!--=====================================Create new campaign================================-->
+        <!--================================= CONTENT AFTER TAB===============================-->
+
+        <!--=====================================Create new review================================-->
         <div id="addPeopleList" class="modal fade">
             <div style="max-width: 440px;ss" class="modal-dialog">
                 <div class="modal-content">
@@ -638,672 +534,207 @@
         </div>
         <!-- /newreviewpopup -->
 
-        <div id="commentpopup" class="modal fade">
-        </div>
+        <div id="commentpopup" class="modal fade"></div>
     </div>
 
 </template>
 
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
+    let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
-        title: 'Onsite reviews - Brand Boost',
-        props : ['pageColor'],
-        components: {UserAvatar},
-        data() {
+        props : ['pageColor', 'title', 'review_type'],
+        components: {UserAvatar, Pagination},
+        data(){
             return {
-                oReviews: {},
-                reviewsCnt: {}
+                successMsg : '',
+                errorMsg: '',
+                loading: true,
+                moduleName: '',
+                moduleUnitID: '',
+                moduleAccountID: '',
+                company_name: '',
+                count : 0,
+                allData: {},
+                oReviews : '',
+                oCampaign: '',
+                reviewTags: '',
+                campaignId: '',
+                current_page: 1,
+                breadcrumb: '',
+                form: new Form({
+                    campaignName: '',
+                    OnsitecampaignDescription: '',
+                    campaign_id: ''
+                }),
+                formLabel: 'Create',
+                viewType: 'Grid View',
+                sortBy: 'Date Created',
+                searchBy: ''
             }
         },
-
+        created() {
+            this.loadPaginatedData();
+        },
         mounted() {
             this.$parent.pageColor = this.pageColor;
-            axios.get('/admin/brandboost/reviews')
-                .then(response => {
-                    //console.log(response.data);
-
-                    this.oReviews = response.data.aReviews;
-                    this.reviewsCnt = this.oReviews.length;
-                    console.log(this.oReviews);
-                });
-
-            console.log('Component mounted.');
-        }
-
-    }
-
-
-    // top navigation fixed on scroll and side bar collasped
-
-    $(window).scroll(function () {
-        var sc = $(window).scrollTop();
-        if (sc > 100) {
-            $("#header-sroll").addClass("small-header");
-        } else {
-            $("#header-sroll").removeClass("small-header");
-        }
-    });
-
-    function smallMenu() {
-        if ($(window).width() < 1600) {
-            $('body').addClass('sidebar-xs');
-        } else {
-            $('body').removeClass('sidebar-xs');
-        }
-    }
-
-    $(document).ready(function () {
-        smallMenu();
-
-        window.onresize = function () {
-            smallMenu();
-        };
-    });
-
-
-
-    $(document).ready(function () {
-        // Setup - add a text input to each footer cell
-        $('#onsitereviewQuestion thead tr').clone(true).appendTo('#onsitereviewQuestion thead');
-
-        $('#onsitereviewQuestion thead tr:eq(1) th').each(function (i) {
-
-            if (i === 11) {
-                var title = $(this).text();
-                $(this).html('<input type="text" id="filterBy" placeholder="Search ' + title + '" />');
-
-                $('input', this).on('keyup change', function () {
-                    if (tableBase.column(i).search() !== this.value) {
-                        tableBase
-                            .column(i)
-                            .search(this.value)
-                            .draw();
-                    }
-                });
+        },
+        watch: {
+            'sortBy' : function(){
+                this.loadPaginatedData();
             }
-            if (i === 4) {
-                var title = $(this).text();
-                $(this).html('<input type="text" id="startRate" placeholder="Search ' + title + '" />');
-
-                $('input', this).on('keyup change', function () {
-                    if (tableBase.column(i).search() !== this.value) {
-                        tableBase
-                            .column(i)
-                            .search(this.value)
-                            .draw();
-                    }
-                });
-            }
-
-
-        });
-
-        $(document).on('click', '.filterByColumn', function () {
-
-            $('.nav-tabs').each(function (i) {
-                $(this).children().removeClass('active');
-            });
-            $(this).parent().addClass('active');
-            var fil = $(this).attr('fil');
-            $('#filterBy').val(fil);
-            $('#filterBy').keyup();
-
-            if (fil.length == 0) {
-                $('.heading_links').each(function (i) {
-                    $(this).children('a').removeClass('btn btn-xs ml20 btn_white_table');
-                });
-                $('#startRate').val('');
-                $('#startRate').keyup();
-                $('.heading_links a:eq(0)').addClass('btn btn-xs ml20 btn_white_table');
-                tableBase.draw();
-            }
-        });
-
-        $(document).on('click', '.top_links_clk', function () {
-
-            $('.heading_links').each(function (i) {
-                $(this).children('a').removeClass('btn btn-xs btn_white_table');
-            });
-            $(this).addClass('btn btn-xs btn_white_table');
-            var typ = $(this).attr('startRate');
-
-            if (typ != 'commentLink') {
-                $('#startRate').val(typ);
-                $('#startRate').keyup();
-
-                if (typ.length == 0) {
-                    $('.nav-tabs').each(function (i) {
-                        $(this).children().removeClass('active');
+        },
+        methods: {
+            searchItem: function(){
+                this.loadPaginatedData();
+            },
+            showReview: function(id){
+                window.location.href='#/brandboost/reviewdetails/'+id;
+            },
+            showQuestions: function(id){
+                window.location.href='#/brandboost/questions/'+id;
+            },
+            loadPaginatedData : function(){
+                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.oCampaign = response.data.oCampaign;
+                        this.allData = response.data.allData;
+                        this.oReviews = response.data.aReviews;
+                        this.reviewTags = response.data.reviewTags;
+                        this.reviewTags = response.data.reviewTags;
+                        this.loading = false;
+                        //console.log(this.campaigns)
                     });
-                    $('#filterBy').val('');
-                    $('#filterBy').keyup();
-                    $('ul.nav-tabs li.all').addClass('active');
-                    tableBase.draw();
+            },
+            showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            navigatePagination: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            displayForm : function(lbl){
+                if(lbl == 'Create'){
+                    this.form={};
                 }
-            } else {
-                $('#startRate').val('');
-                $('#startRate').keyup();
-                tableBase.draw();
-            }
-
-        });
-
-
-        var tableId = 'onsitereviewQuestion';
-        var tableBase = custom_data_table(tableId);
-
-    });
-
-
-
-    function showCommentsPopup(reviewID) {
-        $.ajax({
-            url: "{{ base_url('admin/reviews/getCommentsPopup') }}",
-            type: "POST",
-            data: {review_id: reviewID, _token: '{{csrf_token()}}'},
-            dataType: "json",
-            success: function (data) {
-                if (data.status == 'success') {
-                    $('.overlaynew').hide();
-                    var dataString = data.popupData;
-                    $("#commentpopup").html(dataString);
-                    $("#commentpopup").modal("show");
-                }
-            }
-        });
-    }
-
-
-
-    $(document).ready(function () {
-
-
-        $('#checkAll').change(function () {
-
-            if (false == $(this).prop("checked")) {
-
-                $(".checkRows").prop('checked', false);
-                $(".selectedClass").removeClass('success');
-                $('.custom_action_box').hide();
-            } else {
-
-                $(".checkRows").prop('checked', true);
-                $(".selectedClass").addClass('success');
-                $('.custom_action_box').show();
-            }
-
-        });
-
-        $(document).on('click', '.checkRows', function () {
-            var inc = 0;
-
-
-            var rowId = $(this).val();
-
-            if (false == $(this).prop("checked")) {
-                $('#append-' + rowId).removeClass('success');
-            } else {
-                $('#append-' + rowId).addClass('success');
-            }
-
-            $('.checkRows:checkbox:checked').each(function (i) {
-                inc++;
-            });
-            if (inc == 0) {
-
-                $('.custom_action_box').hide();
-            } else {
-                $('.custom_action_box').show();
-            }
-
-            var numberOfChecked = $('.checkRows:checkbox:checked').length;
-            var totalCheckboxes = $('.checkRows:checkbox').length;
-            if (totalCheckboxes > numberOfChecked) {
-                $('#checkAll').prop('checked', false);
-            }
-
-        });
-
-        $(document).on('click', '#deleteButtonReviewList', function () {
-
-            var val = [];
-            $('.checkRows:checkbox:checked').each(function (i) {
-                val[i] = $(this).val();
-            });
-            if (val.length === 0) {
-                alert('Please select a row.')
-            } else {
-
-                deleteConfirmationPopup(
-                    "This review will deleted immediately.<br>You can't undo this action.",
-                    function () {
-
-                        $('.overlaynew').show();
-                        $.ajax({
-                            url: "{{ base_url('admin/reviews/deleteMultipalReview') }}",
-                            type: "POST",
-                            data: {multiReviewid: val, _token: '{{csrf_token()}}'},
-                            dataType: "json",
-                            success: function (data) {
-                                if (data.status == 'success') {
-                                    location.reload();
-                                } else {
-                                    alert("Having some error.");
-                                }
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        });
-                    });
-
-            }
-
-        });
-
-
-        $("#frmReviewTagListModal").submit(function () {
-            var formdata = $("#frmReviewTagListModal").serialize();
-            $.ajax({
-                url: "{{ base_url('admin/tags/applyReviewTag') }}",
-                type: "POST",
-                data: formdata,
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $("#review_tag_" + data.id).html(data.refreshTags);
-                        $("#ReviewTagListModal").modal("hide");
-                        //window.location.href = '';
-                    }
-                }
-            });
-            return false;
-        });
-
-        $(document).on("click", ".displayReview", function () {
-            var elem = $(this);
-            var reviewid = $(this).attr("reviewid");
-            var tabtype = $(this).attr('tab_type');
-            var reviewTime = $(this).attr('review_time');
-            displayReviewPopup(reviewid, tabtype, reviewTime);
-
-        });
-
-        $(document).on("click", ".showReviewPopup", function () {
-            var reviewid = $(this).attr("reviewid");
-            getReviewPopupData(reviewid, '');
-        });
-
-        function getReviewPopupData(reviewId, tabtype) {
-            $('.overlaynew').show();
-            $.ajax({
-                url: "{{ base_url('/admin/reviews/getReviewPopupData') }}",
-                type: "POST",
-                data: {rid: reviewId, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (response) {
-                    if (response.status == "success") {
-                        $('.overlaynew').hide();
-                        $("#newreviewpopup").modal("show");
-                        $("#reviewPopupBox").html(response.popupData);
-                        if (tabtype == 'note') {
-                            $('.tabbable a[href="#note-tab"]').trigger('click');
-                        } else {
-                            $('.tabbable a[href="#review-tab"]').trigger('click');
-                        }
-                    }
-                },
-                error: function (response) {
-                    alertMessage(response.message);
-                }
-            });
-        }
-
-        function displayReviewPopup(reviewid, tabtype, reviewTime) {
-            $('.overlaynew').show();
-            $.ajax({
-                url: "{{ base_url('/admin/reviews/displayreview') }}",
-                type: "POST",
-                data: {rid: reviewid, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (response) {
-                    if (response.status == "success") {
-                        $('.overlaynew').hide();
-                        $("#reviewContent").html(response.popup_data);
-                        $(".reviewTime").html(reviewTime);
-                        $("#reviewPopup").modal("show");
-                        if (tabtype == 'note') {
-                            $('.tabbable a[href="#note-tab"]').trigger('click');
-                        } else {
-                            $('.tabbable a[href="#review-tab"]').trigger('click');
-                        }
-                    }
-                },
-                error: function (response) {
-                    alertMessage(response.message);
-                }
-            });
-        }
-
-        $(document).on("click", "#saveReviewNotes", function () {
-            var formdata = $("#frmSaveNote").serialize();
-            $('.overlaynew').show();
-            $.ajax({
-                url: "{{ base_url('/admin/reviews/saveReviewNotes') }}",
-                type: "POST",
-                data: formdata,
-                dataType: "json",
-                success: function (response) {
-                    if (response.status == "success") {
-                        var reviewid = $("input[name='reviewid']").val();
-                        var tabtype = 'note';
-                        var reviewtime = $("input[name='reviewtime']").val();
-                        displayReviewPopup(reviewid, tabtype, reviewtime);
-                    }
-                },
-                error: function (response) {
-                    alertMessage(response.message);
-                }
-            });
-        });
-
-        $(document).on("click", "#saveReviewNotesPopup", function () {
-            var formdata = $("#frmSaveNote").serialize();
-            $('.overlaynew').show();
-            $.ajax({
-                url: "{{ base_url('/admin/reviews/saveReviewNotes') }}",
-                type: "POST",
-                data: formdata,
-                dataType: "json",
-                success: function (response) {
-                    if (response.status == "success") {
-                        var reviewid = $("input[name='reviewid']").val();
-                        var tabtype = 'note';
-                        getReviewPopupData(reviewid, tabtype);
-                    }
-                },
-                error: function (response) {
-                    alertMessage(response.message);
-                }
-            });
-        });
-
-    });
-
-    $(document).ready(function () {
-
-        $(document).on('click', '.showVideo', function () {
-
-            var videoUrl = $(this).attr('videoUrl');
-            $("#showVideoPopup").modal();
-            $('#divVideo video source').attr('src', videoUrl);
-            $("#divVideo video")[0].load();
-            $('#downloadVideo').attr('href', videoUrl);
-        });
-
-        $(document).on('click', '.deleteReview', function () {
-
-            var reviewID = $(this).attr('reviewid');
-
-            deleteConfirmationPopup(
-                "This review will deleted immediately.<br>You can't undo this action.",
-                function () {
-
-                    $('.overlaynew').show();
-                    $.ajax({
-                        url: "{{ base_url('admin/reviews/deleteReview') }}",
-                        type: "POST",
-                        data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.status == 'success') {
-                                location.reload();
-                            } else {
-                                alert("Having some error.");
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
+                this.formLabel = lbl;
+                document.querySelector('.js-review-campaign-slidebox').click();
+            },
+            prepareItemUpdate: function(campaign_id) {
+                this.getItemInfo(campaign_id);
+            },
+            getItemInfo: function(campaign_id){
+                axios.post('/admin/brandboost/getReviewCampaign', {
+                    campaign_id: campaign_id,
+                    moduleName: this.moduleName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            //Fill up the form fields
+                            let formData = response.data;
+                            this.form.campaign_id = formData.campaign_id;
+                            this.form.campaignName = formData.campaignName;
+                            this.form.OnsitecampaignDescription = formData.description;
+                            this.formLabel = 'Update';
+                            this.displayForm(this.formLabel);
                         }
                     });
-                });
+            },
+            processForm : function(){
+                this.loading = true;
+                let formActionSrc = '';
+                this.form.module_name = this.moduleName;
+                if(this.form.campaign_id>0){
+                    formActionSrc = '/admin/brandboost/updateReviewCampaign';
+                }else{
+                    formActionSrc = '/admin/brandboost/addOnsite';
+                    this.form.module_account_id = this.moduleAccountID;
+                }
+                this.form.post(formActionSrc, this.form)
+                    .then(response => {
+                        if (response.data.status == 'success') {
+                            if(response.data.brandboostID>0){
+                                this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
+                                window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID+'/1';
+                                return false;
+                            }
 
-        });
+                            //this.form = {};
+                            document.querySelector('.js-review-campaign-slidebox').click();
+                            this.successMsg = 'Action completed successfully.';
+                            var elem = this;
+                            setTimeout(function () {
+                                elem.loadPaginatedData();
+                            }, 500);
+                            syncContactSelectionSources();
+                        }
+                        else if (response.data.status == 'error') {
+                            if (response.data.type == 'duplicate') {
+                                alert('Error: Campaign already exists.');
+                            }
+                            else {
+                                alert('Error: Something went wrong.');
+                            }
+                        }else{
+                            this.loading = false;
+                        }
+                    })
+                    .catch(errors => {
+                        this.loading = false;
+                    })
+            },
+            changeStatus: function(campaign_id, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/brandboost/updateOnsiteStatus', {
+                        brandboostID:campaign_id,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
 
-        $(document).on('click', '.editReview', function () {
-            var reviewID = $(this).attr('reviewid');
-            $.ajax({
-                url: "{{ base_url('admin/reviews/getReviewById') }}",
-                type: "POST",
-                data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-                        var reviewData = data.result[0];
-
-                        $('#edit_content').val(reviewData.comment_text);
-                        $('#edit_review_title').val(reviewData.review_title);
-                        $('#edit_reviewid').val(reviewData.id);
-                        $('#stars li').each(function (index, value) {
-                            $('#ratingValue').val(reviewData.ratings);
-                            if (reviewData.ratings > index) {
-                                $(this).addClass('selected');
-                            } else {
-                                $(this).removeClass('selected');
+                        });
+                }
+            },
+            deleteItem: function(campaign_id) {
+                if(confirm('Are you sure you want to delete this item?')){
+                    //Do axios
+                    axios.post('/admin/brandboost/delete_brandboost', {
+                        brandboost_id:campaign_id,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
                             }
                         });
-                        $("#editReview").modal();
-
-                    } else {
-
-                    }
                 }
-            });
-        });
-
-        $(document).on('click', '.editVideoReview', function () {
-            var reviewID = $(this).attr('reviewid');
-            $.ajax({
-                url: "{{ base_url('admin/reviews/getReviewById') }}",
-                type: "POST",
-                data: {reviewid: reviewID, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-                        var reviewData = data.result[0];
-                        $('#edit_video_content').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' + reviewData.comment_video);
-                        $('#edit_video_reviewid').val(reviewData.id);
-                        $('#edit_video_review_title').val(reviewData.review_title);
-                        var start = '';
-                        var startName = ['', 'Poor', 'Fair', 'Good', 'Excellent', 'WOW!!!'];
-                        for (var inc = 1; inc <= 5; inc++) {
-                            if (inc < reviewData.ratings || inc == reviewData.ratings) {
-
-                                start += "<li class='star txt_yellow' style='display:inline;' title='" + startName[inc] + "' data-value='" + inc + "'><i class='fa fa-star fa-fw' style='margin: 0;'></i></li>";
-                            } else {
-                                start += "<li class='star txt_grey' style='display:inline;' title='" + startName[inc] + "' data-value='" + inc + "'><i class='fa fa-star-o fa-fw' style='margin: 0;'></i></li>";
-                            }
-                        }
-                        $('#stars_video').html(start);
-                        $('#ratingValueVideo').val(reviewData.ratings);
-                        $('#stars_video li').each(function (index, value) {
-
-                            if (reviewData.ratings > index) {
-                                $(this).addClass('selected');
-                            } else {
-                                $(this).removeClass('selected');
-                            }
-                        });
-                        $("#editVideoReview").modal();
-
-                    } else {
-
-                    }
-                }
-            });
-        });
-
-        $("#updateReview").submit(function () {
-
-            $('.overlaynew').show();
-            var formData = new FormData($(this)[0]);
-            $.ajax({
-                url: "{{ base_url('admin/reviews/update_review') }}",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-                        window.location.href = '';
-                    } else {
-                        alertMessage('Error: Some thing wrong!');
-                        $('.overlaynew').hide();
-                    }
-                }
-            });
-        });
-
-
-        $("#updateVideoReview").submit(function () {
-
-            $('.overlaynew').show();
-            var formData = new FormData($(this)[0]);
-            $.ajax({
-                url: "{{ base_url('admin/reviews/update_video_review') }}",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-
-                        window.location.href = '';
-                    } else {
-
-                        alertMessage('Error: Some thing wrong!');
-                        $('.overlaynew').hide();
-                    }
-                }
-            });
-        });
-
-
-        $(document).on('click', '.chg_status', function () {
-            $('.overlaynew').show();
-            var status = $(this).attr('change_status');
-            var review_id = $(this).attr('review_id');
-            $.ajax({
-                url: "{{ base_url('admin/reviews/updateReviewStatus') }}",
-                type: "POST",
-                data: {status: status, review_id: review_id, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-
-                        window.location.href = '';
-
-                    } else {
-
-                        alertMessage('Error: Some thing wrong!');
-                        $('.overlaynew').hide();
-                    }
-                }
-            });
-        });
-
-        $(document).on('click', '.update_category', function () {
-            $('.overlaynew').show();
-            var dataCategory = $(this).attr('change_category');
-            var review_id = $(this).attr('review_id');
-            $.ajax({
-                url: "{{ base_url('admin/reviews/updateReviewCategory') }}",
-                type: "POST",
-                data: {dataCategory: dataCategory, review_id: review_id, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (data) {
-
-                    if (data.status == 'success') {
-
-                        window.location.href = '';
-
-                    } else {
-
-                        alertMessage('Error: Some thing wrong!');
-                        $('.overlaynew').hide();
-                    }
-                }
-            });
-        });
-
-        var ratingValueVideo = 0;
-
-        $(document).on('click', '#stars_video li', function () {
-            var onStar = parseInt($(this).data('value'), 10);
-            var stars = $(this).parent().children('li.star');
-
-            for (i = 0; i < stars.length; i++) {
-                $(stars[i]).removeClass('selected');
-                $(stars[i]).children('i').removeClass('fa-star');
-                $(stars[i]).children('i').addClass('fa-star-o');
             }
-
-            for (i = 0; i < onStar; i++) {
-                $(stars[i]).addClass('selected');
-                $(stars[i]).children('i').removeClass('fa-star-o');
-                $(stars[i]).children('i').addClass('fa-star');
-            }
-
-            ratingValueVideo = parseInt($('#stars_video li.selected').last().data('value'), 10);
-            $('#ratingValueVideo').val(ratingValueVideo);
-
-        });
-
-        $(document).on("click", ".applyInsightTagsReviews", function () {
-            var review_id = $(this).attr("reviewid");
-            var feedback_id = $(this).attr("feedback_id");
-            var action_name = $(this).attr("action_name");
-            $.ajax({
-                url: "{{ base_url('admin/tags/listAllTags') }}",
-                type: "POST",
-                data: {review_id: review_id, _token: '{{csrf_token()}}'},
-                dataType: "json",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $('.overlaynew').hide();
-                        var dataString = data.list_tags;
-                        if (dataString.search('have any tags yet :-') > 0) {
-                            $('.modalFooterBtn').hide();
-                        } else {
-                            $('.modalFooterBtn').show();
-                        }
-                        $("#tagEntireList").html(dataString);
-                        $("#tag_review_id").val(review_id);
-                        $("#tag_feedback_id").val(feedback_id);
-                        if (action_name == 'review-tag') {
-                            $("#ReviewTagListModal").modal("show");
-                        } else if (action_name == 'feedback-tag') {
-                            $("#FeedbackTagListModal").modal("show");
-                        }
-                    }
-                }
+        }
+    }
+    $(document).ready(function () {
+        $(document).on('click', '.js-review-campaign-slidebox', function(){
+            $(".box").animate({
+                width: "toggle"
             });
         });
-
-        $(document).on('click', '.editDataReview', function () {
-            $('.editAction').toggle();
-        });
-
     });
 </script>

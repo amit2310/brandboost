@@ -47,7 +47,6 @@
                                 </div>
                             </div>
 
-
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
                                     <img class="mt40" style="max-width: 240px; " src="assets/images/review_feed_illustration.svg">
@@ -56,12 +55,6 @@
                                     <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Monitor reviews site</button>
                                 </div>
                             </div>
-
-
-
-
-
-
                         </div>
                     </div>
                 </div>
