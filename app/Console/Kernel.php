@@ -26,9 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-
-
-        /*$schedule->command('inviter:email')
+        $schedule->command('inviter:email')
                    ->everyMinute();
 
         $schedule->command('inviter:broadcast')
@@ -41,7 +39,7 @@ class Kernel extends ConsoleKernel
                    ->everyMinute();
 
         $schedule->command('inviter:referral')
-                   ->everyMinute();*/
+                   ->everyMinute();
     }
 
     /**
