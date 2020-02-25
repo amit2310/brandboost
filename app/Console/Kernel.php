@@ -28,16 +28,16 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('inviter:email')
                    ->everyMinute();
-        
+
         $schedule->command('inviter:broadcast')
                    ->everyMinute();
-        
+
         $schedule->command('inviter:brandboost')
                    ->everyMinute();
-        
+
         $schedule->command('inviter:nps')
                    ->everyMinute();
-        
+
         $schedule->command('inviter:referral')
                    ->everyMinute();
     }

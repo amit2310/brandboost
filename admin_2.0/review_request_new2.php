@@ -102,11 +102,13 @@
 					</span>
 				    </td>
 					<td><span class="fsize10 fw500">name </span></td>
-					<td><span class="fsize10 fw500">Email</span></td>
-					<td><span class="fsize10 fw500">Phone</span></td>
-					<td><span class="fsize10 fw500">Tags  </span></td>
-					<td><span class="fsize10 fw500">Update <img src="assets/images/arrow-down-line-14.svg"></span></td>
+					<td><span class="fsize10 fw500">EMAIL / phone</span></td>
+					<td><span class="fsize10 fw500">CAMPAIGN</span></td>
+					<td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
+					<td><span class="fsize10 fw500">REVIEW  </span></td>
+					<td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
 					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+					
 				  </tr>
 				  
 				  
@@ -120,11 +122,105 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/04.png"></span></span> Courtney Black</td>
-					<td>bill.sanders@example.com</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="">2 days ago </span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; scott.gilbert@example.com</td>
+					<td>New Customers Campaign</td>
+					<td><span class="">Jun 20, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td>&nbsp;</td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gregory Henry</td>
+					<td><img src="assets/images/chatline.svg"/> &nbsp; (201) 555-0124</td>
+					<td>Smart SMS Campaign</td>
+					<td><span class="">Jul 16, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td><img src="assets/images/checklineblack.svg"/></td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/03.png"></span></span> Arlene Bell</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; henry.frazier@example.com</td>
+					<td>New Customers Campaign</td>
+					<td><span class="">Apr 26, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td>&nbsp;</td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gloria Fisher</td>
+					<td><img src="assets/images/chatline.svg"/> &nbsp; (225) 555-0118</td>
+					<td>Email Requests </td>
+					<td><span class="">Nov 30, 2020</span></td>
+					<td><img width="14" src="assets/images/star-fill_yellow_16.svg"/> &nbsp; <span class="dark_400">4.5</span></td>
+					<td><img src="assets/images/check_double_green.svg"/></td>
+					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+				  </tr>
+				  
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/05.png"></span></span> Evan Robertson</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; benjamin.ray@example.com</td>
+					<td>Default</td>
+					<td><span class="">Nov 2, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td>&nbsp;</td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  
+				   <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Gloria Fisher</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; tiffany.dean@example.com</td>
+					<td>Customers Campaign </td>
+					<td><span class="">Jul 27, 2020</span></td>
+					<td><img width="14" src="assets/images/star-fill_yellow_16.svg"/> &nbsp; <span class="dark_400">4.5</span></td>
+					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
 				  
@@ -137,12 +233,35 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/02.png"></span></span> Savannah Webb</td>
-					<td>max.terry@example.com</td>
-					<td>-</td>
-					<td> <button class="tags_btn blue">blue</button><button class="tags_btn review">review</button> <button class="tags_btn email">email</button> <button class="tags_btn">+2</button></td>
-					<td><span class="green_400">online </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_dark_100"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/07.png"></span></span> Gloria Fisher</td>
+					<td><img src="assets/images/chatline.svg"/> &nbsp; (307) 555-0133</td>
+					<td>Customers Campaign </td>
+					<td><span class="">Jul 27, 2020</span></td>
+					<td><img width="14" src="assets/images/star-fill_yellow_16.svg"/> &nbsp; <span class="dark_400">4.5</span></td>
+					<td><img src="assets/images/check_double_green.svg"/></td>
+					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+				  </tr>
+				  
+				  
+				  
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; scott.gilbert@example.com</td>
+					<td>New Customers Campaign</td>
+					<td><span class="">Jun 20, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td>&nbsp;</td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
 				  
 				  <tr>
@@ -154,11 +273,87 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Kristin Fisher</td>
-					<td>deanna.curtis@example.com</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="">8 days ago </span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gregory Henry</td>
+					<td><img src="assets/images/chatline.svg"/> &nbsp; (201) 555-0124</td>
+					<td>Smart SMS Campaign</td>
+					<td><span class="">Jul 16, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td><img src="assets/images/checklineblack.svg"/></td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/03.png"></span></span> Arlene Bell</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; henry.frazier@example.com</td>
+					<td>New Customers Campaign</td>
+					<td><span class="">Apr 26, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td>&nbsp;</td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gloria Fisher</td>
+					<td><img src="assets/images/chatline.svg"/> &nbsp; (225) 555-0118</td>
+					<td>Email Requests </td>
+					<td><span class="">Nov 30, 2020</span></td>
+					<td><img width="14" src="assets/images/star-fill_yellow_16.svg"/> &nbsp; <span class="dark_400">4.5</span></td>
+					<td><img src="assets/images/check_double_green.svg"/></td>
+					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+				  </tr>
+				  
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/05.png"></span></span> Evan Robertson</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; benjamin.ray@example.com</td>
+					<td>Default</td>
+					<td><span class="">Nov 2, 2020</span></td>
+					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
+					<td>&nbsp;</td>
+					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+				  
+				  
+				   <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Gloria Fisher</td>
+					<td><img src="assets/images/atline.svg"/> &nbsp; tiffany.dean@example.com</td>
+					<td>Customers Campaign </td>
+					<td><span class="">Jul 27, 2020</span></td>
+					<td><img width="14" src="assets/images/star-fill_yellow_16.svg"/> &nbsp; <span class="dark_400">4.5</span></td>
+					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
 				  
@@ -171,136 +366,12 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/08.png"></span></span> Bessie Flores</td>
-					<td>jackson.graham@example.com</td>
-					<td>-</td>
-					<td> <button class="tags_btn blue">blue</button><button class="tags_btn review">review</button> <button class="tags_btn email">email</button> <button class="tags_btn">+2</button></td>
-					<td><span class="green_400">online </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_dark_100"></span></span></td>
-				  </tr>
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Dianne Mckinney</td>
-					<td>deanna.curtis@example.com</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="">Yesterday </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/20.png"></span></span> Rosemary Steward</td>
-					<td>nina.hernandez@example...</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn blue">customer</button>  <button class="tags_btn">+2 </button> </td>
-					<td><span class="">3 month ago </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/18.png"></span></span> Cameron Cooper</td>
-					<td>timmothy.barnes@example...</td>
-					<td>-</td>
-					<td> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="">Today </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/16.png"></span></span> Bessie Flores</td>
-					<td>ralph.phillips@example.com</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn review">review</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="">3 month ago </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Ann Mckinney</td>
-					<td>jackson.graham@example.com</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn blue">customer</button> <button class="tags_btn">user</button>  </td>
-					<td><span class="">3 month ago </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/14.png"></span></span> Alexander Cooper</td>
-					<td>max.terry@example.com</td>
-					<td>-</td>
-					<td><button class="tags_btn blue">customer</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="green_400">Online </span></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/12.png"></span></span> Kristin Fisher</td>
-					<td>bill.sanders@example.com</td>
-					<td>(252) 555-0126</td>
-					<td><button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>
-					<td><span class="">3 month ago </span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/07.png"></span></span> Gloria Fisher</td>
+					<td><img src="assets/images/chatline.svg"/> &nbsp; (307) 555-0133</td>
+					<td>Customers Campaign </td>
+					<td><span class="">Jul 27, 2020</span></td>
+					<td><img width="14" src="assets/images/star-fill_yellow_16.svg"/> &nbsp; <span class="dark_400">4.5</span></td>
+					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
 				  
@@ -339,7 +410,7 @@
     	</div>
     	
     	<div class="col-md-12 text-center mt-3">
-    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
     	</div>
     </div>
     
