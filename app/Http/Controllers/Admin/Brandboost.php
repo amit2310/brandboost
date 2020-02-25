@@ -648,7 +648,9 @@ class Brandboost extends Controller
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
         $mTags = new TagsModel();
+
         $campaignId = $request->id;
+
         if (!empty($campaignId)) {
 
             $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
@@ -677,28 +679,18 @@ class Brandboost extends Controller
                 }
             }
 
-            $aData = array(
-                'title' => 'Brand Boost Reviews',
-                'pagename' => $breadcrumb,
-                'breadcrumb' => $aBreadcrumb,
-                'oCampaign' => $oCampaign,
-                'allData' => $aReviews,
-                'aReviews' => $aReviews->items(),
-                'reviewTags' => $reviewTags,
-                'campaignId' => $campaignId,
-                'bActiveSubsription' => $bActiveSubsription
-            );
-
             //return view('admin.brandboost.review_list_camp', $aData);
-
-            echo json_encode($aData);
-            exit;
 
         } else {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
             $aReviews = $mReviews->getMyBranboostReviews($userID);
             $bActiveSubsription = $mUsers->isActiveSubscription();
+
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Reviews' => '#/brandboost/onsite'
+            );
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
 				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
@@ -707,19 +699,6 @@ class Brandboost extends Controller
 				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
 				<li><a data-toggle="tooltip" data-placement="bottom" title="Reviews" class="sidebar-control active hidden-xs ">Reviews</a></li>
 				</ul>';
-
-            $aData = array(
-                'title' => 'Brand Boost Reviews',
-                'pagename' => $breadcrumb,
-                'oCampaign' => '',
-                'aReviews' => $aReviews,
-                'campaignId' => '',
-                'userId' => $userID,
-                'bActiveSubsription' => $bActiveSubsription
-            );
-
-
-            $mReviews = new ReviewsModel();
 
             if (!empty($aReviews)) {
                 foreach ($aReviews as $aReview) {
@@ -735,11 +714,23 @@ class Brandboost extends Controller
                 }
             }
 
-			//return view('admin.brandboost.review_list', $aData);
+            $aData = array(
+                'title' => 'Brand Boost Reviews',
+                'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
+                'oCampaign' => '',
+                'allData' => $aReviews,
+                'aReviews' => $aReviews->items(),
+                'campaignId' => '',
+                'userId' => $userID,
+                'bActiveSubsription' => $bActiveSubsription
+            );
 
-            echo json_encode($aData);
-            exit;
+			//return view('admin.brandboost.review_list', $aData);
         }
+
+        echo json_encode($aData);
+        exit;
     }
 
     /**

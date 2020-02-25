@@ -14,7 +14,7 @@ import ListSMSTemplates from './components/admin/templates/ListSMSTemplates.vue'
 import TemplateMaster from './components/admin/templates/TemplateMaster';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
 import ReviewsDashboard from './components/admin/brandboost/Dashboard';
-import OnsiteReviews from './components/admin/brandboost/onsite/reviews';
+import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';
 import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
 import OnsiteCampaignReviews from './components/admin/brandboost/onsite/OnsiteCampaignReviews';
 import OnsiteCampaignQuestions from './components/admin/brandboost/onsite/OnsiteCampaignQuestions';
