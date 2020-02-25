@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%;display:block;" v-if="pagination.total > pagination.per_page">
+    <div class="mt-4" style="width:100%;display:block;" v-if="pagination.total > pagination.per_page">
         <div style="width:80%;float:left;">
             <ul class="pagination">
                 <li v-if="pagination.current_page > 1" class="page-item">

@@ -23,7 +23,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
-                <!--<div class="row">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="card p40 pt0 pb0">
                             <div class="row">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                </div>-->
+                </div>
                 <div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
@@ -139,8 +139,6 @@
                                         <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
                                             <p class="fsize12 fw500 green_400 ml-4">{{ setStringLimit(campaign.brand_desc, 100) }}</p>
                                         </a>
-
-
                                     </td>
                                     <td class="text-right">{{ displayDateFormat("F dS Y", campaign.created) }}</td>
                                     <td>
@@ -174,12 +172,10 @@
                         </div>
                     </div>
                 </div>
-
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
                     :offset="4"
-                    class="mt-4"
                 >
                 </pagination>
             </div>
