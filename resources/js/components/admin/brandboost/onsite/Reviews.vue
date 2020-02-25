@@ -9,10 +9,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Reviews</h3>
+                        <h3 class="htxt_medium_24 dark_700">Reviews Feed</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        &nbsp;
+                        <button class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,8 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
-            <div class="container-fluid" v-if="oReviews.length > 0">
+            <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
+
                 <div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
@@ -111,18 +112,18 @@
                                 <tbody>
                                 <tr>
                                     <td><span class="fsize12 fw300">Review </span></td>
-                                    <td colspan="2"><span class="fsize12 fw300">Status</span></td>
-                                    <td colspan="2"><span class="fsize12 fw300">Created On</span></td>
-                                    <td colspan="2"><span class="fsize12 fw300">Created By</span></td>
-                                    <td><span class="fsize12 fw300"></span></td>
+                                    <td><span class="fsize12 fw300">Status</span></td>
+                                    <td><span class="fsize12 fw300">Created On</span></td>
+                                    <td><span class="fsize12 fw300">Created By</span></td>
+                                    <td><span class="fsize12 fw300">&nbsp;</span></td>
                                 </tr>
                                 <tr v-for="oReview in oReviews">
                                     <td>
-                                        <img src="assets/images/review_campaign.png">
+
                                         <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.id)" style="cursor: pointer;">
-                                            {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
+                                            <img src="assets/images/review_campaign.png" style="width: 30px;"> {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
                                         </h3>
-                                        <p>{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
+                                        <p class="fsize12 fw500 green_400 ml-4">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
                                     </td>
                                     <td>
                                         <span class="text-danger" v-if="oReview.rstatus == 0" @click="setupBroadcast(oReview.id)">INACTIVE</span>
@@ -130,8 +131,8 @@
                                         <span class="text-primary" v-if="oReview.rstatus == 2" @click="setupBroadcast(oReview.id)">PENDING</span>
                                         <span class="text-info" v-if="oReview.rstatus == 3" @click="setupBroadcast(oReview.id)">ARCHIVED</span>
                                     </td>
-                                    <td class="text-right">{{ displayDateFormat('M d, h:i A', oReview.review_created) }}</td>
-                                    <td class="text-right">
+                                    <td>{{ displayDateFormat('M d, h:i A', oReview.review_created) }}</td>
+                                    <td>
                                         <user-avatar
                                             :avatar="oReview.avatar"
                                             :firstname="oReview.firstname"
@@ -554,7 +555,7 @@
                     campaign_id: ''
                 }),
                 formLabel: 'Create',
-                viewType: 'Grid View',
+                viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: ''
             }

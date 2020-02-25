@@ -104,8 +104,8 @@ class ReviewsModel extends Model {
      * @param type $campaignID
      * @return campaign all reviews
      */
-	public static function getCampaignReviews($campaignID) {
-		$oData = DB::table('tbl_reviews')
+	public static function getCampaignReviews($campaignID, $searchBy = '', $sortBy='') {
+        $query = DB::table('tbl_reviews')
                 ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
                 ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
                 ->leftJoin('tbl_subscribers', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
@@ -113,10 +113,30 @@ class ReviewsModel extends Model {
                 ->where('tbl_reviews.status', 1)
 				->when(!empty($campaignID), function ($query) use ($campaignID) {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
-                })
-                ->orderBy('tbl_reviews.id', 'desc')
-                //->get();
-                ->paginate(10);
+                });
+        if(!empty($searchBy)){
+            $query->where('review_title', 'LIKE',  "%$searchBy%");
+            //$query->orWhere('comment_text', 'LIKE',  "%$searchBy%");
+        }
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('review_created', 'desc');
+            }else  if($sortBy == 'Name'){
+                $query->orderBy('review_title', 'desc');
+            }else  if($sortBy == 'Active'){
+                $query->where('tbl_reviews.status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $query->where('tbl_reviews.status', '0');
+            }else  if($sortBy == 'Pending'){
+                $query->where('tbl_reviews.status', '2');
+            }else  if($sortBy == 'Archive'){
+                $query->where('tbl_reviews.status', '3');
+            }
+        }else{
+            $query->orderBy('tbl_reviews.id', 'desc');
+        }
+        $oData = $query->paginate(10);
+
         return $oData;
     }
 
@@ -194,16 +214,36 @@ class ReviewsModel extends Model {
      * @param type $campaignID
      * @return campaign all reviews
      */
-	public function getMyBranboostReviews($userID) {
-        $oData = DB::table('tbl_reviews')
+	public function getMyBranboostReviews($userID, $searchBy = '', $sortBy='') {
+        $query = DB::table('tbl_reviews')
 			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
 			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
 			->select('tbl_reviews.id AS reviewid', 'tbl_reviews.review_type AS reviewtype', 'tbl_reviews.created AS review_created', 'tbl_reviews.status AS rstatus', 'tbl_reviews.*', 'tbl_brandboost.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country as userCountry')
 			->where('tbl_brandboost.user_id', $userID)
-			->where('tbl_brandboost.delete_status', 0)
-			->orderBy('tbl_reviews.id', 'desc')
-			//->get();
-            ->paginate(10);
+			->where('tbl_brandboost.delete_status', 0);
+        if(!empty($searchBy)){
+            $query->where('review_title', 'LIKE',  "%$searchBy%");
+            //$query->orWhere('comment_text', 'LIKE',  "%$searchBy%");
+        }
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('review_created', 'desc');
+            }else  if($sortBy == 'Name'){
+                $query->orderBy('review_title', 'desc');
+            }else  if($sortBy == 'Active'){
+                $query->where('tbl_reviews.status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $query->where('tbl_reviews.status', '0');
+            }else  if($sortBy == 'Pending'){
+                $query->where('tbl_reviews.status', '2');
+            }else  if($sortBy == 'Archive'){
+                $query->where('tbl_reviews.status', '3');
+            }
+        }else{
+            $query->orderBy('tbl_reviews.id', 'desc');
+        }
+        $oData = $query->paginate(10);
+
         return $oData;
     }
 
