@@ -102,7 +102,7 @@
                                                 <span><img src="assets/images/more-vertical.svg"></span>
                                             </button>
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a class="dropdown-item" href="javascript:void(0);">Review Details</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Review Details..</a>
                                             </div>
                                         </div>
                                     </td>
