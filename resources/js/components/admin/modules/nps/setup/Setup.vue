@@ -46,7 +46,7 @@
                     <div class="col-md-4">
                         <div class="email_review_config p20">
                             <div class="bbot pb10 mb15">
-                                <h2 class="fsize11 text-uppercase dark_200 m-0">NPS Survey</h2>
+                                <h2 class="fsize11 text-uppercase dark_200 m-0">NPS Survey Title</h2>
                             </div>
                             <div class="bbot pb10 mb15">
                                 <p class="fsize11 text-uppercase dark_200 m-0">SELECT NPS SURVEY</p>
