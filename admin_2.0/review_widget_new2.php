@@ -108,15 +108,14 @@
 						</label>
 					</span>
 				    </td>
-					<td><span class="fsize10 fw500">VISITOR </span></td>
-					<td><span class="fsize10 fw500">CURRENT PAGE</span></td>
-					<td><span class="fsize10 fw500">TIME ON SITE <img src="assets/images/arrow-down-line-14.svg"></span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/login-circle-line.svg"></span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/file-3-line-grey.svg"></span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/user-4-line.svg"></span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/globe-line.svg"></span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/arrow-down-circle-line.svg"></span></td>
-					<td><span class="fsize10 fw500">ACTION  </span></td>
+					<td><span class="fsize10 fw500">REVIEW WIDGET </span></td>
+					<td><span class="fsize10 fw500">TYPE </span></td>
+					<td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+					<td><span class="fsize10 fw500"><img src="assets/images/cursor-line.svg"></span></td>
+					<td><span class="fsize10 fw500"><img src="assets/images/star-line.svg"></span></td>
+					<td><span class="fsize10 fw500">RATING</span></td>
+					<td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"> </span></td>
+					<td><span class="fsize10 fw500">STATUS</span></td>
 					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
 				  </tr>
 				  
@@ -131,81 +130,27 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/user-fill-16-white.svg"></span></span> NY 826</td>
-					<td>Create account</td>
-					<td><span class="">1 min</span></td>
-					<td><span class="">1</span></td>
-					<td><span class="">5</span></td>
-					<td><span class=""><img src="assets/images/cursor.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/usa.png" width="16"></span></td>
-					<td><span class=""><img src="assets/images/google-fill-grey-16.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img width="14" src="assets/images/review_arrow.svg"></span></span> Homepage Review Widget</td>
+					<td><img src="assets/images/arrow-down-circle-line.svg"/> &nbsp; Collect reviews</td>
+					<td>1,238</td>
+					<td>59%</td>
+					<td>90%</td>
+					<td><span class="mr-2"><img src="assets/images/emojie-eye-face-l.svg"></span>4.5</td>
+					<td>May 15, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_green_200"><img src="assets/images/user-fill-16-white.svg"></span></span> NY 826</td>
-					<td>Start easy with team account...</td>
-					<td><span class="">7 min</span></td>
-					<td><span class="">2</span></td>
-					<td><span class="">3</span></td>
-					<td><span class=""><img src="assets/images/chat-fill-blue.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/afghanistan.svg" width="16"></span></td>
-					<td><span class=""><img src="assets/images/google-fill-grey-16.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_yellow_300"></span></span></td>
 				  </tr>
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_red_200"><img src="assets/images/user-fill-16-white.svg"></span></span> Angel Nguyen</td>
-					<td>All-in-one marketing</td>
-					<td><span class="">13 min</span></td>
-					<td><span class="">1</span></td>
-					<td><span class="">1</span></td>
-					<td><span class=""><img src="assets/images/cursor.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/united-arab-emirates.svg" width="16"></span></td>
-					<td><span class=""><img src="assets/images/facebook-circle-fill-grey.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_red_300"></span></span></td>
-				  </tr>
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/user-fill-16-white.svg"></span></span> Angel Nguyen</td>
-					<td>Blog Posts</td>
-					<td><span class="">2 hr ago</span></td>
-					<td><span class="">3</span></td>
-					<td><span class="">5</span></td>
-					<td><span class=""><img src="assets/images/cursor.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/south-africa.svg" width="16"></span></td>
-					<td><span class=""><img src="assets/images/links-line-16-grey.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
-				  </tr>
-				  
 				  
 				  
 				  <tr>
@@ -217,16 +162,26 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/user-fill-16-white.svg"></span></span> NY 826</td>
-					<td>Create account</td>
-					<td><span class="">1 min</span></td>
-					<td><span class="">1</span></td>
-					<td><span class="">5</span></td>
-					<td><span class=""><img src="assets/images/cursor.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/usa.png" width="16"></span></td>
-					<td><span class=""><img src="assets/images/google-fill-grey-16.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img width="14" src="assets/images/review_arrow.svg"></span></span> Product Page </td>
+					<td><img src="assets/images/star_line_yellow_blank.svg"/> &nbsp; Display</td>
+					<td>1,238</td>
+					<td>77%</td>
+					<td>48%</td>
+					<td><span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9</td>
+					<td>Oct 24, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -238,16 +193,58 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_green_200"><img src="assets/images/user-fill-16-white.svg"></span></span> NY 826</td>
-					<td>Start easy with team account...</td>
-					<td><span class="">7 min</span></td>
-					<td><span class="">2</span></td>
-					<td><span class="">3</span></td>
-					<td><span class=""><img src="assets/images/chat-fill-blue.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/afghanistan.svg" width="16"></span></td>
-					<td><span class=""><img src="assets/images/google-fill-grey-16.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_yellow_300"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img width="14" src="assets/images/review_arrow.svg"></span></span> Ask After Purchase </td>
+					<td><img src="assets/images/arrow-down-circle-line.svg"/> &nbsp; Collect reviews</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><!--<span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9--></td>
+					<td>Nov 28, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_light_800"></span></span>Disable</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
+				  </tr>
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img width="14" src="assets/images/review_arrow.svg"></span></span> Homepage </td>
+					<td><img src="assets/images/star_line_yellow_blank.svg"/> &nbsp; Display</td>
+					<td>1,238</td>
+					<td>77%</td>
+					<td>48%</td>
+					<td><span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9</td>
+					<td>Oct 24, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -259,16 +256,92 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_red_200"><img src="assets/images/user-fill-16-white.svg"></span></span> Angel Nguyen</td>
-					<td>All-in-one marketing</td>
-					<td><span class="">13 min</span></td>
-					<td><span class="">1</span></td>
-					<td><span class="">1</span></td>
-					<td><span class=""><img src="assets/images/cursor.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/united-arab-emirates.svg" width="16"></span></td>
-					<td><span class=""><img src="assets/images/facebook-circle-fill-grey.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_red_300"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img width="14" src="assets/images/review_arrow.svg"></span></span> Contacts Us Page </td>
+					<td><img src="assets/images/arrow-down-circle-line.svg"/> &nbsp; Collect reviews</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><!--<span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9--></td>
+					<td>Sep 24, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_light_800"></span></span>Disable</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
+				  </tr>
+				  
+				  
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img width="14" src="assets/images/review_arrow.svg"></span></span> Homepage Review Widget</td>
+					<td><img src="assets/images/arrow-down-circle-line.svg"/> &nbsp; Collect reviews</td>
+					<td>1,238</td>
+					<td>59%</td>
+					<td>90%</td>
+					<td><span class="mr-2"><img src="assets/images/emojie-eye-face-l.svg"></span>4.5</td>
+					<td>May 15, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
+				  </tr>
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img width="14" src="assets/images/review_arrow.svg"></span></span> Product Page </td>
+					<td><img src="assets/images/star_line_yellow_blank.svg"/> &nbsp; Display</td>
+					<td>1,238</td>
+					<td>77%</td>
+					<td>48%</td>
+					<td><span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9</td>
+					<td>Oct 24, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				  
 				  <tr>
@@ -280,19 +353,91 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/user-fill-16-white.svg"></span></span> Angel Nguyen</td>
-					<td>Blog Posts</td>
-					<td><span class="">2 hr ago</span></td>
-					<td><span class="">3</span></td>
-					<td><span class="">5</span></td>
-					<td><span class=""><img src="assets/images/cursor.svg"></span></td>
-					<td><span class=""><img src="assets/images/flags/south-africa.svg" width="16"></span></td>
-					<td><span class=""><img src="assets/images/links-line-16-grey.svg"></span></td>
-					<td><span class="mr-2"><img src="assets/images/chat_grey_icon.svg"></span>Chat</td>
-					<td><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img width="14" src="assets/images/review_arrow.svg"></span></span> Ask After Purchase </td>
+					<td><img src="assets/images/arrow-down-circle-line.svg"/> &nbsp; Collect reviews</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><!--<span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9--></td>
+					<td>Nov 28, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_light_800"></span></span>Disable</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
+				  </tr>
+				  
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img width="14" src="assets/images/review_arrow.svg"></span></span> Homepage </td>
+					<td><img src="assets/images/star_line_yellow_blank.svg"/> &nbsp; Display</td>
+					<td>1,238</td>
+					<td>77%</td>
+					<td>48%</td>
+					<td><span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9</td>
+					<td>Oct 24, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
+				  </tr>
+				  
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img width="14" src="assets/images/review_arrow.svg"></span></span> Contacts Us Page </td>
+					<td><img src="assets/images/arrow-down-circle-line.svg"/> &nbsp; Collect reviews</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><!--<span class="mr-2"><img src="assets/images/emojie-face-smile.svg"></span>3.9--></td>
+					<td>Sep 24, 2020</td>
+					<td><span class="mr-3"><span class="status_icon bkg_light_800"></span></span>Disable</td>
+					<td>
+						<div class="float-right">
+							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+							  <span><img src="assets/images/more-2-fill.svg"></span>
+							</button>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="#">Link 1</a>
+							  <a class="dropdown-item" href="#">Link 2</a>
+							  <a class="dropdown-item" href="#">Link 3</a>
+							</div>
+						  </div>
+					</td>
 				  </tr>
 				 
-				  
 				  
 				 
 				  
@@ -306,7 +451,7 @@
 			    <div class="custom_pagination">
 			    	<div class="row">
 			    		<div class="col-md-6">
-			    			<span class="mr-4">ITEMS PER PAGE:<select><option>10</option><option>10</option><option>15</option><option>20</option></select></span>
+			    			<span class="mr-4">ITEMS PER PAGE:<select><option>5</option><option>10</option><option>15</option><option>20</option></select></span>
 			    			<span>1-10 out of 137</span>
 			    		</div>
 			    		<div class="col-md-6">
@@ -327,7 +472,7 @@
     	</div>
     	
     	<div class="col-md-12 text-center mt-3">
-    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT Widgets</a>
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT WIDGETS</a>
     	</div>
     </div>
     
