@@ -202,7 +202,8 @@ class ReviewsModel extends Model {
 			->where('tbl_brandboost.user_id', $userID)
 			->where('tbl_brandboost.delete_status', 0)
 			->orderBy('tbl_reviews.id', 'desc')
-			->get();
+			//->get();
+            ->paginate(10);
         return $oData;
     }
 
