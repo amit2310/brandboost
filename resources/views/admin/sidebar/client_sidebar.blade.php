@@ -342,7 +342,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/chat') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Chat Widgets</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/nps/widgets') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">NPS Widgets</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/referral/widgets') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Referral Widgets</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/referral/widgets') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Mediagallery Widgets</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('#/modules/mediagallery') }}"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Mediagallery Widgets</span></a></li>
 {{--                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>--}}
 {{--                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>--}}
 {{--                    <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>--}}

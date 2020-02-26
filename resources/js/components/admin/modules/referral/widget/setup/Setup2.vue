@@ -78,7 +78,7 @@
      &lt;script
         type='text/javascript'
         id='bbscriptloader' data-key='{{campaign.hashcode}}'
-        data-widgets='chat'
+        data-widgets='referral'
         async=''
         src='http://brandboost.io/assets/js/ref_widgets.js' &gt;
     &lt;/script&gt;
