@@ -81,7 +81,40 @@
      			<li><a target="_blank" href="review_campaign_new2.php">Review Campaign 2</a></li>
      			<li><a target="_blank" href="review_campaign_new3.php">Review Campaign 3</a></li>
      		</ul>
-     			
+     		</div>
+     		
+     		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 reviews_400">People Lists</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="people_list1.php">People List 1</a></li>
+     			<li><a target="_blank" href="people_list2.php">People List 2</a></li>
+     			<li><a target="_blank" href="people_list3.php">People List 3</a></li>
+     			<li><a target="_blank" href="people_list_single.php">People List Single </a></li>
+     		</ul>
+     		</div>
+     		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 reviews_400">People Segments</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="people_segment1.php">People Segments 1</a></li>
+     			<li><a target="_blank" href="people_segment2.php">People Segments 2</a></li>
+     			<li><a target="_blank" href="people_segment3.php">People Segments 3</a></li>
+     			<li><a target="_blank" href="people_segment4.php">People Segments 4</a></li>
+     		</ul>
+     		</div>
+     		
+     		<div class="card min-h-280">
+     		<h3 class="htxt_bold_16 reviews_400">People Tags</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="people_tag1.php">People Tags 1</a></li>
+     			<li><a target="_blank" href="people_tag2.php">People Tags 2</a></li>
+     			<li><a target="_blank" href="people_tag3.php">People Tags 3</a></li>
+     			<li><a target="_blank" href="people_tag4.php">People Tags 4</a></li>
+     		</ul>
      		</div>
      		
      	
