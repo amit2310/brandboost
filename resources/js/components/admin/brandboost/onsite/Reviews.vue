@@ -22,9 +22,33 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
+            <div class="table_head_action">
+                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                <loading :isLoading="loading"></loading>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="table_filter">
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
+                            <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="table_filter text-right">
+                            <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
-
-                <div class="table_head_action bbot pb30">
+                <!--<div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
                     <div class="row">
@@ -61,7 +85,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
@@ -77,7 +101,7 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <a href="javascript:void(0);" @click="setupBroadcast(oReview.id)" class="circle-icon-64 bkg_reviews_000 m0auto">
+                            <a href="javascript:void(0);" class="circle-icon-64 bkg_reviews_000 m0auto">
                                 <img v-if="oReview.rstatus == 1" src="assets/images/review_campaign.png">
                                 <img v-else src="assets/images/review_campaign.png">
                             </a>
@@ -85,10 +109,10 @@
                                 {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
                             </h3>
                             <p>{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
-                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 0" @click="setupBroadcast(oReview.id)">INACTIVE</p>
-                            <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="oReview.rstatus == 1" @click="setupBroadcast(oReview.id)">ACTIVE</p>
-                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 2" @click="setupBroadcast(oReview.id)">PENDING</p>
-                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 3" @click="setupBroadcast(oReview.id)">ARCHIVED</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 0" >INACTIVE</p>
+                            <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="oReview.rstatus == 1" >ACTIVE</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 2" >PENDING</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 3" >ARCHIVED</p>
                             <div class="p15 pt15 btop">
                                 <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oReview.review_created) }} </em></p>
                                 <p class="htxt_regular_12 dark_300">
@@ -107,60 +131,61 @@
 
                 <div class="row" v-if="viewType == 'List View'">
                     <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
-                                <tbody>
-                                <tr>
-                                    <td><span class="fsize12 fw300">Review </span></td>
-                                    <td><span class="fsize12 fw300">Status</span></td>
-                                    <td><span class="fsize12 fw300">Created On</span></td>
-                                    <td><span class="fsize12 fw300">Created By</span></td>
-                                    <td><span class="fsize12 fw300">&nbsp;</span></td>
-                                </tr>
-                                <tr v-for="oReview in oReviews">
-                                    <td>
 
-                                        <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.id)" style="cursor: pointer;">
-                                            <img src="assets/images/review_campaign.png" style="width: 30px;"> {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
-                                        </h3>
-                                        <p class="fsize12 fw500 green_400 ml-4">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
-                                    </td>
-                                    <td>
-                                        <span class="text-danger" v-if="oReview.rstatus == 0" @click="setupBroadcast(oReview.id)">INACTIVE</span>
-                                        <span class="text-success" v-if="oReview.rstatus == 1" @click="setupBroadcast(oReview.id)">ACTIVE</span>
-                                        <span class="text-primary" v-if="oReview.rstatus == 2" @click="setupBroadcast(oReview.id)">PENDING</span>
-                                        <span class="text-info" v-if="oReview.rstatus == 3" @click="setupBroadcast(oReview.id)">ARCHIVED</span>
-                                    </td>
-                                    <td>{{ displayDateFormat('M d, h:i A', oReview.review_created) }}</td>
-                                    <td>
-                                        <user-avatar
-                                            :avatar="oReview.avatar"
-                                            :firstname="oReview.firstname"
-                                            :lastname="oReview.lastname"
-                                        ></user-avatar>
-                                        <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
-                                        <span v-if="oReview.email != ''"><br />{{ oReview.email }}</span>
-                                    </td>
-                                    <td>
-                                        <div class="float-right">
-                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-                                                <span><img src="assets/images/more-vertical.svg"/></span>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                                <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                                <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                                <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
-                                            </div>
+                        <div class="card p0" v-for="oReview in oReviews">
+                            <!--<span style="right: 25px; top: 23px; left: auto" class="status_icon bkg_green_300"></span>-->
+                            <span v-if="oReview.rstatus == 0" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_light_600" title="INACTIVE"></span>
+                            <span v-if="oReview.rstatus == 1" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_green_300" title="ACTIVE"></span>
+                            <span v-if="oReview.rstatus == 2" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="PENDING"></span>
+                            <span v-if="oReview.rstatus == 3" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
+                            <div class="p25">
+                                <div class="mb-2">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26">
+                                                <!--<span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/pie_chart_fill_12.svg"></span>--> &nbsp;
+                                                <user-avatar
+                                                    :avatar="oReview.avatar"
+                                                    :firstname="oReview.firstname"
+                                                    :lastname="oReview.lastname"
+                                                ></user-avatar>
+                                                <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
+                                            </p>
+                                            <p class="mt-0 review_rating_start float-left">
+                                                <span v-for="num in [1,2,3,4,5]">
+                                                    <i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
+                                                    <i v-else class=""><img width="14" src="/assets/images/star-fill_grey_18.svg"></i>
+                                                </span>
+                                            </p>
+                                            <p class="float-left ml-3 dark_400">{{ oReview.ratings }}.0</p>
+                                            <!--<p class="float-left ml-3 dark_400">
+                                                <span v-if="oReview.ratings > 3">Positive</span>
+                                                <span v-else-if="oReview.ratings == 3">Neutral</span>
+                                                <span v-else>Negative</span>
+                                            </p>-->
                                         </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+
+                                        <div class="col-md-4 text-right">
+                                            <p class="float-right fsize14 dark_400 mt-0 mb-0 mr-5">{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <p class="fsize14 fw400 dark_600 lh_24">
+                                    <span href="javascript:void(0);" @click="showReview(oReview.id)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 230) }}</strong></span>
+                                    <br />
+                                    <span>{{ oReview.comment_text }}</span>
+                                </p>
+
+                                <div class="reply_sec_link">
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -556,7 +581,7 @@
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
-                sortBy: 'Date Created',
+                sortBy: 'Name',
                 searchBy: ''
             }
         },
