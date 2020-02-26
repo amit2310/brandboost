@@ -238,6 +238,10 @@ class ReviewsModel extends Model {
                 $query->where('tbl_reviews.status', '2');
             }else  if($sortBy == 'Archive'){
                 $query->where('tbl_reviews.status', '3');
+            }else  if($sortBy == 'Positive'){
+                $query->where('tbl_reviews.ratings', '>=', '3');
+            }else  if($sortBy == 'Negative'){
+                $query->where('tbl_reviews.ratings', '<' , '3');
             }
         }else{
             $query->orderBy('tbl_reviews.id', 'desc');

@@ -22,31 +22,32 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
-            <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
-
-                <div class="table_head_action">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="table_filter">
-                                <li><a class="active" href="#">ALL</a></li>
-                                <li><a href="#">POSTED</a></li>
-                                <li><a href="#">DRAFT</a></li>
-                                <li><a href="#">POSITIVE</a></li>
-                                <li><a href="#">NEGATIVE</a></li>
-                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                            </ul>
-                        </div>
+            <div class="table_head_action">
+                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                <loading :isLoading="loading"></loading>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="table_filter">
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
+                            <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="table_filter text-right">
+                            <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+            <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
                 <!--<div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
@@ -157,6 +158,11 @@
                                                 </span>
                                             </p>
                                             <p class="float-left ml-3 dark_400">{{ oReview.ratings }}.0</p>
+                                            <!--<p class="float-left ml-3 dark_400">
+                                                <span v-if="oReview.ratings > 3">Positive</span>
+                                                <span v-else-if="oReview.ratings == 3">Neutral</span>
+                                                <span v-else>Negative</span>
+                                            </p>-->
                                         </div>
 
                                         <div class="col-md-4 text-right">
@@ -167,7 +173,7 @@
 
 
                                 <p class="fsize14 fw400 dark_600 lh_24">
-                                    <span><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 230) }}</strong></span>
+                                    <span href="javascript:void(0);" @click="showReview(oReview.id)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 230) }}</strong></span>
                                     <br />
                                     <span>{{ oReview.comment_text }}</span>
                                 </p>
@@ -575,7 +581,7 @@
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
-                sortBy: 'Date Created',
+                sortBy: 'Name',
                 searchBy: ''
             }
         },
