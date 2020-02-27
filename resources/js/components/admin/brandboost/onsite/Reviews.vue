@@ -179,7 +179,7 @@
                                 </p>
 
                                 <div class="reply_sec_link">
-                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
 
@@ -229,6 +229,38 @@
                     <div class="col-md-12 text-center mt-3">
                         <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!--******************
+         Sliding Smart Popup
+         **********************-->
+        <div class="box" style="width: 424px;">
+            <div style="width: 424px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <form method="post" @submit.prevent="processForm">
+                        <div class="p40">
+                            <div class="row">
+                                <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
+                                    <h3 class="htxt_medium_24 dark_800 mt20">Review </h3>
+                                    <hr>
+                                </div>
+
+                            </div>
+                            <div class="row bottom-position">
+                                <div class="col-md-12 mb15">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                    <input type="hidden" name="module_account_id" id="module_account_id"
+                                           :value="moduleAccountID">
+                                    <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Save</button>
+                                    <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -403,9 +435,6 @@
             </div>
         </div>
 
-
-
-
         <!-- =======================edit video popup========================= -->
 
         <div id="editVideoReview" class="modal fade">
@@ -537,8 +566,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <!-- newreviewpopup -->
         <div id="newreviewpopup" class="modal fade newreviewpopup2">

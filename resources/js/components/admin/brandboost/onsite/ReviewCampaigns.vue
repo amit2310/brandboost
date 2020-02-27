@@ -11,8 +11,9 @@
                         <h3 class="htxt_medium_24 dark_700">Review Campaigns</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>
-                        <button class="btn btn-md bkg_email_300 light_000 js-review-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
+                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000 js-review-campaign-slidebox"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -23,7 +24,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-12">
                         <div class="card p40 pt0 pb0">
                             <div class="row">
@@ -38,45 +39,29 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="table_head_action bbot pb30">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
+                </div>-->
+                <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ allData.total }}&nbsp;Campaigns</h3>
+                            <ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                            </ul>
                         </div>
                         <div class="col-md-6">
-                            <div class="table_action">
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; {{sortBy}}
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
-                                    </div>
-                                </div>
-                                <div class="float-right ml10 mr10">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/list_view.svg"></span>&nbsp; {{viewType}}
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
-                                    </div>
-                                </div>
-                                <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                                </div>
-                            </div>
+                            <ul class="table_filter text-right">
+                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 text-center animate_top col">
@@ -120,37 +105,77 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row" v-if="viewType == 'List View'">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                <tr>
-                                    <td><span class="fsize12 fw300">Campaign name </span></td>
-                                    <td colspan="2"><span class="fsize12 fw300">Preview Data</span></td>
-                                    <td colspan="2"><span class="fsize12 fw300">List fields</span></td>
-                                    <td><span class="fsize12 fw300"></span></td>
-                                </tr>
-                                <tr v-for="campaign in campaigns" :key="campaign.id">
-                                    <td>
-                                        <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
-                                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4"><img src="assets/images/star-fill-review-24.svg">  {{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
-                                        </a>
-                                        <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
-                                            <p class="fsize12 fw500 green_400 ml-4">{{ setStringLimit(campaign.brand_desc, 100) }}</p>
-                                        </a>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
-                                    <td class="text-right">{{ displayDateFormat("F dS Y", campaign.created) }}</td>
+                                    <td><span class="fsize10 fw500">CAMPAIGN </span></td>
+                                    <td><span class="fsize10 fw500">TYPE </span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/send-plain-line.svg"></span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/cursor-line.svg"></span></td>
+                                    <td><span class="fsize10 fw500">RATING</span></td>
+                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"> </span></td>
+                                    <td><span class="fsize10 fw500">STATUS</span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
+
+                                <tr v-for="campaign in campaigns" :key="campaign.id">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
                                     <td>
-                                        <span v-if="campaign.status == 0" class="text-danger"><strong>INACTIVE</strong></span>
-                                        <span v-if="campaign.status == 1" class="text-success"><strong>RUNNING</strong></span>
-                                        <span v-if="campaign.status == 2" class="text-primary"><strong>PENDING</strong></span>
-                                        <span v-if="campaign.status == 3" class="text-info"><strong>ARCHIVE</strong></span>
+                                        <span class="table-img mr15">
+                                            <span class="circle_icon_24 bkg_reviews_400">
+                                                <img src="assets/images/pricetag3-fill.svg" width="14">
+                                            </span>
+                                        </span>
+                                        <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                            <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                        </a>
+                                        <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                            <p class="fsize12 green_400 ml-4">{{ setStringLimit(campaign.brand_desc, 100) }}</p>
+                                        </a>-->
+                                    </td>
+                                    <td><img src="assets/images/share-circle-line.svg"> &nbsp; {{capitalizeFirstLetter(campaign.review_type)}} Review Requests</td>
+                                    <td>1,238</td>
+                                    <td>59%</td>
+                                    <td>90%</td>
+                                    <td>
+                                        <span v-if="campaign.revRA != ''" class="mr-2">
+                                            <img v-if="campaign.revRA >= '3'" src="assets/images/emojie-eye-face-l.svg">
+                                            <img v-if="campaign.revRA == '3'" src="assets/images/emojie-face-smile.svg">
+                                        </span>
+                                        <span v-if="campaign.revRA != ''">{{ campaign.revRA }}/5</span>
+                                        <span v-else>&nbsp;</span>
+                                    </td>
+                                    <td>{{ displayDateFormat("M d, Y", campaign.created) }}</td>
+                                    <td>
+                                        <span v-if="campaign.status == 0" class="mr-3"><span class="status_icon bkg_light_600"></span> &nbsp;Inactive</span>
+                                        <span v-if="campaign.status == 1" class="mr-3"><span class="status_icon bkg_green_300"></span> &nbsp;Active</span>
+                                        <span v-if="campaign.status == 2" class="mr-3"><span class="status_icon bkg_reviews_300"></span> &nbsp;Pending</span>
+                                        <span v-if="campaign.status == 3" class="mr-3"><span class="status_icon bkg_reviews_300"></span> &nbsp;Archive</span>
                                     </td>
                                     <td>
                                         <div class="float-right">
                                             <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-                                                <span><img src="assets/images/more-vertical.svg"/></span>
+                                                <span><img src="assets/images/more-2-fill.svg"></span>
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
@@ -161,12 +186,12 @@
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
-                                                <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -179,27 +204,14 @@
                 >
                 </pagination>
             </div>
+
             <div class="container-fluid" v-else>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card_shadow min-h-280">
                             <div class="row mb65">
-                                <div class="col-md-6 text-left">
-                                    <a class="lh_32 reviews_400 htxt_bold_14" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/download-fill-review.svg"></span>
-                                        Import campaign
-                                    </a>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
-                                        Learn how to use reviews monitoring
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_campaign.png">
+                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_Illustration.svg">
                                     <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any campaigns</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import campaign!</h3>
                                     <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-review-campaign-slidebox">Create review campaign</button>
@@ -207,45 +219,83 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 text-center mt-3">
+                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
+                    </div>
                 </div>
             </div>
+
+
             <!-- Add Campaign Popup -->
-            <div class="box" style="width: 424px;">
-                <div style="width: 424px;overflow: hidden; height: 100%;">
+            <div class="box" style="width: 724px;">
+                <div style="width: 724px;overflow: hidden; height: 100%;">
                     <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                         <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
                             <div class="p40">
                                 <div class="row">
-                                    <div class="col-md-12"> <img src="/assets/images/sms_temp_icon.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Review Campaign </h3>
-                                        <hr class="mt30 mb30">
+                                    <div class="col-12">
+                                        <!--<img src="/assets/images/sms_temp_icon.svg"/>-->
+                                        <h3 class="htxt_medium_24 dark_800 mb-3">Review Campaign</h3>
+                                        <p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
+                                        <hr/>
                                     </div>
-                                    <div class="col-md-12">
+
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <label for="name">Campaign name</label>
-                                            <input type="text" class="form-control h56" id="name" placeholder="Enter campaign name" name="campaignName"
+                                            <label for="campaignName" class="fsize11 fw500 dark_600">CAMPAIGN NAME</label>
+                                            <input type="text" class="form-control h56" id="name" placeholder="Enter new campaign name" name="campaignName"
                                                    v-model="form.campaignName">
                                             <span class="help alert-danger" v-if="form.errors.has('campaignName')" v-text="form.errors.get('campaignName')"></span>
                                         </div>
+                                    </div>
+
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <label for="desc">Description</label>
-                                            <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Campaign description" name="OnsitecampaignDescription"
+                                            <label for="description" class="fsize11 fw500 dark_600">DESCRIPTION</label>
+                                            <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Enter campaign description" name="OnsitecampaignDescription"
                                                       v-model="form.OnsitecampaignDescription"></textarea>
                                             <span class="help alert-danger" v-if="form.errors.has('OnsitecampaignDescription')" v-text="form.errors.get('OnsitecampaignDescription')"></span>
                                         </div>
-                                        <hr class="mt30 mb30"/>
                                     </div>
-                                </div>
-                                <div class="row bottom-position">
-                                    <div class="col-md-12 mb15">
-                                        <hr>
+
+                                    <div class="col-6">
+                                        <div class="form-group m-0">
+                                            <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
+                                            <div class="card border text-center shadow-none m-0 reviews">
+                                                <img class="mb-3" src="assets/images/review_icon1.svg"/>
+                                                <p class="htxt_medium_14 dark_600 mb-3">Manual Campaign</p>
+                                                <p class="htxt_regular_12 dark_300 m-0 lh_17">Send review requests emails <br>& sms instantly to all or part <br>of your customers</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-6">
+                                        <div class="form-group m-0">
+                                            <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
+                                            <div class="card border text-center shadow-none m-0">
+                                                <img class="mb-3" src="assets/images/review_icon2.svg"/>
+                                                <p class="htxt_medium_14 dark_600 mb-3">Automated Campaign</p>
+                                                <p class="htxt_regular_12 dark_300 m-0 lh_17">Automaticaly send email or sms<br> every time a new purchase or<br> contact is added</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <hr/>
+                                    </div>
+
+                                    <div class="col-6">
                                         <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
-                                        <input type="hidden" name="module_account_id" id="module_account_id"
-                                               :value="moduleAccountID">
-                                        <button class="btn btn-lg bkg_sms_400 light_000 pr20 min_w_160 fsize16 fw600" :disabled="form.errors.any()">{{ formLabel }}</button>
-                                        <a class="dark_200 fsize16 fw400 ml20 js-review-campaign-slidebox" href="javascript:void(0);">Close</a> </div>
+                                        <input type="hidden" name="module_account_id" id="module_account_id" :value="moduleAccountID">
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" :disabled="form.errors.any()">{{ formLabel }}</button>
+                                        <a class="dark_200 fsize12 fw500 ml20 text-uppercase js-review-campaign-slidebox" href="javascript:void(0);">Close</a>
+                                    </div>
+
+                                    <div class="col-6 text-right mt-2">
+                                        <a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
+                                            <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+                                            LEARN MORE ABOUT CAMPAIGNS
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -287,8 +337,8 @@
                     campaign_id: ''
                 }),
                 formLabel: 'Create',
-                viewType: 'Grid View',
-                sortBy: 'Date Created',
+                viewType: 'List View',
+                sortBy: 'Name',
                 searchBy: ''
             }
         },
