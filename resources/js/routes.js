@@ -191,7 +191,17 @@ import ReferralCampaignSetup2 from './components/admin/modules/referral/campaign
 import ReferralCampaignSetup3 from './components/admin/modules/referral/campaign/setup/Setup3';
 import ReferralCampaignSetup4 from './components/admin/modules/referral/campaign/setup/Setup4';
 import ReferralCampaignSetup5 from './components/admin/modules/referral/campaign/setup/Setup5';
-// import ReferralWidgetsSetup1 from './components/admin/modules/widgets/referral/setup/Setup';
+
+/**
+ * --------------------------------------------------------------------------
+ *  Import component for MediaGallery widget section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+
+import MediaGallery from './components/admin/modules/mediagallery/Widgets';
+import MediaGallerySetup1 from './components/admin/modules/mediagallery/setup/Setup';
+import MediaGallerySetup2 from './components/admin/modules/mediagallery/setup/Setup2';
 
 const routes = [
 
@@ -253,7 +263,25 @@ const routes = [
     { path: '/modules/referral/setup/:id/3', component: ReferralCampaignSetup3, props : {title : 'Referral Campaign Setup'} },
     { path: '/modules/referral/setup/:id/4', component: ReferralCampaignSetup4, props : {title : 'Referral Campaign Setup'} },
     { path: '/modules/referral/setup/:id/5', component: ReferralCampaignSetup5, props : {title : 'Referral Campaign Setup'} },
-    // referral/setup/25/1
+
+    /**
+     * --------------------------------------------------------------------------
+     *  Add Routes for Media Gallery Widgets
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    { path: '/modules/mediagallery', component: MediaGallery, meta: { title: 'Media Gallery'} },
+    { path: '/modules/mediagallery/setup/:id/1', component: MediaGallerySetup1, meta: { title: 'Media Gallery'} },
+    { path: '/modules/mediagallery/setup/:id/2', component: MediaGallerySetup2, meta: { title: 'Media Gallery'} },
+    // { path: '/modules/nps/widgets/step/:id/2', component: NPSWidgetsSetup2, meta: { title: 'Nps Widget Setup'} },
+    //
+    // { path: '/modules/nps/setup/:id/1', component: npsStep1, meta: { title: 'NPS Widgets'} },
+    // { path: '/modules/nps/setup/:id/2', component: npsStep2, meta: { title: 'NPS Widgets'} },
+    // { path: '/modules/nps/setup/:id/3', component: npsStep3, meta: { title: 'NPS Widgets'} },
+    // { path: '/modules/nps/setup/:id/4', component: npsStep4, meta: { title: 'NPS Widgets'} },
+    /**-----------------------------------End---------------------------------------*/
+
     /*Referral Module*/
     { path: '/modules/referral/overview', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },
     { path: '/modules/referral/', component: ReferralOverview, meta: { title: 'Referral Dashboard'} },

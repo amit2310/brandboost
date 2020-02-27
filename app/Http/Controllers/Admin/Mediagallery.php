@@ -43,7 +43,7 @@ class Mediagallery extends Controller {
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Media Widgets' => '#/mediagallery'
+            'Media Widgets' => '#/modules/mediagallery'
         );
 
         $aData = array(
@@ -301,13 +301,25 @@ class Mediagallery extends Controller {
 			<li><a class="sidebar-controlhidden-xs"><i class="icon-arrow-right13"></i></a> </li>
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Media Gallery" class="sidebar-control active hidden-xs ">Media Gallery</a></li>
 			</ul>';
-
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Media Widgets' => '#/modules/mediagallery',
+            'Setup' => ''
+        );
         $aUser = getLoggedUser();
         $userId = $aUser->id;
 		$galleryData = MediaModel::getGalleryData($galleryId);
 		$reviewsData = ReviewsModel::getAllReviewsByUserId($userId);
-
-		return view('admin.media-gallery.setup', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'galleryData' => $galleryData, 'reviewsData' => $reviewsData));
+        $response= array(
+            'title' => 'Media Gallery',
+            'breadcrumb' => $aBreadcrumb,
+            'galleryData' => $galleryData,
+            'reviewsData' => $reviewsData,
+            "setupPreview"=>'setupPreview'
+        );
+        echo json_encode($response);
+        exit;
+//		return view('admin.media-gallery.setup', array('title' => 'Media Gallery', 'pagename' => $breadcrumb, 'galleryData' => $galleryData, 'reviewsData' => $reviewsData));
 	}
 
 	/**
