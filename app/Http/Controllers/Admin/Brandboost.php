@@ -187,6 +187,12 @@ class Brandboost extends Controller
             $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy);
         }
 
+        foreach ($aBrandboostList->items() as $data) {
+            $data->revCount = getCampaignReviewCount($data->id);
+            $data->revRA = getCampaignReviewRA($data->id) != '' ? getCampaignReviewRA($data->id) : '';
+            $data->allSubscribers = ListsModel::getAllSubscribersList($data->id);
+        }
+
         $moduleName = 'brandboost-onsite';
 
         $aBreadcrumb = array(
