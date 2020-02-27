@@ -12,7 +12,7 @@ function db_connect() {
         if ($_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
             $connection = mysqli_connect('localhost', 'root', '', 'dev_brandboostdbx');
         } else {
-            $connection = mysqli_connect('127.0.0.1', 'root', '!w@9Un+c.u[Ygehj', 'brandboostdb');
+            $connection = mysqli_connect('localhost', 'bbxclient', '?V5Pf$Ye_x7zrzYUpyG@ykESW', 'bbxdb');
         }
     }
     // If connection was not successful, handle the error
@@ -444,11 +444,11 @@ function getCurrentUsage($clientID) {
 
 function random_strings($length_of_string) {
 
-    // String of all alphanumeric character 
+    // String of all alphanumeric character
     $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-    // Shufle the $str_result and returns substring 
-    // of specified length 
+    // Shufle the $str_result and returns substring
+    // of specified length
     return substr(str_shuffle($str_result), 0, $length_of_string);
 }
 

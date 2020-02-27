@@ -14,7 +14,7 @@ function db_connect() {
             $connection = mysqli_connect('localhost', 'root', '', 'dev_brandboostdbx');
         } else {
             //$connection = mysqli_connect('db-brandboost.crokdqsmnwuz.us-west-2.rds.amazonaws.com', 'root', 'WdN&bX%K6fYNDHd(', 'brandboostdb');
-            $connection = mysqli_connect('localhost', 'root', '!w@9Un+c.u[Ygehj', 'brandboostdb');
+            $connection = mysqli_connect('localhost', 'bbxclient', '?V5Pf$Ye_x7zrzYUpyG@ykESW', 'bbxdb');
         }
     }
     // If connection was not successful, handle the error
@@ -236,7 +236,7 @@ function checkIfReviewGiven($bbID, $subscriberID) {
     }else{
         return false;
     }
-    
+
 }
 
 function base64UrlEncode($val) {
