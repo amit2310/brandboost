@@ -11,8 +11,9 @@
                         <h3 class="htxt_medium_24 dark_700">Review Campaigns</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>
-                        <button class="btn btn-md bkg_email_300 light_000 js-review-campaign-slidebox"> New campaign <span style="opacity: 0.3"><img src="/assets/images/blue-plus.svg"/></span></button>
+                        <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
+                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000 js-review-campaign-slidebox"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -23,7 +24,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-12">
                         <div class="card p40 pt0 pb0">
                             <div class="row">
@@ -38,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
@@ -184,22 +185,8 @@
                     <div class="col-md-12">
                         <div class="card card_shadow min-h-280">
                             <div class="row mb65">
-                                <div class="col-md-6 text-left">
-                                    <a class="lh_32 reviews_400 htxt_bold_14" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/download-fill-review.svg"></span>
-                                        Import campaign
-                                    </a>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
-                                        Learn how to use reviews monitoring
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_campaign.png">
+                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_Illustration.svg">
                                     <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any campaigns</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import campaign!</h3>
                                     <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-review-campaign-slidebox">Create review campaign</button>
@@ -207,45 +194,83 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 text-center mt-3">
+                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
+                    </div>
                 </div>
             </div>
+
+
             <!-- Add Campaign Popup -->
-            <div class="box" style="width: 424px;">
-                <div style="width: 424px;overflow: hidden; height: 100%;">
+            <div class="box" style="width: 724px;">
+                <div style="width: 724px;overflow: hidden; height: 100%;">
                     <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                         <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
                             <div class="p40">
                                 <div class="row">
-                                    <div class="col-md-12"> <img src="/assets/images/sms_temp_icon.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">{{ formLabel }} Review Campaign </h3>
-                                        <hr class="mt30 mb30">
+                                    <div class="col-12">
+                                        <!--<img src="/assets/images/sms_temp_icon.svg"/>-->
+                                        <h3 class="htxt_medium_24 dark_800 mb-3">Review Campaign</h3>
+                                        <p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
+                                        <hr/>
                                     </div>
-                                    <div class="col-md-12">
+
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <label for="name">Campaign name</label>
-                                            <input type="text" class="form-control h56" id="name" placeholder="Enter campaign name" name="campaignName"
+                                            <label for="campaignName" class="fsize11 fw500 dark_600">CAMPAIGN NAME</label>
+                                            <input type="text" class="form-control h56" id="name" placeholder="Enter new campaign name" name="campaignName"
                                                    v-model="form.campaignName">
                                             <span class="help alert-danger" v-if="form.errors.has('campaignName')" v-text="form.errors.get('campaignName')"></span>
                                         </div>
+                                    </div>
+
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <label for="desc">Description</label>
-                                            <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Campaign description" name="OnsitecampaignDescription"
+                                            <label for="description" class="fsize11 fw500 dark_600">DESCRIPTION</label>
+                                            <textarea class="form-control min_h_185 p20 pt10" id="desc" placeholder="Enter campaign description" name="OnsitecampaignDescription"
                                                       v-model="form.OnsitecampaignDescription"></textarea>
                                             <span class="help alert-danger" v-if="form.errors.has('OnsitecampaignDescription')" v-text="form.errors.get('OnsitecampaignDescription')"></span>
                                         </div>
-                                        <hr class="mt30 mb30"/>
                                     </div>
-                                </div>
-                                <div class="row bottom-position">
-                                    <div class="col-md-12 mb15">
-                                        <hr>
+
+                                    <div class="col-6">
+                                        <div class="form-group m-0">
+                                            <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
+                                            <div class="card border text-center shadow-none m-0 reviews">
+                                                <img class="mb-3" src="assets/images/review_icon1.svg"/>
+                                                <p class="htxt_medium_14 dark_600 mb-3">Manual Campaign</p>
+                                                <p class="htxt_regular_12 dark_300 m-0 lh_17">Send review requests emails <br>& sms instantly to all or part <br>of your customers</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-6">
+                                        <div class="form-group m-0">
+                                            <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
+                                            <div class="card border text-center shadow-none m-0">
+                                                <img class="mb-3" src="assets/images/review_icon2.svg"/>
+                                                <p class="htxt_medium_14 dark_600 mb-3">Automated Campaign</p>
+                                                <p class="htxt_regular_12 dark_300 m-0 lh_17">Automaticaly send email or sms<br> every time a new purchase or<br> contact is added</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <hr/>
+                                    </div>
+
+                                    <div class="col-6">
                                         <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
-                                        <input type="hidden" name="module_account_id" id="module_account_id"
-                                               :value="moduleAccountID">
-                                        <button class="btn btn-lg bkg_sms_400 light_000 pr20 min_w_160 fsize16 fw600" :disabled="form.errors.any()">{{ formLabel }}</button>
-                                        <a class="dark_200 fsize16 fw400 ml20 js-review-campaign-slidebox" href="javascript:void(0);">Close</a> </div>
+                                        <input type="hidden" name="module_account_id" id="module_account_id" :value="moduleAccountID">
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" :disabled="form.errors.any()">{{ formLabel }}</button>
+                                        <a class="dark_200 fsize12 fw500 ml20 text-uppercase js-review-campaign-slidebox" href="javascript:void(0);">Close</a>
+                                    </div>
+
+                                    <div class="col-6 text-right mt-2">
+                                        <a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
+                                            <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+                                            LEARN MORE ABOUT CAMPAIGNS
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </form>
