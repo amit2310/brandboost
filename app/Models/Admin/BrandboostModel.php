@@ -635,7 +635,8 @@ class BrandboostModel extends Model {
                 $fieldValue = $val;
             }
             $query = "UPDATE `tbl_campaigns` SET {$fieldName} = '{$fieldValue}' WHERE `event_id` IN(SELECT id FROM `tbl_brandboost_events` WHERE brandboost_id='$brandboostID')";
-            $result = DB::raw($query);
+            //echo $query;
+            $result = DB::statement($query);
         }
         return true;
     }
