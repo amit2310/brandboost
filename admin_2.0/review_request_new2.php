@@ -25,15 +25,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
- 
+
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-  
-  
+
+
  <!--******************
   Top Heading area
  **********************-->
@@ -52,16 +52,16 @@
    </div>
     <div class="clearfix"></div>
 </div>
-	 
-	  
-	  
-	  
+
+
+
+
  <!--******************
   Content Area
  **********************-->
    <div class="content-area">
     <div class="container-fluid">
-    
+
     <div class="table_head_action">
     <div class="row">
     	<div class="col-md-6">
@@ -83,38 +83,35 @@
     	</div>
     </div>
     </div>
-    
-    
-    
-    
+
+
+
+
    <div class="row">
     	<div class="col-md-12">
     		<div class="table-responsive">
-    			<table class="table table-borderless mb-0">
-				<tbody>
-			     <tr class="headings">
-		           <td width="20">
-				  	<span>
-						<label class="custmo_checkbox pull-left">
-							<input type="checkbox">
-							<span class="custmo_checkmark blue"></span>
-						</label>
-					</span>
-				    </td>
-					<td><span class="fsize10 fw500">name </span></td>
-					<td><span class="fsize10 fw500">EMAIL / phone</span></td>
-					<td><span class="fsize10 fw500">CAMPAIGN</span></td>
-					<td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-					<td><span class="fsize10 fw500">REVIEW  </span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
-					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-					
-				  </tr>
-				  
-				  
-				  
-				  <tr>
-				   <td width="20">
+            <table class="table table-borderless mb-0">
+            <tbody>
+                <tr class="headings">
+                    <td width="20">
+                    <span>
+                        <label class="custmo_checkbox pull-left">
+                            <input type="checkbox">
+                            <span class="custmo_checkmark blue"></span>
+                        </label>
+                    </span>
+                    </td>
+                    <td><span class="fsize10 fw500">NAME </span></td>
+                    <td><span class="fsize10 fw500">EMAIL / PHONE</span></td>
+                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
+                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                    <td><span class="fsize10 fw500">REVIEW  </span></td>
+                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                </tr>
+
+                <tr>
+                    <td width="20">
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
@@ -129,8 +126,8 @@
 					<td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-				  </tr>
-				  
+                </tr>
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -148,7 +145,7 @@
 					<td><img src="assets/images/checklineblack.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -166,7 +163,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -184,9 +181,9 @@
 					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
-				  
-				  
+
+
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -204,8 +201,8 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
-				  
+
+
 				   <tr>
 				   <td width="20">
 						<span>
@@ -223,7 +220,7 @@
 					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -241,11 +238,11 @@
 					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
-				  
-				  
-				  
-				  
+
+
+
+
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -263,7 +260,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -281,7 +278,7 @@
 					<td><img src="assets/images/checklineblack.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -299,7 +296,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -317,9 +314,9 @@
 					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
-				  
-				  
+
+
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -337,8 +334,8 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-				  
-				  
+
+
 				   <tr>
 				   <td width="20">
 						<span>
@@ -356,7 +353,7 @@
 					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
+
 				  <tr>
 				   <td width="20">
 						<span>
@@ -374,18 +371,18 @@
 					<td><img src="assets/images/check_double_green.svg"/></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
-				  
-				  
-				 
-				  
-				  
-				  
-				  
-				  
+
+
+
+
+
+
+
+
+
 				</tbody>
-			    </table>
-			    
+            </table>
+
 			    <div class="custom_pagination">
 			    	<div class="row">
 			    		<div class="col-md-6">
@@ -405,40 +402,40 @@
 			    		</div>
 			    	</div>
 			    </div>
-			    
+
     		</div>
     	</div>
-    	
+
     	<div class="col-md-12 text-center mt-3">
     		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
     	</div>
     </div>
-    
-    
-    
-    
-    
-     
+
+
+
+
+
+
       </div>
-      
+
       </div>
-      
+
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-  
-  
- 
- 
+
+
+
+
  <!--******************
   Create Contact Sliding Smart Popup
  **********************-->
  <?php include("email_campaign_create_smart_popup.php"); ?>
- 
- 
- 
+
+
+
  <!--******************
   jQuery
  **********************-->
