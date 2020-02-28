@@ -299,7 +299,7 @@
 												<div class="divider"></div>
 												<div class="clearfix"></div>
 												<div class="review_headline full_n_bx">Email</div>
-												<div class="very_much"><input name="emailid[{{ $productData->id }}]" class="form-control autoFillEmail" value="{{ $uSubscribers->email;?>" type="text"></div>
+												<div class="very_much"><input name="emailid[{{ $productData->id }}]" class="form-control autoFillEmail" value="{{ $uSubscribers->email }}" type="text"></div>
 												<input type="hidden" value="{{ $reviewRating }}" id="productRatingValue_{{ $productData->id }}" name="ratingValue[{{ $productData->id }}]">
 												<input type="hidden" value="{{ $productData->id }}" name="productId[{{ $productData->id }}]">
 											</div>
