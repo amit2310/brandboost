@@ -728,7 +728,7 @@ class Reviews extends Controller {
             echo json_encode($response);
             exit;
         } catch (\Exception $e) {
-            //return $e->getMessage();
+            echo $e->getMessage();
             $response = array('status' => 'error');
             echo json_encode($response);
             exit;
