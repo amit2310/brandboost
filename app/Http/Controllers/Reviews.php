@@ -705,7 +705,6 @@ class Reviews extends Controller {
             $campaignID = $request->campaign_id;
             if ($reviewUniqueID != '') {
                 $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
-                pre($reviewDetails);
                 $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
                 $aBrandboost = $mInviter->getBBInfo($campaignID);
                 $clientID = $aBrandboost->user_id;
@@ -772,7 +771,7 @@ class Reviews extends Controller {
 
                 //echo $emailContent;
 
-                $aSendgridData = $this->mInviter->getSendgridAccount($aData['client_id']);
+                $aSendgridData = getSendgridAccount($aData['client_id']);
                 $userName = $aSendgridData->sg_username;
                 $password = $aSendgridData->sg_password;
                 $sendgridFrom = $aSendgridData->sg_email;
@@ -803,7 +802,6 @@ class Reviews extends Controller {
                         'module_name' => 'onsite',
                         'module_unit_id' => $aData['brandboost_id']
                     );
-                    //$bUpdated = $this->mInviter->updateUsage($aUsage);
                     $bUpdated = updateCreditUsage($aUsage);
                 }
                 return true;
