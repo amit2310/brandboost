@@ -127,3 +127,32 @@ $(document).ready(function(){
    });
 });
 
+
+
+$(document).ready(function(){
+	$(".chatboxopen").click(function(){
+		$(".rightchatarea").animate({
+			width: "toggle"
+		});
+	});
+});
+
+
+$(document).ready(function(){
+  $(".show_emoji_small").click(function(){
+    $(".chat_emoji_box_small").toggle();
+  });
+});
+	
+$(document).ready(function(){
+  $(".show_saved_chat_small").click(function(){
+    $(".chat_saved_temp_small").toggle();
+  });
+});
+
+
+
+
+
+
+
