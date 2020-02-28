@@ -464,6 +464,11 @@
 	</head>
 	<body>
 		@php
+            $questionAndAnsData = !empty($questionAndAnsData) ? $questionAndAnsData : [];
+            $totalRatingReview = !empty($totalRatingReview) ? $totalRatingReview : 0;
+            $faQDataRow = !empty($faQDataRow) ? $faQDataRow : [];
+            $uSubscribers  = !empty($uSubscribers) ? $uSubscribers : [];
+
 			if (!empty($oCampaign)) {
 				//permissions
 				$bAllowComments = ($oCampaign->allow_comments == 1) ? true : false;
@@ -495,8 +500,8 @@
 			$threeRating = 0;
 			$fourRating = 0;
 			$fiveRating = 0;
-
-			$totalReviews = (sizeof($aReviews) > 0) ? sizeof($aReviews) : 0;
+            $aReviews = !(empty($aReviews)) ? $aReviews : [];
+			$totalReviews = (!empty($aReviews)) ? sizeof($aReviews) : 0;
 			$totalRatings = 0;
 			if (!empty($aReviews)) {
 				foreach ($aReviews as $arr) {
@@ -521,11 +526,11 @@
 					$totalRatings = $totalRatings + $arr['ratings'];
 				}
 			}
-			$avgRatings = $totalRatings/$totalReviews;
-
-			//$oCampaign->logo_img = '';
-			//pre($aReviews);
-			//pre($brandData);
+			if($totalReviews>0){
+			    $avgRatings = $totalRatings/$totalReviews;
+			}else{
+			    $avgRatings = 0;
+			}
 			$brandHeaderColorSolid = $brandData->header_color_solid;
 			$brandHeaderColorCustom = $brandData->header_color_custom;
 			$brandHeadercolorFix = $brandData->header_color_fix;
@@ -734,7 +739,7 @@
 											<span class="{{ $brandData->rating == 'off'?'hidden':'' }}">
 												@for ($i = 1; $i <= 5; $i++)
 													<i class="fa fa-star
-													if ($i <= ceil($avgRatings))
+													@if ($i <= ceil($avgRatings))
 														txt_yellow
 													@else
 														txt_grey
@@ -880,10 +885,12 @@
 											<div class="col-xs-6">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
 											</div>
-											<div class="col-xs-6 text-right"><p>{{ ceil(($fiveRating/$totalRatingReview)*100) > 0 ? ceil(($fiveRating/$totalRatingReview)*100).'%' : '0'  }} <span>{{ $fiveRating }}</span></p></div>
+											{{--<div class="col-xs-6 text-right"><p>{{ ceil(($fiveRating/$totalRatingReview)*100) > 0 ? ceil(($fiveRating/$totalRatingReview)*100).'%' : '0'  }} <span>{{ $fiveRating }}</span></p></div>--}}
+											<div class="col-xs-6 text-right"><p>{{ $totalRatingReview > 0 ? ceil(($fiveRating/$totalRatingReview)*100).'%' : '0'  }} <span>{{ $fiveRating }}</span></p></div>
 											<div class="col-xs-12">
 												<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:{{ ceil(($fiveRating/$totalRatingReview)*100).'%' }}"></div>
+													{{--<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:{{ ceil(($fiveRating/$totalRatingReview)*100).'%' }}"></div>--}}
+													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:{{ $totalRatingReview>0 ? ceil(($fiveRating/$totalRatingReview)*100).'%' : '0' }}"></div>
 												</div>
 											</div>
 										</div>
@@ -891,10 +898,11 @@
 											<div class="col-xs-6">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
 											</div>
-											<div class="col-xs-6 text-right"><p>{{ ceil(($fourRating/$totalRatingReview)*100) > 0 ? ceil(($fourRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $fourRating }}</span></p></div>
+											{{--<div class="col-xs-6 text-right"><p>{{ ceil(($fourRating/$totalRatingReview)*100) > 0 ? ceil(($fourRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $fourRating }}</span></p></div>--}}
+											<div class="col-xs-6 text-right"><p>{{ $totalRatingReview > 0 ? ceil(($fourRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $fourRating }}</span></p></div>
 											<div class="col-xs-12">
 												<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70" style="width:{{ ceil(($fourRating/$totalRatingReview)*100).'%' }}"></div>
+													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70" style="width:{{ $totalRatingReview>0 ? ceil(($fourRating/$totalRatingReview)*100).'%' : '0' }}"></div>
 												</div>
 											</div>
 										</div>
@@ -902,10 +910,11 @@
 											<div class="col-xs-6">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
 											</div>
-											<div class="col-xs-6 text-right"><p>{{ ceil(($threeRating/$totalRatingReview)*100) > 0 ? ceil(($threeRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $threeRating }}</span></p></div>
+											{{--<div class="col-xs-6 text-right"><p>{{ ceil(($threeRating/$totalRatingReview)*100) > 0 ? ceil(($threeRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $threeRating }}</span></p></div>--}}
+											<div class="col-xs-6 text-right"><p>{{ $totalRatingReview > 0 ? ceil(($threeRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $threeRating }}</span></p></div>
 											<div class="col-xs-12">
 												<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:{{ ceil(($threeRating/$totalRatingReview)*100).'%' }}"></div>
+													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:{{ $totalRatingReview > 0 ? ceil(($threeRating/$totalRatingReview)*100).'%' : '0' }}"></div>
 												</div>
 											</div>
 										</div>
@@ -913,10 +922,11 @@
 											<div class="col-xs-6">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i>
 											</div>
-											<div class="col-xs-6 text-right"><p>{{ ceil(($twoRating/$totalRatingReview)*100) > 0 ? ceil(($twoRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $twoRating }}</span></p></div>
+											{{--<div class="col-xs-6 text-right"><p>{{ ceil(($twoRating/$totalRatingReview)*100) > 0 ? ceil(($twoRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $twoRating }}</span></p></div>--}}
+											<div class="col-xs-6 text-right"><p>{{ $totalRatingReview > 0 ? ceil(($twoRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $twoRating }}</span></p></div>
 											<div class="col-xs-12">
 												<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:{{ ceil(($twoRating/$totalRatingReview)*100).'%' }}"></div>
+													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:{{ $totalRatingReview > 0 ? ceil(($twoRating/$totalRatingReview)*100).'%' : '0' }}"></div>
 												</div>
 											</div>
 										</div>
@@ -924,10 +934,11 @@
 											<div class="col-xs-6">
 												<i class="fa fa-star"></i>
 											</div>
-											<div class="col-xs-6 text-right"><p>{{ ceil(($oneRating/$totalRatingReview)*100) > 0 ? ceil(($oneRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $oneRating }}</span></p></div>
+											{{--<div class="col-xs-6 text-right"><p>{{ ceil(($oneRating/$totalRatingReview)*100) > 0 ? ceil(($oneRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $oneRating }}</span></p></div>--}}
+											<div class="col-xs-6 text-right"><p>{{ $totalRatingReview > 0 ? ceil(($oneRating/$totalRatingReview)*100).'%' : '0'  }}  <span>{{ $oneRating }}</span></p></div>
 											<div class="col-xs-12">
 												<div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:{{ ceil(($oneRating/$totalRatingReview)*100).'%' }}"></div>
+													<div class="progress-bar progress-bar-info {{ $gradientClassReview }}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:{{ $totalRatingReview > 0 ? ceil(($oneRating/$totalRatingReview)*100).'%' : '0' }}"></div>
 												</div>
 											</div>
 										</div>
@@ -1654,11 +1665,11 @@
 										<div class="divider"></div>
 										<div class="clearfix"></div>
 										<div class="review_headline full_n_bx">Phone</div>
-										<div class="very_much"><input name="phone" class="form-control" value="{{ $uSubscribers->phone }}" type="text"></div>
+										<div class="very_much"><input name="phone" class="form-control" value="{{ !empty($uSubscribers) ? $uSubscribers->phone : '' }}" type="text"></div>
 										<div class="divider"></div>
 										<div class="clearfix"></div>
 										<div class="review_headline full_n_bx">Email</div>
-										<div class="very_much"><input name="emailid" class="form-control" value="{{ $uSubscribers->email }}" type="text" required="required" placeholder="admin@brandboost.io"></div>
+										<div class="very_much"><input name="emailid" class="form-control" value="{{ !empty($uSubscribers) ? $uSubscribers->email : '' }}" type="text" required="required" placeholder="admin@brandboost.io"></div>
 									</div>
 									<div class="clearfix"></div>
 
@@ -1763,7 +1774,7 @@
 											</div>
 											<div style="display: none;" id="uploadedReviewFiles{{ $productData->id }}"></div>
 
-											<div class="@if($key > 0) {{ 'hidden' }}">
+											<div class="@if($key > 0) {{ 'hidden' }} @endif">
 												<h2>Contact Info</h2>
 												<div class="clearfix"></div>
 
