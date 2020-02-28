@@ -2972,6 +2972,8 @@ public function widgetStatisticDetailsStatsGraph(){
                 $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
                 if (isset($aResponse->id)) {
                     $result = BrandboostModel::updateBrandboostFeedbackResponse($aFeedbackData, $brandboostID);
+                    //Update in active campaigns
+                    $result2 = BrandboostModel::updateBrandboostEndCampaigns($aFeedbackData, $brandboostID);
                 } else {
                     $aFeedbackData['brandboost_id'] = $brandboostID;
                     $aFeedbackData['created'] = date("Y-m-d H:i:s");

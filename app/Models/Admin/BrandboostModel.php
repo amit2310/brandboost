@@ -622,6 +622,27 @@ class BrandboostModel extends Model {
     }
 
     /**
+     * This function used to update feedback related info into the end campaigns
+     * @param $aData
+     * @param $brandboostID
+     * @return bool
+     */
+    public static function updateBrandboostEndCampaigns($aData, $brandboostID) {
+        if(!empty($aData)){
+            //This array will have only one element
+            foreach($aData as $key => $val){
+                $fieldName = $key;
+                $fieldValue = $val;
+            }
+            $query = "UPDATE `tbl_campaigns` SET {$fieldName} = '{$fieldValue}' WHERE `event_id` IN(SELECT id FROM `tbl_brandboost_events` WHERE brandboost_id='$brandboostID')";
+            //echo $query;
+            $result = DB::statement($query);
+        }
+        return true;
+    }
+
+
+    /**
      * Used to update brandboost feedback response by brandboostID
      * @param type $brandboostID
      * @return type

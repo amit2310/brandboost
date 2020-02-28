@@ -8,21 +8,18 @@ use App\Models\Admin\Crons\BrandboostModel;
 use App\Models\Admin\UsersModel;
 
 class BrandboostInviter extends Command {
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'inviter:brandboost';
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'This cron used to send emails/sms for Onsite/Offsite brandboost module';
-
     /**
      * Create a new command instance.
      *
@@ -88,13 +85,9 @@ class BrandboostInviter extends Command {
         if ($bLocked == false) {
             die("Currently cron is locked!!");
         }
-
-
-
         $aEvents = $mInviter->getInviterEvents();
         //pre($aEvents);
         //die;
-
         if (!empty($aEvents)) {
             foreach ($aEvents as $aEvent) {
                 $bActiveSubsription = false;
@@ -103,10 +96,8 @@ class BrandboostInviter extends Command {
                 //if ($userID > 0 && $bbID == 126) {
                 if ($userID > 0) {
                     $bActiveSubsription = UsersModel::isActiveSubscription($userID);
-
                     //echo "Subscription status ". $bActiveSubsription;
                     //die;
-
                     if ($bActiveSubsription == true) {
                         /* if ($bbID != '60') {
                           break;
@@ -150,7 +141,6 @@ class BrandboostInviter extends Command {
             $delayType = $oParams->delay_type; //after or before
             $delayUnit = $oParams->delay_unit; // minute or hour or day or week or year
             $delayValue = $oParams->delay_value;
-
             //Get all subscriber and then find eligible subscribers only
             $oSubscribers = $mInviter->getThankYouEligibleSubscribers($bbID, $inviterID);
             $timeNow = time();
@@ -173,7 +163,6 @@ class BrandboostInviter extends Command {
                     'inviter_data' => $aEvent,
                     'subscribers' => $aEligibleSubscriber
                 );
-
                 $this->fireAutomationCampaign($aFireData);
             }
         }
@@ -199,7 +188,6 @@ class BrandboostInviter extends Command {
             if (!empty($aBrandboost)) {
                 $bbType = $aBrandboost->review_type;
             }
-
             //Get all subscriber and then find eligible subscribers only
             $oSubscribers = $mInviter->getInviterFollowupSubscribers($inviterID, $previousEventID);
             $timeNow = time();
@@ -233,7 +221,6 @@ class BrandboostInviter extends Command {
                     'inviter_data' => $aEvent,
                     'subscribers' => $aEligibleSubscriber
                 );
-
                 $this->fireAutomationCampaign($aFireData);
             }
         }
@@ -242,7 +229,7 @@ class BrandboostInviter extends Command {
     /**
      * Processes Send Invites(Main Event)
      * @param type $aEvent
-     * @param type $aEvent 
+     * @param type $aEvent
      */
     public function processSendInvites($aEvent = array()) {
         //Instantiate Email Model to access its properties and methods
@@ -256,7 +243,6 @@ class BrandboostInviter extends Command {
             $delayType = $oParams->delay_type; //after or before
             $delayUnit = $oParams->delay_unit; // minute or hour or day or week or year
             $delayValue = $oParams->delay_value;
-
             //Get all subscriber and then find eligible subscribers only
             $oSubscribers = $mInviter->getInviterEligibleSubscribers($bbID);
 
@@ -311,9 +297,7 @@ class BrandboostInviter extends Command {
                     'inviter_data' => $aEvent,
                     'subscribers' => $aMoreEligibleSubscriber
                 );
-
                 //pre($aMoreEligibleSubscriber);
-
                 $this->fireAutomationCampaign($aFireData);
             }
         }
@@ -337,21 +321,20 @@ class BrandboostInviter extends Command {
         if (!empty($aBrandboost)) {
             $bbType = $aBrandboost->review_type;
         }
-
         //Get owner information
         $this->client_from_email = '';
         $this->client_from_name = '';
         $clientEmail = $oEvent->client_email;
-        
+
         $clientFirstName = $oEvent->client_first_name;
         $clientLastName = $oEvent->client_last_name;
-        
+
         $fullName = trim($clientFirstName . ' '. $clientLastName);
 
         if (!empty($clientEmail)) {
             $this->client_from_email = $clientEmail;
         }
-        
+
         if(!empty($fullName)){
             $this->client_from_name = $fullName;
         }
@@ -380,8 +363,7 @@ class BrandboostInviter extends Command {
                         echo "Campaign Type is " . $campaignType;
                     }
                     $subject = $aCampaign->subject;
-                    
-                    
+
                     $defaultFromEmail = (!empty($this->client_from_email)) ? $this->client_from_email : $this->from_email;
                     $defaultFromName = (!empty($this->client_from_name)) ? $this->client_from_name : $this->from_name;
                     $fromEmail = empty($aCampaign->from_email) ? $defaultFromEmail : $aCampaign->from_email;
@@ -430,8 +412,6 @@ class BrandboostInviter extends Command {
     public function sendBulkAutomationEmail($oSubscribers, $aData) {
         //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
-
-
         $content = $aData['content'];
         $fromEmail = $aData['from'];
         $fromName = $aData['name'];
@@ -459,7 +439,7 @@ class BrandboostInviter extends Command {
                 $aTrackSetttings['subscriber_id'] = $oSubscriber->id;
                 $aTrackSetttings['client_id'] = $clientID;
                 $aTrackSetttings['bb_type'] = $aData['review_type'];
-                //Replace Tags 
+                //Replace Tags
                 $contentReplaced = $mInviter->emailTagReplace($aData['brandboost_id'], $emailContent, 'email', $oSubscriber);
                 //echo "Content is ". $content;
                 $msg = $this->prepareHtmlContent($contentReplaced, $messageID, $aTrackSetttings);
@@ -558,7 +538,6 @@ class BrandboostInviter extends Command {
 
         if (!empty($oSubscribers)) {
             foreach ($oSubscribers as $oSubscriber) {
-
                 $smsContent = $mInviter->emailTagReplace($aData['brandboost_id'], $content, 'sms', $oSubscriber);
                 //$userCurrentUsage = $mInviter->getCurrentUsage($clientID);
                 //if ($userCurrentUsage->sms_balance > 0 || $userCurrentUsage->sms_balance_topup > 0) {
@@ -751,7 +730,7 @@ class BrandboostInviter extends Command {
     }
 
     /**
-     * Generates unique email id for each email being sent out 
+     * Generates unique email id for each email being sent out
      * @return type
      */
     public function generateMessageId() {
@@ -1011,7 +990,7 @@ class BrandboostInviter extends Command {
             //pre($aSmsData);
         }
         return true;
-        
+
     }
 
 }
