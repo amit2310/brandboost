@@ -9,8 +9,8 @@
                         <h3 class="htxt_medium_24 dark_700">{{campaign.name}} </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('draft')"> Save as draft</button>
-                        <button class="btn btn-md bkg_email_300 light_000" @click="changeCampaignStatus('active')" >Publish <span><img
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="changeCampaignStatus('0')"> Save as draft</button>
+                        <button class="btn btn-md bkg_email_300 light_000" @click="changeCampaignStatus('1')" >Publish <span><img
                             src="/assets/images/arrow-right-line.svg"></span>  </button>
                     </div>
                 </div>
@@ -59,15 +59,21 @@
                             <div class="p0">
                                 <div class="form-group">
                                     <label class="fsize12" for="fname">Template</label>
-                                    <input type="text" v-model="campaign.brand_name" class="form-control h40" id="fname" placeholder="Enter Brand/Product Name" name="brand_name">
+
+                                    <button id="galleryDesignType" type="button" class="btn h52 form-control w100 js-media-widget-slidebox1" style="text-align: left; padding: 7px 23px!important;">
+                                        <span>Galley Type</span>
+                                        <i class="pull-right txt_grey">
+                                            <img src="/assets/images/icon_grid.svg">
+                                        </i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="p0">
                                 <div class="form-group">
                                     <label class="fsize12" for="fname">Widget type</label>
-                                    <select class="form-control h52 autoSaveConfig" name="galleryType" id="galleryType">
+                                    <select v-model="campaign.gallery_type" @change="synGalleryType($event)" class="form-control h52 autoSaveConfig" name="galleryType" id="galleryType">
                                         <option value="3">3 Images</option>
-                                        <option value="4" selected="">4 Images</option>
+                                        <option value="4">4 Images</option>
                                         <option value="5">5 Images</option>
                                         <option value="6">6 Images</option>
                                         <option value="7">7 Images</option>
@@ -77,8 +83,8 @@
                             <div class="p0">
                                 <div class="form-group">
                                     <label class="fsize12" for="fname">Image Size</label>
-                                    <select class="form-control h52 autoSaveConfig" name="imageSize" id="imageSize">
-                                        <option value="small" selected="">Small</option>
+                                    <select class="form-control h52 autoSaveConfig" @change="synImageSize($event)" v-model="campaign.image_size" name="imageSize" id="imageSize">
+                                        <option value="small">Small</option>
                                         <option value="medium">Medium</option>
                                         <option value="large">Large</option>
                                     </select>
@@ -92,17 +98,17 @@
                             <div class="p0">
                                 <h3 class="dark_400 mb0 fsize13 fw300">Title &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.allow_title" :checked="campaign.allow_title" @change="toggleLogoDisplay($event)">
+                                        <input class="field" type="checkbox" v-model="campaign.allow_title" :checked="campaign.allow_title" @change="synAllowTitle($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Arrows &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" >
+                                        <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" @change="synAllowArrow($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                                 <h3 class="dark_400 mb0 fsize13 fw300">Rating & reviews                                    &nbsp;
                                     <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="toggleIntroDisplay($event)">
+                                        <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="synAllowRatings($event)">
                                         <span class="toggle email"></span> </label>
                                 </h3>
                             </div>
@@ -125,7 +131,7 @@
                                         name="question"
                                         :placeholder="`Gallery Description`"
                                         v-model="campaign.description"
-                                        @keypress="syncQuestion"
+
                                     ></textarea>
                                 </div>
 <!--                                <div class="form-group">-->
@@ -249,7 +255,7 @@
                     <div class="col-6">
                         <!--                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="displayStep(2)">Continue <span><img-->
                         <!--                            src="/assets/images/arrow-right-line.svg"></span></button>-->
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="changeCampaignStatus('active')" >Publish <span><img
+                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="changeCampaignStatus('1')" >Publish <span><img
                             src="/assets/images/arrow-right-line.svg"></span>  </button>
                         <button class="btn btn-success btn-sm bkg_green_300 light_000 float-right mr-3" @click="updateConfigurations">Save Changes <span><img
                             src="/assets/images/arrow-right-line.svg"></span></button>
@@ -263,6 +269,104 @@
             </div>
         </div>
         <!--Content Area End-->
+        <!--******************
+             Create Sliding Smart Popup
+            **********************-->
+        <div class="box" style="width: 424px;">
+            <div style="width: 424px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
+                    <a class="cross_icon js-media-widget-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <form method="post" @submit.prevent="processForm">
+                        <div class="p40">
+                            <div class="row">
+                                <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
+                                    <h3 class="htxt_medium_24 dark_800 mt20">Choose Gallery Widget Design</h3>
+                                    <p class="htxt_medium_24 dark_800 mt20">Choose type of item you want to create</p>
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row p30">
+                                        {{campaign.gallery_design_type}}
+                                        <div class="col-md-2 review_source_new onerowCWBox" current-class="onerow">
+                                            <label for="radiocheck_sp_1">
+                                                <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'onerow'}">
+                                                    <span class="custmo_checkbox checkboxs">
+                                                        <input id="radiocheck_sp_1" type="radio" name="widgetDesignType" class="selectwidget1" widget-id="onerow" v-model="campaign.gallery_design_type">
+                                                        <span class="custmo_checkmark purple"></span>
+                                                    </span>
+                                                    <figure><img src="http://brandboost.io/assets/images/media_inline_4.png"></figure>
+                                                    <div class="text_sec">
+                                                        <p><strong>Single Row Gallery</strong></p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-2 review_source_new squareCWBox" current-class="square">
+                                            <label for="radiocheck_sp_2">
+                                            <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'square'}">
+                                                    <span class="custmo_checkbox checkboxs">
+                                                        <input id="radiocheck_sp_2" type="radio" name="widgetDesignType" v-model="campaign.gallery_design_type" class="selectwidget1" widget-id="square">
+                                                        <span class="custmo_checkmark purple"></span>
+                                                    </span>
+                                                    <figure><img src="http://brandboost.io/assets/images/media_square_4.png"></figure>
+                                                    <div class="text_sec">
+                                                        <p><strong>Square Gallery</strong></p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-2 review_source_new horizontalCWBox" current-class="horizontal">
+                                            <label for="radiocheck_sp_3">
+                                                <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'horizontal'}">
+									<span class="custmo_checkbox checkboxs">
+										<input id="radiocheck_sp_3" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" widget-id="horizontal">
+										<span class="custmo_checkmark purple"></span>
+									</span>
+                                                    <figure><img src="http://brandboost.io/assets/images/media_square_6.png"></figure>
+                                                    <div class="text_sec">
+                                                        <p><strong>Horizontal Gallery</strong></p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-2 review_source_new verticalCWBox" current-class="vertical">
+                                            <label for="radiocheck_sp_4">
+                                                <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'vertical'}">
+									<span class="custmo_checkbox checkboxs">
+										<input id="radiocheck_sp_4" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" widget-id="vertical">
+										<span class="custmo_checkmark purple"></span>
+									</span>
+
+                                                    <figure><img src="http://brandboost.io/assets/images/media_square_6_vert.png"></figure>
+                                                    <div class="text_sec">
+                                                        <p><strong>Vertical Gallery</strong></p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row bottom-position">
+                                <div class="col-md-12 mb15">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="editGalleryId" id="editGalleryId" value="campaign.id"/>
+
+                                    <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Save</button>
+                                    <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -301,6 +405,7 @@
 
         },
         methods: {
+
             getMediaWidgetSetup: function(){
                 axios.get('/admin/mediagallery/setup/' + this.campaignId)
                     .then(response => {
@@ -311,7 +416,8 @@
                         this.reviewsData = response.data.reviewsData;
                         this.preview = response.data.setupPreview;
                         this.loading = false;
-
+                        // this.formLabel = 'Update';
+                        this.displayForm(this.campaign);
                     });
             },
             displayStep: function(step){
@@ -324,53 +430,60 @@
 
                 window.location.href = path;
             },
-            autoSaveNPSWidget: function(e){
-                axios.post('/admin/modules/nps/addNPSWidgetSurvey',{
-                    // params:{
-                    nps_id: this.campaignId,
-                    widget_id: this.campaign.nps_id,
-                    hashcode: this.campaign.hashcode,
-                    // }
-                })
-                    .then(response => {
-                        this.preview = response.data.preview;
-                        this.loading = false;
+            synAllowTitle: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_title',1);
 
-                    });
-            },
-            toggleLogoDisplay: function(e){
-                if(e.target.checked){
-                    jq(".logo_img").parent().show();
-                    jq(".product_icon").show();
                 }else{
-                    jq(".product_icon").hide();
-                    jq(".logo_img").parent().hide();
+                    this.updateSingleField('allow_title',0);
                 }
             },
-            toggleQuestionDisplay: function(e){
+            synAllowArrow: function(e){
                 if(e.target.checked){
-                    jq(".questionText").show();
-                    jq(".questionEamilText").show();
-                }else{
-                    jq(".questionText").hide();
-                    jq(".questionEamilText").hide();
-                }
-            },
-            toggleIntroDisplay: function(e){
-                if(e.target.checked){
-                    jq(".introductionText").show();
-                }else{
-                    jq(".introductionText").hide();
-                }
-            },
-            syncQuestion: function(){
-                document.querySelector('.questionEamilText').innerHTML=this.campaign.question;
-                document.querySelector('.questionText').innerHTML=this.campaign.question;
-                document.querySelector('.questionSMSText').innerHTML=this.campaign.question + '<br><br>Please Reply with a number from "0" (not likely) to "10" (very likely)';
-            },
-            syncIntro: function(){
-                document.querySelector('.introductionText').innerHTML=this.campaign.description;
+                    this.updateSingleField('allow_arrow',1);
 
+                }else{
+                    this.updateSingleField('allow_arrow',0);
+                }
+            },
+            synAllowRatings: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_ratings',1);
+
+                }else{
+                    this.updateSingleField('allow_ratings',0);
+                }
+            },
+            synGalleryType: function(e){
+                this.updateSingleField('gallery_type',this.campaign.gallery_type);
+
+            },
+            synImageSize: function(e){
+                this.updateSingleField('image_size',this.campaign.image_size);
+
+            },
+            updateSingleField: function (fieldName, fieldValue) {
+                this.loading = true;
+                axios.post('admin/mediagallery/updateSingleField', {
+                    _token: this.csrf_token(),
+                    fieldName: fieldName,
+                    fieldVal: fieldValue,
+                    gallery_id: this.campaignId,
+                }).then(response => {
+                    this.refreshMessage = Math.random();
+                    this.successMsg = 'Updated the changes successfully!!';
+                    this.getMediaWidgetSetup();
+                    this.loading = false;
+                });
+
+            },
+
+            displayForm : function(lbl){
+                if(lbl == 'Create'){
+                    this.form={};
+                }
+                this.formLabel = lbl;
+                // document.querySelector('.js-media-widget-slidebox').click();
             },
             updateConfigurations: function(){
                 this.loading = true;
@@ -395,9 +508,9 @@
                 let brandlogo = document.querySelector('input[name="brand_logo"]');
                 this.campaign.brand_logo = (brandlogo != null) ? brandlogo.value : this.campaign.brand_logo;
 
-                axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
+                axios.post('/admin/mediagallery/updateMediaWidget', this.campaign)
                     .then(response => {
-                        this.getNpsWidgetSetup();
+                        this.getMediaWidgetSetup();
                         this.loading = false;
                     });
 
@@ -419,36 +532,33 @@
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
                 }
-                axios.post('/admin/brandboost/saveOnsiteSettings', {
+                axios.post('/admin/mediagallery/updateGallery', {
                     _token: this.csrf_token(),
-                    fieldName: fieldName,
-                    fieldVal: fieldValue,
-                    brandboostId: this.campaignId,
-                    linkExpiryData : this.campaign.link_expire_custom,
-                    requestType: type
-
+                    title: this.campaign.title,
+                    description: this.campaign.description,
+                    editGalleryId: this.campaignId,
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
                     this.loading = false;
-                    this.getNpsWidgetSetup();
+                    this.getMediaWidgetSetup();
                 });
 
             },
             changeCampaignStatus: function(status){
                 this.loading = true;
-                axios.post('/admin/modules/nps/changeStatus', {
-                    npsId: this.campaignId,
+                axios.post('admin/mediagallery/updateStatus', {
+                    gallery_id: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            if(status == 'draft'){
+                            if(status == '0'){
                                 this.successMsg = 'Campaign saved as a draft successfully';
                             }
-                            if(status == 'active'){
+                            if(status == '1'){
                                 this.successMsg = 'Campaign is active now';
                             }
 
@@ -499,6 +609,14 @@
             move: function (color) {
                 $('.colorpicker-basic4').val(color.toHexString());
             }
+        });
+
+        $(document).ready(function () {
+            $(document).on('click', '.js-media-widget-slidebox1', function () {
+                $(".box").animate({
+                    width: "toggle"
+                });
+            });
         });
 
 
