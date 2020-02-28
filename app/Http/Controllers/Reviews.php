@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\FeedbackModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Models\PaymentModel;
@@ -728,8 +729,9 @@ class Reviews extends Controller {
     }
 
     public function sendReviewThankyouEmail($aData) {
+        $mFeedback = new FeedbackModel();
         if (!empty($aData)) {
-            $aResponse = $this->mFeedback->getFeedbackResponse($aData['brandboost_id']);
+            $aResponse = $mFeedback->getFeedbackResponse($aData['brandboost_id']);
             //pre($aData);
             $ratingValue = $aData['siteReviewDetails'][0]->ratings;
             if (!empty($aResponse)) {
