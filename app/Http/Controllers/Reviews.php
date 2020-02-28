@@ -678,7 +678,7 @@ class Reviews extends Controller {
                 'brandboostData' => $aBrandboost,
                 'productsData' => $productsData,
                 'servicesData' => $servicesData,
-                'uSubscribers' => $uSubscribers[0],
+                'uSubscribers' => $uSubscribers,
                 'brandboostdetail' => $getBrandboost[0],
                 'rRating' => $rRating,
                 'action' => $action
