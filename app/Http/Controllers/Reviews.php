@@ -767,7 +767,7 @@ class Reviews extends Controller {
                     }
                 }
 
-                $emailContent = $this->load->view("review_thankyou", array('title' => $sTitle, 'subTitle' => $sSubTitle, 'siteReviewDetails' => $aData['siteReviewDetails'][0], 'reviewDetails' => $aData['reviewDetails']), true);
+                $emailContent = view("review_thankyou", ['title' => $sTitle, 'subTitle' => $sSubTitle, 'siteReviewDetails' => $aData['siteReviewDetails'][0], 'reviewDetails' => $aData['reviewDetails']])->render();
                 $subject = "Thank you for submitting your review";
 
                 //echo $emailContent;
