@@ -44,21 +44,8 @@
     </ul>
     <!--end topbar-nav-->
     <ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">
-      <li>
-        <a href="#"><img src="assets/images/chevron-left.svg"/>&nbsp;List</a>
-      </li>
-      
-      <!--<li class="ml10 mr10"><img src="assets/images/chevron-left.svg"/></li>
-      
-      <li>
-        <a href="#"><img src="assets/images/mail-open-line.svg"/> &nbsp;Email</a>
-      </li>
-      
-       <li class="ml10 mr10"><img src="assets/images/chevron-left.svg"/></li>
-       
-      <li>
-        <a href="#">Campaigns</a>
-      </li>-->
+      <!--<li class="mr-2"><a class="button-menu-mobile-new" href="#"><i class="ri-menu-2-line float-left" style="margin-top: 1px;"></i></a></li>-->
+      <li><a href="#"><img src="assets/images/chevron-left.svg"/>&nbsp;List</a></li>
     </ul>
     <div class="clearfix"></div>
     </div>

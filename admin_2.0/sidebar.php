@@ -34,8 +34,8 @@
   
   <div class="main-menu-inner">
     <div class="menu-body slimscroll"> 
-     <span style="" class="button-menu-mobile"><img src="assets/images/arrow_right_36.svg"/></span>
-     <span style="position: absolute; top: 17px; right: 20px; transform:rotate(180deg);" class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>
+     <!--<span style="" class="button-menu-mobile"><img src="assets/images/arrow_right_36.svg"/></span>-->
+     <!--<span style="position: absolute; top: 0px; right: 20px; transform:rotate(180deg);" class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>-->
      
      <!--************
        DASHBOARD
@@ -46,20 +46,20 @@
         </div>
         <ul class="nav">
           <li class="nav-item"><a class="nav-link active" href="people_dashboard.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Tags</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Deals</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Companies</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Tags</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Deals</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Companies</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
         <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">CAMPAIGNS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_blue.svg"/></i><span class="menu-item-text">McDonald's</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_orange.svg"/></i><span class="menu-item-text">Mitsubishi</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_yellow.svg"/></i><span class="menu-item-text">Louis Vuitton</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_green.svg"/></i><span class="menu-item-text">The Walt  Company </span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_blue.svg"/></i><span class="menu-item-text">McDonald's</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_orange.svg"/></i><span class="menu-item-text">Mitsubishi</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_yellow.svg"/></i><span class="menu-item-text">Louis Vuitton</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_green.svg"/></i><span class="menu-item-text">The Walt  Company </span></a></li>
         </ul>
       </div>
       
@@ -73,22 +73,22 @@
         <ul class="nav">
           <li class="nav-item"><a class="nav-link active" href="people_dashboard.php"><i><img src="assets/images/people_dashboard.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
           <li class="nav-item"><a class="nav-link" href="people_contact.php"><i><img src="assets/images/people_contact.svg"/></i><span class="menu-item-text">Contacts</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_list.svg"/></i><span class="menu-item-text">Lists</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_segment.svg"/></i><span class="menu-item-text">Segments</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_tags.svg"/></i><span class="menu-item-text">Tags</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_deals.svg"/></i><span class="menu-item-text">Deals</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_companies.svg"/></i><span class="menu-item-text">Companies</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_configuration.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_list.svg"/></i><span class="menu-item-text">Lists</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_segment.svg"/></i><span class="menu-item-text">Segments</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_tags.svg"/></i><span class="menu-item-text">Tags</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_deals.svg"/></i><span class="menu-item-text">Deals</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_companies.svg"/></i><span class="menu-item-text">Companies</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_configuration.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
         <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">CAMPAIGNS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_blue.svg"/></i><span class="menu-item-text">McDonald's</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_orange.svg"/></i><span class="menu-item-text">Mitsubishi</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_yellow.svg"/></i><span class="menu-item-text">Louis Vuitton</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/folder_green.svg"/></i><span class="menu-item-text">The Walt  Company </span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_blue.svg"/></i><span class="menu-item-text">McDonald's</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_orange.svg"/></i><span class="menu-item-text">Mitsubishi</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_yellow.svg"/></i><span class="menu-item-text">Louis Vuitton</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/folder_green.svg"/></i><span class="menu-item-text">The Walt  Company </span></a></li>
         </ul>
         
         <hr>
@@ -96,8 +96,8 @@
           <h6 class="menu-title">CONTACTS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user1_20.png"/></i><span class="menu-item-text">Tanya Warren</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/user1_20.png"/></i><span class="menu-item-text">Tanya Warren</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
         </ul>
       </div>
       
@@ -110,22 +110,22 @@
         </div>
         <ul class="nav">
           <li class="nav-item"><a class="nav-link active" href="people_dashboard.php"><i><img src="assets/images/people_dashboard.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_grey.svg"/></i><span class="menu-item-text">Chats</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_contact.svg"/></i><span class="menu-item-text">Visitors</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/live-chat-icon.svg"/></i><span class="menu-item-text">Live Chat</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_deals.svg"/></i><span class="menu-item-text">Auto Messages</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_tags.svg"/></i><span class="menu-item-text">Chat Bots</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/people_configuration.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/chat_grey.svg"/></i><span class="menu-item-text">Chats</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_contact.svg"/></i><span class="menu-item-text">Visitors</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/live-chat-icon.svg"/></i><span class="menu-item-text">Live Chat</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_deals.svg"/></i><span class="menu-item-text">Auto Messages</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_tags.svg"/></i><span class="menu-item-text">Chat Bots</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/people_configuration.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
         <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">INBOXES</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_blue.svg"/></i><span class="menu-item-text">Live Chat</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_red.svg"/></i><span class="menu-item-text">Email</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_email.svg"/></i><span class="menu-item-text">Telegram</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/chat_green.svg"/></i><span class="menu-item-text">SMS</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/chat_blue.svg"/></i><span class="menu-item-text">Live Chat</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/chat_red.svg"/></i><span class="menu-item-text">Email</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/chat_email.svg"/></i><span class="menu-item-text">Telegram</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/chat_green.svg"/></i><span class="menu-item-text">SMS</span></a></li>
         </ul>
         
         <hr>
@@ -133,8 +133,8 @@
           <h6 class="menu-title">CONTACTS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user1_20.png"/></i><span class="menu-item-text">Tanya Warren</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/user1_20.png"/></i><span class="menu-item-text">Tanya Warren</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/user2_20.png"/></i><span class="menu-item-text">Colleen Jack Watson</span></a></li>
         </ul>
       </div>
       
@@ -146,12 +146,12 @@
           <h6 class="menu-title">Email Inbox</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -163,14 +163,14 @@
           <h6 class="menu-title">Brand Page</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -182,23 +182,31 @@
           <h6 class="menu-title">REVIEWS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/star-line-dark.svg"/></i><span class="menu-item-text">Reviews Feed</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Review Requests</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/file-4-line.svg"/></i><span class="menu-item-text">Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/pie-chart-line.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="templates.php"><i class="ri-home-line"></i><span class="menu-item-text">Overview</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-star-line"></i><span class="menu-item-text">Reviews Feed</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-home-line"></i><span class="menu-item-text">Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-add-box-line"></i><span class="menu-item-text">Review Requests</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-arrow-left-up-line"></i><span class="menu-item-text">Widgets</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-share-line"></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-pie-chart-line"></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-settings-5-line"></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
         <div class="title-box-mid">
           <h6 class="menu-title">CAMPAIGNS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span class="menu-item-text">Top Campaign</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span class="menu-item-text">Email New Broadcast</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-star-line reviews_400"></i><span class="menu-item-text">Request Campaign</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-star-line"></i><span class="menu-item-text">Customers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-star-line reviews_400"></i><span class="menu-item-text">Product Reviews</span></a></li>
+        </ul>
+        <div class="title-box-mid">
+          <h6 class="menu-title">WIDGETS</h6>
+        </div>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-star-line reviews_400"></i><span class="menu-item-text">Display</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-add-circle-line reviews_400"></i><span class="menu-item-text">Ask for review</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-star-line reviews_400"></i><span class="menu-item-text">Homepage widget</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i class="ri-add-circle-line reviews_400"></i><span class="menu-item-text">Product page widget</span></a></li>
         </ul>
         
       </div>
@@ -211,14 +219,14 @@
           <h6 class="menu-title">Media Galleries</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="templates.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -230,24 +238,24 @@
           <h6 class="menu-title">Email Marketing</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="templates.php"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
          <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">CAMPAIGNS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span class="menu-item-text">Top Campaign</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span class="menu-item-text">Email New Broadcast</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span class="menu-item-text">Top Campaign</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span class="menu-item-text">Email New Broadcast</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
         </ul>
       </div>
       
@@ -259,24 +267,24 @@
           <h6 class="menu-title">SMS Marketing</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="templates.php"><i><img src="assets/images/Email_home08.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/account-circle-line.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
          <hr>
         <div class="title-box-mid">
           <h6 class="menu-title">CAMPAIGNS</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span class="menu-item-text">Top Campaign</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span class="menu-item-text">Email New Broadcast</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_blue.svg"/></i><span class="menu-item-text">Top Campaign</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_orange.svg"/></i><span class="menu-item-text">Email New Broadcast</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_green.svg"/></i><span class="menu-item-text">Automated Email Ou...</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/Ellipse_blue2.svg"/></i><span class="menu-item-text">Weekly Newslatter  </span></a></li>
         </ul>
         
       </div>
@@ -289,14 +297,14 @@
           <h6 class="menu-title">Referrals</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link active" href="template.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link active" href="templates.php"><i><img src="assets/images/subs-icon.svg"/></i><span class="menu-item-text">Subscribers</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -308,10 +316,10 @@
           <h6 class="menu-title">Site Widgets</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/home-con.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email_campaign-icon.svg"/></i><span class="menu-item-text">Email Campaigns</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -323,11 +331,11 @@
           <h6 class="menu-title">Feed back</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -339,11 +347,11 @@
           <h6 class="menu-title">Help Desk</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -355,11 +363,11 @@
           <h6 class="menu-title">Knowledge Base</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -371,11 +379,11 @@
           <h6 class="menu-title">Appointments</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -388,11 +396,11 @@
           <h6 class="menu-title">Analytics</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
       
@@ -405,11 +413,11 @@
           <h6 class="menu-title">Settings</h6>
         </div>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="template.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/email-temp-icon.svg"/></i><span class="menu-item-text">Email Templates</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/forms-icon.svg"/></i><span class="menu-item-text">Forms</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/workflow-icon.svg"/></i><span class="menu-item-text">Workflows</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Analytics</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="templates.php"><i><img src="assets/images/config-icon.svg"/></i><span class="menu-item-text">Configuration</span></a></li>
         </ul>
       </div>
 
