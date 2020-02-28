@@ -652,14 +652,13 @@ class Reviews extends Controller {
     * @return type
     */
 
-    public function addnew() {
-        $aData = Request::input();
-        if (!empty($aData)) {
-            $action = $aData['action'];
-            $rRating = $aData['r']; // Review Rating
-            $campaignID = $aData['bbid']; //Campaign ID
-            $subscriberID = $aData['subid']; //Subscriber ID
-            $inviterID = $aData['invid']; // Inviter ID
+    public function addnew(Request $request) {
+        if (!empty($request)) {
+            $action = $request->get('action');
+            $rRating = $request->get('r'); // Review Rating
+            $campaignID = $request->get('bbid'); //Campaign ID
+            $subscriberID = $request->get('subid'); //Subscriber ID
+            $inviterID = $request->get('invid'); // Inviter ID
             $mBrandboost  = new BrandboostModel();
             $mUser = new UsersModel();
             $rLists = new ReviewlistsModel();
