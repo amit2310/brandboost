@@ -106,6 +106,7 @@ class BrandboostInviter extends Command {
                         //echo "Event Type is ". $eventType;
                         switch ($eventType) {
                             case "send-invite":
+                            case "main":
                                 $this->processSendInvites($aEvent);
                                 break;
                             case "followup":
