@@ -49,6 +49,7 @@
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a></li>
                                 <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
                             </ul>
                         </div>
@@ -338,7 +339,7 @@
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
-                sortBy: 'Name',
+                sortBy: 'Date Created',
                 searchBy: ''
             }
         },
