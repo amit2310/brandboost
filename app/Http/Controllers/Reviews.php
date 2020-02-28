@@ -710,7 +710,7 @@ class Reviews extends Controller {
             $aReviewRes = array(
                 'client_id' => $clientID,
                 'brandboost_id' => $campaignID,
-                'email' => $reviewDetails[0]->email,
+                'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
                 'siteReviewDetails' => $siteReviewDetails,
                 'reviewDetails' => $reviewDetails
             );
