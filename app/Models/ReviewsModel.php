@@ -1337,13 +1337,15 @@ class ReviewsModel extends Model {
     * @return type object
     */
     public function getOnsiteReviewDetailsByUID($uniqueId) {
+        //DB::enableQueryLog();
         $oData = DB::table('tbl_reviews')
-            ->Join('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
-            ->Join('tbl_brandboost_products', 'tbl_reviews.product_id', '=' , 'tbl_brandboost_products.id')
+            ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=' , 'tbl_users.id')
+            ->leftJoin('tbl_brandboost_products', 'tbl_reviews.product_id', '=' , 'tbl_brandboost_products.id')
             ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_brandboost_products.product_name', 'tbl_brandboost_products.product_image', 'tbl_brandboost_products.created as product_created')
             ->where('tbl_reviews.unique_review_key', $uniqueId)
             ->orderBy("tbl_reviews.id", "ASC")
             ->get();
+        //dd(DB::getQueryLog());
         return $oData;
     }
 

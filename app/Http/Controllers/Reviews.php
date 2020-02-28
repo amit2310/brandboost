@@ -703,6 +703,7 @@ class Reviews extends Controller {
         $campaignID = $request->campaign_id;
         if ($reviewUniqueID != '') {
             $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
+            pre($reviewDetails);
             $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
             $aBrandboost = $mInviter->getBBInfo($campaignID);
             $clientID = $aBrandboost->user_id;
@@ -717,7 +718,7 @@ class Reviews extends Controller {
 
             //pre($aReviewRes);
 
-            //$this->sendReviewThankyouEmail($aReviewRes);
+            $this->sendReviewThankyouEmail($aReviewRes);
             $response = array('status' => 'success');
         } else {
             $response = array('status' => 'error');
