@@ -652,14 +652,13 @@ class Reviews extends Controller {
     * @return type
     */
 
-    public function addnew() {
-        $aData = Request::input();
-        if (!empty($aData)) {
-            $action = $aData['action'];
-            $rRating = $aData['r']; // Review Rating
-            $campaignID = $aData['bbid']; //Campaign ID
-            $subscriberID = $aData['subid']; //Subscriber ID
-            $inviterID = $aData['invid']; // Inviter ID
+    public function addnew(Request $request) {
+        if (!empty($request)) {
+            $action = $request->get('action');
+            $rRating = $request->get('r'); // Review Rating
+            $campaignID = $request->get('bbid'); //Campaign ID
+            $subscriberID = $request->get('subid'); //Subscriber ID
+            $inviterID = $request->get('invid'); // Inviter ID
             $mBrandboost  = new BrandboostModel();
             $mUser = new UsersModel();
             $rLists = new ReviewlistsModel();
@@ -667,6 +666,7 @@ class Reviews extends Controller {
             $aSubscriber = $mUser->getSubscriberInfo($subscriberID);
             $uSubscribers = $rLists->getSubscribersListUser($subscriberID);
             $getBrandboost = $mBrandboost->getBrandboost($campaignID);
+            $aBB = !(empty($getBrandboost))? $getBrandboost->items() : [];
             $productsData = $mBrandboost->getProductDataByType($campaignID, 'product');
             $servicesData = $mBrandboost->getProductDataByType($campaignID, 'service');
             $uniqueID = uniqid() . date('Ymdhis');
@@ -680,7 +680,7 @@ class Reviews extends Controller {
                 'productsData' => $productsData,
                 'servicesData' => $servicesData,
                 'uSubscribers' => $uSubscribers[0],
-                'brandboostdetail' => $getBrandboost[0],
+                'brandboostdetail' => $aBB[0],
                 'rRating' => $rRating,
                 'action' => $action
             );
@@ -710,7 +710,7 @@ class Reviews extends Controller {
             $aReviewRes = array(
                 'client_id' => $clientID,
                 'brandboost_id' => $campaignID,
-                'email' => $reviewDetails[0]->email,
+                'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
                 'siteReviewDetails' => $siteReviewDetails,
                 'reviewDetails' => $reviewDetails
             );

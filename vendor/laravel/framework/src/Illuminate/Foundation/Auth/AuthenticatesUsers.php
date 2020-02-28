@@ -119,7 +119,7 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        return back(); //add this line of code
+        //
     }
 
     /**

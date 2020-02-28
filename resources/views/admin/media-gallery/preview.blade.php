@@ -13,6 +13,8 @@
     $galleryId = $galleryData->id;
     $colorOrientation = $galleryData->gradient_orientation == '' ? 'to right top' : $galleryData->gradient_orientation;
     $reviewIDArray = unserialize($galleryData->reviews_id);
+    $mainWigetClassName ='';
+    //print_r($reviewIDArray);
 @endphp
 <style type="text/css">
     .previewWidgetBox .bbw_white_color {
@@ -54,7 +56,9 @@
         " id="bbColorOrientationSection">
     <h2 class="reviewTitleBH {{ $allowTitle != '0' ? '' : 'hidden' }}"><strong
             class="reviewTitle">{{ $name == '' ? 'Gallery' : $name }}</strong>
-        <span>{{ count($reviewIDArray) }} photos</span></h2>
+        @if($reviewIDArray)
+         <span>{{ count($reviewIDArray) }} photos</span></h2>
+        @endif
     @if($galleryDesign == 'onerow')
         <div class="arrow reviewArrowBH {{ $allowArrows != '0' ? '' : 'hidden' }}">
             <a href="javascript:void(0);" class="left_arrow" bb_direction="left"><img
@@ -133,210 +137,214 @@
                 <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
                 <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
         </div>
+
     @elseif($galleryDesign == 'square')
-    <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">
-        <div class="middle previewWidgetBox">
-            @php
-                if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
-                    foreach($reviewIDArray as $key=>$reviewId){
-                        if($key <= 3){
-                        $reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
-                        $reviewImageArray = unserialize($reviewData[0]->media_url);
-                        $imageUrl = $reviewImageArray[0]['media_url'];
-                        $cropedImageUrl = $reviewData[0]->croped_image_url;
-
-                        if($cropedImageUrl == ''){
-                            $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
-                        }else{
-                            $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
-                        }
-
-                        if($widgetBgcolor == 1){
-                            if($galleryData->bg_color_type == ''){
-                                $styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
-                            }else{
-                                $styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
-                            }
-                        }else{
-                            $styleSetting = 'style="background:none!important; padding:0px!important;"';
-                        }
-                @endif
-                        <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
-                            <div class="top_div">
-                                <a href="javascript:void(0);" class="showReviewPopup" review-id="{{ $reviewId }}">
-                                    <img src="{{ $imagePath }}" class="" alt="">
-                                </a>
-                            </div>
-                            <div class="img_overlay showReviewPopup" review-id="{{ $reviewId }}">SHOP THE LOOK</div>
-                        </div>
-                        @if($key == 1)
-                            <div class="clearfix"></div>
-                        @endif
+        <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">
+            <div class="middle previewWidgetBox">
                 @php
-                        }
+                    if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
+                        foreach($reviewIDArray as $key=>$reviewId){
+                            if($key <= 3){
+                            $reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
+                            $reviewImageArray = unserialize($reviewData[0]->media_url);
+                            $imageUrl = $reviewImageArray[0]['media_url'];
+                            $cropedImageUrl = $reviewData[0]->croped_image_url;
+
+                            if($cropedImageUrl == ''){
+                                $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
+                            }else{
+                                $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
+                            }
+
+                            if($widgetBgcolor == 1){
+                                if($galleryData->bg_color_type == ''){
+                                    $styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
+                                }else{
+                                    $styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
+                                }
+                            }else{
+                                $styleSetting = 'style="background:none!important; padding:0px!important;"';
+                            }
+                @endphp
+                <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
+                    <div class="top_div">
+                        <a href="javascript:void(0);" class="showReviewPopup" review-id="{{ $reviewId }}">
+                            <img src="{{ $imagePath }}" class="" alt="">
+                        </a>
+                    </div>
+                    <div class="img_overlay showReviewPopup" review-id="{{ $reviewId }}">SHOP THE LOOK</div>
+                </div>
+                @if($key == 1)
+                    <div class="clearfix"></div>
+                @endif
+                @php
+                    }
+                   }
+                }
+                @endphp
+
+                @for($i = count($reviewIDArray); $i < 4; $i++)
+                    <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
+                        <div class="top_div">
+                            <a href="javascript:void(0);" class="showNotFoundPopup">
+                                <img src="{{ base_url() }}/assets/images/temp_prev9.png" class="" alt="">
+                            </a>
+                        </div>
+                        <div class="img_overlay showNotFoundPopup">SELECT IMAGE</div>
+                    </div>
+                @endfor
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="footer_div">
+            <div class="left"><img src="{{ base_url() }}assets/images/widget/ask-icon.png"> Powered by BrandBoost</div>
+            <div class="right reviewRatingsBH {{ $allowRating != '0' ? '' : 'hidden' }}">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
+        </div>
+
+
+    @elseif($galleryDesign == 'horizontal')
+        <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">
+            <div class="middle previewWidgetBox">
+                @php
+                    if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
+                        foreach($reviewIDArray as $key=>$reviewId){
+                            if($key <= 5){
+                            $reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
+                            $reviewImageArray = unserialize($reviewData[0]->media_url);
+                            $imageUrl = $reviewImageArray[0]['media_url'];
+                            $cropedImageUrl = $reviewData[0]->croped_image_url;
+
+                            if($cropedImageUrl == ''){
+                                $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
+                            }else{
+                                $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
+                            }
+
+                            if($widgetBgcolor == 1){
+                                if($galleryData->bg_color_type == ''){
+                                    $styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
+                                }else{
+                                    $styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
+                                }
+                            }else{
+                                $styleSetting = 'style="background:none!important; padding:0px!important;"';
+                            }
+                @endphp
+                <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
+                    <div class="top_div">
+                        <a href="javascript:void(0);" class="showReviewPopup" review-id="{{ $reviewId }}">
+                            <img src="{{ $imagePath }}" class="" alt="">
+                        </a>
+                    </div>
+                    <div class="img_overlay showReviewPopup" review-id="{{ $reviewId }}">SHOP THE LOOK</div>
+                </div>
+                @if($key == 2)
+                    <div class="clearfix"></div>
+                @endif
+                @php
                     }
                 }
-            @endphp
-
-            @for($i = count($reviewIDArray); $i < 4; $i++)
-                <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
-                    <div class="top_div">
-                        <a href="javascript:void(0);" class="showNotFoundPopup">
-                            <img src="{{ base_url() }}/assets/images/temp_prev9.png" class="" alt="">
-                        </a>
-                    </div>
-                    <div class="img_overlay showNotFoundPopup">SELECT IMAGE</div>
-                </div>
-            @endfor
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="footer_div">
-        <div class="left"><img src="{{ base_url() }}assets/images/widget/ask-icon.png"> Powered by BrandBoost</div>
-        <div class="right reviewRatingsBH {{ $allowRating != '0' ? '' : 'hidden' }}">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
-    </div>
-    @elseif($galleryDesign == 'horizontal')
-    <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">
-        <div class="middle previewWidgetBox">
-            @php
-                if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
-                    foreach($reviewIDArray as $key=>$reviewId){
-                        if($key <= 5){
-                        $reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
-                        $reviewImageArray = unserialize($reviewData[0]->media_url);
-                        $imageUrl = $reviewImageArray[0]['media_url'];
-                        $cropedImageUrl = $reviewData[0]->croped_image_url;
-
-                        if($cropedImageUrl == ''){
-                            $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
-                        }else{
-                            $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
-                        }
-
-                        if($widgetBgcolor == 1){
-                            if($galleryData->bg_color_type == ''){
-                                $styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
-                            }else{
-                                $styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
-                            }
-                        }else{
-                            $styleSetting = 'style="background:none!important; padding:0px!important;"';
-                        }
-            @endphp
-            <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
-                <div class="top_div">
-                    <a href="javascript:void(0);" class="showReviewPopup" review-id="{{ $reviewId }}">
-                        <img src="{{ $imagePath }}" class="" alt="">
-                    </a>
-                </div>
-                <div class="img_overlay showReviewPopup" review-id="{{ $reviewId }}">SHOP THE LOOK</div>
-            </div>
-            @if($key == 2)
-                <div class="clearfix"></div>
-            @endif
-            @php
-                }
             }
-        }
-            @endphp
+                @endphp
 
-            @for($i = count($reviewIDArray); $i < 6; $i++)
-                <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
-                    <div class="top_div">
-                        <a href="javascript:void(0);" class="showNotFoundPopup">
-                            <img src="{{ base_url() }}/assets/images/temp_prev9.png" class="" alt="">
-                        </a>
+                @for($i = count($reviewIDArray); $i < 6; $i++)
+                    <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
+                        <div class="top_div">
+                            <a href="javascript:void(0);" class="showNotFoundPopup">
+                                <img src="{{ base_url() }}/assets/images/temp_prev9.png" class="" alt="">
+                            </a>
+                        </div>
+                        <div class="img_overlay showNotFoundPopup">SELECT IMAGE</div>
                     </div>
-                    <div class="img_overlay showNotFoundPopup">SELECT IMAGE</div>
-                </div>
-            @endfor
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="footer_div">
-        <div class="left"><img src="{{ base_url() }}assets/images/widget/ask-icon.png"> Powered by BrandBoost</div>
-        <div class="right reviewRatingsBH {{ $allowRating != '0' ? '' : 'hidden' }}">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
-    </div>
-    @elseif($galleryDesign == 'vertical')
-    <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow endif">
-        <div class="middle previewWidgetBox">
-            @php
-                if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){
-                    foreach($reviewIDArray as $key=>$reviewId){
-                        if($key <= 5){
-                        $reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);
-                        $reviewImageArray = unserialize($reviewData[0]->media_url);
-                        $imageUrl = $reviewImageArray[0]['media_url'];
-                        $cropedImageUrl = $reviewData[0]->croped_image_url;
-
-                        if($cropedImageUrl == ''){
-                            $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;
-                        }else{
-                            $imagePath = "data:image/jpg;base64,".$cropedImageUrl;
-                        }
-
-                        if($widgetBgcolor == 1){
-                            if($galleryData->bg_color_type == ''){
-                                $styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';
-                            }else{
-                                $styleSetting = 'style="padding:'.$borderThickness.'px!important;"';
-                            }
-                        }else{
-                            $styleSetting = 'style="background:none!important; padding:0px!important;"';
-                        }
-            @endphp
-            <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
-                <div class="top_div">
-                    <a href="javascript:void(0);" class="showReviewPopup" review-id="{{ $reviewId }}">
-                        <img src="{{ $imagePath }}" class="" alt="">
-                    </a>
-                </div>
-                <div class="img_overlay showReviewPopup" review-id="{{ $reviewId }}">SHOP THE LOOK</div>
+                @endfor
             </div>
-            @if($key == 1 || $key == 3)
-                <div class="clearfix"></div>
-            @endif
-
-            @php
-                }
-            }
-        }
-            @endphp
-
-            @for($i = count($reviewIDArray); $i < 6; $i++)
-                <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>
-                    <div class="top_div">
-                        <a href="javascript:void(0);" class="showNotFoundPopup">
-                            <img src="{{ base_url() }}/assets/images/temp_prev9.png" class="" alt="">
-                        </a>
-                    </div>
-                    <div class="img_overlay showNotFoundPopup">SELECT IMAGE</div>
-                </div>
-            @endfor
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="footer_div">
-        <div class="left"><img src="{{ base_url() }}assets/images/widget/ask-icon.png"> Powered by BrandBoost</div>
-        <div class="right reviewRatingsBH {{ $allowRating != '0' ? '' : 'hidden' }}">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
-            <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
-    </div>
-    @endif
-</div>
+        <div class="clearfix"></div>
+        <div class="footer_div">
+            <div class="left"><img src="{{ base_url() }}assets/images/widget/ask-icon.png"> Powered by BrandBoost</div>
+            <div class="right reviewRatingsBH {{ $allowRating != '0' ? '' : 'hidden' }}">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">
+                <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>
+        </div>
+
+{{--    @elseif($galleryDesign == 'vertical')--}}
+{{--        <div class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow endif">--}}
+{{--            <div class="middle previewWidgetBox">--}}
+{{--                @php--}}
+{{--                    if(count($reviewIDArray) > 0 && $reviewIDArray[0] > 0){--}}
+{{--                        foreach($reviewIDArray as $key=>$reviewId){--}}
+{{--                            if($key <= 5){--}}
+{{--                            $reviewData = \App\Models\ReviewsModel::getReviewDetailsByReviewID($reviewId);--}}
+{{--                            $reviewImageArray = unserialize($reviewData[0]->media_url);--}}
+{{--                            $imageUrl = $reviewImageArray[0]['media_url'];--}}
+{{--                            $cropedImageUrl = $reviewData[0]->croped_image_url;--}}
+{{--    --}}
+{{--                            if($cropedImageUrl == ''){--}}
+{{--                                $imagePath = "https://s3-us-west-2.amazonaws.com/brandboost.io/".$imageUrl;--}}
+{{--                            }else{--}}
+{{--                                $imagePath = "data:image/jpg;base64,".$cropedImageUrl;--}}
+{{--                            }--}}
+{{--    --}}
+{{--                            if($widgetBgcolor == 1){--}}
+{{--                                if($galleryData->bg_color_type == ''){--}}
+{{--                                    $styleSetting = $galleryData->solid_color == '' ? 'style="background:#FF0000!important"' : 'style="background:' . $galleryData->solid_color . '!important; padding:'.$borderThickness.'px!important;"';--}}
+{{--                                }else{--}}
+{{--                                    $styleSetting = 'style="padding:'.$borderThickness.'px!important;"';--}}
+{{--                                }--}}
+{{--                            }else{--}}
+{{--                                $styleSetting = 'style="background:none!important; padding:0px!important;"';--}}
+{{--                            }--}}
+{{--                @endphp--}}
+{{--                <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>--}}
+{{--                    <div class="top_div">--}}
+{{--                        <a href="javascript:void(0);" class="showReviewPopup" review-id="{{ $reviewId }}">--}}
+{{--                            <img src="{{ $imagePath }}" class="" alt="">--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="img_overlay showReviewPopup" review-id="{{ $reviewId }}">SHOP THE LOOK</div>--}}
+{{--                </div>--}}
+{{--                @if($key == 1 || $key == 3)--}}
+{{--                    <div class="clearfix"></div>--}}
+{{--                @endif--}}
+
+{{--                @php--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            }--}}
+{{--                @endphp--}}
+
+{{--                @for($i = count($reviewIDArray); $i < 6; $i++)--}}
+{{--                    <div class="box_1 sliderImage {{ 'bbw_'.$gradientColor.'_color' }}" {{ $styleSetting }}>--}}
+{{--                        <div class="top_div">--}}
+{{--                            <a href="javascript:void(0);" class="showNotFoundPopup">--}}
+{{--                                <img src="{{ base_url() }}/assets/images/temp_prev9.png" class="" alt="">--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                        <div class="img_overlay showNotFoundPopup">SELECT IMAGE</div>--}}
+{{--                    </div>--}}
+{{--                @endfor--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="clearfix"></div>--}}
+{{--        <div class="footer_div">--}}
+{{--            <div class="left"><img src="{{ base_url() }}assets/images/widget/ask-icon.png"> Powered by BrandBoost</div>--}}
+{{--            <div class="right reviewRatingsBH {{ $allowRating != '0' ? '' : 'hidden' }}">--}}
+{{--                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">--}}
+{{--                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">--}}
+{{--                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">--}}
+{{--                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">--}}
+{{--                <img src="{{ base_url() }}assets/images/widget/yellow_icon.png">--}}
+{{--                <span> &nbsp; {{ count($reviewIDArray) }} Reviews</span></div>--}}
+{{--        </div>--}}
+
+@endif
