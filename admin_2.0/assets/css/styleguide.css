@@ -71,6 +71,7 @@ Misc
 .min_h_185{min-height: 185px;}
 .min_h_240{min-height: 240px;}
 .min_h_275{min-height: 275px;}
+.min_h_600{min-height: 600px;}
 .min_w_96{ min-width:96px;}
 .badge.badge-grey{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
 .badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
@@ -185,7 +186,7 @@ TABLES STYLES
 .table.table-borderless{margin: 0!important}
 .table.table-borderless tbody tr{border-bottom: 1px solid #edf1fb; /*box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);*/}
 .table.table-borderless tbody tr:last-child{border: none!important; }
-.table.table-borderless tbody tr td{background: #fff;  color: #56627F!important; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; }
+.table.table-borderless tbody tr td{background: #fff;  color: #56627F!important; font-size: 14px; font-weight: 400; vertical-align: middle;border: none; padding: 16px 12px; line-height: 24px; }
 .table.table-borderless tbody tr.headings td{padding: 10px 12px}
 .table.table-borderless tbody tr.headings td span{font-weight: 500;font-size: 10px!important;letter-spacing: 0.06em;text-transform: uppercase;color: #7B89A6!important;}
 .table.table-borderless.big tbody tr td{padding: 24px 12px; }
@@ -239,6 +240,11 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .status_icon:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
 .circle_icon_24{width: 24px; height: 24px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; text-align: center; line-height: 22px; font-weight: 500;
 font-size: 12px;letter-spacing: 0.02em;color: #FFFFFF; text-transform: uppercase}
+
+
+[class^="ri-"], [class*=" ri-"] {
+	vertical-align: bottom!important
+}
 
 
 
@@ -468,7 +474,7 @@ COLOR CLASSES
 .dark_200{color: #7B89A6!important}
 .dark_300{color: #687693}
 .dark_400{color: #56627F}
-.dark_500{color: #445069}
+.dark_500{color: #445069!important}
 .dark_600{color: #333D54!important}
 .dark_700{color: #242B3D}
 .dark_800{color: #151A25}
@@ -498,7 +504,7 @@ COLOR CLASSES
 .reviews_100{color: #C6CAFC}
 .reviews_200{color: #AFB4FA}
 .reviews_300{color: #9AA1F9}
-.reviews_400{color: #818AE6}
+.reviews_400{color: #818AE6!important}
 .reviews_500{color: #5F67C7}
 
 
@@ -669,7 +675,9 @@ FONT SIZE CLASSES
 .fsize18{font-size: 18px!important;}
 .fsize19{font-size: 19px!important;}
 .fsize20{font-size: 20px!important;}
+.fsize22{font-size: 22px!important;}
 .fsize24{font-size: 24px!important;}
+.fsize26{font-size: 26px!important;}
 .fsize28{font-size: 28px!important;}
 
 /*******************************
@@ -894,6 +902,9 @@ Line Height CLASSES
 .lh_22{line-height: 22px!important;}
 .lh_24{line-height: 24px!important;}
 .lh_26{line-height: 26px!important;}
+.lh_28{line-height: 28px!important;}
+.lh_30{line-height: 30px!important;}
+.lh_32{line-height: 32px!important;}
 
 
 .ls_4{letter-spacing: 0.04em!important;}

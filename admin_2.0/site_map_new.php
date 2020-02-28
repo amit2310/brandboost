@@ -71,7 +71,7 @@
      		<h3 class="htxt_bold_16 reviews_400">Reviews</h3>
      		<hr>
      		<ul>
-				<li><a target="_blank" href="review_feed_new1.php"><strike>Review Feed 1</strike></a></li>
+				<li><a target="_blank" href="review_feed_new1.php">Review Feed 1</a> &nbsp; &nbsp; <small style="font-style: italic">Last Updated on 28th Feb 2020</small></li>
      			<li><a target="_blank" href="review_feed_new2.php">Review Feed 2</a></li>
      			<li><a target="_blank" href="review_request_new1.php">Review Request 1</a></li>
      			<li><a target="_blank" href="review_request_new2.php">Review Request 2 </a></li>
@@ -80,11 +80,9 @@
      			<li><a target="_blank" href="review_campaign_new1.php">Review Campaign 1</a></li>
      			<li><a target="_blank" href="review_campaign_new2.php">Review Campaign 2</a></li>
      			<li><a target="_blank" href="review_campaign_new3.php">Review Campaign 3</a></li>
-     			<li><a target="_blank" href="review_overview.php"><strike>Review Overview</strike></a></li>
+     			<li><a target="_blank" href="review_overview.php"><strike>Review Overview</strike></a> &nbsp; &nbsp; <small style="font-style: italic">Working Not Finished</small></li>
      		</ul>
      		</div>
-     		
-     		
      		<div class="card min-h-280">
      		<h3 class="htxt_bold_16 reviews_400">People Lists</h3>
      		<hr>
