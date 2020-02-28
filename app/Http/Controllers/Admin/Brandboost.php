@@ -191,6 +191,21 @@ class Brandboost extends Controller
             $data->revCount = getCampaignReviewCount($data->id);
             $data->revRA = getCampaignReviewRA($data->id) != '' ? getCampaignReviewRA($data->id) : '';
             $data->allSubscribers = ListsModel::getAllSubscribersList($data->id);
+
+            $data->reviewRequests = $mBrandboost->getReviewRequest($data->id, '');
+            $data->reviewRequestsCount = count($data->reviewRequests);
+            $data->reviewRequestsCountFormat = number_format(count($data->reviewRequests));
+            $data->reviewRequestsCountK = (int)(count($data->reviewRequests)/1000);
+            $data->getSendRequestSms = getSendRequest($data->id, 'sms');
+            $data->getSendRequestEmail = getSendRequest($data->id, 'email');
+
+            $data->reviewResponse = $mBrandboost->getReviewRequestResponse($data->id);
+            $data->reviewResponseCount = count($data->reviewResponse);
+
+            $data->reviewResponsePercent = 0;
+            if($data->reviewRequestsCount > 0) {
+                $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
+            }
         }
 
         $moduleName = 'brandboost-onsite';
