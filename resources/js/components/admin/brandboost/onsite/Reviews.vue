@@ -179,7 +179,7 @@
                                 </p>
 
                                 <div class="reply_sec_link">
-                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
 
@@ -245,6 +245,19 @@
                                 <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
                                     <h3 class="htxt_medium_24 dark_800 mt20">Review </h3>
                                     <hr>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="replyCommentBox">
+                                        <div class="mt10 mb10">
+                                            <textarea name="comment_content" class="form-control comment_content" style="padding: 15px; height: 75px; border:1px solid #eee" placeholder="Comment Reply..." required></textarea>
+                                        </div>
+                                        <div class="text-right">
+                                            <input name="reviweId" class="reviweId" value="" type="hidden">
+                                            <input name="parent_comment_id" class="parent_comment_id" value="" type="hidden">
+                                            <button style="width: 128px;" type="button" class="btn dark_btn addSmartReplyComment"> Reply</button>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

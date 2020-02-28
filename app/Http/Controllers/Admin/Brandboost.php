@@ -180,6 +180,7 @@ class Brandboost extends Controller
 
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
+        $mReviews = new ReviewsModel();
 
         if ($user_role == 1) {
             $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy);
@@ -206,6 +207,8 @@ class Brandboost extends Controller
             if($data->reviewRequestsCount > 0) {
                 $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
             }
+
+            $data->reviewCommentsData = $mReviews->getReviewAllComments($data->reviewid, 0, 5);
         }
 
         $moduleName = 'brandboost-onsite';
