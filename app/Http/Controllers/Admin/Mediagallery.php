@@ -100,6 +100,29 @@ class Mediagallery extends Controller {
         echo json_encode($response);
         exit;
     }
+/**
+     * Used to update galley status
+     * @return type
+     */
+	public function updateSingleField(Request $request) {
+
+        $galleryId = $request->gallery_id;
+        $fieldName = $request->fieldName;
+        $fieldVal = $request->fieldVal;
+
+		$aData = array(
+            $fieldName => $fieldVal
+        );
+
+        $result = MediaModel::updateGallery($galleryId, $aData);
+
+		if($result){
+            $response = array('status' => 'success');
+		}
+
+        echo json_encode($response);
+        exit;
+    }
 
     /**
      * Used to get Media Widget Info
@@ -140,6 +163,57 @@ class Mediagallery extends Controller {
         $description = $request->description;
 
         $galleryId = $request->editGalleryId;
+        $galleryName = (!empty($title) ? $title : $request->editGalleryName);
+        $description = (!empty($description) ? $description : '');
+
+		$aData = array(
+            'name' => $galleryName,
+            'description' => $description,
+        );
+
+        $result = MediaModel::updateGallery($galleryId, $aData);
+
+		if($result){
+            $response = array('gallery_id' => $galleryId, 'status' => 'success');
+
+			$notificationData = array(
+				'event_type' => 'update_gallery_data',
+				'event_id' => 0,
+				'link' => base_url() . 'admin/mediagallery/setup/' . $galleryId,
+				'message' => 'Update gallery data.',
+				'user_id' => $userID,
+				'status' => 1,
+				'created' => date("Y-m-d H:i:s")
+			);
+
+			$eventName = 'sys_gallery_update';
+
+			add_notifications($notificationData, $eventName, $userID);
+		}
+
+        echo json_encode($response);
+        exit;
+    }
+	/**
+     * Used to update galley data
+     * @return type
+     */
+	public function updateMediaWidget(Request $request) {
+
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $validatedData = $request->validate([
+            'name' => ['required'],
+//            'description' => ['required']
+        ]);
+
+        $title = $request->name;
+        $description = $request->description;
+
+        $galleryId = $request->id;
         $galleryName = (!empty($title) ? $title : $request->editGalleryName);
         $description = (!empty($description) ? $description : '');
 
@@ -310,12 +384,18 @@ class Mediagallery extends Controller {
         $userId = $aUser->id;
 		$galleryData = MediaModel::getGalleryData($galleryId);
 		$reviewsData = ReviewsModel::getAllReviewsByUserId($userId);
+
+        //$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
+        $sliderData = view('admin.media-gallery.preview', array('galleryData' => $galleryData))->render();
+
         $response= array(
+            'status' => 'success',
             'title' => 'Media Gallery',
             'breadcrumb' => $aBreadcrumb,
             'galleryData' => $galleryData,
             'reviewsData' => $reviewsData,
-            "setupPreview"=>'setupPreview'
+            "setupPreview"=> utf8_encode($sliderData),
+            "sliderView"=> utf8_encode($sliderData)
         );
         echo json_encode($response);
         exit;
