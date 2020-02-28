@@ -446,7 +446,7 @@ class UsersModel extends Model {
                 }
 
                 $output .= '</td>
-                        
+
                         <td class="text-center">
                             <ul class="icons-list">';
                 if ($inc > 5) {
@@ -454,7 +454,7 @@ class UsersModel extends Model {
                 } else {
                     $output .= '  <li class="dropdown">';
                 }
-                $output .= ' 
+                $output .= '
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-right">';
 
@@ -662,12 +662,21 @@ class UsersModel extends Model {
      * @return type
      */
     public static function getSubscriberInfo($id) {
+        $aData = DB::table('tbl_brandboost_campaign_users')
+                        ->select('tbl_subscribers.*')
+                        ->leftJoin('tbl_subscribers', 'tbl_brandboost_campaign_users.subscriber_id', '=', 'tbl_subscribers.id')
+                        ->where('tbl_brandboost_campaign_users.id', $id)->get();
+        return $aData;
+    }
+
+    public static function getSubscriberInfoOLD($id) {
         $aData = DB::table('tbl_brandboost_users')
                         ->select('tbl_subscribers.*')
                         ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=', 'tbl_subscribers.id')
                         ->where('tbl_brandboost_users.id', $id)->get();
         return $aData;
     }
+
 
     public function checkUserProduct($userID, $productID) {
         $response = 0;
