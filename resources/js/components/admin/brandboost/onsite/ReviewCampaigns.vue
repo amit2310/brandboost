@@ -50,7 +50,7 @@
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a></li>
-                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -91,9 +91,9 @@
                             <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 3" @click="setupBroadcast(campaign.id)">ARCHIVE</p>
                             <div class="p15 pt15 btop" @click="setupBroadcast(campaign.id)">
                                 <ul class="workflow_list">
-                                    <li><a href="#"><span><img src="assets/images/send-plane-line.svg"></span> 3k</a></li>
-                                    <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> 28%</a></li>
-                                    <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> 67%</a></li>
+                                    <li><a href="#"><span><img src="assets/images/send-plane-line.svg"></span> {{ campaign.reviewRequestsCountK }}k</a></li>
+                                    <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                    <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -155,9 +155,9 @@
                                         </a>-->
                                     </td>
                                     <td><img src="assets/images/share-circle-line.svg"> &nbsp; {{capitalizeFirstLetter(campaign.review_type)}} Review Requests</td>
-                                    <td>1,238</td>
-                                    <td>59%</td>
-                                    <td>90%</td>
+                                    <td>{{ campaign.reviewRequestsCountFormat }}</td>
+                                    <td>{{ campaign.reviewResponsePercent }}%</td>
+                                    <td>{{ campaign.reviewResponsePercent }}%</td>
                                     <td>
                                         <span v-if="campaign.revRA != ''" class="mr-2">
                                             <img v-if="campaign.revRA >= '3'" src="assets/images/emojie-eye-face-l.svg">
