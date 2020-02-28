@@ -373,7 +373,7 @@
 													<div class="star_bx starRate">
 														@for($inc = 1; $inc <= 5; $inc++)
 															<i data-value='{{ $inc }}' containerclass="serviceRatingValue_{{ $productData->id }}" class="fa fa-star fav_gry {{ $inc <= $reviewRating ? 'selected' : '' }}"></i>
-														@foreach
+														@endfor
 														<div class="rat_num">{{ $reviewRating }}/5</div>
 													</div>
 												</div>
