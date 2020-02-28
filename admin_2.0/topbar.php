@@ -44,8 +44,8 @@
     </ul>
     <!--end topbar-nav-->
     <ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">
-      <!--<li class="mr-2"><a class="button-menu-mobile-new" href="#"><i class="ri-menu-2-line float-left" style="margin-top: 1px;"></i></a></li>-->
-      <li><a href="#"><img src="assets/images/chevron-left.svg"/>&nbsp;List</a></li>
+      <li class="mr-3"><a class="button-menu-mobile-new" href="#"><i class="ri-menu-2-line float-left" style="margin-top: 1px;"></i></a></li>
+      <li><a href="#"><i class="ri-arrow-right-s-line fsize20"></i> List</a></li>
     </ul>
     <div class="clearfix"></div>
     </div>
@@ -60,3 +60,17 @@
     
   </nav>
   </div>
+  
+ 
+
+
+
+
+
+
+
+<div class="mini_chat">
+	<div class="nav_dot">
+		<i class="ri-more-fill"></i>
+	</div>
+</div>

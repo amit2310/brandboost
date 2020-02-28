@@ -895,7 +895,7 @@ color: #7B89A6;
 	margin-left: 2px
 }
 .navbar-custom {
-	padding: 12px 75px 4px;
+	padding: 12px 112px 4px 43px;
 	margin-left:0px;
 	position: relative;
 	-webkit-transition: .3s;
@@ -905,9 +905,11 @@ color: #7B89A6;
 }
 .top-breadcrumb li a{ font-size: 14px; line-height: 120%; color: #97A4BD; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em;}
 .top-breadcrumb li img{float:left; margin:1px 0 0 0!important}
+.top-breadcrumb li i{float:left; margin:1px 0 0 0!important}
 #ReviewSection .top-breadcrumb li a{color: #6672E8}
 
-.top-bar-top-section{padding: 25px 64px 0px; height: 63px }
+.top-bar-top-section{padding: 20px 100px 0px 34px; height: 54px }
+.top-bar-top-section h3{margin-top: 3px}
 .top-bar-top-section.bbot{border: none!important}
 .top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; text-transform: uppercase; font-weight: 400!important; line-height: 32px; padding: 0 15px 0 10px!important; letter-spacing: 0.04em; }
 .top-bar-top-section span.float-left{display: none!important}
@@ -1282,10 +1284,10 @@ color:#7989b4
 .square{width: 100px; height: 100px; border-radius: 7px; display: inline-block; margin-bottom: 25px;}
 
 
-.content-area{padding: 28px 64px; position:relative; }
+.content-area{padding: 28px 100px 28px 35px; position:relative; }
 .content-area hr{border-color: #f0f1f4!important}
 @media only screen and (max-width:1400px){
-	.content-area{padding: 30px; position:relative; }
+	.content-area{position:relative; }
 }
 
 /********************
@@ -1499,6 +1501,9 @@ PAGE WITH SIDEBAR CSS
 .ratings .icon-star-full2{font-size: 12px; margin-right: 1px; color: #9faecb;} 
 .ratings p{margin: 0; color: #8b9ab9;}
 .ratings .inner{margin-bottom:0px;}
+.ratings .inner .star_sec{width: 50px!important; max-width: 50px!important;}
+.ratings .inner .progress_sec{width: calc(100% - 100px);}
+
 .ratings .progress{height: 6px!important; margin-top: 8px;background: #fff;}
 .progress-bar-info {	background-color: #B4C0D4;	border-radius: 1.5px;}
 
@@ -3714,3 +3719,25 @@ Live Chat Messangers
 .chat_dropdown li strong a.active{color: #3680dc}
 .chat_dropdown li strong a.active:after{color: #3680dc; position: absolute; right: 0; top: 0; content: "\ed6c" ; font-family: 'icomoon'; font-size: 9px;}
 .chat_dropdown li strong a:hover{color: #3680dc}
+
+
+
+
+
+
+.mini_chat {
+	position: fixed;
+	background: #fff;
+	width: 64px;
+	right: 0;
+	top: 0;
+	height: 100vh;
+	box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04);
+}
+.mini_chat .nav_dot{border-bottom: 1px solid #eff3fc; width: 100%; height: 57px; line-height: 55px; text-align: center; }
+.mini_chat .nav_dot i{color: #B4C0D4; font-size: 20px;}
+
+
+
+
+
