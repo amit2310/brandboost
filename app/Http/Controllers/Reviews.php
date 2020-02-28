@@ -666,6 +666,7 @@ class Reviews extends Controller {
             $aSubscriber = $mUser->getSubscriberInfo($subscriberID);
             $uSubscribers = $rLists->getSubscribersListUser($subscriberID);
             $getBrandboost = $mBrandboost->getBrandboost($campaignID);
+            $aBB = !(empty($getBrandboost))? $getBrandboost->items() : [];
             $productsData = $mBrandboost->getProductDataByType($campaignID, 'product');
             $servicesData = $mBrandboost->getProductDataByType($campaignID, 'service');
             $uniqueID = uniqid() . date('Ymdhis');
@@ -679,7 +680,7 @@ class Reviews extends Controller {
                 'productsData' => $productsData,
                 'servicesData' => $servicesData,
                 'uSubscribers' => $uSubscribers,
-                'brandboostdetail' => $getBrandboost[0],
+                'brandboostdetail' => $aBB[0],
                 'rRating' => $rRating,
                 'action' => $action
             );
