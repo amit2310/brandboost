@@ -698,34 +698,42 @@ class Reviews extends Controller {
     */
     public function submitOnsiteReview(Request $request) {
         $response = array();
-        $mReviews = new ReviewsModel();
-        $mInviter = new BrandboostModel();
-        $reviewUniqueID = $request->reviewUniqueID;
-        $campaignID = $request->campaign_id;
-        if ($reviewUniqueID != '') {
-            $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
-            pre($reviewDetails);
-            $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
-            $aBrandboost = $mInviter->getBBInfo($campaignID);
-            $clientID = $aBrandboost->user_id;
-            //Send Thank you email
-            $aReviewRes = array(
-                'client_id' => $clientID,
-                'brandboost_id' => $campaignID,
-                'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
-                'siteReviewDetails' => $siteReviewDetails,
-                'reviewDetails' => $reviewDetails
-            );
+        try {
+            $mReviews = new ReviewsModel();
+            $mInviter = new BrandboostModel();
+            $reviewUniqueID = $request->reviewUniqueID;
+            $campaignID = $request->campaign_id;
+            if ($reviewUniqueID != '') {
+                $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
+                pre($reviewDetails);
+                $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
+                $aBrandboost = $mInviter->getBBInfo($campaignID);
+                $clientID = $aBrandboost->user_id;
+                //Send Thank you email
+                $aReviewRes = array(
+                    'client_id' => $clientID,
+                    'brandboost_id' => $campaignID,
+                    'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
+                    'siteReviewDetails' => $siteReviewDetails,
+                    'reviewDetails' => $reviewDetails
+                );
 
-            //pre($aReviewRes);
+                //pre($aReviewRes);
 
-            $this->sendReviewThankyouEmail($aReviewRes);
-            $response = array('status' => 'success');
-        } else {
+                $this->sendReviewThankyouEmail($aReviewRes);
+                $response = array('status' => 'success');
+            } else {
+                $response = array('status' => 'error');
+            }
+            echo json_encode($response);
+            exit;
+        } catch (\Exception $e) {
+            //return $e->getMessage();
             $response = array('status' => 'error');
+            echo json_encode($response);
+            exit;
         }
-        echo json_encode($response);
-        exit;
+
     }
 
     public function sendReviewThankyouEmail($aData) {
