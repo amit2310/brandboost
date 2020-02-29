@@ -468,6 +468,8 @@
             $totalRatingReview = !empty($totalRatingReview) ? $totalRatingReview : 0;
             $faQDataRow = !empty($faQDataRow) ? $faQDataRow : [];
             $uSubscribers  = !empty($uSubscribers) ? $uSubscribers : [];
+            $count  = !empty($count) ? $count : 0;
+
 
 			if (!empty($oCampaign)) {
 				//permissions
