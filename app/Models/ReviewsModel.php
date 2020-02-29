@@ -166,7 +166,7 @@ class ReviewsModel extends Model {
                 ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
                 ->leftJoin('tbl_subscribers', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
-                ->where('tbl_reviews.status', 1)
+                /*->where('tbl_reviews.status', 1)*/
                 ->when(!empty($campaignID), function ($query) use ($campaignID) {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
                 })
@@ -662,6 +662,7 @@ class ReviewsModel extends Model {
      * @return type
      */
     public function getReviewsByProductType($campaignID, $aSettings = array(), $productType='product') {
+        //DB::enableQueryLog();
         $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
 
         $aData =  DB::table('tbl_reviews')
@@ -682,6 +683,7 @@ class ReviewsModel extends Model {
 			})
 
 			->orderBy("tbl_reviews.id", "DESC")->get();
+        //dd(DB::getQueryLog());
 
         return $aData;
     }

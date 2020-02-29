@@ -468,6 +468,8 @@
             $totalRatingReview = !empty($totalRatingReview) ? $totalRatingReview : 0;
             $faQDataRow = !empty($faQDataRow) ? $faQDataRow : [];
             $uSubscribers  = !empty($uSubscribers) ? $uSubscribers : [];
+            $count  = !empty($count) ? $count : 0;
+
 
 			if (!empty($oCampaign)) {
 				//permissions
@@ -999,7 +1001,7 @@
 											<div class="p20 bbot pl30">
 												<div class="media-left media-middle"> <!-- <i class="fa fa-circle circle txt_green"></i> --> <a class="icons" style="cursor: pointer;"><img src="{{ $profileImg }}" class="img-circle img-xs" alt=""></a> </div>
 												<div class="media-left">
-													<div class="pt-5 fsize14 fw500"><span>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</span><span class="fw400 text-muted fsize14 ml-10">bought {{ $aReview['product_data']->product_name == '' ? $aReview['brand_title'] : $aReview['product_data']->product_name }}</span></div>
+													<div class="pt-5 fsize14 fw500"><span>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</span><span class="fw400 text-muted fsize14 ml-10">bought {{ isset($aReview['product_data']->product_name) ? $aReview['product_data']->product_name : $aReview['brand_title'] }}</span></div>
 
 													<div class="text-muted startRate{{ $aReview['id'] }} text-size-small hidden">
 														<p class="pull-left">
@@ -1217,7 +1219,7 @@
 											<div class="p20 bbot pl30">
 												<div class="media-left media-middle"> <!-- <i class="fa fa-circle circle txt_green"></i> --> <a class="icons" style="cursor: pointer;"><img src="{{ $profileImg }}" class="img-circle img-xs" alt=""></a> </div>
 												<div class="media-left">
-													<div class="pt-5 fsize14 fw500"><span>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</span><span class="fw400 text-muted fsize14 ml-10">bought {{ $aReview['product_data']->product_name == '' ? $aReview['brand_title'] : $aReview['product_data']->product_name }}</span></div>
+													<div class="pt-5 fsize14 fw500"><span>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</span><span class="fw400 text-muted fsize14 ml-10">bought {{ isset($aReview['product_data']->product_name) ? $aReview['product_data']->product_name : $aReview['brand_title'] }}</span></div>
 
 													<div class="text-muted startRate{{ $aReview['id'] }} text-size-small hidden">
 														<p class="pull-left">
@@ -1371,7 +1373,7 @@
 											<div class="p20 bbot pl30">
 												<div class="media-left media-middle"> <!-- <i class="fa fa-circle circle txt_green"></i> --> <a class="icons" style="cursor: pointer;"><img src="{{ $profileImg }}" class="img-circle img-xs" alt=""></a> </div>
 												<div class="media-left">
-													<div class="pt-5 fsize14 fw500"><span>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</span><span class="fw400 text-muted fsize14 ml-10">service {{ $aReview['product_data']->product_name }}</span></div>
+													<div class="pt-5 fsize14 fw500"><span>{{ $aReview['firstname'] . ' ' . $aReview['lastname'] }}</span><span class="fw400 text-muted fsize14 ml-10">service {{ isset($aReview['product_data']->product_name) ? $aReview['product_data']->product_name : '' }}</span></div>
 
 													<div class="text-muted startRate{{ $aReview['id'] }} text-size-small hidden">
 														<p class="pull-left">

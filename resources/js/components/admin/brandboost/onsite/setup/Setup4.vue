@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">
@@ -44,7 +43,6 @@
                 </div>
 
                 <onsite-reviews v-if="campaignId" :campaignId="campaignId"></onsite-reviews>
-
                 <div class="row mt40">
                     <div class="col-md-12">
                         <hr class="mb25">

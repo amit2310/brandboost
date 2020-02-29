@@ -11,6 +11,7 @@
  CSS
  **********************-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
@@ -77,9 +78,9 @@
      			<li><a target="_blank" href="review_request_new2.php">Review Request 2 </a></li>
      			<li><a target="_blank" href="review_widget_new1.php">Review Widget 1</a></li>
      			<li><a target="_blank" href="review_widget_new2.php">Review Widget 2</a></li>
-     			<li><a target="_blank" href="review_campaign_new1.php">Review Campaign 1</a></li>
-     			<li><a target="_blank" href="review_campaign_new2.php">Review Campaign 2</a></li>
-     			<li><a target="_blank" href="review_campaign_new3.php">Review Campaign 3</a></li>
+     			<li><a target="_blank" href="review_campaign_new1.php"><strike>Review Campaign 1</strike></a></li>
+     			<li><a target="_blank" href="review_campaign_new2.php"><strike>Review Campaign 2</strike></a></li>
+     			<li><a target="_blank" href="review_campaign_new3.php"><strike>Review Campaign 3</strike></a></li>
      			<li><a target="_blank" href="review_overview.php"><strike>Review Overview</strike></a> &nbsp; &nbsp; <small style="font-style: italic">Working Not Finished</small></li>
      		</ul>
      		</div>

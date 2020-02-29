@@ -91,81 +91,81 @@
       </div>
       <div class="text-center p20 pt10">
         <h3 class="lh_120 dark_700 htxt_regular_36">4.1</h3>
-        <p class="m-0 fsize14"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i> &nbsp; 33,87%</span>last month</p>
+        <p class="m-0 fsize13"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i> &nbsp; 33,87%</span>last month</p>
       </div>
       <div class="ratings">
         <ul class="ratinglist">
           <li>
             <div class="row inner">
-              <div class="col-1 pr-0 pl-0">
+              <div class="star_sec">
                 <p class="dark_500">5 <i><img src="assets/images/star-fill-12.png"> </i></p>
               </div>
-              <div class="col-10">
+              <div class="progress_sec">
                 <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
                   <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:40%"></div>
                 </div>
               </div>
-              <div class="col-1 pl-0 pr-0 text-right">
+              <div class="star_sec text-right">
                 <p>37</p>
               </div>
             </div>
           </li>
           <li>
             <div class="row inner">
-              <div class="col-1 pr-0 pl-0">
+              <div class="star_sec">
                 <p class="dark_500">4 <i><img src="assets/images/star-fill-12.png"> </i></p>
               </div>
-              <div class="col-10">
+              <div class="progress_sec">
                 <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
                   <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70" style="width:70%"></div>
                 </div>
               </div>
-              <div class="col-1 pl-0 pr-0 text-right">
+              <div class="star_sec text-right">
                 <p>57</p>
               </div>
             </div>
           </li>
           <li>
             <div class="row inner">
-              <div class="col-1 pr-0 pl-0">
+              <div class="star_sec">
                 <p class="dark_500">3 <i><img src="assets/images/star-fill-12.png"> </i></p>
               </div>
-              <div class="col-10">
+              <div class="progress_sec">
                 <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
                   <div class="progress-bar progress-bar-info bkg_yellow_400" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20" style="width:20%"></div>
                 </div>
               </div>
-              <div class="col-1 pl-0 pr-0 text-right">
+              <div class="star_sec text-right">
                 <p>5</p>
               </div>
             </div>
           </li>
           <li>
             <div class="row inner">
-              <div class="col-1 pr-0 pl-0">
+              <div class="star_sec">
                 <p class="dark_500">2 <i><img src="assets/images/star-fill-12.png"> </i></p>
               </div>
-              <div class="col-10">
+              <div class="progress_sec">
                 <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
                   <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width:80%"></div>
                 </div>
               </div>
-              <div class="col-1 pl-0 pr-0 text-right">
+              <div class="star_sec text-right">
                 <p>7</p>
               </div>
             </div>
           </li>
           <li>
             <div class="row inner">
-              <div class="col-1 pr-0 pl-0">
+              <div class="star_sec">
                 <p class="dark_500">1 <i><img src="assets/images/star-fill-12.png"> </i></p>
               </div>
-              <div class="col-10">
+              <div class="progress_sec">
                 <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
                   <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20" style="width:20%"></div>
                 </div>
               </div>
-              <div class="col-1 pl-0 pr-0 text-right">
+              <div class="star_sec text-right">
                 <p>125</p>
               </div>
             </div>
@@ -174,6 +174,7 @@
       </div>
     </div>
   </div>
+    
   <div class="col-md-4">
     <div class="card p25 pt20 animate_top">
       <div class="row">
@@ -194,11 +195,11 @@
       </div>
       <div class="p0 pt20 pb20">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7 pr-0">
             <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">1,468</h3>
-            <p class="m-0 fsize14"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>last week</p>
+            <p class="m-0 fsize13"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>last week</p>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <div class="circle-icon-52 float-right"><img src="assets/images/circle_chart.png"></div>
           </div>
         </div>
@@ -223,11 +224,11 @@
       </div>
       <div class="p0 pt20 pb20">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7 pr-0">
             <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">65</h3>
-            <p class="m-0 fsize14"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>33,87%</span>last week</p>
+            <p class="m-0 fsize13"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>33,87%</span>last week</p>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <div class="circle-icon-52 float-right"><img src="assets/images/circle_chart.png"></div>
           </div>
         </div>
@@ -254,11 +255,11 @@
       </div>
       <div class="p0 pt20 pb20">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7 pr-0">
             <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">284</h3>
-            <p class="m-0 fsize14"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>33,87%</span>last week</p>
+            <p class="m-0 fsize13"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>33,87%</span>last week</p>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <div class="circle-icon-52 float-right"><img src="assets/images/circle_chart.png"></div>
           </div>
         </div>
@@ -283,18 +284,18 @@
       </div>
       <div class="p0 pt20 pb20">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7 pr-0">
             <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">32%</h3>
-            <p class="m-0 fsize14"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>last week</p>
+            <p class="m-0 fsize13"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>last week</p>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <div class="circle-icon-52 float-right"><img src="assets/images/circle_chart.png"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+		</div>
      
      
      
@@ -522,6 +523,13 @@
   
   
 </div>
+     
+     
+     
+     
+     
+     
+     
 
      
      </div>
