@@ -166,7 +166,7 @@ class ReviewsModel extends Model {
                 ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
                 ->leftJoin('tbl_subscribers', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_reviews.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email', 'tbl_users.mobile', 'tbl_users.avatar', 'tbl_users.country', 'tbl_subscribers.id as subscriberId', 'tbl_brandboost.brand_title')
-                ->where('tbl_reviews.status', 1)
+                /*->where('tbl_reviews.status', 1)*/
                 ->when(!empty($campaignID), function ($query) use ($campaignID) {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
                 })
