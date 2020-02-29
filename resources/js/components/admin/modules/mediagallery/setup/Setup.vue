@@ -27,7 +27,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="email_config_list">
-                                <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">1</span><span
+                                <li>
+                                    <a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">1</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Configuration</a></li>
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(2)" ><span class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>
@@ -45,190 +46,222 @@
                     <div class="col-md-4">
                         <div class="email_review_config p20">
                             <div class="bbot pb10 mb15">
-                                <h2 class="fsize11 text-uppercase dark_200 m-0">
-                                <a class="fsize11 text-uppercase dark_200 m-0">Configurations</a>
-                                <a class="fsize11 text-uppercase dark_200 m-0">Design</a>
-                                <a class="fsize11 text-uppercase dark_200 m-0">Reviews</a>
+                                <h2 class="fsize11 text-uppercase dark_200 m-0 ">
+                                <a  class="fsize11 text-uppercase dark_200 m-0" href="javascript:void(0);" @click="SettingTabActive(1)">Configurations</a>
+                                <a @click="SettingTabActive(2)" class="fsize11 text-uppercase dark_200 m-0  p10" href="javascript:void(0);">Design</a>
+                                <a @click="SettingTabActive(3)" class="fsize11 text-uppercase dark_200 m-0  p10" href="javascript:void(0);">Reviews</a>
                                 </h2>
                             </div>
-                            <div class="bbot pb10 mb15">
-                                <h2 class="fsize11 text-uppercase dark_200 m-0">DESIGN
-                                    <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
-                                </h2>
-                            </div>
-                            <div class="p0">
-                                <div class="form-group">
-                                    <label class="fsize12" for="fname">Template</label>
+                            <div v-if="settingTab ==1 ">
+                                <div class="bbot pb10 mb15">
+                                    <h2 class="fsize11 text-uppercase dark_200 m-0">DESIGN
+                                        <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                    </h2>
+                                </div>
+                                <div class="p0">
+                                    <div class="form-group">
+                                        <label class="fsize13" for="fname">Template</label>
 
-                                    <button id="galleryDesignType" type="button" class="btn h52 form-control w100 js-media-widget-slidebox1" style="text-align: left; padding: 7px 23px!important;">
-                                        <span>Galley Type</span>
-                                        <i class="pull-right txt_grey">
-                                            <img src="/assets/images/icon_grid.svg">
-                                        </i>
-                                    </button>
+                                        <button id="galleryDesignType" type="button" class="btn h52 form-control w100 js-media-widget-slidebox1" style="text-align: left; padding: 7px 23px!important;">
+                                            <span>Galley Type</span>
+                                            <i class="pull-right txt_grey">
+                                                <img src="/assets/images/icon_grid.svg">
+                                            </i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="p0">
-                                <div class="form-group">
-                                    <label class="fsize12" for="fname">Widget type</label>
-                                    <select v-model="campaign.gallery_type" @change="synGalleryType($event)" class="form-control h52 autoSaveConfig" name="galleryType" id="galleryType">
-                                        <option value="3">3 Images</option>
-                                        <option value="4">4 Images</option>
-                                        <option value="5">5 Images</option>
-                                        <option value="6">6 Images</option>
-                                        <option value="7">7 Images</option>
-                                    </select>
+                                <div class="p0">
+                                    <div class="form-group">
+                                        <label class="fsize13" for="fname">Widget type</label>
+                                        <select v-model="campaign.gallery_type" @change="synGalleryType($event)" class="form-control h52 autoSaveConfig" name="galleryType" id="galleryType">
+                                            <option value="3">3 Images</option>
+                                            <option value="4">4 Images</option>
+                                            <option value="5">5 Images</option>
+                                            <option value="6">6 Images</option>
+                                            <option value="7">7 Images</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="p0">
-                                <div class="form-group">
-                                    <label class="fsize12" for="fname">Image Size</label>
-                                    <select class="form-control h52 autoSaveConfig" @change="synImageSize($event)" v-model="campaign.image_size" name="imageSize" id="imageSize">
-                                        <option value="small">Small</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="large">Large</option>
-                                    </select>
+                                <div class="p0">
+                                    <div class="form-group">
+                                        <label class="fsize13" for="fname">Image Size</label>
+                                        <select class="form-control h52 autoSaveConfig" @change="synImageSize($event)" v-model="campaign.image_size" name="imageSize" id="imageSize">
+                                            <option value="small">Small</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="large">Large</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="bbot pb10 mb15">
-                                <h2 class="fsize11 text-uppercase dark_200 m-0">COMPONENTS
-                                    <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -160px;"></i>
-                                </h2>
-                            </div>
-                            <div class="p0">
-                                <h3 class="dark_400 mb0 fsize13 fw300">Title &nbsp;
-                                    <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.allow_title" :checked="campaign.allow_title" @change="synAllowTitle($event)">
-                                        <span class="toggle email"></span> </label>
-                                </h3>
-                                <h3 class="dark_400 mb0 fsize13 fw300">Arrows &nbsp;
-                                    <label class="custom-form-switch float-right">
-                                        <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" @change="synAllowArrow($event)">
-                                        <span class="toggle email"></span> </label>
-                                </h3>
-                                <h3 class="dark_400 mb0 fsize13 fw300">Rating & reviews                                    &nbsp;
-                                    <label class="custom-form-switch float-right">
-                                        <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="synAllowRatings($event)">
-                                        <span class="toggle email"></span> </label>
-                                </h3>
-                            </div>
-                            <div class="btop bbot pb10 mb15 mt15">
-                                <h2 class="fsize11 text-uppercase dark_200 m-0">DETAILS
-                                    <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -190px"></i>
-                                </h2>
-                            </div>
-                            <div class="p0">
-                                <div class="form-group">
-                                    <label class="fsize12" for="fname">Gallery Name</label>
-                                    <input type="text" v-model="campaign.name" class="form-control h40" id="fname" placeholder="Gallery Name" name="name">
+                                <div class="bbot pb10 mb15">
+                                    <h2 class="fsize11 text-uppercase dark_200 m-0">COMPONENTS
+                                        <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -160px;"></i>
+                                    </h2>
                                 </div>
-                                <div class="form-group">
-                                    <label class="fsize12" for="Questions">Gallery Description:</label>
-                                    <textarea
-                                        rows="4"
-                                        class="form-control text"
-                                        id="Questions"
-                                        name="question"
-                                        :placeholder="`Gallery Description`"
-                                        v-model="campaign.description"
+                                <div class="p0">
+                                    <h3 class="dark_400 mb0 fsize13 fw300">Title &nbsp;
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="campaign.allow_title" :checked="campaign.allow_title" @change="synAllowTitle($event)">
+                                            <span class="toggle email"></span> </label>
+                                    </h3>
+                                    <h3 class="dark_400 mb0 fsize13 fw300">Arrows &nbsp;
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" @change="synAllowArrow($event)">
+                                            <span class="toggle email"></span> </label>
+                                    </h3>
+                                    <h3 class="dark_400 mb0 fsize13 fw300">Rating & reviews                                    &nbsp;
+                                        <label class="custom-form-switch float-right">
+                                            <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="synAllowRatings($event)">
+                                            <span class="toggle email"></span> </label>
+                                    </h3>
+                                </div>
+                                <div class="btop bbot pb10 mb15 mt15">
+                                    <h2 class="fsize11 text-uppercase dark_200 m-0">DETAILS
+                                        <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -190px"></i>
+                                    </h2>
+                                </div>
+                                <div class="p0">
+                                    <div class="form-group">
+                                        <label class="fsize13" for="fname">Gallery Name</label>
+                                        <input type="text" v-model="campaign.name" class="form-control h40" id="fname" placeholder="Gallery Name" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="fsize13" for="Questions">Gallery Description:</label>
+                                        <textarea
+                                            rows="4"
+                                            class="form-control text"
+                                            id="Questions"
+                                            name="question"
+                                            :placeholder="`Gallery Description`"
+                                            v-model="campaign.description"
 
-                                    ></textarea>
+                                        ></textarea>
+                                    </div>
                                 </div>
-<!--                                <div class="form-group">-->
-<!--                                    <label class="fsize12" for="Introduction">Introduction:</label>-->
-<!--                                    <textarea-->
-<!--                                        class="form-control text"-->
-<!--                                        rows="4"-->
-<!--                                        id="Introduction"-->
-<!--                                        placeholder="Placeholder Text"-->
-<!--                                        name="description"-->
-<!--                                        v-model="campaign.description"-->
-<!--                                        @keypress="syncIntro"-->
-<!--                                    ></textarea>-->
-<!--                                </div>-->
-<!--                                <div class="form-group">-->
-<!--                                    <input type="hidden" name="brand_logo" id="npsBrandLogo" :value="campaign.brand_logo" >-->
-<!--                                    <label class="m0 w-100" for="uploadNPSBrandLogo">-->
-<!--                                        <div class="img_vid_upload_medium">-->
-<!--                                            <input class="d-none" type="file" name="brand_logo" id="uploadNPSBrandLogo">-->
-<!--                                        </div>-->
-<!--                                    </label>-->
-<!--                                    &lt;!&ndash;&ndash;&gt;-->
-<!--                                </div>-->
                             </div>
-<!--                            <div class="bbot btop pb10 pt10 mb15 mt15">-->
-<!--                                <p class="fsize11 text-uppercase dark_200 m-0">Settings</p>-->
-<!--                            </div>-->
-<!--                            <div class="p0 pb30">-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-md-8">-->
-<!--                                        <p class="fsize13 dark_400 mt-2">Question Text Color :</p>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control colorpicker-basic1"-->
-<!--                                               name="web_text_color"-->
-<!--                                               v-model="campaign.web_text_color"-->
-<!--                                        >-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-md-8">-->
-<!--                                        <p class="fsize13 dark_400 mt-2">Introduction Text Color:</p>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control colorpicker-basic2"-->
-<!--                                               name="web_int_text_color"-->
-<!--                                               v-model="campaign.web_int_text_color"-->
-<!--                                        >-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-md-8">-->
-<!--                                        <p class="fsize13 dark_400 mt-2">Button Text Color :</p>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control colorpicker-basic3"-->
-<!--                                               name="web_button_text_color"-->
-<!--                                               v-model="campaign.web_button_text_color"-->
-<!--                                        >-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash;&ndash;&gt;-->
-<!--                                <div class="row" v-if="campaign.platform=='web'">-->
-<!--                                    <div class="col-md-8">-->
-<!--                                        <p class="fsize13 dark_400 mt-2">Button Over Text Color :</p>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control colorpicker-basic3"-->
-<!--                                               name="web_button_over_text_color"-->
-<!--                                               v-model="campaign.web_button_over_text_color"-->
-<!--                                        >-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash;&ndash;&gt;-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-md-8">-->
-<!--                                        <p class="fsize13 dark_400 mt-2">Button Background Color :</p>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control colorpicker-basic4"-->
-<!--                                               name="web_button_color"-->
-<!--                                               v-model="campaign.web_button_color"-->
-<!--                                        >-->
-<!--                                    </div>-->
-<!--                                </div>-->
 
-<!--                                <div class="row">-->
-<!--                                    <div class="col-md-12">-->
-<!--                                        <input type="button" @click="updateConfigurations" class="btn btn-success btn-sm bkg_green_300 light_000 mt-5 ml-3" value="Save Configurations">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <div v-if="settingTab ==2 ">
+                                <div class="bbot pb10 mb15">
+                                    <h2 class="fsize11 text-uppercase dark_200 m-0">BRANDING
+                                        <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                    </h2>
+                                </div>
+                                <div class="p0">
+                                    <h3 class="dark_400 mb0 fsize13 fw300">BORDER DROP-SHADOW
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="campaign.allow_border_shadow" :checked="campaign.allow_border_shadow" @change="synAllowBorderShadow($event)">
+                                            <span class="toggle email"></span> </label>
+                                    </h3>
+                                    <h3 class="dark_400 mb0 fsize13 fw300">BORDER COLOR
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="campaign.allow_widget_bgcolor" :checked="campaign.allow_widget_bgcolor" @change="synAllowWidgetBgcolor($event)">
+                                            <span class="toggle email"></span> </label>
+                                    </h3>
+                                </div>
+                                <div class="pt10">
+                                    <div class="form-group">
+                                        <label class="fsize13" for="fname">Border Thickness</label>
+                                        <select v-model="campaign.border_thickness" @change="synBorderThickness($event)" class="form-control h52" name="borderThickness" id="border_thickness">
+                                            <option value="1">1px</option>
+                                            <option value="2">2px</option>
+                                            <option value="3">3px</option>
+                                            <option value="4">4px</option>
+                                            <option value="5">5px</option>
+                                            <option value="6">6px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h3 class="dark_400 mb0 fsize13 fw300">WIDGET COLOR
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="campaign.bg_color_type" :checked="campaign.bg_color_type =='on'" @change="synBgColorType($event)">
+                                            <span class="toggle email"></span> </label>
+                                            <span class="float-right pr10">Gradient </span>
+                                </h3>
+                                <div class="widgetMultiColorBox" v-if="campaign.bg_color_type =='on'">
+                                    <div class="form-group">
+                                        <div class="color_box">
+                                            <input type="hidden" name="main_colors" id="main_colors" value="yellow">
+                                            <div class="color_cube white selectMainColor " color-data="white" color-class="bbw_white_color"></div>
+                                            <div class="color_cube dred selectMainColor " color-data="red" color-class="bbw_red_color"></div>
+                                            <div class="color_cube yellow selectMainColor active" color-data="yellow" color-class="bbw_yellow_color"></div>
+                                            <div class="color_cube red selectMainColor " color-data="orange" color-class="bbw_orange_color"></div>
+                                            <div class="color_cube green selectMainColor " color-data="green" color-class="bbw_green_color"></div>
+                                            <div class="color_cube blue selectMainColor " color-data="blue" color-class="bbw_blue_color"></div>
+                                            <div class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                            
+                         
+                                <div class="row orientation_top" style="display:block">
+                                    <div class="col-md-12">
+                                        <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
+                                    </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" value="to bottom" id="color_orientation" name="color_orientation">
+                                    <!-- gradient_orientation -->
+                                    <ul class="choose_orientation">
+                                        <li><a class="gradientOrientation " color-orientation="to right top" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="to right" main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="to right bottom" main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation active" color-orientation="to bottom" main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="to left bottom" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="to left" main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="to left top" main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="to top" main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                        <li><a class="gradientOrientation " color-orientation="circle" main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                                </div>
+                             
+                                </div>
+                            </div>
+                            
+                            <div v-if="settingTab ==3 ">
+                                <div class="bbot pb10 mb15">
+                                    <h2 class="fsize11 text-uppercase dark_200 m-0">SELECT REVIEWS
+                                        <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -145px;"></i>
+                                    </h2>
+                                </div>
+ 
+                                <div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;">
+                                            <div class="pull-left mb0 showReviewPopup" review-id="327">
+                                                
+                                                <div>
+                                                    <div class="media-left pr-15">
+                                                        <img class="review_productimg" src="https://s3-us-west-2.amazonaws.com/brandboost.io/35/reviews/images/s3_7639_56b481d2a9584571e7ef4aa0f68d48439ea908d2.jpg">
+                                                    </div>
+                                                    <div class="media-left pr0">
+                                                    <div>testnew 25</div>
+                                                    <div class="text-size-small text-muted" style="font-size:11px;"> If you are going to use a pas... (2.0)</div>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    <div class="review_section_user">
+                                                    <div class="top_div" style="border: none;">
+                                                        <div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><span class="icons fl_letters s32">DM</span></a></div>
+                                                        <div class="right">
+                                                            <div class="client_n"><p>Dheeraj  Maulekhi</p></div>
+                                                            <div class="client_review">
+                                                            <img src="http://brandboost.io/assets/images/widget/yellow_icon.png"> <img src="http://brandboost.io/assets/images/widget/yellow_icon.png"> <img src="http://brandboost.io/assets/images/widget/grey_icon.png"> <img src="http://brandboost.io/assets/images/widget/grey_icon.png"> <img src="http://brandboost.io/assets/images/widget/grey_icon.png">                                                             <span>June 27th 2019</span></div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                            </div>
+                                            <label class="custom-form-switch pull-right">
+                                                <input class="field autoSaveReview" type="checkbox" id="widget_review_327" name="reviewsId[]" value="327">
+                                                <span class="toggle dred"></span> 
+                                            </label>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                            </div>    
+                          
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -261,40 +294,39 @@
                             src="/assets/images/arrow-right-line.svg"></span></button>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
         <!--Content Area End-->
         <!--******************
              Create Sliding Smart Popup
             **********************-->
-        <div class="box" style="width: 424px;">
-            <div style="width: 424px;overflow: hidden; height: 100%;">
+        <div class="box" style="width: 550px;">
+            <div style="width:550px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;">
-                    <a class="cross_icon js-media-widget-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                    <a class="cross_icon js-media-widget-slidebox1">
+                        <i class=""><img src="assets/images/cross.svg"/></i>
+                    </a>
                     <form method="post" @submit.prevent="processForm">
                         <div class="p40">
                             <div class="row">
-                                <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                    <h3 class="htxt_medium_24 dark_800 mt20">Choose Gallery Widget Design</h3>
-                                    <p class="htxt_medium_24 dark_800 mt20">Choose type of item you want to create</p>
+                                <div class="col-md-12"> 
+                                    <!-- <img src="assets/images/list-icon.svg"/> -->
+                                    <h3 class="htxt_medium_13 dark_800 mt20">Choose Gallery Widget Design</h3>
+                                    <p class="htxt_medium_12 dark_800 mt20">Choose type of item you want to create</p>
                                     <hr>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row p30">
-                                        {{campaign.gallery_design_type}}
-                                        <div class="col-md-2 review_source_new onerowCWBox" current-class="onerow">
-                                            <label for="radiocheck_sp_1">
-                                                <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'onerow'}">
+                                        <div class="col-md-6 review_source_new onerowCWBox" current-class="onerow">
+                                            <label for="radiocheck_sp_1" v-on:change="synGalleryDesignType">
+                                                <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'onerow'}">
                                                     <span class="custmo_checkbox checkboxs">
-                                                        <input id="radiocheck_sp_1" type="radio" name="widgetDesignType" class="selectwidget1" widget-id="onerow" v-model="campaign.gallery_design_type">
+                                                        <input :checked="campaign.gallery_design_type == 'onerow'" id="radiocheck_sp_1" type="radio" name="widgetDesignType" class="selectwidget1" value="onerow" v-model="campaign.gallery_design_type">
                                                         <span class="custmo_checkmark purple"></span>
                                                     </span>
-                                                    <figure><img src="http://brandboost.io/assets/images/media_inline_4.png"></figure>
+                                                    <figure>
+                                                        <img src="http://brandboost.io/assets/images/media_inline_4.png">
+                                                    </figure>
                                                     <div class="text_sec">
                                                         <p><strong>Single Row Gallery</strong></p>
                                                     </div>
@@ -302,11 +334,11 @@
                                             </label>
                                         </div>
 
-                                        <div class="col-md-2 review_source_new squareCWBox" current-class="square">
-                                            <label for="radiocheck_sp_2">
-                                            <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'square'}">
+                                        <div class="col-md-6 review_source_new squareCWBox" current-class="square">
+                                            <label for="radiocheck_sp_2" v-on:change="synGalleryDesignType">
+                                            <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'square'}">
                                                     <span class="custmo_checkbox checkboxs">
-                                                        <input id="radiocheck_sp_2" type="radio" name="widgetDesignType" v-model="campaign.gallery_design_type" class="selectwidget1" widget-id="square">
+                                                        <input :checked="campaign.gallery_design_type == 'square'" id="radiocheck_sp_2" type="radio" name="widgetDesignType" v-model="campaign.gallery_design_type" class="selectwidget1" value="square">
                                                         <span class="custmo_checkmark purple"></span>
                                                     </span>
                                                     <figure><img src="http://brandboost.io/assets/images/media_square_4.png"></figure>
@@ -316,12 +348,13 @@
                                                 </div>
                                             </label>
                                         </div>
-
-                                        <div class="col-md-2 review_source_new horizontalCWBox" current-class="horizontal">
-                                            <label for="radiocheck_sp_3">
-                                                <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'horizontal'}">
+                                        </div>
+                                    <div class="row p30">
+                                        <div class="col-md-6 review_source_new horizontalCWBox" current-class="horizontal">
+                                            <label for="radiocheck_sp_3" v-on:change="synGalleryDesignType">
+                                                <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'horizontal'}">
 									<span class="custmo_checkbox checkboxs">
-										<input id="radiocheck_sp_3" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" widget-id="horizontal">
+										<input :checked="campaign.gallery_design_type == 'horizontal'" id="radiocheck_sp_3" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="horizontal">
 										<span class="custmo_checkmark purple"></span>
 									</span>
                                                     <figure><img src="http://brandboost.io/assets/images/media_square_6.png"></figure>
@@ -332,11 +365,11 @@
                                             </label>
                                         </div>
 
-                                        <div class="col-md-2 review_source_new verticalCWBox" current-class="vertical">
-                                            <label for="radiocheck_sp_4">
-                                                <div class="inner " :class="{ 'active' : campaign.gallery_design_type == 'vertical'}">
+                                        <div class="col-md-6 review_source_new verticalCWBox" current-class="vertical">
+                                            <label for="radiocheck_sp_4" v-on:change="synGalleryDesignType">
+                                                <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'vertical'}">
 									<span class="custmo_checkbox checkboxs">
-										<input id="radiocheck_sp_4" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" widget-id="vertical">
+										<input :checked="campaign.gallery_design_type == 'vertical'" id="radiocheck_sp_4" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="vertical">
 										<span class="custmo_checkmark purple"></span>
 									</span>
 
@@ -381,6 +414,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                settingTab :1,
                 campaignId: this.$route.params.id,
                 oNPSList: {},
                 campaign: {},
@@ -438,6 +472,9 @@
                     this.updateSingleField('allow_title',0);
                 }
             },
+            SettingTabActive: function(e){
+                this.settingTab =e;
+            },
             synAllowArrow: function(e){
                 if(e.target.checked){
                     this.updateSingleField('allow_arrow',1);
@@ -454,6 +491,34 @@
                     this.updateSingleField('allow_ratings',0);
                 }
             },
+            synAllowBorderShadow: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_border_shadow',1);
+
+                }else{
+                    this.updateSingleField('allow_border_shadow',0);
+                }
+            },
+            synBgColorType: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('bg_color_type','on');
+
+                }else{
+                    this.updateSingleField('bg_color_type','');
+                }
+            },
+            synAllowWidgetBgcolor: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_widget_bgcolor',1);
+
+                }else{
+                    this.updateSingleField('allow_widget_bgcolor',0);
+                }
+            },
+            synBorderThickness: function(e){
+                this.updateSingleField('border_thickness',this.campaign.border_thickness);
+                 
+            },
             synGalleryType: function(e){
                 this.updateSingleField('gallery_type',this.campaign.gallery_type);
 
@@ -461,6 +526,11 @@
             synImageSize: function(e){
                 this.updateSingleField('image_size',this.campaign.image_size);
 
+            },
+            synGalleryDesignType:function(){
+                this.loading =true;
+                this.updateSingleField('gallery_design_type',this.campaign.gallery_design_type);
+                document.querySelector('.js-media-widget-slidebox1').click();
             },
             updateSingleField: function (fieldName, fieldValue) {
                 this.loading = true;
