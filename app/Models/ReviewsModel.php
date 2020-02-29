@@ -662,6 +662,7 @@ class ReviewsModel extends Model {
      * @return type
      */
     public function getReviewsByProductType($campaignID, $aSettings = array(), $productType='product') {
+        DB::enableQueryLog();
         $start = !empty($aSettings['start']) ? $aSettings['start'] : 0;
 
         $aData =  DB::table('tbl_reviews')
@@ -682,6 +683,7 @@ class ReviewsModel extends Model {
 			})
 
 			->orderBy("tbl_reviews.id", "DESC")->get();
+        dd(DB::getQueryLog());
 
         return $aData;
     }
