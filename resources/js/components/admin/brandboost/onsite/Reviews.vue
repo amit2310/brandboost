@@ -138,6 +138,17 @@
                             <span v-if="oReview.rstatus == 1" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_green_300" title="ACTIVE"></span>
                             <span v-if="oReview.rstatus == 2" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="PENDING"></span>
                             <span v-if="oReview.rstatus == 3" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                </div>
+                            </div>
                             <div class="p25">
                                 <div class="mb-2">
                                     <div class="row">
@@ -748,11 +759,11 @@
                         this.loading = false;
                     })
             },
-            changeStatus: function(campaign_id, status) {
+            changeStatus: function(review_id, status) {
                 if(confirm('Are you sure you want to change the status of this item?')){
                     //Do axios
-                    axios.post('/admin/brandboost/updateOnsiteStatus', {
-                        brandboostID:campaign_id,
+                    axios.post('/admin/reviews/updateReviewStatus', {
+                        review_id:review_id,
                         status:status,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
@@ -761,17 +772,19 @@
                         .then(response => {
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
+
+                                this.successMsg = 'Action completed successfully.';
                                 this.showPaginationData(this.current_page);
                             }
 
                         });
                 }
             },
-            deleteItem: function(campaign_id) {
+            deleteItem: function(reviewID) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
-                    axios.post('/admin/brandboost/delete_brandboost', {
-                        brandboost_id:campaign_id,
+                    axios.post('/admin/reviews/deleteReview', {
+                        reviewid:reviewID,
                         moduleName: this.moduleName,
                         moduleUnitId: this.moduleUnitId,
                         _token: this.csrf_token()
