@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\FeedbackModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Models\PaymentModel;
@@ -697,38 +698,47 @@ class Reviews extends Controller {
     */
     public function submitOnsiteReview(Request $request) {
         $response = array();
-        $mReviews = new ReviewsModel();
-        $mInviter = new BrandboostModel();
-        $reviewUniqueID = $request->reviewUniqueID;
-        $campaignID = $request->campaign_id;
-        if ($reviewUniqueID != '') {
-            $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
-            $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
-            $aBrandboost = $mInviter->getBBInfo($campaignID);
-            $clientID = $aBrandboost->user_id;
-            //Send Thank you email
-            $aReviewRes = array(
-                'client_id' => $clientID,
-                'brandboost_id' => $campaignID,
-                'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
-                'siteReviewDetails' => $siteReviewDetails,
-                'reviewDetails' => $reviewDetails
-            );
+        try {
+            $mReviews = new ReviewsModel();
+            $mInviter = new BrandboostModel();
+            $reviewUniqueID = $request->reviewUniqueID;
+            $campaignID = $request->campaign_id;
+            if ($reviewUniqueID != '') {
+                $reviewDetails = $mReviews->getOnsiteReviewDetailsByUID($reviewUniqueID);
+                $siteReviewDetails = $mReviews->getOnsiteSiteReviewDetailsByUID($reviewUniqueID);
+                $aBrandboost = $mInviter->getBBInfo($campaignID);
+                $clientID = $aBrandboost->user_id;
+                //Send Thank you email
+                $aReviewRes = array(
+                    'client_id' => $clientID,
+                    'brandboost_id' => $campaignID,
+                    'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
+                    'siteReviewDetails' => $siteReviewDetails,
+                    'reviewDetails' => $reviewDetails
+                );
 
-            //pre($aReviewRes);
+                //pre($aReviewRes);
 
-            //$this->sendReviewThankyouEmail($aReviewRes);
-            $response = array('status' => 'success');
-        } else {
+                $this->sendReviewThankyouEmail($aReviewRes);
+                $response = array('status' => 'success');
+            } else {
+                $response = array('status' => 'error');
+            }
+            echo json_encode($response);
+            exit;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
             $response = array('status' => 'error');
+            echo json_encode($response);
+            exit;
         }
-        echo json_encode($response);
-        exit;
+
     }
 
     public function sendReviewThankyouEmail($aData) {
+        $mFeedback = new FeedbackModel();
         if (!empty($aData)) {
-            $aResponse = $this->mFeedback->getFeedbackResponse($aData['brandboost_id']);
+            $aResponse = $mFeedback->getFeedbackResponse($aData['brandboost_id']);
             //pre($aData);
             $ratingValue = $aData['siteReviewDetails'][0]->ratings;
             if (!empty($aResponse)) {
@@ -756,12 +766,12 @@ class Reviews extends Controller {
                     }
                 }
 
-                $emailContent = $this->load->view("review_thankyou", array('title' => $sTitle, 'subTitle' => $sSubTitle, 'siteReviewDetails' => $aData['siteReviewDetails'][0], 'reviewDetails' => $aData['reviewDetails']), true);
+                $emailContent = view("review_thankyou", ['title' => $sTitle, 'subTitle' => $sSubTitle, 'siteReviewDetails' => $aData['siteReviewDetails'][0], 'reviewDetails' => $aData['reviewDetails']])->render();
                 $subject = "Thank you for submitting your review";
 
                 //echo $emailContent;
 
-                $aSendgridData = $this->mInviter->getSendgridAccount($aData['client_id']);
+                $aSendgridData = getSendgridAccount($aData['client_id']);
                 $userName = $aSendgridData->sg_username;
                 $password = $aSendgridData->sg_password;
                 $sendgridFrom = $aSendgridData->sg_email;
@@ -792,7 +802,6 @@ class Reviews extends Controller {
                         'module_name' => 'onsite',
                         'module_unit_id' => $aData['brandboost_id']
                     );
-                    //$bUpdated = $this->mInviter->updateUsage($aUsage);
                     $bUpdated = updateCreditUsage($aUsage);
                 }
                 return true;
