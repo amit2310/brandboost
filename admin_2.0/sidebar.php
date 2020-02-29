@@ -37,6 +37,7 @@
      <!--<span style="" class="button-menu-mobile"><img src="assets/images/arrow_right_36.svg"/></span>-->
      <!--<span style="position: absolute; top: 0px; right: 20px; transform:rotate(180deg);" class="mobile-menu-control float-left"><img src="assets/images/close_menu_circle.svg"></span>-->
      
+     <!--<a class="button-menu-mobile-new float-right" href="#"><i class="ri-menu-2-line float-left" style="margin-top: 1px; font-size: 13px!important;"></i></a>-->
      <!--************
        DASHBOARD
      *************-->

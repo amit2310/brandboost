@@ -88,7 +88,7 @@ $(".slimScrollBar").hide();
     }), e(".main-icon-menu .nav-link").on("click", function(t) {
 		
 		
-        //t.preventDefault(), e("body").toggleClass("enlarge-menu"), a()
+        //t.preventDefault(), e("body").toggleClass("enlarge-menu"),
     
 		
         t.preventDefault(), e(this).addClass("active"), e(this).siblings().removeClass("active"), e(".main-menu-inner").addClass("active");
@@ -126,4 +126,33 @@ $(document).ready(function(){
 	  $('[data-toggle="tooltip-custom"]').tooltip("hide");
    });
 });
+
+
+
+$(document).ready(function(){
+	$(".chatboxopen").click(function(){
+		$(".rightchatarea").animate({
+			width: "toggle"
+		});
+	});
+});
+
+
+$(document).ready(function(){
+  $(".show_emoji_small").click(function(){
+    $(".chat_emoji_box_small").toggle();
+  });
+});
+	
+$(document).ready(function(){
+  $(".show_saved_chat_small").click(function(){
+    $(".chat_saved_temp_small").toggle();
+  });
+});
+
+
+
+
+
+
 
