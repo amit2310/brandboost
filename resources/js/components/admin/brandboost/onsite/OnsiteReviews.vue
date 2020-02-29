@@ -172,8 +172,11 @@
 
             }
         },
-        mounted() {
+        created() {
             this.loadPaginatedData();
+        },
+        mounted() {
+
         },
         methods: {
             loadPaginatedData: function () {
