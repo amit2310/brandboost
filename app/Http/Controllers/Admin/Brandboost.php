@@ -208,7 +208,7 @@ class Brandboost extends Controller
                 $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
             }
 
-            //$data->reviewCommentsData = $mReviews->getReviewAllComments($data->reviewid, 0, 5);
+            //$data->reviewCommentsData = $mReviews->getReviewAllComments($data->id, 0, 5);
         }
 
         $moduleName = 'brandboost-onsite';
