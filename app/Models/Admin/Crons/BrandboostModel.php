@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\ReviewsModel;
 use DB;
 
-class BrandboostModel extends Model { 
-    
+class BrandboostModel extends Model {
+
 
     /**
      * Checks if a review submitted by a subscribers
@@ -43,13 +43,13 @@ class BrandboostModel extends Model {
      * @param type $bbID
      * @return type
      */
-    public function getInviteSubscribers($bbID) {
+    /*public function getInviteSubscribers($bbID) {
         $oData = DB::table('tbl_brandboost_users')
                 ->where('brandboost_id', $bbID)
                 ->where('status', 1)
                 ->get();
         return $oData;
-    }
+    }*/
 
     /**
      * Get Trigger subscribers
@@ -115,7 +115,7 @@ class BrandboostModel extends Model {
      * @param type $previousInviterID
      * @return type
      */
-    public function getReminderEligibleSubscribers($bbID, $inviterID, $previousInviterID) {
+    /*public function getReminderEligibleSubscribers($bbID, $inviterID, $previousInviterID) {
         $sql = "SELECT tbl_brandboost_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_subscribers.user_id AS bb_user_id, tbl_brandboost_trigger.inviter_id, tbl_brandboost_trigger.start_at, tbl_brandboost_trigger.created_at "
                 . "FROM tbl_brandboost_trigger "
                 . "LEFT JOIN tbl_brandboost_events ON tbl_brandboost_trigger.inviter_id = tbl_brandboost_events.id "
@@ -128,7 +128,7 @@ class BrandboostModel extends Model {
                 . "AND tbl_subscribers.email NOT IN(SELECT email FROM tbl_suppression_list)";
         $oData = DB::select(DB::raw($sql));
         return $oData;
-    }
+    }*/
 
     /**
      * Get thank you eligible subscribers
@@ -136,7 +136,7 @@ class BrandboostModel extends Model {
      * @param type $inviterID
      * @return type
      */
-    public function getThankYouEligibleSubscribers($bbID, $inviterID) {
+    /*public function getThankYouEligibleSubscribers($bbID, $inviterID) {
         $sql = "SELECT tbl_brandboost_users.*, tbl_subscribers.firstname, tbl_subscribers.lastname, tbl_subscribers.email, tbl_subscribers.phone, tbl_reviews.created AS review_date "
                 . "FROM tbl_reviews "
                 . "INNER JOIN tbl_brandboost_users ON tbl_reviews.user_id = tbl_brandboost_users.user_id "
@@ -144,7 +144,7 @@ class BrandboostModel extends Model {
                 . "WHERE  tbl_reviews.campaign_id = '{$bbID}'";
         $oData = DB::select(DB::raw($sql));
         return $oData;
-    }
+    }*/
 
     /**
      * Used to check if a review is given by a subscriber for a specific campaign
@@ -161,7 +161,7 @@ class BrandboostModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $bbID
      * @param type $subsID
      * @return boolean
@@ -240,7 +240,7 @@ class BrandboostModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $aData
      * @return type
      */
@@ -250,7 +250,7 @@ class BrandboostModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return type
      */
