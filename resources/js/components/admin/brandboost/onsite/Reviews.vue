@@ -92,20 +92,20 @@
                         <div class="card p0 pt30 text-center animate_top col">
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
-                                    <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                    <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                    <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.id)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                    <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
+                                    <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                    <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                    <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
                             <a href="javascript:void(0);" class="circle-icon-64 bkg_reviews_000 m0auto">
                                 <img v-if="oReview.rstatus == 1" src="assets/images/review_campaign.png">
                                 <img v-else src="assets/images/review_campaign.png">
                             </a>
-                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.id)" style="cursor: pointer;">
+                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
                                 {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
                             </h3>
                             <p>{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
@@ -140,7 +140,7 @@
                             <span v-if="oReview.rstatus == 3" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
                                     <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
                                     <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
                                     <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
@@ -184,7 +184,7 @@
 
 
                                 <p class="fsize14 fw400 dark_600 lh_24">
-                                    <span href="javascript:void(0);" @click="showReview(oReview.id)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 230) }}</strong></span>
+                                    <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 230) }}</strong></span>
                                     <br />
                                     <span>{{ oReview.comment_text }}</span>
                                 </p>
@@ -658,7 +658,7 @@
                 this.loadPaginatedData();
             },
             showReview: function(id){
-                window.location.href='#/brandboost/reviewdetails/'+id;
+                window.location.href='#/reviews/onsite/reviews/'+id;
             },
             showQuestions: function(id){
                 window.location.href='#/brandboost/questions/'+id;
