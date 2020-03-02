@@ -54,8 +54,8 @@ class S3 {
 	public static $use_ssl = false;
 	public static $verify_peer = false;
 
-	private static $__access_key = 'AKIAJ52XK7ZH7VCR7XHQ'; // AWS Access key
-	private static $__secret_key = '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'; // AWS Secret key
+	private static $__access_key = 'AKIARIQCLTJDJHTQQM5Q'; // AWS Access key
+	private static $__secret_key = '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'; // AWS Secret key
 
 	function __construct($config = array())
 	{
@@ -83,7 +83,7 @@ class S3 {
 		//if ( ! empty($access_key) AND ! empty($secret_key))
 		if(true)
 		{
-			self::setAuth('AKIAJ52XK7ZH7VCR7XHQ', 'F9v3tuSAjAbGxOZd7jkBnS3IZvznACK/tLBeCgw/');
+			self::setAuth('AKIARIQCLTJDJHTQQM5Q', 'fTxtk096TF5asAGFv+WU/+oczx1vr7Es0wyAWRxE');
 		}
 
 		self::$use_ssl = $use_ssl;
