@@ -19,7 +19,8 @@ class Reviews extends Controller {
      * @param type
      */
 	public function updateReviewStatus(Request $request) {
-        $response = array();
+
+	    $response = array();
 
 		$reviewID = $request->review_id;
 		$status = $request->status;
@@ -50,7 +51,9 @@ class Reviews extends Controller {
 
 			$response['status'] = 'success';
 			$response['message'] = "Status has been updated successfully.";
-		} else {
+		}
+		else
+		{
 			$response['message'] = "Error: Something went wrong, try again";
 		}
 
