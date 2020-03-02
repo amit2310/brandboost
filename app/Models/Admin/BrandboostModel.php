@@ -234,12 +234,12 @@ class BrandboostModel extends Model {
         $query = DB::table('tbl_brandboost_events')
             ->leftJoin('tbl_campaigns', 'tbl_campaigns.event_id', '=', 'tbl_brandboost_events.id')
             ->leftJoin('tbl_tracking_log_email_sms', 'tbl_tracking_log_email_sms.campaign_id', '=', 'tbl_campaigns.id')
-            ->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=', 'tbl_tracking_log_email_sms.subscriber_id')
-            ->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=', 'tbl_subscribers.id')
-            ->leftJoin('tbl_users', 'tbl_brandboost_users.user_id', '=', 'tbl_users.id')
+            ->leftJoin('tbl_brandboost_campaign_users', 'tbl_brandboost_campaign_users.id', '=', 'tbl_tracking_log_email_sms.subscriber_id')
+            ->leftJoin('tbl_subscribers', 'tbl_brandboost_campaign_users.subscriber_id', '=', 'tbl_subscribers.id')
+            ->leftJoin('tbl_users', 'tbl_brandboost_campaign_users.user_id', '=', 'tbl_users.id')
             ->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=', 'tbl_brandboost_events.brandboost_id')
-            ->select('tbl_subscribers.*', 'tbl_brandboost_users.*', 'tbl_brandboost_users.id as subscriberid',
-                'tbl_brandboost_users.status as subscriberstatus',
+            ->select('tbl_subscribers.*', 'tbl_brandboost_campaign_users.*', 'tbl_brandboost_campaign_users.id as subscriberid',
+                'tbl_brandboost_campaign_users.status as subscriberstatus',
                 'tbl_users.id AS uid', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_users.avatar', 'tbl_users.country',
                 'tbl_brandboost.review_type', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img',
                 'tbl_brandboost_events.id as beventid', 'tbl_tracking_log_email_sms.id as trackinglogid',

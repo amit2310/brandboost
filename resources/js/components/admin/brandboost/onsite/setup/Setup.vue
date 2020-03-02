@@ -342,7 +342,7 @@
                     this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
                     this.user = response.data.aUserInfo;
                     this.loading = false;
-                    loadJQScript(this.user.id);
+                    //loadJQScript(this.user.id);
                 });
         },
         mounted() {
@@ -437,6 +437,7 @@
 
     };
     function loadJQScript(userid){
+        alert('I am called');
         var tkn = $('meta[name="_token"]').attr('content');
         Dropzone.autoDiscover = false;
         var myDropzoneLogoImg = new Dropzone(
