@@ -543,8 +543,8 @@ class Payment extends Controller {
                         'region' => 'us-west-2',
                         'version' => '2006-03-01',
                         'credentials' => [
-                            'key' => 'AKIAJ52XK7ZH7VCR7XHQ',
-                            'secret' => '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'
+                            'key' => 'AKIARIQCLTJDJHTQQM5Q',
+                            'secret' => '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'
                         ],
                         // Set the S3 class to use objects.dreamhost.com/bucket
                         // instead of bucket.objects.dreamhost.com
