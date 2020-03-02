@@ -986,24 +986,27 @@ class Brandboost extends Controller
     public
     function reviewInfo(Request $request)
     {
+        $mReviews = new ReviewsModel();
+
         $response = array();
         $response['status'] = 'error';
 
         $reviewID = $request->id;
         $revID = $request->reviewid;
+
         $product_id = "";
         $product_name = "";
         $brand_title = "";
-        $mReviews = new ReviewsModel();
 
         $reviewID = ($revID > 0) ? $revID : $reviewID;
         $productData = array();
         $reviewCommentCount = getCampaignCommentCount($reviewID);
-        $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
-        $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
-        $reviewData = ReviewsModel::getReviewInfo($reviewID);
+        $reviewNotesData = $mReviews->listReviewNotes($reviewID);
+        $reviewCommentsData = $mReviews->getReviewAllParentsComments($reviewID, $start = 0);
+        $reviewData = $mReviews->getReviewInfo($reviewID);
         $reviewTags = getTagsByReviewID($reviewID);
-        $totalComment = ReviewsModel::parentsCommentsCount($reviewID);
+        $totalComment = $mReviews->parentsCommentsCount($reviewID);
+
         if(!empty($reviewData)){
             $bbID = $reviewData->bbId;
             $aAllReviews = $mReviews->getCampaignAllReviews($bbID, true);
