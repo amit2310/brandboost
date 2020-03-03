@@ -1293,12 +1293,13 @@ color:#7989b4
 /********************
 PAGE WITH SIDEBAR CSS
 *********************/
-.pagewithleftsidebar .navbar-custom{padding-left: 320px}
+/*.pagewithleftsidebar .navbar-custom{padding-left: 320px}
 .pagewithleftsidebar .top-bar-top-section{padding-left: 310px}
-.pagewithleftsidebar .content-area.withsidebar{padding:28px 64px 0 310px; position: inherit}
+.pagewithleftsidebar .content-area.withsidebar{padding:28px 64px 0 310px; position: inherit}*/
 
 .page_sidebar{float: left; width: 280px; height: 100vh; background: #f9fbff; border-right: 1px solid #e9eff8; padding:0px;/*position: fixed*/}
-.page_sidebar.absl{float: left; width: 280px; height: 100vh; /*background: #ffffff;*/ background: #F9FBFF!important;  padding:0px; position: absolute; top: 0px; left: 0px;}
+.page_sidebar.absl{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 9999}
+.page_sidebar.fixed{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 9999}
 .page_sidebar.width_360{width: 360px;}
 .page_sidebar .inner{padding:25px 20px;}
 .page_sidebar .inner2{padding:22px 20px;}
@@ -1313,7 +1314,7 @@ PAGE WITH SIDEBAR CSS
 
 
 .sidebar_search_big{padding: 10px 0; margin-bottom: 15px;}
-.sidebar_search_big input[type="text"]{border-radius: 4px; height: 44px; border: none; max-width: 185px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); background: url(../images/search-2-line.svg) 10px 12px #fff no-repeat; padding-left: 35px; float:left;}
+.sidebar_search_big input[type="text"]{border-radius: 4px; height: 44px; border: none; max-width: 195px; padding: 0 15px; color: #B4C0D4; font-size: 14px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); background: url(../images/search-2-line.svg) 10px 12px #fff no-repeat; padding-left: 35px; float:left;}
 .sidebar_search_big input[type="text"]::placeholder {color: #B4C0D4; opacity: 1;}
 .sidebar_search_big .sidebar_search_submit{border: none; background:#fff; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); width: 44px; height: 44px; padding: 0; margin: 0 0 0 0px; border-radius: 4px;}
 
@@ -1468,6 +1469,12 @@ PAGE WITH SIDEBAR CSS
 
 .nav.nav-pills.review_sec_tab a{color: #7B89A6; font-weight: 400!important}
 .nav.nav-pills.review_sec_tab a.active{color: #717CEF; border-bottom: 2px solid #717CEF; padding-bottom: 21px; font-weight: 500!important}
+
+.nav.nav-pills.review_sec_tab2 a{color: #7B89A6; font-weight: 500!important;font-size: 11px;line-height: 120%;letter-spacing: 0.04em;text-transform: uppercase;}
+.nav.nav-pills.review_sec_tab2 a i{ font-size: 15px; margin-top: 0px; line-height: 17px;}
+.nav.nav-pills.review_sec_tab2 a.active{color: #6672E8; border-bottom: 2px solid #717CEF; padding-bottom: 23px; font-weight: 500!important}
+
+
 .nav.nav-pills.review_feed a{color: #56627F; font-weight: 400!important}
 .nav.nav-pills.review_feed a.active{color: #717CEF; font-weight: 500!important}
 .nav.nav-pills.review_feed a span.badge{font-weight: 500; border-radius: 100px;}
@@ -3653,7 +3660,7 @@ Live Chat Messangers
 /*#LiveChatSection .navbar-custom{background: #ffffff!important; padding-left: 320px}
 #LiveChatSection .top-bar-top-section{padding-left: 310px}
 #LiveChatSection .content-area.chat_messanger_area{padding:0 280px 0 280px; position: inherit}*/
-.pagewithleftsidebar .content-area.withsidebar.chat_messanger_area{padding:0 297px 0 280px; position: inherit}
+.pagewithleftsidebar .content-area.withsidebar.chat_messanger_area{padding:0 345px 0 0px; position: inherit}
 
 .chat_messanger_area .chat_user_list {max-width: 225px; border-right: 2px solid #d5dfef; padding-right: 15px; float: right}
 .chat_messanger_area .chat_user_list ul{margin: 0; padding: 0;}
@@ -3755,10 +3762,12 @@ Live Chat Messangers
 .mini_chat .nav_dot i{color: #B4C0D4; font-size: 20px;}
 .mini_chat .chat_user{margin: 0; padding: 10px 0 0 0;}
 .mini_chat .chat_user li{list-style: none}
-.mini_chat .chat_user li a{display: block; text-align: center; background: #fff; width: 37px; height: 38px; padding: 2px; border: 1px solid #fff; border-radius: 100px; margin: 13px auto;}
+.mini_chat .chat_user li a{display: block; text-align: center; background: #fff; width: 37px; height: 38px; padding: 2px; border: 1px solid #fff; border-radius: 100px; margin: 13px auto; position: relative;}
 .mini_chat .chat_user li a.active{ border: 1px solid #A6BFFF; }
 .mini_chat .chat_user li a:hover{ border: 1px solid #A6BFFF; }
 .mini_chat .chat_user li img{list-style: none; width: 32px; height: 32px;}
+.mini_chat .chat_user li a span.chat_notification{position: absolute; width: 18px; height: 18px;background: #5079F5;border: 2px solid #FFFFFF; border-radius: 25px; font-size: 9px; color: #fff; text-align: center; font-weight: 500; right: -5px;bottom: -3px;}
+
 
 .rightchatarea{width: 338px; height: 100vh; background: #fff;box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04); z-index: 999; top: 0; right: 65px; position: fixed; display: none; padding: 0px;}
 .rightchatarea .heading_area{width: 288px;}
@@ -3772,7 +3781,7 @@ Live Chat Messangers
 .users_chat_area .chat-list .media.reversed .media-content:before {display: none;}
 .users_chat_area .chat-list .media-content:not([class*="bg-"]) {border:none; background: rgba(219, 228, 243, 0.3);border-radius: 48px!important;}
 .users_chat_area .chat-list .media-content:before {display: none; }
-.users_chat_area .chat-list .media-content{padding: 7px 15px!important; font-size: 13px; font-weight: 400!important; max-width: 500px; color:#333D54!important; display:table!important; margin-bottom: 8px !important;position: relative; width: auto; clear: both}
+.users_chat_area .chat-list .media-content{padding: 7px 15px!important; font-size: 13px; font-weight: 400!important; max-width: 500px; color:#333D54!important; display:table!important; margin-bottom: 4px !important;position: relative; width: auto; clear: both}
 
 .users_chat_area .chat-list .media-content.date_time, .users_chat_area .chat-list .media.reversed .media-content.date_time{background: #fff!important; letter-spacing: 0.04em!important;text-transform: uppercase!important;font-size: 11px!important;color: #97A4BD!important;}
 .users_chat_area .chat-list .media-content.date_time i, .users_chat_area .chat-list .media.reversed .media-content.date_time i{font-size: 13px!important}

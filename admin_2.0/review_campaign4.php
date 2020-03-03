@@ -13,10 +13,6 @@
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
-
-
-
-
 </head>
 <body id="ReviewSection">
 
@@ -99,7 +95,6 @@
 						<li><a href="#"><img src="assets/images/star-fill-24.svg"></a></li>
 						<li><a href="#"><img src="assets/images/star-half-fill-24.svg"></a></li>
 					</ul>
-						
 					</div>
    				</div>
     		</div>
@@ -120,8 +115,6 @@
    				</div>
     		</div>
     	</div>
-    	
-    	
     </div>
     
     
@@ -136,23 +129,19 @@
     	<div class="table_action">
 			<div class="float-right">
 			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
-			</button>
+			  <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created			</button>
 			<div class="dropdown-menu">
 			  <a class="dropdown-item" href="#">Link 1</a>
 			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
+			  <a class="dropdown-item" href="#">Link 3</a>			</div>
 		  </div>
 			<div class="float-right ml10 mr10">
 			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/list_view.svg"></span>&nbsp; List View
-			</button>
+			  <span><img src="assets/images/list_view.svg"></span>&nbsp; List View			</button>
 			<div class="dropdown-menu">
 			  <a class="dropdown-item" href="#">Link 1</a>
 			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
+			  <a class="dropdown-item" href="#">Link 3</a>			</div>
 		  </div>
 		  <div class="float-right">
 			<input class="table_search" type="text" placeholder="Serch">
@@ -176,20 +165,16 @@
 					<td>michael.mitchell@example.com</td>
 					<td>Jan 2, 2:16 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  <tr>
@@ -198,20 +183,16 @@
 					<td>glen.ramirez@example.com</td>
 					<td>Jul 6, 2:09 PM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  <tr>
@@ -220,20 +201,16 @@
 					<td>tiffany.dean@example.com</td>
 					<td>Sep 21, 4:06 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">4/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">4/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  
@@ -243,20 +220,16 @@
 					<td>nathan.roberts@example.com</td>
 					<td>Aug 6, 6:52 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  
@@ -266,27 +239,17 @@
 					<td>michelle.rivera@example.com</td>
 					<td>Nov 25, 3:01 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">3/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">3/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
-				  
-				 
-				  
-				  
-				  
-				  
 				</tbody>
 			  </table>
     		</div>
@@ -306,23 +269,19 @@
     	<div class="table_action">
 			<div class="float-right">
 			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
-			</button>
+			  <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created			</button>
 			<div class="dropdown-menu">
 			  <a class="dropdown-item" href="#">Link 1</a>
 			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
+			  <a class="dropdown-item" href="#">Link 3</a>			</div>
 		  </div>
 			<div class="float-right ml10 mr10">
 			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/list_view.svg"></span>&nbsp; List View
-			</button>
+			  <span><img src="assets/images/list_view.svg"></span>&nbsp; List View			</button>
 			<div class="dropdown-menu">
 			  <a class="dropdown-item" href="#">Link 1</a>
 			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
+			  <a class="dropdown-item" href="#">Link 3</a>			</div>
 		  </div>
 		  <div class="float-right">
 			<input class="table_search" type="text" placeholder="Serch">
@@ -346,20 +305,16 @@
 					<td>michael.mitchell@example.com</td>
 					<td>Jan 2, 2:16 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  <tr>
@@ -368,20 +323,16 @@
 					<td>glen.ramirez@example.com</td>
 					<td>Jul 6, 2:09 PM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  <tr>
@@ -390,20 +341,16 @@
 					<td>tiffany.dean@example.com</td>
 					<td>Sep 21, 4:06 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">4/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">4/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  
@@ -413,20 +360,16 @@
 					<td>nathan.roberts@example.com</td>
 					<td>Aug 6, 6:52 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="icons"><img src="assets/images/star-line.svg"></span><span class="dark_400 fsize14">0/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
 				  
 				  
@@ -436,43 +379,23 @@
 					<td>michelle.rivera@example.com</td>
 					<td>Nov 25, 3:01 AM</td>
 					<td class="text-right">
-					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">3/5</span>
-					</td>
+					<span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_yellow_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="icons"><img src="assets/images/star-fill_grey_16.svg"></span><span class="dark_400 fsize14">3/5</span>					</td>
 					<td>
 						<div class="float-right">
 							<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-							  <span><img src="assets/images/more-vertical.svg"></span>
-							</button>
+							  <span><img src="assets/images/more-vertical.svg"></span>							</button>
 							<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(1487px, 98px, 0px); top: 0px; left: 0px; will-change: transform;">
 							  <a class="dropdown-item" href="#">Link 1</a>
 							  <a class="dropdown-item" href="#">Link 2</a>
-							  <a class="dropdown-item" href="#">Link 3</a>
-							</div>
-						  </div>
-					</td>
+							  <a class="dropdown-item" href="#">Link 3</a>							</div>
+						  </div>					</td>
 				  </tr>
-				  
-				 
-				  
-				  
-				  
-				  
 				</tbody>
 			  </table>
     		</div>
     	</div>
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-     
       </div>
-      
       </div>
       
 <!--******************
@@ -651,7 +574,5 @@ $(document).ready(function(){
        
 
     </script>
-    
-
 </body>
 </html>
