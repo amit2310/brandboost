@@ -226,6 +226,41 @@ class BrandboostModel extends Model {
      * @return type
      */
     public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='') {
+        //DB::enableQueryLog();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        $query = DB::table('tbl_tracking_log_email_sms')
+            ->leftJoin('tbl_brandboost_campaign_users', 'tbl_tracking_log_email_sms.subscriber_id', '=', 'tbl_brandboost_campaign_users.id')
+            ->leftJoin('tbl_subscribers', 'tbl_brandboost_campaign_users.subscriber_id', '=', 'tbl_subscribers.id')
+            ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
+            ->leftJoin('tbl_brandboost', 'tbl_brandboost_campaign_users.brandboost_id', '=', 'tbl_brandboost.id')
+            ->select('tbl_users.id AS uid', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_users.avatar', 'tbl_users.country',
+                'tbl_brandboost.review_type', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img',
+                'tbl_brandboost_campaign_users.id as subscriberid','tbl_brandboost_campaign_users.status as subscriberstatus',
+                'tbl_tracking_log_email_sms.id as trackinglogid',
+                'tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid', 'tbl_tracking_log_email_sms.type as tracksubscribertype',
+                'tbl_tracking_log_email_sms.created as requestdate')
+            ->when(($brandboostId > 0), function ($query) use ($brandboostId) {
+                return $query->where('tbl_brandboost.id', $brandboostId);
+            })
+            ->when(($user_role != 1), function ($query) use ($userID) {
+                return $query->where('tbl_brandboost.user_id', $userID);
+            })
+            ->when((!empty($type)), function ($query) use ($type) {
+                return $query->where('tbl_tracking_log_email_sms.type', $type);
+            })
+            ->when((!empty($reviewType)), function ($query) use ($reviewType) {
+                return $query->where('tbl_brandboost.review_type', $reviewType);
+            });
+        $query->where('tbl_subscribers.email', '!=',  '');
+        $query('tbl_tracking_log_email_sms.id', 'DESC');
+        $oData = $query->paginate(10);
+        //dd(DB::getQueryLog());
+        return $oData;
+    }
+
+    public static function getReviewRequestOLD2($brandboostId = '', $type = '', $reviewType='') {
         /*Todo: Need to fix this function after the cron script*/
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -266,7 +301,7 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
-    public static function getReviewRequestOLD($brandboostId = '', $type = '') {
+    public static function getReviewRequestOLD1($brandboostId = '', $type = '') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
