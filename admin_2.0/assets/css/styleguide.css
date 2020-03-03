@@ -177,7 +177,7 @@ CUSTOM SWITCH STYLES
 /******************************
 TABLES STYLES
 ******************************/
-.table_head_action{margin-bottom: 20px}
+.table_head_action{margin-bottom: 20px;position: relative}
 .table_head_action .table_filter{margin: 0; padding: 0;}
 .table_head_action .table_filter li{margin: 0; padding: 0; list-style: none; display: inline-block;}
 .table_head_action .table_filter li a{margin: 0 20px 0 0; padding: 0; display: inline-block; font-weight: 500;font-size: 12px;line-height: 120%;letter-spacing: 0.04em;text-transform: uppercase;color: #7B89A6;}
@@ -205,6 +205,11 @@ TABLES STYLES
 .table.table-borderless tbody tr td p{color: #242B3D; font-size: 14px; font-weight: 500; margin-bottom: 10px; line-height: 120%;}
 .table.table-borderless tbody tr td p.small{color: #687693; font-size: 12px; font-weight: 400; margin: 0!important}
 
+
+.datasearcharea{position: absolute;width: 100%;z-index: 1;top: 40px; display: none}
+.datasearcharea a.searchcloseicon{ position: absolute; right: 25px;top: 14px;}
+
+.datasearcharea .form-control:focus{box-shadow: none!important}
 
 .tags_btn{background: #FFFFFF;border: 1px solid #DBE4F3;box-sizing: border-box;box-shadow: 0px 1px 1px rgba(0, 39, 115, 0.02);border-radius: 6px; font-size: 13px;line-height: 110%;
 text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-right: 5px;}
@@ -428,7 +433,7 @@ BORDER CLASSES
 BORDER RADIUS CLASSES
 ******************************/
 .br4{border-radius: 4px!important;}
-.br5{border-radius: 5px;}
+.br5{border-radius: 5px!important;}
 .br6{border-radius: 6px!important;}
 .br7{border-radius: 7px;}
 .br8{border-radius: 8px;}

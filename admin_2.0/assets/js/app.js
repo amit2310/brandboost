@@ -160,5 +160,25 @@ $(document).ready(function(){
 });
 
 
+	
+$(document).ready(function(){
+	$(".search_tables_open_close").click(function(){
+		$(".datasearcharea").animate({
+			width: "toggle"
+		});
+		
+		$('#InputToFocus').focus();
+		
+	});
+});
+	
+	
+	
+	
+//$(document).ready(function(){
+//  $(".search_tables_open_close").click(function(){
+//    $(".datasearcharea").toggle();
+//  });
+//});
 
 
