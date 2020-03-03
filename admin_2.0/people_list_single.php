@@ -11,6 +11,7 @@
  CSS
  **********************-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -83,7 +84,7 @@
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
 	 			<div class="col"><p>People</p></div>
-	 			<div class="col text-right"><p><a href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"/></a></p></div>
+	 			<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"/></a></p></div>
 	 		</div>
 	 	</div>
        

@@ -130,7 +130,7 @@ class BrandboostInviter extends Command {
      * Process Thank you Invites
      * @param type $aEvent
      */
-    public function processThankyouInvites($aEvent = array()) {
+    /*public function processThankyouInvites($aEvent = array()) {
         //Instantiate Email Model to access its properties and methods
         $mInviter = new BrandboostModel();
 
@@ -167,7 +167,7 @@ class BrandboostInviter extends Command {
                 $this->fireAutomationCampaign($aFireData);
             }
         }
-    }
+    }*/
 
     /**
      * Processes all followup end campaigns

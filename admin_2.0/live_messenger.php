@@ -77,13 +77,28 @@
 	 PAGE SIDEBAR
 	**********************-->
 	<div class="page_sidebar bkg_light_000 absl">
-	 	<div class="inner2 pb0">
-			<div class="title-box">
-			  <h6 class="menu-title" style="line-height: 36px;"><!--<span class="button-menu-mobile_sidebar"><img src="assets/images/close_menu_circle.svg"></span> &nbsp; -->LIVE MESSENGER</h6>
-			</div>
-			<h3 class="htxt_medium_20 dark_800" >Contacts </h3>
+	 	
+			<div style="width: 279px;">
 			
-			<div class="bbot btop contact_sort pt15 pb15 mt-3">
+			
+			<div class="p20 bbot top_headings">
+	 		<div class="row">
+	 			<div class="col"><p>LIVE MESSENGER</p></div>
+	 			<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"/></a></p></div>
+	 		</div>
+	 	</div>
+	 	
+	 	<div class="p20 pt30 pb10">
+	 		<div class="row">
+	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Contacts</h3></div>
+	 			<div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/download-line.svg"></button></div>
+	 		</div>
+	 	</div>
+	 	
+	 	
+	 	
+			
+			<div class="bbot btop contact_sort mt-3 p20 pt15 pb15">
 				<div class="row">
 					<div class="col">
 						<div class="tdropdown ml0">
@@ -110,12 +125,11 @@
 				</div>
 			</div>
 			
-			<div class="sidebar_search_big mt10">
+			<div class="sidebar_search_big mt10 p20 pt15 pb15">
         	<input type="text" name="" value="" placeholder="Search">
         	<button class="sidebar_search_submit"><img src="assets/images/filter-3-line.svg"></button>
             </div>
-        </div> 
-        
+       
         
         
         	<div class="p20 pt0">
@@ -416,7 +430,8 @@
        
 
     
-    <div class="clearfix"></div>   
+    <div class="clearfix"></div> 
+    </div>  
 </div>
    
 	<!--******************

@@ -84,8 +84,8 @@
 		<i class="ri-more-fill"></i>
 	</div>
 	<ul class="chat_user">
-		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/01.png"/></a></li>
-		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/02.png"/></a></li>
+		<li class="chatboxopen"><a href="#"><span class="chat_notification">2</span><img src="assets/images/avatar/01.png"/></a></li>
+		<li class="chatboxopen"><a href="#"><span class="chat_notification">5</span><img src="assets/images/avatar/02.png"/></a></li>
 		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/03.png"/></a></li>
 		<li class="chatboxopen"><a class="active" href="#"><img src="assets/images/avatar/04.png"/></a></li>
 		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/05.png"/></a></li>
@@ -93,7 +93,7 @@
 		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/07.png"/></a></li>
 		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/08.png"/></a></li>
 		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/09.png"/></a></li>
-		<li class="chatboxopen"><a href="#"><img src="assets/images/avatar/10.png"/></a></li>
+		<li class="chatboxopen"><a href="#"><span class="chat_notification">3</span><img src="assets/images/avatar/10.png"/></a></li>
 		<li class="chatboxopen"><a href="#"><img src="assets/images/sidebar_chat_add_circle_32.svg"/></a></li>
 	</ul>
 </div>
