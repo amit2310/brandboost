@@ -123,6 +123,29 @@ class Mediagallery extends Controller {
         echo json_encode($response);
         exit;
     }
+    /**
+     * Used to update galley status
+     * @return type
+     */
+    public function updateSingleFieldCompress(Request $request) {
+
+        $galleryId = $request->gallery_id;
+        $fieldName = $request->fieldName;
+        $fieldVal = $request->fieldVal;
+
+        $aData = array(
+            $fieldName => serialize($fieldVal)
+        );
+        print_r($aData);
+        $result = MediaModel::updateGallery($galleryId, $aData);
+
+        if($result){
+            $response = array('status' => 'success');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
 
     /**
      * Used to get Media Widget Info
@@ -387,7 +410,7 @@ class Mediagallery extends Controller {
 
         //$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
         $sliderData = view('admin.media-gallery.preview', array('galleryData' => $galleryData))->render();
-
+        $galleryData->reviews_id =unserialize($galleryData->reviews_id);
         $response= array(
             'status' => 'success',
             'title' => 'Media Gallery',

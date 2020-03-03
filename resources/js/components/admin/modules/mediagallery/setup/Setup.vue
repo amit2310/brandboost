@@ -179,89 +179,108 @@
                                 <div class="widgetMultiColorBox" v-if="campaign.bg_color_type =='on'">
                                     <div class="form-group">
                                         <div class="color_box">
-                                            <input type="hidden" name="main_colors" id="main_colors" value="yellow">
-                                            <div class="color_cube white selectMainColor " color-data="white" color-class="bbw_white_color"></div>
-                                            <div class="color_cube dred selectMainColor " color-data="red" color-class="bbw_red_color"></div>
-                                            <div class="color_cube yellow selectMainColor active" color-data="yellow" color-class="bbw_yellow_color"></div>
-                                            <div class="color_cube red selectMainColor " color-data="orange" color-class="bbw_orange_color"></div>
-                                            <div class="color_cube green selectMainColor " color-data="green" color-class="bbw_green_color"></div>
-                                            <div class="color_cube blue selectMainColor " color-data="blue" color-class="bbw_blue_color"></div>
-                                            <div class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
+                                            <input type="hidden" name="main_colors" id="main_colors"  :value="campaign.gradient_color">
+                                            <div v-on:click="synMainColor('white')" class="color_cube white selectMainColor " :class="{ 'active' : campaign.gradient_color == 'white'}" color-class="bbw_white_color"></div>
+                                            <div v-on:click="synMainColor('red')" class="color_cube dred selectMainColor " :class="{ 'active' : campaign.gradient_color == 'red'}"  color-class="bbw_red_color"></div>
+                                            <div v-on:click="synMainColor('yellow')" class="color_cube yellow selectMainColor " :class="{ 'active' : campaign.gradient_color == 'yellow'}" color-class="bbw_yellow_color"></div>
+                                            <div v-on:click="synMainColor('orange')" class="color_cube red selectMainColor " :class="{ 'active' : campaign.gradient_color == 'orange'}" color-class="bbw_orange_color"></div>
+                                            <div v-on:click="synMainColor('green')" class="color_cube green selectMainColor " :class="{ 'active' : campaign.gradient_color == 'green'}" color-class="bbw_green_color"></div>
+                                            <div v-on:click="synMainColor('blue')" class="color_cube blue selectMainColor " :class="{ 'active' : campaign.gradient_color == 'blue'}" color-class="bbw_blue_color"></div>
+                                            <div v-on:click="synMainColor('purple')" class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
                                             <div class="clearfix"></div>
                                         </div>
                                     </div>
-                            
-                         
-                                <div class="row orientation_top" style="display:block">
+                                    <div class="row orientation_top" style="display:block">
                                     <div class="col-md-12">
                                         <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
                                     </div>
-                                <div class="col-md-12">
-                                    <input type="hidden" value="to bottom" id="color_orientation" name="color_orientation">
-                                    <!-- gradient_orientation -->
-                                    <ul class="choose_orientation">
-                                        <li><a class="gradientOrientation " color-orientation="to right top" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="to right" main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="to right bottom" main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation active" color-orientation="to bottom" main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="to left bottom" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="to left" main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="to left top" main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="to top" main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
-                                        <li><a class="gradientOrientation " color-orientation="circle" main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
-                                    </ul>
+                                    <div class="col-md-12">
+                                        <input type="hidden" id="color_orientation" name="color_orientation" :value="campaign.gradient_orientation">
+                                        <!-- gradient_orientation -->
+                                        <ul class="choose_orientation">
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')"   main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')"  main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 </div>
-                             
+
+                                <div v-if="!campaign.bg_color_type" class="widgetMultiColorBox">
+                                     <div class="col-md-12">
+                                         <span class="fsize13 dark_400 mt-2">SOLID COLOR:</span>
+                                        <input type="text"
+                                           class="form-control colorpicker-basic2 float-right"
+                                           name="solid_color"
+                                           v-model="campaign.solid_color"
+                                               @change="synSolidColor()"
+                                         >
+                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div v-if="settingTab ==3 ">
                                 <div class="bbot pb10 mb15">
                                     <h2 class="fsize11 text-uppercase dark_200 m-0">SELECT REVIEWS
                                         <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -145px;"></i>
                                     </h2>
                                 </div>
- 
-                                <div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;">
-                                            <div class="pull-left mb0 showReviewPopup" review-id="327">
-                                                
-                                                <div>
-                                                    <div class="media-left pr-15">
-                                                        <img class="review_productimg" src="https://s3-us-west-2.amazonaws.com/brandboost.io/35/reviews/images/s3_7639_56b481d2a9584571e7ef4aa0f68d48439ea908d2.jpg">
-                                                    </div>
-                                                    <div class="media-left pr0">
-                                                    <div>testnew 25</div>
-                                                    <div class="text-size-small text-muted" style="font-size:11px;"> If you are going to use a pas... (2.0)</div>
-                                                    </div>
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    <div class="review_section_user">
+<!--{{campaign}}-->
+                                <div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;" v-for="review in reviewsData">
+                                    <div class="pull-left mb0 showReviewPopup">
+                                        <div>
+                                             <div class="media-left pr-15">
+                                                 <img class="review_productimg" src="review.id">
+                                             </div>
+                                             <div class="media-left pr0">
+                                                <div>{{review.brand_title}}</div>
+                                                    <div class="text-size-small text-muted" style="font-size:11px;"> {{review.review_title}}</div>
+                                                </div>
+                                                <div class="review_section_user">
                                                     <div class="top_div" style="border: none;">
                                                         <div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><span class="icons fl_letters s32">DM</span></a></div>
                                                         <div class="right">
-                                                            <div class="client_n"><p>Dheeraj  Maulekhi</p></div>
-                                                            <div class="client_review">
-                                                            <img src="http://brandboost.io/assets/images/widget/yellow_icon.png"> <img src="http://brandboost.io/assets/images/widget/yellow_icon.png"> <img src="http://brandboost.io/assets/images/widget/grey_icon.png"> <img src="http://brandboost.io/assets/images/widget/grey_icon.png"> <img src="http://brandboost.io/assets/images/widget/grey_icon.png">                                                             <span>June 27th 2019</span></div>
-                                                        </div>
+                                                            <div class="client_n"><p>{{review.firstname}} {{review.lastname}}</p></div>
+                                                                <div class="client_review">
+                                                                    ratings
+                                                                    
+                                                                    <img src="/assets/images/widget/yellow_icon.png">
+                                                                    <img src="/assets/images/widget/yellow_icon.png">
+                                                                    <img src="http://brandboost.io/assets/images/widget/grey_icon.png">
+                                                                    <img src="http://brandboost.io/assets/images/widget/grey_icon.png">
+                                                                    <img src="http://brandboost.io/assets/images/widget/grey_icon.png">
+                                                                    <span>June 27th 2019</span></div>
+                                                                </div>
                                                     </div>
-                                                    </div>
-                                                    
-                                                    
-                                                    
                                                 </div>
+                                             </div>
                                             </div>
+<!--                                    v-model="findSelectedReview(review.id)"-->
                                             <label class="custom-form-switch pull-right">
-                                                <input class="field autoSaveReview" type="checkbox" id="widget_review_327" name="reviewsId[]" value="327">
-                                                <span class="toggle dred"></span> 
+                                                <input class="field"
+                                                       type="checkbox"
+                                                       id="review-" :id="review.id"
+                                                       v-bind:value="review.id"
+                                                        :checked="findSelectedReview(review.id)"
+                                                       v-model="campaign.reviews_id"
+                                                       @change="synReviewsId($event)">
+<!--                                                <input class="field autoSaveReview" type="checkbox" id="widget_review_" :id="review.id" name="reviewsId[]" :value="review.id">-->
+                                                <span class="toggle dred"></span>
                                             </label>
                                             <div class="clearfix"></div>
                                         </div>
 
-                            </div>    
-                          
+                            </div>
+                            <div class="col-12 pt-15">
+                                <button class="btn btn-success btn-sm bkg_green_300 light_000 text-center" @click="synSolidColor">Save<span><img
+                                    src="/assets/images/arrow-right-line.svg"></span></button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -309,7 +328,7 @@
                     <form method="post" @submit.prevent="processForm">
                         <div class="p40">
                             <div class="row">
-                                <div class="col-md-12"> 
+                                <div class="col-md-12">
                                     <!-- <img src="assets/images/list-icon.svg"/> -->
                                     <h3 class="htxt_medium_13 dark_800 mt20">Choose Gallery Widget Design</h3>
                                     <p class="htxt_medium_12 dark_800 mt20">Choose type of item you want to create</p>
@@ -414,9 +433,9 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                settingTab :1,
+                settingTab :3,
                 campaignId: this.$route.params.id,
-                oNPSList: {},
+                reviewsData: {},
                 campaign: {},
                 user: {},
                 breadcrumb: '',
@@ -453,6 +472,19 @@
                         // this.formLabel = 'Update';
                         this.displayForm(this.campaign);
                     });
+            },
+            findSelectedReview: function(findId){
+                console.log(this.campaign.reviews_id);
+                if(this.campaign.reviews_id) {
+                    var length = this.campaign.reviews_id.length;
+                    for(var i = 0; i < length; i++) {
+                            console.log(this.campaign.reviews_id[i]);
+                            if(this.campaign.reviews_id[i] == findId)
+                                return true;
+                    }
+                }
+
+                // return true;
             },
             displayStep: function(step){
                 let path = '';
@@ -514,10 +546,11 @@
                 }else{
                     this.updateSingleField('allow_widget_bgcolor',0);
                 }
+                $(".colorpicker-basic2").spectrum();
             },
             synBorderThickness: function(e){
                 this.updateSingleField('border_thickness',this.campaign.border_thickness);
-                 
+
             },
             synGalleryType: function(e){
                 this.updateSingleField('gallery_type',this.campaign.gallery_type);
@@ -527,6 +560,19 @@
                 this.updateSingleField('image_size',this.campaign.image_size);
 
             },
+            synMainColor: function(e){
+                this.updateSingleField('gradient_color',e);
+            },
+            synGradientOrientation: function(e){
+                this.updateSingleField('gradient_orientation',e);
+            },
+            synSolidColor: function(e){
+                let elem1 = document.querySelector('input[name="solid_color"]');
+                let solid_color = (elem1 != null) ? elem1.value : null;
+                // console.log(solid_color);
+                this.campaign.solid_color = solid_color ? solid_color : this.campaign.solid_color;
+                this.updateSingleField('solid_color',this.campaign.solid_color);
+            },
             synGalleryDesignType:function(){
                 this.loading =true;
                 this.updateSingleField('gallery_design_type',this.campaign.gallery_design_type);
@@ -535,6 +581,23 @@
             updateSingleField: function (fieldName, fieldValue) {
                 this.loading = true;
                 axios.post('admin/mediagallery/updateSingleField', {
+                    _token: this.csrf_token(),
+                    fieldName: fieldName,
+                    fieldVal: fieldValue,
+                    gallery_id: this.campaignId,
+                }).then(response => {
+                    this.refreshMessage = Math.random();
+                    this.successMsg = 'Updated the changes successfully!!';
+                    this.getMediaWidgetSetup();
+                    this.loading = false;
+                });
+
+            },
+            synReviewsId: function () {
+                var fieldName = 'reviews_id';
+                var fieldValue=this.campaign.reviews_id;
+                this.loading = true;
+                axios.post('admin/mediagallery/updateSingleFieldCompress', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
                     fieldVal: fieldValue,
@@ -647,7 +710,7 @@
         $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic3").spectrum();
         $(".colorpicker-basic4").spectrum();*/
-
+        $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic1").spectrum({
             change: function (color) {
                 $('.colorpicker-basic1').val(color.toHexString());
@@ -687,42 +750,14 @@
                     width: "toggle"
                 });
             });
+            // $(document).on('click', '.selectMainColor', function () {
+            //     $('#main_colors').val($(this).attr('color-data'));
+            // });
         });
 
 
 
-        var myDropzoneLogoImg = new Dropzone(
-            '#uploadNPSBrandLogo', //id of drop zone element 1
-            {
-                url: 'dropzone/upload_s3_attachment/'+userid+'/nps',
-                params: {
-                    _token: tkn
-                },
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
-                    if(response.xhr.responseText != "") {
-                        $('.logo_img').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
-                        var dropImage = $('#npsBrandLogo').val();
-                        $.ajax({
-                            url: '/admin/brandboost/DeleteObjectFromS3',
-                            type: "POST",
-                            data: {_token: tkn, dropImage: dropImage},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-                        $('#npsBrandLogo').val(response.xhr.responseText);
-                    }
-                }
-            });
-        myDropzoneLogoImg.on("complete", function(file) {
-            myDropzoneLogoImg.removeFile(file);
-        });
+
     }
 
 </script>
