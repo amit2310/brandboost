@@ -78,7 +78,8 @@
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
     			<li><a class="search_tables_open_close" href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-    			<li><a href="#"><i class="ri-delete-bin-line fsize17 dark_100 red_400"></i></a></li>
+    			<!--<li><a href="#"><i class="ri-delete-bin-line fsize17 dark_100 red_400"></i></a></li>-->
+    			<li><a href="#"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
     			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
     			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
     		</ul>
