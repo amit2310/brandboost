@@ -162,7 +162,7 @@
                                         <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</span>
                                     </td>
                                     <td>
-                                        <span v-if="request.phone != ''"><img src="assets/images/chatline.svg"/> &nbsp; {{ phoneNoFormat(request.phone) }}</span>
+                                        <span v-if="request.phone != ''"><img src="assets/images/chatline.svg"/> &nbsp; {{ request.phone ? phoneNoFormat(request.phone) : '' }}</span>
                                         <span v-if="request.email != ''"><img src="assets/images/atline.svg"/> &nbsp; {{ request.email }}</span>
                                     </td>
                                     <td>
