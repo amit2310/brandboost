@@ -11,6 +11,7 @@
  CSS
  **********************-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
@@ -77,6 +78,7 @@
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
     			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+    			<li><a href="#"><i class="ri-delete-bin-line fsize17 dark_100 red_400"></i></a></li>
     			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
     			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
     		</ul>
