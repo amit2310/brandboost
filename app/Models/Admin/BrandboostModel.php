@@ -254,7 +254,7 @@ class BrandboostModel extends Model {
                 return $query->where('tbl_brandboost.review_type', $reviewType);
             });
         $query->where('tbl_subscribers.email', '!=',  '');
-        $query('tbl_tracking_log_email_sms.id', 'DESC');
+        $query->orderBy('tbl_tracking_log_email_sms.id', 'DESC');
         $oData = $query->paginate(10);
         //dd(DB::getQueryLog());
         return $oData;
