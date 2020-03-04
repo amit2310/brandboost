@@ -11,6 +11,7 @@
  CSS
  **********************-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
@@ -76,12 +77,23 @@
     	</div>
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
-    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+    			<li><a class="search_tables_open_close" href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+    			<!--<li><a href="#"><i class="ri-delete-bin-line fsize17 dark_100 red_400"></i></a></li>-->
+    			<li><a href="#"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
     			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
     			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
     		</ul>
     	</div>
     </div>
+    
+    <div class="card p20 datasearcharea br6 shadow3">
+    	<div class="form-group m-0 position-relative">
+    		<input id="InputToFocus" type="search" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+    		<a class="search_tables_open_close searchcloseicon" href="#"><img src="assets/images/close-icon-13.svg"/></a>
+    	</div>
+    </div>
+    
+    
     </div>
 
 
@@ -458,7 +470,7 @@ $(document).ready(function(){
 
 
 <script>
-	//side nav active script
+//side nav active script
 	$(".nav-link.review").addClass("active");
 	$(".nav-link.people").removeClass("active");
 	$(".main-icon-menu-pane.review").addClass("active");
