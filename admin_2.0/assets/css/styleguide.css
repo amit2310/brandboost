@@ -74,7 +74,7 @@ Misc
 .min_h_600{min-height: 600px;}
 .min_w_96{ min-width:96px;}
 .badge.badge-grey{background: #ebedf2!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 4px 8px; font-weight: 500}
-.badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 10px; color: #7B89A6!important; border-radius: 20px;padding: 2px 4px; font-weight: 500; display: table; }
+.badge.badge-grey.top-bar{background: #DBE4F3!important; font-size: 9px; color: #7B89A6!important; border-radius: 20px;padding: 3px 4px; font-weight: 300; display: table; }
 .ls4{letter-spacing: 0.4px}
 .h-100-vh{height: 100vh}
 .bottom_positiom{position: absolute; width: 100%; bottom: 0}
