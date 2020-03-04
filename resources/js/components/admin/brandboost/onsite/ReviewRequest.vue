@@ -34,23 +34,31 @@
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>-->
                             <ul class="table_filter">
-                                <li><a class="active" href="javascript:void(0);">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'all'}" @click="applySort('all')">ALL</a></li>
                                 <li><a href="javascript:void(0);">SENT</a></li>
                                 <li><a href="javascript:void(0);">DRAFT</a></li>
                                 <li><a href="javascript:void(0);">SUBMITED</a></li>
-                                <li><a href="javascript:void(0);">ARCHIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
                                 <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
                             </ul>
                         </div>
                     </div>
+
+                    <div class="card p20 datasearcharea br6 shadow3">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                        </div>
+                    </div>
+
                 </div>
 
 
@@ -63,7 +71,7 @@
                                     <td width="20">
                                         <span>
                                             <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
+                                                <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
                                                 <span class="custmo_checkmark blue"></span>
                                             </label>
                                         </span>
@@ -80,7 +88,7 @@
                                     <td width="20">
                                         <span>
                                             <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
+                                                <input type="checkbox" :checked="deletedItems.indexOf(request.trackinglogid)>-1" @change="addtoDeleteCollection(request.trackinglogid, $event.target)">
                                                 <span class="custmo_checkmark blue"></span>
                                             </label>
                                         </span>
@@ -248,8 +256,9 @@
                 current_page: 1,
                 breadcrumb: '',
                 viewType: 'List View',
-                sortBy: 'Name',
-                searchBy: ''
+                sortBy: 'all',
+                searchBy: '',
+                deletedItems: []
             }
         },
         created() {
@@ -261,9 +270,72 @@
         watch: {
             'sortBy' : function(){
                 this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            }
+        },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.requests.forEach(req => {
+                    let idx = this.deletedItems.indexOf(req.trackinglogid);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
             }
         },
         methods: {
+            applySort: function(sortVal){
+                this.sortBy = sortVal;
+                this.deletedItems = [];
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/brandboost/deleteReviewRequest', {_token:this.csrf_token(), multipal_id:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.requests.length>0){
+                            this.requests.forEach(req => {
+                                let idxx = this.deletedItems.indexOf(req.trackinglogid);
+                                if(idxx == -1){
+                                    this.deletedItems.push(req.trackinglogid);
+                                }
+                            });
+                        }
+                    }else{
+                        this.requests.forEach(req => {
+                            let idxx = this.deletedItems.indexOf(req.trackinglogid);
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+            },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/review_request/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
@@ -328,4 +400,12 @@
             }
         }
     }
+    $(document).ready(function(){
+        $(".search_tables_open_close").click(function(){
+            $(".datasearcharea").animate({
+                width: "toggle"
+            });
+            $('#InputToFocus').focus();
+        });
+    });
 </script>
