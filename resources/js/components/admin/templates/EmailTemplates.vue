@@ -407,7 +407,7 @@
     });
 
 </script>
-<style>
+<style scoped>
     .emailtempsec {
         width: calc(100% - 190px);
     }

@@ -554,7 +554,7 @@
     }
 
 </script>
-<style>
+<style scoped>
     .dropzone .dz-default.dz-message:before { content: ''!important; }
     .dropzone {min-height:40px;}
     .dropzone .dz-default.dz-message span {    font-size: 13px;    margin-top: -10px;}

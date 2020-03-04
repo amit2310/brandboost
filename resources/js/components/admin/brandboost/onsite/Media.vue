@@ -363,7 +363,3 @@
         });
     });
 </script>
-
-<style>
-
-</style>

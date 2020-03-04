@@ -456,7 +456,3 @@
 
     });
 </script>
-
-<style>
-
-</style>

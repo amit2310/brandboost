@@ -943,7 +943,7 @@
         }
     };
 </script>
-<style>
+<style scoped>
     .media_file{
         width: 250px !important;
     }

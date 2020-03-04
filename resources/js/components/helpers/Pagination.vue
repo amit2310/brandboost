@@ -1,31 +1,19 @@
 <template>
-    <div class="mt-4" style="width:100%;display:block;" v-if="pagination.total > pagination.per_page">
-        <div style="width:80%;float:left;">
-            <ul class="pagination">
-                <li v-if="pagination.current_page > 1" class="page-item">
-                    <a class="page-link" href="javascript:void(0)" aria-label="Previous"
-                       v-on:click.prevent="changePage(pagination.current_page - 1)">
-                        <span aria-hidden="true">Previous</span>
-                    </a>
-                </li>
-                <li v-for="page in pagesNumber" :class="{'active': page == pagination.current_page}" class="page-item">
-                    <a class="page-link" href="javascript:void(0)" v-on:click.prevent="changePage(page)">{{ page }}</a>
-                </li>
-                <li v-if="pagination.current_page < pagination.last_page" class="page-item">
-                    <a class="page-link" href="javascript:void(0)" aria-label="Next"
-                       v-on:click.prevent="changePage(pagination.current_page + 1)">
-                        <span aria-hidden="true">Next</span>
-                    </a>
-                </li>
-            </ul>
+    <div class="custom_pagination" v-if="pagination.total > pagination.per_page">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="mr-4">ITEMS PER PAGE:<select v-model="pagination.per_page"><option>10</option><option>15</option><option>20</option></select></span>
+                <span>{{pagination.current_page}}-{{pagesNumber.length}} out of {{pagination.total}}</span>
+            </div>
+            <div class="col-md-6">
+                <ul class="page_list float-right">
+                    <li v-if="pagination.current_page > 1"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page - 1)"><img src="assets/images/arrow-right-s-line.svg"></a></li>
+                    <li v-for="page in pagesNumber"><a :class="{'active': page == pagination.current_page}" href="javascript:void(0);" v-on:click.prevent="changePage(page)">{{ page }}</a></li>
+                    <li v-if="pagination.current_page < pagination.last_page"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page + 1)"><img src="assets/images/arrow-left-s-line.svg"></a></li>
+                </ul>
+            </div>
         </div>
-        <div style="width:20%;float:right;">
-            <span style="margin-left:20px;"><strong>Total Record: {{pagination.total}}</strong></span>
-            <span><strong>Page {{pagination.current_page}} of {{pagesNumber.length}}</strong></span>
-        </div>
-
-        </div>
-
+    </div>
 </template>
 
 <script>

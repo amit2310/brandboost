@@ -191,7 +191,3 @@
         }
     };
 </script>
-
-<style>
-
-</style>

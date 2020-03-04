@@ -523,7 +523,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .outer_circle {
         padding: 14px;
         background: #fff;

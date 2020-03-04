@@ -450,7 +450,3 @@
         /*$('[name=tags]').tagify();*/
     });
 </script>
-
-<style>
-
-</style>

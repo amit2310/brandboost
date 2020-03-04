@@ -211,7 +211,7 @@
     });
 </script>
 
-<style>
+<style scoped>
     .review_source_new .inner {
         text-align: center;
         border-radius: 5px;
