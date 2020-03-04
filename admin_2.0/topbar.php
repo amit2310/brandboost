@@ -38,7 +38,7 @@
           <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
       </li>
       
-      <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993 float-left" src="assets/images/alarm-bell.svg" alt="profile-user"> <img class="visible_993 float-left" src="assets/images/alarm-bell-white.svg" alt="profile-user"> <!--<span class="badge badge-grey top-bar">2</span>--></a>
+      <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993 float-left" src="assets/images/alarm-bell.svg" alt="profile-user"> <img class="visible_993 float-left" src="assets/images/alarm-bell-white.svg" alt="profile-user"> <span class="badge badge-grey top-bar">25</span></a>
         <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>

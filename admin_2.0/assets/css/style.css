@@ -939,7 +939,8 @@ color: #7B89A6;
 	padding: 0;
 	color: #828db1;
 	line-height: 32px;
-	max-height: 32px
+	max-height: 32px;
+	position: relative
 }
 .navbar-custom .nav-link .nav-icon {
 	font-size: 18px
