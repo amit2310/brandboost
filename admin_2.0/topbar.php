@@ -39,9 +39,72 @@
       </li>
       
       <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993 float-left" src="assets/images/alarm-bell.svg" alt="profile-user"> <img class="visible_993 float-left" src="assets/images/alarm-bell-white.svg" alt="profile-user"> <span class="badge badge-grey top-bar">25</span></a>
-        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+       
+          
+          <div class="dropdown-menu notification_dropdown dropdown-menu-right">
+                        <div class="dropdown-content-heading"> Notifications <span class="badge bkg_purple ml10">25</span>
+                            <ul class="icons-list">
+                                <li><a href="javascript:void(0);" class="readAllNotification"><i class="icon-checkmark3"></i></a> </li>
+                                <li><a href="http://brandboostx.com/admin/settings/?t=notify"><i class="icon-cog2"></i></a> </li>
+                            </ul>
+                        </div>
+                        <ul class="media-list dropdown-content-body">
+
+                                                                                            <li class="media">
+                                    <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="icon-stack-text txt_purple "></i></a> </div>
+                                    <div class="media-body">
+                                        <a target="_blank" href="javascript:void(0);" data-redirect="" data-notifyid="1186" class="media-heading fw700 readNotification ">
+                                            <p>Please upgrade Your Plan you have "150" remaining in your current plan</p>
+                                            <p class="fsize10 text-muted">Please upgrade Your Plan ...</p>
+                                            <p class="fsize10 text-muted"> 08:20PM 03 Jul 2019</p>
+                                        </a>
+                                    </div>
+                                </li>
+                                                                <li class="media">
+                                    <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="icon-stack-text txt_purple "></i></a> </div>
+                                    <div class="media-body">
+                                        <a target="_blank" href="javascript:void(0);" data-redirect="" data-notifyid="1185" class="media-heading fw700 readNotification ">
+                                            <p>Please upgrade Your Plan you have "150" remaining in your current plan</p>
+                                            <p class="fsize10 text-muted">Please upgrade Your Plan ...</p>
+                                            <p class="fsize10 text-muted"> 08:19PM 03 Jul 2019</p>
+                                        </a>
+                                    </div>
+                                </li>
+                                                                <li class="media">
+                                    <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="icon-stack-text txt_purple "></i></a> </div>
+                                    <div class="media-body">
+                                        <a target="_blank" href="javascript:void(0);" data-redirect="" data-notifyid="1184" class="media-heading fw700 readNotification ">
+                                            <p>Please upgrade Your Plan you have "150" remaining in your current plan</p>
+                                            <p class="fsize10 text-muted">Please upgrade Your Plan ...</p>
+                                            <p class="fsize10 text-muted"> 08:16PM 03 Jul 2019</p>
+                                        </a>
+                                    </div>
+                                </li>
+                                                                <li class="media">
+                                    <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="icon-stack-text txt_purple "></i></a> </div>
+                                    <div class="media-body">
+                                        <a target="_blank" href="javascript:void(0);" data-redirect="" data-notifyid="1183" class="media-heading fw700 readNotification ">
+                                            <p> Comment has been added successfully</p>
+                                            <p class="fsize10 text-muted"> Comment has been added s...</p>
+                                            <p class="fsize10 text-muted"> 06:18PM 27 Jun 2019</p>
+                                        </a>
+                                    </div>
+                                </li>
+                                                                <li class="media">
+                                    <div class="media-left pr15">  <a class="icons" href="javascript:void(0);"><i class="icon-stack-text txt_purple "></i></a> </div>
+                                    <div class="media-body">
+                                        <a target="_blank" href="javascript:void(0);" data-redirect="" data-notifyid="1182" class="media-heading fw700 readNotification ">
+                                            <p> Comment has been added successfully</p>
+                                            <p class="fsize10 text-muted"> Comment has been added s...</p>
+                                            <p class="fsize10 text-muted"> 05:09PM 27 Jun 2019</p>
+                                        </a>
+                                    </div>
+                                </li>
+                                                                                    </ul>
+                                                    <div class="dropdown-content-footer"> <a href="javascript:void(0);" class="viewAllNotification" data-popup="tooltip" title="All messages"><i class="icon-menu display-block"></i></a> </div>
+                                            </div>
+                                            
+                                            
       </li>
       
       
