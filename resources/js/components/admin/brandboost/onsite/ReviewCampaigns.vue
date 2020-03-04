@@ -119,26 +119,6 @@
                 </div>
 
                 <div class="row" v-if="viewType == 'Grid View'">
-                    <div class="col-md-3 d-flex">
-                        <div class="card p0 pt30 text-center animate_top col">
-                            <span class="status_icon bkg_green_400"></span>
-                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
-                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
-                            </div>
-                            <a href="#" class="circle-icon-64 bkg_reviews_300 m0auto"><img src="assets/images/star_fill_white_25.svg"> </a>
-                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4">Review Campaign</h3>
-                            <p class="fsize10 fw500 green_400 text-uppercase mb20">RUNNING</p>
-                            <div class="p15 pt15 btop">
-                                <ul class="workflow_list">
-                                    <li><a href="#"><span><img src="assets/images/send-plane-grey.svg"></span> 3k</a></li>
-                                    <li><a href="#"><span><img src="assets/images/mail_open_fill_grey.svg"></span> 28%</a></li>
-                                    <li><a href="#"><span><img src="assets/images/cursorline-fill-grey.svg"></span> 67%</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 text-center animate_top col">
                             <span v-if="campaign.status == '1'" class="status_icon bkg_green_400"></span>
