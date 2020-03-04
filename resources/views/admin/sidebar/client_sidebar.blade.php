@@ -52,7 +52,7 @@
     <div class="main-icon-menu">
         <div class="slimscroll">
             <nav class="nav">
-                <a href="#" class="mb-4" > <img src="assets/images/logo_small.svg"/> </a>
+                <a href="javascript:void(0);" class="brandboost_logo"><span class="site_status_icon"></span> <img class="bb_logo_img" src="assets/images/logo_small.svg"/> </a>
                 <a href="#dashboard" id="loadDasboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a>
                 <a href="#people" id="loadContactTheme" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a>
                 <a href="#live_messanger" id="loadChatTheme" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a>

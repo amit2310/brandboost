@@ -242,7 +242,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='') {
+    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='',  $searchBy='', $sortBy='') {
         //DB::enableQueryLog();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -257,8 +257,15 @@ class BrandboostModel extends Model {
                 'tbl_brandboost_campaign_users.id as subscriberid','tbl_brandboost_campaign_users.status as subscriberstatus',
                 'tbl_tracking_log_email_sms.id as trackinglogid',
                 'tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid', 'tbl_tracking_log_email_sms.type as tracksubscribertype',
-                'tbl_tracking_log_email_sms.created as requestdate')
-            ->when(($brandboostId > 0), function ($query) use ($brandboostId) {
+                'tbl_tracking_log_email_sms.created as requestdate');
+            if(!empty($searchBy)){
+                $query->where('tbl_subscribers.firstname', 'LIKE',  "%$searchBy%");
+                $query->orWhere('tbl_subscribers.lastname', 'LIKE',  "%$searchBy%");
+                $query->orWhere('tbl_subscribers.email', 'LIKE',  "%$searchBy%");
+                $query->orWhere('tbl_subscribers.phone', 'LIKE',  "%$searchBy%");
+                //$query->orWhere('tbl_brandboost.brand_title', 'LIKE',  "%$searchBy%");
+            }
+            $query->when(($brandboostId > 0), function ($query) use ($brandboostId) {
                 return $query->where('tbl_brandboost.id', $brandboostId);
             })
             ->when(($user_role != 1), function ($query) use ($userID) {
@@ -271,6 +278,13 @@ class BrandboostModel extends Model {
                 return $query->where('tbl_brandboost.review_type', $reviewType);
             });
         $query->where('tbl_subscribers.email', '!=',  '');
+        if(!empty($sortBy)){
+            if($sortBy == 'archive'){
+                $query->where('tbl_tracking_log_email_sms.archived', 1);
+            }
+        }else{
+            $query->where('tbl_tracking_log_email_sms.archived', 0);
+        }
         $query->orderBy('tbl_tracking_log_email_sms.id', 'DESC');
         $oData = $query->paginate(10);
         //dd(DB::getQueryLog());
@@ -650,6 +664,22 @@ class BrandboostModel extends Model {
                 ->where('id', $recordId)
                 ->delete();
 
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * This function is used to archive review request
+     * @param $recordId
+     * @return bool
+     */
+    public static function archiveReviewRequest($recordId) {
+        $result = DB::table('tbl_tracking_log_email_sms')
+                ->where('id', $recordId)
+                ->update(['archived'=>1]);
         if ($result) {
             return true;
         } else {

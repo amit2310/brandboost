@@ -565,6 +565,8 @@ class Brandboost extends Controller
     {
         $aUser = getLoggedUser();
         $param = $request->type;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
         $moduleName = 'brandboost';
         //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
@@ -573,7 +575,7 @@ class Brandboost extends Controller
             'Reviews' => '#/reviews/dashboard',
             ucwords($param).' Review Requests' => ''
         );
-        $oRequests = $mBrandboost->getReviewRequest('', '', $param);
+        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy);
         if($oRequests->items()){
             foreach($oRequests->items() as $oRequest){
                 $brandboostId = $oRequest->bbid;
@@ -3727,7 +3729,8 @@ public function widgetStatisticDetailsStatsGraph(){
 
         $multipalIds = $request->multipal_id;
         foreach ($multipalIds as $recordId) {
-            $result = $mBrandboost->deleteReviewRequest($recordId);
+            //$result = $mBrandboost->deleteReviewRequest($recordId);
+            $result = $mBrandboost->archiveReviewRequest($recordId);
         }
         if ($result) {
             $response['status'] = 'success';
@@ -7521,5 +7524,6 @@ public function widgetStatisticDetailsStatsGraph(){
             exit;
         }
     }
+
 
 }
