@@ -4,7 +4,7 @@
     <nav class="nav"> 
     <a href="#" class="brandboost_logo"><span class="site_status_icon"></span> <img class="bb_logo_img" src="assets/images/logo_small.svg"/> </a>
     
-    <a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a> 
+    <!--<a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a> 
     <a href="#people" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a> 
     <a href="#live_messanger" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a> 
     <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a> 
@@ -24,7 +24,31 @@
     <a href="#Appointments" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Appointments"> <img src="assets/images/calendar-event-fill.svg"/> </a> 
     <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
     <a href="#Analytics" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Analytics"> <img src="assets/images/bar-chart-box-fill.svg"/> </a> 
-    <a href="#Settings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <img src="assets/images/settings-3-fill-icon.svg"/> </a> 
+    <a href="#Settings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <img src="assets/images/settings-3-fill-icon.svg"/> </a> -->
+    
+    <a href="#dashboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <i class="ri-dashboard-fill"></i> </a> 
+    <a href="#people" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <i class="ri-account-circle-fill"></i></a> 
+    <a href="#live_messanger" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <i class="ri-chat-1-fill"></i> </a> 
+    <a href="#Email_inbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <i class="ri-mail-fill"></i> </a> 
+    <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
+    <a href="#BrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <i class="ri-window-2-fill"></i></a> 
+    <a href="#ReviewSystem" class="nav-link review" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <i class="ri-star-fill"></i> </a> 
+    <a href="#MediaGalleries" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <i class="ri-image-fill"></i> </a> 
+    <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
+    <a href="#EmailMarketing" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <i class="ri-send-plane-2-fill"></i> </a> 
+    <a href="#SMSMarketing" class="nav-link sms" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <i class="ri-message-2-fill"></i> </a> 
+    <a href="#Referrals" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <i class="ri-share-fill"></i> </a> 
+    <a href="#SiteWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <i class="ri-rocket-2-fill"></i> </a>
+    <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
+    <a href="#Feedback" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Feedback"> <i class="ri-chat-smile-3-fill"></i> </a> 
+    <a href="#HelpDesk" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Help Desk"> <i class="ri-customer-service-fill"></i> </a> 
+    <a href="#KnowledgeBase" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Knowledge Base"> <i class="ri-book-open-fill"></i></a> 
+    <a href="#Appointments" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Appointments"> <i class="ri-calendar-event-fill"></i> </a> 
+    <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
+    <a href="#Analytics" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Analytics"> <i class="ri-bar-chart-box-fill"></i> </a> 
+    <a href="#Settings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <i class="ri-settings-3-fill"></i> </a> 
+    
+    
     </nav>
   </div>
   </div>

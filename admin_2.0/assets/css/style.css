@@ -530,9 +530,9 @@ code {
 .left-sidenav .main-icon-menu .nav-link {
 	position: relative;
 	padding: 0;
-	color: #fff;
-	width: 36px;
-	height: 36px;
+	color: #9cbfff;
+	width: 32px;
+	height: 32px;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -552,25 +552,32 @@ code {
 .left-sidenav .main-icon-menu .nav-link img{opacity: 0.6}
 
 .left-sidenav .main-icon-menu .nav-link:focus, .left-sidenav .main-icon-menu .nav-link:hover, .left-sidenav .main-icon-menu .nav-link.active {
-	color: #fff;
+	color: #000;
 	border-radius: 100%;
-	/*background: #509fc8;
-	border:4px solid rgba(117, 202, 246, 0.5);*/
+	/*background: #509fc8;border:4px solid rgba(117, 202, 246, 0.5);*/
 	/*background: url(../images/menuactive.png)center center no-repeat;*/
 	/*background: url(../images/Frame.svg)center center no-repeat;*/
-	background: url(../images/menuhovericon_grey.png)center center no-repeat;
-	background-size: 36px;
+	/*background: url(../images/menuhovericon_grey.png)center center no-repeat;*/
+	background: #ffffff;
+	background-size: 32px;
 }
 .left-sidenav .main-icon-menu .nav-link.active img{opacity: 1}
 .left-sidenav .main-icon-menu .nav-link.active, .left-sidenav .main-icon-menu .nav-link:active {
-	color: #4d79f6
+	color: #3970d9;
 }
 .left-sidenav .main-icon-menu .nav-link+.nav-link {
 	margin-top: 9px
 }
-.left-sidenav .main-icon-menu .nav-link i {
-	font-size: 15px
-}
+.left-sidenav .main-icon-menu .nav-link i {font-size: 18px;color: #fff;opacity: 0.7}
+.left-sidenav .main-icon-menu .nav-link.active i, .left-sidenav .main-icon-menu .nav-link:hover i {color: #000;opacity: 1}
+
+#PeopleSection .left-sidenav .main-icon-menu .nav-link.active i, #PeopleSection .left-sidenav .main-icon-menu .nav-link:hover i{color: #4f8af4}
+#EmailSection .left-sidenav .main-icon-menu .nav-link.active i, #EmailSection .left-sidenav .main-icon-menu .nav-link:hover i{color: #56ACD8}
+#LiveChatSection .left-sidenav .main-icon-menu .nav-link.active i, #LiveChatSection .left-sidenav .main-icon-menu .nav-link:hover i{color: #3D5DD5}
+#ReviewSection .left-sidenav .main-icon-menu .nav-link.active i, #ReviewSection .left-sidenav .main-icon-menu .nav-link:hover i{color: #6562EB}
+#SMSSection .left-sidenav .main-icon-menu .nav-link.active i, #SMSSection .left-sidenav .main-icon-menu .nav-link:hover i{color: #50A98F}
+
+
 .left-sidenav .main-icon-menu .nav-link i.drip-icon {
 	line-height: 1
 }
@@ -582,7 +589,7 @@ code {
 .left-sidenav .main-icon-menu .nav-link.active::before {
 	content: "";
 	position: absolute;
-	left: 46px;
+	left: 43px;
 	top: 3px;
 	line-height: 0;
 	background: url(../images/Union.png) left top no-repeat;
