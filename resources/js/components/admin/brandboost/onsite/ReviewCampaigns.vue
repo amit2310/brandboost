@@ -8,11 +8,12 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review Campaigns</h3>
+                        <h3 class="htxt_medium_24 dark_700">Review Campaigns Cards</h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
-                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <!--<button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>-->
+                        <button class="circle-icon-40 mr15"><img src="assets/images/settings-3-line.svg"></button>
                         <button class="btn btn-md bkg_reviews_400 light_000 js-review-campaign-slidebox"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
@@ -41,7 +42,60 @@
                     </div>
                 </div>-->
                 <div class="table_head_action">
-                    <div class="row">
+
+                    <div class="row" v-if="viewType == 'Grid View'">
+                        <div class="col-md-6">
+                            <!--<ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                            </ul>-->
+                            <h3 class="htxt_medium_16 dark_400">Campaigns</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <!--<ul class="table_filter text-right">
+                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                            </ul>-->
+                            <div class="table_action">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a>
+                                    </div>
+                                </div>
+                                <div class="float-right ml10 mr10">
+                                    <button v-if="viewType='Grid View'" type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/cards_16_grey.svg"></span>&nbsp; Grid View
+                                    </button>
+                                    <button v-else type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp; List View
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" v-else>
                         <div class="col-md-6">
                             <ul class="table_filter">
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
@@ -61,11 +115,34 @@
                             </ul>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="row" v-if="viewType == 'Grid View'">
+                    <div class="col-md-3 d-flex">
+                        <div class="card p0 pt30 text-center animate_top col">
+                            <span class="status_icon bkg_green_400"></span>
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                            </div>
+                            <a href="#" class="circle-icon-64 bkg_reviews_300 m0auto"><img src="assets/images/star_fill_white_25.svg"> </a>
+                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4">Review Campaign</h3>
+                            <p class="fsize10 fw500 green_400 text-uppercase mb20">RUNNING</p>
+                            <div class="p15 pt15 btop">
+                                <ul class="workflow_list">
+                                    <li><a href="#"><span><img src="assets/images/send-plane-grey.svg"></span> 3k</a></li>
+                                    <li><a href="#"><span><img src="assets/images/mail_open_fill_grey.svg"></span> 28%</a></li>
+                                    <li><a href="#"><span><img src="assets/images/cursorline-fill-grey.svg"></span> 67%</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 text-center animate_top col">
+                            <span v-if="campaign.status == '1'" class="status_icon bkg_green_400"></span>
+                            <span v-else class="status_icon bkg_light_800"></span>
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
@@ -80,10 +157,18 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)" class="circle-icon-64 bkg_reviews_000 m0auto">
+                            <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)" class="circle-icon-64 bkg_reviews_000 m0auto">
                                 <img v-if="campaign.status == 1" src="assets/images/star-fill-review-24.svg">
                                 <img v-else src="assets/images/star-fill-grey.svg">
+                            </a>-->
+
+                            <a v-if="campaign.status == 1" href="javascript:void(0);" @click="setupBroadcast(campaign.id)" class="circle-icon-64 bkg_reviews_300 m0auto">
+                                <img src="assets/images/star_fill_white_25.svg">
                             </a>
+                            <a v-else href="javascript:void(0);" @click="setupBroadcast(campaign.id)" class="circle-icon-64 bkg_light_800 m0auto">
+                                <img src="assets/images/star_fill_white_25.svg">
+                            </a>
+
                             <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="setupBroadcast(campaign.id)">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
                             <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 0" @click="setupBroadcast(campaign.id)">INACTIVE</p>
                             <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="campaign.status == 1" @click="setupBroadcast(campaign.id)">RUNNING</p>
@@ -91,18 +176,17 @@
                             <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 3" @click="setupBroadcast(campaign.id)">ARCHIVE</p>
                             <div class="p15 pt15 btop" @click="setupBroadcast(campaign.id)">
                                 <ul class="workflow_list">
-                                    <li><a href="#"><span><img src="assets/images/send-plane-line.svg"></span> {{ campaign.reviewRequestsCountK }}k</a></li>
-                                    <li><a href="#"><span><img src="assets/images/mail-open-line.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
-                                    <li><a href="#"><span><img src="assets/images/cursor-line.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                    <li><a href="#"><span><img src="assets/images/send-plane-grey.svg"></span> {{ campaign.reviewRequestsCountK }}k</a></li>
+                                    <li><a href="#"><span><img src="assets/images/mail_open_fill_grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                    <li><a href="#"><span><img src="assets/images/cursorline-fill-grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 d-flex js-review-campaign-slidebox" style="cursor: pointer;">
                         <div class="card p0 pt50 text-center animate_top col">
-                            <a href="javascript:void(0);" class="circle-icon-64 bkg_dark_000 m0auto"><img src="assets/images/plus_grey_24.svg"> </a>
+                            <a href="javascript:void(0);" class="circle-icon-64 bkg_light_200 m0auto"><img src="assets/images/plus_grey_24.svg"> </a>
                             <h3 class="htxt_bold_12 dark_200 mb-0 mt-4 text-uppercase">Create<br>new campaign</h3>
-
                         </div>
                     </div>
                 </div>
