@@ -235,27 +235,28 @@
                                 <div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;" v-for="review in reviewsData">
                                     <div class="pull-left mb0 showReviewPopup">
                                         <div>
+
                                              <div class="media-left pr-15">
-                                                 <img class="review_productimg" src="review.id">
+                                                 <template v-for=" (rateUrl,idx) in review.media_url" >
+                                                     <img  v-if="idx==0"  class="review_productimg"  :src="getReviewImageUrl(rateUrl.media_url)">
+                                                 </template>
+
                                              </div>
                                              <div class="media-left pr0">
                                                 <div>{{review.brand_title}}</div>
                                                     <div class="text-size-small text-muted" style="font-size:11px;"> {{review.review_title}}</div>
                                                 </div>
-                                                <div class="review_section_user">
+                                                <div class="review_section_user pt-15">
                                                     <div class="top_div" style="border: none;">
-                                                        <div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><span class="icons fl_letters s32">DM</span></a></div>
+<!--                                                        <div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><span class="icons fl_letters s32">DM</span></a></div>-->
                                                         <div class="right">
-                                                            <div class="client_n"><p>{{review.firstname}} {{review.lastname}}</p></div>
+                                                            <div class="client_n"><span>{{review.firstname}} {{review.lastname}}</span></div>
                                                                 <div class="client_review">
-                                                                    ratings
-                                                                    
-                                                                    <img src="/assets/images/widget/yellow_icon.png">
-                                                                    <img src="/assets/images/widget/yellow_icon.png">
-                                                                    <img src="http://brandboost.io/assets/images/widget/grey_icon.png">
-                                                                    <img src="http://brandboost.io/assets/images/widget/grey_icon.png">
-                                                                    <img src="http://brandboost.io/assets/images/widget/grey_icon.png">
-                                                                    <span>June 27th 2019</span></div>
+                                                                    <template v-for="rateIdx in 5" >
+                                                                     <img v-if="rateIdx < review.ratings" src="/assets/images/widget/yellow_icon.png">
+                                                                     <img v-else src="/assets/images/widget/grey_icon.png">
+                                                                    </template>
+                                                                    <span> {{ displayDateFormat('F dS Y', review.created) }}</span></div>
                                                                 </div>
                                                     </div>
                                                 </div>
@@ -269,7 +270,7 @@
                                                        v-bind:value="review.id"
                                                         :checked="findSelectedReview(review.id)"
                                                        v-model="campaign.reviews_id"
-                                                       @change="synReviewsId($event)">
+                                                       @change="synReviewsId(review.id)">
 <!--                                                <input class="field autoSaveReview" type="checkbox" id="widget_review_" :id="review.id" name="reviewsId[]" :value="review.id">-->
                                                 <span class="toggle dred"></span>
                                             </label>
@@ -433,7 +434,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                settingTab :3,
+                settingTab :1,
                 campaignId: this.$route.params.id,
                 reviewsData: {},
                 campaign: {},
@@ -471,20 +472,68 @@
                         this.loading = false;
                         // this.formLabel = 'Update';
                         this.displayForm(this.campaign);
+                        this.imageSlider();
                     });
             },
             findSelectedReview: function(findId){
-                console.log(this.campaign.reviews_id);
+                // console.log(this.campaign.reviews_id);
                 if(this.campaign.reviews_id) {
                     var length = this.campaign.reviews_id.length;
                     for(var i = 0; i < length; i++) {
-                            console.log(this.campaign.reviews_id[i]);
+                            // console.log(this.campaign.reviews_id[i]);
                             if(this.campaign.reviews_id[i] == findId)
                                 return true;
                     }
                 }
 
                 // return true;
+            },
+            imageSlider: function(n=1){
+                var i;
+                var slides = document.getElementsByClassName("sliderImage");
+                var sliderBoxCount =  (this.campaign.gallery_type =='') ? 6:this.campaign.gallery_type;
+                var slideIndex = 0;
+                console.log(slides);
+                if (n > 0) {
+                    if (slides.length > sliderBoxCount + slideIndex) {
+                        $(slides[slideIndex]).css('display','none');
+                        $(slides[slideIndex+ slideIndex]).css('display','block');
+                        // slides[slideIndex].style.display = "none";
+                        // slides[sliderBoxCount + slideIndex].style.display = "block";
+                        slideIndex++;
+                        $("right_arrow").first().css('backgroundColor','#fff');
+                        $("left_arrow").first().css('backgroundColor','#fff');
+                        // document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
+                        // document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
+                        if (slides.length == sliderBoxCount + slideIndex) {
+                            $("right_arrow").first().css('backgroundColor','#eee');
+                            // document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
+                        }
+                    } else {
+                        $("right_arrow").first().css('backgroundColor','#eee');
+                        // document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
+                    }
+                } else {
+                    if ((slides.length >= sliderBoxCount + slideIndex) && (slideIndex > 0)) {
+                        --slideIndex;
+                        $(slides[slideIndex]).css('display','none');
+                        $(slides[slideIndex+ slideIndex]).css('display','block');
+                        // slides[slideIndex].style.display = "block";
+                        // slides[sliderBoxCount + slideIndex].style.display = "none";
+                        $("right_arrow").first().css('backgroundColor','#fff');
+                        $("left_arrow").first().css('backgroundColor','#fff');
+                        // document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
+                        // document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
+
+                        if (sliderBoxCount == sliderBoxCount + slideIndex) {
+                            $("left_arrow").first().css('backgroundColor','#eee');
+                            // document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
+                        }
+                    } else {
+                        $("left_arrow").first().css('backgroundColor','#eee');
+                        // document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
+                    }
+                }
             },
             displayStep: function(step){
                 let path = '';
@@ -529,6 +578,13 @@
 
                 }else{
                     this.updateSingleField('allow_border_shadow',0);
+                }
+            },
+            getReviewImageUrl: function(review_img_url){
+                if(review_img_url){
+                    return 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+review_img_url;
+                }else{
+                    return '/assets/images/temp_prev9.png';
                 }
             },
             synBgColorType: function(e){
@@ -593,9 +649,14 @@
                 });
 
             },
-            synReviewsId: function () {
+            synReviewsId: function (review_id) {
                 var fieldName = 'reviews_id';
-                var fieldValue=this.campaign.reviews_id;
+
+                if(Array.isArray(this.campaign.reviews_id)){
+                    var fieldValue=this.campaign.reviews_id;
+                }else{
+                    var fieldValue=[review_id];
+                }
                 this.loading = true;
                 axios.post('admin/mediagallery/updateSingleFieldCompress', {
                     _token: this.csrf_token(),
@@ -703,13 +764,51 @@
         }
 
     };
+    var slideIndex = 0;
+    function showSlides(n) {
+        var sliderBoxCount = parseInt(document.getElementById('gallery-type').value);
 
+        var i;
+        var slides = document.getElementsByClassName("sliderImage");
+        if (n > 0) {
+            if (slides.length > sliderBoxCount + slideIndex) {
+                slides[slideIndex].style.display = "none";
+                slides[sliderBoxCount + slideIndex].style.display = "block";
+                slideIndex++;
+                document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
+                document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
+                if (slides.length == sliderBoxCount + slideIndex) {
+                    document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
+                }
+            } else {
+                document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#eee';
+            }
+        } else {
+            if ((slides.length >= sliderBoxCount + slideIndex) && (slideIndex > 0)) {
+                --slideIndex;
+                slides[slideIndex].style.display = "block";
+                slides[sliderBoxCount + slideIndex].style.display = "none";
+                document.getElementsByClassName("right_arrow")[0].style.backgroundColor = '#fff';
+                document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#fff';
+
+                if (sliderBoxCount == sliderBoxCount + slideIndex) {
+                    document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
+                }
+            } else {
+                document.getElementsByClassName("left_arrow")[0].style.backgroundColor = '#eee';
+            }
+        }
+    }
     function loadNPSJQScript(userid){
         var tkn = $('meta[name="_token"]').attr('content');
         /*$(".colorpicker-basic1").spectrum();
         $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic3").spectrum();
         $(".colorpicker-basic4").spectrum();*/
+        //
+        // var sliderBoxCount =  6;
+        // var slideIndex = 0;
+        // showSlides(1);
         $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic1").spectrum({
             change: function (color) {
@@ -750,9 +849,14 @@
                     width: "toggle"
                 });
             });
-            // $(document).on('click', '.selectMainColor', function () {
-            //     $('#main_colors').val($(this).attr('color-data'));
-            // });
+            $(document).on('click', '.reviewArrowBH a', function (e) {
+                var bd = $(this).attr("bb_direction");
+                if (bd == 'right') {
+                    showSlides(1)
+                } else if (bd == 'left') {
+                    showSlides(-1)
+                }
+            });
         });
 
 
@@ -761,6 +865,7 @@
     }
 
 </script>
+
 <style scoped>
     .email_config_list li{
         width: 24.5% !important;
@@ -769,6 +874,480 @@
         width:300px !important;
         position: relative !important;
     }
+</style>
+<style>
+    .panel-heading .nav-tabs > li.active > a, .panel-heading .nav-tabs > li.active > a:hover, .panel-heading .nav-tabs > li.active > a:focus {
+        color: #962e6c !important;
+    }
+
+    .media_sec p {
+        font-size: 14px;
+    }
+
+    .gallery_slider_widget {
+        width: 950px;
+        margin: 0px auto;
+        font-family: 'Inter UI';
+        font-style: normal;
+        font-weight: 400;
+        position: absolute;
+        /*bottom: 35px;*/
+        box-sizing: border-box;
+        left: 50%;
+        transform: translate(-50%, 0)
+    }
+
+    .gallery_slider_widget h2 {
+        font-family: InterUI;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 0.67;
+        font-family: 'Inter UI';
+        margin-bottom: 20px;
+        margin-left: 6px;
+    }
+
+    .gallery_slider_widget h2 span {
+        margin-left: 15px;
+        color: #5e5e7c;
+        font-weight: normal;
+    }
+
+    .gallery_slider_widget .top_header {
+        width: 100%;
+    }
+
+    .gallery_slider_widget .arrow {
+        position: relative;
+        top: 102px;
+        right: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9;
+    }
+
+    .gallery_slider_widget .middle .box_1 {
+        max-width: 235px;
+        width: 100%;
+        float: left;
+        padding: 5px;
+        box-sizing: border-box;
+        border-radius: 0px;
+        background: #ffffff;
+        margin: 0 1px;
+        max-height: 235px;
+        position: relative;
+    }
+
+    .img_overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 100%;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #FFF;
+        font-size: 15px;
+        padding-top: 48%;
+        box-sizing: border-box;
+        display: none;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .gallery_slider_widget .middle .box_1:hover .img_overlay {
+        display: block;
+    }
+
+    .gallery_slider_widget .middle .box_1 img {
+        width: 100%;
+    }
+
+    .gallery_slider_widget .arrow .left_arrow {
+        background: #fff;
+        width: 42px;
+        height: 42px;
+        border-radius: 100%;
+        display: inline-block;
+        box-shadow: 0 2px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);
+        line-height: 42px;
+        position: absolute;
+        left: -15px;
+        text-align: center;
+    }
+
+    .gallery_slider_widget .arrow .right_arrow {
+        background: #fff;
+        width: 42px;
+        height: 42px;
+        border-radius: 100%;
+        display: inline-block;
+        box-shadow: 0 2px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);
+        line-height: 42px;
+        position: absolute;
+        right: -15px;
+        text-align: center;
+    }
+
+    .gallery_slider_widget .footer_div {
+        margin-top: 20px;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gallery_slider_widget .footer_div .left {
+        float: left;
+    }
+
+    .gallery_slider_widget .footer_div .left img {
+        float: left;
+        margin: 4px 4px 0;
+    }
+
+    .gallery_slider_widget .footer_div .left p {
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        color: #1e1e40;
+        margin: 0 10px 0 10px;
+        padding: 0;
+    }
+
+    .gallery_slider_widget .footer_div .left span {
+        float: left;
+        font-weight: normal;
+        color: #525378;
+    }
+
+    .gallery_slider_widget .footer_div .right {
+        float: right;
+        margin-right: 6px;
+        color: #8787a5;
+    }
+
+    .gallery_slider_widget .footer_div .right img {
+        float: left;
+        margin-right: 5px;
+        margin-top: 3px;
+    }
+
+    @media only screen and (max-width: 1550px) {
+        .gallery_slider_widget {
+            max-width: 695px;
+            left: 50%;
+            /*margin-left: -350px*/
+        }
+
+        .box_1.hide_under_1500 {
+            display: none;
+        }
+    }
+
+    .imgpopup.modal .close:hover, .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .imgpopup.modal .box_inner {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .imgpopup.modal .left_box {
+        width: 50%;
+        box-sizing: border-box;
+        float: left;
+        padding-right: 40px;
+    }
+
+    .imgpopup.modal .left_box img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .imgpopup.modal .right_box {
+        width: 50%;
+        box-sizing: border-box;
+        float: right;
+        padding-right: 0px;
+    }
+
+    .imgpopup.modal .box_2 {
+        width: 100%;
+        float: left;
+        padding: 5px 0px 18px 0px; /*border-bottom: 1px solid #e7edf8;*/
+        box-sizing: border-box;
+    }
+
+    .imgpopup.modal .box_2 .top_div {
+        padding: 17px 0;
+        border-bottom: 1px solid #e7edf8;
+        border-top: 1px solid #e7edf8;
+    }
+
+    .imgpopup.modal .box_2 .top_div .left {
+        position: relative;
+        width: 45px;
+        display: inline-block;
+        margin-right: 12px;
+        float: left;
+        margin-top: 5px;
+    }
+
+    .imgpopup.modal .box_2 .top_div .left a.icons {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .imgpopup.modal .box_2 .top_div .left .img-xs {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .imgpopup.modal .box_2 .top_div .left .circle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #69d641;
+        border-radius: 100%;
+        right: 0;
+        border: 2px solid #fff;
+        top: 4px;
+        right: 2px;
+    }
+
+    .imgpopup.modal .box_2 .top_div .right {
+        display: inline-block;
+        padding-right: 35px;
+    }
+
+    .imgpopup.modal .box_2 .bottom_div {
+        padding: 0;
+        margin: 15px 0
+    }
+
+    .imgpopup.modal .heading_pop {
+        font-size: 18px;
+        font-weight: 500;
+        color: #0c0c2c;
+        margin-top: 0px;
+    }
+
+    .imgpopup.modal .heading_pop2 {
+        font-size: 12px;
+        color: #525378;
+        line-height: 1.67;
+        font-weight: normal;
+    }
+
+    .imgpopup.modal .box_2 .top_div .right .client_review span {
+        color: #526b9b;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .imgpopup.modal .box_2 .top_div .right p {
+        color: #364d79;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0 0 2px 0;
+        padding: 0;
+    }
+
+    .imgpopup.modal .box_2 .top_div .right .client_review span {
+        color: #526b9b;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .imgpopup.modal .footer_div2 .comment_div p {
+        color: #768fbf;
+        font-size: 12px !important;
+        font-weight: 500;
+    }
+
+    .imgpopup.modal .footer_div2 {
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    .imgpopup.modal .footer_div2 .comment_div {
+        display: inline-block;
+    }
+
+    .imgpopup.modal .footer_div2 .liked_icon {
+        display: inline-block;
+        position: relative;
+        top: 3px;
+    }
+
+    .imgpopup.modal .footer_div2 .comment_div p img {
+        margin-right: 10px;
+        float: left;
+        margin-top: 2px;
+    }
+
+    .imgpopup.modal .footer_div2 .comment_div p span {
+        margin-left: 14px;
+        padding-left: 14px;
+        border-left: 1px solid;
+        margin-right: 14px;
+    }
+
+    .imgpopup.modal .footer_div2 .liked_icon img {
+        background: #fff;
+        padding: 4px;
+        box-shadow: 0 1px 1px 0 rgba(0, 36, 128, 0.11), 0 0 1px 0 rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
+    }
+
+    .imgpopup.modal .box_2 .bottom_div p {
+        color: #22375e;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.69;
+        margin-bottom: 10px;
+    }
+
+    .imgpopup.modal .arrow {
+        top: 170px;
+    }
+
+    .imgpopup.modal .arrow .left_arrow {
+        left: -30px;
+    }
+
+    .imgpopup.modal .arrow .right_arrow {
+        right: -32px;
+    }
+
+    .dropzone .dz-default.dz-message:before {
+        content: '' !important;
+    }
+
+    .dropzone {
+        min-height: 83px !important;
+        height: 83px !important;
+        opacity: 0 !important;
+    }
+
+    .dropzone .dz-default.dz-message {
+        top: 0% !important;
+        height: 40px;
+        margin-top: 0px;
+    }
+
+    .dropzone .dz-default.dz-message span {
+        font-size: 13px;
+        margin-top: -10px;
+    }
+
+
+    .review_section_user .top_div {
+        padding: 7px 0 7px 55px;
+        border-bottom: 1px solid #e7edf8;
+        border-top: 1px solid #e7edf8;
+    }
+
+    .review_section_user .top_div .left {
+        position: relative;
+        width: 35px;
+        display: inline-block;
+        margin-right: 4px;
+        float: left;
+        margin-top: 3px;
+    }
+
+    .review_section_user .top_div .left a.icons {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .review_section_user .top_div .left .img-xs {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .review_section_user .top_div .left a.icons span.icons.fl_letters {
+        width: 30px !important;
+        height: 30px !important;
+        line-height: 30px;
+        font-size: 10px !important;
+    }
+
+    .review_section_user .top_div .left .circle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #69d641;
+        border-radius: 100%;
+        right: 0;
+        border: 2px solid #fff;
+        top: 4px;
+        right: 2px;
+    }
+
+    img.review_productimg {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+    }
+
+    @media (max-width: 1367px) {
+        .review_section_user .top_div .left {
+            display: none;
+        }
+
+        .media-left.pr-15 {
+            padding-right: 5px !important
+        }
+
+        .review_section_user .top_div {
+            padding: 7px 0 7px 35px;
+        }
+
+        .showReviewPopup {
+            width: calc(100% - 35px) !important;
+        }
+
+        img.review_productimg {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+    }
+
+    .review_section_user .top_div .right {
+        display: inline-block;
+        padding-right: 0px;
+        line-height: 15px;
+    }
+
+    .review_section_user .top_div .right p {
+        color: #364d79;
+        font-size: 12px;
+        font-weight: 500;
+        margin: 0 0 2px 0;
+        padding: 0;
+    }
+
+    .review_section_user .top_div .right .client_review span {
+        color: #526b9b;
+        font-size: 10px;
+        margin-left: 2px;
+    }
+
+    .review_section_user .top_div .right .client_review img {
+        width: 9px;
+        height: 9px;
+    }
+
+
 </style>
 
 

@@ -407,8 +407,13 @@ class Mediagallery extends Controller {
         $userId = $aUser->id;
 		$galleryData = MediaModel::getGalleryData($galleryId);
 		$reviewsData = ReviewsModel::getAllReviewsByUserId($userId);
+		foreach ($reviewsData as $idx => $sr)
+        {
+            $sr->media_url =unserialize($sr->media_url);
+            $reviewsData[$idx] =$sr;
+        }
 
-        //$sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
+//        $sliderData = $this->load->view('/admin/media-gallery/preview', array('galleryData' => $galleryData), true);
         $sliderData = view('admin.media-gallery.preview', array('galleryData' => $galleryData))->render();
         $galleryData->reviews_id =unserialize($galleryData->reviews_id);
         $response= array(
