@@ -182,6 +182,3 @@
     }
 </script>
 
-<style>
-
-</style>

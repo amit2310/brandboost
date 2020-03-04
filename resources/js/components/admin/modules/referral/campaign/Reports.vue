@@ -420,7 +420,3 @@
 
     });
 </script>
-
-<style>
-
-</style>

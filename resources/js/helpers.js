@@ -250,20 +250,25 @@ export default {
                     let url = elements[name];
                     breadcrumbString += '<li>';
                     if(url != ''){
-                        breadcrumbString += '<a href="'+url+'">';
-                        breadcrumbString += '<img src="/assets/images/mail-open-line.svg"/>';
+                        breadcrumbString += '<a class="button-menu-mobile-new" href="'+url+'" style="color:#6672E8;">';
+                        breadcrumbString += '<i class="ri-arrow-left-s-line"></i>';
                     }
-                    breadcrumbString += ' &nbsp;' + name;
+                    if(url == ''){
+                        breadcrumbString += '<li><a href="javascript:void(0);" style="cursor:default;color:#97A4BD;"> <i class="ri-arrow-left-s-line"></i> &nbsp;'+ name+' </a></li>';
+                    }else{
+                        breadcrumbString += ' &nbsp;' + name;
+                    }
+
                     if(url != ''){
                         breadcrumbString += '</a>';
                     }
                     breadcrumbString += '</li>';
                     if(url != '') {
-                        breadcrumbString += '<li class="ml10 mr10"><img src="/assets/images/chevron-left.svg"/></li>';
+
                     }
                 }
 
-                breadcrumbString += '</ul>';
+                breadcrumbString += '</ul><div class="clearfix"></div>';
                 document.getElementById("breadcrumb").innerHTML = breadcrumbString;
 
             }

@@ -406,7 +406,3 @@
 
     });
 </script>
-
-<style>
-
-</style>

@@ -11,8 +11,8 @@
         <link href="{{ base_url() }}assets/css/intlTelInput.css">
         <script src="{{ base_url() }}assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/bootstrap.min.js"></script>
-        
-        <style>
+
+        <style scoped>
             .step_star ul {
                 list-style-type:none;
                 padding:0;
@@ -63,7 +63,7 @@
                                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>                        
+                                        <span class="icon-bar"></span>
                                     </button>
                                 </div>
                                 <div class="collapse navbar-collapse p0" id="myNavbar">
@@ -75,11 +75,11 @@
                                                 <li><a href="#">INTEGRATIONS</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="{{ base_url('price') }}">PRICING</a></li>                                        
+                                        <li><a href="{{ base_url('price') }}">PRICING</a></li>
                                     </ul>
                                 </div>
                             </div>
-                        </nav>	
+                        </nav>
                     </div>
 
                     <div class="col-md-2 text-right">

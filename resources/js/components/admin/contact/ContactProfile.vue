@@ -294,6 +294,6 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .info_list li span{ display:block;}
 </style>

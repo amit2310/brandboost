@@ -387,7 +387,3 @@
         });
     }
 </script>
-
-<style>
-
-</style>

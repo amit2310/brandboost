@@ -1599,9 +1599,7 @@
         });
     }
 </script>
-<style>
-
-
+<style scoped>
     .label.bkg_green.ml0 {    display: none;}
     .table strong{font-weight: 600!important}
 

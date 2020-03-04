@@ -386,7 +386,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .createSegment{
         cursor:pointer!important;
     }

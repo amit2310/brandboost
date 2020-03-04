@@ -574,6 +574,17 @@ class Brandboost extends Controller
             ucwords($param).' Review Requests' => ''
         );
         $oRequests = $mBrandboost->getReviewRequest('', '', $param);
+        if($oRequests->items()){
+            foreach($oRequests->items() as $oRequest){
+                $brandboostId = $oRequest->bbid;
+                $reviewUserId = $oRequest->uid;
+                $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
+                if(!empty($oReview)){
+                    $oRequest->ratings = number_format($oReview->ratings, 1);
+                }
+            }
+        }
+
         $aData = array(
             'title' => 'Brand Boost Review Requests',
             'breadcrumb' => $aBreadcrumb,

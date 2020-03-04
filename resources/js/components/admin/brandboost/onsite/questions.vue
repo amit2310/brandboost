@@ -693,6 +693,6 @@
         });
     });
 </script>
-<style>
+<style scoped>
     .odd { display: none!important; }
 </style>
