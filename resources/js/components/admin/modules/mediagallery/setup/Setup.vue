@@ -317,7 +317,17 @@
             </div>
         </div>
         <!--Content Area End-->
+
+        <div id="reviewPopupModal" class="imgpopup modal fade">
+            <div class="modal-dialog" style="max-width: 800px;">
+                <div class="modal-content modal-lg" id="reviewPopupData">
+
+                </div>
+            </div>
+        </div>
+
         <!--******************
+
              Create Sliding Smart Popup
             **********************-->
         <div class="box" style="width: 550px;">
@@ -857,6 +867,28 @@
                     showSlides(-1)
                 }
             });
+
+            $(document).on('click', '.showReviewPopup', function (e) {
+                e.preventDefault();
+
+                $('.overlaynew').show();
+                var reviewId = $(this).attr('review-id');
+                $.ajax({
+                    url: "/admin/mediagallery/getReviewData",
+                    method: "get",
+                    data: {'review_id': reviewId},
+                    dataType: "json",
+                    success: function (data) {
+                        $('.overlaynew').hide();
+                        if (data.status == "success") {
+                            $('#reviewPopupData').html(data.popupData);
+                            $('#reviewPopupModal').modal();
+                        } else {
+                            displayMessagePopup('error');
+                        }
+                    }
+                });
+            });
         });
 
 
@@ -873,6 +905,36 @@
     .email_review_config{
         width:300px !important;
         position: relative !important;
+    }
+    .modal-header h5 {
+        font-size: 13px;
+        font-weight: 400;
+        color: #09204f;
+    }
+    .modal-header .close {
+        position: absolute;
+        right: 25px;
+        color: #98adcf;
+        top: 10px;
+        margin-top: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 100%;
+        background: #fff;
+        opacity: 1;
+    }
+    .imgpopup.modal .box_2 .bottom_div p {
+        color: #22375e;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.69;
+        margin-bottom: 10px;
+    }
+    .imgpopup.modal .heading_pop {
+        font-size: 18px;
+        font-weight: 500;
+        color: #0c0c2c;
+        margin-top: 0px;
     }
 </style>
 <style>
