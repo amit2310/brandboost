@@ -207,7 +207,10 @@
                                     </td>
                                     <td>
                                         <span class="table-img mr15">
-                                            <span class="circle_icon_24 bkg_reviews_400">
+                                            <span v-if="campaign.status == 1" class="circle_icon_24 bkg_reviews_400">
+                                                <img src="assets/images/pricetag3-fill.svg" width="14">
+                                            </span>
+                                            <span v-else class="circle_icon_24 bkg_light_800">
                                                 <img src="assets/images/pricetag3-fill.svg" width="14">
                                             </span>
                                         </span>
@@ -218,7 +221,10 @@
                                             <p class="fsize12 green_400 ml-4">{{ setStringLimit(campaign.brand_desc, 100) }}</p>
                                         </a>-->
                                     </td>
-                                    <td><img src="assets/images/share-circle-line.svg"> &nbsp; {{capitalizeFirstLetter(campaign.review_type)}} Review Requests</td>
+                                    <td>
+                                        <span v-if="campaign.review_type == 'onsite'"><img src="assets/images/window-fill.svg"> {{ capitalizeFirstLetter(campaign.review_type) }} Review Requests</span>
+                                        <span v-else><img src="assets/images/share-circle-line.svg"> {{ capitalizeFirstLetter(campaign.review_type) }} Review Requests</span>
+                                    </td>
                                     <td>{{ campaign.reviewRequestsCountFormat }}</td>
                                     <td>{{ campaign.reviewResponsePercent }}%</td>
                                     <td>{{ campaign.reviewResponsePercent }}%</td>
