@@ -30,7 +30,7 @@
         props: ['isLoading']
     }
 </script>
-<style>
+<style scoped>
     svg path,
     svg rect{
         fill: #FF6700;

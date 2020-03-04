@@ -1134,7 +1134,7 @@
 
 
 </script>
-<style>
+<style scoped>
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { font-weight: bold; color: #000; }
     .price_plan { padding: 55px; margin: 10px!important; }
 </style>

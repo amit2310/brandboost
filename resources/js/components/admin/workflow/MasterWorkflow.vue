@@ -749,7 +749,7 @@
         loadWorkflowDraggerScript();
     }
 </script>
-<style>
+<style scoped>
     .workflowTemplateArea {
         padding: 32px 64px !important;
     }

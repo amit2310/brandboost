@@ -236,7 +236,7 @@
     });
 </script>
 
-<style>
+<style scoped>
     .step_star ul > li.star.hover > i.fa {
         color: #FFCC36;
     }

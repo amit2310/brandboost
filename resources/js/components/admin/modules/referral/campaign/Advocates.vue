@@ -365,7 +365,3 @@
         });
     }
 </script>
-
-<style>
-
-</style>

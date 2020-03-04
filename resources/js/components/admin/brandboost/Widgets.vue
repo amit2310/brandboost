@@ -413,6 +413,3 @@
     });
 </script>
 
-<style>
-
-</style>

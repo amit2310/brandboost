@@ -412,7 +412,3 @@
 
     });
 </script>
-
-<style>
-
-</style>

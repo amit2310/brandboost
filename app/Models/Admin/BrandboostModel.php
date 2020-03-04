@@ -220,6 +220,23 @@ class BrandboostModel extends Model {
     }
 
     /**
+     * This funcion used to get lastest review added by the user
+     * @param $brandboostID
+     * @param $userId
+     */
+    public function getUserCampaignReview($brandboostID, $userId){
+        if($brandboostID>0 && $userId>0){
+            $oData = DB::table('tbl_reviews')
+                ->where('campaign_id', $brandboostID)
+                ->where('user_id', $userId)
+                ->orderBy('id', 'desc')
+                ->first();
+            return $oData;
+        }
+        return;
+    }
+
+    /**
      * get review request data
      * @param type $brandboostId
      * @param type $type
@@ -235,8 +252,8 @@ class BrandboostModel extends Model {
             ->leftJoin('tbl_subscribers', 'tbl_brandboost_campaign_users.subscriber_id', '=', 'tbl_subscribers.id')
             ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
             ->leftJoin('tbl_brandboost', 'tbl_brandboost_campaign_users.brandboost_id', '=', 'tbl_brandboost.id')
-            ->select('tbl_users.id AS uid', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_users.avatar', 'tbl_users.country',
-                'tbl_brandboost.review_type', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img',
+            ->select('tbl_users.id AS uid', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_users.avatar', 'tbl_users.country',
+                'tbl_brandboost.id AS bbid','tbl_brandboost.review_type', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img',
                 'tbl_brandboost_campaign_users.id as subscriberid','tbl_brandboost_campaign_users.status as subscriberstatus',
                 'tbl_tracking_log_email_sms.id as trackinglogid',
                 'tbl_tracking_log_email_sms.subscriber_id as tracksubscriberid', 'tbl_tracking_log_email_sms.type as tracksubscribertype',

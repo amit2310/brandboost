@@ -146,7 +146,7 @@
 
 
 </script>
-<style>
+<style scoped>
     .ddmtext{
         margin-top:10px !important;
     }

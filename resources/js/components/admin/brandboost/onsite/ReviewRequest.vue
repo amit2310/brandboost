@@ -23,33 +23,102 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="allData.total>0 || true  ">
-
-                <div class="table_head_action mt-2">
+                <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
-                            <ul class="table_filter">
-                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                            <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>-->
-                                <li><a class="active" href="#">ALL</a></li>
-                                <li><a href="#">SENT</a></li>
-                                <li><a href="#">DRAFT</a></li>
-                                <li><a href="#">SUBMITED</a></li>
-                                <li><a href="#">ARCHIVE</a></li>
-                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                            <ul class="table_filter">
+                                <li><a class="active" href="javascript:void(0);">ALL</a></li>
+                                <li><a href="javascript:void(0);">SENT</a></li>
+                                <li><a href="javascript:void(0);">DRAFT</a></li>
+                                <li><a href="javascript:void(0);">SUBMITED</a></li>
+                                <li><a href="javascript:void(0);">ARCHIVE</a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+
+
+                <div class="row" v-if="viewType == 'List View'">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="fsize10 fw500">NAME </span></td>
+                                    <td><span class="fsize10 fw500">EMAIL / PHONE</span></td>
+                                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
+                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                                    <td><span class="fsize10 fw500">REVIEW  </span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
+                                <tr v-for="request in requests">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{request.firstname.charAt(0)}}</span></span> {{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</td>
+                                    <td v-if="request.tracksubscribertype =='email'"><img src="assets/images/atline.svg"/>&nbsp; {{ request.email}}</td>
+                                    <td v-if="request.tracksubscribertype =='sms'"><img src="assets/images/chatline.svg"/>&nbsp; {{ phoneNoFormat(request.phone)}}</td>
+                                    <td>{{ request.brand_title ? setStringLimit(capitalizeFirstLetter(request.brand_title), 23) :  'No Data' }}</td>
+                                    <td><span class="">{{ displayDateFormat('M d, Y', request.requestdate) }}</span></td>
+                                    <td>
+                                        <img v-if="request.ratings>0" width="14" src="assets/images/star-fill_yellow_16.svg">
+                                        <img v-else src="assets/images/star-line.svg"/>
+                                        <span v-if="request.ratings>0" class="dark_400">&nbsp; {{request.ratings}}</span>
+                                        <span v-else class="light_400">-</span>
+                                    </td>
+                                    <td v-if="request.tracksubscribertype =='email'"></td>
+                                    <td v-if="request.tracksubscribertype =='sms'"><!--<img src="assets/images/check_double_green.svg">--><img src="assets/images/checklineblack.svg"></td>
+                                    <td>
+                                        <span class="float-right">
+                                            <span v-if="request.subscriberstatus == 1" class="status_icon bkg_blue_300"></span>
+                                            <span v-else class="status_icon bkg_light_800"></span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <pagination
+                                :pagination="allData"
+                                @paginate="showPaginationData"
+                                :offset="4">
+                            </pagination>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-center mt-3">
+                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
                     </div>
                 </div>
 
@@ -117,110 +186,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4">
+                    </pagination>
                 </div>
 
-                <div class="row" v-if="viewType == 'List View'">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-0">
-                                <tbody>
-                                <tr class="headings">
-                                    <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                                    </td>
-                                    <td><span class="fsize10 fw500">NAME </span></td>
-                                    <td><span class="fsize10 fw500">EMAIL / PHONE</span></td>
-                                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
-                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                                    <td><span class="fsize10 fw500">REVIEW  </span></td>
-                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
-                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                                </tr>
 
-                                <tr v-for="request in requests">
-                                    <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="table-img mr15">
-                                           <user-avatar
-                                               :avatar="''"
-                                               :firstname="request.firstname"
-                                               :lastname="request.lastname"
-                                           ></user-avatar>
-                                        </span>
-                                        <span class="htxt_medium_14 dark_900">{{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</span>
-                                    </td>
-                                    <td>
-                                        <span v-if="request.phone != ''"><img src="assets/images/chatline.svg"/> &nbsp; {{ request.phone ? phoneNoFormat(request.phone) : '' }}</span>
-                                        <span v-if="request.email != ''"><img src="assets/images/atline.svg"/> &nbsp; {{ request.email }}</span>
-                                    </td>
-                                    <td>
-                                        <span v-if="request.brand_title != ''">
-                                        <strong>{{ setStringLimit(capitalizeFirstLetter(request.brand_title), 23) }}</strong>
-                                        <br />
-                                        {{ setStringLimit(capitalizeFirstLetter(request.brand_desc), 31) }}
-                                        </span>
-                                        <span v-else>No Data</span>
-                                    </td>
-                                    <td><span class="">{{ displayDateFormat('M d, Y', request.requestdate) }}</span></td>
-                                    <td>{{request.min_ratings_display}}<img src="assets/images/star-line.svg"/> <span class="light_400">-</span>
-                                        <span v-for="num in [1,2,3,4,5]">
-                                            <i v-if="num<=request.min_ratings_display" class=""><img width="14" src="/assets/images/star-fill_yellow_16.svg"> <span class="dark_400">{{request.min_ratings_display}}.5</span></i>
-                                            <i v-else class=""><img width="14" src="/assets/images/star-line.svg"> <span class="light_400">-</span></i>
-                                        </span>
-                                    </td>
-                                    <td><img src="assets/images/checklineblack.svg"/></td>
-                                    <td>
-                                        <span class="float-right">
-                                        <span v-if="request.subscriberstatus == 1" class="status_icon bkg_blue_300"></span>
-                                        <span v-else class="status_icon bkg_light_800"></span>
-                                        </span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                                    </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gregory Henry</td>
-                                    <td><img src="assets/images/chatline.svg"/> &nbsp; (201) 555-0124</td>
-                                    <td>Smart SMS Campaign</td>
-                                    <td><span class="">Jul 16, 2020</span></td>
-                                    <td><img src="assets/images/star-line.svg"/> <span class="light_400">-</span></td>
-                                    <td><img src="assets/images/checklineblack.svg"/></td>
-                                    <td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
-                    </div>
-                </div>
-
-                <pagination
-                    :pagination="allData"
-                    @paginate="showPaginationData"
-                    :offset="4">
-                </pagination>
             </div>
             <div class="container-fluid" v-else>
                 <div class="row">
@@ -240,7 +214,7 @@
                     </div>
 
                     <div class="col-md-12 text-center mt-3">
-                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
+                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
                     </div>
                 </div>
 
@@ -355,7 +329,3 @@
         }
     }
 </script>
-
-<style>
-
-</style>
