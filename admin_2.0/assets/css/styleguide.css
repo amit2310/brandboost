@@ -1,7 +1,7 @@
 /******************************
 CARD CLASSES
 ******************************/
-.card{background: #FFFFFF;box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius: 4px;padding: 30px 40px;	border: none!important;	margin-bottom: 24px; position: relative}
+.card{background: #FFFFFF;box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04);border-radius: 4px;padding: 30px 40px;	border: none!important;	margin-bottom: 24px; position: relative}
 .card hr{border-color: #f0f1f4!important}
 .card.card_shadow{position: relative; z-index: 1;}
 .card.card_shadow:before{position: absolute; height: 11px; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius:0 0 4px 4px; width: 90%; left: 5%; bottom: -11px; content: ''; background:url(../images/shadow_bkg.png) left top repeat-x #fff; z-index: 0;}
@@ -180,8 +180,8 @@ TABLES STYLES
 .table_head_action{margin-bottom: 20px;position: relative}
 .table_head_action .table_filter{margin: 0; padding: 0;}
 .table_head_action .table_filter li{margin: 0; padding: 0; list-style: none; display: inline-block;}
-.table_head_action .table_filter li a{margin: 0 20px 0 0; padding: 0; display: inline-block; font-weight: 500;font-size: 12px;line-height: 120%;letter-spacing: 0.04em;text-transform: uppercase;color: #7B89A6;}
-.table_head_action .table_filter li a.active, .table_head_action .table_filter li a:hover{color: #5998F8;}
+.table_head_action .table_filter li a{margin: 0 20px 0 0; padding: 0; display: inline-block; font-weight: 400;font-size: 13.5px;line-height: 120%;letter-spacing: 0.04em;/*text-transform: uppercase;*/color: #7B89A6;}
+.table_head_action .table_filter li a.active, .table_head_action .table_filter li a:hover{color: #5998F8; font-weight: 500}
 .table_head_action.calendar{margin-bottom: 30px; padding: 0 0px;}
 .table.table-borderless{margin: 0!important}
 .table.table-borderless tbody tr{border-bottom: 1px solid #edf1fb; /*box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);*/}
@@ -243,7 +243,7 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 
 .status_icon{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 5px;}
 .status_icon:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
-.circle_icon_24{width: 24px; height: 24px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; text-align: center; line-height: 22px; font-weight: 500;
+.circle_icon_24{width: 24px; height: 24px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; text-align: center; line-height: 23px; font-weight: 500;
 font-size: 12px;letter-spacing: 0.02em;color: #FFFFFF; text-transform: uppercase}
 
 
