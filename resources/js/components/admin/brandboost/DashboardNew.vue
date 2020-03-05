@@ -649,15 +649,75 @@
 </template>
 
 <script>
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
+
     export default {
-        props : ['pageColor', 'title'],
+        props : ['pageColor', 'title', 'review_type'],
+        components: {UserAvatar, Pagination},
         data(){
             return {
-
+                moduleName: '',
+                moduleUnitID: '',
+                moduleAccountID: '',
+                allData: {},
+                oReviews : '',
+                oCampaign: '',
+                reviewTags: '',
+                campaignId: '',
+                current_page: 1,
+                breadcrumb: '',
+                viewType: 'List View',
+                sortBy: 'Name',
+                searchBy: ''
             }
         },
+        created() {
+            this.loadPaginatedData();
+        },
         mounted() {
-            console.log("component mounted")
+            this.$parent.pageColor = this.pageColor;
+        },
+        watch: {
+            'sortBy' : function(){
+                this.loadPaginatedData();
+            }
+        },
+        methods: {
+            searchItem: function(){
+                this.loadPaginatedData();
+            },
+            showReview: function(id){
+                window.location.href='#/reviews/onsite/reviews/'+id;
+            },
+            showQuestions: function(id){
+                window.location.href='#/brandboost/questions/'+id;
+            },
+            loadPaginatedData : function(){
+                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.oCampaign = response.data.oCampaign;
+                        this.allData = response.data.allData;
+                        this.oReviews = response.data.aReviews;
+                        this.reviewTags = response.data.reviewTags;
+                        this.reviewTags = response.data.reviewTags;
+                        this.loading = false;
+                        //console.log(this.campaigns)
+                    });
+            },
+            showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            navigatePagination: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            }
         }
     }
 </script>
