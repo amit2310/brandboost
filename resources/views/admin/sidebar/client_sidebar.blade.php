@@ -53,28 +53,28 @@
         <div class="slimscroll">
             <nav class="nav">
                 <a href="javascript:void(0);" class="brandboost_logo"><span class="site_status_icon"></span> <img class="bb_logo_img" src="assets/images/logo_small.svg"/> </a>
-                <a href="#dashboard" id="loadDasboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <img src="assets/images/dashboard-fill.svg"/> </a>
-                <a href="#people" id="loadContactTheme" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <img src="assets/images/account-circle-fill.svg"/></a>
-                <a href="#live_messanger" id="loadChatTheme" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <img src="assets/images/live_messanger.svg"/> </a>
-                <a href="#Email_inbox" id="loadEmailInbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <img src="assets/images/mail-fill.svg"/> </a>
+                <a href="#dashboard" id="loadDasboard" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Dashboard" > <i class="ri-dashboard-fill"></i> </a>
+                <a href="#people" id="loadContactTheme" class="nav-link people active" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="People"> <i class="ri-account-circle-fill"></i></a>
+                <a href="#live_messanger" id="loadChatTheme" class="nav-link livechat" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Messenger" > <i class="ri-chat-1-fill"></i> </a>
+                <a href="#Email_inbox" id="loadEmailInbox" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email"> <i class="ri-mail-fill"></i> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-                <a href="#BrandPage" id="loadBrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <img src="assets/images/window-2-fill.svg"/> </a>
-                <a href="#ReviewSystem" id="loadReviewsTheme" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <img src="assets/images/star-fill.svg"/> </a>
-                <a href="#MediaGalleries" id="loadMediaGallery" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <img src="assets/images/Image.svg"/> </a>
+                <a href="#BrandPage" id="loadBrandPage" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Brand"> <i class="ri-window-2-fill"></i></a>
+                <a href="#ReviewSystem" id="loadReviewsTheme" class="nav-link review" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Review"> <i class="ri-star-fill"></i> </a>
+                <a href="#MediaGalleries" id="loadMediaGallery" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Media"> <i class="ri-image-fill"></i> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-                <a href="#EmailMarketing" id="loadEmailTheme" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <img src="assets/images/send-plane-fill-icon.svg"/> </a>
-                <a href="#SMSMarketing" id="loadSMSTheme" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <img src="assets/images/message-2-fill-icon.svg"/> </a>
-                <a href="#Referrals" id="loadReferral" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <img src="assets/images/share-fill.svg"/> </a>
-                <a href="#Nps" id="loadNps" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Nps"> <img src="assets/images/share-fill.svg"/> </a>
-                <a href="#SiteWidgets" id="loadWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <img src="assets/images/rocket-2-fill.svg"/> </a>
+                <a href="#EmailMarketing" id="loadEmailTheme" class="nav-link email" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Email Marketing"> <i class="ri-send-plane-2-fill"></i> </a>
+                <a href="#SMSMarketing" id="loadSMSTheme" class="nav-link sms" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="SMS Marketing"> <i class="ri-message-2-fill"></i> </a>
+                <a href="#Referrals" id="loadReferral" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Referrals"> <i class="ri-share-fill"></i> </a>
+                <a href="#Nps" id="loadNps" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="NPS"> <i class="ri-share-fill"></i> </a>
+                <a href="#SiteWidgets" id="loadWidgets" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Widgets"> <i class="ri-rocket-2-fill"></i> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-                <a href="#Feedback" id="loadFeedback" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Feedback"> <img src="assets/images/chat-smile-3-fill.svg"/> </a>
-                <a href="#HelpDesk" id="loadHelpDesk" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Help Desk"> <img src="assets/images/customer-service-fill.svg"/> </a>
-                <a href="#KnowledgeBase" id="loadKnowledgeBase" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Knowledge Base"> <img src="assets/images/book-open-fill.svg"/> </a>
-                <a href="#Appointments" id="loadAppointments" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Appointments"> <img src="assets/images/calendar-event-fill.svg"/> </a>
+                <a href="#Feedback" id="loadFeedback" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Feedback"> <i class="ri-chat-smile-3-fill"></i> </a>
+                <a href="#HelpDesk" id="loadHelpDesk" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Help Desk"> <i class="ri-customer-service-fill"></i> </a>
+                <a href="#KnowledgeBase" id="loadKnowledgeBase" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Knowledge Base"> <i class="ri-book-open-fill"></i></a>
+                <a href="#Appointments" id="loadAppointments" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Appointments"> <i class="ri-calendar-event-fill"></i> </a>
                 <span class="menu-icon-divider"><img src="assets/images/menu-icon-divider.svg"/></span>
-                <a href="#Analytics" id="loadAnalytics" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Analytics"> <img src="assets/images/bar-chart-box-fill.svg"/> </a>
-                <a href="#Settings" id="loadSettings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <img src="assets/images/settings-3-fill-icon.svg"/> </a>
+                <a href="#Analytics" id="loadAnalytics" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Analytics"> <i class="ri-bar-chart-box-fill"></i> </a>
+                <a href="#Settings" id="loadSettings" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Settings"> <i class="ri-settings-3-fill"></i> </a>
             </nav>
         </div>
     </div>
