@@ -22,6 +22,18 @@
                     </form>
                 </li>--}}
 
+                <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993" src="assets/images/add-circle-line-grey.svg" alt="profile-user"> <img class="visible_993" src="assets/images/add-circle-line-grey.svg" alt="profile-user"> </a>
+                    <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                </li>
+
+                <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993" src="assets/images/search-2-line.svg" alt="profile-user"> <img class="visible_993" src="assets/images/search-2-line.svg" alt="profile-user"> </a>
+                    <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                </li>
+
 
                 <li class="dropdown icons"><a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993" src="{{ URL::asset('assets/images/book-next-page.svg') }}" alt="profile-user"> <img class="visible_993" src="assets/images/book-next-page-white.svg" alt="profile-user"> </a>
                     <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
@@ -173,8 +185,8 @@
         <i class="ri-more-fill"></i>
     </div>
     <ul class="chat_user">
-        <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/01.png"/></a></li>
-        <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/02.png"/></a></li>
+        <li class="chatboxopen"><a href="#"><span class="chat_notification">2</span><img src="assets/images/avatar/01.png"/></a></li>
+        <li class="chatboxopen"><a href="#"><span class="chat_notification">5</span><img src="assets/images/avatar/02.png"/></a></li>
         <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/03.png"/></a></li>
         <li class="chatboxopen"><a class="active" href="#"><img src="assets/images/avatar/04.png"/></a></li>
         <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/05.png"/></a></li>
@@ -182,7 +194,7 @@
         <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/07.png"/></a></li>
         <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/08.png"/></a></li>
         <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/09.png"/></a></li>
-        <li class="chatboxopen"><a href="#"><img src="assets/images/avatar/10.png"/></a></li>
+        <li class="chatboxopen"><a href="#"><span class="chat_notification">3</span><img src="assets/images/avatar/10.png"/></a></li>
         <li class="chatboxopen"><a href="#"><img src="assets/images/sidebar_chat_add_circle_32.svg"/></a></li>
     </ul>
 </div>
