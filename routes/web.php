@@ -386,7 +386,6 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/mediagallery/saveReviewsList', 'Admin\Mediagallery@saveReviewsList');
     Route::post('admin/mediagallery/updateWidgetType', 'Admin\Mediagallery@updateWidgetType');
     Route::post('admin/mediagallery/getReviewData', 'Admin\Mediagallery@getReviewData');
-    Route::get('admin/mediagallery/getReviewData', 'Admin\Mediagallery@getReviewData');
     Route::post('admin/mediagallery/updateGallery', 'Admin\Mediagallery@updateGallery');
     Route::post('admin/mediagallery/getGalleryImages', 'Admin\Mediagallery@getGalleryImages');
     Route::post('admin/mediagallery/getMediaInfo', 'Admin\Mediagallery@getMediaInfo');
@@ -421,6 +420,11 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 //Setting
     Route::get('admin/settings', 'Admin\Settings@index');
+    Route::post('admin/settings/saveGeneralInfo', 'Admin\Settings@saveGeneralInfo');
+    Route::post('admin/settings/savePublicProfile', 'Admin\Settings@savePublicProfile');
+
+
+
     Route::get('admin/settings/setup_system_notifications', 'Admin\Settings@setup_system_notifications');
     Route::post('admin/settings/getEmailNotificationContent', 'Admin\Settings@getEmailNotificationContent');
     Route::post('admin/settings/updateEmailNotificationContent', 'Admin\Settings@updateEmailNotificationContent');
