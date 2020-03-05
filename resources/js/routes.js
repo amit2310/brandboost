@@ -114,7 +114,7 @@ import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
 
 import Profile from './components/admin/Profile';
-import Settings from './components/admin/Settings';
+
 
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
@@ -203,6 +203,18 @@ import MediaGallery from './components/admin/modules/mediagallery/Widgets';
 import MediaGallerySetup1 from './components/admin/modules/mediagallery/setup/Setup';
 import MediaGallerySetup2 from './components/admin/modules/mediagallery/setup/Setup2';
 
+/** -----------------------------------** END  **-----------------------------*/
+
+/**
+ * --------------------------------------------------------------------------
+ *  Import component for Admin Setting section.
+ *  @Pavan
+ * --------------------------------------------------------------------------
+ */
+    // import Settings from './components/admin/Settings';
+    import Settings from './components/admin/settings/Settings';
+/** -----------------------------------** END  **-----------------------------*/
+
 const routes = [
 
     /**
@@ -256,8 +268,6 @@ const routes = [
     { path: '/modules/referral/widgets', component: ReferralWidgets, meta: { title: 'Referral Widgets'} },
     { path: '/modules/referral/widget/setup/:id/1', component: ReferralWidgetsSetup1, meta: { title: 'Referral Widgets'} },
     { path: '/modules/referral/widget/setup/:id/2', component: ReferralWidgetsSetup2, meta: { title: 'Referral Widgets'} },
-
-
     { path: '/modules/referral/setup/:id/1', component: ReferralCampaignSetup1, meta: { title: 'Referral Campaign Setup'} },
     { path: '/modules/referral/setup/:id/2', component: ReferralCampaignSetup2, props : {title : 'Referral Campaign Setup'} },
     { path: '/modules/referral/setup/:id/3', component: ReferralCampaignSetup3, props : {title : 'Referral Campaign Setup'} },
@@ -274,12 +284,7 @@ const routes = [
     { path: '/modules/mediagallery', component: MediaGallery, meta: { title: 'Media Gallery'} },
     { path: '/modules/mediagallery/setup/:id/1', component: MediaGallerySetup1, meta: { title: 'Media Gallery'} },
     { path: '/modules/mediagallery/setup/:id/2', component: MediaGallerySetup2, meta: { title: 'Media Gallery'} },
-    // { path: '/modules/nps/widgets/step/:id/2', component: NPSWidgetsSetup2, meta: { title: 'Nps Widget Setup'} },
-    //
-    // { path: '/modules/nps/setup/:id/1', component: npsStep1, meta: { title: 'NPS Widgets'} },
-    // { path: '/modules/nps/setup/:id/2', component: npsStep2, meta: { title: 'NPS Widgets'} },
-    // { path: '/modules/nps/setup/:id/3', component: npsStep3, meta: { title: 'NPS Widgets'} },
-    // { path: '/modules/nps/setup/:id/4', component: npsStep4, meta: { title: 'NPS Widgets'} },
+
     /**-----------------------------------End---------------------------------------*/
 
     /*Referral Module*/
@@ -297,9 +302,19 @@ const routes = [
     /**-----------------------------------End---------------------------------------*/
     { path: '/dashboard', component: Dashboard, props: { pageColor: 'onsite_sec'}  },
     { path: '/live', component: Live, props: {pageColor: 'live_sec'} },
-    /*Admin Profi;e*/
+
+    /**
+     * --------------------------------------------------------------------------
+     *  Add Routes for Admin Setting /Profile  Section
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
     { path: '/profile', component: Profile, meta: { title: 'Admin Settings - Brand Boost'} },
     { path: '/settings', component: Settings, meta: { title: 'Brand Settings - Brand Boost'} },
+
+    /**-----------------------------------End---------------------------------------*/
+
     /*Contacts*/
     { path: '/contacts/dashboard', component: ContactDashboard, props: { pageColor: 'onsite_sec'} },
     { path: '/contacts/mycontacts', component: Contact, props:{ pageColor: 'people_sec'} },

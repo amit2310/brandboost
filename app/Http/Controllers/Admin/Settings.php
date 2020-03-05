@@ -154,7 +154,71 @@ class Settings extends Controller {
             );
 
             $aData['updated'] = date("Y-m-d H:i:s");
+//    print_r($request->all());
+//    print_r($aData);
+//    exit;
+            $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
 
+    /**
+     * Update company profile
+     * @param type
+     */
+    public function saveGeneralInfo(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+
+        if (!empty($request)) {
+            $aData = array(
+                'company_name' => request('company_name'),
+                'company_address' => request('company_address'),
+                'business_address_dppa' => request('business_address_dppa'),
+                'phone_no_dppa' => request('phone_no_dppa'),
+                'company_phone' => request('company_phone'),
+                'website_dppa' => request('website_dppa'),
+                'company_website' => request('company_website'),
+                'country' => request('country'),
+                'social_facebook' => request('social_facebook'),
+                'social_instagram' => request('social_instagram'),
+                'social_twitter' => request('social_twitter'),
+                'social_linkedin' => request('social_linkedin'),
+            );
+            $aData['updated'] = date("Y-m-d H:i:s");
+            $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+    public function savePublicProfile(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+
+        if (!empty($request)) {
+            $aData = array(
+                'company_description' => request('company_description'),
+                'company_working_hours' => request('company_working_hours'),
+                'company_operate_scope' => request('company_operate_scope'),
+                'company_type' => request('company_type'),
+                'public_profile_link' => request('public_profile_link'),
+                'company_seo_keywords' => request('company_seo_keywords'),
+
+            );
+            $aData['updated'] = date("Y-m-d H:i:s");
             $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
             if ($bUpdated) {
                 $response['status'] = 'success';
