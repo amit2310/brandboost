@@ -219,10 +219,10 @@
                     </div>
                 </div>
 
-                <div class="table_head_action pb0 mt-3">
+                <div v-if="requests.length > 0" class="table_head_action pb0 mt-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
+                            <h3 class="htxt_medium_14 dark_600">{{ requests.length }} - Review Requests</h3>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
@@ -231,19 +231,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div v-if="requests.length > 0" class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0">
                                 <tbody>
                                 <tr class="headings">
                                     <td width="20">
-				  	<span>
-						<label class="custmo_checkbox pull-left">
-							<input type="checkbox">
-							<span class="custmo_checkmark blue"></span>
-						</label>
-					</span>
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
                                     <td><span class="fsize10 fw500">name </span></td>
                                     <td><span class="fsize10 fw500">EMAIL / phone</span></td>
@@ -252,22 +252,27 @@
                                     <td><span class="fsize10 fw500">REVIEW  </span></td>
                                     <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
                                     <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-
                                 </tr>
 
-
-
-                                <tr>
+                                <tr v-for="request in requests">
                                     <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
-                                    <td><img src="assets/images/atline.svg"> &nbsp; scott.gilbert@example.com</td>
+                                    <td>
+                                        <span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{ request.firstname.charAt(0) }}</span></span>
+                                        <!--<user-avatar
+                                            :avatar="request.avatar"
+                                            :firstname="request.firstname"
+                                            :lastname="request.lastname"
+                                        ></user-avatar>-->
+                                        <span>{{ request.firstname }} {{ request.lastname }}</span>
+                                    </td>
+                                    <td><img src="assets/images/atline.svg"> {{ request.email }}</td>
                                     <td>New Customers Campaign</td>
                                     <td><span class="">Jun 20, 2020</span></td>
                                     <td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
@@ -467,12 +472,12 @@
                                         </span>
                                     </td>
                                     <td class="fw500 dark_600">
-                                        <!--<span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> -->
-                                        <user-avatar
+                                        <span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{ oReview.firstname.charAt(0) }}</span></span>
+                                        <!--<user-avatar
                                             :avatar="oReview.avatar"
                                             :firstname="oReview.firstname"
                                             :lastname="oReview.lastname"
-                                        ></user-avatar>
+                                        ></user-avatar>-->
                                         <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
                                     </td>
                                     <td>
@@ -548,29 +553,46 @@
                 breadcrumb: '',
                 viewType: 'List View',
                 sortBy: 'Name',
-                searchBy: ''
+                searchBy: '',
+
+                moduleNameRR: '',
+                requests : '',
+                allDataRR: {},
+                current_pageRR: 1,
+                breadcrumbRR: '',
+                viewTypeRR: 'List View',
+                sortByRR: 'all',
+                searchByRR: '',
             }
         },
         created() {
+            this.loadPaginatedDataRR();
             this.loadPaginatedData();
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
         },
         watch: {
+            'sortByRR' : function(){
+                this.loadPaginatedDataRR();
+            },
             'sortBy' : function(){
                 this.loadPaginatedData();
             }
         },
         methods: {
-            searchItem: function(){
-                this.loadPaginatedData();
-            },
             showReview: function(id){
                 window.location.href='#/reviews/onsite/reviews/'+id;
             },
-            showQuestions: function(id){
-                window.location.href='#/brandboost/questions/'+id;
+            loadPaginatedDataRR : function(){
+                axios.get('/admin/brandboost/review_request/onsite?page='+this.current_pageRR+'&search='+this.searchByRR+'&sortBy='+this.sortByRR)
+                    .then(response => {
+                        this.breadcrumbRR = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumbRR);
+                        this.moduleNameRR = response.data.moduleName;
+                        this.requests = response.data.oRequest;
+                        this.allDataRR = response.data.allData;
+                    });
             },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
@@ -583,17 +605,21 @@
                         this.oReviews = response.data.aReviews;
                         this.reviewTags = response.data.reviewTags;
                         this.reviewTags = response.data.reviewTags;
-                        this.loading = false;
-                        //console.log(this.campaigns)
                     });
             },
+            showPaginationDataRR: function(p){
+                this.current_pageRR = p;
+                this.loadPaginatedDataRR();
+            },
+            navigatePaginationRR: function(p){
+                this.current_pageRR = p;
+                this.loadPaginatedDataRR();
+            },
             showPaginationData: function(p){
-                this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
             }
