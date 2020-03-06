@@ -52,7 +52,7 @@
                     <a class="nav-link dropdown-toggle waves-effect waves-light nav-user top-icons-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"><img class="hide_993 float-left" src="{{ URL::asset('assets/images/alarm-bell.svg') }}" alt="notifications"> <img class="visible_993 float-left" src="{{ URL::asset('assets/images/alarm-bell-white.svg') }}" alt="Notifications">
                         <span class="badge badge-grey top-bar">{{ $unreadNotificationCount }}</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu notification_dropdown dropdown-menu-right">
                         <div class="dropdown-content-heading"> Notifications <span class="badge bkg_purple ml10">{{ $unreadNotificationCount }}</span>
                             <ul class="icons-list">
                                 <li><a href="javascript:void(0);" class="readAllNotification"><i class="icon-checkmark3"></i></a> </li>

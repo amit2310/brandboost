@@ -38,7 +38,7 @@ function getLoggedUser($redirect = true)
         Session::put('admin_redirect_url', \Request::fullUrl());
         if ($redirect == true) {
             // return redirect('/admin/login');
-            header('Location: /admin/login');
+            header('Location: /admin/login?r='.\Request::fullUrl());
             die();
         }
     }

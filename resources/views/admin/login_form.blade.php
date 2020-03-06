@@ -100,6 +100,7 @@ $isLoginPage = 1;
                     </div>
                 </div>
             </div>
+                <input type="hidden" name="urlFragment" id="urlFragment" value="" />
             </form>
 
             <div class="p30 pl50 pr50">
@@ -129,6 +130,9 @@ $isLoginPage = 1;
     <script type="text/javascript" src="{{ URL::asset('assets/js/pages/login.js') }}"></script>
     <!-- /theme JS files -->
     <script>
+        $(document).ready(function(){
+            $("#urlFragment").val(window.location.hash);
+        });
         document.getElementById("loginerrorclose").addEventListener("click", function(e){
             e.preventDefault();
             document.getElementById("login_error").style.display = "none";
