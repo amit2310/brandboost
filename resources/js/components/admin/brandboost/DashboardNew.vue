@@ -225,9 +225,18 @@
                             <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
                         </div>
                         <div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                            </ul>
+                            <!--<ul class="table_filter text-right">
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            </ul>-->
+                            <div class="float-right">
+                                <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                    <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp;
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortByRR='all'">ALL</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortByRR='archive'">ARCHIVE</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -312,19 +321,32 @@
 
                 </div>
 
-                <div v-if="oReviews.length > 0 || searchBy.length>0" class="table_head_action pb0 mt-4">
+                <div v-if="oReviews.length > 0" class="table_head_action pb0 mt-4">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_14 dark_600">Reviews</h3>
                         </div>
                         <div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                            </ul>
+                            <!--<ul class="table_filter text-right">
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            </ul>-->
+                            <div class="float-right">
+                                <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                    <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp;
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div v-if="oReviews.length > 0 || searchBy.length>0" class="row">
+                <div v-if="oReviews.length > 0" class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0">
@@ -435,7 +457,7 @@
                 current_page: 1,
                 breadcrumb: '',
                 viewType: 'List View',
-                sortBy: 'Name',
+                sortBy: 'Date Created',
                 searchBy: '',
 
                 moduleNameRR: '',
