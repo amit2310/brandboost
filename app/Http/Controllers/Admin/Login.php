@@ -24,6 +24,11 @@ class Login extends Controller {
      * @return display login page and redirect to dashboard page after authorization
      */
     public function index(Request $request) {
+        $redirect = $request->get('r');
+        if(!empty($redirect)){
+            Session::put('admin_redirect_url', $redirect);
+        }
+
 
         $detect = new Mobile_Detect;
         if ($detect->isMobile()) {
@@ -47,6 +52,7 @@ class Login extends Controller {
         $loginid = (!empty($request->email)) ? $request->email : '';
         $password = (!empty($request->password)) ? $request->password : '';
         $remember = (!empty($request->remember)) ? $request->remember : '';
+        $urlFragment = (!empty($request->urlFragment)) ? $request->urlFragment : '';
 
         if (!empty($loginid)) {
             //Apply validation
@@ -117,13 +123,14 @@ class Login extends Controller {
                     return redirect('/user/profile');
                 }
 
-                if (Session::get('admin_redirect_url') == '') {
+                if (empty(Session::get('admin_redirect_url'))) {
                     if ($loginType == 'ajax') {
                         $response = array('status' => 'success', 'msg' => 'Successfully logged in');
                         echo json_encode($response);
                         exit;
                     } else {
-                        return redirect('/admin/');
+                        //die('I am here');
+                        return redirect('/admin#/contacts/dashboard');
                     }
                 } else {
                     if ($loginType == 'ajax') {
@@ -131,7 +138,9 @@ class Login extends Controller {
                         echo json_encode($response);
                         exit;
                     } else {
-                        return redirect(Session::get('admin_redirect_url'));
+                        $redirectURL = Session::get('admin_redirect_url');
+                        Session::put('admin_redirect_url', '');
+                        return redirect($redirectURL.$urlFragment);
                     }
                 }
             } else {
