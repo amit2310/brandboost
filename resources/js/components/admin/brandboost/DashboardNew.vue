@@ -95,12 +95,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a class="active" href="#">Overview</a></li>
-                                <li><a href="#">Requests</a></li>
-                                <li><a href="#">Reviews</a></li>
-                                <li><a href="#">Contacts</a></li>
-                                <li><a href="#">Stats</a></li>
-                                <!--<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                                <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Stats&nbsp;</a></li>&nbsp;&nbsp;
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -219,6 +218,7 @@
                     </div>
                 </div>
 
+                <div v-if="(seletedTab === '' || seletedTab === 1)">
                 <div class="table_head_action pb0 mt-3">
                     <div class="row">
                         <div class="col-md-6">
@@ -334,7 +334,7 @@
                                             </label>
                                         </span>
                                     </td>
-                                    <td><span class="fsize10 fw500">name </span></td>
+                                    <td><span class="fsize10 fw500">NAME </span></td>
                                     <td><span class="fsize10 fw500">EMAIL / phone</span></td>
                                     <td><span class="fsize10 fw500">CAMPAIGN</span></td>
                                     <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
@@ -353,7 +353,9 @@
 
 
                 </div>
+                </div>
 
+                <div v-if="(seletedTab == 2)">
                 <div class="table_head_action pb0 mt-4">
                     <div class="row">
                         <div class="col-md-6">
@@ -490,6 +492,7 @@
 
 
                 </div>
+                </div>
 
             </div>
         </div>
@@ -520,6 +523,7 @@
                 campaignId: '',
                 current_page: 1,
                 breadcrumb: '',
+                seletedTab: 1,
                 viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: '',
