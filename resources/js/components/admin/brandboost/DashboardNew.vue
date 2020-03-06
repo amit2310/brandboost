@@ -424,7 +424,7 @@
 
                 </div>
 
-                <div class="table_head_action pb0 mt-4">
+                <div v-if="oReviews.length > 0 || searchBy.length>0" class="table_head_action pb0 mt-4">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_14 dark_600">Reviews</h3>
@@ -436,19 +436,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div v-if="oReviews.length > 0 || searchBy.length>0" class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0">
                                 <tbody>
                                 <tr class="headings">
                                     <td width="20">
-				  	<span>
-						<label class="custmo_checkbox pull-left">
-							<input type="checkbox">
-							<span class="custmo_checkmark blue"></span>
-						</label>
-					</span>
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
                                     <td><span class="fsize10 fw500">CONTACT </span></td>
                                     <td><span class="fsize10 fw500">RATING</span></td>
@@ -456,181 +456,60 @@
                                     <td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
                                     <td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
                                     <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-
                                 </tr>
-
-
-
-                                <tr>
+                                <tr v-for="oReview in oReviews">
                                     <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
-                                    <td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+                                    <td class="fw500 dark_600">
+                                        <!--<span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> -->
+                                        <user-avatar
+                                            :avatar="oReview.avatar"
+                                            :firstname="oReview.firstname"
+                                            :lastname="oReview.lastname"
+                                        ></user-avatar>
+                                        <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
+                                    </td>
                                     <td>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        &nbsp; <span>5.0</span></td>
-                                    <td>Consectetur eiusmod aliquip aliquip ...</td>
+                                        <span v-for="num in [1,2,3,4,5]">
+                                            <!--<i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
+                                            <i v-else class=""><img width="14" src="/assets/images/star-fill_grey_18.svg"></i>-->
+                                            <i v-if="num<=oReview.ratings && oReview.ratings > 3" class="ri-star-s-fill fsize18 green_400"></i>
+                                            <i v-else-if="num<=oReview.ratings && oReview.ratings == 3" class="ri-star-s-fill fsize18 yellow_400"></i>
+                                            <i v-else class="ri-star-s-fill fsize18 light_600"></i>
+                                        </span>
+                                        <span>{{ oReview.ratings }}.0</span>
+                                    </td>
+                                    <td>
+                                        <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
+                                        <br />
+                                        <span>{{ setStringLimit(oReview.comment_text, 50) }}</span>
+                                    </td>
                                     <td><i class="ri-at-line email_400 fsize15"></i></td>
-                                    <td>3 month ago</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-                                    </td>
-                                    <td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Regina Flores</td>
+                                    <td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}<!--3 month ago--></td>
                                     <td>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 light_600"></i>
-                                        &nbsp; <span>4.0</span></td>
-                                    <td>Consectetur eiusmod aliquip aliquip ...</td>
-                                    <td><i class="ri-phone-line green_400 fsize15"></i></td>
-                                    <td>3 month ago</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                        <span class="float-right">
+                                            <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
+                                            <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
+                                            <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
+                                            <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
+                                        </span>
                                     </td>
-                                    <td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Jorge Robertson</td>
-                                    <td>
-                                        <i class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i class="ri-star-s-fill fsize18 light_600"></i>
-                                        <i class="ri-star-s-fill fsize18 light_600"></i>
-                                        &nbsp; <span>4.0</span></td>
-                                    <td>Consectetur eiusmod aliquip aliquip ...</td>
-                                    <td><i class="ri-phone-line green_400 fsize15"></i></td>
-                                    <td>3 month ago</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
                                 </tr>
-
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-                                    </td>
-                                    <td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
-                                    <td>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        &nbsp; <span>5.0</span></td>
-                                    <td>Consectetur eiusmod aliquip aliquip ...</td>
-                                    <td><i class="ri-at-line email_400 fsize15"></i></td>
-                                    <td>3 month ago</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-                                    </td>
-                                    <td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Regina Flores</td>
-                                    <td>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i class="ri-star-s-fill fsize18 light_600"></i>
-                                        &nbsp; <span>4.0</span></td>
-                                    <td>Consectetur eiusmod aliquip aliquip ...</td>
-                                    <td><i class="ri-phone-line green_400 fsize15"></i></td>
-                                    <td>3 month ago</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-                                    </td>
-                                    <td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Jorge Robertson</td>
-                                    <td>
-                                        <i class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i class="ri-star-s-fill fsize18 light_600"></i>
-                                        <i class="ri-star-s-fill fsize18 light_600"></i>
-                                        &nbsp; <span>4.0</span></td>
-                                    <td>Consectetur eiusmod aliquip aliquip ...</td>
-                                    <td><i class="ri-phone-line green_400 fsize15"></i></td>
-                                    <td>3 month ago</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
-                                </tr>
-
-
-
-
-
-
-
-
-
-
                                 </tbody>
                             </table>
 
-                            <div class="custom_pagination">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <span class="mr-4">ITEMS PER PAGE:<select><option>10</option><option>10</option><option>15</option><option>20</option></select></span>
-                                        <span>1-10 out of 137</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <ul class="page_list float-right">
-                                            <li><a href="#"><img src="assets/images/arrow-right-s-line.svg"></a></li>
-                                            <li><a class="active" href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">...</a></li>
-                                            <li><a href="#">9</a></li>
-                                            <li><a href="#"><img src="assets/images/arrow-left-s-line.svg"></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <pagination
+                                :pagination="allData"
+                                @paginate="showPaginationData"
+                                :offset="4"
+                                class="mt-4">
+                            </pagination>
 
                         </div>
                     </div>
