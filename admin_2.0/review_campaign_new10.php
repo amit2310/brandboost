@@ -516,14 +516,20 @@
     </div>
     	
    		<div class="card p25">
-   			<div class="form-group m-0">
-					<label class="fsize12 text-uppercase dark_600 fw500 mb-3 ls_4">Media</label>
-					<label class="m0 w-100" for="upload">
-					<div class="img_vid_upload_medium">
-					  <input class="d-none" type="file" name="" value="" id="upload">
-					</div>
-					</label>
-				  </div>
+				  <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Media</h3>
+    		<hr>
+    		
+    		
+    		<div class="row">
+    			<div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media1.svg"/></div>
+    			<div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media2.svg"/></div>
+    			<div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media3.svg"/></div>
+    			<div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media4.svg"/></div>
+    			
+    			
+    			
+    		</div>
+    		
    		</div>
    		
    		

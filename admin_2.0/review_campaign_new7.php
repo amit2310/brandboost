@@ -193,17 +193,39 @@
 						</label>
 					</span>
 				    </td>
-					<td><span class="fsize10 fw500">name </span></td>
-					<td><span class="fsize10 fw500">EMAIL / phone</span></td>
-					<td><span class="fsize10 fw500">CAMPAIGN</span></td>
-					<td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-					<td><span class="fsize10 fw500">REVIEW  </span></td>
-					<td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+					<td><span class="fsize10 fw500">CONTACT </span></td>
+					<td><span class="fsize10 fw500">RATING</span></td>
+					<td><span class="fsize10 fw500">REVIEW</span></td>
+					<td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
+					<td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
 					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
 					
 				  </tr>
 				  
 				  
+				   
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+					&nbsp; <span>5.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-at-line email_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
+				  </tr>
 				  
 				  <tr>
 				   <td width="20">
@@ -214,12 +236,17 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; scott.gilbert@example.com</td>
-					<td>New Customers Campaign</td>
-					<td><span class="">Jun 20, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td>&nbsp;</td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Regina Flores</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-message-2-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
 				  
@@ -232,12 +259,41 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gregory Henry</td>
-					<td><img src="assets/images/chatline.svg"> &nbsp; (201) 555-0124</td>
-					<td>Smart SMS Campaign</td>
-					<td><span class="">Jul 16, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td><img src="assets/images/checklineblack.svg"></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Jorge Robertson</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-phone-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
+				  </tr>
+				  
+				 
+				  <tr>
+				   <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+					&nbsp; <span>5.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-at-line email_400 fsize15"></i></td>
+					<td>3 month ago</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
 				  
@@ -250,13 +306,18 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/03.png"></span></span> Arlene Bell</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; henry.frazier@example.com</td>
-					<td>New Customers Campaign</td>
-					<td><span class="">Apr 26, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td>&nbsp;</td>
-					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Regina Flores</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-phone-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
 				  </tr>
 				  
 				  <tr>
@@ -268,37 +329,22 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gloria Fisher</td>
-					<td><img src="assets/images/chatline.svg"> &nbsp; (225) 555-0118</td>
-					<td>Email Requests </td>
-					<td><span class="">Nov 30, 2020</span></td>
-					<td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-					<td><img src="assets/images/check_double_green.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/05.png"></span></span> Evan Robertson</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; benjamin.ray@example.com</td>
-					<td>Default</td>
-					<td><span class="">Nov 2, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td>&nbsp;</td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Jorge Robertson</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-phone-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
 				  
 				  
-				   <tr>
+				  <tr>
 				   <td width="20">
 						<span>
 							<label class="custmo_checkbox pull-left">
@@ -307,13 +353,18 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Gloria Fisher</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; tiffany.dean@example.com</td>
-					<td>Customers Campaign </td>
-					<td><span class="">Jul 27, 2020</span></td>
-					<td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-					<td><img src="assets/images/check_double_green.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+					&nbsp; <span>5.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-at-line email_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
 				  </tr>
 				  
 				  <tr>
@@ -325,17 +376,21 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/07.png"></span></span> Gloria Fisher</td>
-					<td><img src="assets/images/chatline.svg"> &nbsp; (307) 555-0133</td>
-					<td>Customers Campaign </td>
-					<td><span class="">Jul 27, 2020</span></td>
-					<td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-					<td><img src="assets/images/check_double_green.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Regina Flores</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-phone-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
 				  </tr>
 				  
-				  
-				   <tr>
+				  <tr>
 				   <td width="20">
 						<span>
 							<label class="custmo_checkbox pull-left">
@@ -344,15 +399,21 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; scott.gilbert@example.com</td>
-					<td>New Customers Campaign</td>
-					<td><span class="">Jun 20, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td>&nbsp;</td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Jorge Robertson</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-phone-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
 				  
+				 
 				  <tr>
 				   <td width="20">
 						<span>
@@ -362,31 +423,18 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gregory Henry</td>
-					<td><img src="assets/images/chatline.svg"> &nbsp; (201) 555-0124</td>
-					<td>Smart SMS Campaign</td>
-					<td><span class="">Jul 16, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td><img src="assets/images/checklineblack.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-				  </tr>
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/03.png"></span></span> Arlene Bell</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; henry.frazier@example.com</td>
-					<td>New Customers Campaign</td>
-					<td><span class="">Apr 26, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td>&nbsp;</td>
-					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Floyd Howard</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 red_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>5.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-at-line email_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
 				  </tr>
 				  
 				  <tr>
@@ -398,52 +446,18 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gloria Fisher</td>
-					<td><img src="assets/images/chatline.svg"> &nbsp; (225) 555-0118</td>
-					<td>Email Requests </td>
-					<td><span class="">Nov 30, 2020</span></td>
-					<td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-					<td><img src="assets/images/check_double_green.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-				  </tr>
-				  
-				  
-				  
-				  <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/05.png"></span></span> Evan Robertson</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; benjamin.ray@example.com</td>
-					<td>Default</td>
-					<td><span class="">Nov 2, 2020</span></td>
-					<td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-					<td>&nbsp;</td>
-					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-				  </tr>
-				  
-				  
-				   <tr>
-				   <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Gloria Fisher</td>
-					<td><img src="assets/images/atline.svg"> &nbsp; tiffany.dean@example.com</td>
-					<td>Customers Campaign </td>
-					<td><span class="">Jul 27, 2020</span></td>
-					<td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-					<td><img src="assets/images/check_double_green.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Regina Flores</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 green_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-message-2-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
 				  </tr>
 				  
 				  <tr>
@@ -455,14 +469,22 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/07.png"></span></span> Gloria Fisher</td>
-					<td><img src="assets/images/chatline.svg"> &nbsp; (307) 555-0133</td>
-					<td>Customers Campaign </td>
-					<td><span class="">Jul 27, 2020</span></td>
-					<td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-					<td><img src="assets/images/check_double_green.svg"></td>
-					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+					<td class="fw500 dark_600"><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">f</span></span> Jorge Robertson</td>
+					<td>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 yellow_400"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+						<i class="ri-star-s-fill fsize18 light_600"></i>
+					&nbsp; <span>4.0</span></td>
+					<td>Consectetur eiusmod aliquip aliquip ...</td>
+					<td><i class="ri-message-2-line green_400 fsize15"></i></td>
+					<td>3 month ago</td>
+					<td><span class="float-right"><span class="status_icon bkg_green_400"></span></span></td>
 				  </tr>
+				  
+				  
+				  
 				 
 				 
 				  
