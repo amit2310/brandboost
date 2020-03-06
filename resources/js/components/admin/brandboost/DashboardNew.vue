@@ -222,7 +222,7 @@
                 <div v-if="requests.length > 0" class="table_head_action pb0 mt-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="htxt_medium_14 dark_600">{{ requests.length }} - Review Requests</h3>
+                            <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
@@ -272,156 +272,39 @@
                                         ></user-avatar>-->
                                         <span>{{ request.firstname }} {{ request.lastname }}</span>
                                     </td>
-                                    <td><img src="assets/images/atline.svg"> {{ request.email }}</td>
-                                    <td>New Customers Campaign</td>
-                                    <td><span class="">Jun 20, 2020</span></td>
-                                    <td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-                                    <td>&nbsp;</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                    <td>
+                                        <!--<span v-if="request.tracksubscribertype =='sms' && (request.phone != '' && request.phone != null)"><img src="assets/images/chatline.svg"> {{ phoneNoFormat(request.phone) }}</span>-->
+                                        <span v-if="(request.phone != '' && request.phone != null)"><img src="assets/images/chatline.svg"> &nbsp;{{ phoneNoFormat(request.phone) }}</span>
+                                        <span v-else><img src="assets/images/atline.svg"> {{ request.email }}</span>
                                     </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gregory Henry</td>
-                                    <td><img src="assets/images/chatline.svg"> &nbsp; (201) 555-0124</td>
-                                    <td>Smart SMS Campaign</td>
-                                    <td><span class="">Jul 16, 2020</span></td>
-                                    <td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-                                    <td><img src="assets/images/checklineblack.svg"></td>
-                                    <td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                    <td>{{ request.brand_title ? setStringLimit(capitalizeFirstLetter(request.brand_title), 23) :  'No Data' }}</td>
+                                    <td><span class="">{{ displayDateFormat('M d, Y', request.requestdate) }}</span></td>
+                                    <td>
+                                        <img v-if="request.ratings>0" width="14" src="assets/images/star-fill_yellow_16.svg">
+                                        <img v-else src="assets/images/star-line.svg"/>
+                                        <span v-if="request.ratings>0" class="dark_400">&nbsp; {{ request.ratings }}</span>
+                                        <span v-else class="light_400">-</span>
                                     </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/03.png"></span></span> Arlene Bell</td>
-                                    <td><img src="assets/images/atline.svg"> &nbsp; henry.frazier@example.com</td>
-                                    <td>New Customers Campaign</td>
-                                    <td><span class="">Apr 26, 2020</span></td>
-                                    <td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-                                    <td>&nbsp;</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                    <td>
+                                        <span v-if="request.tracksubscribertype =='email'"></span>
+                                        <span v-if="request.tracksubscribertype =='sms'"><!--<img src="assets/images/check_double_green.svg">--><img src="assets/images/checklineblack.svg"></span>
                                     </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">g</span></span> Gloria Fisher</td>
-                                    <td><img src="assets/images/chatline.svg"> &nbsp; (225) 555-0118</td>
-                                    <td>Email Requests </td>
-                                    <td><span class="">Nov 30, 2020</span></td>
-                                    <td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-                                    <td><img src="assets/images/check_double_green.svg"></td>
-                                    <td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-                                </tr>
-
-
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
+                                    <td>
+                                        <span class="float-right">
+                                            <span v-if="request.subscriberstatus == 1" class="status_icon bkg_blue_300"></span>
+                                            <span v-else class="status_icon bkg_light_800"></span>
+                                        </span>
                                     </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/05.png"></span></span> Evan Robertson</td>
-                                    <td><img src="assets/images/atline.svg"> &nbsp; benjamin.ray@example.com</td>
-                                    <td>Default</td>
-                                    <td><span class="">Nov 2, 2020</span></td>
-                                    <td><img src="assets/images/star-line.svg"> <span class="light_400">-</span></td>
-                                    <td>&nbsp;</td>
-                                    <td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
                                 </tr>
-
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-                                    </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Gloria Fisher</td>
-                                    <td><img src="assets/images/atline.svg"> &nbsp; tiffany.dean@example.com</td>
-                                    <td>Customers Campaign </td>
-                                    <td><span class="">Jul 27, 2020</span></td>
-                                    <td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-                                    <td><img src="assets/images/check_double_green.svg"></td>
-                                    <td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td width="20">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-                                    </td>
-                                    <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/07.png"></span></span> Gloria Fisher</td>
-                                    <td><img src="assets/images/chatline.svg"> &nbsp; (307) 555-0133</td>
-                                    <td>Customers Campaign </td>
-                                    <td><span class="">Jul 27, 2020</span></td>
-                                    <td><img src="assets/images/star-fill_yellow_16.svg" width="14"> &nbsp; <span class="dark_400">4.5</span></td>
-                                    <td><img src="assets/images/check_double_green.svg"></td>
-                                    <td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
-                                </tr>
-
-
-
-
-
-
-
-
-
-
                                 </tbody>
                             </table>
 
-                            <div class="custom_pagination">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <span class="mr-4">ITEMS PER PAGE:<select><option>10</option><option>10</option><option>15</option><option>20</option></select></span>
-                                        <span>1-10 out of 137</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <ul class="page_list float-right">
-                                            <li><a href="#"><img src="assets/images/arrow-right-s-line.svg"></a></li>
-                                            <li><a class="active" href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">...</a></li>
-                                            <li><a href="#">9</a></li>
-                                            <li><a href="#"><img src="assets/images/arrow-left-s-line.svg"></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <pagination
+                                :pagination="allDataRR"
+                                @paginate="showPaginationDataRR"
+                                :offset="4"
+                                class="mt-4">
+                            </pagination>
 
                         </div>
                     </div>
