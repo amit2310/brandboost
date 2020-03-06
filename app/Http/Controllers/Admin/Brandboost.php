@@ -686,15 +686,15 @@ class Brandboost extends Controller
         $mReviews = new ReviewsModel();
         $mTags = new TagsModel();
 
+        $bActiveSubsription = $mUsers->isActiveSubscription();
+
         $campaignId = $request->id;
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
 
         if (!empty($campaignId)) {
-
             $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
             $aReviews = $mReviews->getCampaignReviews($campaignId, $searchBy, $sortBy);
-            $bActiveSubsription = $mUsers->isActiveSubscription();
 
             $aBreadcrumb = array(
                 'Home' => '#/',
@@ -724,7 +724,6 @@ class Brandboost extends Controller
             $aUser = getLoggedUser();
             $userID = $aUser->id;
             $aReviews = $mReviews->getMyBranboostReviews($userID, $searchBy, $sortBy);
-            $bActiveSubsription = $mUsers->isActiveSubscription();
 
             $aBreadcrumb = array(
                 'Home' => '#/',

@@ -228,24 +228,25 @@ class ReviewsModel extends Model {
         if(!empty($sortBy)){
             if($sortBy == 'Date Created'){
                 $query->orderBy('review_created', 'desc');
-            }else  if($sortBy == 'Name'){
+            } else  if($sortBy == 'Name'){
                 $query->orderBy('review_title', 'desc');
-            }else  if($sortBy == 'Active'){
+            } else  if($sortBy == 'Active'){
                 $query->where('tbl_reviews.status', '1');
-            }else  if($sortBy == 'Inactive'){
+            } else  if($sortBy == 'Inactive'){
                 $query->where('tbl_reviews.status', '0');
-            }else  if($sortBy == 'Pending'){
+            } else  if($sortBy == 'Pending'){
                 $query->where('tbl_reviews.status', '2');
-            }else  if($sortBy == 'Archive'){
+            } else  if($sortBy == 'Archive'){
                 $query->where('tbl_reviews.status', '3');
-            }else  if($sortBy == 'Positive'){
+            } else  if($sortBy == 'Positive'){
                 $query->where('tbl_reviews.ratings', '>=', '3');
-            }else  if($sortBy == 'Negative'){
+            } else  if($sortBy == 'Negative'){
                 $query->where('tbl_reviews.ratings', '<' , '3');
             }
-        }else{
+        } else {
             $query->orderBy('tbl_reviews.id', 'desc');
         }
+
         $oData = $query->paginate(10);
 
         return $oData;
