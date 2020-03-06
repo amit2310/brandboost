@@ -95,12 +95,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a class="active" href="#">Overview</a></li>
-                                <li><a href="#">Requests</a></li>
-                                <li><a href="#">Reviews</a></li>
-                                <li><a href="#">Contacts</a></li>
-                                <li><a href="#">Stats</a></li>
-                                <!--<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                                <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Stats&nbsp;</a></li>&nbsp;&nbsp;
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -219,15 +218,25 @@
                     </div>
                 </div>
 
-                <div v-if="requests.length > 0" class="table_head_action pb0 mt-3">
+                <div v-if="(seletedTab === '' || seletedTab === 1)">
+                <div class="table_head_action pb0 mt-3">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
                         </div>
                         <div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                            </ul>
+                            <!--<ul class="table_filter text-right">
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            </ul>-->
+                            <div class="float-right">
+                                <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                    <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp;
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortByRR='all'">ALL</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortByRR='archive'">ARCHIVE</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -311,20 +320,68 @@
 
 
                 </div>
+                <div v-else class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="fsize10 fw500">NAME </span></td>
+                                    <td><span class="fsize10 fw500">EMAIL / phone</span></td>
+                                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
+                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                                    <td><span class="fsize10 fw500">REVIEW  </span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
 
-                <div v-if="oReviews.length > 0 || searchBy.length>0" class="table_head_action pb0 mt-4">
+                                <tr>
+                                    <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+                </div>
+
+                <div v-if="(seletedTab == 2)">
+                <div class="table_head_action pb0 mt-4">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_14 dark_600">Reviews</h3>
                         </div>
                         <div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                            </ul>
+                            <!--<ul class="table_filter text-right">
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            </ul>-->
+                            <div class="float-right">
+                                <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                    <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp;
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div v-if="oReviews.length > 0 || searchBy.length>0" class="row">
+                <div v-if="oReviews.length > 0" class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0">
@@ -404,6 +461,38 @@
 
 
                 </div>
+                <div v-else class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="fsize10 fw500">CONTACT </span></td>
+                                    <td><span class="fsize10 fw500">RATING</span></td>
+                                    <td><span class="fsize10 fw500">REVIEW</span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
+                                    <td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+                </div>
 
             </div>
         </div>
@@ -434,8 +523,9 @@
                 campaignId: '',
                 current_page: 1,
                 breadcrumb: '',
+                seletedTab: 1,
                 viewType: 'List View',
-                sortBy: 'Name',
+                sortBy: 'Date Created',
                 searchBy: '',
 
                 moduleNameRR: '',
