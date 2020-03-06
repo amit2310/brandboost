@@ -420,8 +420,10 @@ Route::group(['middleware' => ['bb_authorize']], function () {
 
 //Setting
     Route::get('admin/settings', 'Admin\Settings@index');
-    Route::post('admin/settings/saveGeneralInfo', 'Admin\Settings@saveGeneralInfo');
-    Route::post('admin/settings/savePublicProfile', 'Admin\Settings@savePublicProfile');
+    Route::post('admin/settings/saveGeneralInfo', 'Admin\Settings@saveUserSettings');
+    Route::post('admin/settings/savePublicProfile', 'Admin\Settings@saveUserSettings');
+    Route::post('admin/settings/saveGeneralPreferences', 'Admin\Settings@saveUserSettings');
+    Route::post('admin/settings/saveFieldsSettings', 'Admin\Settings@saveUserSettings');
 
 
 
