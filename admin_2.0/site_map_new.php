@@ -96,6 +96,8 @@
                 <li><a target="_blank" href="review_campaign_new8.php">Review Single 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
                 <li><a target="_blank" href="review_campaign_new9.php">Review Single 2 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
                 <li><a target="_blank" href="review_campaign_new10.php">Review Single 3 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_add_new1.php">Review Add 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 7th March 2020</small></li>
+                <li><a target="_blank" href="review_add_new2.php">Review Add 2 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 7th March 2020</small></li>
                 
                 
                 <li><strong>Review App Overview</strong></li>
