@@ -112,112 +112,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4 d-flex">
-
-
-                        <div class="card p25 pt20 animate_top col">
-                            <div class="row">
-                                <div class="col-9">
-                                    <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REVIEW REQUESTS</p>
-                                </div>
-                                <div class="col">
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <hr>
-                                </div>
-                            </div>
-                            <div class="p0 pt20 pb0">
-                                <div class="row">
-                                    <div class="col-md-7 pr-0">
-                                        <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">284</h3>
-                                        <p class="m-0 fsize14"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>15%</span>last week</p>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="float-right"><img height="96" src="assets/images/review_request_chart1.svg"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-
-                    <div class="col-md-4 d-flex">
-                        <div class="card p25 pt20 animate_top col">
-                            <div class="row">
-                                <div class="col-9">
-                                    <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REQUEST CLICK RATE</p>
-                                </div>
-                                <div class="col">
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <hr>
-                                </div>
-                            </div>
-                            <div class="p0 pt20 pb0">
-                                <div class="row">
-                                    <div class="col-md-7 pr-0">
-                                        <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">46%</h3>
-                                        <p class="m-0 fsize14"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>/ last week</p>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="float-right"><img height="96" src="assets/images/review_chart_02.svg"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 d-flex">
-                        <div class="card p25 pt20 animate_top col">
-                            <div class="row">
-                                <div class="col-9">
-                                    <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REVIEWS SUMMARY</p>
-                                </div>
-                                <div class="col">
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <hr>
-                                </div>
-                            </div>
-                            <div class="p0 pt0 pb0">
-                                <div class="row">
-                                    <div class="col-md-5 pr-0">
-                                        <div class="mt20"><img height="96" src="assets/images/review_chart_03.svg"></div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <ul class="list2">
-                                            <li><span><i class="ri-star-s-fill fsize18 green_400"></i> 4-5</span>  <strong>129</strong></li>
-                                            <li><span><i class="ri-star-s-fill fsize18 yellow_400"></i> 3</span>  <strong>74</strong></li>
-                                            <li><span><i class="ri-star-s-fill fsize18 red_400"></i> 1-2</span>  <strong>13</strong></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div v-if="(seletedTab === '' || seletedTab === 1)">
                 <div class="table_head_action pb0 mt-3">
                     <div class="row">
@@ -492,6 +386,114 @@
 
 
                 </div>
+                </div>
+
+                <div v-if="(seletedTab == 4)">
+                    <div class="row">
+                        <div class="col-md-4 d-flex">
+
+
+                            <div class="card p25 pt20 animate_top col">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REVIEW REQUESTS</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="p0 pt20 pb0">
+                                    <div class="row">
+                                        <div class="col-md-7 pr-0">
+                                            <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">284</h3>
+                                            <p class="m-0 fsize14"><span class="red_400 mr-2"><i><img src="assets/images/arrow-right-down-line-red.svg"></i>15%</span>last week</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="float-right"><img height="96" src="assets/images/review_request_chart1.svg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="col-md-4 d-flex">
+                            <div class="card p25 pt20 animate_top col">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REQUEST CLICK RATE</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="p0 pt20 pb0">
+                                    <div class="row">
+                                        <div class="col-md-7 pr-0">
+                                            <h3 class="htxt_regular_28 dark_700 mt-0 mb-1">46%</h3>
+                                            <p class="m-0 fsize14"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i>33,87%</span>/ last week</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="float-right"><img height="96" src="assets/images/review_chart_02.svg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 d-flex">
+                            <div class="card p25 pt20 animate_top col">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REVIEWS SUMMARY</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="p0 pt0 pb0">
+                                    <div class="row">
+                                        <div class="col-md-5 pr-0">
+                                            <div class="mt20"><img height="96" src="assets/images/review_chart_03.svg"></div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="list2">
+                                                <li><span><i class="ri-star-s-fill fsize18 green_400"></i> 4-5</span>  <strong>129</strong></li>
+                                                <li><span><i class="ri-star-s-fill fsize18 yellow_400"></i> 3</span>  <strong>74</strong></li>
+                                                <li><span><i class="ri-star-s-fill fsize18 red_400"></i> 1-2</span>  <strong>13</strong></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
