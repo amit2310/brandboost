@@ -219,7 +219,7 @@
                     </div>
                 </div>
 
-                <div v-if="requests.length > 0" class="table_head_action pb0 mt-3">
+                <div class="table_head_action pb0 mt-3">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
@@ -320,8 +320,41 @@
 
 
                 </div>
+                <div v-else class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="fsize10 fw500">name </span></td>
+                                    <td><span class="fsize10 fw500">EMAIL / phone</span></td>
+                                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
+                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                                    <td><span class="fsize10 fw500">REVIEW  </span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
 
-                <div v-if="oReviews.length > 0" class="table_head_action pb0 mt-4">
+                                <tr>
+                                    <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="table_head_action pb0 mt-4">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_14 dark_600">Reviews</h3>
@@ -421,6 +454,37 @@
                                 class="mt-4">
                             </pagination>
 
+                        </div>
+                    </div>
+
+
+                </div>
+                <div v-else class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="fsize10 fw500">CONTACT </span></td>
+                                    <td><span class="fsize10 fw500">RATING</span></td>
+                                    <td><span class="fsize10 fw500">REVIEW</span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
+                                    <td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
