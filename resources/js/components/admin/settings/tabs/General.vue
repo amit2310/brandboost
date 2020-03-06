@@ -50,8 +50,8 @@
                                         <div class="form-group">
                                             <label class="control-label">Country</label>
                                             <div class="">
-                                                <select class="form-control"  name="company_country" v-model="oUser.country">
-                                                    <option v-for="country in countries" :value="country.country_code" :selected="country.country_code == company_country ? 'selected' : ''">
+                                                <select class="form-control" v-model="oUser.country">
+                                                    <option v-for="country in countries" :value="country.country_code" :selected="country.country_code? 'selected' : ''">
                                                         {{ country.name }}
                                                     </option>
                                                 </select>
