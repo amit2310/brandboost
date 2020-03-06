@@ -21,6 +21,7 @@
 	.sitemap ul li{margin: 0; padding: 0; list-style: none;}
 	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left top no-repeat}
 	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
+	.sitemap ul li strong{color: #4f8af4; }
 	</style>
 
 </head>
@@ -73,22 +74,31 @@
      		<h3 class="htxt_bold_16 reviews_400">Reviews</h3>
      		<hr>
      		<ul>
+     			<li><strong>Review Feed</strong></li>
 				<li><a target="_blank" href="review_feed_new1.php">Review Feed 1</a> &nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 28th Feb 2020</small></li>
      			<li><a target="_blank" href="review_feed_new2.php">Review Feed 2</a></li>
+     			<li><strong>Review Request</strong></li>
      			<li><a target="_blank" href="review_request_new1.php">Review Request 1</a></li>
      			<li><a target="_blank" href="review_request_new2.php">Review Request 2 </a></li>
+     			<li><strong>Review Widget</strong></li>
      			<li><a target="_blank" href="review_widget_new1.php">Review Widget 1</a></li>
      			<li><a target="_blank" href="review_widget_new2.php">Review Widget 2</a></li>
      			
+     			<li><strong>Review Campaign</strong></li>
      			<li><a target="_blank" href="review_campaign_new1.php">Review Campaign 1</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
      			<li><a target="_blank" href="review_campaign_new2.php">Review Campaign 2</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
      			<li><a target="_blank" href="review_campaign_new3.php">Review Campaign 3</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
                 <li><a target="_blank" href="review_campaign_new4.php">Review Campaign 4</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                
                 <li><a target="_blank" href="review_campaign_new5.php">Review Campaign 5</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new6.php">Review Campaign 6</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new7.php">Review Campaign 7</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new8.php">Review Campaign 8</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new6.php">Review Campaign 6</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+                <li><strong>Reviews</strong></li>
+                <li><a target="_blank" href="review_campaign_new7.php">Review 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new8.php">Review Single 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new9.php">Review Single 2 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new10.php">Review Single 3 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+                
+                
+                <li><strong>Review App Overview</strong></li>
      			<li><a target="_blank" href="review_overview.php"><strike>Review Overview</strike></a> &nbsp; &nbsp; <small style="font-style: italic">Working Not Finished</small></li>
      		</ul>
      		</div>

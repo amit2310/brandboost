@@ -25,16 +25,16 @@
 
         <!--****************** Content Area **********************-->
         <SettingGeneral v-if="(seletedTab === '' || seletedTab === 1)"></SettingGeneral>
-<!--        <SettingPreferences v-if="(seletedTab === 2)"></SettingPreferences>-->
+        <SettingPreferences v-if="(seletedTab == 2)"></SettingPreferences>
 
     </div>
 </template>
 
 <script>
     import SettingGeneral from '@/components/admin/settings/tabs/General';
-    // import SettingPreferences from '@/components/admin/settings/tabs/SettingPreferences';
+    import SettingPreferences from '@/components/admin/settings/tabs/SettingPreferences';
     export default {
-        components: {SettingGeneral},
+        components: {SettingGeneral,SettingPreferences},
         title: 'Admin Settings - Brand Boost',
         name: "Settings",
         data() {

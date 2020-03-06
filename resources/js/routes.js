@@ -214,6 +214,10 @@ import MediaGallerySetup2 from './components/admin/modules/mediagallery/setup/Se
  */
     // import Settings from './components/admin/Settings';
     import Settings from './components/admin/settings/Settings';
+    import SettingGeneral from './components/admin/settings/tabs/SettingGeneral';
+    import SettingPreferences from './components/admin/settings/tabs/SettingPreferences';
+    import SettingSubscription from './components/admin/settings/tabs/SettingSubscription';
+
 /** -----------------------------------** END  **-----------------------------*/
 
 const routes = [
@@ -313,6 +317,9 @@ const routes = [
 
     { path: '/profile', component: Profile, meta: { title: 'Admin Settings - Brand Boost'} },
     { path: '/settings', component: Settings, meta: { title: 'Brand Settings - Brand Boost'} },
+    { path: '/settings/general', component: SettingGeneral, meta: { title: 'Brand Settings - Brand Boost'} },
+    { path: '/settings/preferences', component: SettingPreferences, meta: { title: 'Brand Settings - Brand Boost'} },
+    { path: '/settings/subscription', component: SettingSubscription, meta: { title: 'Brand Settings - Brand Boost'} },
 
     /**-----------------------------------End---------------------------------------*/
 

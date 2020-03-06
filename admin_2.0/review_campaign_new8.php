@@ -17,8 +17,6 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
 
-
-
 </head>
 <body id="ReviewSection" class="">
 
@@ -44,11 +42,11 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Review General Electric</h3>
+   	<h3 class="htxt_medium_24 dark_700">Brandon Mckinney</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
-   		<button class="circle-icon-40 mr15"><img src="assets/images/settings-3-fill-blue.svg"></button>
-   		<!--<button class="btn btn-md bkg_reviews_400 light_000" data-toggle="modal" data-target="#CREATEFORM">CREATE CAMPAIGN <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
+   		<button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
+   		<button class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal" data-target="#CREATEFORM">Approve <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
    	</div>
    </div>
    </div>
@@ -79,7 +77,7 @@
        
        <div class="p20 pt30 pb10">
 	 		<div class="row">
-	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Campaigns</h3></div>
+	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Reviews</h3></div>
 	 			<div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/add-fill-review.svg"></button></div>
 	 		</div>
 	 	</div>
@@ -96,32 +94,36 @@
       <div class="p20 pt0 pb0 bkg_light_050">
         	<ul class="list_with_icons3">
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>IBM</span>
+        	<span><span class="circle_icon_24 bkg_reviews_400">c</span>Colleen Cooper</span>
         	<strong>4.5 <i class="ri-star-fill green_400"></i></strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_green_200"><img src="assets/images/start-fill-white.svg"></span>General Electric</span>
+        	<span><span class="circle_icon_24 bkg_green_200">b</span>Brandon Mckinney</span>
         	<strong>4.8 <i class="ri-star-fill green_400"></i></strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_review_200"><img src="assets/images/start-fill-white.svg"></span>Louis Vuitton</span>
+        	<span><span class="circle_icon_24 bkg_review_200">a</span>Ann Mccoy</span>
         	<strong>3.2 <i class="ri-star-fill yellow_400"></i></strong>
         	</li>
         	<li class="d-flex active">
-        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>Apple</span>
+        	<span><span class="circle_icon_24 bkg_blue_200">d</span>Debra Edwards</span>
         	<strong>4.3 <i class="ri-star-fill green_400"></i></strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_red_200"><img src="assets/images/start-fill-white.svg"></span>IBM</span>
+        	<span><span class="circle_icon_24 bkg_red_200">c</span>Calvin Flores</span>
         	<strong>2.7 <i class="ri-star-fill red_400"></i></strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>General Electric</span>
+        	<span><span class="circle_icon_24 bkg_light_800 ">j</span>Johnny Robertson</span>
         	<strong>4.8 <i class="ri-star-fill green_400"></i></strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/start-fill-white.svg"></span>Louis Vuitton</span>
+        	<span><span class="circle_icon_24 bkg_green_400">d</span>Dwight Jones</span>
         	<strong>4.5 <i class="ri-star-fill green_400"></i></strong>
+        	</li>
+        	<li class="d-flex">
+        	<span><span class="circle_icon_24 bkg_red_400">m</span>Max Miles</span>
+        	<strong>1.5 <i class="ri-star-fill red_400"></i></strong>
         	</li>
         	
         	
@@ -154,40 +156,39 @@
     <div class="row">
     	<div class="col-md-12">
     		<div class="card p0">
-						<div class="p30 bbot pt20 pb20">
-							<div class="bbot mb30">
+						<div class="p30 pt20 pb20">
+							<div class="bbot mb20">
 								<div class="row">
-									<div class="col-md-8">
-								<p class="fsize16 fw500 dark_700 float-left mr-3"><img src="assets/images/avatar/14.png" width="32"> &nbsp; Gladys Russell</p>
-								<p class="mt-1 review_rating_start"><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img src="assets/images/star-fill_grey_18.svg"></i></p>
+									<div class="col-md-6">
+										<span class="circle_icon_24 bkg_reviews_400 mr-3">b</span>
+										<p class="fsize14 fw500 dark_600 float-left mr-3 lh_24">Brandon Mckinney</p>
 									</div>
-									<div class="col-md-4">
 									
-									
-									
-									
-									
-									<div class="float-right mt-1 ml-2">
-										<button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
-										  <span><img src="assets/images/more-vertical.svg"></span>
-										</button>
-										<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(1585px, 43px, 0px);">
-										  <a class="dropdown-item" href="#">Link 1</a>
-										  <a class="dropdown-item" href="#">Link 2</a>
-										  <a class="dropdown-item" href="#">Link 3</a>
-										</div>
-									  </div>
-						  			<p class="float-right fsize14 dark_200 mt-1 mb-0 ml-5">Dec 9, 2019</p>
-						  			<button class="btn btn-sm-24 bkg_blue_000 pr10 pl10 blue_300 fsize12 fw500 mt-1 float-right">Published</button>
-									</div>
+									<div class="col-md-6">
+				  					<ul class="review_header_section">
+				  						<li>
+				  							<i class="ri-star-s-fill fsize18 green_400"></i>
+											<i class="ri-star-s-fill fsize18 green_400"></i>
+											<i class="ri-star-s-fill fsize18 green_400"></i>
+											<i class="ri-star-s-fill fsize18 green_400"></i>
+											<i class="ri-star-s-fill fsize18 green_400"></i>
+				  						</li>
+				  						<li class="ml-1"><span>5.0</span></li>
+				  						<li><span><i class="ri-at-line email_400 fsize15"></i></span></li>
+				  						<li><span>3 month ago </span></li>
+				  						<li><span style="left:auto; right:auto; top: auto" class="status_icon bkg_green_400 position-relative"></span></li>
+				  					</ul>
+					  				
+					  				</div>
+					  				
 								</div>
 							
 								
 								
 								
 							</div>
-							<p class="fsize14 fw500 dark_800 lh_22 mb-2">Forex Trading by incorporating a list of the top brokers in the world!</p>
-							<p class="fsize14 fw400 dark_600 lh_22">
+							<p class="fsize14 fw500 dark_800 lh_26 mb-2">Forex Trading by incorporating a list of the top brokers in the world!</p>
+							<p class="fsize14 fw400 dark_600 lh_26 text-justify">
 								The Top Forex Brokers Review is a great website that provided me with insightful information about Forex Trading by incorporating a list of the top brokers in the world, it gave me an idea of where i should make trades. The use of Forex Education is fantastic as it helped me gain a better understanding of various aspects related to the Forex Trading, which allowed me to make my decision of which broker to trade with. I highly recommend using this website.
 							</p>
 						</div>
@@ -233,8 +234,8 @@
 					
  					
  					<div class="row">
- 						<div class="col-md-11"><textarea class="border-0 w-100 fsize15 dark_200" style="resize: none" placeholder="Leave your note here..."></textarea></div>
- 						<div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0 mt-2" type="submit"><img src="assets/images/review_send_btn_36.svg"></button></div>
+ 						<div class="col-md-11"><textarea class="border-0 w-100 fsize14 dark_200" style="resize: none" placeholder="Start writing your note here. Use @ to mention your teammates."></textarea></div>
+ 						<div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit"><img src="assets/images/review_send_btn_36.svg"></button></div>
  					</div>
 				</div>
 				<!--======Tab 2=====-->
@@ -264,7 +265,7 @@
     			
     		</div>
     		
-		<div class="table_head_action mt-1 mb25">
+		<div class="table_head_action mt-1 mb20">
     <div class="row">
     	<div class="col-md-6">
     		<h3 class="htxt_medium_14 dark_600">Activity</h3>
@@ -273,7 +274,7 @@
     	<div class="table_action">
 			<div class="float-right">
 			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  Last week
+			  Sort by Date
 			</button>
 			<div class="dropdown-menu">
 			  <a class="dropdown-item" href="#">Link 1</a>
@@ -305,12 +306,12 @@
 				<div class="activity_date_small">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="icons bkg_light_800 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
+							<div class="icons bkg_light_800 mb-0"><i class="ri-price-tag-3-line light_000 fsize18"></i></div>
 							<p class="htxt_bold_16 dark_800 mb-2">Max added “USA” tag</p>
-							<p class="htxt_regular_14 dark_400 mb0">Max added “USA” tag to Gladys’ review.</p>
+							<p class="htxt_regular_14 dark_400 mb0 lh_22">Max added “USA” tag to Gladys’ review.</p>
 							
 						</div>
-						<div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+						<div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
 					</div>
 				</div>
 				
@@ -318,12 +319,12 @@
 				<div class="activity_date_small">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="icons bkg_blue_200"><i><img src="assets/images/message-3-line.svg"></i></div>
+							<div class="icons bkg_blue_200"><i class="ri-check-line light_000 fsize18"></i></div>
 							<p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-							<p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
+							<p class="htxt_regular_14 dark_400 mb0 lh_22">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
 							<button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
 						</div>
-						<div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+						<div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
 					</div>
 				</div>
 				
@@ -333,12 +334,12 @@
 				<div class="activity_date_small">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="icons bkg_yellow_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-							<p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-							<p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
+							<div class="icons bkg_yellow_400"><i class="ri-reply-line light_000 fsize18"></i></div>
+							<p class="htxt_bold_16 dark_800 mb-2">Review approved</p>
+							<p class="htxt_regular_14 dark_400 mb0 lh_22">Consequat sint quis aliqua irure excepteur occaecat aute occaecat non enim exercitation excepteur pariatu</p>
 							<button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
 						</div>
-						<div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+						<div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
 					</div>
 				</div>
 				
@@ -346,12 +347,24 @@
 				<div class="activity_date_small">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="icons bkg_green_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-							<p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-							<p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
+							<div class="icons bkg_green_400"><i class="ri-mail-open-line light_000 fsize16"></i></div>
+							<p class="htxt_bold_16 dark_800 mb-2">Email sent by Birdman</p>
+							<p class="htxt_regular_14 dark_400 mb0 lh_22">Hi @customer! Thanks for your review, we appriciate your opinion here...</p>
 							<button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
 						</div>
-						<div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+						<div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
+					</div>
+				</div>
+				
+				<div class="activity_date_small">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="icons bkg_yellow_400"><i class="ri-reply-line light_000 fsize18"></i></div>
+							<p class="htxt_bold_16 dark_800 mb-2">Review submited</p>
+							<p class="htxt_regular_14 dark_400 mb0 lh_22">The Top Forex Brokers Review is a great website that provided me with insightful information about Forex Trading by incorporating a list of the top brokers in the world...</p>
+							
+						</div>
+						<div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
 					</div>
 				</div>
 				
@@ -366,7 +379,7 @@
     	<div class="card p25 pt20 animate_top">
       <div class="row">
         <div class="col-9">
-          <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">PRODUCT</p>
+          <p class="fsize12 fw500 ls_4 dark_600 m-0 float-left">PRODUCT</p>
         </div>
         <div class="col">
           <div class="float-right">
@@ -403,7 +416,7 @@
     	<div class="card p25 pt20 animate_top">
       <div class="row">
         <div class="col-9">
-          <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">REVIEWS SUMMARY</p>
+          <p class="fsize12 fw500 ls_4 dark_600 m-0 float-left ">PRODUCT SUMMARY</p>
         </div>
         <div class="col">
           <div class="float-right">
@@ -504,7 +517,7 @@
     	
    		<div class="card p25">
    			<div class="form-group m-0">
-					<label class="fsize12 text-uppercase dark_400 fw500 mb-3">Media</label>
+					<label class="fsize12 text-uppercase dark_600 fw500 mb-3 ls_4">Media</label>
 					<label class="m0 w-100" for="upload">
 					<div class="img_vid_upload_medium">
 					  <input class="d-none" type="file" name="" value="" id="upload">
@@ -512,6 +525,40 @@
 					</label>
 				  </div>
    		</div>
+   		
+   		
+   		
+   		<div class="card p25">
+    		<h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
+    		<hr>
+    		<div>
+    			<button class="tags_btn mb-3">customer</button>
+    			<button class="tags_btn mb-3">email</button>
+    			<button class="tags_btn mb-3">4 star</button>
+    			<button class="tags_btn mb-3">website about</button>
+    			<button class="tags_btn mb-3">positive</button>
+    			<button class="tags_btn mb-3">4 star</button>
+    			<button class="tags_btn mb-3">male</button>
+    			<button class="tags_btn mb-3">user</button>
+    			<button class="tags_btn mb-3">+</button>
+    		</div>
+    		</div>
+    		
+    		
+    		
+    		<div class="card p25">
+    		<h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Details</h3>
+    		<hr>
+    		<ul class="info_list">
+    			<li><span>ID</span><strong>2423423</strong></li>
+    			<li><span>Order ID</span><strong>3332</strong></li>
+    			<li><span>Product ID</span><strong>20</strong></li>
+    			<li><span>Source</span><strong>email</strong></li>
+    		</ul>
+    		</div>
+    		
+    		
+    		
     		
     		
     		

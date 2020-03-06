@@ -172,7 +172,7 @@ class Settings extends Controller {
      * Update company profile
      * @param type
      */
-    public function saveGeneralInfo(Request $request) {
+    public function saveGeneralInfo_Need_to_remove(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
@@ -203,7 +203,7 @@ class Settings extends Controller {
         echo json_encode($response);
         exit;
     }
-    public function savePublicProfile(Request $request) {
+    public function savePublicProfile_Need_to_remove(Request $request) {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $response = array();
@@ -218,6 +218,55 @@ class Settings extends Controller {
                 'company_seo_keywords' => request('company_seo_keywords'),
 
             );
+            $aData['updated'] = date("Y-m-d H:i:s");
+            $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+    public function saveGeneralPreferences_Need_to_remove(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+
+        if (!empty($request)) {
+            $aData = array(
+                'language' => request('language'),
+                'currency' => request('currency'),
+                'timezone' => request('timezone'),
+                'date_format' => request('date_format'),
+                'time_format' => request('time_format'),
+                'wh_start_week' => request('wh_start_week'),
+                'wh_start_day' => request('wh_start_day'),
+                'wh_start_day_minutes' => request('wh_start_day_minutes'),
+                'wh_end_day' => request('wh_end_day'),
+                'wh_end_day_minutes' => request('wh_end_day_minutes'),
+
+            );
+            $aData['updated'] = date("Y-m-d H:i:s");
+            $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
+            if ($bUpdated) {
+                $response['status'] = 'success';
+            } else {
+                $response['status'] = 'error';
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    public function saveUserSettings(Request $request) {
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $response = array();
+
+        if (!empty($request)) {
+            $aData=(array)$request->all();
             $aData['updated'] = date("Y-m-d H:i:s");
             $bUpdated = SettingsModel::updateCompanyProfile($aData, $userID);
             if ($bUpdated) {
