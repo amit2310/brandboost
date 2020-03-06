@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading :isLoading="loading"></loading>
         <div class="row">
             <div class="col-md-8">
                 <div class="card min-h-280">
@@ -58,10 +59,14 @@
         data(){
             return {
                 breadcrumb: {Home:'#/', People:'#/contacts/dashboard', Dashboard:''},
+                loading: true,
             }
         },
-        mounted() {
+        created() {
             this.makeBreadcrumb(this.breadcrumb);
+        },
+        mounted() {
+            this.loading = false;
         }
     };
 </script>
