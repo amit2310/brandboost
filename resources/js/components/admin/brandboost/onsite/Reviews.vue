@@ -11,8 +11,10 @@
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">Reviews Feed</h3>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
+                    <div class="col-md-6 col-6 text-right">
+                        <button v-if="oReviews.length > 0 || searchBy.length>0" class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
+                        <button v-else class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <!--<button class="btn btn-md bkg_reviews_400 light_000 slidebox">ADD New Contact <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
                     </div>
                 </div>
             </div>
@@ -22,31 +24,6 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
-            <div class="table_head_action">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                <loading :isLoading="loading"></loading>
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul class="table_filter">
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
-                            <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="table_filter text-right">
-                            <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
                 <!--<div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
@@ -86,6 +63,50 @@
                         </div>
                     </div>
                 </div>-->
+                <div class="table_head_action">
+                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                    <loading :isLoading="loading"></loading>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; ARCHIVE</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <li><a href="javascript:void(0);" class="search_tables_open_close"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                            </ul>
+                        </div>
+                        <!--<div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                            </ul>
+                        </div>-->
+                    </div>
+                    <div class="card p20 datasearcharea reviewfeedSearch br6 shadow3" style="z-index: 999999!important;">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
@@ -129,6 +150,7 @@
                     </div>
                 </div>
 
+
                 <div class="row" v-if="viewType == 'List View'">
                     <div class="col-md-12">
 
@@ -153,15 +175,7 @@
                                 <div class="mb-2">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26">
-                                                <!--<span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/pie_chart_fill_12.svg"></span>--> &nbsp;
-                                                <user-avatar
-                                                    :avatar="oReview.avatar"
-                                                    :firstname="oReview.firstname"
-                                                    :lastname="oReview.lastname"
-                                                ></user-avatar>
-                                                <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
-                                            </p>
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
                                             <p class="mt-0 review_rating_start float-left">
                                                 <span v-for="num in [1,2,3,4,5]">
                                                     <i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
@@ -183,17 +197,14 @@
                                 </div>
 
 
-                                <p class="fsize14 fw400 dark_600 lh_24">
-                                    <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 230) }}</strong></span>
-                                    <br />
-                                    <span>{{ oReview.comment_text }}</span>
+                                <p class="fsize14 fw400 dark_600 lh_24" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
+                                    {{ oReview.comment_text }}
                                 </p>
 
                                 <div class="reply_sec_link">
                                     <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -212,34 +223,48 @@
             <div class="container-fluid" v-else>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card_shadow min-h-280">
+                        <div class="card card_shadow min_h_600">
+
                             <div class="row mb65">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 reviews_400 htxt_bold_14" href="#">
+                                    <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="#">
                                         <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
                                         Set up reviews monitoring
                                     </a>
                                 </div>
-                                <div class="col-md-6 text-right d-none">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="#">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
-                                        Learn how to use reviews monitoring
+                                <div class="col-md-6 text-right">
+                                    <a class="lh_32 htxt_regular_12 dark_200 " href="#">
+                                        Learn how use use contacts &nbsp; <img src="assets/images/question-line.svg">
                                     </a>
                                 </div>
                             </div>
+
+
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 240px; " src="assets/images/review_feed_illustration.svg">
+                                    <img class="mt40" style="max-width: 240px; " src="assets/images/reviews_icon_125.svg">
                                     <h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
-                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
-                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Monitor reviews site</button>
+                                    <h3 class="htxt_regular_14 dark_200 mt15 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
+                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>
                                 </div>
                             </div>
+
+
+
+
+
+
                         </div>
                     </div>
-                    <div class="col-md-12 text-center mt-3">
+
+
+                    <!--<div class="col-md-12 text-center mt-3">
                         <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
-                    </div>
+                    </div>-->
+
+
+
+
                 </div>
             </div>
         </div>
@@ -651,6 +676,9 @@
         watch: {
             'sortBy' : function(){
                 this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
             }
         },
         methods: {
@@ -804,6 +832,13 @@
             $(".box").animate({
                 width: "toggle"
             });
+        });
+
+        $(document).on('click', '.search_tables_open_close', function(){
+            $(".reviewfeedSearch").animate({
+                width: "toggle"
+            });
+            $('#InputToFocus').focus();
         });
     });
 </script>
