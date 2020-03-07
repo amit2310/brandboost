@@ -73,7 +73,13 @@
     			<li><a href="#">DRAFT</a></li>
     			<li><a href="#">POSITIVE</a></li>
     			<li><a href="#">NEGATIVE</a></li>
-    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+    			<li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
+    			<div class="dropdown-menu p10 mt-1"> 
+    			<a class="dropdown-item" href="#"><i class="ri-check-double-fill"></i> &nbsp; Link 1</a> 
+    			<a class="dropdown-item" href="#"><i class="ri-check-double-fill"></i> &nbsp; Link 2</a> 
+    			<a class="dropdown-item" href="#"><i class="ri-check-double-fill"></i> &nbsp; Link 3</a> 
+    			</div>
+    			</li>
     		</ul>
     	</div>
     	<div class="col-md-6">

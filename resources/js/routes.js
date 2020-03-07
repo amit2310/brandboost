@@ -16,6 +16,8 @@ import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview
 //import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
 import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';
+import OnsiteReviewsTab from './components/admin/brandboost/onsite/tabs/Reviews';
+import OnsiteReviewRequestsTab from './components/admin/brandboost/onsite/tabs/ReviewRequest';
 import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
 import OnsiteCampaignReviews from './components/admin/brandboost/onsite/OnsiteCampaignReviews';
 import OnsiteCampaignQuestions from './components/admin/brandboost/onsite/OnsiteCampaignQuestions';
@@ -351,6 +353,12 @@ const routes = [
     { path: '/questions/details/:id', component: QuestionsDetails, props: {pageColor: 'onsite_sec'}, meta: { title: 'Question Details - Brand Boost'} },
     { path: '/questions', component: OnsiteQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite questions - Brand Boost'} },
     { path: '/brandboost/reviews/onsite/requests', component: OnsiteReviewRequest, props: {pageColor: 'onsite_sec', title : 'Review Requests', review_type: 'onsite'} },
+
+    /* Tab Option In Review Section */
+    { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
+    { path: '/brandboost/onsite/requests', component: OnsiteReviewRequestsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
+    /* Tab Option In Review Section */
+
     /*Offsite Module*/
     { path: '/brandboost/offsite_overview', component: OffsiteOverview, props: {pageColor:'offsite_sec', title: 'Offsite overview'} },
     { path: '/brandboost/offsite', component: OffsiteCampaigns, props: {pageColor:'offsite_sec', title: 'Offsite Brand Boost Campaigns'} },

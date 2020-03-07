@@ -306,26 +306,30 @@ export default {
             return smiliesMap;
         },
         phoneNoFormat(phNum) {
-            if (phNum.length <= 3) {
+            if(phNum != '' && phNum != null) {
+                if (phNum.length <= 3) {
+                    return '';
+                }
+                phNum = phNum.replace(/\D/g, '');
+                var len = phNum.length;
+                switch (len) {
+                    case 13:
+                        phNum = phNum.substr(3);
+                        phNum = phNum.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
+                        break;
+                    case 12:
+                        phNum = phNum.substr(2);
+                        phNum = phNum.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
+                        break;
+                    default:
+                        phNum = phNum.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
+                        break;
+                }
+
+                return phNum;
+            } else {
                 return '';
             }
-            phNum = phNum.replace(/\D/g,'');
-            var len = phNum.length;
-            switch (len) {
-                case 13:
-                    phNum = phNum.substr(3);
-                    phNum = phNum.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
-                    break;
-                case 12:
-                    phNum = phNum.substr(2);
-                    phNum = phNum.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
-                    break;
-                default:
-                    phNum = phNum.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
-                    break;
-            }
-
-            return phNum;
         }
 
     }
