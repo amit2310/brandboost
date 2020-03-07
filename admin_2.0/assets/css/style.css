@@ -915,7 +915,7 @@ color: #7B89A6;
 .top-bar-top-section{padding: 20px 100px 0px 34px; height: 54px }
 .top-bar-top-section h3{margin-top: 3px}
 .top-bar-top-section.bbot{border: none!important}
-.top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; text-transform: uppercase; font-weight: 400!important; line-height: 32px; padding: 0 15px 0 10px!important; letter-spacing: 0.04em; }
+.top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; /*text-transform: uppercase;*/ font-weight: 400; line-height: 32px; padding: 0 15px 0 10px; letter-spacing: 0.04em; }
 .top-bar-top-section span.float-left{display: none!important}
 .top-bar-top-section .btn.btn-md span{margin: 0 10px 0 0; float: left;}
 .top-bar-top-section .btn.btn-md img{width: 20px; height: 20px; float: left; margin-top: 6px}
@@ -1482,7 +1482,7 @@ PAGE WITH SIDEBAR CSS
 
 .info_list{margin: 0; padding: 0;}
 .info_list li{margin: 0; padding: 0; font-size: 14px; list-style: none; line-height: 30px;}
-.info_list li span{color: #56627F; font-weight: 400; }
+.info_list li span{color: #7B89A6; font-weight: 400; }
 .info_list li strong{ color: #151A25; font-weight: 400!important; float: right; text-align: right}
 
 .nav.nav-pills.profile_tab a{color: #445069; font-weight: 400!important}

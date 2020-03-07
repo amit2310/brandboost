@@ -93,7 +93,8 @@ FORMS GROUP
 ******************************/
 .form-group label{font-size: 14px; color: #242B3D; font-weight: 400; margin-bottom: 7px;}
 .review_forms .form-group label{font-size: 12px; color: #7B89A6; font-weight: 400; margin-bottom: 7px;}
-.form-group .form-control{font-size: 16px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; padding: 5px 17px;}
+.form-group .form-control{font-size: 14px; color: #7B89A6; font-weight: 400; border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 4px; padding: 5px 17px;}
+.form-group .form-control:focus{box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05) !important;}
 .form-group .form-control.h50{height: 50px;}
 .form-group .form-control.h36{height: 36px; font-size: 14px;}
 .form-group .form-control.h40{height: 40px; font-size: 14px;}
@@ -105,6 +106,8 @@ FORMS GROUP
 .form-group .form-control.search{ background: url(../images/search-2-line.svg) 15px 13px #fff no-repeat; padding-left: 45px;}
 .form-group .form-control.shadow{border: none!important;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.3)!important;border-radius: 4px;}
 .review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
+.form-group select.form-control-custom{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 97% 20px no-repeat #fff}
+.form-group select.form-control-custom2{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 97% 10px no-repeat #fff}
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
 .phonenumber.h50{ height: 50px;}
@@ -115,6 +118,7 @@ FORMS GROUP
 .img_vid_upload_medium{width: 100%; min-height: 180px; border-radius: 4px; background:url(../../assets/images/addfile_txt.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 4px; background:url(../../assets/images/no_image.png) 20px 17px no-repeat #fff; border: 1px solid #dfe5f0;}
 .img_vid_upload_circle{width: 125px; height: 125px;  border-radius: 100px; background:url(../../assets/images/browse_img.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
+.img_vid_upload_media{width: 100%; min-height: 90px; border-radius: 4px; background:url(../../assets/images/drag-drop-file.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 
 
 
@@ -181,6 +185,10 @@ TABLES STYLES
 .table_head_action .table_filter{margin: 0; padding: 0;}
 .table_head_action .table_filter li{margin: 0; padding: 0; list-style: none; display: inline-block;}
 .table_head_action .table_filter li a{margin: 0 20px 0 0; padding: 0; display: inline-block; font-weight: 400;font-size: 13.5px;line-height: 120%;letter-spacing: 0.04em;/*text-transform: uppercase;*/color: #7B89A6;}
+
+.table_head_action .table_filter .dropdown-menu a{margin: 0!important; display: block!important; padding: 7px 8px;}
+
+
 .table_head_action .table_filter li a.active, .table_head_action .table_filter li a:hover{color: #5998F8; font-weight: 500}
 .table_head_action.calendar{margin-bottom: 30px; padding: 0 0px;}
 .table.table-borderless{margin: 0!important}
@@ -416,7 +424,7 @@ MODAL POPUP CLASSES
 /******************************
 BORDER CLASSES
 ******************************/
-.border{border: 1px solid #e9eff8!important;}
+.border{border: 1px solid #E1E9F6!important; }
 .border2{border: 1px solid #D5DFEF!important;}
 .border.active{border: 1px solid #67BAE4!important;}
 .border.active2{border: 1px solid #5998F8!important;}
