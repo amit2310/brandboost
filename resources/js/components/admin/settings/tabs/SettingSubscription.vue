@@ -9,9 +9,9 @@
                         <h3 class="htxt_medium_24 dark_700">Brand Settings</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li><a href="#/settings/general" tyle="cursor:pointer; padding: 5px;">General&nbsp;</a></li>&nbsp;&nbsp;
-                            <li class="active"><a href="#/settings/preferences" style="cursor:pointer; padding: 5px;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/subscription" style="cursor:pointer; padding: 5px;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/preferences" style="cursor:pointer; padding: 5px;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
+                            <li  class="active"><a href="#/settings/subscription" style="cursor:pointer; padding: 5px;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/billing" style="cursor:pointer; padding: 5px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
                             <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
                             <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Import&nbsp;</a></li>&nbsp;&nbsp;
                             <li><a href="#/settings/general" style="cursor:pointer;">Export</a></li>
@@ -111,7 +111,9 @@
 
                                             <button v-if="oMembership.isMembershipActive" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
 
-                                            <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" :plan_id="oMembership.plan_id" :plan_name="oMembership.level_name">
+                                            <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade"
+                                                    data-target="#confirm_level_upgrade"
+                                                    v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.plan_id)" >
                                                 <span v-if="oCurrentPlanData == ''">Buy</span>
                                                 <span v-else-if="oMembership.isMembershipActive != ''">Upgrade</span>
                                                 <span v-else>Downgrade</span>
@@ -176,7 +178,9 @@
 
                                             <button v-if="oMembership.isMembershipActive" type="button" class="btn white_btn w100 txt_purple h40"><span>Active</span> </button>
 
-                                            <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade" :plan_id="oMembership.plan_id" :plan_name="oMembership.level_name">
+                                            <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade"
+                                                    data-toggle="modal" data-target="#confirm_level_upgrade"
+                                                    v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.plan_id)" >
                                                 <span v-if="(oMembership.isMembershipActive != '' && oCurrentPlanData.level_name == 'Pro')">Upgrade</span>
                                                 <span v-else>Downgrade</span>
                                             </button>
@@ -237,7 +241,8 @@
 
                                         <div class="p30">
                                             <button v-if="(oUser.topup_plan_id == oMembership.plan_id)" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
-                                            <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade" v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name)" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" data-toggle="modal" data-target="#confirm_topup_level_upgrade">
+                                            <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade"
+                                                    v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.topup_plan_id)" data-toggle="modal" data-target="#confirm_topup_level_upgrade">
                                                 <span v-if="oMembership.isTopupMembershipActive == ''">Buy</span>
                                                 <span v-if="oMembership.isTopupMembershipActive == 'true'">Upgrade</span>
                                                 <span v-else>Downgrade</span>
@@ -333,6 +338,73 @@
             </div>
         </div>
         <!-- Upgrade plan Modal Confirm -->
+        <div id="confirm_level_upgrade" class="modal fade">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title">Confirm Upgrade</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <h6 class="text-semibold">Upgrade Your Account</h6>
+
+                        <table class="table table-hover table-striped table-bordered text-left mb-20">
+                            <tr>
+                                <td>Name :</td>
+                                <td>
+                                    {{ oUser.firstname +' ' + oUser.lastname }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email :</td>
+                                <td>
+                                    {{ oUser.email }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phone :</td>
+                                <td>
+                                    {{ oUser.mobile }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Current Plan :</td>
+                                <td>
+
+                                    <template v-if="buyCredits.currentPlanName === 'small-businesses-yearly'">Starter Yearly</template>
+                                    <template v-else-if="buyCredits.currentPlanName === 'medium-businesses-yearly'">Medium Businesses Yearly</template>
+                                    <template v-else-if="buyCredits.currentPlanName === 'big-businesses-yearly'">Pro Yearly</template>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Upgrade to :</td>
+                                <td>
+                                    <span id="upgradedPlanTitle">
+                                        {{buyCredits.planName}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="checkbox">
+                            <label>
+                                <div class="border-primary-600 text-primary-800">
+                                    <input class="control-primary" v-model="buyCredits.acceptTerms" type="checkbox">
+                                    I accept terms & condition
+                                </div>
+                                <span style="color:red;">{{buyCredits.selectTerms}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
+                        <button type="button" class="btn btn-primary"  v-on:click="confirmLevelUpgrade()">Yes, Upgrade Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Upgrade plan Modal Confirm -->
         <div id="confirm_topup_level_upgrade" class="modal fade">
             <div class="modal-dialog">
 
@@ -367,15 +439,19 @@
                             <tr>
                                 <td>Current Plan :</td>
                                 <td>
-                                    {{ (credits.level_name) ? credits.level_name : 'No topup plan subscribed yet' }}
+                                    <template v-if="buyCredits.currentPlanName === 'topup-membership-a'">Topup Membership A</template>
+                                    <template v-else-if="buyCredits.currentPlanName === 'topup-membership-b'">Topup Membership B</template>
+                                    <template v-else-if="buyCredits.currentPlanName === 'topup-membership-c'">Topup Membership C</template>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Upgrade to :</td>
                                 <td>
-                            <span id="upgradedTopupPlanTitle">
-                                   {{ (buyCredits.level_name) ? buyCredits.level_name : 'No topup plan subscribed yet' }}
-                            </span>
+                                    <span id="upgradedTopupPlanTitle">
+                                        <template v-if="buyCredits.planID === 'topup-membership-a'">Topup Membership A</template>
+                                        <template v-else-if="buyCredits.planID === 'topup-membership-b'">Topup Membership B</template>
+                                        <template v-else-if="buyCredits.planID === 'topup-membership-c'">Topup Membership C</template>
+                                    </span>
                                 </td>
                             </tr>
                         </table>
@@ -385,18 +461,18 @@
                                     <input class="control-primary" v-model="buyCredits.acceptTerms" type="checkbox">
                                     I accept terms & condition
                                 </div>
-                                <spam style="color:red;">{{buyCredits.selectTerms}}</spam>
+                                <span style="color:red;">{{buyCredits.selectTerms}}</span>
                             </label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" name="hidLevelTopupPlanId" id="hidLevelTopupPlanId" value=""/>
                         <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
-                        <button type="button" id="confirmTopupLevelUpdate" class="btn btn-primary"  v-on:click="confirmbuyCreditAddons()">Yes, Upgrade Now</button>
+                        <button type="button" class="btn btn-primary"  v-on:click="confirmTopupLevelUpdate()">Yes, Upgrade Now</button>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Buy Addon plan Modal Confirm -->
         <div id="confirm_buy_addon_plan" class="modal fade">
             <div class="modal-dialog">
@@ -451,7 +527,7 @@
                                     <input class="control-primary" v-model="buyCredits.acceptTerms" type="checkbox">
                                     I accept terms & condition
                                 </div>
-                                <spam style="color:red;">{{buyCredits.selectTerms}}</spam>
+                                <span style="color:red;">{{buyCredits.selectTerms}}</span>
                             </label>
                         </div>
                     </div>
@@ -464,8 +540,8 @@
                 </div>
             </div>
         </div>
-        <!-- Buy Addon plan Modal Confirm -->
 
+        <!-- Buy Addon plan Modal Confirm -->
         <div id="confirm_buy_custom_addon_plan" class="modal fade">
             <div class="modal-dialog">
 
@@ -520,7 +596,7 @@
                                     <input class="control-primary" v-model="buyCredits.acceptTerms" type="checkbox">
                                     I accept terms & condition
                                 </div>
-                                <spam style="color:red;">{{buyCredits.selectTerms}}</spam>
+                                <span style="color:red;">{{buyCredits.selectTerms}}</span>
                             </label>
                         </div>
                     </div>
@@ -564,6 +640,7 @@
                     price :0,
                     planID:'',
                     planName:'',
+                    currentPlanName:'',
                     selectTerms:'',
                 },
                 buyCredits: {
@@ -572,6 +649,7 @@
                     price :0,
                     planID:'',
                     planName:'',
+                    currentPlanName:'',
                     selectTerms:'',
                 }
             }
@@ -610,12 +688,56 @@
             dispUpgradePlan: function (painType){
                 this.oCurrentPlanData.subs_cycle= painType
             },
-            confirmTopupUpgradePopup:function(quantity,price,planID,planName){
+
+            confirmManualUpgrade:function(planID,planName,currentPlanName){
+                this.buyCredits.acceptTerms=false;
+                // this.buyCredits.quantity =quantity;
+                // this.buyCredits.price =price;
+                this.buyCredits.planID =planID;
+                this.buyCredits.planName =planName;
+                this.buyCredits.currentPlanName =currentPlanName;
+            },
+            confirmLevelUpgrade: function (){
+                this.loading = true;
+                if(this.buyCredits.acceptTerms) {
+                    axios.post('/payment/upgradeMembership', {
+                        plan_id: this.buyCredits.planID,
+                    })
+                        .then(response => {
+                            // $bvModal.hide('confirm_topup_level_upgrade')
+                            this.buyCredits.acceptTerms =false;
+                            this.loading = false;
+                            this.loadData();
+                            $('#confirm_level_upgrade').modal('hide');
+                        });
+                }else{
+                    this.buyCredits.selectTerms ="Please select accept terms & condition."
+                }
+            },
+            confirmTopupUpgradePopup:function(quantity,price,planID,planName,currentPlanName){
                 this.buyCredits.acceptTerms=false;
                 this.buyCredits.quantity =quantity;
                 this.buyCredits.price =price;
                 this.buyCredits.planID =planID;
                 this.buyCredits.planName =planName;
+                this.buyCredits.currentPlanName =currentPlanName;
+            },
+            confirmTopupLevelUpdate: function (){
+                this.loading = true;
+                if(this.buyCredits.acceptTerms) {
+                    axios.post('/payment/upgradeTopupMembership', {
+                        toup_plan_id: this.buyCredits.planID,
+                    })
+                        .then(response => {
+                            // $bvModal.hide('confirm_topup_level_upgrade')
+                            this.buyCredits.acceptTerms =false;
+                            this.loading = false;
+                            this.loadData();
+                            $('#confirm_topup_level_upgrade').modal('hide');
+                        });
+                }else{
+                    this.buyCredits.selectTerms ="Please select accept terms & condition."
+                }
             },
             confirmBuyCustomAddonPopup: function(quantity,price,planID,planName){
                 this.buyCredits.acceptTerms=false;
@@ -634,6 +756,7 @@
                             this.buyCredits.acceptTerms =false;
                             this.loading = false;
                             this.loadData();
+                            $('#confirm_buy_addon_plan').modal('hide');
                         });
                 }else{
                     this.buyCredits.selectTerms ="Please select accept terms & condition."
@@ -652,6 +775,7 @@
                             this.buyCredits.acceptTerms =false;
                             this.loading = false;
                             this.loadData();
+                            $('#confirm_buy_custom_addon_plan').modal('hide');
                         });
                 }else{
                     this.buyCredits.selectTerms ="Please select accept terms & condition."
