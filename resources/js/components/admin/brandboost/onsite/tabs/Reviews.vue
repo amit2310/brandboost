@@ -24,7 +24,7 @@
                         <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
                         <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
                         <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
-                        <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                        <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
                     </ul>
                 </div>
                 <div class="col-md-6">
@@ -130,12 +130,13 @@
                                 <span>{{ oReview.ratings }}.0</span>
                             </td>
                             <td>
-                                <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
-                                <br />
-                                <span>{{ setStringLimit(oReview.comment_text, 50) }}</span>
+                                <!--<span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
+                                <br />-->
+                                <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ setStringLimit(oReview.comment_text, 50) }}</span>
                             </td>
                             <td><i class="ri-at-line email_400 fsize15"></i></td>
-                            <td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}<!--3 month ago--></td>
+                            <!--<td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</td>-->
+                            <td>{{ timeAgo(oReview.review_created) }}</td>
                             <td>
                                     <span class="float-right">
                                         <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
