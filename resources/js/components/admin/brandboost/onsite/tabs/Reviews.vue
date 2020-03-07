@@ -13,6 +13,7 @@
                     </ul>-->
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <ul class="table_filter">
@@ -35,6 +36,7 @@
                 </div>
             </div>
         </div>
+
         <div v-if="oReviews.length > 0">
 
             <div class="row" v-if="viewType == 'Grid View'">

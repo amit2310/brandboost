@@ -218,142 +218,7 @@
                     </div>
                 </div>
 
-                <div v-if="(seletedTab === '' || seletedTab === 1)">
-                <div class="table_head_action pb0 mt-3">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <!--<ul class="table_filter text-right">
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                            </ul>-->
-                            <div class="float-right">
-                                <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                    <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp;
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortByRR='all'">ALL</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortByRR='archive'">ARCHIVE</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div v-if="requests.length > 0" class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-0">
-                                <tbody>
-                                <tr class="headings">
-                                    <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                                    </td>
-                                    <td><span class="fsize10 fw500">name </span></td>
-                                    <td><span class="fsize10 fw500">EMAIL / phone</span></td>
-                                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
-                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                                    <td><span class="fsize10 fw500">REVIEW  </span></td>
-                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
-                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                                </tr>
-
-                                <tr v-for="request in requests">
-                                    <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{ request.firstname.charAt(0) }}</span></span>
-                                        <!--<user-avatar
-                                            :avatar="request.avatar"
-                                            :firstname="request.firstname"
-                                            :lastname="request.lastname"
-                                        ></user-avatar>-->
-                                        <span>{{ request.firstname }} {{ request.lastname }}</span>
-                                    </td>
-                                    <td>
-                                        <!--<span v-if="request.tracksubscribertype =='sms' && (request.phone != '' && request.phone != null)"><img src="assets/images/chatline.svg"> {{ phoneNoFormat(request.phone) }}</span>-->
-                                        <span v-if="(request.phone != '' && request.phone != null)"><img src="assets/images/chatline.svg"> &nbsp;{{ phoneNoFormat(request.phone) }}</span>
-                                        <span v-else><img src="assets/images/atline.svg"> {{ request.email }}</span>
-                                    </td>
-                                    <td>{{ request.brand_title ? setStringLimit(capitalizeFirstLetter(request.brand_title), 23) :  'No Data' }}</td>
-                                    <td><span class="">{{ displayDateFormat('M d, Y', request.requestdate) }}</span></td>
-                                    <td>
-                                        <img v-if="request.ratings>0" width="14" src="assets/images/star-fill_yellow_16.svg">
-                                        <img v-else src="assets/images/star-line.svg"/>
-                                        <span v-if="request.ratings>0" class="dark_400">&nbsp; {{ request.ratings }}</span>
-                                        <span v-else class="light_400">-</span>
-                                    </td>
-                                    <td>
-                                        <span v-if="request.tracksubscribertype =='email'"></span>
-                                        <span v-if="request.tracksubscribertype =='sms'"><!--<img src="assets/images/check_double_green.svg">--><img src="assets/images/checklineblack.svg"></span>
-                                    </td>
-                                    <td>
-                                        <span class="float-right">
-                                            <span v-if="request.subscriberstatus == 1" class="status_icon bkg_blue_300"></span>
-                                            <span v-else class="status_icon bkg_light_800"></span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <pagination
-                                :pagination="allDataRR"
-                                @paginate="showPaginationDataRR"
-                                :offset="4"
-                                class="mt-4">
-                            </pagination>
-
-                        </div>
-                    </div>
-
-
-                </div>
-                <div v-else class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-0">
-                                <tbody>
-                                <tr class="headings">
-                                    <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                                    </td>
-                                    <td><span class="fsize10 fw500">NAME </span></td>
-                                    <td><span class="fsize10 fw500">EMAIL / phone</span></td>
-                                    <td><span class="fsize10 fw500">CAMPAIGN</span></td>
-                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                                    <td><span class="fsize10 fw500">REVIEW  </span></td>
-                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
-                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-
-                </div>
-                </div>
+                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1)"></OnsiteReviewRequestsTab>
 
                 <OnsiteReviewsTab v-if="(seletedTab == 2)"></OnsiteReviewsTab>
 
@@ -479,16 +344,18 @@
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     import OnsiteReviewsTab from '@/components/admin/brandboost/onsite/tabs/Reviews';
+    import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 
     export default {
         props : ['pageColor', 'title', 'review_type'],
-        components: {UserAvatar, Pagination, OnsiteReviewsTab},
+        components: {UserAvatar, Pagination, OnsiteReviewsTab, OnsiteReviewRequestsTab},
         data(){
             return {
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
                 allData: {},
+                requests : '',
                 oReviews : '',
                 oCampaign: '',
                 reviewTags: '',
@@ -498,50 +365,7 @@
                 seletedTab: 1,
                 viewType: 'List View',
                 sortBy: 'Date Created',
-                searchBy: '',
-
-                moduleNameRR: '',
-                requests : '',
-                allDataRR: {},
-                current_pageRR: 1,
-                breadcrumbRR: '',
-                viewTypeRR: 'List View',
-                sortByRR: 'all',
-                searchByRR: '',
-            }
-        },
-        created() {
-            this.loadPaginatedDataRR();
-        },
-        mounted() {
-            this.$parent.pageColor = this.pageColor;
-        },
-        watch: {
-            'sortByRR' : function(){
-                this.loadPaginatedDataRR();
-            }
-        },
-        methods: {
-            showReview: function(id){
-                window.location.href='#/reviews/onsite/reviews/'+id;
-            },
-            loadPaginatedDataRR : function(){
-                axios.get('/admin/brandboost/review_request/onsite?page='+this.current_pageRR+'&search='+this.searchByRR+'&sortBy='+this.sortByRR)
-                    .then(response => {
-                        this.breadcrumbRR = response.data.breadcrumb;
-                        this.makeBreadcrumb(this.breadcrumbRR);
-                        this.moduleNameRR = response.data.moduleName;
-                        this.requests = response.data.oRequest;
-                        this.allDataRR = response.data.allData;
-                    });
-            },
-            showPaginationDataRR: function(p){
-                this.current_pageRR = p;
-                this.loadPaginatedDataRR();
-            },
-            navigatePaginationRR: function(p){
-                this.current_pageRR = p;
-                this.loadPaginatedDataRR();
+                searchBy: ''
             }
         }
     }
