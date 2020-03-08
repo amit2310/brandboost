@@ -353,6 +353,7 @@ const routes = [
     { path: '/questions/details/:id', component: QuestionsDetails, props: {pageColor: 'onsite_sec'}, meta: { title: 'Question Details - Brand Boost'} },
     { path: '/questions', component: OnsiteQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite questions - Brand Boost'} },
     { path: '/brandboost/reviews/onsite/requests', component: OnsiteReviewRequest, props: {pageColor: 'onsite_sec', title : 'Review Requests', review_type: 'onsite'} },
+    { path: '/reviews/onsite/widgets', component: WidgetsOnsiteList, meta: { title: 'Onsite Widgets'} },
 
     /* Tab Option In Review Section */
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
