@@ -16,12 +16,13 @@ class Settings extends Controller {
      * This is a setting index function
      * @param type
      */
-	public function index(Request $request) {
+	public function index(Request $request)
+    {
 
-		$seletedTab = 1;//$request->input('t');
+        $seletedTab = 1;//$request->input('t');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-        $pID =$oUser->plan_id;
+        $pID = $oUser->plan_id;
         $topupPlanID = isset($oUser->topup_plan_id) ? $oUser->topup_plan_id : '';
 
         /* Country List */
@@ -40,7 +41,7 @@ class Settings extends Controller {
         $oSettings = SettingsModel::getNotificationSettings($userID);
         $notificationlisting = SettingsModel::getallowNotification();
 
-        if(empty($oSettings)){
+        if (empty($oSettings)) {
             SettingsModel::addNotificationSettings($userID);
             $oSettings = SettingsModel::getNotificationSettings($userID);
         }
@@ -60,7 +61,7 @@ class Settings extends Controller {
                     $oCurrentPlanData = $oPlan;
                 }
 
-                if($planID == $topupPlanID){
+                if ($planID == $topupPlanID) {
                     $oCurrentTopupPlanData = $oPlan;
                 }
 
@@ -79,7 +80,10 @@ class Settings extends Controller {
                 }*/
             }
         }
-
+        $oInvoices = InvoicesModel::getInvoices($userID);
+        foreach ($oInvoices as $oInvoice){
+            $invoiceData[$oInvoice->id] = InvoicesModel::getInvoiceDetails($oInvoice->id);
+        }
         $aData = array(
             'title' => 'Brand Settings',
             'pagename' => $breadcrumb,
@@ -92,7 +96,8 @@ class Settings extends Controller {
             'oMemberships' => $oMemberships,
             'oCurrentPlanData' => $oCurrentPlanData,
             'oCurrentTopupPlanData' => isset($oCurrentTopupPlanData) ? $oCurrentTopupPlanData : '',
-            'oInvoices' => InvoicesModel::getInvoices($userID),
+            'oInvoices' => $oInvoices,
+            'invoiceData' => $invoiceData,
             'seletedTab' => $seletedTab,
             'notificationlisting'=>$notificationlisting,
             'oUser' => $oUser

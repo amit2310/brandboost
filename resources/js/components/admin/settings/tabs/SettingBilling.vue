@@ -28,7 +28,6 @@
                 <div class="panel panel-flat review_ratings">
                     <div class="panel-heading">
                         <h6 class="panel-title">General Preferences</h6>
-                        <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
                     </div>
                     <div class="panel-body p0">
                         <!--====GENERAL SETTINGS====-->
@@ -72,7 +71,7 @@
 
                         <!--====Billing Info====-->
                         <div class="bbot p30">
-                            <form id="frmGeneralBusinessInfo" name="frmGeneralBusinessInfo" method="post">
+<!--                            <form id="frmGeneralBusinessInfo" name="frmGeneralBusinessInfo" method="post">-->
                                 <div class="row">
                                     <div class="col-md-3"><p class="text-muted">Billing Info</p></div>
                                     <div class="col-md-9">
@@ -126,13 +125,7 @@
                                                     <div class="">
                                                         <select class="form-control" name="billing_country" id="billing_country" v-model="oUser.billing_country">
                                                             <option value="">Select Country</option>
-<!--                                                            @if (!empty($oCountries))-->
-<!--                                                            @foreach ($oCountries as $oCountry)-->
-<!--                                                            <option value="{{ $oCountry->country_code }}" {!! ($oCountry->country_code == $oUser->billing_country) ? 'selected' : '' !!}>-->
-<!--                                                                {{ $oCountry->name }}-->
-<!--                                                            </option>-->
-<!--                                                            @endforeach-->
-<!--                                                            @endif-->
+                                                            <option v-for="country in countries" :value="country.country_code"> {{country.name}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -142,9 +135,9 @@
                                                     <label class="control-label">State</label>
                                                     <div class="">
                                                         <select class="form-control" name="billing_state" id="billing_state" v-model="oUser.billing_state">
-<!--                                                            <option {!! ($oUser->billing_state == 'Alabama') ? 'selected' : '' !!}>Alabama</option>-->
-<!--                                                            <option {!! ($oUser->billing_state == 'Delhi') ? 'selected' : '' !!}>Delhi</option><option {!! ($oUser->billing_state == 'Alabama') ? 'selected' : '' !!}>Alabama</option>-->
-<!--                                                            <option {!! ($oUser->billing_state == 'Delhi') ? 'selected' : '' !!}>Delhi</option>-->
+                                                            <option :value='`Alabama`'>Alabama}</option>
+                                                            <option :value='`Delhi`'>Delhi</option>
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -170,11 +163,11 @@
 
                                 <div class="row">
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn dark_btn ml20 bkg_purple saveUserOtherInfo" >Save</button>
+                                        <button type="submit" class="btn dark_btn ml20 bkg_purple" v-on:click="saveUserOtherInfo()">Save</button>
 
                                     </div>
                                 </div>
-                            </form>
+<!--                            </form>-->
                         </div>
                         <!--====Active Card====-->
                         <div class="bbot p30">
@@ -216,44 +209,45 @@
                                 </div>
                             </div>
                         </div>
-
+<!--                        {{oUser}}-->
                         <!--====Subscription====-->
                         <div class="bbot p30">
                             <div class="row">
                                 <div class="col-md-3"><p class="text-muted">Subscriptions</p></div>
                                 <div class="col-md-9">
-                                    @if (!empty(oUser.subscription_id))
-                                    <div class="card_sec p0">
-<!--                                        <ul class="subscription_list">-->
-<!--                                            <li><span>Plan Name</span><strong class="pull-right">{{ oRegularMembership.level_name }} ({{ ucfirst(oRegularMembership.subs_cycle) }}, USD)</strong></li>-->
-<!--                                            <li><span>Price</span><strong class="pull-right">${{ oRegularMembership.price }}/{{ ucfirst(oRegularMembership.subs_cycle) }}</strong></li>-->
-<!--                                            <li><span>Subscription Status</span><strong class="pull-right">{{ ucfirst(oUser.regular_subscription_info.subscription_status) }}</strong></li>-->
-<!--                                            <li><span>Start</span><strong class="pull-right">{{ date("F dS Y", oUser.regular_subscription_info.started_at) }}</strong></li>-->
-<!--                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ date("F dS Y", oUser.regular_subscription_info.next_billing_at) }}</strong></li>-->
-<!--                                            <li><span>End</span><strong class="pull-right">Recurring</strong></li>-->
-<!--                                        </ul>-->
+<!--                                    {{ oUser.regular_subscription_info}}-->
+<!--                                    {{oCurrentPlanData}}-->
+                                    <div class="card_sec p0" v-if="oUser.subscription_id">
+                                        <ul class="subscription_list">
+                                            <li><span>Plan Name</span><strong class="pull-right">{{ oCurrentPlanData.level_name }} ({{ oCurrentPlanData.subs_cycle | capitalize }}, USD)</strong></li>
+                                            <li><span>Price</span><strong class="pull-right">${{ oCurrentPlanData.price }}/{{ oCurrentPlanData.subs_cycle | capitalize }}</strong></li>
+                                            <li><span>Subscription Status</span><strong class="pull-right">{{ oUser.regular_subscription_info.subscription_status | capitalize }}</strong></li>
+                                            <li><span>Start</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oCurrentPlanData.created) }}</strong></li>
+                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oUser.regular_subscription_info.next_billing_at) }}</strong></li>
+                                            <li><span>End</span><strong class="pull-right">Recurring</strong></li>
+                                        </ul>
                                         <div class="clearfix"></div>
                                     </div>
-                                    @endif
+<!--                                    @endif-->
 
-                                    @if (!empty(oUser.topup_subscription_id))
+<!--                                    {{oCurrentTopupPlanData}}-->
                                     <br>
-                                    <div class="card_sec p0">
-<!--                                        <ul class="subscription_list">-->
-<!--                                            <li><span>Plan Name</span><strong class="pull-right">{{ oTopupMembership.level_name }} ({{ ucfirst(oTopupMembership.subs_cycle) }}, USD)</strong></li>-->
-<!--                                            <li><span>Price</span><strong class="pull-right">${{ oTopupMembership.price }}/{{ ucfirst(oTopupMembership.subs_cycle) }}</strong></li>-->
+                                     <div class="card_sec p0" v-if="oUser.topup_subscription_id">
+                                        <ul class="subscription_list">
+                                            <li><span>Plan Name</span><strong class="pull-right">{{ oCurrentTopupPlanData.level_name }} ({{ oCurrentTopupPlanData.subs_cycle | capitalize }}, USD)</strong></li>
+                                            <li><span>Price</span><strong class="pull-right">${{ oCurrentTopupPlanData.price }}/{{ oCurrentTopupPlanData.subs_cycle | capitalize }}</strong></li>
 <!--                                            <li><span>Subscription Status</span><strong class="pull-right">{{ ucfirst(oUser.topup_subscription_info.subscription_status) }}</strong></li>-->
-<!--                                            <li><span>Start</span><strong class="pull-right">{{ date("F dS Y", oUser.topup_subscription_info.started_at) }}</strong></li>-->
-<!--                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ date("F dS Y", oUser.topup_subscription_info.next_billing_at) }}</strong></li>-->
-<!--                                            <li><span>End</span><strong class="pull-right">Recurring</strong></li>-->
-<!--                                        </ul>-->
+<!--                                            <li><span>Start</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oCurrentTopupPlanData.started_at) }}</strong></li>-->
+<!--                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ // displayDateFormat("F dS Y", oUser.topup_subscription_info.next_billing_at) }}</strong></li>-->
+                                            <li><span>End</span><strong class="pull-right">Recurring</strong></li>
+                                        </ul>
                                         <div class="clearfix"></div>
                                     </div>
-                                    @endif
+<!--                                    @endif-->
 
-                                    @if (empty($oUser->subscription_id) && empty($oUser->topup_subscription_id))
-                                    <i>No Subscription found</i>
-                                    @endif
+<!--                                    @if (empty($oUser->subscription_id) && empty($oUser->topup_subscription_id))-->
+<!--                                    <i>No Subscription found</i>-->
+<!--                                    @endif-->
                                 </div>
                             </div>
                         </div>
@@ -273,6 +267,16 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+
+                                            <tr v-if="oInvoices" v-for="oInvoice in oInvoices">
+<!--                                                {{// oInvoice}}-->
+                                                <td><span class="text-muted">{{ displayDateFormat("F dS Y", oInvoice.created) }}</span></td>
+                                                <td><span class="text-muted">{{ displayDateFormat("F dS Y", oInvoice.created) }}</span></td>
+                                                <td><span class="text-muted">{{ number_format(oInvoice.amount_paid, 2)}}</span></td>
+                                                <td><span class="text-muted">{{ oInvoice.invoice_status }}</span></td>
+<!--    {{ invoiceData[43].description}}-->
+
+                                            </tr>
 <!--                                            @php-->
 <!--                                            if (!empty($oInvoices)):-->
 <!--                                            foreach ($oInvoices as $oInvoice):-->
@@ -344,27 +348,10 @@
                 oCurrentPlanData: '',
                 oCurrentTopupPlanData: '',
                 oInvoices: '',
+                invoiceData: '',
                 notificationlisting: '',
                 oUser: '',
-                countries: '',
-                credits: {
-                    acceptTerms:false,
-                    quantity :0,
-                    price :0,
-                    planID:'',
-                    planName:'',
-                    currentPlanName:'',
-                    selectTerms:'',
-                },
-                buyCredits: {
-                    acceptTerms:false,
-                    quantity :0,
-                    price :0,
-                    planID:'',
-                    planName:'',
-                    currentPlanName:'',
-                    selectTerms:'',
-                }
+                countries: {},
             }
         },
         mounted() {
@@ -372,6 +359,13 @@
             setTimeout(function(){
                 loadJQCode();
             },2000);
+        },
+        filters: {
+            capitalize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            }
         },
         methods: {
             loadData: function () {
@@ -392,6 +386,7 @@
                         this.oCurrentTopupPlanData = response.data.oCurrentTopupPlanData;
                         this.seletedTab = response.data.seletedTab;
                         this.oInvoices = response.data.oInvoices;
+                        this.invoiceData = response.data.invoiceData;
                         this.notificationlisting = response.data.notificationlisting;
                         this.oUser = response.data.oUser;
                         this.countries = response.data.countries;
@@ -402,13 +397,29 @@
                 this.oCurrentPlanData.subs_cycle= painType
             },
 
-            confirmManualUpgrade:function(planID,planName,currentPlanName){
-                this.buyCredits.acceptTerms=false;
-                // this.buyCredits.quantity =quantity;
-                // this.buyCredits.price =price;
-                this.buyCredits.planID =planID;
-                this.buyCredits.planName =planName;
-                this.buyCredits.currentPlanName =currentPlanName;
+            saveUserOtherInfo:function(){
+                this.loading = true;
+
+                    axios.post('/admin/settings/saveBillingInfo', {
+                        company_name:this.oUser.company_name,
+                        company_description:this.oUser.company_description,
+                        receive_newsletter:this.oUser.receive_newsletter,
+                        receive_debug_notification:this.oUser.receive_debug_notification,
+                        billing_firstname:this.oUser.billing_firstname,
+                        billing_lastname:this.oUser.billing_lastname,
+                        billing_address1:this.oUser.billing_address1,
+                        billing_address2:this.oUser.billing_address2,
+                        billing_city:this.oUser.billing_city,
+                        billing_zipcode:this.oUser.billing_zipcode,
+                        billing_state:this.oUser.billing_state,
+                        billing_country:this.oUser.billing_country,
+                    })
+                        .then(response => {
+                            // $bvModal.hide('confirm_topup_level_upgrade')
+                            this.loading = false;
+                            this.loadData();
+                        });
+
             },
             confirmLevelUpgrade: function (){
                 this.loading = true;
