@@ -66,6 +66,7 @@ Misc
 .min_w_160{min-width: 160px;}
 .h100{height: 100vh}
 .h235{height: 235px;}
+.h200{height: 200px!important;}
 .min_h_56{min-height: 56px;}
 
 .min_h_185{min-height: 185px;}
@@ -214,7 +215,7 @@ TABLES STYLES
 .table.table-borderless tbody tr td p.small{color: #687693; font-size: 12px; font-weight: 400; margin: 0!important}
 
 
-.datasearcharea{position: absolute;width: 100%;z-index: 1;top: 40px; display: none}
+.datasearcharea{position:relative;width: 100%;z-index: 1;top: 13px; display: none}
 .datasearcharea a.searchcloseicon{ position: absolute; right: 25px;top: 14px;}
 
 .datasearcharea .form-control:focus{box-shadow: none!important}
