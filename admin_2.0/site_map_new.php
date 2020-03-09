@@ -101,7 +101,7 @@
                 
                 
                 <li><strong>Review App Overview</strong></li>
-     			<li><a target="_blank" href="review_overview.php"><strike>Review Overview</strike></a> &nbsp; &nbsp; <small style="font-style: italic">Working Not Finished</small></li>
+     			<li><a target="_blank" href="review_overview.php">Review Overview</a> &nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 10th March 2020</small></li>
      		</ul>
      		</div>
      		<div class="card min-h-280">
