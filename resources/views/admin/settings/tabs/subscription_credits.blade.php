@@ -215,6 +215,52 @@
         </div>
     </div>
 </div>
+
+
+<!-- Upgrade plan Modal Confirm -->
+<div id="confirm_level_upgrade" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title">Confirm Upgrade</h5>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-semibold">Upgrade Your Account</h6>
+                <table class="table table-hover table-striped table-bordered text-left mb-20">
+
+                    <tr>
+                        <td>Current Plan :</td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>Upgrade to :</td>
+                        <td><span id="upgradedPlanTitle">
+
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <div class="checkbox">
+                    <label>
+                        <div class="border-primary-600 text-primary-800"><input class="control-primary" id="lvltermsCondition" type="checkbox">
+                        </div>
+                        I accept terms & condition
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" name="hidLevelPlanId" id="hidLevelPlanId" value="medium-businesses"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
+                <button type="button" id="confirmLevelUpdate" class="btn btn-primary">Yes, Upgrade Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Upgrade plan Modal Confirm -->
 <div id="confirm_topup_level_upgrade" class="modal fade">
     <div class="modal-dialog">

@@ -424,6 +424,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/settings/savePublicProfile', 'Admin\Settings@saveUserSettings');
     Route::post('admin/settings/saveGeneralPreferences', 'Admin\Settings@saveUserSettings');
     Route::post('admin/settings/saveFieldsSettings', 'Admin\Settings@saveUserSettings');
+    Route::post('admin/settings/saveBillingInfo', 'Admin\Settings@saveUserSettings');
 
 
 
