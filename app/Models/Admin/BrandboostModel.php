@@ -89,8 +89,8 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBBWidgets($id = 0, $userID = 0, $type = '') {
-        $oData = DB::table('tbl_brandboost_widgets')
+    public static function getBBWidgets($id = 0, $userID = 0, $type = '', $searchBy='', $sortBy='') {
+        $query = DB::table('tbl_brandboost_widgets')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=', 'tbl_brandboost.id')
                 ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
                 ->when(($id > 0), function ($query) use ($id) {
@@ -102,10 +102,29 @@ class BrandboostModel extends Model {
                 ->when((!empty($type)), function ($query) use ($type) {
                     return $query->where('tbl_brandboost_widgets.review_type', $type);
                 })
-                ->where('tbl_brandboost_widgets.delete_status', 0)
-                ->orderBy('tbl_brandboost_widgets.id', 'desc')
-                //->get();
-                ->paginate(10);
+                ->where('tbl_brandboost_widgets.delete_status', 0);
+
+        if(!empty($searchBy)){
+            $query->where('tbl_brandboost_widgets.widget_title', 'LIKE',  "%$searchBy%");
+        }
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_brandboost_widgets.created', 'desc');
+            }else  if($sortBy == 'Name'){
+                $query->orderBy('tbl_brandboost_widgets.widget_title', 'desc');
+            }else  if($sortBy == 'draft'){
+                $query->where('tbl_brandboost_widgets.status', '0');
+            }else  if($sortBy == 'active'){
+                $query->where('tbl_brandboost_widgets.status', '1');
+            }else  if($sortBy == 'pending'){
+                $query->where('tbl_brandboost_widgets.status', '2');
+            }else  if($sortBy == 'archive'){
+                $query->where('tbl_brandboost_widgets.status', '3');
+            }
+        }else{
+            $query->orderBy('tbl_brandboost_widgets.id', 'desc');
+        }
+        $oData = $query->paginate(10);
         return $oData;
     }
 
@@ -687,6 +706,30 @@ class BrandboostModel extends Model {
         }
     }
 
+    /**
+     * This function used to archive/delete one or more widgets
+     * @param $recordId
+     * @return bool
+     */
+    public static function deleteWidgets($recordId, $actionName='') {
+        $query = DB::table('tbl_brandboost_widgets')
+                ->where('id', $recordId);
+        if(!empty($actionName)){
+            if($actionName == 'delete'){
+                $result = $query->update(['delete_status'=>1]);
+            }else if($actionName == 'archive'){
+                $result = $query->update(['status'=>3]);
+            }
+        }else{
+            $result = $query->update(['status'=>3]);
+        }
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * Used to update brandboost feedback response by brandboostID
      * @param type $brandboostID
