@@ -82,11 +82,11 @@
 					<label class="fw500 fsize11 dark_600 ls_4">PRODUCT dropdown</label>
 					<a class="fw500 fsize11 reviews_400 ls_4 float-right" href="#">CREATE NEW <i class="ri-add-circle-fill"></i></a>
 					<div class="dropdown">
-					  <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Select review type
 					  </button>
 					  <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-					  	<div class="p20">
+					  	<div class="p10">
 					  	<input type="text" name="" value="" placeholder="Search" class="form-control"/>	
 					  	</div>
 					  	
@@ -115,11 +115,11 @@
 					<label class="fw500 fsize11 dark_600 ls_4">REVIEW AUTHOR dropdown</label>
 					<a class="fw500 fsize11 reviews_400 ls_4 float-right" href="#">CREATE NEW <i class="ri-add-circle-fill"></i></a>
 					<div class="dropdown">
-					  <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Select review's author contact
 					  </button>
 					  <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-					  	<div class="p20">
+					  	<div class="p10">
 					  	<input type="text" name="" value="" placeholder="Search" class="form-control"/>	
 					  	</div>
 					  	
