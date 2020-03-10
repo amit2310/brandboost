@@ -150,4 +150,13 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+    $(document).on("click", ".search_tables_open_close", function(){
+        $(".datasearcharea").animate({
+            width: "toggle"
+        });
+        $('#InputToFocus').focus();
+    });
+});
+
 

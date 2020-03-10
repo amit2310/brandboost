@@ -72,21 +72,66 @@
 					<label class="fw500 fsize11 dark_600 ls_4">REVIEW TYPE</label>
 					<select class="form-control form-control-custom h48 dark_600"><option>Product review</option><option>Select review type</option></select>
 				</div>
-  		   <div class="form-group m-0 review_forms">
+  		   <div class="form-group review_forms">
 					<label class="fw500 fsize11 dark_600 ls_4">PRODUCT</label>
 					<a class="fw500 fsize11 reviews_400 ls_4 float-right" href="#">CREATE NEW <i class="ri-add-circle-fill"></i></a>
 					<select class="form-control form-control-custom h48 dark_600"><option>Pro Email Marketing Cource</option><option>Select review type</option></select>
 				</div>
+  		   
+  		   <div class="form-group m-0 review_forms">
+					<label class="fw500 fsize11 dark_600 ls_4">PRODUCT dropdown</label>
+					<a class="fw500 fsize11 reviews_400 ls_4 float-right" href="#">CREATE NEW <i class="ri-add-circle-fill"></i></a>
+					<div class="dropdown">
+					  <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Select review type
+					  </button>
+					  <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+					  	<div class="p10">
+					  	<input type="text" name="" value="" placeholder="Search" class="form-control"/>	
+					  	</div>
+					  	
+						<a class="dropdown-item" href="#">Pro Email Marketing Cource</a>
+						<a class="dropdown-item" href="#">Pro Email  Cource</a>
+						<a class="dropdown-item" href="#">Marketing Cource</a>
+					  </div>
+					</div>
+				</div>
+  		   
+  		   
+  		   
    		   </div>
    		   
    		   <div class="card p25">
 			  <h3 class="htxt_medium_12 dark_200 text-uppercase ls_4">FROM</h3>
     		  <hr>
-				<div class="form-group m-0 review_forms">
+				<div class="form-group review_forms">
 					<label class="fw500 fsize11 dark_600 ls_4">REVIEW AUTHOR</label>
 					<a class="fw500 fsize11 reviews_400 ls_4 float-right" href="#">CREATE NEW <i class="ri-add-circle-fill"></i></a>
 					<select class="form-control form-control-custom h48 dark_600"><option>Gloria Williamson</option><option>Select review's author contact</option></select>
 				</div>
+  		   
+  		   
+  		   		<div class="form-group m-0 review_forms">
+					<label class="fw500 fsize11 dark_600 ls_4">REVIEW AUTHOR dropdown</label>
+					<a class="fw500 fsize11 reviews_400 ls_4 float-right" href="#">CREATE NEW <i class="ri-add-circle-fill"></i></a>
+					<div class="dropdown">
+					  <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Select review's author contact
+					  </button>
+					  <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+					  	<div class="p10">
+					  	<input type="text" name="" value="" placeholder="Search" class="form-control"/>	
+					  	</div>
+					  	
+						<a class="dropdown-item" href="#">Gloria Williamson</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Something else here</a>
+					  </div>
+					</div>
+				</div>
+  		   
+  		   
+  		   
    		   </div>
    		   
    		   <div class="card p25">

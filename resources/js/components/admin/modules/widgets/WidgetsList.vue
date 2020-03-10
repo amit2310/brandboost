@@ -31,17 +31,17 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="table_filter">
-                                    <li><a class="active" href="#">ALL</a></li>
-                                    <li><a href="#">ACTIVE</a></li>
-                                    <li><a href="#">DRAFT</a></li>
-                                    <li><a href="#">ARCHIVE</a></li>
-                                    <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                    <li><a href="javascript:void(0);" :class="{'active': sortBy == 'all'}" @click="applySort('all')">ALL</a></li>
+                                    <li><a href="javascript:void(0);" :class="{'active': sortBy == 'active'}" @click="applySort('active')">ACTIVE</a></li>
+                                    <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">DRAFT</a></li>
+                                    <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
+                                    <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <ul class="table_filter text-right">
                                     <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-                                    <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                    <li v-show="deletedItems.length>0"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                                     <li><a href="javascript:void(0);" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
                                     <li><a href="javascript:void(0);" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
                                 </ul>
@@ -60,7 +60,7 @@
                         <div v-for="widget in widgets" class="col-md-3 text-center">
                             <div class="card  h235 animate_top" style="padding:0px!important;">
                                 <div class="dot_dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                                         <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="javascript:void(0);" @click="prepareUpdate(widget.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
@@ -230,7 +230,7 @@
                         </div>
 
                         <div class="col-md-12 text-center mt-3">
-                            <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT WIDGETS</a>
+                            <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT WIDGETS</a>
                         </div>
                     </div>
 
@@ -253,7 +253,7 @@
 
 
                         <div class="col-md-12 text-center mt-3">
-                            <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT widget</a>
+                            <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT widget</a>
                         </div>
 
                     </div>
@@ -296,7 +296,7 @@
                                         <input type="hidden" name="module_account_id" id="module_account_id"
                                                :value="moduleAccountID">
                                         <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                        <a class="blue_300 fsize16 fw600 ml20" href="#">Close</a> </div>
+                                        <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
                                 </div>
                             </div>
                         </form>
@@ -385,13 +385,16 @@
         methods: {
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
-                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                    let actionName = (this.sortBy == 'archive') ? 'delete' : 'archive';
+                    let msg = (this.sortBy == 'archive') ? 'permanently delete' : 'archive';
+                    if(confirm('Are you sure you want to '+msg+' selected item(s)?')){
                         this.loading = true;
-                        /*axios.post('/admin/brandboost/deleteReviewRequest', {_token:this.csrf_token(), multipal_id:this.deletedItems})
+                        axios.post('/admin/brandboost/deleteWidgets', {_token:this.csrf_token(), multipal_id:this.deletedItems, action: actionName})
                             .then(response => {
                                 this.loading = false;
+                                this.deletedItems = [];
                                 this.loadPaginatedData();
-                            });*/
+                            });
                     }
                 }
             },
@@ -426,6 +429,10 @@
                         this.deletedItems.splice(idx, 1);
                     }
                 }
+            },
+            applySort: function(sortVal){
+                this.sortBy = sortVal;
+                this.deletedItems = [];
             },
             widgetStats: function(widget){
                 if(widget != ''){
@@ -510,7 +517,7 @@
             },
             loadPaginatedData: function () {
                 //getData
-                axios.get('/admin/brandboost/widgets?page='+this.current_page)
+                axios.get('/admin/brandboost/widgets?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         //console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
