@@ -23,6 +23,8 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="allData.total>0 || true  ">
+                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -375,12 +377,4 @@
             }
         }
     }
-    $(document).ready(function(){
-        $(".search_tables_open_close").click(function(){
-            $(".reviewRequestSearch").animate({
-                width: "toggle"
-            });
-            $('#InputToFocus').focus();
-        });
-    });
 </script>

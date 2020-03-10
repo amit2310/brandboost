@@ -1780,15 +1780,19 @@ class Brandboost extends Controller
      * @return type
      */
     public
-    function widgets()
+    function widgets(Request $request)
     {
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        //echo "Sort By ". $sortBy;
+        //echo " Search By ". $searchBy;
         if ($user_role == 1) {
-            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite');
+            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite', $searchBy, $sortBy);
         } else {
-            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite');
+            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite', $searchBy, $sortBy);
         }
         foreach($oWidgetsList->items() as $wData) {
             $wid = $wData->id;
@@ -3153,7 +3157,8 @@ public function widgetStatisticDetailsStatsGraph(){
         $widgetID = $request->widget_id;
 
         $aData = array(
-            'delete_status' => '1'
+            //'delete_status' => '1'
+            'status' => '3'
         );
 
         $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
@@ -3720,6 +3725,10 @@ public function widgetStatisticDetailsStatsGraph(){
         exit;
     }
 
+    /**
+     * Used to archive one or more review request
+     * @param Request $request
+     */
     public
     function deleteReviewRequest(Request $request)
     {
@@ -3739,6 +3748,27 @@ public function widgetStatisticDetailsStatsGraph(){
         echo json_encode($response);
         exit;
     }
+
+    public
+    function deleteWidgets(Request $request)
+    {
+        $mBrandboost = new BrandboostModel();
+        $response = array();
+
+        $multipalIds = $request->multipal_id;
+        $actionName = $request->action;
+        foreach ($multipalIds as $recordId) {
+           $result = $mBrandboost->deleteWidgets($recordId, $actionName);
+        }
+        if ($result) {
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+        echo json_encode($response);
+        exit;
+    }
+
 
 
     public
