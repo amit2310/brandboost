@@ -7,9 +7,6 @@
                     <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
                 </div>
                 <div class="col-md-6">
-                    <!--<ul class="table_filter text-right">
-                        <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                    </ul>-->
                     <ul class="table_filter text-right">
                         <li>
                             <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
