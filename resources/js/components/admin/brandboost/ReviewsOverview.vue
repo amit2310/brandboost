@@ -175,7 +175,7 @@
     import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 
     export default {
-        props : ['pageColor', 'title', 'review_type'],
+        props : ['title', 'review_type'],
         components: {UserAvatar, Pagination, OnsiteReviewsTab, OnsiteReviewRequestsTab},
         data(){
             return {
