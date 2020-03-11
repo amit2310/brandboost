@@ -756,7 +756,7 @@ code {
 	display: block
 }
 .main-menu-inner hr{border-color: #e9eff8; display: none}
-.title-box{ border-bottom: 1px solid #e9eff8; margin-bottom: 15px;position: absolute;width: 280px;top: -22px;left: -22px;height: 57px; padding: 23px 23px 0 30px}
+.title-box{ border-bottom: 1px solid #e9eff8; margin-bottom: 15px;position: absolute;width: 280px;top: -22px;left: -22px;height: 57px; padding: 23px 23px 0 20px}
 .menu-title {
 	font-size: 12px;
 	font-weight: 500;
@@ -1343,12 +1343,19 @@ PAGE WITH SIDEBAR CSS
 .sidebar_search_big .sidebar_search_submit{border: none; background:#fff; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.07); width: 44px; height: 44px; padding: 0; margin: 0 0 0 0px; border-radius: 4px;}
 
 
+.close_sidebar {
+	position: fixed;
+	top: 20px;
+	left: 227px;
+	z-index: 99999;
+	font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #7B89A6;
+}
 
 .sidebar_headings{background: rgba(196, 207, 225, 0.1); border-top: 1px solid #eef1f7; border-bottom: 1px solid #eef1f7; padding: 7px 24px; font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #687693; line-height: 23px;}
 
 
 .page_sidebar .top_headings{height: 57px;}
-.page_sidebar .top_headings p, .page_sidebar .top_headings a{ font-weight: 500;font-size: 12px;letter-spacing: 0.02em;text-transform: uppercase;color: #7B89A6;}
+.page_sidebar .top_headings p, .page_sidebar .top_headings a{ font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #7B89A6;}
 
 
 .list_with_icons{margin: 0; padding: 0;}

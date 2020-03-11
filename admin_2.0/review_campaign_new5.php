@@ -67,12 +67,13 @@
     <!--******************
 	 PAGE LEFT SIDEBAR
 	**********************-->
+	<a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a>
 	<div class="page_sidebar bkg_light_000 fixed">
  	<div style="width: 279px;">
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
 	 			<div class="col"><p>ReviewS</p></div>
-	 			<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a></p></div>
+	 			<!--<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a></p></div>-->
 	 		</div>
 	 	</div>
        
@@ -169,7 +170,6 @@
     	</div>
     </div>
     </div>
-    
     <div class="row">
     	<div class="col-md-4 d-flex">
     		
@@ -702,12 +702,7 @@
     </div>
     
     
-    
-    
-        
-    
-    
-    
+   
     
     
       </div>
@@ -761,135 +756,5 @@ $(document).ready(function(){
 </script>
 
 
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
-
-    <script>
-       var options7 = {
-      chart: {
-        type: 'bar',
-        width: 240,
-        height: 55,
-        sparkline: {
-          enabled: true
-        }
-      },
-		colors: ['#AFB4FA'],
-		   
-		   
-  
-
-      plotOptions: {
-        bar: {
-          columnWidth: '70%',
-			endingShape: 'rounded'	
-        }
-      },
-      series: [{
-        data: [47, 45, 74, 94, 56, 74, 24, 21, 77, 39, 82, 56, 74, 34, 91]
-      }],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-	  
-	  
-	  
-    }
-
-    
-
-   
-    new ApexCharts(document.querySelector("#email_open_chart"), options7).render();
-		
-
-
-       
-
-		
-		
-		var randomizeArray = function (arg) {
-      var array = arg.slice();
-      var currentIndex = array.length,
-        temporaryValue, randomIndex;
-
-      while (0 !== currentIndex) {
-
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-
-      return array;
-    }
-		
-	 var sparklineData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];	
-		
-		
-		
-		
-		var spark3 = {
-      chart: {
-        type: 'area',
-		  width: 240,
-        height: 60,
-        sparkline: {
-          enabled: true
-        },
-      },
-			
-		colors:['#AFB4FA', '#67bae4', '#9C27B0'],
-      stroke: {
-        curve: 'straight',
-		  width: 1
-      },
-		
-      fill: {
-        opacity: 0.1
-      },
-      series: [{
-        data: randomizeArray(sparklineData)
-      }],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      yaxis: {
-        min: 0
-      }
-    }
-
-
-
-
-    var spark3 = new ApexCharts(document.querySelector("#spark3"), spark3);
-    spark3.render();
-       
-
-    </script>
 </body>
 </html>
