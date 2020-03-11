@@ -242,6 +242,38 @@ export default {
             //return date("l jS F Y", strtotime('2019-06-19 16:36:46'));
             return date(format, strtotime(datetime));
         },
+        timestampToDateFormat(unixtimestamp){
+
+            // Months array
+            var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+            // Convert timestamp to milliseconds
+            var date = new Date(unixtimestamp*1000);
+
+            // Year
+            var year = date.getFullYear();
+
+            // Month
+            var month = months_arr[date.getMonth()];
+
+            // Day
+            var day = date.getDate();
+
+            // Hours
+            var hours = date.getHours();
+
+            // Minutes
+            var minutes = "0" + date.getMinutes();
+
+            // Seconds
+            var seconds = "0" + date.getSeconds();
+
+            // Display date time in MM-dd-yyyy h:m:s format
+            var convdataTime = month+'-'+day+'-'+year+' '+hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+            return convdataTime;
+
+        },
         timeAgo(datetime) {
             const NOW = new Date()
             const times = [["second", 1], ["minute", 60], ["hour", 3600], ["day", 86400], ["week", 604800], ["month", 2592000], ["year", 31536000], ["years", 315360000]]
