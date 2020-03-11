@@ -13,6 +13,7 @@ import ListTemplates from './components/admin/templates/ListTemplates.vue';
 import ListSMSTemplates from './components/admin/templates/ListSMSTemplates.vue';
 import TemplateMaster from './components/admin/templates/TemplateMaster';
 import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview';
+import addReviews from './components/admin/brandboost/onsite/addReview';
 //import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import ReviewsOverview from './components/admin/brandboost/ReviewsOverview';
 import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
@@ -355,6 +356,7 @@ const routes = [
     { path: '/questions', component: OnsiteQuestions, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite questions - Brand Boost'} },
     { path: '/brandboost/reviews/onsite/requests', component: OnsiteReviewRequest, props: {pageColor: 'onsite_sec', title : 'Review Requests', review_type: 'onsite'} },
     { path: '/reviews/onsite/widgets', component: WidgetsOnsiteList, meta: { title: 'Onsite Widgets'} },
+    { path: '/reviews/onsite/add', component: addReviews, meta: { title: 'Add Review'} },
 
     /* Tab Option In Review Section */
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },

@@ -3579,47 +3579,43 @@ public function widgetStatisticDetailsStatsGraph(){
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
-            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite');
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite', '', '', false);
         } else {
-            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite', '', '', false);
         }
+        $subscribersData = SubscriberModel::getGlobalSubscribers($userID, false);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Add Review' => '',
+        );
 
         if (!empty($campaignId)) {
 
             $oCampaign = ReviewsModel::getBrandBoostCampaign($campaignId);
 
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignId) . '" class="sidebar-control hidden-xs">' . $oCampaign->brand_title . '</a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
-				</ul>';
-
             $aData = array(
                 'title' => 'Brand Boost add Review',
-                'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'aBrandboostList' => $aBrandboostList,
                 'oCampaign' => $oCampaign,
+                'subscribers' => $subscribersData,
                 'aUser' => $aUser
             );
         } else {
 
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
-				</ul>';
-
             $aData = array(
                 'title' => 'Brand Boost add Review',
-                'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'aBrandboostList' => $aBrandboostList,
+                'subscribers' => $subscribersData,
                 'aUser' => $aUser
             );
         }
 
-        return view('admin.brandboost.add_review', $aData);
+        return $aData;
+        //return view('admin.brandboost.add_review', $aData);
     }
 
     /**
@@ -3749,6 +3745,10 @@ public function widgetStatisticDetailsStatsGraph(){
         exit;
     }
 
+    /**
+     * Used to delete/archive one or more widgets
+     * @param Request $request
+     */
     public
     function deleteWidgets(Request $request)
     {
