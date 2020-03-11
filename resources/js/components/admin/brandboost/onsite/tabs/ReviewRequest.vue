@@ -147,39 +147,28 @@
                 class="mt-4">
             </pagination>
         </div>
+
         <div v-else class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <tbody>
-                        <tr class="headings">
-                            <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                            </td>
-                            <td><span class="fsize10 fw500">NAME </span></td>
-                            <td><span class="fsize10 fw500">EMAIL / phone</span></td>
-                            <td><span class="fsize10 fw500">CAMPAIGN</span></td>
-                            <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                            <td><span class="fsize10 fw500">REVIEW  </span></td>
-                            <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
-                            <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                        </tr>
+                <div class="card card_shadow min-h-280">
 
-                        <tr>
-                            <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="row mb65">
+                        <div class="col-md-12 text-center">
+                            <img class="mt40" style="max-width: 250px; " src="assets/images/Review_request_image.svg">
+                            <h3 class="htxt_bold_18 dark_700 mt30">No review request so far. But you can change it!</h3>
+                            <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import review request!</h3>
+                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-
+            <div class="col-md-12 text-center mt-3">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
+            </div>
         </div>
+
     </div>
 
 </template>

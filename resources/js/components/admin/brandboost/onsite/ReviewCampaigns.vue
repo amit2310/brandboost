@@ -230,7 +230,7 @@
                                     <td>{{ campaign.reviewResponsePercent }}%</td>
                                     <td>
                                         <span v-if="campaign.revRA != ''" class="mr-2">
-                                            <img v-if="campaign.revRA >= '3'" src="assets/images/emojie-eye-face-l.svg">
+                                            <img v-if="campaign.revRA > '3'" src="assets/images/emojie-eye-face-l.svg">
                                             <img v-if="campaign.revRA == '3'" src="assets/images/emojie-face-smile.svg">
                                         </span>
                                         <span v-if="campaign.revRA != ''">{{ campaign.revRA }}/5</span>

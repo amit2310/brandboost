@@ -156,35 +156,39 @@
             </pagination>
 
         </div>
+
         <div v-else class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <tbody>
-                        <tr class="headings">
-                            <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                            </td>
-                            <td><span class="fsize10 fw500">CONTACT </span></td>
-                            <td><span class="fsize10 fw500">RATING</span></td>
-                            <td><span class="fsize10 fw500">REVIEW</span></td>
-                            <td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
-                            <td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                            <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                        </tr>
-                        <tr>
-                            <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="card card_shadow min_h_600">
+
+                    <div class="row mb65">
+                        <div class="col-md-6 text-left">
+                            <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="#">
+                                <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
+                                Set up reviews monitoring
+                            </a>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a class="lh_32 htxt_regular_12 dark_200 " href="#">
+                                Learn how use use contacts &nbsp; <img src="assets/images/question-line.svg">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mb65">
+                        <div class="col-md-12 text-center">
+                            <img class="mt40" style="max-width: 240px; " src="assets/images/reviews_icon_125.svg">
+                            <h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
+                            <h3 class="htxt_regular_14 dark_200 mt15 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
+                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <div class="col-md-12 text-center mt-3">
+                <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT reviews</a>
+            </div>
 
         </div>
 
