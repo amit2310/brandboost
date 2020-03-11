@@ -38,7 +38,7 @@
                             <p>
                                 <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
                                 <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                                <a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a>
+                                <a href="javascript:void(0);" title="List View"><i><img src="assets/images/sort_16_grey.svg"></i></a>
                             </p>
                         </div>
                     </div>
