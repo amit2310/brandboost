@@ -19,42 +19,68 @@
 
                 <div class="p20 top_headings">
                     <div class="row">
-                        <div class="col"><p><a href="#"><img src="assets/images/filter-line.svg"> &nbsp; Filter</a></p></div>
-                        <div class="col text-right"><p><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a> &nbsp; <a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></p></div>
+                        <div class="col-md-4">
+                            <!--<p>
+                                <a href="#"><img src="assets/images/filter-line.svg"> &nbsp; Filter</a>
+                            </p>-->
+                            <a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i> &nbsp;Filter</a>
+                            <div class="dropdown-menu p10 mt-1">
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a><br />
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a><br />
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a><br />
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a><br />
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a><br />
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a><br />
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a>
+                            </div>
+                        </div>
+                        <div class="col-md-8 text-right">
+                            <p>
+                                <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
+                                <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
+                                <a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
-                        <li class="d-flex">
-                            <span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>IBM</span>
-                            <strong>4.5 <i class="ri-star-fill green_400"></i></strong>
-                        </li>
-                        <li class="d-flex">
-                            <span><span class="circle_icon_24 bkg_green_200"><img src="assets/images/start-fill-white.svg"></span>General Electric</span>
-                            <strong>4.8 <i class="ri-star-fill green_400"></i></strong>
-                        </li>
-                        <li class="d-flex">
-                            <span><span class="circle_icon_24 bkg_review_200"><img src="assets/images/start-fill-white.svg"></span>Louis Vuitton</span>
-                            <strong>3.2 <i class="ri-star-fill yellow_400"></i></strong>
-                        </li>
-                        <li class="d-flex active">
-                            <span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>Apple</span>
-                            <strong>4.3 <i class="ri-star-fill green_400"></i></strong>
-                        </li>
-                        <li class="d-flex">
-                            <span><span class="circle_icon_24 bkg_red_200"><img src="assets/images/start-fill-white.svg"></span>IBM</span>
-                            <strong>2.7 <i class="ri-star-fill red_400"></i></strong>
-                        </li>
-                        <li class="d-flex">
-                            <span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>General Electric</span>
-                            <strong>4.8 <i class="ri-star-fill green_400"></i></strong>
-                        </li>
-                        <li class="d-flex">
-                            <span><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/start-fill-white.svg"></span>Louis Vuitton</span>
-                            <strong>4.5 <i class="ri-star-fill green_400"></i></strong>
+                        <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex">
+                            <span>
+                                <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
+                                    <img src="assets/images/start-fill-white.svg">
+                                </span>
+                                <span v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="circle_icon_24 bkg_yellow_200">
+                                    <img src="assets/images/start-fill-white.svg">
+                                </span>
+                                <span v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="circle_icon_24 bkg_red_200">
+                                    <img src="assets/images/start-fill-white.svg">
+                                </span>
+                                <span v-else class="circle_icon_24 bkg_blue_200">
+                                    <img src="assets/images/start-fill-white.svg">
+                                </span>
+                                <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                    <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                </a>
+                            </span>
+                            <strong>
+                                <span v-if="campaign.revRA != ''">{{ number_format(campaign.revRA, 1) }}&nbsp;</span>
+                                <span v-else>&nbsp;</span>
+                                <i v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="ri-star-fill green_400"></i>
+                                <i v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="ri-star-fill yellow_400"></i>
+                                <i v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="ri-star-fill red_400"></i>
+                                <i v-else class=""></i>
+                            </strong>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4"
+                        :noItemPerPage="true"
+                        class="mt-4">
+                    </pagination>
                 </div>
                 <div class="clearfix"></div>
             </div>
