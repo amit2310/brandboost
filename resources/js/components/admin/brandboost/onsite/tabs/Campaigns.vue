@@ -1,12 +1,13 @@
 <template>
 
     <div>
+        <a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a>
         <div class="page_sidebar bkg_light_000 fixed">
             <div style="width: 279px;">
                 <div class="p20 bbot top_headings">
                     <div class="row">
                         <div class="col"><p>REVIEWS</p></div>
-                        <div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a></p></div>
+                        <!--<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a></p></div>-->
                     </div>
                 </div>
 
