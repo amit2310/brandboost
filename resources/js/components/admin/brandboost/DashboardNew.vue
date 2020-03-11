@@ -29,7 +29,7 @@
                 <!--******************
                  PAGE LEFT SIDEBAR
                 **********************-->`
-                <!--<div class="page_sidebar bkg_light_000 fixed">
+                <div class="page_sidebar bkg_light_000 fixed">
                     <div style="width: 279px;">
                         <div class="p20 bbot top_headings">
                             <div class="row">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                </div>-->
+                </div>
                 <!--******************
                   PAGE LEFT SIDEBAR END
                  **********************-->
