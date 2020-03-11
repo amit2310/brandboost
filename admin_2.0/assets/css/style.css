@@ -1404,6 +1404,8 @@ PAGE WITH SIDEBAR CSS
 .temp_design_box{height: 172px; background: #DBE4F3; border-radius: 4px; margin-bottom: 20px;}
 
 
+.review_forms .dropdown-toggle::after{display: none!important}
+.review_forms .dropdown-toggle {background: url(../images/select_bkg.svg) 97% 21px no-repeat #fff;}
 
 
 .editor_option{}
