@@ -29,7 +29,7 @@
                 <!--******************
                  PAGE LEFT SIDEBAR
                 **********************-->`
-                <div class="page_sidebar bkg_light_000 fixed">
+                <!--<div class="page_sidebar bkg_light_000 fixed">
                     <div style="width: 279px;">
                         <div class="p20 bbot top_headings">
                             <div class="row">
@@ -86,7 +86,8 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                </div>
+                </div>-->
+                <OnsiteCampaignsTab></OnsiteCampaignsTab>
                 <!--******************
                   PAGE LEFT SIDEBAR END
                  **********************-->
@@ -343,12 +344,13 @@
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
+    import OnsiteCampaignsTab from '@/components/admin/brandboost/onsite/tabs/Campaigns';
     import OnsiteReviewsTab from '@/components/admin/brandboost/onsite/tabs/Reviews';
     import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 
     export default {
         props : ['pageColor', 'title', 'review_type'],
-        components: {UserAvatar, Pagination, OnsiteReviewsTab, OnsiteReviewRequestsTab},
+        components: {UserAvatar, Pagination, OnsiteCampaignsTab, OnsiteReviewsTab, OnsiteReviewRequestsTab},
         data(){
             return {
                 moduleName: '',

@@ -18,6 +18,7 @@ import addReviews from './components/admin/brandboost/onsite/addReview';
 import ReviewsOverview from './components/admin/brandboost/ReviewsOverview';
 import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
 import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';
+import OnsiteCampaignsTab from './components/admin/brandboost/onsite/tabs/Campaigns';
 import OnsiteReviewsTab from './components/admin/brandboost/onsite/tabs/Reviews';
 import OnsiteReviewRequestsTab from './components/admin/brandboost/onsite/tabs/ReviewRequest';
 import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
@@ -359,6 +360,7 @@ const routes = [
     { path: '/reviews/onsite/add', component: addReviews, meta: { title: 'Add Review'} },
 
     /* Tab Option In Review Section */
+    { path: '/brandboost/onsite/campaigns', component: OnsiteCampaignsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/onsite/requests', component: OnsiteReviewRequestsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     /* Tab Option In Review Section */
