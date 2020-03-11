@@ -135,7 +135,7 @@
                                                     <label class="control-label">State</label>
                                                     <div class="">
                                                         <select class="form-control" name="billing_state" id="billing_state" v-model="oUser.billing_state">
-                                                            <option :value='`Alabama`'>Alabama}</option>
+                                                            <option :value='`Alabama`'>Alabama</option>
                                                             <option :value='`Delhi`'>Delhi</option>
 
                                                         </select>
@@ -177,21 +177,25 @@
                                     <div class="card_sec p30">
                                         <div class="row mb20">
                                             <div class="col-xs-6"><img width="135" src="assets/images/credit-cards.png"/></div>
-                                            <div class="col-xs-6"><button class="btn btn-xs btn_white_table pull-right" data-toggle="modal" data-target="#cbChangeCC">@if (!empty(oUser.chargebee_cc_id)) Edit @else Add @endif Card</button></div>
+                                            <div class="col-xs-6"><button class="btn btn-xs btn_white_table pull-right" data-toggle="modal" data-target="#cbChangeCC">
+                                                <span v-if="oUser.chargebee_cc_id !=''">Edit Card</span>
+                                                <span v-else>Add Card</span>
+                                            </button></div>
+
                                         </div>
 
 <!--                                        <div class="row mb20 ccinfodetails" @if (empty(oUser.chargebee_cc_id)) style="display:none;" @endif>-->
                                         <div class="row mb20 ccinfodetails">
                                             <div class="col-xs-12">
 <!--                                                {{oUser.cc_last_four }}-->
-                                                <input type="text" id="savedccnum" class="form-control" disabled="disabled" value="XXXX-XXXX-XXXX " placeholder="XXXX-XXXX-XXXX 9613"/>
+                                                <input type="text" id="savedccnum" class="form-control" disabled="disabled" v-bind:value="'XXXX-XXXX-XXXX-'+oUser.cc_last_four" placeholder="XXXX-XXXX-XXXX 9613"/>
                                             </div>
                                         </div>
 <!--                                        <div class="row ccinfodetails" @if (empty(oUser.chargebee_cc_id)) style="display:none;" @endif >-->
                                         <div class="row ccinfodetails">
                                             <div class="col-xs-3">
 <!--                                                {{oUser.cc_exp_month + ' / ' + oUser.cc_exp_year }}-->
-                                                <input type="text" id="savedExpiry" class="form-control" disabled="disabled" placeholder="e.g. 10 / 2021" value=""/>
+                                                <input type="text" id="savedExpiry" class="form-control" disabled="disabled" placeholder="e.g. 10 / 2021" v-bind:value="oUser.cc_exp_month+' / '+oUser.cc_exp_year"/>
                                             </div>
                                             <div class="col-xs-3">
                                                 <p class="pull-left mb0"><span class="text-muted fsize11">EXP.<br>DATE</span></p>
@@ -199,7 +203,7 @@
                                         </div>
 
 <!--                                        @if (empty(oUser.chargebee_cc_id))-->
-                                        <div class="row ccinfoerror">
+                                        <div class="row ccinfoerror" v-if="oUser.chargebee_cc_id ==''">
                                             <div class="col-xs-6 tex-center">
                                                 <p class="pull-left mb0">Currently you haven't stored any credit card details yet.</p>
                                             </div>
@@ -215,14 +219,17 @@
                             <div class="row">
                                 <div class="col-md-3"><p class="text-muted">Subscriptions</p></div>
                                 <div class="col-md-9">
-<!--                                    {{ oUser.regular_subscription_info}}-->
-<!--                                    {{oCurrentPlanData}}-->
+                                  <!--   {{ oUser.regular_subscription_info.next_billing_at}}
+                                    {{oCurrentPlanData}}
+                                    {{oUser.regular_subscription_info}} -->
                                     <div class="card_sec p0" v-if="oUser.subscription_id">
                                         <ul class="subscription_list">
                                             <li><span>Plan Name</span><strong class="pull-right">{{ oCurrentPlanData.level_name }} ({{ oCurrentPlanData.subs_cycle | capitalize }}, USD)</strong></li>
                                             <li><span>Price</span><strong class="pull-right">${{ oCurrentPlanData.price }}/{{ oCurrentPlanData.subs_cycle | capitalize }}</strong></li>
                                             <li><span>Subscription Status</span><strong class="pull-right">{{ oUser.regular_subscription_info.subscription_status | capitalize }}</strong></li>
-                                            <li><span>Start</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oCurrentPlanData.created) }}</strong></li>
+                                            <li><span>Start</span><strong class="pull-right">
+<!-- {{ timestampToDateFormat('1583966838') }} -->
+                                            {{ displayDateFormat("F dS Y",(oUser.regular_subscription_info.trial_start)) }}</strong></li>
                                             <li><span>Next Billing Date</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oUser.regular_subscription_info.next_billing_at) }}</strong></li>
                                             <li><span>End</span><strong class="pull-right">Recurring</strong></li>
                                         </ul>
@@ -252,56 +259,42 @@
                             </div>
                         </div>
                         <!--====GENERAL SETTINGS====-->
-                        <div class="bbot p30">
-                            <div class="row">
+                        
+                        <div class="row p20">
+                            <div class="col-md-12">
                                 <div class="col-md-12 mb-20"><p class="text-muted">Past Invoices</p></div>
-                                <div class="col-md-12">
-                                    <div class="card_sec p0">
-                                        <table class="subscription_list table datatable-basic datatable-sorting">
-                                            <thead class="subscription_list_head">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
                                             <tr>
-                                                <td>Date</td>
-                                                <td>Subscriptions</td>
-                                                <td>Price</td>
-                                                <td>Action</td>
+                                                <td colspan="1"><span class="fsize12 fw300">Date </span></td>
+                                                <td><span class="fsize12 fw300">Subscriptions</span></td>
+                                                <td><span class="fsize12 fw300">Price</span></td>
+                                                <td><span class="fsize12 fw300">Action</span></td>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            <tr v-if="oInvoices" v-for="oInvoice in oInvoices">
-<!--                                                {{// oInvoice}}-->
+                                            <tr v-for="oInvoice in oInvoices.data" v-if="oInvoices.data">
                                                 <td><span class="text-muted">{{ displayDateFormat("F dS Y", oInvoice.created) }}</span></td>
-                                                <td><span class="text-muted">{{ displayDateFormat("F dS Y", oInvoice.created) }}</span></td>
-                                                <td><span class="text-muted">{{ number_format(oInvoice.amount_paid, 2)}}</span></td>
-                                                <td><span class="text-muted">{{ oInvoice.invoice_status }}</span></td>
-<!--    {{ invoiceData[43].description}}-->
-
+                                                <td>
+<!--                                                    {{oInvoice.plan_id}}-->
+                                                    <span class="text-muted" v-if="oInvoice.plan_id =='medium-businesses-yearly'">Medium Businesses Yearly</span>
+                                                    <span class="text-muted" v-else-if="oInvoice.plan_id =='topup-membership-a'">Credit Membership</span>
+                                                     <span class="text-muted" v-else>{{oInvoice.plan_id}}</span>
+                                                </td>
+                                                <td><span class="text-muted">${{ number_format(oInvoice.amount_paid, 2)}}</span></td>
+<!--                                                <td><span class="text-muted">{{ oInvoice.invoice_status }}</span></td>-->
+                                                <td><span class="text-muted"><a target="_blank" v-bind:href="'admin/invoices/download_invoice/'+oInvoice.id">download</a></span></td>
                                             </tr>
-<!--                                            @php-->
-<!--                                            if (!empty($oInvoices)):-->
-<!--                                            foreach ($oInvoices as $oInvoice):-->
-<!--                                            $invoiceData = App\Models\Admin\InvoicesModel::getInvoiceDetails($oInvoice->id);-->
-<!--                                            @endphp-->
-<!--                                            <tr>-->
-<!--                                                <td><span class="text-muted">{{ date("F dS Y", $oInvoice->paid_at) }}</span></td>-->
-<!--                                                <td><span class="pl0 txt_dark inv_details" invoice_id="{{ $oInvoice->id }}" style="cursor:pointer;"><strong class="text-left">-->
-<!--															@if (!empty($invoiceData[0]))-->
-<!--																{{ $invoiceData[0]->description }}-->
-<!--															@endif-->
-<!--															</strong></span></td>-->
-<!--                                                <td><span class="txt_dark"><strong class="text-left">${{ number_format($oInvoice->amount_paid, 2) }}</strong></span></td>-->
-<!--                                                <td><span class="text-right"><a href="{{ base_url() }}admin/invoices/download_invoice/{{ $oInvoice->id }}"><strong class="txt_purple">Download</strong></a></span></td>-->
-<!--                                            </tr>-->
-<!--                                            @endforeach-->
-<!--                                            @endif-->
-                                            </tbody>
-                                        </table>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                         </tbody>
+                                    </table>
+                                     <pagination
+                                         :pagination="oInvoices"
+                                          @paginate="showPaginationData"
+                                          :offset="4">
+                                      </pagination>
+                                        </div>
+                                  </div>
+                           </div>
+                           </div>
                 </div>
             </div>
 
@@ -310,7 +303,7 @@
                 <div class="panel panel-flat review_ratings">
                     <div class="panel-heading">
                         <h6 class="panel-title">Info Card</h6>
-                        <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>
+                                            <!--                        <div class="heading-elements"><a href="#"><i class="icon-more2"></i></a></div>-->
                     </div>
                     <div class="panel-body min_h405 p40 pt60 info_card text-center">
                         <div class="img_icon mb20"><img src="assets/images/icon_card.png" width="35"></div>
@@ -325,14 +318,85 @@
 
 
         </div>
+        <div id="cbChangeCC" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+<!--                    <form id="frmSaveCCDetails" method="post" class="form-horizontal">-->
 
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h5 class="modal-title"><img src="assets/images/edit_email_icon.png"> Add/Change Credit Card Details <span>Store your card card details on file directly at merchant site, highly secure and reliable</span></h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="card_sec p0">
+                                    <div class="row bbot form_box">
+                                        <div class="col-xs-4"><label>Credit Card Number</label></div>
+                                        <div class="col-xs-8">
+                                            <input placeholder="Enter Credit Card Number" v-model="ccCardDetail.ccNum" id="ccNum"  class="form-control" type="text" maxlength="16" autocomplete="off" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row bbot form_box">
+                                        <div class="col-xs-4"><label>Security Code</label></div>
+                                        <div class="col-xs-8">
+                                            <input placeholder="Enter Security Code" v-model="ccCardDetail.cvv" id="cvv" maxlength="4" class="form-control" type="text" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row bbot form_box">
+                                        <div class="col-xs-4"><label>Exp Month</label></div>
+                                        <div class="col-xs-8">
+                                            <select v-model="ccCardDetail.expMonth" id="expMonth" class="form-control">
+                                                <option value="">MM</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row bbot form_box">
+                                        <div class="col-xs-4"><label>Exp Year</label></div>
+                                        <div class="col-xs-8">
+                                            <select v-model="ccCardDetail.expYear" id="expYear" class="form-control">
+                                                <option value="">YYYY</option>
+                                                <option v-for="year in years" :value="year">{{ year }}</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer p40">
+                            <button data-dismiss="modal" type="button" class="btn white_btn h52">Cancel</button>
+                            <button type="submit" class="btn dark_btn bkg_sblue h52" v-on:click="frmSaveCCDetails()"><i class="fa fa-cart-plus"></i> Save</button>
+                        </div>
+<!--                    </form>-->
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import Pagination from '@/components/helpers/Pagination';
     export default {
         name: "SettingBilling",
         title: 'Admin Settings - Brand Boost',
+        components: {Pagination},
         data() {
             return {
                 successMsg: '',
@@ -352,6 +416,8 @@
                 notificationlisting: '',
                 oUser: '',
                 countries: {},
+                ccCardDetail: {},
+                current_page: 1,
             }
         },
         mounted() {
@@ -367,11 +433,27 @@
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
         },
+        computed : {
+            years () {
+                const year = new Date().getFullYear()
+                return Array.from({length: 21}, (value, index) => year + index)
+            }
+        },
         methods: {
+            showPaginationData: function(current_page){
+                this.current_page =current_page;
+                this.loadData();
+            },
+            navigatePagination: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadData();
+            },
             loadData: function () {
                 //getData
                 this.loading = true;
-                axios.get('/admin/settings')
+                console.log(this.current_page);
+                axios.get('/admin/settings?page='+this.current_page)
                     .then(response => {
                         //console.log(response.data);
                         this.loading = false;
@@ -390,7 +472,6 @@
                         this.notificationlisting = response.data.notificationlisting;
                         this.oUser = response.data.oUser;
                         this.countries = response.data.countries;
-
                     });
             },
             dispUpgradePlan: function (painType){
@@ -438,72 +519,39 @@
                     this.buyCredits.selectTerms ="Please select accept terms & condition."
                 }
             },
-            confirmTopupUpgradePopup:function(quantity,price,planID,planName,currentPlanName){
-                this.buyCredits.acceptTerms=false;
-                this.buyCredits.quantity =quantity;
-                this.buyCredits.price =price;
-                this.buyCredits.planID =planID;
-                this.buyCredits.planName =planName;
-                this.buyCredits.currentPlanName =currentPlanName;
-            },
-            confirmTopupLevelUpdate: function (){
+            frmSaveCCDetails:function(){
                 this.loading = true;
-                if(this.buyCredits.acceptTerms) {
-                    axios.post('/payment/upgradeTopupMembership', {
-                        toup_plan_id: this.buyCredits.planID,
-                    })
-                        .then(response => {
-                            // $bvModal.hide('confirm_topup_level_upgrade')
-                            this.buyCredits.acceptTerms =false;
-                            this.loading = false;
-                            this.loadData();
-                            $('#confirm_topup_level_upgrade').modal('hide');
-                        });
-                }else{
-                    this.buyCredits.selectTerms ="Please select accept terms & condition."
+                console.log(this.ccCardDetail.ccNum.length);
+                var cslngth = (this.ccCardDetail.ccNum.length)?this.ccCardDetail.ccNum.length:0
+                if(this.ccCardDetail.ccNum  =='' || cslngth !=16){
+                    $('#ccNum').focus();
+                    return false;
                 }
-            },
-            confirmBuyCustomAddonPopup: function(quantity,price,planID,planName){
-                this.buyCredits.acceptTerms=false;
-                this.buyCredits.quantity =quantity;
-                this.buyCredits.price =price;
-                this.buyCredits.planID =planID;
-                this.buyCredits.planName =planName;
-            },
-            confirmbuyCreditAddons: function (){
-                this.loading = true;
-                if(this.buyCredits.acceptTerms) {
-                    axios.post('/payment/buyCreditAddons', {
-                        toup_plan_id: this.buyCredits.planID,
-                    })
-                        .then(response => {
-                            this.buyCredits.acceptTerms =false;
-                            this.loading = false;
-                            this.loadData();
-                            $('#confirm_buy_addon_plan').modal('hide');
-                        });
-                }else{
-                    this.buyCredits.selectTerms ="Please select accept terms & condition."
+                if(this.ccCardDetail.cvv  =='' || (this.ccCardDetail.cvv.length < 3 || this.ccCardDetail.cvv.length > 4)){
+                    $('#cvv').focus();
+                    return false;
                 }
-            },
-            confirmCustomAddOnBuy: function (){payment/buyCreditAddons
-                this.loading = true;
-                var planID ='custom-pack'
-                var qty ='1000';
-                if(this.buyCredits.acceptTerms) {
-                    axios.post('/payment/buyCreditAddons', {
-                        toup_plan_id: this.buyCredits.planID,
-                        quantity: this.buyCredits.quantity
-                    })
-                        .then(response => {
-                            this.buyCredits.acceptTerms =false;
-                            this.loading = false;
-                            this.loadData();
-                            $('#confirm_buy_custom_addon_plan').modal('hide');
-                        });
-                }else{
-                    this.buyCredits.selectTerms ="Please select accept terms & condition."
+                 if(this.ccCardDetail.expMonth  ==''){
+                    $('#expMonth').focus();
+                    return false;
                 }
+                if(this.ccCardDetail.expYear  ==''){
+                    $('#expYear').focus();
+                    return false;
+                }
+                axios.post('/payment/storeCreditCard', {
+                    ccNum: this.ccCardDetail.ccNum,
+                    expMonth: this.ccCardDetail.expMonth,
+                    expYear: this.ccCardDetail.expYear,
+                    cvv: this.ccCardDetail.cvv,
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.loadData();
+                        // this.ccCardDetail.ccNum
+                        console.log(response.data);
+                        $('#cbChangeCC').modal('hide');
+                    });
             },
             saveGeneralPreferences: function () {
                 this.loading = true;
@@ -541,100 +589,14 @@
     }
     function loadJQCode(){
         $(document).ready(function () {
-            // $(".token-field").on('tokenfield:createdtoken tokenfield:removedtoken change', function (e) {
-            //     if($(this).parent().children().hasClass('token')) {
-            //         $(this).parent().find('.token-input').attr('placeholder', '');
-            //     }
-            //     else {
-            //         $(this).parent().find('.token-input').attr('placeholder', '- Tokenfield');
-            //     }
-            // }).trigger('change');
-            //
-            // $('.showSubPage').click(function(){
-            //     $('.nav-tabs a[href="#right-icon-tab2"]').tab('show');
-            // });
-            //
-            //
-            // $('.changeBA1').click(function(){
-            //     $('.changeBA1').removeClass('txt_purple');
-            //     $(this).addClass('txt_purple');
-            // });
-            //
-            // $('.changeBA2').click(function(){
-            //     $('.changeBA2').removeClass('txt_purple');
-            //     $(this).addClass('txt_purple');
-            // });
-            //
-            // $('#public_publish_page').change(function () {
-            //     if ($(this).is(":checked") == true) {
-            //         $('input[name="public_publish_page"]').attr("value", 1);
-            //     } else {
-            //         $('input[name="public_publish_page"]').attr("value", 0);
-            //     }
-            // });
-            //
-            // $('#business_address_dppa').change(function () {
-            //     if ($(this).is(":checked") == true) {
-            //         $('input[name="business_address_dppa"]').attr("value", 1);
-            //     } else {
-            //         $('input[name="business_address_dppa"]').attr("value", 0);
-            //     }
-            // });
-            //
-            // $('#phone_no_dppa').change(function () {
-            //     if ($(this).is(":checked") == true) {
-            //         $('input[name="phone_no_dppa"]').attr("value", 1);
-            //     } else {
-            //         $('input[name="phone_no_dppa"]').attr("value", 0);
-            //     }
-            // });
-            //
-            // $('#website_dppa').change(function () {
-            //     if ($(this).is(":checked") == true) {
-            //         $('input[name="website_dppa"]').attr("value", 1);
-            //     } else {
-            //         $('input[name="website_dppa"]').attr("value", 0);
-            //     }
-            // });
-            //
-
-            // Dropzone.autoDiscover = false;
-            // var settingUserId = $("#settingsUserId").val();
-            // var myDropzone = new Dropzone(
-            //     '#myDropzone', //id of drop zone element 1
-            //     {
-            //         url: '/webchat/dropzone/upload_s3_attachment/'+settingUserId+'/onsite',
-            //         uploadMultiple: false,
-            //         maxFiles: 1,
-            //         maxFilesize: 600,
-            //         acceptedFiles: 'image/*',
-            //         addRemoveLinks: false,
-            //         success: function (response) {
-            //
-            //             if(response.xhr.responseText != "") {
-            //
-            //                 $('#brand_logo_image_preview').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+response.xhr.responseText).show();
-            //                 var dropImage = $('#company_logo').val();
-            //                 $.ajax({
-            //                     url: 'admin/brandboost/deleteObjectFromS3',
-            //                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-            //                     type: "POST",
-            //                     data: {dropImage: dropImage},
-            //                     dataType: "json",
-            //                     success: function (data) {
-            //                         console.log(data);
-            //                     }
-            //                 });
-            //
-            //                 $('#company_logo').val(response.xhr.responseText);
-            //                 $('.saveUserOtherInfo').trigger('click');
-            //             }
-            //         }
-            //     });
-
-            // myDropzone.on("complete", function(file) {
-            //     myDropzone.removeFile(file);
-            // });
+             $('input[name="ccNum"], input[name="cvv"]').keypress(function (evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                 return true;
+            });
         });
 
     }

@@ -242,6 +242,7 @@ class Payment extends Controller {
             $expYear = $aData['expYear'];
             $cvvCode = $aData['cvv'];
             $aUser = UsersModel::getUserInfo($userID);
+
             if (!empty($aUser)) {
                 $contactID = $aUser->cb_contact_id;
 
@@ -254,14 +255,21 @@ class Payment extends Controller {
                         'expiryYear' => $expYear,
                         'cvv' => $cvvCode
                     );
-
-                    $aCCResponse = $mChargeBee->AddCreditCart($contactID, $ccData);
-
-                    if (@$aCCResponse['status'] == 'valid') {
-                        $paymentSourceID = $aCCResponse['payment_source_id'];
-                        $lastFour = $aCCResponse['last4'];
+//                    cc_last_four cc_exp_month cc_exp_year
+//                    $aCCResponse = $mChargeBee->AddCreditCart($contactID, $ccData);
+//                    echo 'sssssssssssssss';
+//                    print_r($contactID);
+//                    print_r($ccData);
+//                    exit;
+//                    if (@$aCCResponse['status'] == 'valid') {
+//                        $paymentSourceID = $aCCResponse['payment_source_id'];
+//                        $lastFour = $aCCResponse['last4'];
+                    $paymentSourceID =
+                    $lastFour =substr($cc, -4);
+                    $expMonth =$expMonth;
+                    $expYear =$expYear;
                         $userData = array(
-                            "chargebee_cc_id" => $paymentSourceID,
+//                            "chargebee_cc_id" => $paymentSourceID,
                             "cc_last_four" => $lastFour,
                             "cc_exp_month" => $expMonth,
                             "cc_exp_year" => $expYear
@@ -269,7 +277,7 @@ class Payment extends Controller {
                         $bIsUpdated = $mUser->updateUser($userID, $userData);
                         $creditCardID = $paymentSourceID;
                     }
-                }
+//                }
             }
             return $creditCardID;
         } catch (Exception $ex) {

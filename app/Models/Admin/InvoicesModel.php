@@ -3,19 +3,27 @@
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ChargeBeeModel;
 use DB;
+use Cookie;
+use Session;
 
 class InvoicesModel extends Model {
 
-    public static function getInvoices($clientID) {
+    public static function getInvoices($clientID, $paginated = true) {
 
-        $oData = DB::table('tbl_cc_invoices')
+        $query = DB::table('tbl_cc_invoices')
             ->join('tbl_users', 'tbl_cc_invoices.customer_id', '=' , 'tbl_users.cb_contact_id')
-            ->select('tbl_cc_invoices.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email')
+            ->leftJoin('tbl_cc_subscriptions', 'tbl_cc_subscriptions.subscription_id', '=' , 'tbl_cc_invoices.subscription_id')
+            ->select('tbl_cc_invoices.*', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.email','tbl_cc_subscriptions.plan_id')
             ->where('tbl_users.id', $clientID)
-            ->orderBy("tbl_cc_invoices.id", "DESC")
-            ->get();
-
+            ->orderBy("tbl_cc_invoices.id", "DESC");
+//            ->get();
+        if($paginated){
+            $oData = $query->paginate(10);
+        }else{
+            $oData = $query->get();
+        }
         return $oData;
     }
 
@@ -30,9 +38,9 @@ class InvoicesModel extends Model {
             ->get();
 
         return $oData;
-        
+
     }
 
-    
+
 
 }
