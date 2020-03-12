@@ -134,7 +134,7 @@
               </div>
       		</div>
       		
-      		<div class="col-6">
+      		<div class="col">
       			<div class="form-group m-0">
                 <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
                 <div class="card border text-center shadow-none m-0 reviews">
@@ -144,7 +144,7 @@
                 </div>
               </div>
       		</div>
-      		<div class="col-6">
+      		<div class="col">
       			<div class="form-group m-0">
                 <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
                 <div class="card border text-center shadow-none m-0">
@@ -206,9 +206,7 @@
 <script>
 
     $(document).ready(function(){
-
         $("#CREATEFORM").modal('show');
-
     });
 
 </script>
