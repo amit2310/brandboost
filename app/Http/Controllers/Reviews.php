@@ -428,45 +428,7 @@ class Reviews extends Controller {
         return $aCommentData;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /*Unconverted Methods from CI*/
     public function lists($campaignId) {
         if (empty($campaignId)) {
             $aUser = getLoggedUser();
@@ -810,6 +772,10 @@ class Reviews extends Controller {
         return true;
     }
 
+    /**
+     * Collect subscriber's review
+     * @param Request $request
+     */
     public function saveNewReview(Request $request) {
         $response = array();
 
@@ -1043,6 +1009,256 @@ class Reviews extends Controller {
         echo json_encode($response);
         exit;
     }
+
+    /**
+     * Collect subscriber's review manually by admin
+     * @param Request $request
+     */
+    public function addManualReview(Request $request) {
+        $response = array();
+
+         $mInviter = new BrandboostModel();
+         $mSubscriber = new SubscriberModel();
+         $mReviews = new ReviewsModel();
+        $bAllDone = false;
+
+        if (!empty($request)) {
+            $uniqueID = uniqid() . date('Ymdhis');
+            $reviewTitle = $request->title;
+            $description = $request->description;
+            $campaignID = $request->campaign_id;
+            $reviewType = $type = $request->reviewType;
+            $ratingVal = $request->ratingValue;
+            $productId = $request->productId;
+            $reviewUniqueID = $uniqueID;
+            $recommendedValue = $request->recomendationValue;
+
+
+            $email = $request->emailid;
+            $mobile = $request->phone;
+            $display_name = $request->display_name;
+            if (!empty($display_name)) {
+                $showName = 0;
+            } else {
+                $showName = 1;
+            }
+
+            $aBrandboost = $mInviter->getBBInfo($campaignID);
+             $clientID = $aBrandboost->user_id;
+
+            //Collect Review
+
+            if ($type == 'site') {
+                $fullName = $request->fullname;
+                $aNameChunks = explode(" ", $fullName);
+                $firstName = $aNameChunks[0];
+                $lastName = str_replace($firstName, "", $fullName);
+
+                $aRegistrationData = array(
+                    'firstname' => $firstName,
+                    'lastname' => $lastName,
+                    'email' => $email,
+                    'phone' => $mobile
+                );
+                $aRegistrationData['clientID'] = $clientID;
+                $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+
+                $siteReviewFile = $request->site_uploaded_name;
+                $siteReviewFileArray = array();
+
+                if(!empty($siteReviewFile)){
+                    foreach ($siteReviewFile['media_url'] as $key => $fileData) {
+                        $siteReviewFileArray[$key]['media_url'] = $fileData;
+                        $siteReviewFileArray[$key]['media_type'] = $siteReviewFile['media_type'][$key];
+                    }
+                }
+
+                $aReviewData = array(
+                    'user_id' => $userID,
+                    'review_type' => $reviewType,
+                    'campaign_id' => $campaignID,
+                    'review_title' => $reviewTitle,
+                    'comment_text' => $description,
+                    'unique_review_key' => $reviewUniqueID,
+                    'media_url' => !empty($siteReviewFileArray) ? serialize($siteReviewFileArray): '',
+                    'ratings' => $ratingVal,
+                    'created' => date("Y-m-d H:i:s")
+                );
+                //Save Site Reviews
+                $bSaved = $mReviews->saveReview($aReviewData);
+            } else if ($type == 'product' || $type == 'service') {
+
+                if(!empty($productId)) {
+
+                    foreach ($productId as $key => $productData) {
+                        $fullName = $request->fullname[$productData];
+                        $aNameChunks = explode(" ", $fullName);
+                        $firstName = $aNameChunks[0];
+                        $lastName = str_replace($firstName, "", $fullName);
+
+                        if ($request->newReviewPage == 'brandPage') {
+                            $reviewType = $request->reviewTypeNew[$productData];
+                        }
+
+                        $aRegistrationData = array(
+                            'firstname' => $firstName,
+                            'lastname' => $lastName,
+                            'email' => $email[$productData],
+                            'phone' => $mobile[$productData]
+                        );
+                        $aRegistrationData['clientID'] = $clientID;
+
+                        $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+
+                        $productReviewFile = $request->uploaded_name_ . $productData;
+                        $productReviewFileArray = array();
+
+                        if(!empty($productReviewFile)){
+                            foreach ($productReviewFile['media_url'] as $key => $fileData) {
+                                $productReviewFileArray[$key]['media_url'] = $fileData;
+                                $productReviewFileArray[$key]['media_type'] = $productReviewFile['media_type'][$key];
+                            }
+                        }
+
+                        $aReviewData = array(
+                            'user_id' => $userID,
+                            'review_type' => $reviewType,
+                            'campaign_id' => $campaignID,
+                            'product_id' => $productId[$productData],
+                            'review_title' => $reviewTitle[$productData],
+                            'comment_text' => $description[$productData],
+                            'unique_review_key' => $reviewUniqueID,
+                            'media_url' => serialize($productReviewFileArray),
+                            'ratings' => $ratingVal[$productData],
+                            'created' => date("Y-m-d H:i:s")
+                        );
+                        //Save Brandboost Reviews
+                        $reviewID = $mReviews->saveReview($aReviewData);
+                    }
+                }
+                else {
+                    $fullName = $request->fullname;
+                    $aNameChunks = explode(" ", $fullName);
+                    $firstName = $aNameChunks[0];
+                    $lastName = $aNameChunks[1];
+
+                    if ($request->newReviewPage == 'brandPage') {
+                        $reviewType = $request->reviewType;
+                    }
+
+                    $aRegistrationData = array(
+                        'firstname' => $firstName,
+                        'lastname' => $lastName,
+                        'email' => $email,
+                        'phone' => $mobile
+                    );
+
+                    $aRegistrationData['clientID'] = $clientID;
+
+                    $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
+
+                    $productReviewFile = $request->uploaded_name;
+                    $productReviewFileArray = array();
+                    if(!empty($productReviewFile)){
+                        foreach ($productReviewFile['media_url'] as $key => $fileData) {
+                            $productReviewFileArray[$key]['media_url'] = $fileData;
+                            $productReviewFileArray[$key]['media_type'] = $productReviewFile['media_type'][$key];
+                        }
+                    }
+
+                    $aReviewData = array(
+                        'user_id' => $userID,
+                        'review_type' => $reviewType,
+                        'campaign_id' => $campaignID,
+                        'product_id' => $productId,
+                        'review_title' => $reviewTitle,
+                        'comment_text' => $description,
+                        'unique_review_key' => $reviewUniqueID,
+                        'media_url' => serialize($productReviewFileArray),
+                        'ratings' => $ratingVal,
+                        'created' => date("Y-m-d H:i:s")
+                    );
+
+                    //Save Brandboost Reviews
+                    $reviewID = $mReviews->saveReview($aReviewData);
+
+                }
+                if ($reviewID > 0) {
+                    $bSaved = true;
+                }
+                Session::put('review_id', $reviewID);
+
+            } else if ($type == 'recomendation') {
+                //Update Recommmendations into brandboost reviews
+                $bSaved = $mReviews->updateReview(array('recvalue' => $recommendedValue), $reviewID);
+            }
+
+            if ($bSaved) {
+
+                //Send notification only for brandboost reivews not for the site view
+
+                if ($type == 'product') {
+                    $aNotificationDataCus = array(
+                        'user_id' => $clientID,
+                        'event_type' => 'added_' . $reviewType . '_review',
+                        'message' => 'A review has been added successfully',
+                        'link' => base_url() . 'admin/brandboost/reviews/' . $campaignID,
+                        'created' => date("Y-m-d H:i:s")
+                    );
+                    add_notifications($aNotificationDataCus);
+
+                    $aNotificationDataAd = array(
+                        'user_id' => 1,
+                        'event_type' => 'added_' . $reviewType . '_review',
+                        'message' => 'A review has been added successfully',
+                        'link' => base_url() . 'admin/brandboost/reviews/' . $campaignID,
+                        'created' => date("Y-m-d H:i:s")
+                    );
+                    add_notifications($aNotificationDataAd);
+
+                    if (!empty($ratingVal)) {
+                        if ($ratingVal <= 2) {
+                            $feedType = 'Negative';
+                        } else if ($ratingVal == 3) {
+                            $feedType = 'Neutral';
+                        } else if ($ratingVal >= 4) {
+                            $feedType = 'Positive';
+                        }
+                    }
+
+
+                    /*
+                      //Send Thank you email
+
+                      $aFeedbackRes = array(
+                        'feedback_type' => $feedType,
+                        'client_id' => $clientID,
+                        'subscriber_id' => $subscriberID,
+                        'brandboost_id' => $campaignID,
+                        'email' => $email
+                    );
+
+                    $this->sendFeedbackThankyouEmail($aFeedbackRes);*/
+                }
+
+                //Update userid of the subscriber in subscriber list
+
+                if ($subscriberID > 0) {
+                    $mReviews->updateSubscriber(array('user_id' => $userID), $subscriberID);
+                }
+            }
+
+            // Take them to the next step page in the flow
+            $response = array('status' => 'success', 'redirect_url' => base_url('/store/explore/' . $aBrandboost->hashcode));
+        } else {
+            $response = array('status' => 'error', 'msg' => 'Unauthorized Access!');
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+
 
 
     public function saveReviewByEmailTemplate(Request $request) {
@@ -1840,7 +2056,7 @@ class Reviews extends Controller {
                             $tableName = 'tbl_automation_users';
                         } else if ($moduleName == 'brandboost') {
                             $aData['brandboost_id'] = $moduleAccountID;
-                            $tableName = 'tbl_brandboost_users';
+                            $tableName = 'tbl_brandboost_campaign_users';
                         } else if ($moduleName == 'referral') {
                             $aData['account_id'] = $moduleAccountID;
                             $tableName = 'tbl_referral_users';
