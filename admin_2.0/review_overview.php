@@ -1107,7 +1107,7 @@ $(document).ready(function(){
           },
           stroke: {
             curve: 'straight',
-			  width: 1
+			  width: 2
           },
           series: [{
             name: "Widget",
@@ -1119,6 +1119,20 @@ $(document).ready(function(){
 			grid: {
 			  borderColor: '#eee',
 			  strokeDashArray: 5,
+				
+				xaxis: {
+				lines: {
+					show: true
+				}
+				},   
+				yaxis: {
+					lines: {
+						show: false
+					}
+				},  
+				
+				
+				
 			},
          
           labels: series.monthDataSeries1.dates,
