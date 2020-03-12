@@ -241,6 +241,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/addOffsite', 'Admin\Brandboost@addOffsite');
     Route::get('admin/brandboost/addreview/{id}', 'Admin\Brandboost@addReview');
     Route::get('admin/brandboost/addReview', 'Admin\Brandboost@addReview');
+    Route::post('reviews/addManualReview', 'Reviews@addManualReview');
     Route::post('admin/brandboost/delete_multipal_brandboost', 'Admin\Brandboost@deleteMultipalBrandboost');
     Route::post('admin/brandboost/publishOnsiteWidget', 'Admin\Brandboost@publishOnsiteWidget');
     Route::post('admin/brandboost/deleteReviewRequest', 'Admin\Brandboost@deleteReviewRequest');
