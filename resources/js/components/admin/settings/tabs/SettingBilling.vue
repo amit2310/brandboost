@@ -228,24 +228,33 @@
                                             <li><span>Price</span><strong class="pull-right">${{ oCurrentPlanData.price }}/{{ oCurrentPlanData.subs_cycle | capitalize }}</strong></li>
                                             <li><span>Subscription Status</span><strong class="pull-right">{{ oUser.regular_subscription_info.subscription_status | capitalize }}</strong></li>
                                             <li><span>Start</span><strong class="pull-right">
-<!-- {{ timestampToDateFormat('1583966838') }} -->
-                                            {{ displayDateFormat("F dS Y",(oUser.regular_subscription_info.trial_start)) }}</strong></li>
-                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oUser.regular_subscription_info.next_billing_at) }}</strong></li>
+                                        {{ timestampToDateFormat(oUser.regular_subscription_info.trial_start) }}
+                                             </strong></li>
+                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ timestampToDateFormat(oUser.regular_subscription_info.next_billing_at) }}</strong></li>
                                             <li><span>End</span><strong class="pull-right">Recurring</strong></li>
                                         </ul>
                                         <div class="clearfix"></div>
                                     </div>
 <!--                                    @endif-->
 
-<!--                                    {{oCurrentTopupPlanData}}-->
+                                     
                                     <br>
                                      <div class="card_sec p0" v-if="oUser.topup_subscription_id">
                                         <ul class="subscription_list">
                                             <li><span>Plan Name</span><strong class="pull-right">{{ oCurrentTopupPlanData.level_name }} ({{ oCurrentTopupPlanData.subs_cycle | capitalize }}, USD)</strong></li>
                                             <li><span>Price</span><strong class="pull-right">${{ oCurrentTopupPlanData.price }}/{{ oCurrentTopupPlanData.subs_cycle | capitalize }}</strong></li>
-<!--                                            <li><span>Subscription Status</span><strong class="pull-right">{{ ucfirst(oUser.topup_subscription_info.subscription_status) }}</strong></li>-->
-<!--                                            <li><span>Start</span><strong class="pull-right">{{ displayDateFormat("F dS Y", oCurrentTopupPlanData.started_at) }}</strong></li>-->
-<!--                                            <li><span>Next Billing Date</span><strong class="pull-right">{{ // displayDateFormat("F dS Y", oUser.topup_subscription_info.next_billing_at) }}</strong></li>-->
+                                           <li><span>Subscription Status</span>
+                                                <strong class="pull-right">
+                                               {{ oUser.topup_subscription_info.subscription_status }}</strong>
+                                           </li>
+                                            <li><span>Start</span>
+                                                <strong class="pull-right">
+                                                    {{ timestampToDateFormat(oUser.topup_subscription_info.started_at) }}
+                                               </strong></li>
+                                            <li><span>Next Billing Date</span>
+                                                <strong class="pull-right">
+                                                {{ timestampToDateFormat(oUser.topup_subscription_info.next_billing_at) }}
+                                            </strong></li> 
                                             <li><span>End</span><strong class="pull-right">Recurring</strong></li>
                                         </ul>
                                         <div class="clearfix"></div>
