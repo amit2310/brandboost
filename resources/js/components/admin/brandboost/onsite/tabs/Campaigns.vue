@@ -18,7 +18,8 @@
                     </div>
                 </div>
 
-                <div class="p20 top_headings">
+                <div v-if="campaigns.length > 0 || searchBy.length>0">
+                    <div class="p20 top_headings">
                     <div class="row">
                         <div class="col-md-5">
                             <!--<p>
@@ -42,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p20 pt0 pb0 bkg_light_050">
+                    <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
                         <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex">
                             <span>
@@ -81,6 +82,26 @@
                         class="mt-4">
                     </pagination>
                 </div>
+                </div>
+
+                <div v-else>
+                    <div class="col-md-12">
+                        <div class="card card_shadow min-h-280">
+                            <div class="row mb65">
+                                <div class="col-md-12 text-center">
+                                    <img class="mt40" src="assets/images/review_Illustration.svg">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any campaigns</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import campaign!</h3>
+                                    <!--<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-review-campaign-slidebox">Create review campaign</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-3">
+                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
+                    </div>
+                </div>
+
                 <div class="clearfix"></div>
             </div>
         </div>
