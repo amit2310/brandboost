@@ -14,14 +14,11 @@
                     <div class="col-md-6 text-right">
                         <button class="mr15 btn btn-md bkg_light_000 reviews_400">Filters &nbsp; &nbsp; <img src="assets/images/filter_review.svg"></button>
                         <button class="btn btn-md bkg_reviews_300 light_000 slidebox"> Edit review &nbsp; &nbsp; <span><img src="assets/images/review_add.svg"></span></button>
-
                     </div>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
-
-
 
 
         <!--******************
@@ -37,7 +34,6 @@
                                     <p class="fsize12 fw500 dark_200 mt30 mb30"><i><img src="assets/images/lightbulb-fill.svg"></i> &nbsp; TIPS</p>
                                     <h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
                                     <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">Conversational marketing platform that helps companies close more deals by messaging with prospects in real-time & via intelligent chatbots. Qualify leads, book meetings.</p>
-
                                 </div>
                                 <div class="col-md-5 text-center mt0">
                                     <img class="mt0" style="max-width: 240px;" src="assets/images/review_feed_illustration.svg">
@@ -72,11 +68,6 @@
                                             </p>
                                         </div>
                                         <div class="col-md-4">
-
-
-
-
-
                                             <div class="float-right mt-1 ml-2">
                                                 <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
                                                     <span><img src="assets/images/more-vertical.svg"></span>
@@ -91,29 +82,17 @@
                                             <button class="btn btn-sm-24 bkg_blue_000 pr10 pl10 blue_300 fsize12 fw500 mt-1 float-right">Published</button>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
                                 <p class="fsize14 fw500 dark_800 lh_22 mb-2">{{review.review_title}}</p>
-                                <p class="fsize14 fw400 dark_600 lh_22" v-html="review.comment_text">
-
-                                </p>
+                                <p class="fsize14 fw400 dark_600 lh_22" v-html="review.comment_text"></p>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
 
-
-
-
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card p20 pl30 pr30 min_h_240">
-
                             <ul class="nav nav-pills review_sec_tab mt-0 mb20 bbot pb20" role="tablist">
                                 <li class="mr30">
                                     <a class="htxt_bold_14 active" data-toggle="pill" href="#AddComment" @click="displayActivity='commentSection'"><img src="assets/images/reply-fill.svg" /> &nbsp; Add a comment</a>
@@ -164,10 +143,6 @@
                                     Review
                                 </div>
                             </div>
-
-
-
-
                         </div>
 
                         <div class="table_head_action mt-1 mb25">
@@ -197,24 +172,19 @@
                                                 <a class="dropdown-item" href="#">Link 3</a>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-
                         <div class="row" v-if="displayActivity=='commentSection'">
                             <div class="col-md-12">
-
                                 <div v-for="comment in commentData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="icons bkg_green_400 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
                                             <p class="htxt_bold_16 dark_800 mb-2">{{comment.firstname + ' ' + comment.lastname}} added a comment</p>
                                             <p class="htxt_regular_14 dark_400 mb0">{{comment.content}}</p>
-
                                         </div>
                                         <div class="time"><p class="htxt_regular_14 dark_200">{{displayDateFormat('M d, Y H:i A', comment.created)}}</p></div>
                                     </div>
@@ -256,40 +226,30 @@
                                     </div>
                                 </div>-->
 
-
                             </div>
                         </div>
                         <div class="row" v-if="displayActivity=='notesSection'">
                             <div class="col-md-12">
-
                                 <div v-for="note in notesData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="icons bkg_blue_200 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
                                             <p class="htxt_bold_16 dark_800 mb-2">{{note.firstname + ' ' + note.lastname}} added a note</p>
                                             <p class="htxt_regular_14 dark_400 mb0">{{note.notes}}</p>
-
                                         </div>
                                         <div class="time"><p class="htxt_regular_14 dark_200">{{displayDateFormat('M d, Y H:i A', note.created)}}</p></div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-
-
                     </div>
                     <div class="col-md-4">
-
                         <div class="card p25 animate_top">
                             <img v-if="review.logo_img" class="float-left mb-3" width="70" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${review.logo_img}`"/>
                             <img v-else class="float-left mb-3" width="70" src="assets/images/plane_work.svg"/>
 
                             <p class="fsize16 fw500 dark_800 mb-1">{{review.brand_title}}</p>
                             <p class="fsize14 fw400 dark_500 mb-3 bbot pb-3">{{reviewStats.totalReviews}} reviews</p>
-
-
 
                             <div class="pb-3 pl-3 ratings bbot">
                                 <div class="row inner">
@@ -351,18 +311,9 @@
                                     </div>
                                     <div class="col-1 pr-0 pl-0"><p>{{reviewStats.oneStar}}</p></div>
                                 </div>
-
-
-
-
-
                             </div>
 
-
-
                             <p class="fsize14 dark_600 mt-3 mb-0"><i><img src="assets/images/chat-1-fill.svg"/></i> &nbsp; 13 questions / 10 answers </p>
-
-
 
                         </div>
 
@@ -376,15 +327,12 @@
                                 <ul class="templates_list">
                                     <li><a class="active" href="#"><strong><img src="assets/images/menu-2-line.svg"> All</strong> <span>345</span></a></li>
                                     <li><a href="#"><strong><img src="assets/images/heart-line.svg"> My Templates</strong> <span>128</span></a></li>
-
                                     <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Non-profit</strong> <span>13</span></a></li>
                                     <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Photography</strong> <span>86</span></a></li>
                                     <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Product / Service</strong> <span>31</span></a></li>
                                 </ul>
                             </div>
                         </div>
-
-
 
                         <div class="card p20 min_h_240 d-none ">
                             <h3 class="htxt_medium_16 dark_800">Info</h3>
@@ -400,7 +348,6 @@
                                 <li><span>SMS</span><strong>On</strong></li>
                             </ul>
                         </div>
-
 
                         <div class="card p20 min_h_240 profile_form">
                             <h3 class="htxt_medium_16 dark_800">Media</h3>
@@ -426,21 +373,10 @@
                                     <option>Email Campaign</option>
                                 </select>
                             </div>
-
-
                         </div>
-
-
-
-
                     </div>
                 </div>
-
-
-
-
             </div>
-
         </div>
     </div>
 
@@ -465,7 +401,6 @@
                 notes: '',
                 commentData: '',
                 displayActivity: 'commentSection'
-
             }
         },
         mounted() {
