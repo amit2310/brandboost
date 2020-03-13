@@ -161,7 +161,7 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
-    $(".close_sidebar").click(function(){
+    $(document).on("click", ".close_sidebar", function(){
         $(".page_sidebar").animate({
             width: "toggle"
         });

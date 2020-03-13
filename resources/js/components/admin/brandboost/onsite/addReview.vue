@@ -13,8 +13,9 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>-->
-                        <button class="btn btn-md bkg_light_000 reviews_400 fw500 pl20 mr-2 shadow3" @click.prevent="saveReview" >Save</button>
-                        <button class="btn btn-md bkg_reviews_400 fw500 light_000 pl20 pr20" @click.prevent="saveReview">Save & Publish <span><img width="16" src="assets/images/arrow-right-circle-fill.svg"></span></button>
+                        <button class="btn btn-md bkg_light_000 reviews_400 fw500 pl20 mr-2 shadow3" @click.prevent="saveReview('draft')" >Save</button>
+                        <button class="btn btn-md bkg_reviews_400 fw500 light_000 pl20 pr20" @click.prevent="saveReview('active')">Save & Publish <span><img width="16" src="assets/images/arrow-right-circle-fill.svg"></span></button>
+                        <button v-if="this.reviewId" class="btn btn-md bkg_reviews_400 light_000" @click.prevent="resetForm">Add New Review <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                     </div>
                 </div>
             </div>
@@ -25,7 +26,7 @@
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <div class="row">
                     <div class="col-md-8">
@@ -45,15 +46,15 @@
                                 <a class="fw500 fsize11 reviews_400 ls_4 float-right" href="javascript:void(0);">CREATE NEW <i class="ri-add-circle-fill"></i></a>
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Select review type
+                                        {{selectedProduct}}
                                     </button>
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                                         <div class="p10">
                                             <input type="text" name="" value="" placeholder="Search" class="form-control"/>
                                         </div>
 
-                                        <a class="dropdown-item" href="javascript:void(0);" @click="selectProduct('any')">Any</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" @click="selectProduct('any')">Specific Product</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="selectProduct('Any')">Any</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="selectProduct('Specific Product')">Specific Product</a>
                                     </div>
                                 </div>
                             </div>
@@ -137,9 +138,9 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">STATUS</h3>
                             <hr>
                             <ul class="info_list">
-                                <li><span>Status</span><strong>Published &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong> </li>
-                                <li><span>Visibility</span><strong>Public &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
-                                <li><span>Publish date</span><strong>Dec 16, 3:18 PM &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
+                                <li><span>Status</span><strong>{{displayStatus}} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong> </li>
+                                <li><span>Visibility</span><strong>{{displayVisibility}} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
+                                <li><span>Publish date</span><strong>{{publishDate}} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
 
                             </ul>
                         </div>
@@ -219,6 +220,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
         components: {UserAvatar, Pagination},
         data(){
             return {
+                refreshMessage: 1,
                 successMsg : '',
                 errorMsg: '',
                 loading: true,
@@ -240,7 +242,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                 selectedSubscriberName: 'Select review\'s author contact',
                 selected_campaign: '',
                 reviewType: 'site',
-                selectedProduct: '',
+                selectedProduct: 'Select review type',
                 searchContactBy: '',
                 searchProductBy: '',
                 searchCampaignBy: '',
@@ -251,6 +253,10 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                 lastname: '',
                 email: '',
                 phone: '',
+                reviewId: '',
+                displayStatus: 'No Data',
+                displayVisibility: 'No Data',
+                publishDate: 'No Data',
             }
         },
         created() {
@@ -289,7 +295,28 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                 this.selectedCampaignName = data.brand_title;
             },
             selectProduct: function(data){
-                this.selectedProduct = '';
+                this.selectedProduct = data;
+            },
+            resetForm: function(){
+                this.selectedSubscriberName = 'Select review\'s author contact',
+                    this.selected_campaign= '';
+                    this.selectedCampaignName= 'Select Campaign';
+                    this.reviewType = 'site';
+                    this.selectedProduct = 'Select review type';
+                    this.searchContactBy = '';
+                    this.searchProductBy = '';
+                    this.searchCampaignBy = '';
+                    this.selectedRating = '4';
+                    this.title = '';
+                    this.description = '';
+                    this.firstname = '';
+                    this.lastname = '';
+                    this.email = '';
+                    this.phone = '';
+                    this.reviewId = '';
+                    this.displayStatus = 'No Data';
+                    this.displayVisibility = 'No Data';
+                    this.publishDate = 'No Data';
             },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/addReview')
@@ -303,7 +330,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                         this.loading = false;
                     });
             },
-            saveReview: function(){
+            saveReview: function(reviewStatus){
                 if(confirm("Are you sure you want to add manual review?")){
                     this.loading = true;
                     let manualForm = {
@@ -317,8 +344,10 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                         phone: this.phone,
                         display_name: '',
                         productId: this.reviewType == 'product' ? this.selectedProduct : '',
+                        reviewId: this.reviewId,
                         recomendationValue: '',
                         site_uploaded_name: '',
+                        status: reviewStatus,
                         _token: this.csrf_token()
                     };
                     /*Some basic validations*/
@@ -340,6 +369,12 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                             this.loading = false;
                             if(response.data.status == 'success'){
                                 this.successMsg = 'Review has been added successfully!!';
+                                let reviewData = response.data.reviewData;
+                                this.reviewId = reviewData.id;
+                                this.displayStatus = reviewData.status == '1' ? 'Published' : 'Draft';
+                                this.displayVisibility = reviewData.status == '1' ? 'Public' : 'Private';
+                                this.publishDate = this.displayDateFormat('M d, h:i A', reviewData.created);
+                                //this.resetForm()
                             }
                         });
 

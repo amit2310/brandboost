@@ -1024,6 +1024,7 @@ class Reviews extends Controller {
 
         if (!empty($request)) {
             $uniqueID = uniqid() . date('Ymdhis');
+            $reviewID = $request->reviewId;
             $reviewTitle = $request->title;
             $description = $request->description;
             $campaignID = $request->campaign_id;
@@ -1032,6 +1033,7 @@ class Reviews extends Controller {
             $productId = $request->productId;
             $reviewUniqueID = $uniqueID;
             $recommendedValue = $request->recomendationValue;
+            $reviewStatus = $request->status;
 
 
             $email = $request->emailid;
@@ -1082,10 +1084,21 @@ class Reviews extends Controller {
                     'unique_review_key' => $reviewUniqueID,
                     'media_url' => !empty($siteReviewFileArray) ? serialize($siteReviewFileArray): '',
                     'ratings' => $ratingVal,
+                    'status' => ($reviewStatus == 'active') ? 1 : 0,
                     'created' => date("Y-m-d H:i:s")
                 );
                 //Save Site Reviews
-                $bSaved = $mReviews->saveReview($aReviewData);
+                if(!empty($reviewID)){
+                    $bSaved = $mReviews->updateReview($aReviewData, $reviewID);
+                    $bSaved = $reviewID;
+
+                }else{
+                    $bSaved = $mReviews->saveReview($aReviewData);
+                }
+
+                if($bSaved>0){
+                    $aReviewData['id'] = $bSaved;
+                }
             } else if ($type == 'product' || $type == 'service') {
 
                 if(!empty($productId)) {
@@ -1130,10 +1143,19 @@ class Reviews extends Controller {
                             'unique_review_key' => $reviewUniqueID,
                             'media_url' => serialize($productReviewFileArray),
                             'ratings' => $ratingVal[$productData],
+                            'status' => ($reviewStatus == 'active') ? 1 : 0,
                             'created' => date("Y-m-d H:i:s")
                         );
                         //Save Brandboost Reviews
-                        $reviewID = $mReviews->saveReview($aReviewData);
+                        if(!empty($reviewID)){
+                            $bUpdated = $mReviews->updateReview($aReviewData, $reviewID);
+                        }else{
+                            $reviewID = $mReviews->saveReview($aReviewData);
+                        }
+
+                        if($reviewID>0){
+                            $aReviewData['id'] = $reviewID;
+                        }
                     }
                 }
                 else {
@@ -1176,11 +1198,19 @@ class Reviews extends Controller {
                         'unique_review_key' => $reviewUniqueID,
                         'media_url' => serialize($productReviewFileArray),
                         'ratings' => $ratingVal,
+                        'status' => ($reviewStatus == 'active') ? 1 : 0,
                         'created' => date("Y-m-d H:i:s")
                     );
 
                     //Save Brandboost Reviews
-                    $reviewID = $mReviews->saveReview($aReviewData);
+                    if(!empty($reviewID)){
+                        $bUpdated = $mReviews->updateReview($aReviewData, $reviewID);
+                    }else{
+                        $reviewID = $mReviews->saveReview($aReviewData);
+                    }
+                    if($reviewID>0){
+                        $aReviewData['id'] = $reviewID;
+                    }
 
                 }
                 if ($reviewID > 0) {
@@ -1241,15 +1271,10 @@ class Reviews extends Controller {
                     $this->sendFeedbackThankyouEmail($aFeedbackRes);*/
                 }
 
-                //Update userid of the subscriber in subscriber list
-
-                if ($subscriberID > 0) {
-                    $mReviews->updateSubscriber(array('user_id' => $userID), $subscriberID);
-                }
             }
 
             // Take them to the next step page in the flow
-            $response = array('status' => 'success', 'redirect_url' => base_url('/store/explore/' . $aBrandboost->hashcode));
+            $response = array('status' => 'success', 'reviewData' =>$aReviewData, 'redirect_url' => base_url('/store/explore/' . $aBrandboost->hashcode));
         } else {
             $response = array('status' => 'error', 'msg' => 'Unauthorized Access!');
         }
