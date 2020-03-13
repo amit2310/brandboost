@@ -81,9 +81,9 @@ class Settings extends Controller {
             }
         }
         $oInvoices = InvoicesModel::getInvoices($userID);
-        foreach ($oInvoices as $oInvoice){
-            $invoiceData[$oInvoice->id] = InvoicesModel::getInvoiceDetails($oInvoice->id);
-        }
+//        foreach ($oInvoices as $oInvoice){
+//            $invoiceData[$oInvoice->id] = InvoicesModel::getInvoiceDetails($oInvoice->id);
+//        }
         $aData = array(
             'title' => 'Brand Settings',
             'pagename' => $breadcrumb,
@@ -97,7 +97,7 @@ class Settings extends Controller {
             'oCurrentPlanData' => $oCurrentPlanData,
             'oCurrentTopupPlanData' => isset($oCurrentTopupPlanData) ? $oCurrentTopupPlanData : '',
             'oInvoices' => $oInvoices,
-            'invoiceData' => $invoiceData,
+//            'invoiceData' => $invoiceData,
             'seletedTab' => $seletedTab,
             'notificationlisting'=>$notificationlisting,
             'oUser' => $oUser

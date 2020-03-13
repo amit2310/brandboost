@@ -19,19 +19,7 @@
 
 
 <style>
-#openrate .apexcharts-canvas::after {
-	border: 1px solid #e8eafd !important;
-	border-radius: 100%;
-	height: 90px;
-	width: 90px !important;
-	content: '';
-	left: 10px;
-	top: 0px;
-	z-index: 1;
-	display: block;
-	position: absolute;
-}	
-	#openrate .apexcharts-svg{z-index: 2!important; position: relative}
+
 </style>
 
 </head>
@@ -1119,7 +1107,7 @@ $(document).ready(function(){
           },
           stroke: {
             curve: 'straight',
-			  width: 1
+			  width: 2
           },
           series: [{
             name: "Widget",
@@ -1131,6 +1119,20 @@ $(document).ready(function(){
 			grid: {
 			  borderColor: '#eee',
 			  strokeDashArray: 5,
+				
+				xaxis: {
+				lines: {
+					show: true
+				}
+				},   
+				yaxis: {
+					lines: {
+						show: false
+					}
+				},  
+				
+				
+				
 			},
          
           labels: series.monthDataSeries1.dates,

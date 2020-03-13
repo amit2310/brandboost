@@ -260,9 +260,9 @@ function cbHelperPrototyp($aData) {
     $bConfiguredSuccess = initCbConfiguration();
     if ($bConfiguredSuccess == true) {
         try {
-            //write your own code             
+            //write your own code
         } catch (Exception $ex) {
-            
+
         }
     } else {
         die('Something went wrong');

@@ -150,7 +150,7 @@ class ChargeBeeModel extends Model {
     }
 
     /**
-     * Used to charge invoice 
+     * Used to charge invoice
      * @param type $aInput
      * @return type
      */
@@ -310,7 +310,7 @@ class ChargeBeeModel extends Model {
             if ($productType == 'topup-membership') {
                 $fieldName = 'topup_subscription_id';
             }
-            
+
             $aData = array(
                 $fieldName => $subscriptionID
             );
@@ -318,7 +318,7 @@ class ChargeBeeModel extends Model {
             DB::table('tbl_users')
                     ->where('cb_contact_id', $customerID)
                     ->update($aData);
-            
+
             return true;
         }
     }
