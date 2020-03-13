@@ -270,73 +270,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="card p25 pt20 pb10">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fsize12 fw500 ls_4 dark_400 m-0 float-left">CAMPAIGNS</p>
-                                </div>
-                                <div class="col">
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <hr class="mb-0">
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col">
-                                    <table class="table table-borderless mb-0">
-                                        <tbody>
-                                        <tr>
-                                            <td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Request Campaign</td>
-                                            <td>128</td>
-                                            <td>39%</td>
-                                            <td>86%</td>
-                                            <td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 green_400"></i> &nbsp; 4.5</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Customers</td>
-                                            <td>828</td>
-                                            <td>70%</td>
-                                            <td>78%</td>
-                                            <td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 yellow_500"></i> &nbsp; 3.2</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Product Reviews</td>
-                                            <td>284</td>
-                                            <td>68%</td>
-                                            <td>62%</td>
-                                            <td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 green_400"></i> &nbsp; 4.1</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Request Campaign</td>
-                                            <td>128</td>
-                                            <td>39%</td>
-                                            <td>86%</td>
-                                            <td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 green_400"></i> &nbsp; 4.5</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Customers</td>
-                                            <td>828</td>
-                                            <td>70%</td>
-                                            <td>78%</td>
-                                            <td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 yellow_500"></i> &nbsp; 3.2</span></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        <LatestCampaigns></LatestCampaigns>
                     </div>
                 </div>
             </div>
