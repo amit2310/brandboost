@@ -130,7 +130,29 @@
       		<div class="col-12">
       			<div class="form-group">
                 <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN NAME</label>
-                <input type="text" class="form-control h48 fsize14 dark_200 br4" id="fname" placeholder="Enter new campaign name" name="fname">
+                <!--<input type="text" class="form-control h48 fsize14 dark_200 br4" id="fname" placeholder="Enter new campaign name" name="fname">-->
+                
+                <div class="campaign_name_sec border br4 p10 pl20 pr20 fsize14 dark_200">
+                	<div class="row">
+                		<div class="col-10"><input type="text" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new campaign name" name="fname"></div>
+                		<div class="col-2">
+                	<div class="dropdown campaign_forms">
+					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="assets/images/circle-dot.svg"/>
+					  </button>
+					  <div class="dropdown-menu w-100 dropdown-menu-right">
+						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 1 </a>
+						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
+						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 3 </a>
+					  </div>
+					</div>
+               		
+               		
+               		
+                		</div>
+                	</div>
+                </div>
+                
               </div>
       		</div>
       		
