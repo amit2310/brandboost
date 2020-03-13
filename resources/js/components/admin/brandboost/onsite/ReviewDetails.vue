@@ -88,43 +88,39 @@
 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card p20 pl30 pr30 min_h_240">
-                            <ul class="nav nav-pills review_sec_tab mt-0 mb20 bbot pb20" role="tablist">
-                                <li class="mr30">
-                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddComment" @click="displayActivity='commentSection'"><img src="assets/images/reply-fill.svg" /> &nbsp; Add a comment</a>
+                        <div class="card p20 pl30 pr30 " style="min-height: 165px;">
+                            <ul class="nav nav-pills review_sec_tab2 mt-0 mb20 bbot pb20" role="tablist">
+                                <li class="mr20">
+                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddNote"><i class="ri-edit-box-line"></i> &nbsp; New note</a>
                                 </li>
-                                <li class="mr30">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#jsAddNote" @click="displayActivity='notesSection'"><img src="assets/images/edit-box-line.svg" /> &nbsp; New note</a>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Chat"><i class="ri-chat-1-line"></i> &nbsp; Chat</a>
                                 </li>
-                                <li class="mr30">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#Email"><img src="assets/images/mail-open-line.svg" /> &nbsp; Email</a>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Email"><i class="ri-mail-line"></i> &nbsp; Email</a>
                                 </li>
-                                <li class="mr30">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#TextMessage"><img src="assets/images/message-3-line-16.svg" /> &nbsp; SMS</a>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#TextMessage"><i class="ri-chat-4-line"></i> &nbsp; SMS</a>
+                                </li>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Review"><i class="ri-star-line"></i> &nbsp; Review</a>
                                 </li>
                                 <li class="">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#Review"><img src="assets/images/add-line.svg" /> &nbsp; Log activity</a>
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Logactivity"><i class="ri-add-line"></i> &nbsp; Log activity</a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
                                 <!--======Tab 1====-->
-                                <div id="AddComment" class="tab-pane active">
-                                    <div class="p-0 mb20">
-                                        <textarea class="border-0 w-100 fsize15 dark_200" v-model="comment_content" style="resize: none" placeholder="Leave your comment here..." ></textarea>
-                                    </div>
-                                    <div class="p-0 text-right">
-                                        <button class="border-0 bkg_none p-0" type="button" @click="addComment" ><img src="assets/images/review_48_send_circle.svg"/></button>
+                                <div id="AddNote" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-md-11"><textarea class="border-0 w-100 fsize14 dark_200" style="resize: none" placeholder="Start writing your note here. Use @ to mention your teammates."></textarea></div>
+                                        <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit"><img src="assets/images/review_send_btn_36.svg"></button></div>
                                     </div>
                                 </div>
                                 <!--======Tab 2=====-->
-                                <div id="jsAddNote" class="tab-pane fade">
-                                    <div class="p-0 mb20">
-                                        <textarea class="border-0 w-100 fsize15 dark_200" v-model="notes" style="resize: none" placeholder="Leave your note here..." ></textarea>
-                                    </div>
-                                    <div class="p-0 text-right">
-                                        <button class="border-0 bkg_none p-0" type="button" @click="addNotes" ><img src="assets/images/review_48_send_circle.svg"/></button>
-                                    </div>
+                                <div id="Chat" class="tab-pane fade">
+                                    Chat
                                 </div>
                                 <!--======Tab 3=====-->
                                 <div id="Email" class="tab-pane fade">
@@ -138,19 +134,24 @@
                                 <div id="Review" class="tab-pane fade">
                                     Review
                                 </div>
+                                <!--======Tab 5=====-->
+                                <div id="Logactivity" class="tab-pane fade">
+                                    Log activity
+                                </div>
                             </div>
+
                         </div>
 
-                        <div class="table_head_action mt-1 mb25">
+                        <div class="table_head_action mt-1 mb20">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3 class="htxt_bold_20 dark_700">Activity</h3>
+                                    <h3 class="htxt_medium_14 dark_600">Activity</h3>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table_action">
                                         <div class="float-right">
                                             <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                                Last week
+                                                Sort by Date
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="#">Link 1</a>
@@ -168,212 +169,285 @@
                                                 <a class="dropdown-item" href="#">Link 3</a>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row" v-if="displayActivity=='commentSection'">
+                        <div class="row">
                             <div class="col-md-12">
-                                <div v-for="comment in commentData" class="activity_date_small">
+
+                                <div class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_green_400 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">{{comment.firstname + ' ' + comment.lastname}} added a comment</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">{{comment.content}}</p>
+                                            <div class="icons bkg_light_800 mb-0"><i class="ri-price-tag-3-line light_000 fsize18"></i></div>
+                                            <p class="htxt_bold_16 dark_800 mb-2">Max added “USA” tag</p>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Max added “USA” tag to Gladys’ review.</p>
+
                                         </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">{{displayDateFormat('M d, Y H:i A', comment.created)}}</p></div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
                                     </div>
                                 </div>
 
-                                <!--<div class="activity_date_small">
+
+                                <div class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_blue_200"><i><img src="assets/images/message-3-line.svg"></i></div>
+                                            <div class="icons bkg_blue_200"><i class="ri-check-line light_000 fsize18"></i></div>
                                             <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"/></i> Answer with SMS</button>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
+                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
                                         </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="activity_date_small">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="icons bkg_yellow_400"><i class="ri-reply-line light_000 fsize18"></i></div>
+                                            <p class="htxt_bold_16 dark_800 mb-2">Review approved</p>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Consequat sint quis aliqua irure excepteur occaecat aute occaecat non enim exercitation excepteur pariatu</p>
+                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
+                                        </div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="activity_date_small">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="icons bkg_green_400"><i class="ri-mail-open-line light_000 fsize16"></i></div>
+                                            <p class="htxt_bold_16 dark_800 mb-2">Email sent by Birdman</p>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Hi @customer! Thanks for your review, we appriciate your opinion here...</p>
+                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
+                                        </div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
                                     </div>
                                 </div>
 
                                 <div class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_yellow_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"/></i> Answer with SMS</button>
+                                            <div class="icons bkg_yellow_400"><i class="ri-reply-line light_000 fsize18"></i></div>
+                                            <p class="htxt_bold_16 dark_800 mb-2">Review submited</p>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">The Top Forex Brokers Review is a great website that provided me with insightful information about Forex Trading by incorporating a list of the top brokers in the world...</p>
+
                                         </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
                                     </div>
                                 </div>
 
-                                <div class="activity_date_small">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="icons bkg_green_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"/></i> Answer with SMS</button>
-                                        </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
-                                    </div>
-                                </div>-->
 
-                            </div>
-                        </div>
-                        <div class="row" v-if="displayActivity=='notesSection'">
-                            <div class="col-md-12">
-                                <div v-for="note in notesData" class="activity_date_small">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="icons bkg_blue_200 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">{{note.firstname + ' ' + note.lastname}} added a note</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">{{note.notes}}</p>
-                                        </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">{{displayDateFormat('M d, Y H:i A', note.created)}}</p></div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-4">
-                        <div class="card p25 animate_top">
-                            <img v-if="review.logo_img" class="float-left mb-3" width="70" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${review.logo_img}`"/>
-                            <img v-else class="float-left mb-3" width="70" src="assets/images/plane_work.svg"/>
-
-                            <p class="fsize16 fw500 dark_800 mb-1">{{review.brand_title}}</p>
-                            <p class="fsize14 fw400 dark_500 mb-3 bbot pb-3">{{reviewStats.totalReviews}} reviews</p>
-
-                            <div class="pb-3 pl-3 ratings bbot">
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>5 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fiveStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.fiveStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fiveStarPercent" :style="`width:${reviewStats.fiveStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.fiveStar}}</p></div>
+                        <div class="card p25 pt20 animate_top">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="fsize12 fw500 ls_4 dark_600 m-0 float-left">PRODUCT</p>
                                 </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>4 <i><img src="assets/images/star-fill-12.png"/> </i></p>
+                                <div class="col">
+                                    <div class="float-right">
+                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
                                     </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fourStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.fourStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fourStarPercent" :style="`width:${reviewStats.fourStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.fourStar}}</p></div>
                                 </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>3 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.threeStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.threeStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.threeStarPercent" :style="`width:${reviewStats.threeStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.threeStar}}</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <hr>
                                 </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>2 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.twoStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.twoStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.twoStarPercent" :style="`width:${reviewStats.twoStarPercent}%`"></div>
+                            </div>
+                            <div class="pt10 pb0">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="media">
+                                            <div class="media_left">
+                                                <img width="56" style="max-width: 56px!important" src="assets/images/product_info.svg"/>
+                                            </div>
+                                            <div class="media_left">
+                                                <h3 class="htxt_medium_16 dark_800 mt-1">Nintendo</h3>
+                                                <p class="fsize14 dark_200 m-0">Website Product</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.twoStar}}</p></div>
-                                </div>
 
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>1 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.oneStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.oneStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.oneStarPercent" :style="`width:${reviewStats.oneStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.oneStar}}</p></div>
                                 </div>
                             </div>
 
-                            <p class="fsize14 dark_600 mt-3 mb-0"><i><img src="assets/images/chat-1-fill.svg"/></i> &nbsp; 13 questions / 10 answers </p>
 
                         </div>
 
-                        <div class="card p0 animate_top col text-center d-none">
-                            <div class="p15 pt15 bbot">
-                                <ul class="workflow_list">
-                                    <li><a class="text-uppercase fw500 dark_600" href="#">FOLLOWERS</a></li>
-                                </ul>
+                        <div class="card p25 pt20 animate_top">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="fsize12 fw500 ls_4 dark_600 m-0 float-left ">PRODUCT SUMMARY</p>
+                                </div>
+                                <div class="col">
+                                    <div class="float-right">
+                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="p30">
-                                <ul class="templates_list">
-                                    <li><a class="active" href="#"><strong><img src="assets/images/menu-2-line.svg"> All</strong> <span>345</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/heart-line.svg"> My Templates</strong> <span>128</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Non-profit</strong> <span>13</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Photography</strong> <span>86</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Product / Service</strong> <span>31</span></a></li>
+                            <div class="row">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="text-center p20 pt10">
+                                <h3 class="lh_120 dark_700 htxt_regular_36">4.1</h3>
+                                <p class="m-0 fsize13"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i> &nbsp; 33,87%</span>last month</p>
+                            </div>
+                            <div class="ratings">
+                                <ul class="ratinglist">
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">5 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
+                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:40%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>37</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">4 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
+                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70" style="width:70%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>57</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">3 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
+                                                    <div class="progress-bar progress-bar-info bkg_yellow_400" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20" style="width:20%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>5</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">2 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
+                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width:80%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>7</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">1 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
+                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20" style="width:20%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>125</p>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="card p20 min_h_240 d-none ">
-                            <h3 class="htxt_medium_16 dark_800">Info</h3>
-                            <hr/>
+                        <div class="card p25">
+                            <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Media</h3>
+                            <hr>
+
+
+                            <div class="row">
+                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media1.svg"/></div>
+                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media2.svg"/></div>
+                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media3.svg"/></div>
+                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media4.svg"/></div>
+
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="card p25">
+                            <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
+                            <hr>
+                            <div>
+                                <button class="tags_btn mb-3">customer</button>
+                                <button class="tags_btn mb-3">email</button>
+                                <button class="tags_btn mb-3">4 star</button>
+                                <button class="tags_btn mb-3">website about</button>
+                                <button class="tags_btn mb-3">positive</button>
+                                <button class="tags_btn mb-3">4 star</button>
+                                <button class="tags_btn mb-3">male</button>
+                                <button class="tags_btn mb-3">user</button>
+                                <button class="tags_btn mb-3">+</button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="card p25">
+                            <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Details</h3>
+                            <hr>
                             <ul class="info_list">
-                                <li><span>Source</span><strong>Email</strong></li>
-                                <li><span>First Seen</span><strong>17 Jan 2018</strong></li>
-                                <li><span>Lase Seen</span><strong>22 Apr 2018</strong></li>
-                                <li><span>Page views</span><strong>139</strong></li>
-                                <li><span>Reviews</span><strong>3</strong></li>
-                                <li><span>Notification</span><strong>On</strong></li>
-                                <li><span>Id</span><strong>310282</strong></li>
-                                <li><span>SMS</span><strong>On</strong></li>
+                                <li><span>ID</span><strong>2423423</strong></li>
+                                <li><span>Order ID</span><strong>3332</strong></li>
+                                <li><span>Product ID</span><strong>20</strong></li>
+                                <li><span>Source</span><strong>email</strong></li>
                             </ul>
                         </div>
 
-                        <div class="card p20 min_h_240 profile_form">
-                            <h3 class="htxt_medium_16 dark_800">Media</h3>
-                            <hr>
-                            <div class="form-group">
-                                <label class="fsize12 fw400 dark_100" for="Leadsource">Lead source</label>
-                                <select class="form-control h36">
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                </select>
-                            </div>
 
-                            <div class="form-group mb-0">
-                                <label class="fsize12 fw400 dark_100" for="Stage">Stage</label>
-                                <select class="form-control h36">
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                </select>
-                            </div>
-                        </div>
+
+
+
+
+
                     </div>
+
                 </div>
             </div>
         </div>
+
     </div>
 
 </template>
