@@ -90,8 +90,11 @@
                     <div class="col-md-8">
                         <div class="card p20 pl30 pr30 " style="min-height: 165px;">
                             <ul class="nav nav-pills review_sec_tab2 mt-0 mb20 bbot pb20" role="tablist">
+                                <!--<li class="mr20">
+                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddComment" @click="displayActivity='commentSection'"><i class="ri-edit-box-line"></i>&nbsp; Add a comment</a>
+                                </li>-->
                                 <li class="mr20">
-                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddNote"><i class="ri-edit-box-line"></i> &nbsp; New note</a>
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#AddNote" @click="displayActivity='notesSection'"><i class="ri-edit-box-line"></i> &nbsp; New note</a>
                                 </li>
                                 <li class="mr20">
                                     <a class="htxt_bold_14" data-toggle="pill" href="#Chat"><i class="ri-chat-1-line"></i> &nbsp; Chat</a>
@@ -106,13 +109,19 @@
                                     <a class="htxt_bold_14" data-toggle="pill" href="#Review"><i class="ri-star-line"></i> &nbsp; Review</a>
                                 </li>
                                 <li class="">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#Logactivity"><i class="ri-add-line"></i> &nbsp; Log activity</a>
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Logactivity" @click="displayActivity='commentSection'"><i class="ri-add-line"></i> &nbsp; Log activity</a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
+                                <!--<div id="AddComment" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-md-11"><textarea class="border-0 w-100 fsize14 dark_200" v-model="comment_content" style="resize: none" placeholder="Start writing your comment here."></textarea></div>
+                                        <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit" @click="addComment"><img src="assets/images/review_send_btn_36.svg"></button></div>
+                                    </div>
+                                </div>-->
                                 <!--======Tab 1====-->
-                                <div id="AddNote" class="tab-pane active">
+                                <div id="AddNote" class="tab-pane ">
                                     <div class="row">
                                         <div class="col-md-11"><textarea class="border-0 w-100 fsize14 dark_200" style="resize: none" placeholder="Start writing your note here. Use @ to mention your teammates."></textarea></div>
                                         <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit"><img src="assets/images/review_send_btn_36.svg"></button></div>
@@ -175,75 +184,52 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" v-if="displayActivity=='commentSection'">
                             <div class="col-md-12">
 
-                                <div class="activity_date_small">
+                                <div v-if="commentData.length > 0" v-for="comment in commentData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="icons bkg_light_800 mb-0"><i class="ri-price-tag-3-line light_000 fsize18"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Max added “USA” tag</p>
-                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Max added “USA” tag to Gladys’ review.</p>
-
+                                            <p class="htxt_bold_16 dark_800 mb-2">{{ capitalizeFirstLetter(comment.firstname) + ' ' + capitalizeFirstLetter(comment.lastname) }} added a comment</p>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">{{ comment.content }}.</p>
                                         </div>
-                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">{{ displayDateFormat('M d, Y H:i A', comment.created) }}</p></div>
                                     </div>
                                 </div>
 
-
-                                <div class="activity_date_small">
+                                <div v-else class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_blue_200"><i class="ri-check-line light_000 fsize18"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
+                                            No Record Found.
                                         </div>
-                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
 
 
-
-                                <div class="activity_date_small">
+                        <div class="row" v-if="displayActivity=='notesSection'">
+                            <div class="col-md-12">
+                                <div v-if="notesData.length > 0" v-for="note in notesData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_yellow_400"><i class="ri-reply-line light_000 fsize18"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Review approved</p>
-                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Consequat sint quis aliqua irure excepteur occaecat aute occaecat non enim exercitation excepteur pariatu</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
+                                            <div class="icons bkg_blue_200 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
+                                            <p class="htxt_bold_16 dark_800 mb-2">{{ capitalizeFirstLetter(note.firstname) + ' ' + capitalizeFirstLetter(note.lastname) }} added a note</p>
+                                            <p class="htxt_regular_14 dark_400 mb0">{{ note.notes }}</p>
                                         </div>
-                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
+                                        <div class="time"><p class="htxt_regular_14 dark_200">{{ displayDateFormat('M d, Y H:i A', note.created) }}</p></div>
                                     </div>
                                 </div>
 
-
-                                <div class="activity_date_small">
+                                <div v-else class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_green_400"><i class="ri-mail-open-line light_000 fsize16"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Email sent by Birdman</p>
-                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">Hi @customer! Thanks for your review, we appriciate your opinion here...</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"></i> Answer with SMS</button>
+                                            No Record Found.
                                         </div>
-                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
                                     </div>
                                 </div>
-
-                                <div class="activity_date_small">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="icons bkg_yellow_400"><i class="ri-reply-line light_000 fsize18"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Review submited</p>
-                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">The Top Forex Brokers Review is a great website that provided me with insightful information about Forex Trading by incorporating a list of the top brokers in the world...</p>
-
-                                        </div>
-                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">11:44AM</p></div>
-                                    </div>
-                                </div>
-
-
                             </div>
                         </div>
                     </div>
