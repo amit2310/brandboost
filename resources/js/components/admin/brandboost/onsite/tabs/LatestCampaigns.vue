@@ -171,7 +171,7 @@
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-review-campaign-slidebox-tab').click();
+                //document.querySelector('.js-review-campaign-slidebox-tab').click();
             },
             processForm : function(){
                 this.loading = true;
@@ -193,7 +193,7 @@
                             }
 
                             //this.form = {};
-                            document.querySelector('.js-review-campaign-slidebox-tab').click();
+                            //document.querySelector('.js-review-campaign-slidebox-tab').click();
                             this.successMsg = 'Action completed successfully.';
                             var elem = this;
                             setTimeout(function () {
@@ -219,11 +219,11 @@
         }
     }
 
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         $(document).on('click', '.js-review-campaign-slidebox-tab', function(){
             $(".box").animate({
                 width: "toggle"
             });
         });
-    });
+    });*/
 </script>
