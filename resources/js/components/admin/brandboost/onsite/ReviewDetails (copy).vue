@@ -9,12 +9,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <!--<h3 class="htxt_medium_24 dark_700">{{ capitalizeFirstLetter(review.brand_title) }}</h3>-->
-                        <h3 class="htxt_medium_24 dark_700">{{ capitalizeFirstLetter(review.firstname) + ' ' + capitalizeFirstLetter(review.lastname) }}</h3>
+                        <h3 class="htxt_medium_24 dark_700">Review Page</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
-                        <button class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal" data-target="#CREATEFORM">Approve <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
+                        <button class="mr15 btn btn-md bkg_light_000 reviews_400">Filters &nbsp; &nbsp; <img src="assets/images/filter_review.svg"></button>
+                        <button class="btn btn-md bkg_reviews_300 light_000 slidebox"> Edit review &nbsp; &nbsp; <span><img src="assets/images/review_add.svg"></span></button>
                     </div>
                 </div>
             </div>
@@ -27,6 +26,22 @@
         **********************-->
         <div class="content-area">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p40 pt0 pb0">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p class="fsize12 fw500 dark_200 mt30 mb30"><i><img src="assets/images/lightbulb-fill.svg"></i> &nbsp; TIPS</p>
+                                    <h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
+                                    <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">Conversational marketing platform that helps companies close more deals by messaging with prospects in real-time & via intelligent chatbots. Qualify leads, book meetings.</p>
+                                </div>
+                                <div class="col-md-5 text-center mt0">
+                                    <img class="mt0" style="max-width: 240px;" src="assets/images/review_feed_illustration.svg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                 <loading :isLoading="loading"></loading>
@@ -36,34 +51,23 @@
                             <div class="p30 bbot pt20 pb20">
                                 <div class="bbot mb30">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <span class="circle_icon_24 bkg_reviews_400 mr-3">{{ review.firstname.charAt(0) }}</span>
-                                            <p class="fsize14 fw500 dark_600 float-left mr-3 lh_24">{{ capitalizeFirstLetter(review.firstname) + ' ' + capitalizeFirstLetter(review.lastname) }}</p>
-
+                                        <div class="col-md-8">
+                                            <p class="fsize16 fw500 dark_700 float-left mr-3"><user-avatar
+                                                :avatar="review.avatar"
+                                                :firstname="review.firstname"
+                                                :lastname="review.lastname"
+                                                :width="33"
+                                                :height="33"
+                                                :fontsize="33"
+                                            ></user-avatar> &nbsp;{{review.firstname+ ' ' +review.lastname}}</p>
+                                            <p class="mt-1 review_rating_start">
+                                                <i class="" v-for="num in [1,2,3,4,5]">
+                                                <img v-if="num<=review.ratings" src="assets/images/star-fill_yellow_18.svg">
+                                                <img v-else src="assets/images/star-fill_grey_18.svg">
+                                                </i>
+                                            </p>
                                         </div>
-                                        <div class="col-md-6">
-                                            <ul class="review_header_section">
-                                                <li>
-                                                    <span v-for="num in [1,2,3,4,5]">
-                                                        <i v-if="num<=review.ratings && review.ratings > 3" class="ri-star-s-fill fsize18 green_400"></i>
-                                                        <i v-else-if="num<=review.ratings && review.ratings == 3" class="ri-star-s-fill fsize18 yellow_400"></i>
-                                                        <i v-else class="ri-star-s-fill fsize18 light_600"></i>
-                                                    </span>
-                                                </li>
-
-                                                <li class="ml-1"><span>{{ number_format(review.ratings, 1) }}</span></li>
-                                                <li><span><i class="ri-at-line email_400 fsize15"></i></span></li>
-                                                <li><span>{{ timeAgo(review.created) }}</span></li>
-                                                <li>
-                                                    <span v-if="review.status == 0" style="left:auto; right:auto; top: auto" class="status_icon bkg_light_600 position-relative" title="INACTIVE"></span>
-                                                    <span v-if="review.status == 1" style="left:auto; right:auto; top: auto" class="status_icon bkg_green_400 position-relative" title="ACTIVE"></span>
-                                                    <span v-if="review.status == 2" style="left:auto; right:auto; top: auto" class="status_icon bkg_reviews_300 position-relative" title="PENDING"></span>
-                                                    <span v-if="review.status == 3" style="left:auto; right:auto; top: auto" class="status_icon bkg_reviews_300 position-relative" title="ARCHIVED"></span>
-                                                </li>
-                                            </ul>
-
-                                        </div>
-                                        <!--<div class="col-md-4">
+                                        <div class="col-md-4">
                                             <div class="float-right mt-1 ml-2">
                                                 <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
                                                     <span><img src="assets/images/more-vertical.svg"></span>
@@ -76,7 +80,7 @@
                                             </div>
                                             <p class="float-right fsize14 dark_200 mt-1 mb-0 ml-5">{{displayDateFormat('M d, Y', review.created)}}</p>
                                             <button class="btn btn-sm-24 bkg_blue_000 pr10 pl10 blue_300 fsize12 fw500 mt-1 float-right">Published</button>
-                                        </div>-->
+                                        </div>
                                     </div>
                                 </div>
                                 <p class="fsize14 fw500 dark_800 lh_22 mb-2">{{review.review_title}}</p>

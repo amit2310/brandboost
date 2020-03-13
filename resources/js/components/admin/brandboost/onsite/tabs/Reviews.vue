@@ -135,12 +135,12 @@
                             <!--<td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</td>-->
                             <td>{{ timeAgo(oReview.review_created) }}</td>
                             <td>
-                                    <span class="float-right">
-                                        <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
-                                        <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
-                                        <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
-                                        <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
-                                    </span>
+                                <span class="float-right">
+                                    <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
+                                    <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
+                                    <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
+                                    <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
+                                </span>
                             </td>
                         </tr>
                         </tbody>
