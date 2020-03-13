@@ -223,6 +223,9 @@ import MediaGallerySetup2 from './components/admin/modules/mediagallery/setup/Se
     import SettingPreferences from './components/admin/settings/tabs/SettingPreferences';
     import SettingSubscription from './components/admin/settings/tabs/SettingSubscription';
     import SettingBilling from './components/admin/settings/tabs/SettingBilling';
+    import SettingNotification from './components/admin/settings/tabs/SettingNotification';
+    import SettingImport from './components/admin/settings/tabs/SettingImport';
+    import SettingExport from './components/admin/settings/tabs/SettingExport';
 
 /** -----------------------------------** END  **-----------------------------*/
 
@@ -327,6 +330,9 @@ const routes = [
     { path: '/settings/preferences', component: SettingPreferences, meta: { title: 'Brand Settings - Brand Boost'} },
     { path: '/settings/subscription', component: SettingSubscription, meta: { title: 'Brand Settings - Brand Boost'} },
     { path: '/settings/billing', component: SettingBilling, meta: { title: 'Brand Settings - Brand Boost'} },
+    { path: '/settings/notification', component: SettingNotification, meta: { title: 'Brand Settings - Brand Boost'} },
+    { path: '/settings/import', component: SettingImport, meta: { title: 'Brand Settings - Brand Boost'} },
+    { path: '/settings/export', component: SettingExport, meta: { title: 'Brand Settings - Brand Boost'} },
 
     /**-----------------------------------End---------------------------------------*/
 
