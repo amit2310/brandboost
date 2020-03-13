@@ -8,13 +8,13 @@
                         <span class="float-left mr20 back_btn"><img class="back_img_icon" src="assets/images/BACK.svg"/></span>
                         <h3 class="htxt_medium_24 dark_700">Brand Settings</h3>
                         <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li><a href="#/settings/general" tyle="cursor:pointer; padding: 5px;">General&nbsp;</a></li>&nbsp;&nbsp;
+                            <li  class="active"><a href="#/settings/general" tyle="cursor:pointer; padding: 5px;">General&nbsp;</a></li>&nbsp;&nbsp;
                             <li><a href="#/settings/preferences" style="cursor:pointer; padding: 5px;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
                             <li><a href="#/settings/subscription" style="cursor:pointer; padding: 5px;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
-                            <li class="active"><a href="#/settings/billing" style="cursor:pointer; padding: 5px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Import&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer;">Export</a></li>
+                            <li><a href="#/settings/billing" style="cursor:pointer; padding: 5px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/notification" style="cursor:pointer; padding: 5px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/import" style="cursor:pointer; padding: 5px;">Import&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/export" style="cursor:pointer;">Export</a></li>
                         </ul>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                                     </div>
 <!--                                    @endif-->
 
-                                     
+
                                     <br>
                                      <div class="card_sec p0" v-if="oUser.topup_subscription_id">
                                         <ul class="subscription_list">
@@ -254,7 +254,7 @@
                                             <li><span>Next Billing Date</span>
                                                 <strong class="pull-right">
                                                 {{ timestampToDateFormat(oUser.topup_subscription_info.next_billing_at) }}
-                                            </strong></li> 
+                                            </strong></li>
                                             <li><span>End</span><strong class="pull-right">Recurring</strong></li>
                                         </ul>
                                         <div class="clearfix"></div>
@@ -268,7 +268,7 @@
                             </div>
                         </div>
                         <!--====GENERAL SETTINGS====-->
-                        
+
                         <div class="row p20">
                             <div class="col-md-12">
                                 <div class="col-md-12 mb-20"><p class="text-muted">Past Invoices</p></div>
