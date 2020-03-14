@@ -94,7 +94,7 @@
                                     <a class="htxt_bold_14 active" data-toggle="pill" href="#AddComment" @click="displayActivity='commentSection'"><i class="ri-edit-box-line"></i>&nbsp; Add a comment</a>
                                 </li>-->
                                 <li class="mr20">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#AddNote" @click="displayActivity='notesSection'"><i class="ri-edit-box-line"></i> &nbsp; New note</a>
+                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddNote" @click="displayActivity='notesSection'"><i class="ri-edit-box-line"></i> &nbsp; New note</a>
                                 </li>
                                 <li class="mr20">
                                     <a class="htxt_bold_14" data-toggle="pill" href="#Chat"><i class="ri-chat-1-line"></i> &nbsp; Chat</a>
@@ -123,8 +123,10 @@
                                 <!--======Tab 1====-->
                                 <div id="AddNote" class="tab-pane ">
                                     <div class="row">
-                                        <div class="col-md-11"><textarea class="border-0 w-100 fsize14 dark_200" style="resize: none" placeholder="Start writing your note here. Use @ to mention your teammates."></textarea></div>
-                                        <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit"><img src="assets/images/review_send_btn_36.svg"></button></div>
+                                        <div class="col-md-11">
+                                            <textarea class="border-0 w-100 fsize14 dark_200" v-model="notes" style="resize: none" placeholder="Start writing your note here. Use @ to mention your teammates."></textarea>
+                                        </div>
+                                        <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit" @click="addNotes"><img src="assets/images/review_send_btn_36.svg"></button></div>
                                     </div>
                                 </div>
                                 <!--======Tab 2=====-->
@@ -154,7 +156,8 @@
                         <div class="table_head_action mt-1 mb20">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3 class="htxt_medium_14 dark_600">Activity</h3>
+                                    <h3 v-if="displayActivity=='notesSection'" class="htxt_medium_14 dark_600">Notes</h3>
+                                    <h3 v-else class="htxt_medium_14 dark_600">Activity</h3>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table_action">
@@ -185,9 +188,8 @@
                         </div>
 
                         <div class="row" v-if="displayActivity=='commentSection'">
-                            <div class="col-md-12">
-
-                                <div v-if="commentData.length > 0" v-for="comment in commentData" class="activity_date_small">
+                            <div v-if="commentData.length > 0" class="col-md-12">
+                                <div v-for="comment in commentData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="icons bkg_light_800 mb-0"><i class="ri-price-tag-3-line light_000 fsize18"></i></div>
@@ -197,22 +199,21 @@
                                         <div class="time"><p class="htxt_regular_13 dark_200 ls_4">{{ displayDateFormat('M d, Y H:i A', comment.created) }}</p></div>
                                     </div>
                                 </div>
-
-                                <div v-else class="activity_date_small">
+                            </div>
+                            <div v-else class="col-md-12">
+                                <div class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             No Record Found.
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
-
                         <div class="row" v-if="displayActivity=='notesSection'">
-                            <div class="col-md-12">
-                                <div v-if="notesData.length > 0" v-for="note in notesData" class="activity_date_small">
+                            <div v-if="notesData.length > 0"  class="col-md-12">
+                                <div v-for="note in notesData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="icons bkg_blue_200 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
@@ -222,8 +223,9 @@
                                         <div class="time"><p class="htxt_regular_14 dark_200">{{ displayDateFormat('M d, Y H:i A', note.created) }}</p></div>
                                     </div>
                                 </div>
-
-                                <div v-else class="activity_date_small">
+                            </div>
+                            <div v-else class="col-md-12">
+                                <div class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             No Record Found.
@@ -260,8 +262,8 @@
                                                 <img width="56" style="max-width: 56px!important" src="assets/images/product_info.svg"/>
                                             </div>
                                             <div class="media_left">
-                                                <h3 class="htxt_medium_16 dark_800 mt-1">Nintendo</h3>
-                                                <p class="fsize14 dark_200 m-0">Website Product</p>
+                                                <h3 class="htxt_medium_16 dark_800 mt-1">{{ capitalizeFirstLetter(productData.product_name) }}</h3>
+                                                <p class="fsize14 dark_200 m-0">{{ capitalizeFirstLetter(productData.product_type) }} Product</p>
                                             </div>
                                         </div>
                                     </div>
@@ -290,7 +292,8 @@
                                 </div>
                             </div>
                             <div class="text-center p20 pt10">
-                                <h3 class="lh_120 dark_700 htxt_regular_36">4.1</h3>
+                                <!--<h3 class="lh_120 dark_700 htxt_regular_36">{{ number_format(reviewStats.totalReviews, 1) }}</h3>-->
+                                <h3 class="lh_120 dark_700 htxt_regular_36">{{ number_format(review.ratings, 1) }}</h3>
                                 <p class="m-0 fsize13"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i> &nbsp; 33,87%</span>last month</p>
                             </div>
                             <div class="ratings">
@@ -301,12 +304,12 @@
                                                 <p class="dark_500">5 <i><img src="assets/images/star-fill-12.png"> </i></p>
                                             </div>
                                             <div class="progress_sec">
-                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40" style="width:40%"></div>
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fiveStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" :aria-valuenow="reviewStats.fiveStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fiveStarPercent" :style="`width:${reviewStats.fiveStarPercent}%`"></div>
                                                 </div>
                                             </div>
                                             <div class="star_sec text-right">
-                                                <p>37</p>
+                                                <p>{{ reviewStats.fiveStar }}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -316,12 +319,12 @@
                                                 <p class="dark_500">4 <i><img src="assets/images/star-fill-12.png"> </i></p>
                                             </div>
                                             <div class="progress_sec">
-                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70" style="width:70%"></div>
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fourStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" :aria-valuenow="reviewStats.fourStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fourStarPercent" :style="`width:${reviewStats.fourStarPercent}%`"></div>
                                                 </div>
                                             </div>
                                             <div class="star_sec text-right">
-                                                <p>57</p>
+                                                <p>{{ reviewStats.fourStar }}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -331,12 +334,12 @@
                                                 <p class="dark_500">3 <i><img src="assets/images/star-fill-12.png"> </i></p>
                                             </div>
                                             <div class="progress_sec">
-                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-                                                    <div class="progress-bar progress-bar-info bkg_yellow_400" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20" style="width:20%"></div>
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.threeStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_yellow_400" role="progressbar" :aria-valuenow="reviewStats.threeStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.threeStarPercent" :style="`width:${reviewStats.threeStarPercent}%`"></div>
                                                 </div>
                                             </div>
                                             <div class="star_sec text-right">
-                                                <p>5</p>
+                                                <p>{{ reviewStats.threeStar }}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -346,12 +349,12 @@
                                                 <p class="dark_500">2 <i><img src="assets/images/star-fill-12.png"> </i></p>
                                             </div>
                                             <div class="progress_sec">
-                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width:80%"></div>
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.twoStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" :aria-valuenow="reviewStats.twoStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.twoStarPercent" :style="`width:${reviewStats.twoStarPercent}%`"></div>
                                                 </div>
                                             </div>
                                             <div class="star_sec text-right">
-                                                <p>7</p>
+                                                <p>{{ reviewStats.twoStar }}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -361,12 +364,12 @@
                                                 <p class="dark_500">1 <i><img src="assets/images/star-fill-12.png"> </i></p>
                                             </div>
                                             <div class="progress_sec">
-                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" data-original-title="Total Requests 17">
-                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20" style="width:20%"></div>
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.oneStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" :aria-valuenow="reviewStats.oneStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.oneStarPercent" :style="`width:${reviewStats.oneStarPercent}%`"></div>
                                                 </div>
                                             </div>
                                             <div class="star_sec text-right">
-                                                <p>125</p>
+                                                <p>{{ reviewStats.oneStar }}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -391,8 +394,6 @@
 
                         </div>
 
-
-
                         <div class="card p25">
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
                             <hr>
@@ -409,8 +410,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="card p25">
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Details</h3>
                             <hr>
@@ -421,20 +420,13 @@
                                 <li><span>Source</span><strong>email</strong></li>
                             </ul>
                         </div>
-
-
-
-
-
-
+                    </div>
 
                     </div>
 
                 </div>
             </div>
         </div>
-
-    </div>
 
 </template>
 <script>
@@ -456,7 +448,7 @@
                 comment_content: '',
                 notes: '',
                 commentData: '',
-                displayActivity: 'commentSection'
+                displayActivity: 'notesSection'
             }
         },
         mounted() {
