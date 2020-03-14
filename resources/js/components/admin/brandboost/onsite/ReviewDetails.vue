@@ -414,9 +414,9 @@
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Details</h3>
                             <hr>
                             <ul class="info_list">
-                                <li><span>ID</span><strong>2423423</strong></li>
-                                <li><span>Order ID</span><strong>3332</strong></li>
-                                <li><span>Product ID</span><strong>20</strong></li>
+                                <li><span>ID</span><strong>{{ reviewId }}</strong></li>
+                                <li><span>Order ID</span><strong>{{ productData.brandboost_id }}</strong></li>
+                                <li><span>Product ID</span><strong>{{ productData.id }}</strong></li>
                                 <li><span>Source</span><strong>email</strong></li>
                             </ul>
                         </div>
