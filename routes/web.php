@@ -436,6 +436,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/settings/updateEmailNotificationContent', 'Admin\Settings@updateEmailNotificationContent');
     Route::post('admin/settings/updateSMSNotificationContent', 'Admin\Settings@updateSMSNotificationContent');
     Route::post('admin/settings/updateSystemNotificationContent', 'Admin\Settings@updateSystemNotificationContent');
+//    Setting export
+    Route::get('admin/brandboost/exportMedia', 'Admin\Brandboost@exportMedia');
 
     Route::post('admin/webchat/favouriteUser', 'Admin\WebChat@favouriteUser');
     Route::post('admin/webchat/smallwfilter', 'Admin\WebChat@smallwfilter');

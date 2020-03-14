@@ -38,7 +38,7 @@ class SettingsModel extends Model {
        return $oData->value;
    }
 
-   
+
 
     /**
      * This function used to get notification related data
@@ -134,7 +134,7 @@ class SettingsModel extends Model {
         }
     }
 
-    // this function is user to get the remaining credit value 
+    // this function is user to get the remaining credit value
     public function getremainingCredits($clientID) {
         $this->db->where("user_id", $clientID);
         $result = $this->db->get('tbl_account_usage');
@@ -155,7 +155,7 @@ class SettingsModel extends Model {
     }
 
     /**
-     * This function will return client account credit values 
+     * This function will return client account credit values
      * @param type $clientID
      * @return type
      */
@@ -223,14 +223,14 @@ class SettingsModel extends Model {
 
 
     /**
-    * This function will return all credit values 
+    * This function will return all credit values
     * @param type $clientID
     * @return type
     */
 
     public function getCreditValuesHistory() {
         $aData =  DB::table('tbl_credit_values_history')->get();
-        
+
         return $aData;
     }
 
@@ -298,13 +298,13 @@ class SettingsModel extends Model {
     }
 
     /**
-     * This function is use to check the module permissons allow for notifications 
+     * This function is use to check the module permissons allow for notifications
      * @param type $clientID
      * @return type
      */
     public static function updateNotificationSettings($aData, $userID) {
         if ($userID > 0) {
-          
+
             DB::table('tbl_users_notification_settings')
                 ->where('user_id', $userID)
                 ->update($aData);
@@ -314,7 +314,7 @@ class SettingsModel extends Model {
     }
 
     /**
-     * This function is use to check the module permissons allow for notifications 
+     * This function is use to check the module permissons allow for notifications
      * @param type $clientID
      * @return type
      */
@@ -326,7 +326,18 @@ class SettingsModel extends Model {
                 ->first();
         return $oData;
     }
+    /**
+     * This function is use to check the module permissons allow for notifications
+     * @param type $userID
+     * @return type
+     */
+    public static function getNotificationEventsSettings($userID) {
 
+        $oData = DB::table('tbl_notifications_permission_entry')
+            ->where('user_id', $userID)
+            ->get();
+        return $oData;
+    }
     /**
      * This function is use for add notification settings
      * @param type $userID
@@ -351,7 +362,7 @@ class SettingsModel extends Model {
                 ->where('user_id', $userID)
                 ->where('notification_slug', $aData['notification_slug'])
                 ->get();
-       
+
         if($oData->count() > 0) {
             $oData = DB::table('tbl_notifications_permission_entry')
                 ->where('user_id', $userID)
@@ -362,7 +373,7 @@ class SettingsModel extends Model {
             $oData = DB::table('tbl_notifications_permission_entry')
                 ->insert(array('user_id' => $userID, 'notification_slug' => $aData['notification_slug']));
         }
-    
+
         return true;
 
     }
@@ -390,7 +401,7 @@ class SettingsModel extends Model {
     /**
      * Get email notification content
      * @param type $id
-     * @return type object 
+     * @return type object
      */
     public function getEmailNotificationContent($id = "") {
 
@@ -532,11 +543,11 @@ class SettingsModel extends Model {
         return false;
     }
 
-    
+
 
    /**
-    * This function is used to update the amazon s3 settings 
-    * @param type 
+    * This function is used to update the amazon s3 settings
+    * @param type
     * @return type
     */
 
@@ -544,7 +555,7 @@ class SettingsModel extends Model {
         if ($id > 0) {
             $aData =  DB::table('tbl_users')->where('id', $id)->update($aData);
             return true;
-            
+
         }
         return false;
     }
@@ -561,7 +572,7 @@ class SettingsModel extends Model {
 
             $aData =  DB::table('tbl_notifications_manager')->where('id', $id)->update($aData);
             return true;
-            
+
         }
         return false;
     }
@@ -590,7 +601,7 @@ class SettingsModel extends Model {
                 })
                 ->orderBy('id', 'desc')
                 ->get();
-        return $oData;        
+        return $oData;
     }
 
 
@@ -603,12 +614,12 @@ class SettingsModel extends Model {
     }
 
    /**
-    * This function is used to get all notifications 
+    * This function is used to get all notifications
     * @param type $userId
     * @param type $type
     * @return type
     */
-  
+
     public function listNotifications($userId, $type = '') {
 
         $oData = DB::table('tbl_notifications_manager')
@@ -621,7 +632,7 @@ class SettingsModel extends Model {
 
 
     /**
-    * This function is used to update notification permissions 
+    * This function is used to update notification permissions
     * @param type $aData
     * @return type boolean
     */
@@ -641,7 +652,7 @@ class SettingsModel extends Model {
 
     /**
     * This function is used to get the client twilio logs
-    * @param 
+    * @param
     * @return type
     */
 
@@ -653,11 +664,11 @@ class SettingsModel extends Model {
         ->whereNotNull('tbl_twilio_accounts.contact_no')
          ->where('tbl_twilio_accounts.user_id','!=', '1')
         ->leftJoin('tbl_users', 'tbl_twilio_accounts.user_id','=','tbl_users.id')->get();
-        
+
         return $aData;
     }
 
-    
+
 
      /**
     * This function is used to load team accounts
@@ -676,13 +687,13 @@ class SettingsModel extends Model {
     }
 
      /**
-    * This function is used list all team member number usage details 
+    * This function is used list all team member number usage details
     * @param $userid
     * @return type
     */
 
     public function getNumberlogs($id) {
-       
+
         $aData =  DB::table('tbl_users_team')
          ->select('tbl_users_team.bb_number')
          ->where('tbl_users_team.id', $id)->get();
@@ -696,13 +707,13 @@ class SettingsModel extends Model {
 
 
     /**
-    * This function is used to get the client twilio number details 
-    * @param id 
+    * This function is used to get the client twilio number details
+    * @param id
     * @return type
     */
 
     public function getClientNumberlogs($id) {
- 
+
         $aData =  DB::table('tbl_twilio_accounts')
         ->select("tbl_twilio_accounts.contact_no")
          ->where('tbl_twilio_accounts.user_id', $id)->get();
@@ -715,8 +726,8 @@ class SettingsModel extends Model {
     }
 
    /**
-    * This function will return the single number twilio usage details 
-    * @param id 
+    * This function will return the single number twilio usage details
+    * @param id
     * @return type
     */
 
@@ -801,7 +812,7 @@ class SettingsModel extends Model {
          ->select("bb_number")
           ->whereNotNull('tbl_users_team.bb_number')
          ->where('tbl_users_team.parent_user_id', $parentUserId)->get();
-       
+
         return $aData;
     }
 
