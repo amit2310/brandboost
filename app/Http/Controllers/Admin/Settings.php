@@ -39,6 +39,7 @@ class Settings extends Controller {
         );
 
         $oSettings = SettingsModel::getNotificationSettings($userID);
+        $eventsSettings = SettingsModel::getNotificationEventsSettings($userID);
         $notificationlisting = SettingsModel::getallowNotification();
 
         if (empty($oSettings)) {
@@ -91,6 +92,7 @@ class Settings extends Controller {
             'countries' => $countries,
             'settingsData' => SettingsModel::getSettingsData(),
             'notificationData' => $oSettings,
+            'notificationEventData' => $eventsSettings,
             'oImportHistory' => $oImportHistory,
             'oExportHistory' => $oExportHistory,
             'oMemberships' => $oMemberships,

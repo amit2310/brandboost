@@ -33,7 +33,9 @@
                         <div class="bbot p30">
                             <div class="brand_subs">
                                 <div class="row">
-                                    <div class="col-md-7"><img width="24" class="pull-left mr-20" src="/assets/images/company_profile_dark.png"/><p class="mb0"><span class="text-muted">Current plan:</span> {{ oCurrentPlanData != '' ? oCurrentPlanData.level_name : '[No Data]' }}</p></div>
+                                    <div class="col-md-7">
+                                        <img width="24" class="pull-left mr-20" src="/assets/images/company_profile_dark.png"/>
+                                        <p class="mb0"><span class="text-muted">Current plan:</span> {{ oCurrentPlanData != '' ? oCurrentPlanData.level_name : '[No Data]' }}</p></div>
                                     <div class="col-md-5 text-right"><a style="text-decoration:underline;" class="txt_purple showSubPage" href="#/settings/subscription">Manage Subscription</a></div>
                                 </div>
                             </div>
@@ -42,7 +44,9 @@
                         <div class="bbot p30">
                             <div class="row">
                                 <div class="col-md-3"><p class="text-muted">Logo</p></div>
-                                <div class="col-md-2 brig"><img class="img-circle" id="brand_logo_image_preview" width="64" height="64" :src="oUser.company_logo ? 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+oUser.company_logo : '/assets/images/wakerslogo.png'"/></div>
+                                <div class="col-md-2 brig">
+                                    <img class="img-circle" id="brand_logo_image_preview" width="64" height="64"
+                                         :src="oUser.company_logo ? 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+oUser.company_logo : '/assets/images/wakerslogo.png'"/></div>
 
                                 <div class="col-md-6 col-md-offset-1">
                                     <div class="form-group mb0">
@@ -430,64 +434,23 @@
     }
     function loadJQCode(){
         $(document).ready(function () {
-            $(".token-field").on('tokenfield:createdtoken tokenfield:removedtoken change', function (e) {
-                if($(this).parent().children().hasClass('token')) {
-                    $(this).parent().find('.token-input').attr('placeholder', '');
-                }
-                else {
-                    $(this).parent().find('.token-input').attr('placeholder', '- Tokenfield');
-                }
-            }).trigger('change');
-
-            $('.showSubPage').click(function(){
-                $('.nav-tabs a[href="#right-icon-tab2"]').tab('show');
+            $("#frmGeneralBusinessInfo, #frmGeneralBusinessInfo2, #frmGeneralBusinessInfo3, #frmGeneralBusinessInfo4").submit(function () {
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: "{{ base_url('webchat/settings/updateCompanyFormData') }}",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            alertMessage("Updated Successfully!");
+                        }
+                    }
+                });
+                return false;
             });
 
-
-            $('.changeBA1').click(function(){
-                $('.changeBA1').removeClass('txt_purple');
-                $(this).addClass('txt_purple');
-            });
-
-            $('.changeBA2').click(function(){
-                $('.changeBA2').removeClass('txt_purple');
-                $(this).addClass('txt_purple');
-            });
-
-            $('#public_publish_page').change(function () {
-                if ($(this).is(":checked") == true) {
-                    $('input[name="public_publish_page"]').attr("value", 1);
-                } else {
-                    $('input[name="public_publish_page"]').attr("value", 0);
-                }
-            });
-
-            $('#business_address_dppa').change(function () {
-                if ($(this).is(":checked") == true) {
-                    $('input[name="business_address_dppa"]').attr("value", 1);
-                } else {
-                    $('input[name="business_address_dppa"]').attr("value", 0);
-                }
-            });
-
-            $('#phone_no_dppa').change(function () {
-                if ($(this).is(":checked") == true) {
-                    $('input[name="phone_no_dppa"]').attr("value", 1);
-                } else {
-                    $('input[name="phone_no_dppa"]').attr("value", 0);
-                }
-            });
-
-            $('#website_dppa').change(function () {
-                if ($(this).is(":checked") == true) {
-                    $('input[name="website_dppa"]').attr("value", 1);
-                } else {
-                    $('input[name="website_dppa"]').attr("value", 0);
-                }
-            });
-
-
-            Dropzone.autoDiscover = false;
+            Dropzone.autoDiscover = true;
             var settingUserId = $("#settingsUserId").val();
             var myDropzone = new Dropzone(
                 '#myDropzone', //id of drop zone element 1

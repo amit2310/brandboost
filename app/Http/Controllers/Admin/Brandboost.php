@@ -7432,7 +7432,9 @@ public function widgetStatisticDetailsStatsGraph(){
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
+        $mReviews = new ReviewsModel();
+        $oReviews = $mReviews->getMyBranboostReviews($userID);
+//        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
 
 
         $filename = 'reviews_' . time() . '.csv';
@@ -7463,13 +7465,15 @@ public function widgetStatisticDetailsStatsGraph(){
         exit;
     }
 
-    public
-    function exportMedia()
+    public function exportMedia()
     {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
+
+        $mReviews = new ReviewsModel();
+//        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
+        $oReviews = $mReviews->getMyBranboostReviews($userID);
 
         $filename = 'reviews_' . time() . '.csv';
         header("Content-Description: File Transfer");
