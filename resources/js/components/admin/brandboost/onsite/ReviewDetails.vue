@@ -394,18 +394,11 @@
 
                         </div>
 
-                        <div class="card p25">
+                        <div v-if="tagsData.length > 0" class="card p25">
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
                             <hr>
                             <div>
-                                <button class="tags_btn mb-3">customer</button>
-                                <button class="tags_btn mb-3">email</button>
-                                <button class="tags_btn mb-3">4 star</button>
-                                <button class="tags_btn mb-3">website about</button>
-                                <button class="tags_btn mb-3">positive</button>
-                                <button class="tags_btn mb-3">4 star</button>
-                                <button class="tags_btn mb-3">male</button>
-                                <button class="tags_btn mb-3">user</button>
+                                <button v-for="tags in tagsData" class="tags_btn mb-3">{{ tags.tag_name }}</button>
                                 <button class="tags_btn mb-3">+</button>
                             </div>
                         </div>
