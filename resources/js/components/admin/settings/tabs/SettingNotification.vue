@@ -22,7 +22,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="clearfix">&nbsp;</div>
- 
+
             <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
             <loading :isLoading="loading"></loading>
         <div class="row">
@@ -31,7 +31,7 @@
                     <div class="panel-heading" style="padding: 10px;">
                         <h4  class="panel-title">Notification Center</h4>
                     </div>
-                    
+
                     <div class="panel-body p0">
                         <!--====GENERAL SETTINGS====-->
                         <div class="bbot p30">
@@ -49,8 +49,8 @@
                                             <span class="toggle"></span> </label>
                                         <div class="clearfix"></div>
                                     </div>
-            
-            
+
+
                                     <div class="form-group">
                                         <p class="pull-left mb0">Floating notification sound<br>
                                             <span class="text-muted fsize11">Play sound when a visitor sends a new message.
@@ -73,8 +73,6 @@
                                 </div>
                             </div>
                             <hr/>
-                            <!-- settingsData notificationData notificationlisting -->
-                           
                             <div class="row">
                                 <div class="col-md-3">
                                     <p class="text-muted">Events</p>
@@ -88,92 +86,7 @@
                                             <span class="toggle"></span> </label>
                                         <div class="clearfix"></div>
                                     </div>
-                                    
-                                    <!-- <div class="form-group">
-                                        <p class="pull-left mb0">Onsite Review Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" @change="updateNotificationPermisson('sys_onsite_review_add')" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">Brandpage Review Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">New Sale Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">MemberShip Upgrade</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">Referral Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">Onsite Campaign Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">Offsite Campaign Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">New List Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">New Onsite Question Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">New Template Added</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">S3 Storage Alert</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p class="pull-left mb0">Remanning Credit Alert</p>
-                                        <label class="custom-form-switch pull-right">
-                                            <input class="field updatecompanyprofileinfo" name="receive_debug_notification" type="checkbox" >
-                                            <span class="toggle"></span> </label>
-                                        <div class="clearfix"></div>
-                                    </div> -->
+
                                 </div>
                             </div>
                             <hr/>
@@ -185,16 +98,17 @@
                                     <div class="form-group">
                                         <label class="control-label">Minutes</label>
                                         <div class="">
-                                            <input name="company_phone" class="form-control" type="text" placeholder="120">
+                                            <input name="company_phone" class="form-control" type="text" placeholder="120"
+                                                   v-model="notificationData.inactivity_length" @blur="synInactivityLength($event)">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
             <div class="col-md-5">
                 <div class="panel panel-flat review_ratings">
@@ -213,13 +127,15 @@
                                         <label class="control-label">Email notification</label>
                                         <span class="display-inline-block pull-right fsize11 text-muted">Receive an email every time you get new event &nbsp; &nbsp;
                                             <label class="custom-form-switch pull-right">
-                                                <input class="field" type="checkbox" id="phone_no_dppa">
+                                                <input class="field" type="checkbox" v-model="notificationData.email_notify" @change="synEmailNotify($event)">
                                                 <span class="toggle blue"></span>
                                             </label>
                                         </span>
                                         <div class="">
                                             <label class="control-label">Email</label>
-                                            <input name="company_phone" class="form-control" type="text" placeholder="max@wakers.co">
+                                            <input name="company_phone" class="form-control"
+                                                   v-model="notificationData.notify_email" @blur="synNotifyEmail($event)"
+                                                   type="text" placeholder="max@wakers.co">
                                         </div>
                                 </div>
                             </div>
@@ -242,13 +158,15 @@
                                         <label class="control-label">Sms notification</label>
                                         <span class="display-inline-block pull-right fsize11 text-muted">Receive an Sms every time you get new event &nbsp; &nbsp;
                                             <label class="custom-form-switch pull-right">
-                                                <input class="field" type="checkbox" id="phone_no_dppa">
+                                                <input class="field" type="checkbox"
+                                                @change="synSmsNotify($event)" v-model="notificationData.sms_notify">
                                                 <span class="toggle blue"></span>
                                             </label>
                                         </span>
                                         <div class="">
                                             <label class="control-label">SMS</label>
-                                            <input name="company_phone" class="form-control" type="text" placeholder="xx-xx-xx-xx">
+                                            <input @blur="synNotifyPhone($event)" v-model="notificationData.notify_phone"
+                                                   class="form-control" type="text" placeholder="xx-xx-xx-xx">
                                         </div>
                                 </div>
                             </div>
@@ -266,6 +184,7 @@
         title: 'Admin Settings - Brand Boost',
         data() {
             return {
+                refreshMessage: '',
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
@@ -273,6 +192,7 @@
                 seletedTab: 1,
                 settingsData: '',
                 notificationData: '',
+                notificationEventData: '',
                 oImportHistory: '',
                 oExportHistory: '',
                 oMemberships: '',
@@ -300,9 +220,9 @@
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
         },
-         
+
         methods: {
-             
+
             loadData: function () {
                 //getData
                 this.loading = true;
@@ -315,6 +235,7 @@
                         this.makeBreadcrumb(this.breadcrumb);
                         this.settingsData = response.data.settingsData;
                         this.notificationData = response.data.notificationData;
+                        this.notificationEventData = response.data.notificationEventData;
                         this.oImportHistory = response.data.oImportHistory;
                         this.oExportHistory = response.data.oExportHistory;
                         this.oMemberships = response.data.oMemberships;
@@ -329,12 +250,17 @@
                     });
             },
             checkPermissionentry: function(notification_slug){
-                console.log(notification_slug);
-                console.log(this.notificationData.sys_onsite_review_add);
-                console.log(this.notificationData.notification_slug);
-                if(this.notificationData.notification_slug){
-                    return true;
-                }else{
+                var i =0;
+                var found =0;
+                for (i=0; i < this.notificationEventData.length; i++) {
+                    if(this.notificationEventData[i].notification_slug == notification_slug){
+                        found =1;
+                        return true;
+                    }else{
+                        found =0;
+                    }
+                }
+                if(found ==0){
                     return false;
                 }
             },
@@ -346,6 +272,22 @@
             },
             synBrowserNotify: function(e){
                 this.updateSingleField('browser_notify',this.notificationData.browser_notify);
+            },
+            synInactivityLength: function(e){
+                this.updateSingleField('inactivity_length',this.notificationData.inactivity_length);
+            },
+
+            synEmailNotify: function(e){
+                this.updateSingleField('email_notify',this.notificationData.email_notify);
+            },
+            synNotifyEmail: function(e){
+                this.updateSingleField('notify_email',this.notificationData.notify_email);
+            },
+            synSmsNotify: function(e){
+                this.updateSingleField('sms_notify',this.notificationData.sms_notify);
+            },
+            synNotifyPhone: function(e){
+                this.updateSingleField('notify_phone',this.notificationData.notify_phone);
             },
             updateSingleField: function (fieldName, fieldValue) {
                 this.loading = true;
@@ -362,6 +304,7 @@
 
             },
             updateNotificationPermisson: function (notification_slug) {
+                console.log(notification_slug);
                 this.loading = true;
                 axios.post('admin/settings/updateNotificationPermisson', {
                     _token: this.csrf_token(),
@@ -374,12 +317,12 @@
                 });
 
             },
-             
+
         }
     }
     function loadJQCode(){
         $(document).ready(function () {
-              
+
         });
 
     }
