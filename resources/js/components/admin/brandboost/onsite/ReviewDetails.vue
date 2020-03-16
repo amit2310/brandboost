@@ -37,7 +37,7 @@
                                 <div class="bbot mb30">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <span class="circle_icon_24 bkg_reviews_400 mr-3">{{ review.firstname.charAt(0) }}</span>
+                                            <span class="circle_icon_24 bkg_reviews_400 mr-3">{{ review.firstname != '' ? review.firstname.charAt(0) : review.lastname.charAt(0) }}</span>
                                             <p class="fsize14 fw500 dark_600 float-left mr-3 lh_24">{{ capitalizeFirstLetter(review.firstname) + ' ' + capitalizeFirstLetter(review.lastname) }}</p>
 
                                         </div>
@@ -381,15 +381,17 @@
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Media</h3>
                             <hr>
 
+                            <div v-if="review.mediaArr.image.length > 0" class="row">
+                                <div v-for="media in review.mediaArr.image" class="col-6">
+                                    <img width="100%" class="br5 mb25" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${media}`"/>
+                                </div>
+                            </div>
 
-                            <div class="row">
-                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media1.svg"/></div>
-                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media2.svg"/></div>
-                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media3.svg"/></div>
-                                <div class="col-6"><img width="100%" class="br5 mb25" src="assets/images/media4.svg"/></div>
-
-
-
+                            <div v-if="review.mediaArr.video.length > 0" class="row">
+                                <div v-for="video in review.mediaArr.video" class="col-6">
+                                    <video class="media br5 " height="100%" width="100%" controls><source id="bb_video_enlarge" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${video}`" type="video/mp4"></video>
+                                    <div class="caption-overflow smallovfl"><a class="preview_video_src" style="cursor: pointer;" :filepath="`https://s3-us-west-2.amazonaws.com/brandboost.io/${video}`" fileext="mp4"><i class="icon-eye"></i></a></div>
+                                </div>
                             </div>
 
                         </div>
@@ -483,6 +485,7 @@
                         this.commentData = response.data.reviewCommentsData;
                         this.notesData = response.data.reviewNotesData;
                         this.loading = false;
+                        console.log((this.review.mediaArr));
                     });
             },
             addComment: function () {

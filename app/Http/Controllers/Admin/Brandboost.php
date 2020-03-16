@@ -1019,6 +1019,20 @@ class Brandboost extends Controller
         $reviewTags = getTagsByReviewID($reviewID);
         $totalComment = $mReviews->parentsCommentsCount($reviewID);
 
+        if(!empty($reviewData->media_url)) {
+            $media_url_arr = unserialize($reviewData->media_url);
+            foreach ($media_url_arr as $kArr => $vArr) {
+                //pre($vArr);
+                //$reviewData->media = $vArr['media_type']."^^^".$vArr['media_url'];
+                if($vArr['media_type'] == 'image') {
+                    $reviewData->mediaArr->image[] = $vArr['media_url'];
+                }
+                if($vArr['media_type'] == 'video') {
+                    $reviewData->mediaArr->video[] = $vArr['media_url'];
+                }
+            }
+        }
+
         if(!empty($reviewData)){
             $bbID = $reviewData->bbId;
             $aAllReviews = $mReviews->getCampaignAllReviews($bbID, true);
