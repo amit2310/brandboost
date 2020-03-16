@@ -19,7 +19,8 @@ class Settings extends Controller {
 	public function index(Request $request)
     {
 
-        $seletedTab = 1;//$request->input('t');
+        $seletedTab = 1;
+        $current_tab = request('current_tab');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $pID = $oUser->plan_id;
@@ -35,7 +36,8 @@ class Settings extends Controller {
                     </ul>';
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Brand Setting' => '#/settings/'
+            'Brand Setting' => '#/settings/general',
+            $current_tab => ''
         );
 
         $oSettings = SettingsModel::getNotificationSettings($userID);
@@ -186,6 +188,7 @@ class Settings extends Controller {
 
         if (!empty($request)) {
             $aData = array(
+                'company_logo' => @request('company_logo'),
                 'company_name' => request('company_name'),
                 'company_address' => request('company_address'),
                 'business_address_dppa' => request('business_address_dppa'),

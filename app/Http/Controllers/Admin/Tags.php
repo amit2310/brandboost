@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\TagsModel;
+use App\Models\Admin\SettingsModel;
 use Cookie;
 use Session;
 
@@ -1015,7 +1016,7 @@ class Tags extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $oTags = TagsModel::getClientTags($userID);
-
+        $mSetting = new SettingsModel();
 
         $filename = 'tags_' . time() . '.csv';
         header("Content-Description: File Transfer");
@@ -1041,7 +1042,7 @@ class Tags extends Controller {
                 'item_count' => count($oTags),
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mSettings->logExportHistory($aHistoryData);
+            $mSetting->logExportHistory($aHistoryData);
         }
         exit;
     }

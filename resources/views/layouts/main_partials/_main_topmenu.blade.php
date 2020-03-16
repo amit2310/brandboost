@@ -136,7 +136,7 @@
                         <a class="dropdown-item" href="{{ url('#/profile/') }}"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
                         <a class="dropdown-item" href="{{ url('/admin/accounts/usage') }}"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
                         <a class="dropdown-item" href="{{ url('/admin/invoices/view/'.$aUInfo->id.'') }}"><i class="dripicons-wallet text-muted mr-2"></i> Invoices</a>
-                        <a class="dropdown-item" href="{{ url('/admin/settings/') }}"><i class="dripicons-gear text-muted mr-2"></i> Settings</a>
+                        <a class="dropdown-item" href="{{ url('#/settings/general/') }}"><i class="dripicons-gear text-muted mr-2"></i> Settings</a>
                         <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url('/admin/login/logout/') }}"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>

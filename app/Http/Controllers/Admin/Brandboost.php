@@ -14,6 +14,7 @@ use App\Models\Admin\BrandModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\FeedbackModel;
 use App\Models\ReviewsModel;
+use App\Models\Admin\SettingsModel;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TemplatesModel;
 use App\Models\Admin\OffsiteModel;
@@ -7440,26 +7441,24 @@ public function widgetStatisticDetailsStatsGraph(){
         return view('admin.brandboost.brandboost-stats', $aData);
     }
 
-    public
-    function exportReviews()
+    public function exportReviews()
     {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mReviews = new ReviewsModel();
+        $mSetting = new SettingsModel();
         $oReviews = $mReviews->getMyBranboostReviews($userID);
 //        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
-
 
         $filename = 'reviews_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
-        //echo "Hello";
-        //die;
+//        echo "Hello";
+//        die;
         // file creation
         $file = fopen('php://output', 'w');
-
         $header = array("CAMPAIGN_ID", "CAMPAIGN_NAME", "TYPE", "AUTHOR", "EMAIL", "PHONE", "REVIEW_TITLE", "REVIEW_DESCRIPTION", "REVIEW_DATE");
         fputcsv($file, $header);
         foreach ($oReviews as $key => $line) {
@@ -7474,7 +7473,7 @@ public function widgetStatisticDetailsStatsGraph(){
                 'item_count' => count($oReviews),
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mSettings->logExportHistory($aHistoryData);
+            $mSetting->logExportHistory($aHistoryData);
         }
         exit;
     }

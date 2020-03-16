@@ -438,6 +438,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/settings/updateSystemNotificationContent', 'Admin\Settings@updateSystemNotificationContent');
 //    Setting export
     Route::get('admin/brandboost/exportMedia', 'Admin\Brandboost@exportMedia');
+    Route::get('admin/brandboost/exportReviews', 'Admin\Brandboost@exportReviews');
+    Route::get('admin/tags/exportTags', 'Admin\Tags@exportTags');
 
     Route::post('admin/webchat/favouriteUser', 'Admin\WebChat@favouriteUser');
     Route::post('admin/webchat/smallwfilter', 'Admin\WebChat@smallwfilter');

@@ -22,7 +22,8 @@
             <div class="clearfix"></div>
         </div>
         <div class="clearfix">&nbsp;</div>
-
+        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+        <loading :isLoading="loading"></loading>
         <div class="row">
             <div class="col-md-8">
                 <div class="panel panel-flat review_ratings">
@@ -462,7 +463,11 @@
                 //getData
                 this.loading = true;
                 console.log(this.current_page);
-                axios.get('/admin/settings?page='+this.current_page)
+                axios.get('/admin/settings?page='+this.current_page,{
+                        params: {
+                            current_tab:'billing'
+                        }
+                    })
                     .then(response => {
                         //console.log(response.data);
                         this.loading = false;
