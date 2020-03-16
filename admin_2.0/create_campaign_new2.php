@@ -63,6 +63,86 @@
    <div class="content-area">
     <div class="container-fluid">
     
+    
+     <!--******************
+	 PAGE LEFT SIDEBAR
+	**********************-->
+	<a class="close_sidebar" href="#">&nbsp; <img src="assets/images/menu-2-line.svg"></a>
+	<div class="page_sidebar bkg_light_000 fixed">
+ 	<div style="width: 279px;">
+	 	<div class="p20 bbot top_headings">
+	 		<div class="row">
+	 			<div class="col"><p>Review Campaign</p></div>
+	 		</div>
+	 	</div>
+      
+      <div class="p30 pb10 text-center">
+      	<img src="assets/images/review_setup_graph.svg"/>
+      </div>
+       
+      					<div class="p30 pb15">
+     						<div class="row">
+     							<div class="col-9">
+     								<p class="htxt_medium_12 dark_200 ls_4 m-0 ml20">EMAIL REQUESTS</p>
+     							</div>
+     							<div class="col-3">
+     								<label class="custom-form-switch mt-0 float-right">
+										<input class="field" type="checkbox" checked="">
+										<span class="toggle reviews"></span>
+									</label>
+     							</div>
+     						</div>
+      						<ul class="list_review mt-3">
+     							<li><a class="active" href="#">From</a></li>
+     							<li><a href="#">Email Subject</a></li>
+     							<li><a class="" href="#">Content</a></li>
+     							<li><a href="#">Settings & Tracking</a></li>
+     						</ul>
+      					</div>
+      					
+      					<div class="pl30 pr30"><hr class="m-0"></div>
+      					
+      					<div class="p30 pb15">
+     						<div class="row">
+     							<div class="col-9">
+     								<p class="htxt_medium_12 dark_200 ls_4 m-0 ml20">SMS REQUESTS</p>
+     							</div>
+     							<div class="col-3">
+     								<label class="custom-form-switch mt-0 float-right">
+										<input class="field" type="checkbox" checked="">
+										<span class="toggle reviews"></span>
+									</label>
+     							</div>
+     						</div>
+      						<ul class="list_review mt-3">
+     							<li><a class="" href="#">From</a></li>
+     							<li><a href="#">Content</a></li>
+     							<li><a class="" href="#">Settings & Tracking</a></li>
+     						</ul>
+      					</div>
+      					
+      					
+      					
+      					<div class="reviw_howtouse">
+      						<a href="#" class="close_x_icon2"><img src="assets/images/close_grey_line.svg"/></a>
+      						<p class="fsize12 fw300 light_000">Learn how to use <br><strong>Campaigns</strong> in 60 seconds</p>
+							<img src="assets/images/review_play.svg"/>
+      					</div>
+        
+       
+
+    
+    <div class="clearfix"></div> 
+    </div>  
+</div>
+   <!--******************
+	 PAGE LEFT SIDEBAR END
+	**********************-->
+   
+   
+   
+   
+    
     <div class="table_head_action pb0 mb15">
     <div class="row">
     	<div class="col">
@@ -206,6 +286,17 @@
 	$(".main-icon-menu-pane.review").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
 </script>
+
+<script>
+$(document).ready(function(){
+  $(".close_x_icon2").click(function(){
+    $(".reviw_howtouse").hide(200);
+  });
+ 
+});
+</script>
+
+
 
 </body>
 </html>

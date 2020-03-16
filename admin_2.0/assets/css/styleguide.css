@@ -84,6 +84,7 @@ Misc
 .max_h_330{max-height: 330px!important}
 .max_h_260{max-height: 260px!important}
 .close_x_icon{width: 24px; height: 24px; position: absolute; right: 20px; top: 20px;}
+.close_x_icon2{width: 20px; height: 20px; position: absolute; right: 10px; top: 10px;}
 .max_w_225{max-width: 225px;}
 .max_w_250{max-width: 250px;}
 
@@ -176,6 +177,7 @@ CUSTOM SWITCH STYLES
 .custom-form-switch .field:checked + .toggle.yellow {  border-color: #ed8e8c;  background-color: #ed8e8c;}
 .custom-form-switch .field:checked + .toggle.greenl {  border-color: #9ecc78;  background-color: #9ecc78;}
 .custom-form-switch .field:checked + .toggle.green3 {  border-color: #7ECD99;  background-color: #7ECD99;}
+.custom-form-switch .field:checked + .toggle.reviews {  border-color: #8C95F8;  background-color: #8C95F8;}
 
 
 
@@ -294,6 +296,20 @@ List Styles Classes
 .list1 li a.done{background: url(../images/checkbox-circle-fill.svg) 17px 11px no-repeat;}
 .list1 li a.active{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 500; border-radius: 45px;}
 .list1 li a:hover{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 500; border-radius: 45px;}
+
+
+.list_review{margin: 0 ;padding: 0;}
+.list_review li{margin: 5px 0 ;padding: 0; list-style: none; line-height: 36px;}
+.list_review li a{margin: 0 ;padding: 0 17px 0 45px; display: block;  font-weight: 400;font-size: 14px; color: #687693; background: url(../images/checkbox-blank-circle-line.svg) 17px 11px no-repeat;}
+.list_review li a.done{background: url(../images/review_check.svg) 17px 10px no-repeat; color: #333D54}
+.list_review li a.active{background: url(../images/review_blank_circle.svg) 17px 10px no-repeat #FFFFFF; color: #6672E8; border-radius: 45px; box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4);}
+.list_review li a:hover{background: url(../images/review_blank_circle.svg) 17px 10px no-repeat #FFFFFF; color: #6672E8; border-radius: 45px; box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4);}
+
+
+
+
+
+
 
 .list2{margin: 0 ;padding: 0;}
 .list2 li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 36px; border-bottom: 1px solid #F4F6FA; width: 100%; float: left}
