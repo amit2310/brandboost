@@ -197,7 +197,11 @@
                 //getData
                 this.loading = true;
                 console.log(this.current_page);
-                axios.get('/admin/settings?page='+this.current_page)
+                axios.get('/admin/settings?page='+this.current_page,{
+                        params: {
+                            current_tab:'import'
+                        }
+                    })
                     .then(response => {
                         //console.log(response.data);
                         this.loading = false;
