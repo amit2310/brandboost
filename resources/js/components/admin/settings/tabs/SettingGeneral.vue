@@ -1,8 +1,6 @@
 <template>
     <div class="content">
-        <!--******************
-                  Top Heading area
-                 **********************-->
+        <!--****************** Top Heading area  **********************-->
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
                 <div class="row">

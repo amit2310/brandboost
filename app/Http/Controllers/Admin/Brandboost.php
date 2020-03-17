@@ -279,7 +279,64 @@ class Brandboost extends Controller
         exit;
     }
 
+    /**
+     * Used to set onsite widget
+     * @return type
+     */
+    public function getWidget(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        $selectedTab = '';
+        $widgetID = $request->widgetID;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
 
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+        $breadcrumb ='';
+        $aData = array(
+            'title' => 'Onsite Widget',
+            'pagename' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+
+
+        if (!empty($widgetID)) {
+//            Session::put("selectedOnsiteWidget", $widgetID);
+
+            $response = $aData;
+            echo json_encode($response);
+            exit;
+        }
+    }
     /**
      * Used to get onsite configuration related values
      * @param type $request
@@ -319,6 +376,8 @@ class Brandboost extends Controller
             redirect("admin/brandboost/onsite");
             exit;
         }
+        $oWidgets = BrandboostModel::getBBWidgets($brandboostID);
+        $oStats = BrandboostModel::getBBWidgetStats($brandboostID);
 
         $bbProductsData = $mBrandboost->getProductData($brandboostID);
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
@@ -360,8 +419,7 @@ class Brandboost extends Controller
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Reviews' => '#/reviews/dashboard',
-            'Onsite' => '#/reviews/onsite',
+            'Onsite Widgets' => '#/widgets/onsite',
             'Setup' => '',
         );
 
@@ -371,8 +429,8 @@ class Brandboost extends Controller
             'getOnsite' => $getBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $getBrandboostFR,
-            'brandboostData' => $getBrandboost[0],
-            'campaignTitle' => $getBrandboost[0]->brand_title,
+            'brandboostData' => $oWidgets[0],
+            'campaignTitle' => @$oWidgets[0]->brand_title,
             'eventsData' => $eventsdata,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
@@ -1476,7 +1534,9 @@ class Brandboost extends Controller
         $aBrandboostData = array(
             'status' => $status,
         );
-        $result = BrandboostModel::updateBrandboost($userID, $aBrandboostData, $brandboostID);
+
+//        $result = BrandboostModel::updateBrandboost($userID, $aBrandboostData, $brandboostID);
+        $result = BrandboostModel::updateWidget($userID, $aBrandboostData, $brandboostID);
 
         //Add User Activity log data
         $aActivityData = array(
@@ -2392,64 +2452,7 @@ public function widgetStatisticDetailsStatsGraph(){
 
         return view('admin.brandboost.onsite_widget_setup', $aData);
     }
-    /**
-     * Used to set onsite widget
-     * @return type
-     */
-    public function getWidget(Request $request)
-    {
-        $response = array("status" => "error", "msg" => "Something went wrong");
-        $selectedTab = '';
-        $widgetID = $request->widgetID;
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
 
-        if (!empty($selectedTab)) {
-            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
-                //set required session
-                Session::put("setTab", $selectedTab);
-            }
-        } else {
-            $setTab = Session::get('setTab');
-            if ($setTab == '') {
-                Session::put("setTab", 'Review Sources');
-            }
-        }
-        if (empty($widgetID)) {
-            redirect("admin/brandboost/widgets");
-            exit;
-        }
-
-        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
-        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
-        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
-        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
-        $bActiveSubsription = UsersModel::isActiveSubscription();
-        $setTab = Session::get("setTab");
-        $breadcrumb ='';
-        $aData = array(
-            'title' => 'Onsite Widget',
-            'pagename' => $breadcrumb,
-            'oWidgets' => $oWidgets,
-            'bActiveSubsription' => $bActiveSubsription,
-            'widgetData' => $oWidgets[0],
-            'oBrandboostList' => $oBrandboostList,
-            'oStats' => $oStats,
-            'setTab' => $setTab,
-            'widgetID' => $widgetID,
-            'widgetThemeData' => $widgetThemeData,
-            'selectedTab' => $selectedTab
-        );
-
-
-        if (!empty($widgetID)) {
-//            Session::put("selectedOnsiteWidget", $widgetID);
-
-            $response = $aData;
-            echo json_encode($response);
-            exit;
-        }
-    }
     public function setWidgetType(Request $request)
     {
         $response = array("status" => "error", "msg" => "Something went wrong");

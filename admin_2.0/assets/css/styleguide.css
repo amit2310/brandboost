@@ -8,8 +8,11 @@ CARD CLASSES
 .card .dot_dropdown{position: absolute; right: 15px; top: 20px; z-index: 8}
 .card .dot_dropdown .dropdown-toggle:after{display: none;}
 .card .dot_dropdown .dropdown-toggle img{width: 16px; height: 16px!important;}
-
 .card .status_icon{position: absolute; left: 15px; top: 15px; z-index: 8}
+
+
+
+.disabled{opacity: 0.5;}
 
 
 /******************************
@@ -26,26 +29,7 @@ SHADOWS STYLES
 /******************************
 SMART POPUP SLIDING BOX
 ******************************/
-/*.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }*/
-
-.box {
-	float: left;
-	display: none;
-	top: 16px !important;
-	height: calc(100% - 32px);
-	width: 424px;
-	position: fixed !important;
-	box-sizing: border-box;
-	right: 85px !important;
-	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;
-	padding: 0px;
-	background: #fff !important;
-	z-index: 99;
-	border-radius: 6px;
-	border-top: 6px solid #5893FF;
-}
-
-
+.box {float: left;	display: none;	top: 16px !important;	height: calc(100% - 32px);	width: 424px;	position: fixed !important;	box-sizing: border-box;	right: 85px !important;	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;	padding: 0px;	background: #fff !important;	z-index: 99;	border-radius: 6px;	border-top: 6px solid #5893FF;}
 .box > div {position: relative!important;	background: #fff!important;	z-index: 999!important; border-radius: 6px;}
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
@@ -105,6 +89,7 @@ FORMS GROUP
 .form-control::placeholder {color: #7B89A6; opacity: 1;}
 .form-control-dark::placeholder {color: #333D54; opacity: 1; font-size: 14px;}
 .form-group .form-control.emoji{ background: url(../images/Emoji.png) 95% 15px #fff no-repeat;}
+.form-group .form-control.emoji2{ background: url(../images/user_smile_line_18.svg) 98% 15px #fff no-repeat;}
 .form-group .form-control.search{ background: url(../images/search-2-line.svg) 15px 13px #fff no-repeat; padding-left: 45px;}
 .form-group .form-control.shadow{border: none!important;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.3)!important;border-radius: 4px;}
 .review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
@@ -512,7 +497,7 @@ COLOR CLASSES
 .dark_100{color: #97A4BD!important}
 .dark_200{color: #7B89A6!important}
 .dark_300{color: #687693}
-.dark_400{color: #56627F}
+.dark_400{color: #56627F!important}
 .dark_500{color: #445069!important}
 .dark_600{color: #333D54!important}
 .dark_700{color: #242B3D}
