@@ -14,7 +14,7 @@
                 <div class="p20 pt30 pb10">
                     <div class="row">
                         <div class="col"><h3 class="htxt_medium_24 dark_800">Reviews</h3></div>
-                        <div class="col text-right"><button class="circle-icon-32 shadow3 "><img src="assets/images/add-fill-review.svg"></button></div>
+                        <div class="col text-right"><button class="circle-icon-32 shadow3 " @click="displayAddReviewForm"><img src="assets/images/add-fill-review.svg"></button></div>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                                 <span v-else-if="oReview.ratings == 3" class="circle_icon_24 bkg_yellow_200">{{ oReview.firstname.charAt(0) }}</span>
                                 <span v-else class="circle_icon_24 bkg_reviews_400">{{ oReview.firstname.charAt(0) }}</span>
 
-                                <span>{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
+                                <span @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
 
                             </span>
                             <strong>
