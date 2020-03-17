@@ -3365,14 +3365,14 @@ public function widgetStatisticDetailsStatsGraph(){
         $response = array();
 
         $validatedData = $request->validate([
-            'campaignName' => ['required'],
-            'OnsitecampaignDescription' => ['required']
+            'campaignName' => ['required']
+            //'OnsitecampaignDescription' => ['required']
         ]);
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $campaignName = $request->campaignName;
-        $OnsitecampaignDescription = $request->OnsitecampaignDescription;
+        $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
 
         $str = rand();
         $hashcode = sha1($str);
