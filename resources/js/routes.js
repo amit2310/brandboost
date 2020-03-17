@@ -142,7 +142,10 @@ import UserSupport from './components/user/Support';
  * --------------------------------------------------------------------------
  */
 import WidgetsOnsiteList from './components/admin/modules/widgets/WidgetsList';
-import WidgetsOnsiteSetup from './components/admin/modules/widgets/onsite/ReviewWidgets';
+import WidgetsOnsiteSetup1 from './components/admin/modules/widgets/onsite/setup/Setup';
+import WidgetsOnsiteSetup2 from './components/admin/modules/widgets/onsite/setup/Setup2';
+import WidgetsOnsiteSetup3 from './components/admin/modules/widgets/onsite/setup/Setup3';
+//import WidgetsOnsiteStats4 from './components/admin/modules/widgets/onsite/setup/Setup4';
 import WidgetsOnsiteStats from './components/admin/modules/widgets/onsite/Stats';
 /**
  * --------------------------------------------------------------------------
@@ -241,7 +244,9 @@ const routes = [
      */
 
     { path: '/widgets/onsite', component: WidgetsOnsiteList, meta: { title: 'Onsite Widgets'} },
-    { path: '/widgets/onsite/setup/:id/1', component: WidgetsOnsiteSetup, meta: { title: 'Onsite Widget Setup'} },
+    { path: '/widgets/onsite/setup/:id/1', component: WidgetsOnsiteSetup1, meta: { title: 'Onsite Widget Setup'} },
+    { path: '/widgets/onsite/setup/:id/2', component: WidgetsOnsiteSetup2, meta: { title: 'Onsite Widget Setup'} },
+    { path: '/widgets/onsite/setup/:id/3', component: WidgetsOnsiteSetup3, meta: { title: 'Onsite Widget Setup'} },
     { path: '/widgets/onsite/stats/:id/4', component: WidgetsOnsiteStats, meta: { title: 'Onsite Widget Stats'} },
 
     /**-----------------------------------End---------------------------------------*/
