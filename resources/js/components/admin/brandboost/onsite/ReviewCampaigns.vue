@@ -14,7 +14,7 @@
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>-->
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-3-line.svg"></button>
-                        <button class="btn btn-md bkg_reviews_400 light_000 js-review-campaign-slidebox"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000" id="displayAddCampaignForm" @click="displayAddCampaignForm"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -156,14 +156,14 @@
                             <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 3" @click="setupBroadcast(campaign.id)">ARCHIVE</p>
                             <div class="p15 pt15 btop" @click="setupBroadcast(campaign.id)">
                                 <ul class="workflow_list">
-                                    <li><a href="#"><span><img src="assets/images/send-plane-grey.svg"></span> {{ campaign.reviewRequestsCountK }}k</a></li>
-                                    <li><a href="#"><span><img src="assets/images/mail_open_fill_grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
-                                    <li><a href="#"><span><img src="assets/images/cursorline-fill-grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/send-plane-grey.svg"></span> {{ campaign.reviewRequestsCountK }}k</a></li>
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/mail_open_fill_grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/cursorline-fill-grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 d-flex js-review-campaign-slidebox" style="cursor: pointer;">
+                    <div class="col-md-3 d-flex" @click="displayAddCampaignForm" style="cursor: pointer;">
                         <div class="card p0 pt50 text-center animate_top col">
                             <a href="javascript:void(0);" class="circle-icon-64 bkg_light_200 m0auto"><img src="assets/images/plus_grey_24.svg"> </a>
                             <h3 class="htxt_bold_12 dark_200 mb-0 mt-4 text-uppercase">Create<br>new campaign</h3>
@@ -285,27 +285,126 @@
                                     <img class="mt40" style="max-width: 250px; " src="assets/images/review_Illustration.svg">
                                     <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any campaigns</h3>
                                     <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import campaign!</h3>
-                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 js-review-campaign-slidebox">Create review campaign</button>
+                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400" @click="displayAddCampaignForm">Create review campaign</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 text-center mt-3">
-                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
+                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
                     </div>
                 </div>
             </div>
 
 
             <!-- Add Campaign Popup -->
-            <div class="box" style="width: 724px;">
+            <div class="modal fade show" id="CREATEFORM">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content review">
+                        <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+                        <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="htxt_medium_24 dark_800 mb-3">Review Campaign</h3>
+                                <p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
+                                <hr/>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN NAME</label>
+                                    <!--<input type="text" class="form-control h48 fsize14 dark_200 br4" id="fname" placeholder="Enter new campaign name" name="fname">-->
+
+                                    <div class="campaign_name_sec border br4 p10 pl20 pr20 fsize14 dark_200">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <input type="text" v-model="form.campaignName" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new campaign name" name="campaignName">
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="dropdown campaign_forms">
+                                                    <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="assets/images/circle-dot.svg"/>
+                                                    </button>
+                                                    <div class="dropdown-menu w-100 dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0);"><img src="assets/images/circle-dot.svg"/> Option 1 </a>
+                                                        <a class="dropdown-item" href="javascript:void(0);"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
+                                                        <a class="dropdown-item" href="javascript:void(0);"><img src="assets/images/circle-dot.svg"/> Option 3 </a>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="help alert-danger" v-if="form.errors.has('campaignName')" v-text="form.errors.get('campaignName')"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
+                                    <div class="card border text-center shadow-none m-0" :class="{'reviews': form.campaignType =='manual'}" @click="form.campaignType='manual'" style="cursor: pointer;">
+                                        <img class="mb-3" src="assets/images/review_icon1.svg"/>
+                                        <p class="htxt_medium_14 dark_600 mb-3">Manual Campaign</p>
+                                        <p class="htxt_regular_12 dark_300 m-0 lh_17">Send review requests emails <br>& sms instantly to all or part <br>of your customers</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
+                                    <div class="card border text-center shadow-none m-0" :class="{'reviews': form.campaignType =='automated'}" @click="form.campaignType='automated'" style="cursor: pointer;">
+                                        <img class="mb-3" src="assets/images/review_icon2.svg"/>
+                                        <p class="htxt_medium_14 dark_600 mb-3">Automated Campaign</p>
+                                        <p class="htxt_regular_12 dark_300 m-0 lh_17">Automaticaly send email or sms<br> every time a new purchase or<br> contact is added</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <hr/>
+                            </div>
+
+                            <div class="col-6">
+                                <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                <input type="hidden" name="module_account_id" id="module_account_id" :value="moduleAccountID">
+                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" :disabled="form.errors.any()">CONTINUE</button>
+                                <a class="dark_200 fsize12 fw500 ml20 text-uppercase" data-dismiss="modal" href="javascript:void(0);">Close</a>
+                            </div>
+
+                            <div class="col-6 text-right mt-2">
+                                <a class="lh_32 htxt_regular_12 dark_200 ls_4" href="javascript:void(0);">
+                                    <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+                                    LEARN MORE ABOUT CAMPAIGNS
+                                </a>
+                            </div>
+
+
+
+
+                        </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!--<div class="box" style="width: 724px;">
                 <div style="width: 724px;overflow: hidden; height: 100%;">
                     <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-campaign-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
                         <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-12">
-                                        <!--<img src="/assets/images/sms_temp_icon.svg"/>-->
+                                        &lt;!&ndash;<img src="/assets/images/sms_temp_icon.svg"/>&ndash;&gt;
                                         <h3 class="htxt_medium_24 dark_800 mb-3">Review Campaign</h3>
                                         <p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
                                         <hr/>
@@ -362,7 +461,7 @@
                                     </div>
 
                                     <div class="col-6 text-right mt-2">
-                                        <a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
+                                        <a class="lh_32 htxt_regular_12 dark_200 ls_4" href="javascript:void(0);">
                                             <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
                                             LEARN MORE ABOUT CAMPAIGNS
                                         </a>
@@ -372,7 +471,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!-- /Add Campaign -->
         </div>
         <!--******************
@@ -383,6 +482,7 @@
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
+    import jq from 'jquery';
     let tkn = $('meta[name="_token"]').attr('content');
 
     export default {
@@ -405,7 +505,8 @@
                 form: new Form({
                     campaignName: '',
                     OnsitecampaignDescription: '',
-                    campaign_id: ''
+                    campaign_id: '',
+                    campaignType: 'manual'
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
@@ -472,6 +573,9 @@
                 }
                 this.formLabel = lbl;
                 document.querySelector('.js-review-campaign-slidebox').click();
+            },
+            displayAddCampaignForm: function(){
+                document.querySelector('#displayAddCampaignForm').click();
             },
             prepareItemUpdate: function(campaign_id) {
                 this.getItemInfo(campaign_id);
@@ -575,11 +679,10 @@
             }
         }
     }
-    $(document).ready(function () {
-        $(document).on('click', '.js-review-campaign-slidebox', function(){
-            $(".box").animate({
-                width: "toggle"
-            });
-        });
+    $(document).ready(function(){
+        $(document).on("click", "#displayAddCampaignForm", function(){
+            $("#CREATEFORM").modal('show');
+        })
+
     });
 </script>

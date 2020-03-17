@@ -5,7 +5,7 @@
                 <div class="modal-wrapper">
                     <div class="modal-container" :class="width">
 
-                        <div class="modal-header">
+                        <div v-if="$slots.header" class="modal-header">
                             <slot name="header">
                                 default header
                             </slot>
@@ -17,7 +17,7 @@
                             </slot>
                         </div>
 
-                        <div class="modal-footer">
+                        <div v-if="$slots.footer" class="modal-footer">
                             <slot name="footer">
                                 default footer
                                 <button class="modal-default-button" @click="$emit('close')">
