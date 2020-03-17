@@ -31,86 +31,7 @@
                 <!--******************
                  PAGE LEFT SIDEBAR
                 **********************-->
-                <a class="close_sidebar" href="javascript:void(0);">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a>
-                <div class="page_sidebar bkg_light_000 fixed">
-                    <div style="width: 279px;">
-                        <div class="p20 bbot top_headings">
-                            <div class="row">
-                                <div class="col"><p>ReviewS</p></div>
-                            </div>
-                        </div>
-
-                        <div class="p20 pt30 pb10">
-                            <div class="row">
-                                <div class="col"><h3 class="htxt_medium_24 dark_800">Reviews</h3></div>
-                                <div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/add-fill-review.svg"></button></div>
-                            </div>
-                        </div>
-
-                        <div class="p20 top_headings">
-                            <div class="row">
-                                <div class="col"><p><a href="#"><img src="assets/images/filter-line.svg"> &nbsp; Filter</a></p></div>
-                                <div class="col text-right"><p><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a> &nbsp; <a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></p></div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="p20 pt0 pb0 bkg_light_050">
-                            <ul class="list_with_icons3">
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_reviews_400">c</span>Colleen Cooper</span>
-                                    <strong>4.5 <i class="ri-star-fill green_400"></i></strong>
-                                </li>
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_green_200">b</span>Brandon Mckinney</span>
-                                    <strong>4.8 <i class="ri-star-fill green_400"></i></strong>
-                                </li>
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_review_200">a</span>Ann Mccoy</span>
-                                    <strong>3.2 <i class="ri-star-fill yellow_400"></i></strong>
-                                </li>
-                                <li class="d-flex active">
-                                    <span><span class="circle_icon_24 bkg_blue_200">d</span>Debra Edwards</span>
-                                    <strong>4.3 <i class="ri-star-fill green_400"></i></strong>
-                                </li>
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_red_200">c</span>Calvin Flores</span>
-                                    <strong>2.7 <i class="ri-star-fill red_400"></i></strong>
-                                </li>
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_light_800 ">j</span>Johnny Robertson</span>
-                                    <strong>4.8 <i class="ri-star-fill green_400"></i></strong>
-                                </li>
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_green_400">d</span>Dwight Jones</span>
-                                    <strong>4.5 <i class="ri-star-fill green_400"></i></strong>
-                                </li>
-                                <li class="d-flex">
-                                    <span><span class="circle_icon_24 bkg_red_400">m</span>Max Miles</span>
-                                    <strong>1.5 <i class="ri-star-fill red_400"></i></strong>
-                                </li>
-
-
-
-
-
-
-
-
-                            </ul>
-
-                            <div class="clearfix"></div>
-                        </div>
-
-
-
-
-
-
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+                <OnsiteReviewsSummary></OnsiteReviewsSummary>
                 <!--******************
                   PAGE LEFT SIDEBAR END
                  **********************-->
@@ -534,8 +455,10 @@
 </template>
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
+    import OnsiteReviewsSummary from '@/components/admin/brandboost/onsite/tabs/ReviewsSummary';
+
     export default {
-        components: {UserAvatar},
+        components: {UserAvatar, OnsiteReviewsSummary},
         data() {
             return {
                 successMsg: '',
