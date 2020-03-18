@@ -43,13 +43,14 @@
                 </div>
                     <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
-                        <li v-for="oReview in oReviews" :key="oReview.reviewid" class="d-flex">
-                            <span>
+                        <li v-for="oReview in oReviews" :key="oReview.reviewid" class="d-flex" :class="{ active : active_el == oReview.reviewid }">
+                            <span @click="showReview(oReview.reviewid)" style="cursor: pointer;">
+
                                 <span v-if="oReview.ratings > 3" class="circle_icon_24 bkg_green_200">{{ oReview.firstname.charAt(0) }}</span>
                                 <span v-else-if="oReview.ratings == 3" class="circle_icon_24 bkg_yellow_200">{{ oReview.firstname.charAt(0) }}</span>
                                 <span v-else class="circle_icon_24 bkg_reviews_400">{{ oReview.firstname.charAt(0) }}</span>
 
-                                <span @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
+                                <span>{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
 
                             </span>
                             <strong>
@@ -127,7 +128,8 @@
                 breadcrumb: '',
                 viewType: 'List View',
                 sortBy: 'Date Created',
-                searchBy: ''
+                searchBy: '',
+                active_el: false
             }
         },
         created() {
@@ -150,6 +152,7 @@
             },
             showReview: function(id){
                 window.location.href='#/reviews/onsite/reviews/'+id;
+                this.active_el = id;
             },
             showQuestions: function(id){
                 window.location.href='#/brandboost/questions/'+id;
