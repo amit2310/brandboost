@@ -344,7 +344,7 @@
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
-    import OnsiteCampaignsTab from '@/components/admin/brandboost/onsite/tabs/Campaigns';
+    import OnsiteCampaignsTab from '@/components/admin/brandboost/onsite/tabs/CampaignsSummary';
     import OnsiteReviewsTab from '@/components/admin/brandboost/onsite/tabs/Reviews';
     import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 

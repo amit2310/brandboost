@@ -28,6 +28,14 @@
         <div class="content-area">
             <div class="container-fluid">
 
+                <!--******************
+                 PAGE LEFT SIDEBAR
+                **********************-->
+                <OnsiteReviewsSummary></OnsiteReviewsSummary>
+                <!--******************
+                  PAGE LEFT SIDEBAR END
+                 **********************-->
+
                 <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <div class="row">
@@ -188,7 +196,7 @@
                         </div>
 
                         <div class="row" v-if="displayActivity=='commentSection'">
-                            <div v-if="commentData.length > 0" class="col-md-12">
+                            <div v-if="commentData && commentData.length > 0" class="col-md-12">
                                 <div v-for="comment in commentData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -212,7 +220,7 @@
                         </div>
 
                         <div class="row" v-if="displayActivity=='notesSection'">
-                            <div v-if="notesData.length > 0"  class="col-md-12">
+                            <div v-if="notesData && notesData.length > 0"  class="col-md-12">
                                 <div v-for="note in notesData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -381,13 +389,13 @@
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Media</h3>
                             <hr>
 
-                            <div v-if="review.mediaArr.image.length > 0" class="row">
+                            <div v-if="review.mediaArr.image && review.mediaArr.image.length > 0" class="row">
                                 <div v-for="media in review.mediaArr.image" class="col-6">
                                     <img width="100%" class="br5 mb25" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${media}`"/>
                                 </div>
                             </div>
 
-                            <div v-if="review.mediaArr.video.length > 0" class="row">
+                            <div v-if="review.mediaArr.video && review.mediaArr.video.length > 0" class="row">
                                 <div v-for="video in review.mediaArr.video" class="col-6">
                                     <video class="media br5 " height="100%" width="100%" controls><source id="bb_video_enlarge" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${video}`" type="video/mp4"></video>
                                     <div class="caption-overflow smallovfl"><a class="preview_video_src" style="cursor: pointer;" :filepath="`https://s3-us-west-2.amazonaws.com/brandboost.io/${video}`" fileext="mp4"><i class="icon-eye"></i></a></div>
@@ -396,7 +404,7 @@
 
                         </div>
 
-                        <div v-if="tagsData.length > 0" class="card p25">
+                        <div v-if="tagsData && tagsData.length > 0" class="card p25">
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
                             <hr>
                             <div>
@@ -447,8 +455,10 @@
 </template>
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
+    import OnsiteReviewsSummary from '@/components/admin/brandboost/onsite/tabs/ReviewsSummary';
+
     export default {
-        components: {UserAvatar},
+        components: {UserAvatar, OnsiteReviewsSummary},
         data() {
             return {
                 successMsg: '',
