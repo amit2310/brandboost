@@ -11,7 +11,7 @@
                         </h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.bc_status !='archive'" @click="saveDraft"> Save as draft</button>
+                        <button class="btn btn-md bkg_light_000 dark_300 slidebox mr10 pr20" v-if="this.campaign.status !='3'" @click="saveDraft"> Save as draft</button>
                         <button class="btn btn-md bkg_email_300 light_000" @click="displayStep(3)"> Next <span style="opacity: 1"><img
                             src="/assets/images/arrow-right-line-white.svg"/></span></button>
                     </div>
@@ -47,17 +47,17 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div style="margin: 0;" class="panel panel-flat">
-                            <div class="panel-heading p15">
-                                <h6 class="panel-title">
-                                    Configurations
 
-                                    Design
-
-                                    Campaigns
-                                </h6>
-                            </div>
-                            <hr/>
                             <div class="panel-body p15">
+                                <div class="panel-title">
+                                    <h6 class="fsize11 text-uppercase dark_200 m-0 ">
+                                        <a  class="fsize11 text-uppercase dark_200 m-0" href="javascript:void(0);" @click="SettingTabActive(1)">Configurations</a>
+                                        <a @click="SettingTabActive(2)" class="fsize11 text-uppercase dark_200 m-0  p8" href="javascript:void(0);">Design</a>
+                                        <a @click="SettingTabActive(3)" class="fsize11 text-uppercase dark_200 m-0" href="javascript:void(0);">Campaigns</a>
+                                    </h6>
+                                </div>
+                                <hr/>
+                                <!--                            {{oBrandboostList}}-->
                                 <div class="embed-responsive">
                                     <div v-if="settingTab ==1 ">
                                         <div class="bbot pb10 mb15">
@@ -67,8 +67,7 @@
                                         </div>
                                         <div class="p0">
                                             <div class="form-group">
-                                                <label class="fsize13" for="fname">Template</label>
-
+                                                <label class="fsize13" for="galleryDesignType">Template</label>
                                                 <button id="galleryDesignType" type="button" class="btn h52 form-control w100 js-media-widget-slidebox1" style="text-align: left; padding: 7px 23px!important;">
                                                     <span>Horizontal Popup</span>
                                                     <i class="pull-right txt_grey">
@@ -86,45 +85,47 @@
                                         <div class="p0">
                                             <h3 class="dark_400 mb0 fsize13 fw300">Comments &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_title" :checked="campaign.allow_title" @change="synAllowTitle($event)">
+                                                    <input class="field" type="checkbox" v-model="campaign.allow_comments" :checked="campaign.allow_comments" @change="synAllowComment($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">Video Reviews &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" @change="synAllowArrow($event)">
+                                                    <input class="field" type="checkbox" v-model="campaign.allow_video_reviews" :checked="campaign.allow_video_reviews" @change="synAllowVideoReviews($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">Helpful Feedback                                    &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="synAllowRatings($event)">
+                                                    <input class=" field" type="checkbox" v-model="campaign.allow_helpful_feedback" :checked="campaign.allow_helpful_feedback" @change="synAllowHelpful($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">People Currently Reading
                                                 <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_title" :checked="campaign.allow_title" @change="synAllowTitle($event)">
+                                                    <input class="field" type="checkbox" v-model="campaign.allow_live_reading_review" :checked="campaign.allow_live_reading_review" @change="synAllowLiveReading($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">Comment Rating &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" @change="synAllowArrow($event)">
+                                                    <input class="field" type="checkbox" v-model="campaign.allow_comment_ratings" :checked="campaign.allow_comment_ratings" @change="synAllowRatings($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">Review Date Stamps                                    &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="synAllowRatings($event)">
+                                                    <input class=" field" type="checkbox" v-model="campaign.allow_review_timestamp" :checked="campaign.allow_review_timestamp" @change="synAllowTimestamp($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">Alternative Design &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_arrow" :checked="campaign.allow_arrow" @change="synAllowArrow($event)">
+                                                    <input class="field" type="checkbox" v-model="campaign.alternative_design" :checked="campaign.alternative_design" @change="synAlternativeDesign($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                             <h3 class="dark_400 mb0 fsize13 fw300">Display Campaign Name                                    &nbsp;
                                                 <label class="custom-form-switch float-right">
-                                                    <input class=" field" type="checkbox" v-model="campaign.allow_ratings" :checked="campaign.allow_ratings" @change="synAllowRatings($event)">
+                                                    <input class=" field" type="checkbox" v-model="campaign.allow_campaign_name" :checked="campaign.allow_campaign_name" @change="synAllowCampaignName($event)">
                                                     <span class="toggle email"></span> </label>
                                             </h3>
                                         </div>
+
+
                                         <div class="btop bbot pb10 mb15 mt15">
                                             <h2 class="fsize11 text-uppercase dark_200 m-0">BRAND BOOST DETAILS
                                                 <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -190px"></i>
@@ -132,97 +133,193 @@
                                         </div>
                                         <div class="p0">
                                             <div class="form-group">
-                                                <label class="fsize13" for="fname">Brand Boost Name</label>
-                                                <input type="text" v-model="campaign.name" class="form-control h40" id="fname" placeholder="Brand Boost Name" name="name">
+                                                <label class="fsize13" for="domain_name">Domain</label>
+                                                <input type="text" v-model="campaign.domain_name"
+                                                       @change="updateSettings('domain_name', $event.target.value, 'brandboost')"
+                                                       class="form-control h40" id="domain_name" placeholder="https://google.com/">
                                             </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div v-if="settingTab ==2 ">
-                                        <div class="bbot pb10 mb15">
-                                            <h2 class="fsize11 text-uppercase dark_200 m-0">BRANDING
-                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
-                                            </h2>
                                         </div>
                                         <div class="p0">
-                                            <h3 class="dark_400 mb0 fsize13 fw300">BORDER DROP-SHADOW
-                                                <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_border_shadow" :checked="campaign.allow_border_shadow" @change="synAllowBorderShadow($event)">
-                                                    <span class="toggle email"></span> </label>
-                                            </h3>
-                                            <h3 class="dark_400 mb0 fsize13 fw300">BORDER COLOR
-                                                <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.allow_widget_bgcolor" :checked="campaign.allow_widget_bgcolor" @change="synAllowWidgetBgcolor($event)">
-                                                    <span class="toggle email"></span> </label>
-                                            </h3>
-                                        </div>
-                                        <div class="pt10">
                                             <div class="form-group">
-                                                <label class="fsize13" for="fname">Border Thickness</label>
-                                                <select v-model="campaign.border_thickness" @change="synBorderThickness($event)" class="form-control h52" name="borderThickness" id="border_thickness">
-                                                    <option value="1">1px</option>
-                                                    <option value="2">2px</option>
-                                                    <option value="3">3px</option>
-                                                    <option value="4">4px</option>
-                                                    <option value="5">5px</option>
-                                                    <option value="6">6px</option>
+                                                <label class="fsize13" for="brand_title">Brand Boost Name</label>
+                                                <input type="text" v-model="campaign.brand_title"
+                                                       @change="updateSettings('brand_title', $event.target.value, 'brandboost')"
+                                                       class="form-control h40" id="brand_title" placeholder="New Product on Site Boost" name="brand_title">
+                                            </div>
+                                        </div>
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label for="company_logo" class="fsize12 fw300">Company logo</label>
+                                                <input type="hidden" id="company_logo" name="company_logo" @click="updateSettings('company_logo', $event.target.value, 'brandboost')">
+                                                <div class="img_vid_upload_small">
+                                                    <div class="dropzone" id="myDropzone_CmpLogo"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label for="logo_img" class="fsize12 fw300">Product image</label>
+                                                <input type="hidden" id="logo_img" name="logo_img" @click="updateSettings('logo_img', $event.target.value, 'brandboost')">
+                                                <div class="img_vid_upload_small">
+                                                    <div class="dropzone" id="myDropzone_logo_img"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="btop bbot pb10 mb15 mt15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">REVIEW SETTINGS
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -190px"></i>
+                                            </h2>
+                                        </div>
+
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label class="fsize13" for="brand_title">Reviews Order</label>
+                                                <select v-model="campaign.reviews_order" @change="updateSettings('reviews_order', $event.target.value, 'brandboost')" class="form-control h52 autoSaveConfig"  id="reviews_order">
+                                                    <option value="all" selected="">All Reviews</option>
+                                                    <option value="top_rating">Top Rated Reviews</option>
+                                                    <option value="lowest_rating">Lowest Rated Reviews</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <h3 class="dark_400 mb0 fsize13 fw300">WIDGET COLOR
-                                            <label class="custom-form-switch float-right">
-                                                <input class="field" type="checkbox" v-model="campaign.bg_color_type" :checked="campaign.bg_color_type =='on'" @change="synBgColorType($event)">
-                                                <span class="toggle email"></span> </label>
-                                            <span class="float-right pr10">Gradient </span>
-                                        </h3>
-                                        <div class="widgetMultiColorBox" v-if="campaign.bg_color_type =='on'">
+                                        <div class="p0">
                                             <div class="form-group">
-                                                <div class="color_box">
-                                                    <input type="hidden" name="main_colors" id="main_colors"  :value="campaign.gradient_color">
-                                                    <div v-on:click="synMainColor('white')" class="color_cube white selectMainColor " :class="{ 'active' : campaign.gradient_color == 'white'}" color-class="bbw_white_color"></div>
-                                                    <div v-on:click="synMainColor('red')" class="color_cube dred selectMainColor " :class="{ 'active' : campaign.gradient_color == 'red'}"  color-class="bbw_red_color"></div>
-                                                    <div v-on:click="synMainColor('yellow')" class="color_cube yellow selectMainColor " :class="{ 'active' : campaign.gradient_color == 'yellow'}" color-class="bbw_yellow_color"></div>
-                                                    <div v-on:click="synMainColor('orange')" class="color_cube red selectMainColor " :class="{ 'active' : campaign.gradient_color == 'orange'}" color-class="bbw_orange_color"></div>
-                                                    <div v-on:click="synMainColor('green')" class="color_cube green selectMainColor " :class="{ 'active' : campaign.gradient_color == 'green'}" color-class="bbw_green_color"></div>
-                                                    <div v-on:click="synMainColor('blue')" class="color_cube blue selectMainColor " :class="{ 'active' : campaign.gradient_color == 'blue'}" color-class="bbw_blue_color"></div>
-                                                    <div v-on:click="synMainColor('purple')" class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
-                                                    <div class="clearfix"></div>
-                                                </div>
+                                                <label class="fsize13" for="brand_title">Reviews Order By</label>
+                                                <select v-model="campaign.reviews_order_by" @change="updateSettings('reviews_order_by', $event.target.value, 'brandboost')"  class="form-control h52" id="reviews_order_by">
+                                                    <option value="all" selected="">All Reviews</option>
+                                                    <option value="newest">Newest Reviews</option>
+                                                    <option value="oldest">Oldest Reviews</option>
+                                                </select>
                                             </div>
-                                            <div class="row orientation_top" style="display:block">
-                                                <div class="col-md-12">
-                                                    <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <input type="hidden" id="color_orientation" name="color_orientation" :value="campaign.gradient_orientation">
-                                                    <!-- gradient_orientation -->
-                                                    <ul class="choose_orientation">
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')"   main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')"  main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
-                                                        <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
-                                                    </ul>
-                                                </div>
+                                        </div>
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label class="fsize13" for="num_of_review">Reviews display</label>
+                                                <input v-model="campaign.num_of_review" min="0" type="number" @change="updateSettings('num_of_review', $event.target.value, 'brandboost')"  class="form-control h52" id="num_of_review" />
+                                            </div>
+                                        </div>
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label class="fsize13" for="often_bb_display">How often to show widget</label>
+                                                <input v-model="campaign.often_bb_display" min="0" type="number" @change="updateSettings('often_bb_display', $event.target.value, 'brandboost')"  class="form-control h52" id="often_bb_display" />
+                                            </div>
+                                        </div>
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label class="fsize13" for="min_ratings_display">Minimum rating to display</label>
+                                                <input v-model="campaign.min_ratings_display" min="0" max="5" type="number" @change="updateSettings('min_ratings_display', $event.target.value, 'brandboost')"  class="form-control h52" id="min_ratings_display" />
                                             </div>
                                         </div>
 
-                                        <div v-if="!campaign.bg_color_type" class="widgetMultiColorBox">
-                                            <div class="col-md-12">
-                                                <span class="fsize13 dark_400 mt-2">SOLID COLOR:</span>
-                                                <input type="text"
-                                                       class="form-control colorpicker-basic2 float-right"
-                                                       name="solid_color"
-                                                       v-model="campaign.solid_color"
-                                                       @change="synSolidColor()"
-                                                >
+                                    </div>
+
+
+                                    <div v-if="settingTab ==2 ">
+                                        <div class="bbot pb10 mb15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">WIDGET APPEARANCE
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                            </h2>
+                                        </div>
+
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <label class="control-label">Widget Position</label>
+                                                <select class="form-control h52 autoSaveDesign widgetPosition" v-model="campaign.widget_position" id="widget_position" style="display: none;">
+                                                    <option value="bottom-left" selected="">Left</option>
+                                                    <option value="bottom-right">Right</option>
+                                                </select>
+                                                <div class="form-control h52">
+                                                    <span v-if="campaign.widget_position =='bottom-right'">Bottom Right</span>
+                                                    <span v-if="campaign.widget_position =='bottom-left'">Bottom Left</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Widget Theme</label>
+                                                <select class="form-control h52" @change="updateSettings('widget_themes', $event.target.value, 'brandboost')"  v-model="campaign.widget_themes" id="widget_themes">
+                                                    <option v-for="wtheme in widgetThemeData" :value="wtheme.id">{{wtheme.widget_theme_title}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="bbot pb10 mb15">
+                                                <h2 class="fsize11 text-uppercase dark_200 m-0">WIDGET STYLE
+                                                    <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                                </h2>
+                                            </div>
+                                            <h3 class="dark_400 mb0 fsize13 fw300">WIDGET COLOR
+                                                <label class="custom-form-switch float-right">
+                                                    <input class="field" type="checkbox" v-model="campaign.bg_color_type" :checked="campaign.bg_color_type =='on'"
+                                                           @change="updateSettings('widget_themes', $event.target.value, 'brandboost')">
+                                                    <span class="toggle email"></span> </label>
+                                                <span class="float-right pr10">Gradient </span>
+                                            </h3>
+                                            <div class="widgetMultiColorBox">
+                                                <div class="form-group">
+                                                    <div class="color_box">
+                                                        <input type="hidden" name="main_colors" id="main_colors"  :value="campaign.gradient_color">
+                                                        <div v-on:click="synMainColor('white')" class="color_cube white selectMainColor " :class="{ 'active' : campaign.gradient_color == 'white'}" color-class="bbw_white_color"></div>
+                                                        <div v-on:click="synMainColor('red')" class="color_cube dred selectMainColor " :class="{ 'active' : campaign.gradient_color == 'red'}"  color-class="bbw_red_color"></div>
+                                                        <div v-on:click="synMainColor('yellow')" class="color_cube yellow selectMainColor " :class="{ 'active' : campaign.gradient_color == 'yellow'}" color-class="bbw_yellow_color"></div>
+                                                        <div v-on:click="synMainColor('orange')" class="color_cube red selectMainColor " :class="{ 'active' : campaign.gradient_color == 'orange'}" color-class="bbw_orange_color"></div>
+                                                        <div v-on:click="synMainColor('green')" class="color_cube green selectMainColor " :class="{ 'active' : campaign.gradient_color == 'green'}" color-class="bbw_green_color"></div>
+                                                        <div v-on:click="synMainColor('blue')" class="color_cube blue selectMainColor " :class="{ 'active' : campaign.gradient_color == 'blue'}" color-class="bbw_blue_color"></div>
+                                                        <div v-on:click="synMainColor('purple')" class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row orientation_top" style="display:block">
+                                                    <div class="col-md-12">
+                                                        <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <input type="hidden" id="color_orientation" name="color_orientation" :value="campaign.gradient_orientation">
+                                                        <!-- gradient_orientation -->
+                                                        <ul class="choose_orientation">
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')"   main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')"  main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="!campaign.bg_color_type" class="widgetMultiColorBox">
+                                                <div class="col-md-12">
+                                                    <span class="fsize13 dark_400 mt-2">SOLID COLOR:</span>
+                                                    <input type="text"
+                                                           class="form-control colorpicker-basic2 float-right"
+                                                           name="solid_color"
+                                                           v-model="campaign.solid_color"
+                                                           @change="synSolidColor()"
+                                                    >
+                                                </div>
+                                            </div>
+
+                                            <div class="bbot pb10 mb15">
+                                                <h2 class="fsize11 text-uppercase dark_200 m-0">FONT COLOR
+                                                    <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                                </h2>
                                             </div>
                                         </div>
+
+<!--                                        <div class="pt10">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label class="fsize13" for="fname">Border Thickness</label>-->
+<!--                                                <select v-model="campaign.border_thickness" @change="synBorderThickness($event)" class="form-control h52" name="borderThickness" id="border_thickness">-->
+<!--                                                    <option value="1">1px</option>-->
+<!--                                                    <option value="2">2px</option>-->
+<!--                                                    <option value="3">3px</option>-->
+<!--                                                    <option value="4">4px</option>-->
+<!--                                                    <option value="5">5px</option>-->
+<!--                                                    <option value="6">6px</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
                                     </div>
 
                                     <div v-if="settingTab ==3 ">
@@ -231,52 +328,22 @@
                                                 <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -145px;"></i>
                                             </h2>
                                         </div>
-                                        <!--{{campaign}}-->
-                                        <div class="form-group mb10" style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #f4f6fa;" v-for="review in reviewsData">
-                                            <div class="pull-left mb0 showReviewPopup">
-                                                <div>
-
-                                                    <div class="media-left pr-15">
-                                                        <template v-for=" (rateUrl,idx) in review.media_url" >
-                                                            <img  v-if="idx==0"  class="review_productimg"  :src="getReviewImageUrl(rateUrl.media_url)">
-                                                        </template>
-
-                                                    </div>
-                                                    <div class="media-left pr0">
-                                                        <div>{{review.brand_title}}</div>
-                                                        <div class="text-size-small text-muted" style="font-size:11px;"> {{review.review_title}}</div>
-                                                    </div>
-                                                    <div class="review_section_user pt-15">
-                                                        <div class="top_div" style="border: none;">
-                                                            <!--                                                        <div class="left"><i class="circle"></i><a class="icons" href="javascript:void(0);"><span class="icons fl_letters s32">DM</span></a></div>-->
-                                                            <div class="right">
-                                                                <div class="client_n"><span>{{review.firstname}} {{review.lastname}}</span></div>
-                                                                <div class="client_review">
-                                                                    <template v-for="rateIdx in 5" >
-                                                                        <img v-if="rateIdx < review.ratings" src="/assets/images/widget/yellow_icon.png">
-                                                                        <img v-else src="/assets/images/widget/grey_icon.png">
-                                                                    </template>
-                                                                    <span> {{ displayDateFormat('F dS Y', review.created) }}</span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="form-group mb10" style="" v-for="review in oBrandboostList">
+                                            <div class="p0">
+                                                <h3 class="dark_400 mb0 fsize13 fw300">
+                                                    {{review.brand_title}}
+                                                    <label class="custom-form-switch pull-right">
+                                                        <input class="field"
+                                                               type="checkbox"
+                                                               id="review-" :id="'review-'+review.id"
+                                                                v-bind:value="review.id"
+                                                               :checked="findSelectedReview(review.id)"
+                                                               @change="synBrandboostId($event , review.id)">
+                                                        <span class="toggle dred"></span>
+                                                    </label>
+                                                </h3>
                                             </div>
-                                            <!--                                    v-model="findSelectedReview(review.id)"-->
-                                            <label class="custom-form-switch pull-right">
-                                                <input class="field"
-                                                       type="checkbox"
-                                                       id="review-" :id="review.id"
-                                                       v-bind:value="review.id"
-                                                       :checked="findSelectedReview(review.id)"
-                                                       v-model="campaign.reviews_id"
-                                                       @change="synReviewsId(review.id)">
-                                                <!--                                                <input class="field autoSaveReview" type="checkbox" id="widget_review_" :id="review.id" name="reviewsId[]" :value="review.id">-->
-                                                <span class="toggle dred"></span>
-                                            </label>
-                                            <div class="clearfix"></div>
                                         </div>
-
                                     </div>
                                     <div class="col-12 pt-15">
                                         <button class="btn btn-success btn-sm bkg_green_300 light_000 text-center" @click="synSolidColor">Save<span><img
@@ -294,7 +361,8 @@
                             </div>
                             <div class="panel-body p15">
                                 <div class="embed-responsive embed-responsive-16by9">
-
+<!--                    {{// oBrandboostList}}-->
+<!--                                    {{campaign}}-->
                                 </div>
                             </div>
                         </div>
@@ -456,7 +524,7 @@
                 campaign: {},
                 user: {},
                 breadcrumb: '',
-                feedbackResponse: '',
+                oBrandboostList: '',
                 fromNumber: '',
                 displayCustomLinkExpiry: false
             }
@@ -494,6 +562,17 @@
             }
         },
         methods: {
+            SettingTabActive: function(e){
+                this.settingTab =e;
+            },
+            findSelectedReview: function(findId){
+                console.log(this.campaign.brandboost_id +'dddddddd'+findId);
+                if(this.campaign.brandboost_id == findId) {
+                   return true
+                }
+
+                return false;
+            },
             displayStep: function(step){
                 let path = '';
                 if(!step){
@@ -529,16 +608,21 @@
                 window.location.href = path;
             },
             getWidgetDetails: function () {
-                //getData
-                axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+
+                axios.get('/admin/brandboost/onsite-widget-setup/' + this.campaignId)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
-                        this.campaign = response.data.brandboostData;
-                        this.feedbackResponse = response.data.feedbackResponse;
-                        this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
-                        this.user = response.data.aUserInfo;
+                        this.oWidgets = response.data.oWidgets;
+                        this.bActiveSubsription = response.data.bActiveSubsription;
+                        this.campaign = response.data.widgetData;
+                        this.oBrandboostList = response.data.oBrandboostList;
+                        this.oStats = response.data.oStats;
+                        this.setTab = response.data.setTab;
+                        this.widgetID = response.data.widgetID;
+                        this.widgetThemeData = response.data.widgetThemeData;
+                        this.selectedTab = response.data.selectedTab;
                         this.loading = false;
                         //loadJQScript(this.user.id);
 
@@ -572,25 +656,42 @@
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
                 }
-                axios.post('/admin/brandboost/saveOnsiteSettings', {
+                axios.post('/admin/brandboost/saveOnsiteWidgetSingleSettings', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
                     fieldVal: fieldValue,
-                    brandboostId: this.campaignId,
-                    linkExpiryData : this.campaign.link_expire_custom,
-                    requestType: type
-
+                    widgetID: this.campaignId,
                 }).then(response => {
                     this.refreshMessage = Math.random();
                     this.successMsg = 'Updated the changes successfully!!';
+                    this.getWidgetDetails();
+                    this.loading = false;
+                });
+
+            },
+            updateSingleField: function (fieldName, fieldValue,  type) {
+                this.loading = true;
+
+                if(type =='expiry'){
+                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
+                }
+                axios.post('/admin/brandboost/saveOnsiteWidgetSingleSettings', {
+                    _token: this.csrf_token(),
+                    fieldName: fieldName,
+                    fieldVal: fieldValue,
+                    widgetID: this.campaignId,
+                }).then(response => {
+                    this.refreshMessage = Math.random();
+                    this.successMsg = 'Updated the changes successfully!!';
+                    this.getWidgetDetails();
                     this.loading = false;
                 });
 
             },
             saveDraft: function(){
                 this.loading = true;
-                axios.post('/admin/brandboost/updateOnsiteStatus', {
-                    brandboostID: this.campaignId,
+                axios.post('/admin/brandboost/updateOnsiteWidgetStatus', {
+                    widgetID: this.campaignId,
                     status: '3',
                     current_state: '',
                     _token: this.csrf_token()
@@ -604,65 +705,77 @@
                         }
                     });
             },
-            synAllowTitle: function(e){
+
+
+
+            synAllowComment: function(e){
                 if(e.target.checked){
-                    this.updateSingleField('allow_title',1);
+                    this.updateSingleField('allow_comments',1);
 
                 }else{
-                    this.updateSingleField('allow_title',0);
+                    this.updateSingleField('allow_comments',0);
                 }
             },
-            SettingTabActive: function(e){
-                this.settingTab =e;
-            },
-            synAllowArrow: function(e){
+            synAllowVideoReviews: function(e){
                 if(e.target.checked){
-                    this.updateSingleField('allow_arrow',1);
+                    this.updateSingleField('allow_video_reviews',1);
 
                 }else{
-                    this.updateSingleField('allow_arrow',0);
+                    this.updateSingleField('allow_video_reviews',0);
+                }
+            },
+            synAllowHelpful: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_helpful_feedback',1);
+
+                }else{
+                    this.updateSingleField('allow_helpful_feedback',0);
+                }
+            },
+            synAllowLiveReading: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_live_reading_review',1);
+
+                }else{
+                    this.updateSingleField('allow_live_reading_review',0);
                 }
             },
             synAllowRatings: function(e){
                 if(e.target.checked){
-                    this.updateSingleField('allow_ratings',1);
+                    this.updateSingleField('allow_comment_ratings','on');
 
                 }else{
-                    this.updateSingleField('allow_ratings',0);
+                    this.updateSingleField('allow_comment_ratings','');
                 }
             },
-            synAllowBorderShadow: function(e){
+            synAllowTimestamp: function(e){
                 if(e.target.checked){
-                    this.updateSingleField('allow_border_shadow',1);
+                    this.updateSingleField('allow_review_timestamp',1);
 
                 }else{
-                    this.updateSingleField('allow_border_shadow',0);
+                    this.updateSingleField('allow_review_timestamp',0);
                 }
+
             },
-            getReviewImageUrl: function(review_img_url){
-                if(review_img_url){
-                    return 'https://s3-us-west-2.amazonaws.com/brandboost.io/'+review_img_url;
-                }else{
-                    return '/assets/images/temp_prev9.png';
-                }
-            },
-            synBgColorType: function(e){
+            synAlternativeDesign: function(e){
                 if(e.target.checked){
-                    this.updateSingleField('bg_color_type','on');
+                    this.updateSingleField('alternative_design',1);
 
                 }else{
-                    this.updateSingleField('bg_color_type','');
+                    this.updateSingleField('alternative_design',0);
                 }
             },
-            synAllowWidgetBgcolor: function(e){
+            synBrandboostId: function(e,value){
                 if(e.target.checked){
-                    this.updateSingleField('allow_widget_bgcolor',1);
+                    this.updateSingleField('brandboost_id',value)
 
                 }else{
-                    this.updateSingleField('allow_widget_bgcolor',0);
+                    this.updateSingleField('brandboost_id','')
                 }
-                $(".colorpicker-basic2").spectrum();
+
             },
+
+
             synBorderThickness: function(e){
                 this.updateSingleField('border_thickness',this.campaign.border_thickness);
 
@@ -771,9 +884,77 @@
                 });
             });
         });
+        var tkn = $('meta[name="_token"]').attr('content');
+        Dropzone.autoDiscover = false;
+        var myDropzoneCmpLogoImg = new Dropzone(
+            '#myDropzone_CmpLogo', //id of drop zone element 1
+            {
+                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
+                uploadMultiple: false,
+                maxFiles: 1,
+                maxFilesize: 600,
+                acceptedFiles: 'image/*',
+                addRemoveLinks: false,
+                success: function (response) {
 
+                    if (response.xhr.responseText != "") {
 
+                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
+                        var dropImage = $('#logo_img').val();
+                        $.ajax({
+                            url: "/admin/brandboost/DeleteObjectFromS3",
+                            type: "POST",
+                            data: {dropImage: dropImage, _token: tkn},
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                        $('#company_logo').val(response.xhr.responseText);
+                        $('#company_logo').click();
 
+                    }
+
+                }
+            });
+        myDropzoneCmpLogoImg.on("complete", function (file) {
+            myDropzoneCmpLogoImg.removeFile(file);
+        });
+
+        var myDropzoneLogoImg = new Dropzone(
+            '#myDropzone_logo_img', //id of drop zone element 1
+            {
+                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
+                uploadMultiple: false,
+                maxFiles: 1,
+                maxFilesize: 600,
+                acceptedFiles: 'image/*',
+                addRemoveLinks: false,
+                success: function (response) {
+
+                    if (response.xhr.responseText != "") {
+
+                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
+                        var dropImage = $('#logo_img').val();
+                        $.ajax({
+                            url: "/admin/brandboost/DeleteObjectFromS3",
+                            type: "POST",
+                            data: {dropImage: dropImage, _token: tkn},
+                            dataType: "json",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                        $('#logo_img').val(response.xhr.responseText);
+                        $('#logo_img').click();
+
+                    }
+
+                }
+            });
+        myDropzoneLogoImg.on("complete", function (file) {
+            myDropzoneLogoImg.removeFile(file);
+        });
 
     }
 </script>

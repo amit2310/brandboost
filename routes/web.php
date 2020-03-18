@@ -211,6 +211,21 @@ Route::group(['middleware' => ['bb_authorize']], function () {
      *                                 End
      * --------------------------------------------------------------------------
      */
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite setup section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    Route::get('/admin/brandboost/onsite-widget-setup/{id}', 'Admin\Brandboost@widgetOnsiteSetup');
+    Route::get('/admin/brandboost/updateOnsiteWidgetStatus', 'Admin\Brandboost@updateOnsiteWidgetStatus');
+    Route::post('/admin/brandboost/saveOnsiteWidgetSingleSettings', 'Admin\Brandboost@saveOnsiteWidgetSingleSettings');
+    /**
+     * --------------------------------------------------------------------------
+     *                                 End
+     * --------------------------------------------------------------------------
+     */
 
     Route::post('admin/brandboost/switchTemplate', 'Admin\Brandboost@switchTemplate');
     Route::post('admin/brandboost/campaignPreferences', 'Admin\Brandboost@campaignPreferences');
