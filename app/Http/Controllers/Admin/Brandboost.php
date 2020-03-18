@@ -250,8 +250,8 @@ class Brandboost extends Controller
         $userID = $aUser->id;
 
         $validatedData = $request->validate([
-            'campaignName' => ['required'],
-            'campaignDescription' => ['required']
+            'campaignName' => ['required']
+            //'campaignDescription' => ['required']
         ]);
 
         //Instantiate Brandboost model to get its methods and properties
@@ -429,8 +429,8 @@ class Brandboost extends Controller
             'getOnsite' => $getBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $getBrandboostFR,
-            'brandboostData' => $getBrandboost[0],
-            'campaignTitle' => @$getBrandboost[0]->brand_title,
+            'brandboostData' =>  $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
             'eventsData' => $eventsdata,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
@@ -1533,7 +1533,6 @@ class Brandboost extends Controller
         $aBrandboostData = array(
             'status' => $status,
         );
-
         $result = BrandboostModel::updateBrandboost($userID, $aBrandboostData, $brandboostID);
 
         //Add User Activity log data
@@ -3445,6 +3444,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $campaignName = $request->campaignName;
+        $campaignType = $request->campaignType;
         $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
 
         $str = rand();
@@ -3453,6 +3453,7 @@ public function widgetStatisticDetailsStatsGraph(){
 
         $aData = array(
             'review_type' => 'onsite',
+            'campaign_type' => $campaignType,
             'user_id' => $userID,
             'brand_title' => $campaignName,
             'brand_desc' => $OnsitecampaignDescription,
