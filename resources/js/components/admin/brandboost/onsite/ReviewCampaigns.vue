@@ -609,7 +609,7 @@
                 this.loadPaginatedData();
             },
             setupBroadcast: function(id){
-                window.location.href='#/reviews/onsite/setup/'+id+'/1';
+                window.location.href='#/reviews/onsite/setup/'+id;
             },
             showContacts: function(id){
                 window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
@@ -651,7 +651,7 @@
                     this.form={};
                 }
                 this.formLabel = lbl;
-                document.querySelector('.js-review-campaign-slidebox').click();
+                document.querySelector('#displayAddCampaignForm').click();
             },
             displayAddCampaignForm: function(){
                 document.querySelector('#displayAddCampaignForm').click();
@@ -692,12 +692,12 @@
                     if (response.data.status == 'success') {
                         if(response.data.brandboostID>0){
                             this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
-                            window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID+'/1';
+                            window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID;
                             return false;
                         }
 
                         //this.form = {};
-                        document.querySelector('.js-review-campaign-slidebox').click();
+                        //document.querySelector('.js-review-campaign-slidebox').click();
                         this.successMsg = 'Action completed successfully.';
                         var elem = this;
                         setTimeout(function () {

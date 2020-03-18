@@ -250,8 +250,8 @@ class Brandboost extends Controller
         $userID = $aUser->id;
 
         $validatedData = $request->validate([
-            'campaignName' => ['required'],
-            'campaignDescription' => ['required']
+            'campaignName' => ['required']
+            //'campaignDescription' => ['required']
         ]);
 
         //Instantiate Brandboost model to get its methods and properties
@@ -376,8 +376,6 @@ class Brandboost extends Controller
             redirect("admin/brandboost/onsite");
             exit;
         }
-        $oWidgets = BrandboostModel::getBBWidgets($brandboostID);
-        $oStats = BrandboostModel::getBBWidgetStats($brandboostID);
 
         $bbProductsData = $mBrandboost->getProductData($brandboostID);
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
@@ -419,9 +417,11 @@ class Brandboost extends Controller
 
         $aBreadcrumb = array(
             'Home' => '#/',
-            'Onsite Widgets' => '#/widgets/onsite',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
             'Setup' => '',
         );
+
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaign',
@@ -429,8 +429,8 @@ class Brandboost extends Controller
             'getOnsite' => $getBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $getBrandboostFR,
-            'brandboostData' => $oWidgets[0],
-            'campaignTitle' => @$oWidgets[0]->brand_title,
+            'brandboostData' =>  $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
             'eventsData' => $eventsdata,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
@@ -1522,8 +1522,7 @@ class Brandboost extends Controller
      * @param type $param
      * @return type
      */
-    public
-    function updateOnsiteStatus(Request $request)
+    public function updateOnsiteStatus(Request $request)
     {
 
         $response = array();
@@ -1534,9 +1533,7 @@ class Brandboost extends Controller
         $aBrandboostData = array(
             'status' => $status,
         );
-
-//        $result = BrandboostModel::updateBrandboost($userID, $aBrandboostData, $brandboostID);
-        $result = BrandboostModel::updateWidget($userID, $aBrandboostData, $brandboostID);
+        $result = BrandboostModel::updateBrandboost($userID, $aBrandboostData, $brandboostID);
 
         //Add User Activity log data
         $aActivityData = array(
@@ -2391,14 +2388,70 @@ public function widgetStatisticDetailsStatsGraph(){
         }
     }
 
+    /**
+     * Used to get onsite widget configuration settings by widget id
+     * $param type $widgetID
+     * @return type
+     */
+    public  function widgetOnsiteSetup($widgetID)
+    {
+        $selectedTab = '';
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite','','',false);
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+
+        $breadcrumb = array(
+            'Home' => '#/',
+            'Onsite Widgets' => '#/widgets/onsite',
+            'Setup' => '',
+        );
+        $response = array(
+            'title' => 'Onsite Widget',
+            'breadcrumb' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+        echo json_encode($response);
+        exit;
+        return view('admin.brandboost.onsite_widget_setup', $aData);
+    }
 
     /**
      * Used to get onsite widget configuration settings by widget id
      * $param type $widgetID
      * @return type
      */
-    public
-    function onsiteWidgetSetup($widgetID)
+    public  function onsiteWidgetSetup($widgetID)
     {
         $selectedTab = Request::input("t");
         $oUser = getLoggedUser();
@@ -2463,6 +2516,26 @@ public function widgetStatisticDetailsStatsGraph(){
         $widgetID = $request->widgetID;
         $aData = array(
             'widget_type' => $widgetTypeID
+        );
+
+        if (!empty($widgetID)) {
+            Session::put("selectedOnsiteWidget", $widgetID);
+            $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+            $response = array("status" => "success", "msg" => "Okay");
+            echo json_encode($response);
+            exit;
+        }
+    }
+    public function saveOnsiteWidgetSingleSettings(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $fieldName = $request->fieldName;
+        $fieldVal = $request->fieldVal;
+        $widgetID = $request->widgetID;
+        $aData = array(
+            $fieldName => $fieldVal
         );
 
         if (!empty($widgetID)) {
@@ -3237,8 +3310,7 @@ public function widgetStatisticDetailsStatsGraph(){
      * Used to update onsite widget status
      * @return type
      */
-    public
-    function updateOnsiteWidgetStatus(Request $request)
+    public function updateOnsiteWidgetStatus(Request $request)
     {
 
         $response = array();
@@ -3372,6 +3444,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $campaignName = $request->campaignName;
+        $campaignType = $request->campaignType;
         $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
 
         $str = rand();
@@ -3380,6 +3453,7 @@ public function widgetStatisticDetailsStatsGraph(){
 
         $aData = array(
             'review_type' => 'onsite',
+            'campaign_type' => $campaignType,
             'user_id' => $userID,
             'brand_title' => $campaignName,
             'brand_desc' => $OnsitecampaignDescription,
