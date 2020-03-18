@@ -3654,32 +3654,33 @@ public function widgetStatisticDetailsStatsGraph(){
             'delete_status' => '1'
         );
 
-        foreach ($multi_brandboost_id as $brandboostID) {
+        if(!empty($multi_brandboost_id)) {
+            foreach ($multi_brandboost_id as $brandboostID) {
 
-            $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+                $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
 
-            if ($result) {
-                //Add Useractivity log
+                if ($result) {
+                    //Add Useractivity log
 
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite_offsite',
-                    'action_name' => 'deleted_brandboost',
-                    'brandboost_id' => $brandboostID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Brandboost Deleted',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
+                    $aActivityData = array(
+                        'user_id' => $userID,
+                        'event_type' => 'brandboost_onsite_offsite',
+                        'action_name' => 'deleted_brandboost',
+                        'brandboost_id' => $brandboostID,
+                        'campaign_id' => '',
+                        'inviter_id' => '',
+                        'subscriber_id' => '',
+                        'feedback_id' => '',
+                        'activity_message' => 'Brandboost Deleted',
+                        'activity_created' => date("Y-m-d H:i:s")
+                    );
+                    logUserActivity($aActivityData);
+                    $response['status'] = 'success';
+                } else {
+                    $response['status'] = "Error";
+                }
             }
         }
-
         echo json_encode($response);
         exit;
     }
