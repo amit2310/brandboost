@@ -8,12 +8,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review Campaigns Cards</h3>
+                        <h3 class="htxt_medium_24 dark_700"> Campaigns </h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
-                        <!--<button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>-->
-                        <button class="circle-icon-40 mr15"><img src="assets/images/settings-3-line.svg"></button>
+                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
                         <button class="btn btn-md bkg_reviews_400 light_000" id="displayAddCampaignForm" @click="displayAddCampaignForm"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
@@ -101,11 +100,17 @@
                             <ul class="table_filter">
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="applySort('Name')">ALL</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">PENDING</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a></li>-->
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">CREATED</a></li>
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">CREATED</a></li>-->
+
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-6">
