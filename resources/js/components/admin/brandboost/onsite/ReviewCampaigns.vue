@@ -8,12 +8,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review Campaigns Cards</h3>
+                        <h3 class="htxt_medium_24 dark_700"> Campaigns </h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
-                        <!--<button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>-->
-                        <button class="circle-icon-40 mr15"><img src="assets/images/settings-3-line.svg"></button>
+                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
                         <button class="btn btn-md bkg_reviews_400 light_000" id="displayAddCampaignForm" @click="displayAddCampaignForm"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
@@ -68,12 +67,12 @@
                                         <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="applySort('Name')">Name</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">PENDING</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">CREATED</a>
                                     </div>
                                 </div>
                                 <div class="float-right ml10 mr10">
@@ -89,7 +88,8 @@
                                     </div>
                                 </div>
                                 <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
+                                    <!--<input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">-->
+                                    <a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -98,21 +98,36 @@
                     <div class="row" v-else>
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a></li>
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="applySort('Name')">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a></li>-->
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">CREATED</a></li>-->
+
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                                <!--<li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>-->
+                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                         </div>
                     </div>
 
@@ -180,7 +195,7 @@
                                     <td width="20">
                                         <span>
                                             <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
+                                                <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
                                                 <span class="custmo_checkmark blue"></span>
                                             </label>
                                         </span>
@@ -200,7 +215,7 @@
                                     <td width="20">
                                         <span>
                                             <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
+                                                <input type="checkbox" :checked="deletedItems.indexOf(campaign.id)>-1" @change="addtoDeleteCollection(campaign.id, $event.target)">
                                                 <span class="custmo_checkmark blue"></span>
                                             </label>
                                         </span>
@@ -511,7 +526,8 @@
                 formLabel: 'Create',
                 viewType: 'List View',
                 sortBy: 'Date Created',
-                searchBy: ''
+                searchBy: '',
+                deletedItems: []
             }
         },
         created() {
@@ -521,11 +537,74 @@
             this.$parent.pageColor = this.pageColor;
         },
         watch: {
-          'sortBy' : function(){
+            'sortBy' : function(){
               this.loadPaginatedData();
-          }
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            }
+        },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.campaigns.forEach(camp => {
+                    let idx = this.deletedItems.indexOf(camp.id);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
+            }
         },
         methods: {
+            applySort: function(sortVal){
+                this.sortBy = sortVal;
+                this.deletedItems = [];
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/brandboost/delete_multipal_brandboost', {_token:this.csrf_token(), multi_brandboost_id:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.campaigns.length>0){
+                            this.campaigns.forEach(camp => {
+                                let idxx = this.deletedItems.indexOf(camp.id);
+                                if(idxx == -1){
+                                    this.deletedItems.push(camp.id);
+                                }
+                            });
+                        }
+                    }else{
+                        this.campaigns.forEach(camp => {
+                            let idxx = this.deletedItems.indexOf(camp.id);
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+
+            },
             searchItem: function(){
                 this.loadPaginatedData();
             },

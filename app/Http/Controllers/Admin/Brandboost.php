@@ -2431,7 +2431,7 @@ public function widgetStatisticDetailsStatsGraph(){
             'Onsite Widgets' => '#/widgets/onsite',
             'Setup' => '',
         );
-        $response = array(
+        $aData = array(
             'title' => 'Onsite Widget',
             'breadcrumb' => $breadcrumb,
             'oWidgets' => $oWidgets,
@@ -2444,6 +2444,22 @@ public function widgetStatisticDetailsStatsGraph(){
             'widgetThemeData' => $widgetThemeData,
             'selectedTab' => $selectedTab
         );
+        $widget_preview = view('admin.brandboost.campaign-tabs.widget.onsite-widget-configuration-setup-preview', $aData)->render();
+        $response = array(
+            'title' => 'Onsite Widget',
+            'breadcrumb' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab,
+            'widget_preview' => utf8_encode($widget_preview)
+        );
+
         echo json_encode($response);
         exit;
         return view('admin.brandboost.onsite_widget_setup', $aData);
@@ -2778,7 +2794,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $allow_branding = $request->allow_branding != '' ? '1' : '0';
         $notification = $request->notification != '' ? '1' : '0';
         $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
-        $widgetID = $request->edit_widgetId;
+        $widgetID = ($request->edit_widgetId)? $request->edit_widgetId: $request->id;
         $solid_color = $request->solid_color;
         $main_colors = $request->main_colors;
         $custom_colors1 = $request->custom_colors1;
@@ -3855,32 +3871,33 @@ public function widgetStatisticDetailsStatsGraph(){
             'delete_status' => '1'
         );
 
-        foreach ($multi_brandboost_id as $brandboostID) {
+        if(!empty($multi_brandboost_id)) {
+            foreach ($multi_brandboost_id as $brandboostID) {
 
-            $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+                $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
 
-            if ($result) {
-                //Add Useractivity log
+                if ($result) {
+                    //Add Useractivity log
 
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite_offsite',
-                    'action_name' => 'deleted_brandboost',
-                    'brandboost_id' => $brandboostID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Brandboost Deleted',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
+                    $aActivityData = array(
+                        'user_id' => $userID,
+                        'event_type' => 'brandboost_onsite_offsite',
+                        'action_name' => 'deleted_brandboost',
+                        'brandboost_id' => $brandboostID,
+                        'campaign_id' => '',
+                        'inviter_id' => '',
+                        'subscriber_id' => '',
+                        'feedback_id' => '',
+                        'activity_message' => 'Brandboost Deleted',
+                        'activity_created' => date("Y-m-d H:i:s")
+                    );
+                    logUserActivity($aActivityData);
+                    $response['status'] = 'success';
+                } else {
+                    $response['status'] = "Error";
+                }
             }
         }
-
         echo json_encode($response);
         exit;
     }

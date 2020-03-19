@@ -198,38 +198,37 @@
                 if(!step){
                     path = '/admin#/widgets/onsite';
                 }else{
-                    path = '/admin#/widgets/onsite/setup/'+this.campaignId+'/'+step;
+                    if(step == 4){
+                        path = '/admin#/widgets/onsite/stats/'+this.campaignId+'/'+step;
+                    }else{
+                        path = '/admin#/widgets/onsite/setup/'+this.campaignId+'/'+step;
+                    }
+
                 }
 
                 window.location.href = path;
             },
             getWidgetDetails: function () {
-                //getData
-                axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+
+                axios.get('/admin/brandboost/onsite-widget-setup/' + this.campaignId)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
-                        this.campaign = response.data.brandboostData;
-                        this.feedbackResponse = response.data.feedbackResponse;
-                        this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
-                        this.user = response.data.aUserInfo;
+                        this.oWidgets = response.data.oWidgets;
+                        this.bActiveSubsription = response.data.bActiveSubsription;
+                        this.campaign = response.data.widgetData;
+                        this.oBrandboostList = response.data.oBrandboostList;
+                        this.oStats = response.data.oStats;
+                        this.setTab = response.data.setTab;
+                        this.widgetID = response.data.widgetID;
+                        this.widgetThemeData = response.data.widgetThemeData;
+                        this.selectedTab = response.data.selectedTab;
+                        this.widget_preview = response.data.widget_preview;
+
                         this.loading = false;
-                        //loadJQScript(this.user.id);
 
                     });
-                // axios.get('/admin/brandboost/get-widget',{
-                //     params: {
-                //         widgetID: this.$route.params.id,
-                //     }
-                // })
-                //     .then(response => {
-                //         // console.log(response.data);
-                //
-                //         this.widget = response.data;
-                //         this.loading =false;
-                //         this.widget_type=response.data.widgetData.widget_type
-                //     });
             },
             applyDefaultInfo: function (e) {
                 if (e.target.checked) {
