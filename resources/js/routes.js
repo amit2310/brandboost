@@ -39,7 +39,7 @@ import onsiteStep2 from './components/admin/brandboost/onsite/setup/Setup2';
 import onsiteStep3 from './components/admin/brandboost/onsite/setup/Setup3';
 import onsiteStep4 from './components/admin/brandboost/onsite/setup/Setup4';
 import onsiteStep5 from './components/admin/brandboost/onsite/setup/Setup5';
-import onsiteConfigure from './components/admin/brandboost/onsite/setup/configure';
+import onsiteConfigure from './components/admin/brandboost/onsite/setup/Configure';
 
 import OffsiteReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
 /*Import Offsite Setup components*/
