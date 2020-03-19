@@ -222,6 +222,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('/admin/brandboost/updateOnsiteWidgetStatus', 'Admin\Brandboost@updateOnsiteWidgetStatus');
     Route::post('/admin/brandboost/saveOnsiteWidgetSingleSettings', 'Admin\Brandboost@saveOnsiteWidgetSingleSettings');
     Route::post('/admin/brandboost/createBrandBoostWidgetTheme', 'Admin\Brandboost@createBrandBoostWidgetTheme');
+    Route::get('/admin/brandboost/getWidgetThemeData/{themeId}', 'Admin\Brandboost@getWidgetThemeData');
     /**
      * --------------------------------------------------------------------------
      *                                 End

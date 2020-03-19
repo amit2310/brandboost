@@ -4771,7 +4771,11 @@ public function widgetStatisticDetailsStatsGraph(){
     public
     function getWidgetThemeData($themeId)
     {
-        $result = $this->mBrandboost->getWidgetThemeData($themeId);
+
+        if(empty($this->mBrandboost)){
+            $this->mBrandboost =new BrandboostModel();
+        }
+        $result = $this->mBrandboost->getWidgetThemeDetails($themeId);
 
         if ($result) {
             $response = array('status' => 'ok', 'themeData' => $result[0]);

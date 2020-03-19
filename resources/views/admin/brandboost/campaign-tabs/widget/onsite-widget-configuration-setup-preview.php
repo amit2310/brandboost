@@ -40,6 +40,9 @@ if ($colorOrientation == 'to right top') {
 </style>
 
 <style>
+    .hidden {
+        display: none !important;
+    }
     .highcharts-tick{stroke:none!important}
     .highcharts-legend, .highcharts-credits{display: none!important;}
     .highcharts-container, .highcharts-container svg {width: 100% !important;}
