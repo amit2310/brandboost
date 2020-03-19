@@ -265,6 +265,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
     Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
+    Route::post('admin/brandboost/saveOnsiteConfiguration', 'Admin\Brandboost@saveOnsiteConfiguration');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
