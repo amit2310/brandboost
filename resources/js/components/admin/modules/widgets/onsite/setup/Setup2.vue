@@ -246,79 +246,139 @@
                                             </div>
                                             <h3 class="dark_400 mb0 fsize13 fw300">WIDGET COLOR
                                                 <label class="custom-form-switch float-right">
-                                                    <input class="field" type="checkbox" v-model="campaign.bg_color_type" :checked="campaign.bg_color_type =='on'"
-                                                           @change="updateSettings('widget_themes', $event.target.value, 'brandboost')">
+                                                    <input class="field" type="checkbox" v-model="campaign.header_color_solid"
+                                                           @change="synWidgetColor($event)">
                                                     <span class="toggle email"></span> </label>
                                                 <span class="float-right pr10">Gradient </span>
                                             </h3>
-                                            <div class="widgetMultiColorBox">
+                                            <div  v-if="campaign.header_color_solid"  class="widgetMultiColorBox">
                                                 <div class="form-group">
                                                     <div class="color_box">
-                                                        <input type="hidden" name="main_colors" id="main_colors"  :value="campaign.gradient_color">
-                                                        <div v-on:click="synMainColor('white')" class="color_cube white selectMainColor " :class="{ 'active' : campaign.gradient_color == 'white'}" color-class="bbw_white_color"></div>
-                                                        <div v-on:click="synMainColor('red')" class="color_cube dred selectMainColor " :class="{ 'active' : campaign.gradient_color == 'red'}"  color-class="bbw_red_color"></div>
-                                                        <div v-on:click="synMainColor('yellow')" class="color_cube yellow selectMainColor " :class="{ 'active' : campaign.gradient_color == 'yellow'}" color-class="bbw_yellow_color"></div>
-                                                        <div v-on:click="synMainColor('orange')" class="color_cube red selectMainColor " :class="{ 'active' : campaign.gradient_color == 'orange'}" color-class="bbw_orange_color"></div>
-                                                        <div v-on:click="synMainColor('green')" class="color_cube green selectMainColor " :class="{ 'active' : campaign.gradient_color == 'green'}" color-class="bbw_green_color"></div>
-                                                        <div v-on:click="synMainColor('blue')" class="color_cube blue selectMainColor " :class="{ 'active' : campaign.gradient_color == 'blue'}" color-class="bbw_blue_color"></div>
-                                                        <div v-on:click="synMainColor('purple')" class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
+                                                        <div v-on:click="synMainColor('white')" class="color_cube white " :class="{ 'active' : campaign.header_color == 'white'}"></div>
+                                                        <div v-on:click="synMainColor('red')" class="color_cube dred " :class="{ 'active' : campaign.header_color == 'red'}"></div>
+                                                        <div v-on:click="synMainColor('yellow')" class="color_cube yellow " :class="{ 'active' : campaign.header_color == 'yellow'}"></div>
+                                                        <div v-on:click="synMainColor('orange')" class="color_cube red " :class="{ 'active' : campaign.header_color == 'orange'}"></div>
+                                                        <div v-on:click="synMainColor('green')" class="color_cube green " :class="{ 'active' : campaign.header_color == 'green'}"></div>
+                                                        <div v-on:click="synMainColor('blue')" class="color_cube blue " :class="{ 'active' : campaign.header_color == 'blue'}"></div>
+                                                        <div v-on:click="synMainColor('purple')" class="color_cube black " :class="{ 'active' : campaign.header_color == 'purple'}"></div>
                                                         <div class="clearfix"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row orientation_top" style="display:block">
                                                     <div class="col-md-12">
-                                                        <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">Choose orientation</div>
+                                                        <div style="margin: 25px 0 15px!important;" class="profile_headings txt_upper fsize11 fw600">CHOOSE ORIENTATION</div>
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <input type="hidden" id="color_orientation" name="color_orientation" :value="campaign.gradient_orientation">
-                                                        <!-- gradient_orientation -->
                                                         <ul class="choose_orientation">
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')"   main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')"  main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
-                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')"  href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div v-if="!campaign.bg_color_type" class="widgetMultiColorBox">
+                                            <div v-if="!campaign.header_color_solid" class="widgetMultiColorBox">
                                                 <div class="col-md-12">
                                                     <span class="fsize13 dark_400 mt-2">SOLID COLOR:</span>
-                                                    <input type="text"
+                                                    <input style="display: none;" type="hidden"
                                                            class="form-control colorpicker-basic2 float-right"
-                                                           name="solid_color"
-                                                           v-model="campaign.solid_color"
-                                                           @change="synSolidColor()"
-                                                    >
+                                                           name="rating_solid_color"
+                                                           v-model="campaign.rating_solid_color">
                                                 </div>
                                             </div>
 
-                                            <div class="bbot pb10 mb15">
-                                                <h2 class="fsize11 text-uppercase dark_200 m-0">FONT COLOR
-                                                    <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
-                                                </h2>
+                                        </div>
+                                        <div class="btop bbot mt15 pb10 pt10 mb15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">FONT COLOR
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                            </h2>
+                                        </div>
+                                        <div class="pb10 mb15">
+
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control float-right"
+                                                           readonly
+                                                           :value="campaign.widget_font_color">
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input style="display: none;" type="hidden"
+                                                           class="form-control colorpicker-basic3 float-right"
+                                                           name="widget_font_color"
+                                                           v-model="campaign.widget_font_color">
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="btop bbot mt15 pb10 pt10 mb15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">BORDER LINE COLOR
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                            </h2>
+                                        </div>
+                                        <div class="pb10 mb15">
 
-<!--                                        <div class="pt10">-->
-<!--                                            <div class="form-group">-->
-<!--                                                <label class="fsize13" for="fname">Border Thickness</label>-->
-<!--                                                <select v-model="campaign.border_thickness" @change="synBorderThickness($event)" class="form-control h52" name="borderThickness" id="border_thickness">-->
-<!--                                                    <option value="1">1px</option>-->
-<!--                                                    <option value="2">2px</option>-->
-<!--                                                    <option value="3">3px</option>-->
-<!--                                                    <option value="4">4px</option>-->
-<!--                                                    <option value="5">5px</option>-->
-<!--                                                    <option value="6">6px</option>-->
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control float-right"
+                                                           readonly
+                                                           :value="campaign.widget_border_color">
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input style="display: none;" type="hidden"
+                                                           class="form-control colorpicker-basic4 float-right"
+                                                           name="widget_border_color"
+                                                           v-model="campaign.widget_border_color">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btop bbot mt15 pb10 pt10 mb15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">RATING STYLE
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -195px;"></i>
+                                            </h2>
+                                        </div>
+                                        <div class="pb10 mb15">
+
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control float-right"
+                                                           readonly
+                                                           :value="campaign.widget_border_color">
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input style="display: none;" type="hidden"
+                                                           class="form-control colorpicker-basic5 float-right"
+                                                           name="widget_border_color"
+                                                           v-model="campaign.widget_border_color">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btop bbot mt15 pb10 pt10 mb15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">BRANDING
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -160px;"></i>
+                                            </h2>
+                                        </div>
+                                        <div class="p0">
+                                            <h3 class="dark_400 mb0 fsize13 fw300">Hide Brand Boost branding &nbsp;
+                                                <label class="custom-form-switch float-right">
+                                                    <input class="field" type="checkbox" v-model="campaign.allow_branding" :checked="campaign.allow_branding" @change="synAllowBranding($event)">
+                                                    <span class="toggle email"></span> </label>
+                                            </h3>
+                                        </div>
+                                        <div class="btop bbot mt15 pb10 pt10 mb15">
+                                            <h2 class="fsize11 text-uppercase dark_200 m-0">SAVE WIDGET THEME SETTINGS
+                                                <i class="icon-arrow-down12 txt_grey fsize15 text-right" style="right: -160px;"></i>
+                                            </h2>
+                                        </div>
+                                        <div class="p0">
+                                            <div class="form-group">
+                                                <input type="text" v-model="widgetNewTheme.widget_theme_title" class="form-control h40" id="widget_theme_title" placeholder="Create Widget Theme" name="widget_theme_title">
+                                            </div>
+                                        </div>
 
                                     </div>
 
@@ -346,7 +406,9 @@
                                         </div>
                                     </div>
                                     <div class="col-12 pt-15">
-                                        <button class="btn btn-success btn-sm bkg_green_300 light_000 text-center" @click="synSolidColor">Save<span><img
+                                        <button class="btn btn-success btn-sm bkg_green_300 light_000 text-center saveWidgetDesign" @click="saveWidgetDesign" style="display: none"> <span><img
+                                            src="/assets/images/arrow-right-line.svg"></span></button>
+                                            <button class="btn btn-success btn-sm bkg_green_300 light_000 text-center saveWidgetTheme" @click="saveWidgetTheme">Save Widget Theme <span><img
                                             src="/assets/images/arrow-right-line.svg"></span></button>
                                     </div>
                                 </div>
@@ -358,11 +420,20 @@
                         <div style="margin: 0;" class="panel panel-flat">
                             <div class="panel-heading p15">
                                 <h6 class="panel-title">Statistic</h6>
+                                <div class="widget_view_change_menu">
+                                    <ul class="nav nav-tabs nav-tabs-bottom">
+<!--                                        @click="setStatisticTab('Tablet')"-->
+                                        <li><a  href="#Tabletver" data-toggle="tab"><i class="icon-tablet"></i> Tablet</a></li>
+                                        <li><a href="#Phonever" data-toggle="tab"><i class="icon-mobile2"></i> Mobile</a></li>
+                                        <li class="active"><a href="#Desktopver" data-toggle="tab"><i class="icon-display"></i> Desktop</a></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="panel-body p15">
-                                <div class="embed-responsive embed-responsive-16by9">
-<!--                    {{// oBrandboostList}}-->
-<!--                                    {{campaign}}-->
+                                <div class="embed-responsive embed-responsive-16by9d">
+                                    <div  v-html="widget_preview">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -494,21 +565,6 @@
 
     export default {
         title: 'Onsite Widgets - Brand Boost',
-        // data() {
-        //     return {
-        //         form: {
-        //             campaignName: '',
-        //         },
-        //         successMsg: '',
-        //         errorMsg: '',
-        //         loading: true,
-        //         widget_type: '',
-        //         widget:{
-        //             widgetData:{widget_type:''}
-        //         },
-        //         widgetID:''
-        //     }
-        // },
         data() {
             return {
                 refreshMessage: 1,
@@ -520,11 +576,16 @@
                 moduleUnitID: '',
                 moduleAccountID: '',
                 widget_type: '',
+                widget_preview: '',
                 campaignId: this.$route.params.id,
                 campaign: {},
                 user: {},
                 breadcrumb: '',
                 oBrandboostList: '',
+                widgetThemeData: '',
+                widgetNewTheme: {
+                    widget_theme_title:'',
+                },
                 fromNumber: '',
                 displayCustomLinkExpiry: false
             }
@@ -533,8 +594,10 @@
         mounted() {
             this.widgetID = this.$route.params.id;
             this.widget_type = this.$route.params.id;
-            this.getWidgetDetails()
-            loadNPSJQScript(35);
+            this.getWidgetDetails();
+            setTimeout(function () {
+                loadNPSJQScript(35);
+            },1000)
         },
         computed: {
             checkLinkExpiry: function(){
@@ -564,6 +627,43 @@
         methods: {
             SettingTabActive: function(e){
                 this.settingTab =e;
+                loadNPSJQScript(35);
+            },
+            saveWidgetTheme: function () {
+                this.widgetNewTheme.theme_main_colors =this.campaign.header_color;
+                this.widgetNewTheme.theme_custom_colors1 =this.campaign.theme_custom_colors1;
+                this.widgetNewTheme.theme_custom_colors2 =this.campaign.theme_custom_colors2;
+                this.widgetNewTheme.theme_solid_color ='';
+                this.widgetNewTheme.theme_bg_color_switch =this.campaign.header_color_fix;
+                this.widgetNewTheme.theme_main_colors_rating =this.campaign.rating_color;
+                this.widgetNewTheme.theme_rating_custom_color1 =this.campaign.rating_custom_color1;
+                this.widgetNewTheme.theme_rating_custom_colors2 =this.campaign.rating_custom_color2;
+                this.widgetNewTheme.theme_rating_solid_color =this.campaign.rating_solid_color;
+                this.widgetNewTheme.theme_fix_rating_color =this.campaign.rating_color_fix;
+                this.widgetNewTheme.theme_widget_font_color =this.campaign.widget_font_color;
+                this.widgetNewTheme.theme_widget_border_color =this.campaign.widget_border_color;
+                this.widgetNewTheme.theme_widget_position =this.campaign.widget_position;
+                this.widgetNewTheme.theme_color_orientation =this.campaign.color_orientation;
+                this.widgetNewTheme.theme_widget_id =this.campaign.id;
+
+                axios.post('/admin/brandboost/createBrandBoostWidgetTheme',this.widgetNewTheme)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.oWidgets = response.data.oWidgets;
+                        this.bActiveSubsription = response.data.bActiveSubsription;
+                        this.campaign = response.data.widgetData;
+                        this.oBrandboostList = response.data.oBrandboostList;
+                        this.oStats = response.data.oStats;
+                        this.setTab = response.data.setTab;
+                        this.widgetID = response.data.widgetID;
+                        this.widgetThemeData = response.data.widgetThemeData;
+                        this.selectedTab = response.data.selectedTab;
+
+                        this.loading = false;
+
+                    });
             },
             findSelectedReview: function(findId){
                 console.log(this.campaign.brandboost_id +'dddddddd'+findId);
@@ -572,16 +672,6 @@
                 }
 
                 return false;
-            },
-            displayStep: function(step){
-                let path = '';
-                if(!step){
-                    path = '/admin#/widgets/onsite';
-                }else{
-                    path = '/admin#/widgets/onsite/setup/'+this.campaignId+'/'+step;
-                }
-
-                window.location.href = path;
             },
             setWidgetType:function(){
                 this.loading =true;
@@ -623,22 +713,30 @@
                         this.widgetID = response.data.widgetID;
                         this.widgetThemeData = response.data.widgetThemeData;
                         this.selectedTab = response.data.selectedTab;
+                        this.widget_preview = response.data.widget_preview;
+
                         this.loading = false;
-                        //loadJQScript(this.user.id);
 
                     });
-                // axios.get('/admin/brandboost/get-widget',{
-                //     params: {
-                //         widgetID: this.$route.params.id,
-                //     }
-                // })
-                //     .then(response => {
-                //         // console.log(response.data);
-                //
-                //         this.widget = response.data;
-                //         this.loading =false;
-                //         this.widget_type=response.data.widgetData.widget_type
-                //     });
+            },
+            saveWidgetDesign: function(e){
+                let elem1 = document.querySelector('input[name="rating_solid_color"]');
+                let solid_color = (elem1 != null) ? elem1.value : null;
+                this.campaign.solid_color_rating = solid_color ? solid_color : this.campaign.rating_solid_color;
+                let elem2 = document.querySelector('input[name="widget_font_color"]');
+                let font_color = (elem2 != null) ? elem2.value : null;
+                this.campaign.widget_font_color = font_color ? font_color : this.campaign.widget_font_color;
+                let elem3 = document.querySelector('input[name="widget_border_color"]');
+                let border_color = (elem3 != null) ? elem3.value : null;
+                this.campaign.widget_border_color = border_color ? border_color : this.campaign.widget_border_color;
+                this.loading = true;
+
+                axios.post('/admin/brandboost/addBrandBoostWidgetDesign', this.campaign).then(response => {
+                    this.refreshMessage = Math.random();
+                    this.successMsg = 'Updated the changes successfully!!';
+                    this.getWidgetDetails();
+                    this.loading = false;
+                });
             },
             applyDefaultInfo: function (e) {
                 if (e.target.checked) {
@@ -706,14 +804,28 @@
                     });
             },
 
+            synWidgetColor: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('header_color_solid',1);
 
-
+                }else{
+                    this.updateSingleField('header_color_solid',0);
+                }
+            },
             synAllowComment: function(e){
                 if(e.target.checked){
                     this.updateSingleField('allow_comments',1);
 
                 }else{
                     this.updateSingleField('allow_comments',0);
+                }
+            },
+            synAllowBranding: function(e){
+                if(e.target.checked){
+                    this.updateSingleField('allow_branding',1);
+
+                }else{
+                    this.updateSingleField('allow_branding',0);
                 }
             },
             synAllowVideoReviews: function(e){
@@ -789,14 +901,12 @@
 
             },
             synMainColor: function(e){
-                this.updateSingleField('gradient_color',e);
+                this.updateSingleField('header_color',e);
             },
             synGradientOrientation: function(e){
-                this.updateSingleField('gradient_orientation',e);
+                this.updateSingleField('color_orientation',e);
             },
-            synSolidColor: function(e){
-                this.updateSingleField('gradient_orientation',e);
-            },
+
             synGalleryDesignType: function(e){
                 this.updateSingleField('gradient_orientation',e);
             },
@@ -813,7 +923,7 @@
         // var sliderBoxCount =  6;
         // var slideIndex = 0;
         // showSlides(1);
-        $(".colorpicker-basic2").spectrum();
+        $(".colorpicker-basic1").spectrum();
         $(".colorpicker-basic1").spectrum({
             change: function (color) {
                 $('.colorpicker-basic1').val(color.toHexString());
@@ -822,31 +932,68 @@
                 $('.colorpicker-basic1').val(color.toHexString());
             }
         });
+        $(".colorpicker-basic2").spectrum();
         $(".colorpicker-basic2").spectrum({
             change: function (color) {
+                // console.log('change'+color.toHexString());
                 $('.colorpicker-basic2').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
             },
             move: function (color) {
+                // console.log('Move'+color.toHexString());
                 $('.colorpicker-basic2').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
             }
         });
+        $(".colorpicker-basic3").spectrum();
         $(".colorpicker-basic3").spectrum({
             change: function (color) {
                 $('.colorpicker-basic3').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
             },
             move: function (color) {
                 $('.colorpicker-basic3').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
             }
         });
+        $(".colorpicker-basic4").spectrum();
         $(".colorpicker-basic4").spectrum({
             change: function (color) {
                 $('.colorpicker-basic4').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
             },
             move: function (color) {
                 $('.colorpicker-basic4').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
             }
         });
-
+        $(".colorpicker-basic5").spectrum();
+        $(".colorpicker-basic5").spectrum({
+            change: function (color) {
+                $('.colorpicker-basic4').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
+            },
+            move: function (color) {
+                $('.colorpicker-basic4').val(color.toHexString());
+                setTimeout(function () {
+                    $('.saveWidgetDesign').trigger('click');
+                }, 1000);
+            }
+        });
         $(document).ready(function () {
             $(document).on('click', '.js-media-widget-slidebox1', function () {
                 $(".box").animate({
@@ -886,75 +1033,79 @@
         });
         var tkn = $('meta[name="_token"]').attr('content');
         Dropzone.autoDiscover = false;
-        var myDropzoneCmpLogoImg = new Dropzone(
-            '#myDropzone_CmpLogo', //id of drop zone element 1
-            {
-                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
+        if($('#myDropzone_CmpLogo').length) {
+            var myDropzoneCmpLogoImg = new Dropzone(
+                '#myDropzone_CmpLogo', //id of drop zone element 1
+                {
+                    url: '/dropzone/upload_s3_attachment/' + userid + '/onsite',
+                    uploadMultiple: false,
+                    maxFiles: 1,
+                    maxFilesize: 600,
+                    acceptedFiles: 'image/*',
+                    addRemoveLinks: false,
+                    success: function (response) {
 
-                    if (response.xhr.responseText != "") {
+                        if (response.xhr.responseText != "") {
 
-                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
-                        var dropImage = $('#logo_img').val();
-                        $.ajax({
-                            url: "/admin/brandboost/DeleteObjectFromS3",
-                            type: "POST",
-                            data: {dropImage: dropImage, _token: tkn},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-                        $('#company_logo').val(response.xhr.responseText);
-                        $('#company_logo').click();
+                            $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
+                            var dropImage = $('#logo_img').val();
+                            $.ajax({
+                                url: "/admin/brandboost/DeleteObjectFromS3",
+                                type: "POST",
+                                data: {dropImage: dropImage, _token: tkn},
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log(data);
+                                }
+                            });
+                            $('#company_logo').val(response.xhr.responseText);
+                            $('#company_logo').click();
 
-                    }
-
-                }
-            });
-        myDropzoneCmpLogoImg.on("complete", function (file) {
-            myDropzoneCmpLogoImg.removeFile(file);
-        });
-
-        var myDropzoneLogoImg = new Dropzone(
-            '#myDropzone_logo_img', //id of drop zone element 1
-            {
-                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
-
-                    if (response.xhr.responseText != "") {
-
-                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
-                        var dropImage = $('#logo_img').val();
-                        $.ajax({
-                            url: "/admin/brandboost/DeleteObjectFromS3",
-                            type: "POST",
-                            data: {dropImage: dropImage, _token: tkn},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-                        $('#logo_img').val(response.xhr.responseText);
-                        $('#logo_img').click();
+                        }
 
                     }
-
-                }
+                });
+            myDropzoneCmpLogoImg.on("complete", function (file) {
+                myDropzoneCmpLogoImg.removeFile(file);
             });
-        myDropzoneLogoImg.on("complete", function (file) {
-            myDropzoneLogoImg.removeFile(file);
-        });
+
+        }
+        if($('#myDropzone_logo_img').length) {
+            var myDropzoneLogoImg = new Dropzone(
+                '#myDropzone_logo_img', //id of drop zone element 1
+                {
+                    url: '/dropzone/upload_s3_attachment/' + userid + '/onsite',
+                    uploadMultiple: false,
+                    maxFiles: 1,
+                    maxFilesize: 600,
+                    acceptedFiles: 'image/*',
+                    addRemoveLinks: false,
+                    success: function (response) {
+
+                        if (response.xhr.responseText != "") {
+
+                            $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
+                            var dropImage = $('#logo_img').val();
+                            $.ajax({
+                                url: "/admin/brandboost/DeleteObjectFromS3",
+                                type: "POST",
+                                data: {dropImage: dropImage, _token: tkn},
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log(data);
+                                }
+                            });
+                            $('#logo_img').val(response.xhr.responseText);
+                            $('#logo_img').click();
+
+                        }
+
+                    }
+                });
+            myDropzoneLogoImg.on("complete", function (file) {
+                myDropzoneLogoImg.removeFile(file);
+            });
+        }
 
     }
 </script>
