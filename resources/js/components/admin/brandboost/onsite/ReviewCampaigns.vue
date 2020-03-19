@@ -537,9 +537,9 @@
             this.$parent.pageColor = this.pageColor;
         },
         watch: {
-          'sortBy' : function(){
+            'sortBy' : function(){
               this.loadPaginatedData();
-          },
+            },
             'searchBy' : function(){
                 this.loadPaginatedData();
             }

@@ -20,27 +20,35 @@
 
                 <div v-if="oReviews.length > 0 || searchBy.length>0">
                     <div class="p20 top_headings">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <!--<p>
-                                <a href="#"><img src="assets/images/filter-line.svg"> &nbsp; Filter</a>
-                            </p>-->
-                            <a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i> &nbsp;Filter</a>
-                            <div class="dropdown-menu p10 mt-1">
-                                <a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="sortBy='Date Created'">ALL</a><br />
-                                <a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a><br />
-                                <a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a><br />
-                                <a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a><br />
-                                <a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a><br />
+                        <div class="row">
+                            <div class="col-md-5">
+                                <!--<p>
+                                    <a href="#"><img src="assets/images/filter-line.svg"> &nbsp; Filter</a>
+                                </p>-->
+                                <a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i> &nbsp;Filter</a>
+                                <div class="dropdown-menu p10 mt-1">
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="sortBy='Date Created'">ALL</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a><br />
+                                </div>
+                            </div>
+                            <div class="col-md-7 text-right">
+                                <a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>
+                                <!--<input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">-->
+                                <a href="javascript:void(0);" title="List View"><i><img src="assets/images/sort_16_grey.svg"></i></a>
                             </div>
                         </div>
-                        <div class="col-md-7 text-right">
-                            <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
-                            <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                            <a href="javascript:void(0);" title="List View"><i><img src="assets/images/sort_16_grey.svg"></i></a>
+                    </div>
+
+                    <div class=" datasearcharea shadow3">
+                        <div class="row form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                         </div>
                     </div>
-                </div>
+
                     <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
                         <li v-for="oReview in oReviews" :key="oReview.reviewid" class="d-flex" :class="{ active : active_el == oReview.reviewid }">
@@ -129,7 +137,7 @@
                 viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: '',
-                active_el: false
+                active_el: 0
             }
         },
         created() {
@@ -140,6 +148,9 @@
         },
         watch: {
             'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
                 this.loadPaginatedData();
             }
         },
