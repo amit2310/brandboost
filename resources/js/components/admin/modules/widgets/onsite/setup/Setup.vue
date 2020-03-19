@@ -517,7 +517,11 @@
                 if(!step){
                     path = '/admin#/widgets/onsite';
                 }else{
-                    path = '/admin#/widgets/onsite/setup/'+this.campaignId+'/'+step;
+                    if(step == 4){
+                        path = '/admin#/widgets/onsite/stats/'+this.campaignId+'/'+step;
+                    }else{
+                        path = '/admin#/widgets/onsite/setup/'+this.campaignId+'/'+step;
+                    }
                 }
 
                 window.location.href = path;

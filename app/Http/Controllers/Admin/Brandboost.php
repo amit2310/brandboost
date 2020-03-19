@@ -413,6 +413,9 @@ class Brandboost extends Controller
             }
         }*/
 
+        $oTwilio = getTwilioAccountCustom($userID);
+        $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
+
         $fromNumber = '';
 
         $aBreadcrumb = array(
@@ -453,7 +456,7 @@ class Brandboost extends Controller
             'smsTemplate' => $smsTemplate,
             'selectedCategory' => $selectedCategory,
             'fromNumber' => $fromNumber,
-            'aUserInfo' => $oUser
+            'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ]
         );
 
         //return view('admin.brandboost.onsite_setup', $aData);
@@ -2428,7 +2431,7 @@ public function widgetStatisticDetailsStatsGraph(){
             'Onsite Widgets' => '#/widgets/onsite',
             'Setup' => '',
         );
-        $response = array(
+        $aData = array(
             'title' => 'Onsite Widget',
             'breadcrumb' => $breadcrumb,
             'oWidgets' => $oWidgets,
@@ -2441,6 +2444,22 @@ public function widgetStatisticDetailsStatsGraph(){
             'widgetThemeData' => $widgetThemeData,
             'selectedTab' => $selectedTab
         );
+        $widget_preview = view('admin.brandboost.campaign-tabs.widget.onsite-widget-configuration-setup-preview', $aData)->render();
+        $response = array(
+            'title' => 'Onsite Widget',
+            'breadcrumb' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab,
+            'widget_preview' => utf8_encode($widget_preview)
+        );
+
         echo json_encode($response);
         exit;
         return view('admin.brandboost.onsite_widget_setup', $aData);
@@ -2775,7 +2794,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $allow_branding = $request->allow_branding != '' ? '1' : '0';
         $notification = $request->notification != '' ? '1' : '0';
         $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
-        $widgetID = $request->edit_widgetId;
+        $widgetID = ($request->edit_widgetId)? $request->edit_widgetId: $request->id;
         $solid_color = $request->solid_color;
         $main_colors = $request->main_colors;
         $custom_colors1 = $request->custom_colors1;
@@ -3157,6 +3176,130 @@ public function widgetStatisticDetailsStatsGraph(){
         echo json_encode($response);
         exit;
     }
+
+    /**
+     * This method used to save onsite configuration as per new logic
+     * @param Request $request
+     */
+    function saveOnsiteConfiguration(Request $request)
+    {
+
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $brandboostID = $request->brandboostId;
+        $type = $request->requestType;
+        if($type == 'feedback'){
+            $formData = [
+                'brandboost_id' => $brandboostID,
+                'from_name' => $request->from_name,
+                'from_email' => $request->from_email
+            ];
+            $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+            if (isset($aResponse->id)) {
+                $result = BrandboostModel::updateBrandboostFeedbackResponse($formData, $brandboostID);
+                $result2 = BrandboostModel::updateBrandboostEndCampaigns($formData, $brandboostID);
+            } else {
+                $aFeedbackData['brandboost_id'] = $brandboostID;
+                $aFeedbackData['created'] = date("Y-m-d H:i:s");
+                $result = BrandboostModel::addBrandboostFeedbackResponse($formData);
+            }
+        }else if($type =='subject'){
+            $formData = [
+                'subject' => $request->subject,
+                'preheader' => $request->preheader
+            ];
+            $result = BrandboostModel::updateBrandBoost($userID, $formData, $brandboostID);
+        }else if($type =='tracking'){
+            $formData = [
+                'tracking_conversation' => $request->tracking_conversation,
+                'tracking_google_analytics' => $request->tracking_google_analytics,
+                'tracking_open_read' => $request->tracking_open_read,
+                'tracking_expire_link' => $request->tracking_expire_link,
+            ];
+            $result = BrandboostModel::updateBrandBoost($userID, $formData, $brandboostID);
+        }
+
+
+
+        $fieldName = $request->fieldName;
+        $fieldValue = $request->fieldVal;
+
+
+        $aProductData = [];
+        $aBrandboostData = [];
+        $aFeedbackData = [];
+        $aExpiryData = [];
+        if (!empty($fieldName) && $brandboostID > 0) {
+            if ($type == 'product') {
+                $aProductData[$fieldName] = $fieldValue;
+            } else if ($type == 'brandboost') {
+                $aBrandboostData[$fieldName] = $fieldValue;
+                $result = BrandboostModel::updateBrandBoost($userID, $aBrandboostData, $brandboostID);
+            } else if ($type == 'feedback') {
+                $aFeedbackData[$fieldName] = $fieldValue;
+                $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+                if (isset($aResponse->id)) {
+                    $result = BrandboostModel::updateBrandboostFeedbackResponse($aFeedbackData, $brandboostID);
+                    //Update in active campaigns
+                    $result2 = BrandboostModel::updateBrandboostEndCampaigns($aFeedbackData, $brandboostID);
+                } else {
+                    $aFeedbackData['brandboost_id'] = $brandboostID;
+                    $aFeedbackData['created'] = date("Y-m-d H:i:s");
+                    $result = BrandboostModel::addBrandboostFeedbackResponse($aFeedbackData);
+                }
+            }else if($type == 'expiry'){
+                $aLinkExpiryData = [];
+                $txtInteger = $exp_duration = '';
+                if ($fieldValue == 'custom' || $fieldName == 'txtInteger'  || $fieldName == 'exp_duration') {
+                    $aExpiry = $request->linkExpiryData;
+                    $aExpData = json_decode($aExpiry);
+                    if($fieldValue == 'txtInteger'){
+                        $txtInteger = $fieldValue;
+                        $exp_duration = $aExpData['delay_unit'];
+                    }
+
+                    if($fieldValue == 'exp_duration'){
+                        $exp_duration = $fieldValue;
+                        $txtInteger = $aExpData['delay_unit'];
+                    }
+
+                    $aLinkExpiryData['delay_value'] = $txtInteger;
+                    $aLinkExpiryData['delay_unit'] = $exp_duration;
+                } else {
+
+                    $aLinkExpiryData['delay_value'] = 'never';
+                    $aLinkExpiryData['delay_unit'] = 'never';
+                }
+
+                if($fieldValue == 'never'){
+                    $aExpiryData[$fieldName] = $fieldValue;
+                }else{
+                    $aExpiryData['link_expire_custom'] = json_encode($aLinkExpiryData);
+                }
+                pre($aExpiryData);
+
+                $result = BrandboostModel::updateBrandBoost($userID, $aExpiryData, $brandboostID);
+
+            }
+        }
+
+
+        if ($result) {
+            //Okay We also need to update "From" info into the campaigns
+
+            //$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
+
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
     /**
      * Used to save onsite widget
      * @return type
@@ -4628,7 +4771,11 @@ public function widgetStatisticDetailsStatsGraph(){
     public
     function getWidgetThemeData($themeId)
     {
-        $result = $this->mBrandboost->getWidgetThemeData($themeId);
+
+        if(empty($this->mBrandboost)){
+            $this->mBrandboost =new BrandboostModel();
+        }
+        $result = $this->mBrandboost->getWidgetThemeDetails($themeId);
 
         if ($result) {
             $response = array('status' => 'ok', 'themeData' => $result[0]);
