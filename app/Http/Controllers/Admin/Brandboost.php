@@ -2428,7 +2428,7 @@ public function widgetStatisticDetailsStatsGraph(){
             'Onsite Widgets' => '#/widgets/onsite',
             'Setup' => '',
         );
-        $response = array(
+        $aData = array(
             'title' => 'Onsite Widget',
             'breadcrumb' => $breadcrumb,
             'oWidgets' => $oWidgets,
@@ -2441,6 +2441,22 @@ public function widgetStatisticDetailsStatsGraph(){
             'widgetThemeData' => $widgetThemeData,
             'selectedTab' => $selectedTab
         );
+        $widget_preview = view('admin.brandboost.campaign-tabs.widget.onsite-widget-configuration-setup-preview', $aData)->render();
+        $response = array(
+            'title' => 'Onsite Widget',
+            'breadcrumb' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab,
+            'widget_preview' => utf8_encode($widget_preview)
+        );
+
         echo json_encode($response);
         exit;
         return view('admin.brandboost.onsite_widget_setup', $aData);
@@ -2775,7 +2791,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $allow_branding = $request->allow_branding != '' ? '1' : '0';
         $notification = $request->notification != '' ? '1' : '0';
         $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
-        $widgetID = $request->edit_widgetId;
+        $widgetID = ($request->edit_widgetId)? $request->edit_widgetId: $request->id;
         $solid_color = $request->solid_color;
         $main_colors = $request->main_colors;
         $custom_colors1 = $request->custom_colors1;

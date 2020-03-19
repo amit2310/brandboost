@@ -444,7 +444,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                settingTab :1,
+                settingTab :2,
                 campaignId: this.$route.params.id,
                 reviewsData: {},
                 campaign: {},
