@@ -101,21 +101,7 @@
 
 
                 </div>
-
-                <div class="row mt40">
-                    <div class="col-md-12">
-                        <hr class="mb25">
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" v-show="true" @click="displayStep(3)"><span class="ml0 mr10"><img
-                            src="/assets/images/arrow-left-line.svg"></span>Back
-                        </button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="changeCampaignStatus('1')">Publish<span><img
-                            src="/assets/images/arrow-right-line.svg"></span></button>
-                    </div>
-                </div>
+ 
             </div>
         </div>
         <!--Content Area End-->

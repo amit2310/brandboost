@@ -1097,7 +1097,19 @@ class BrandboostModel extends Model {
         return $aData;
     }
 
+    /**
+     *
+     * @param type $campType
+     * @param type $userID
+     * @return type
+     */
+    public function getWidgetThemeDetails($themeId) {
 
+        $oData = DB::table('tbl_brandboost_widget_theme_settings')
+            ->where('id', $themeId)
+            ->get();
+        return $oData;
+    }
 
     public function getCampaignBycampID($campaignID) {
 
