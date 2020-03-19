@@ -14,7 +14,8 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
-                        <button class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal" data-target="#CREATEFORM">Approve <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
+                        <button v-if="review.status == '0'" @click="changeStatus(reviewId, '1')" class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal">Approve <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
+                        <button v-else @click="changeStatus(reviewId, '0')" class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal">Dispprove <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
                     </div>
                 </div>
             </div>
@@ -533,6 +534,29 @@
 
                     });
             },
+            changeStatus: function(review_id, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/reviews/updateReviewStatus', {
+                        review_id:review_id,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+
+                                this.successMsg = 'Action completed successfully.';
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 5000);
+                            }
+
+                        });
+                }
+            }
 
         }
     }

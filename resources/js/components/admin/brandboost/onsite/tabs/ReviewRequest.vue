@@ -9,7 +9,7 @@
                 <div class="col-md-6">
                     <ul class="table_filter text-right">
                         <li>
-                            <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
+                            <!--<a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
                             <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
                         </li>
                         <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
@@ -26,6 +26,12 @@
                     </ul>
                 </div>
             </div>
+            <!--<div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                <div class="form-group m-0 position-relative">
+                    <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                    <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                </div>
+            </div>-->
         </div>
 
         <div v-if="requests.length > 0">
@@ -205,6 +211,9 @@
         },
         watch: {
             'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
                 this.loadPaginatedData();
             }
         },
