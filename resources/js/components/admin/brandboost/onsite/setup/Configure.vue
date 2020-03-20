@@ -94,8 +94,6 @@
                   PAGE LEFT SIDEBAR END
                  **********************-->
 
-
-
                 <div class="table_head_action pb0 mb15">
                     <div class="row">
                         <div class="col">
@@ -115,9 +113,12 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableSenderForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span></div>
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedSenderForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span>
+                                </div>
                                 <div class="col">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">From</h3>
                                     <p class="htxt_regular_14 dark_400 m-0 ls4">Who is sending this email?</p>
@@ -127,7 +128,7 @@
                                 </div>
                                 <div class="col text-right" v-if="displaySenderForm==true">
                                     <!--<button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add sender</button>-->
-                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="displaySenderForm=false">Cancel</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('sender')">Cancel</button>
                                     <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSenderInfo">Save</button>
                                 </div>
                             </div>
@@ -160,9 +161,12 @@
 
                         </div>
 
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableSubjectForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span></div>
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedSubjectForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span>
+                                </div>
                                 <div class="col">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Subject</h3>
                                     <p class="htxt_regular_14 dark_400 m-0 ls4">Add your email’s subject line</p>
@@ -171,7 +175,7 @@
                                     <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('subject')">Add subject</button>
                                 </div>
                                 <div class="col text-right" v-if="displaySubjectForm==true">
-                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="displaySubjectForm=false">Cancel</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('subject')">Cancel</button>
                                     <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSubjectInfo">Save</button>
                                 </div>
                             </div>
@@ -217,10 +221,12 @@
                             </div>
                         </div>
 
-
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableContentForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedContentForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span>
+                                </div>
                                 <div class="col">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Content</h3>
                                     <p class="htxt_regular_14 dark_400 m-0 ls4">Customize the content of your email.</p>
@@ -231,9 +237,12 @@
                             </div>
                         </div>
 
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableTrackingForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">4</span></div>
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedTrackingForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">4</span>
+                                </div>
                                 <div class="col">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
                                     <p class="htxt_regular_14 dark_400 m-0 ls4">Customize your default campaign’s settings</p>
@@ -242,7 +251,7 @@
                                     <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('tracking')">Edit Settings</button>
                                 </div>
                                 <div class="col text-right" v-if="displayTrackingForm==true">
-                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="displayTrackingForm=false">Cancel</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('sender')">Cancel</button>
                                     <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveTrackingInfo">Save</button>
                                 </div>
                             </div>
@@ -320,7 +329,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="isDisabled">
                             <div class="row">
                                 <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span></div>
                                 <div class="col">
@@ -333,9 +342,7 @@
                             </div>
                         </div>
 
-
-
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="isDisabled">
                             <div class="row">
                                 <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span></div>
                                 <div class="col">
@@ -348,7 +355,7 @@
                             </div>
                         </div>
 
-                        <div class="card p35 br6 mb10">
+                        <div class="card p35 br6 mb10" :class="isDisabled">
                             <div class="row">
                                 <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
                                 <div class="col">
@@ -403,6 +410,10 @@
                 completedSubjectForm: false,
                 completedContentForm: false,
                 completedTrackingForm: false,
+                disableSenderForm: false,
+                disableSubjectForm: false,
+                disableContentForm: false,
+                disableTrackingForm: false,
                 senderForm: {
                     _token: this.csrf_token(),
                     requestType: 'feedback',
@@ -429,36 +440,31 @@
             }
         },
         created() {
-            axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
-                .then(response => {
-                    this.breadcrumb = response.data.breadcrumb;
-                    this.makeBreadcrumb(this.breadcrumb);
-                    this.moduleName = response.data.moduleName;
-                    this.campaign = response.data.brandboostData;
-                    this.feedbackResponse = response.data.feedbackResponse;
-                    //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
-                    this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
-                    this.user = response.data.aUserInfo;
-                    this.loading = false;
-                    //Set SenderForm fields
-                    this.senderForm.from_name = this.feedbackResponse.from_name;
-                    this.senderForm.from_email = this.feedbackResponse.from_email;
-                    this.senderForm.brandboostId = this.campaignId;
-                    //Set SubjectForm fields
-                    this.subjectForm.subject = this.campaign.subject;
-                    this.subjectForm.preheader = this.campaign.preheader;
-                    //Set Tracking fields
-                    this.trackingForm.tracking_conversation = this.campaign.tracking_conversation;
-                    this.trackingForm.tracking_google_analytics = this.campaign.tracking_google_analytics;
-                    this.trackingForm.tracking_open_read = this.campaign.tracking_open_read;
-                    this.trackingForm.tracking_expire_link = this.campaign.tracking_expire_link;
-                    //loadJQScript(this.user.id);
-                });
+            this.loadCampaignSettings();
+
         },
         mounted() {
             //loadJQScript(35);
         },
+        watch: {
+            completedSenderForm: function(){
+                this.validateStepCompletion();
+            },
+            completedSubjectForm: function(){
+                this.validateStepCompletion();
+            },
+            completedContentForm: function(){
+                this.validateStepCompletion();
+            },
+            completedTrackingForm: function(){
+                this.validateStepCompletion();
+            },
+
+        },
         computed: {
+            isDisabled: function(){
+                return 'disabled'
+            },
             checkLinkExpiry: function(){
                 let linkExpiry = this.campaign.link_expire_custom;
                 if(linkExpiry){
@@ -490,6 +496,73 @@
             }
         },
         methods: {
+            disableAllCards: function(form){
+                this.disableSenderForm = true;
+                this.disableSubjectForm = true;
+                this.disableContentForm = true;
+                this.disableTrackingForm = true;
+                if(form == 'sender'){
+                    this.disableSenderForm = false;
+                }else if(form == 'subject'){
+                    this.disableSubjectForm = false;
+                }else if(form == 'content'){
+                    this.disableContentForm = false;
+                }else if(form == 'tracking'){
+                    this.disableTrackingForm = false;
+                }
+
+            },
+            enableAllCards: function(form){
+                this.disableSenderForm = false;
+                this.disableSubjectForm = false;
+                this.disableContentForm = false;
+                this.disableTrackingForm = false;
+            },
+            loadCampaignSettings: function(){
+                axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.campaign = response.data.brandboostData;
+                        this.feedbackResponse = response.data.feedbackResponse;
+                        //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
+                        this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
+                        this.user = response.data.aUserInfo;
+                        this.loading = false;
+                        //Set SenderForm fields
+                        this.senderForm.from_name = this.feedbackResponse.from_name;
+                        this.senderForm.from_email = this.feedbackResponse.from_email;
+                        this.senderForm.brandboostId = this.campaignId;
+                        //Set SubjectForm fields
+                        this.subjectForm.subject = this.campaign.subject;
+                        this.subjectForm.preheader = this.campaign.preheader;
+                        //Set Tracking fields
+                        this.trackingForm.tracking_conversation = this.campaign.tracking_conversation;
+                        this.trackingForm.tracking_google_analytics = this.campaign.tracking_google_analytics;
+                        this.trackingForm.tracking_open_read = this.campaign.tracking_open_read;
+                        this.trackingForm.tracking_expire_link = this.campaign.tracking_expire_link;
+                        //Validate Step Completion
+                        this.validateStepCompletion();
+                        //loadJQScript(this.user.id);
+                    });
+            },
+            validateStepCompletion: function(){
+                //Sender form
+                this.completedSenderForm = false;
+                this.completedSubjectForm = false;
+                this.completedTrackingForm = false;
+                if(this.senderForm.from_name && this.senderForm.from_email){
+                    this.completedSenderForm = true;
+                }
+                if(this.campaign.subject && this.campaign.preheader){
+                    this.completedSubjectForm = true;
+                }
+                if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
+                    this.completedTrackingForm = true;
+                }
+
+            },
             progressClass: function(form){
                 let className;
                 let activeClassName;
@@ -510,6 +583,7 @@
             },
             openForm: function(form){
                 this.resetAllForms();
+                this.disableAllCards(form);
                 if(form == 'sender'){
                     this.displaySenderForm = true;
                 }else if(form == 'subject'){
@@ -519,6 +593,19 @@
                 }else if(form == 'tracking'){
                     this.displayTrackingForm = true;
                 }
+            },
+            closeForm: function(form){
+                this.resetAllForms();
+                this.enableAllCards(form);
+                /*if(form == 'sender'){
+                    this.displaySenderForm = true;
+                }else if(form == 'subject'){
+                    this.displaySubjectForm = true;
+                }else if(form == 'content'){
+                    this.displayContentForm = true;
+                }else if(form == 'tracking'){
+                    this.displayTrackingForm = true;
+                }*/
             },
             resetAllForms: function(){
                 this.displaySenderForm = false;
@@ -534,7 +621,8 @@
                             this.refreshMessage = Math.random();
                             this.successMsg = 'Updated the changes successfully!!';
                             this.loading = false;
-                            this.displaySenderForm = false;
+                            this.closeForm('sender');
+                            this.validateStepCompletion();
                         }
                     });
 
@@ -547,7 +635,8 @@
                             this.refreshMessage = Math.random();
                             this.successMsg = 'Updated the changes successfully!!';
                             this.loading = false;
-                            this.displaySubjectForm = false;
+                            this.closeForm('subject');
+                            this.validateStepCompletion();
                         }
                     });
             },
@@ -559,7 +648,8 @@
                             this.refreshMessage = Math.random();
                             this.successMsg = 'Updated the changes successfully!!';
                             this.loading = false;
-                            this.displayTrackingForm = false;
+                            this.closeForm('tracking');
+                            this.validateStepCompletion();
                         }
                     });
             },
