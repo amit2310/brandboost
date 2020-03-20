@@ -15,10 +15,13 @@
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
+<<<<<<< HEAD
+=======
 
 
 
 
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
 </head>
 <body id="ReviewSection">
 
@@ -77,8 +80,12 @@
 	 	</div>
       
       <div class="p30 pb10 text-center">
+<<<<<<< HEAD
+      	<img src="assets/images/review_setup_graph.svg"/>      </div>
+=======
       	<img src="assets/images/review_setup_graph.svg"/>
       </div>
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
        
       					<div class="p30 pb15">
      						<div class="row">
@@ -88,8 +95,12 @@
      							<div class="col-3">
      								<label class="custom-form-switch mt-0 float-right">
 										<input class="field" type="checkbox" checked="">
+<<<<<<< HEAD
+										<span class="toggle reviews"></span>									</label>
+=======
 										<span class="toggle reviews"></span>
 									</label>
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
      							</div>
      						</div>
       						<ul class="list_review mt-3">
@@ -110,8 +121,12 @@
      							<div class="col-3">
      								<label class="custom-form-switch mt-0 float-right">
 										<input class="field" type="checkbox" checked="">
+<<<<<<< HEAD
+										<span class="toggle reviews"></span>									</label>
+=======
 										<span class="toggle reviews"></span>
 									</label>
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
      							</div>
      						</div>
       						<ul class="list_review mt-3">
@@ -126,8 +141,12 @@
       					<div class="reviw_howtouse">
       						<a href="#" class="close_x_icon2"><img src="assets/images/close_grey_line.svg"/></a>
       						<p class="fsize12 fw300 light_000">Learn how to use <br><strong>Campaigns</strong> in 60 seconds</p>
+<<<<<<< HEAD
+							<img src="assets/images/review_play.svg"/>      					</div>
+=======
 							<img src="assets/images/review_play.svg"/>
       					</div>
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
         
        
 
@@ -152,8 +171,12 @@
     	<p class="fsize14 dark_600 m-0">On &nbsp; &nbsp;
     	<label class="custom-form-switch mt-0">
 			<input class="field" type="checkbox" checked="">
+<<<<<<< HEAD
+			<span class="toggle green3"></span>		</label>
+=======
 			<span class="toggle green3"></span>
 		</label>
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
    		</p>
     	</div>
     </div>
@@ -213,8 +236,11 @@
     				</div>
     			</div>
     		</div>
+<<<<<<< HEAD
+=======
     		
     		
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
     	</div>
     </div>
     
@@ -228,8 +254,12 @@
     	<p class="fsize14 dark_600 m-0">Off &nbsp; &nbsp;
     	<label class="custom-form-switch mt-0">
 			<input class="field" type="checkbox" >
+<<<<<<< HEAD
+			<span class="toggle green3"></span>		</label>
+=======
 			<span class="toggle green3"></span>
 		</label>
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
    		</p>
     	</div>
     </div>
@@ -245,6 +275,9 @@
     		</div>
     	</div>
     </div>
+<<<<<<< HEAD
+      </div>
+=======
     
     
     
@@ -252,6 +285,7 @@
      
       </div>
       
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
       </div>
       
 <!--******************
@@ -295,8 +329,11 @@ $(document).ready(function(){
  
 });
 </script>
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> 12e58133be310c84255274bddc292049a6882225
 </body>
 </html>
