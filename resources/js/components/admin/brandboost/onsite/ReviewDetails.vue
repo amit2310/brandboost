@@ -9,12 +9,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review Page</h3>
+                        <!--<h3 class="htxt_medium_24 dark_700">{{ capitalizeFirstLetter(review.brand_title) }}</h3>-->
+                        <h3 class="htxt_medium_24 dark_700">{{ capitalizeFirstLetter(review.firstname) + ' ' + capitalizeFirstLetter(review.lastname) }}</h3>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="mr15 btn btn-md bkg_light_000 reviews_400">Filters &nbsp; &nbsp; <img src="assets/images/filter_review.svg"></button>
-                        <button class="btn btn-md bkg_reviews_300 light_000 slidebox"> Edit review &nbsp; &nbsp; <span><img src="assets/images/review_add.svg"></span></button>
-
+                        <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
+                        <button v-if="review.status == '0'" @click="changeStatus(reviewId, '1')" class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal">Approve <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
+                        <button v-else @click="changeStatus(reviewId, '0')" class="btn btn-md bkg_light_000 reviews_400 fw500" data-toggle="modal">Dispprove <span><img src="assets/images/arrow-down-s-line-review.svg"></span></button>
                     </div>
                 </div>
             </div>
@@ -22,30 +23,19 @@
         </div>
 
 
-
-
         <!--******************
          Content Area
         **********************-->
         <div class="content-area">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p40 pt0 pb0">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <p class="fsize12 fw500 dark_200 mt30 mb30"><i><img src="assets/images/lightbulb-fill.svg"></i> &nbsp; TIPS</p>
-                                    <h3 class="htxt_bold_18 dark_800">Automate messages, build engage with chatbots</h3>
-                                    <p style="max-width: 440px;" class="htxt_regular_14 dark_400 mt15 mb25 lh_22">Conversational marketing platform that helps companies close more deals by messaging with prospects in real-time & via intelligent chatbots. Qualify leads, book meetings.</p>
 
-                                </div>
-                                <div class="col-md-5 text-center mt0">
-                                    <img class="mt0" style="max-width: 240px;" src="assets/images/review_feed_illustration.svg">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--******************
+                 PAGE LEFT SIDEBAR
+                **********************-->
+                <OnsiteReviewsSummary></OnsiteReviewsSummary>
+                <!--******************
+                  PAGE LEFT SIDEBAR END
+                 **********************-->
 
                 <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                 <loading :isLoading="loading"></loading>
@@ -55,28 +45,34 @@
                             <div class="p30 bbot pt20 pb20">
                                 <div class="bbot mb30">
                                     <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="fsize16 fw500 dark_700 float-left mr-3"><user-avatar
-                                                :avatar="review.avatar"
-                                                :firstname="review.firstname"
-                                                :lastname="review.lastname"
-                                                :width="33"
-                                                :height="33"
-                                                :fontsize="33"
-                                            ></user-avatar> &nbsp;{{review.firstname+ ' ' +review.lastname}}</p>
-                                            <p class="mt-1 review_rating_start">
-                                                <i class="" v-for="num in [1,2,3,4,5]">
-                                                <img v-if="num<=review.ratings" src="assets/images/star-fill_yellow_18.svg">
-                                                <img v-else src="assets/images/star-fill_grey_18.svg">
-                                                </i>
-                                            </p>
+                                        <div class="col-md-6">
+                                            <span class="circle_icon_24 bkg_reviews_400 mr-3">{{ review.firstname != '' ? review.firstname.charAt(0) : review.lastname.charAt(0) }}</span>
+                                            <p class="fsize14 fw500 dark_600 float-left mr-3 lh_24">{{ capitalizeFirstLetter(review.firstname) + ' ' + capitalizeFirstLetter(review.lastname) }}</p>
+
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
+                                            <ul class="review_header_section">
+                                                <li>
+                                                    <span v-for="num in [1,2,3,4,5]">
+                                                        <i v-if="num<=review.ratings && review.ratings > 3" class="ri-star-s-fill fsize18 green_400"></i>
+                                                        <i v-else-if="num<=review.ratings && review.ratings == 3" class="ri-star-s-fill fsize18 yellow_400"></i>
+                                                        <i v-else class="ri-star-s-fill fsize18 light_600"></i>
+                                                    </span>
+                                                </li>
 
+                                                <li class="ml-1"><span>{{ number_format(review.ratings, 1) }}</span></li>
+                                                <li><span><i class="ri-at-line email_400 fsize15"></i></span></li>
+                                                <li><span>{{ timeAgo(review.created) }}</span></li>
+                                                <li>
+                                                    <span v-if="review.status == 0" style="left:auto; right:auto; top: auto" class="status_icon bkg_light_600 position-relative" title="INACTIVE"></span>
+                                                    <span v-if="review.status == 1" style="left:auto; right:auto; top: auto" class="status_icon bkg_green_400 position-relative" title="ACTIVE"></span>
+                                                    <span v-if="review.status == 2" style="left:auto; right:auto; top: auto" class="status_icon bkg_reviews_300 position-relative" title="PENDING"></span>
+                                                    <span v-if="review.status == 3" style="left:auto; right:auto; top: auto" class="status_icon bkg_reviews_300 position-relative" title="ARCHIVED"></span>
+                                                </li>
+                                            </ul>
 
-
-
-
+                                        </div>
+                                        <!--<div class="col-md-4">
                                             <div class="float-right mt-1 ml-2">
                                                 <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false">
                                                     <span><img src="assets/images/more-vertical.svg"></span>
@@ -89,67 +85,62 @@
                                             </div>
                                             <p class="float-right fsize14 dark_200 mt-1 mb-0 ml-5">{{displayDateFormat('M d, Y', review.created)}}</p>
                                             <button class="btn btn-sm-24 bkg_blue_000 pr10 pl10 blue_300 fsize12 fw500 mt-1 float-right">Published</button>
-                                        </div>
+                                        </div>-->
                                     </div>
-
-
-
-
                                 </div>
                                 <p class="fsize14 fw500 dark_800 lh_22 mb-2">{{review.review_title}}</p>
-                                <p class="fsize14 fw400 dark_600 lh_22" v-html="review.comment_text">
-
-                                </p>
+                                <p class="fsize14 fw400 dark_600 lh_22" v-html="review.comment_text"></p>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
 
-
-
-
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card p20 pl30 pr30 min_h_240">
-
-                            <ul class="nav nav-pills review_sec_tab mt-0 mb20 bbot pb20" role="tablist">
-                                <li class="mr30">
-                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddComment" @click="displayActivity='commentSection'"><img src="assets/images/reply-fill.svg" /> &nbsp; Add a comment</a>
+                        <div class="card p20 pl30 pr30 " style="min-height: 165px;">
+                            <ul class="nav nav-pills review_sec_tab2 mt-0 mb20 bbot pb20" role="tablist">
+                                <!--<li class="mr20">
+                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddComment" @click="displayActivity='commentSection'"><i class="ri-edit-box-line"></i>&nbsp; Add a comment</a>
+                                </li>-->
+                                <li class="mr20">
+                                    <a class="htxt_bold_14 active" data-toggle="pill" href="#AddNote" @click="displayActivity='notesSection'"><i class="ri-edit-box-line"></i> &nbsp; New note</a>
                                 </li>
-                                <li class="mr30">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#jsAddNote" @click="displayActivity='notesSection'"><img src="assets/images/edit-box-line.svg" /> &nbsp; New note</a>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Chat"><i class="ri-chat-1-line"></i> &nbsp; Chat</a>
                                 </li>
-                                <li class="mr30">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#Email"><img src="assets/images/mail-open-line.svg" /> &nbsp; Email</a>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Email"><i class="ri-mail-line"></i> &nbsp; Email</a>
                                 </li>
-                                <li class="mr30">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#TextMessage"><img src="assets/images/message-3-line-16.svg" /> &nbsp; SMS</a>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#TextMessage"><i class="ri-chat-4-line"></i> &nbsp; SMS</a>
+                                </li>
+                                <li class="mr20">
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Review"><i class="ri-star-line"></i> &nbsp; Review</a>
                                 </li>
                                 <li class="">
-                                    <a class="htxt_bold_14" data-toggle="pill" href="#Review"><img src="assets/images/add-line.svg" /> &nbsp; Log activity</a>
+                                    <a class="htxt_bold_14" data-toggle="pill" href="#Logactivity" @click="displayActivity='commentSection'"><i class="ri-add-line"></i> &nbsp; Log activity</a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
-                                <!--======Tab 1====-->
-                                <div id="AddComment" class="tab-pane active">
-                                    <div class="p-0 mb20">
-                                        <textarea class="border-0 w-100 fsize15 dark_200" v-model="comment_content" style="resize: none" placeholder="Leave your comment here..." ></textarea>
+                                <!--<div id="AddComment" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-md-11"><textarea class="border-0 w-100 fsize14 dark_200" v-model="comment_content" style="resize: none" placeholder="Start writing your comment here."></textarea></div>
+                                        <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit" @click="addComment"><img src="assets/images/review_send_btn_36.svg"></button></div>
                                     </div>
-                                    <div class="p-0 text-right">
-                                        <button class="border-0 bkg_none p-0" type="button" @click="addComment" ><img src="assets/images/review_48_send_circle.svg"/></button>
+                                </div>-->
+                                <!--======Tab 1====-->
+                                <div id="AddNote" class="tab-pane ">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <textarea class="border-0 w-100 fsize14 dark_200" v-model="notes" style="resize: none" placeholder="Start writing your note here. Use @ to mention your teammates."></textarea>
+                                        </div>
+                                        <div class="col-md-1 text-right"><button style="width: 36px!important;" class="border-0 bkg_none p-0" type="submit" @click="addNotes"><img src="assets/images/review_send_btn_36.svg"></button></div>
                                     </div>
                                 </div>
                                 <!--======Tab 2=====-->
-                                <div id="jsAddNote" class="tab-pane fade">
-                                    <div class="p-0 mb20">
-                                        <textarea class="border-0 w-100 fsize15 dark_200" v-model="notes" style="resize: none" placeholder="Leave your note here..." ></textarea>
-                                    </div>
-                                    <div class="p-0 text-right">
-                                        <button class="border-0 bkg_none p-0" type="button" @click="addNotes" ><img src="assets/images/review_48_send_circle.svg"/></button>
-                                    </div>
+                                <div id="Chat" class="tab-pane fade">
+                                    Chat
                                 </div>
                                 <!--======Tab 3=====-->
                                 <div id="Email" class="tab-pane fade">
@@ -163,23 +154,25 @@
                                 <div id="Review" class="tab-pane fade">
                                     Review
                                 </div>
+                                <!--======Tab 5=====-->
+                                <div id="Logactivity" class="tab-pane fade">
+                                    Log activity
+                                </div>
                             </div>
-
-
-
 
                         </div>
 
-                        <div class="table_head_action mt-1 mb25">
+                        <div class="table_head_action mt-1 mb20">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3 class="htxt_bold_20 dark_700">Activity</h3>
+                                    <h3 v-if="displayActivity=='notesSection'" class="htxt_medium_14 dark_600">Notes</h3>
+                                    <h3 v-else class="htxt_medium_14 dark_600">Activity</h3>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="table_action">
                                         <div class="float-right">
                                             <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                                Last week
+                                                Sort by Date
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="#">Link 1</a>
@@ -203,252 +196,270 @@
                             </div>
                         </div>
 
-
-
                         <div class="row" v-if="displayActivity=='commentSection'">
-                            <div class="col-md-12">
-
+                            <div v-if="commentData && commentData.length > 0" class="col-md-12">
                                 <div v-for="comment in commentData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_green_400 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">{{comment.firstname + ' ' + comment.lastname}} added a comment</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">{{comment.content}}</p>
-
+                                            <div class="icons bkg_light_800 mb-0"><i class="ri-price-tag-3-line light_000 fsize18"></i></div>
+                                            <p class="htxt_bold_16 dark_800 mb-2">{{ capitalizeFirstLetter(comment.firstname) + ' ' + capitalizeFirstLetter(comment.lastname) }} added a comment</p>
+                                            <p class="htxt_regular_14 dark_400 mb0 lh_22">{{ comment.content }}.</p>
                                         </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">{{displayDateFormat('M d, Y H:i A', comment.created)}}</p></div>
+                                        <div class="time"><p class="htxt_regular_13 dark_200 ls_4">{{ displayDateFormat('M d, Y H:i A', comment.created) }}</p></div>
                                     </div>
                                 </div>
-
-                                <!--<div class="activity_date_small">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="icons bkg_blue_200"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"/></i> Answer with SMS</button>
-                                        </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
-                                    </div>
-                                </div>
-
+                            </div>
+                            <div v-else class="col-md-12">
                                 <div class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="icons bkg_yellow_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"/></i> Answer with SMS</button>
+                                            No Record Found.
                                         </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
                                     </div>
                                 </div>
-
-                                <div class="activity_date_small">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="icons bkg_green_400"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">Received SMS</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">Hey Alex, do you have few minutes for a quick call at 11:30 AM?</p>
-                                            <button class="activity_button"><i><img src="assets/images/message-3-line-16.svg"/></i> Answer with SMS</button>
-                                        </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">11:44AM</p></div>
-                                    </div>
-                                </div>-->
-
-
                             </div>
                         </div>
-                        <div class="row" v-if="displayActivity=='notesSection'">
-                            <div class="col-md-12">
 
+                        <div class="row" v-if="displayActivity=='notesSection'">
+                            <div v-if="notesData && notesData.length > 0"  class="col-md-12">
                                 <div v-for="note in notesData" class="activity_date_small">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="icons bkg_blue_200 mb-0"><i><img src="assets/images/message-3-line.svg"></i></div>
-                                            <p class="htxt_bold_16 dark_800 mb-2">{{note.firstname + ' ' + note.lastname}} added a note</p>
-                                            <p class="htxt_regular_14 dark_400 mb0">{{note.notes}}</p>
-
+                                            <p class="htxt_bold_16 dark_800 mb-2">{{ capitalizeFirstLetter(note.firstname) + ' ' + capitalizeFirstLetter(note.lastname) }} added a note</p>
+                                            <p class="htxt_regular_14 dark_400 mb0">{{ note.notes }}</p>
                                         </div>
-                                        <div class="time"><p class="htxt_regular_14 dark_200">{{displayDateFormat('M d, Y H:i A', note.created)}}</p></div>
+                                        <div class="time"><p class="htxt_regular_14 dark_200">{{ displayDateFormat('M d, Y H:i A', note.created) }}</p></div>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div v-else class="col-md-12">
+                                <div class="activity_date_small">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            No Record Found.
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
-
                     </div>
+
                     <div class="col-md-4">
-
-                        <div class="card p25 animate_top">
-                            <img v-if="review.logo_img" class="float-left mb-3" width="70" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${review.logo_img}`"/>
-                            <img v-else class="float-left mb-3" width="70" src="assets/images/plane_work.svg"/>
-
-                            <p class="fsize16 fw500 dark_800 mb-1">{{review.brand_title}}</p>
-                            <p class="fsize14 fw400 dark_500 mb-3 bbot pb-3">{{reviewStats.totalReviews}} reviews</p>
-
-
-
-                            <div class="pb-3 pl-3 ratings bbot">
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>5 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fiveStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.fiveStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fiveStarPercent" :style="`width:${reviewStats.fiveStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.fiveStar}}</p></div>
+                        <div class="card p25 pt20 animate_top">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="fsize12 fw500 ls_4 dark_600 m-0 float-left">PRODUCT</p>
                                 </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>4 <i><img src="assets/images/star-fill-12.png"/> </i></p>
+                                <div class="col">
+                                    <div class="float-right">
+                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
                                     </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fourStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.fourStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fourStarPercent" :style="`width:${reviewStats.fourStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.fourStar}}</p></div>
                                 </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>3 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.threeStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.threeStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.threeStarPercent" :style="`width:${reviewStats.threeStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.threeStar}}</p></div>
-                                </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>2 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.twoStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.twoStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.twoStarPercent" :style="`width:${reviewStats.twoStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.twoStar}}</p></div>
-                                </div>
-
-                                <div class="row inner">
-                                    <div class="col-1 pr-0 pl-0">
-                                        <p>1 <i><img src="assets/images/star-fill-12.png"/> </i></p>
-                                    </div>
-                                    <div class="col-10">
-                                        <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.oneStar}`">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" :aria-valuenow="reviewStats.oneStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.oneStarPercent" :style="`width:${reviewStats.oneStarPercent}%`"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-1 pr-0 pl-0"><p>{{reviewStats.oneStar}}</p></div>
-                                </div>
-
-
-
-
-
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="pt10 pb0">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="media">
+                                            <div class="media_left">
+                                                <img width="56" style="max-width: 56px!important" src="assets/images/product_info.svg"/>
+                                            </div>
+                                            <div class="media_left">
+                                                <h3 class="htxt_medium_16 dark_800 mt-1">{{ capitalizeFirstLetter(productData.product_name) }}</h3>
+                                                <p class="fsize14 dark_200 m-0">{{ capitalizeFirstLetter(productData.product_type) }} Product</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-
-
-                            <p class="fsize14 dark_600 mt-3 mb-0"><i><img src="assets/images/chat-1-fill.svg"/></i> &nbsp; 13 questions / 10 answers </p>
-
+                                </div>
+                            </div>
 
 
                         </div>
 
-                        <div class="card p0 animate_top col text-center d-none">
-                            <div class="p15 pt15 bbot">
-                                <ul class="workflow_list">
-                                    <li><a class="text-uppercase fw500 dark_600" href="#">FOLLOWERS</a></li>
-                                </ul>
+                        <div class="card p25 pt20 animate_top">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="fsize12 fw500 ls_4 dark_600 m-0 float-left ">PRODUCT SUMMARY</p>
+                                </div>
+                                <div class="col">
+                                    <div class="float-right">
+                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="p30">
-                                <ul class="templates_list">
-                                    <li><a class="active" href="#"><strong><img src="assets/images/menu-2-line.svg"> All</strong> <span>345</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/heart-line.svg"> My Templates</strong> <span>128</span></a></li>
-
-                                    <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Non-profit</strong> <span>13</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Photography</strong> <span>86</span></a></li>
-                                    <li><a href="#"><strong><img src="assets/images/folder-3-line.svg"> Product / Service</strong> <span>31</span></a></li>
+                            <div class="row">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="text-center p20 pt10">
+                                <!--<h3 class="lh_120 dark_700 htxt_regular_36">{{ number_format(reviewStats.totalReviews, 1) }}</h3>-->
+                                <h3 class="lh_120 dark_700 htxt_regular_36">{{ number_format(review.ratings, 1) }}</h3>
+                                <p class="m-0 fsize13"><span class="green_400 mr-2"><i><img src="assets/images/arrow-right-up-line.svg"></i> &nbsp; 33,87%</span>last month</p>
+                            </div>
+                            <div class="ratings">
+                                <ul class="ratinglist">
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">5 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fiveStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" :aria-valuenow="reviewStats.fiveStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fiveStarPercent" :style="`width:${reviewStats.fiveStarPercent}%`"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>{{ reviewStats.fiveStar }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">4 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.fourStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_green_400" role="progressbar" :aria-valuenow="reviewStats.fourStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.fourStarPercent" :style="`width:${reviewStats.fourStarPercent}%`"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>{{ reviewStats.fourStar }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">3 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.threeStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_yellow_400" role="progressbar" :aria-valuenow="reviewStats.threeStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.threeStarPercent" :style="`width:${reviewStats.threeStarPercent}%`"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>{{ reviewStats.threeStar }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">2 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.twoStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" :aria-valuenow="reviewStats.twoStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.twoStarPercent" :style="`width:${reviewStats.twoStarPercent}%`"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>{{ reviewStats.twoStar }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row inner">
+                                            <div class="star_sec">
+                                                <p class="dark_500">1 <i><img src="assets/images/star-fill-12.png"> </i></p>
+                                            </div>
+                                            <div class="progress_sec">
+                                                <div data-toggle="tooltip" title="" data-placement="top" class="progress" :data-original-title="`Total Reviews ${reviewStats.oneStar}`">
+                                                    <div class="progress-bar progress-bar-info bkg_red_400" role="progressbar" :aria-valuenow="reviewStats.oneStarPercent" aria-valuemin="0" :aria-valuemax="reviewStats.oneStarPercent" :style="`width:${reviewStats.oneStarPercent}%`"></div>
+                                                </div>
+                                            </div>
+                                            <div class="star_sec text-right">
+                                                <p>{{ reviewStats.oneStar }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
 
+                        <div class="card p25">
+                            <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Media</h3>
+                            <hr>
 
+                            <div v-if="review.mediaArr.image && review.mediaArr.image.length > 0" class="row">
+                                <div v-for="media in review.mediaArr.image" class="col-6">
+                                    <img width="100%" class="br5 mb25" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${media}`"/>
+                                </div>
+                            </div>
 
-                        <div class="card p20 min_h_240 d-none ">
-                            <h3 class="htxt_medium_16 dark_800">Info</h3>
-                            <hr/>
+                            <div v-if="review.mediaArr.video && review.mediaArr.video.length > 0" class="row">
+                                <div v-for="video in review.mediaArr.video" class="col-6">
+                                    <video class="media br5 " height="100%" width="100%" controls><source id="bb_video_enlarge" :src="`https://s3-us-west-2.amazonaws.com/brandboost.io/${video}`" type="video/mp4"></video>
+                                    <div class="caption-overflow smallovfl"><a class="preview_video_src" style="cursor: pointer;" :filepath="`https://s3-us-west-2.amazonaws.com/brandboost.io/${video}`" fileext="mp4"><i class="icon-eye"></i></a></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div v-if="tagsData && tagsData.length > 0" class="card p25">
+                            <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
+                            <hr>
+                            <div>
+                                <button v-for="tags in tagsData" class="tags_btn mb-3">{{ tags.tag_name }}</button>
+                                <button class="tags_btn mb-3 applyInsightTagsReviewsNew" :reviewid="review.id" action_name="review-tag">+</button>
+                            </div>
+                        </div>
+
+                        <div class="card p25">
+                            <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Details</h3>
+                            <hr>
                             <ul class="info_list">
-                                <li><span>Source</span><strong>Email</strong></li>
-                                <li><span>First Seen</span><strong>17 Jan 2018</strong></li>
-                                <li><span>Lase Seen</span><strong>22 Apr 2018</strong></li>
-                                <li><span>Page views</span><strong>139</strong></li>
-                                <li><span>Reviews</span><strong>3</strong></li>
-                                <li><span>Notification</span><strong>On</strong></li>
-                                <li><span>Id</span><strong>310282</strong></li>
-                                <li><span>SMS</span><strong>On</strong></li>
+                                <li><span>ID</span><strong>{{ reviewId }}</strong></li>
+                                <li><span>Order ID</span><strong>{{ productData.brandboost_id }}</strong></li>
+                                <li><span>Product ID</span><strong>{{ productData.id }}</strong></li>
+                                <li><span>Source</span><strong>email</strong></li>
                             </ul>
                         </div>
-
-
-                        <div class="card p20 min_h_240 profile_form">
-                            <h3 class="htxt_medium_16 dark_800">Media</h3>
-                            <hr>
-                            <div class="form-group">
-                                <label class="fsize12 fw400 dark_100" for="Leadsource">Lead source</label>
-                                <select class="form-control h36">
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mb-0">
-                                <label class="fsize12 fw400 dark_100" for="Stage">Stage</label>
-                                <select class="form-control h36">
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                    <option>Email Campaign</option>
-                                </select>
-                            </div>
-
-
-                        </div>
-
-
-
+                    </div>
 
                     </div>
+
                 </div>
-
-
-
-
             </div>
 
+        <div id="ReviewTagListModalNew" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" name="frmReviewTagListModalNew" id="frmReviewTagListModalNew" action="javascript:void();">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Apply Tags</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body" id="tagEntireListReview"></div>
+
+                        <div class="modal-footer modalFooterBtn">
+                            <input type="hidden" name="review_id" id="tag_review_id" />
+                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn dark_btn frmReviewTagListModalBtn">Apply Tag</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
     </div>
 
 </template>
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
+    import OnsiteReviewsSummary from '@/components/admin/brandboost/onsite/tabs/ReviewsSummary';
+
     export default {
-        components: {UserAvatar},
+        components: {UserAvatar, OnsiteReviewsSummary},
         data() {
             return {
                 successMsg: '',
@@ -464,8 +475,7 @@
                 comment_content: '',
                 notes: '',
                 commentData: '',
-                displayActivity: 'commentSection'
-
+                displayActivity: 'notesSection'
             }
         },
         mounted() {
@@ -486,6 +496,7 @@
                         this.commentData = response.data.reviewCommentsData;
                         this.notesData = response.data.reviewNotesData;
                         this.loading = false;
+                        console.log((this.review.mediaArr));
                     });
             },
             addComment: function () {
@@ -523,7 +534,92 @@
 
                     });
             },
+            changeStatus: function(review_id, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/reviews/updateReviewStatus', {
+                        review_id:review_id,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+
+                                this.successMsg = 'Action completed successfully.';
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 5000);
+                            }
+
+                        });
+                }
+            }
 
         }
     }
+
+    $(document).ready(function () {
+
+        $(document).on("click", ".applyInsightTagsReviewsNew", function () {
+            var review_id = $(this).attr("reviewid");
+            var feedback_id = $(this).attr("feedback_id");
+            var action_name = $(this).attr("action_name");
+
+            $.ajax({
+                url: '/admin/tags/listAllTags',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: {review_id: review_id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        var dataString = data.list_tags;
+                        if (dataString.search('have any tags yet :-') > 0) {
+                            $('.modalFooterBtn').hide();
+                        } else {
+                            $('.modalFooterBtn').show();
+                        }
+
+                        $("#tagEntireListReview").html(dataString);
+                        $("#tag_review_id").val(review_id);
+                        $("#tag_feedback_id").val(feedback_id);
+                        if (action_name == 'review-tag') {
+                            $("#ReviewTagListModalNew").modal("show");
+                        } else if (action_name == 'feedback-tag') {
+                            $("#FeedbackTagListModalNew").modal("show");
+                        }
+                    }
+                }
+            });
+        });
+
+        //$("#frmReviewTagListModalNew").submit(function () { alert("here")
+        $(document).on("click", ".frmReviewTagListModalBtn", function () {
+            var formdata = $("#frmReviewTagListModalNew").serialize();
+            $.ajax({
+                url: '/admin/tags/applyReviewTag',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: formdata,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        $("#review_tag_" + data.id).html(data.refreshTags);
+                        $("#ReviewTagListModalNew").modal("hide");
+                        //window.location.href = '';
+                    } else {
+                        $('.overlaynew').hide();
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
 </script>

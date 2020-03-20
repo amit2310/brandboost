@@ -11,27 +11,24 @@
                     <!--<ul class="table_filter text-right">
                         <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
                     </ul>-->
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="table_filter">
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
-                        <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
                     <ul class="table_filter text-right">
-                        <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li>
+                            <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
+                            <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
+                        </li>
+                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
+                            <div class="dropdown-menu p10 mt-1">
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -130,19 +127,20 @@
                                 <span>{{ oReview.ratings }}.0</span>
                             </td>
                             <td>
-                                <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
-                                <br />
-                                <span>{{ setStringLimit(oReview.comment_text, 50) }}</span>
+                                <!--<span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
+                                <br />-->
+                                <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ setStringLimit(oReview.comment_text, 50) }}</span>
                             </td>
                             <td><i class="ri-at-line email_400 fsize15"></i></td>
-                            <td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}<!--3 month ago--></td>
+                            <!--<td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</td>-->
+                            <td>{{ timeAgo(oReview.review_created) }}</td>
                             <td>
-                                    <span class="float-right">
-                                        <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
-                                        <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
-                                        <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
-                                        <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
-                                    </span>
+                                <span class="float-right">
+                                    <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
+                                    <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
+                                    <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
+                                    <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
+                                </span>
                             </td>
                         </tr>
                         </tbody>
@@ -158,35 +156,39 @@
             </pagination>
 
         </div>
+
         <div v-else class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <tbody>
-                        <tr class="headings">
-                            <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                            </td>
-                            <td><span class="fsize10 fw500">CONTACT </span></td>
-                            <td><span class="fsize10 fw500">RATING</span></td>
-                            <td><span class="fsize10 fw500">REVIEW</span></td>
-                            <td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
-                            <td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                            <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                        </tr>
-                        <tr>
-                            <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="card card_shadow min_h_600">
+
+                    <div class="row mb65">
+                        <div class="col-md-6 text-left">
+                            <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="#">
+                                <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
+                                Set up reviews monitoring
+                            </a>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a class="lh_32 htxt_regular_12 dark_200 " href="#">
+                                Learn how use use contacts &nbsp; <img src="assets/images/question-line.svg">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row mb65">
+                        <div class="col-md-12 text-center">
+                            <img class="mt40" style="max-width: 240px; " src="assets/images/reviews_icon_125.svg">
+                            <h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
+                            <h3 class="htxt_regular_14 dark_200 mt15 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
+                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <div class="col-md-12 text-center mt-3">
+                <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT reviews</a>
+            </div>
 
         </div>
 

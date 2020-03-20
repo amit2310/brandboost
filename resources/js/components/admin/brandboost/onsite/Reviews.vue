@@ -14,6 +14,7 @@
                     <div class="col-md-6 col-6 text-right">
                         <button v-if="oReviews.length > 0 || searchBy.length>0" class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
                         <button v-else class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000" @click="displayAddReviewForm">Add Review <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                         <!--<button class="btn btn-md bkg_reviews_400 light_000 slidebox">ADD New Contact <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
                     </div>
                 </div>
@@ -69,7 +70,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="sortBy='Name'">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="sortBy='Date Created'">ALL</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
@@ -663,7 +664,7 @@
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
-                sortBy: 'Name',
+                sortBy: 'Date Created',
                 searchBy: ''
             }
         },
@@ -682,6 +683,9 @@
             }
         },
         methods: {
+            displayAddReviewForm: function(){
+                window.location.href='#/reviews/onsite/add';
+            },
             searchItem: function(){
                 this.loadPaginatedData();
             },
@@ -834,11 +838,11 @@
             });
         });
 
-        $(document).on('click', '.search_tables_open_close', function(){
+        /*$(document).on('click', '.search_tables_open_close', function(){
             $(".reviewfeedSearch").animate({
                 width: "toggle"
             });
             $('#InputToFocus').focus();
-        });
+        });*/
     });
 </script>

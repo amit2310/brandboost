@@ -5,8 +5,8 @@
     </div>
 </template>
 <script>
-    import ErrorMessage from './ErrorMessage.vue';
-    import SuccessMessage from './SuccessMessage.vue';
+    import ErrorMessage from './ErrorMessage';
+    import SuccessMessage from './SuccessMessage';
 
     export default {
         name: 'system-messages',

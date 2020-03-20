@@ -7,31 +7,31 @@
                     <h3 class="htxt_medium_14 dark_600">Review Requests</h3>
                 </div>
                 <div class="col-md-6">
-                    <!--<ul class="table_filter text-right">
-                        <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                    </ul>-->
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="table_filter">
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'all'}" @click="sortBy='all'">ALL</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'sent'}" @click="sortBy='sent'">SENT</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'draft'}" @click="sortBy='draft'">DRAFT</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'submitted'}" @click="sortBy='submitted'">SUBMITED</a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'archive'}" @click="sortBy='archive'">ARCHIVE</a></li>
-                        <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
                     <ul class="table_filter text-right">
-                        <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li>
+                            <!--<a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
+                            <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
+                        </li>
+                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
+                            <div class="dropdown-menu p10 mt-1">
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'all'}" @click="sortBy='all'">ALL</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'sent'}" @click="sortBy='sent'">SENT</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'draft'}" @click="sortBy='draft'">DRAFT</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'submitted'}" @click="sortBy='submitted'">SUBMITED</a>
+                                <a href="javascript:void(0);" :class="{'active': viewType == 'archive'}" @click="sortBy='archive'">ARCHIVE</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
+            <!--<div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                <div class="form-group m-0 position-relative">
+                    <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                    <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                </div>
+            </div>-->
         </div>
 
         <div v-if="requests.length > 0">
@@ -153,39 +153,28 @@
                 class="mt-4">
             </pagination>
         </div>
+
         <div v-else class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <tbody>
-                        <tr class="headings">
-                            <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
-                            </td>
-                            <td><span class="fsize10 fw500">NAME </span></td>
-                            <td><span class="fsize10 fw500">EMAIL / phone</span></td>
-                            <td><span class="fsize10 fw500">CAMPAIGN</span></td>
-                            <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                            <td><span class="fsize10 fw500">REVIEW  </span></td>
-                            <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
-                            <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                        </tr>
+                <div class="card card_shadow min-h-280">
 
-                        <tr>
-                            <td colspan="8" align="center"><span style="font-weight: bold; color: #FF0000;">No Record Found.</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="row mb65">
+                        <div class="col-md-12 text-center">
+                            <img class="mt40" style="max-width: 250px; " src="assets/images/Review_request_image.svg">
+                            <h3 class="htxt_bold_18 dark_700 mt30">No review request so far. But you can change it!</h3>
+                            <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import review request!</h3>
+                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-
+            <div class="col-md-12 text-center mt-3">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
+            </div>
         </div>
+
     </div>
 
 </template>
@@ -222,6 +211,9 @@
         },
         watch: {
             'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
                 this.loadPaginatedData();
             }
         },

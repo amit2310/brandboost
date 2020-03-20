@@ -87,6 +87,7 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>-->
+                <OnsiteCampaignsTab></OnsiteCampaignsTab>
                 <!--******************
                   PAGE LEFT SIDEBAR END
                  **********************-->
@@ -96,10 +97,10 @@
                         <div class="col-md-6">
                             <ul class="table_filter">
                                 <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>&nbsp;&nbsp;
-                                <li :class="[ seletedTab === 1 ? 'active' : '' ]"><a v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
-                                <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
-                                <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
-                                <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Stats&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 2 ? 'active' : '' ]"><a v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 3 ? 'active' : '' ]"><a v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 4 ? 'active' : '' ]"><a v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
+                                <li :class="[ seletedTab === 5 ? 'active' : '' ]"><a v-on:click="seletedTab=5" data-toggle="tab" style="cursor:pointer; padding: 5px;">Stats&nbsp;</a></li>&nbsp;&nbsp;
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -218,9 +219,9 @@
                     </div>
                 </div>
 
-                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1)"></OnsiteReviewRequestsTab>
+                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)"></OnsiteReviewRequestsTab>
 
-                <OnsiteReviewsTab v-if="(seletedTab == 2)"></OnsiteReviewsTab>
+                <OnsiteReviewsTab v-if="(seletedTab == 3)"></OnsiteReviewsTab>
 
                 <!--<div v-if="(seletedTab == 4)">
                     <div class="row">
@@ -343,12 +344,13 @@
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
+    import OnsiteCampaignsTab from '@/components/admin/brandboost/onsite/tabs/CampaignsSummary';
     import OnsiteReviewsTab from '@/components/admin/brandboost/onsite/tabs/Reviews';
     import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 
     export default {
         props : ['pageColor', 'title', 'review_type'],
-        components: {UserAvatar, Pagination, OnsiteReviewsTab, OnsiteReviewRequestsTab},
+        components: {UserAvatar, Pagination, OnsiteCampaignsTab, OnsiteReviewsTab, OnsiteReviewRequestsTab},
         data(){
             return {
                 moduleName: '',

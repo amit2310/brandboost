@@ -12,9 +12,9 @@
                             <li><a href="#/settings/preferences" style="cursor:pointer; padding: 5px;"> Preferences&nbsp;</a></li>&nbsp;&nbsp;
                             <li  class="active"><a href="#/settings/subscription" style="cursor:pointer; padding: 5px;">Subscription & Credits&nbsp;</a></li>&nbsp;&nbsp;
                             <li><a href="#/settings/billing" style="cursor:pointer; padding: 5px;">Billing&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer; padding: 5px;">Import&nbsp;</a></li>&nbsp;&nbsp;
-                            <li><a href="#/settings/general" style="cursor:pointer;">Export</a></li>
+                            <li><a href="#/settings/notification" style="cursor:pointer; padding: 5px;">Notifications&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/import" style="cursor:pointer; padding: 5px;">Import&nbsp;</a></li>&nbsp;&nbsp;
+                            <li><a href="#/settings/export" style="cursor:pointer;">Export</a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,6 +22,8 @@
             <div class="clearfix"></div>
         </div>
         <div class="clearfix">&nbsp;</div>
+        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+        <loading :isLoading="loading"></loading>
         <div class="row">
             <div class="col-md-9">
                 <div class="panel panel-flat review_ratings">
@@ -664,7 +666,11 @@
             loadData: function () {
                 //getData
                 this.loading = true;
-                axios.get('/admin/settings')
+                axios.get('/admin/settings',{
+                        params: {
+                            current_tab:'notification'
+                        }
+                    })
                     .then(response => {
                         //console.log(response.data);
                         this.loading = false;

@@ -15,7 +15,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='') {
+    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='', $paginate=true) {
         $query = DB::table('tbl_brandboost')
                 ->when(($userId > 0), function($query) use ($userId) {
                     return $query->where('user_id', $userId);
@@ -46,7 +46,10 @@ class BrandboostModel extends Model {
                     $query->orderBy('id', 'desc');
                 }
                 //->get();
-        $oData = $query->paginate(10);
+        if($paginate == true)
+            $oData = $query->paginate(10);
+        else
+            $oData = $query->get();
         return $oData;
     }
 
@@ -423,7 +426,7 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='') {
+    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='', $paginate=true) {
 
         $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
@@ -454,7 +457,10 @@ class BrandboostModel extends Model {
         }else{
             $query->orderBy('id', 'desc');
         }
-        $oData = $query->paginate(10);
+        if($paginate == true)
+            $oData = $query->paginate(10);
+        else
+            $oData = $query->get();
         return $oData;
     }
 
@@ -1091,7 +1097,19 @@ class BrandboostModel extends Model {
         return $aData;
     }
 
+    /**
+     *
+     * @param type $campType
+     * @param type $userID
+     * @return type
+     */
+    public function getWidgetThemeDetails($themeId) {
 
+        $oData = DB::table('tbl_brandboost_widget_theme_settings')
+            ->where('id', $themeId)
+            ->get();
+        return $oData;
+    }
 
     public function getCampaignBycampID($campaignID) {
 

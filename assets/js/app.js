@@ -160,3 +160,10 @@ $(document).ready(function(){
 });
 
 
+$(document).ready(function(){
+    $(document).on("click", ".close_sidebar", function(){
+        $(".page_sidebar").animate({
+            width: "toggle"
+        });
+    });
+});

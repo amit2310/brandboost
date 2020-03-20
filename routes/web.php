@@ -211,6 +211,23 @@ Route::group(['middleware' => ['bb_authorize']], function () {
      *                                 End
      * --------------------------------------------------------------------------
      */
+    /**
+     * --------------------------------------------------------------------------
+     *  Add component of widget onsite setup section.
+     *  @Pavan
+     * --------------------------------------------------------------------------
+     */
+
+    Route::get('/admin/brandboost/onsite-widget-setup/{id}', 'Admin\Brandboost@widgetOnsiteSetup');
+    Route::get('/admin/brandboost/updateOnsiteWidgetStatus', 'Admin\Brandboost@updateOnsiteWidgetStatus');
+    Route::post('/admin/brandboost/saveOnsiteWidgetSingleSettings', 'Admin\Brandboost@saveOnsiteWidgetSingleSettings');
+    Route::post('/admin/brandboost/createBrandBoostWidgetTheme', 'Admin\Brandboost@createBrandBoostWidgetTheme');
+    Route::get('/admin/brandboost/getWidgetThemeData/{themeId}', 'Admin\Brandboost@getWidgetThemeData');
+    /**
+     * --------------------------------------------------------------------------
+     *                                 End
+     * --------------------------------------------------------------------------
+     */
 
     Route::post('admin/brandboost/switchTemplate', 'Admin\Brandboost@switchTemplate');
     Route::post('admin/brandboost/campaignPreferences', 'Admin\Brandboost@campaignPreferences');
@@ -240,6 +257,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/deleteProduct', 'Admin\Brandboost@deleteProduct');
     Route::post('admin/brandboost/addOffsite', 'Admin\Brandboost@addOffsite');
     Route::get('admin/brandboost/addreview/{id}', 'Admin\Brandboost@addReview');
+    Route::get('admin/brandboost/addReview', 'Admin\Brandboost@addReview');
+    Route::post('reviews/addManualReview', 'Reviews@addManualReview');
     Route::post('admin/brandboost/delete_multipal_brandboost', 'Admin\Brandboost@deleteMultipalBrandboost');
     Route::post('admin/brandboost/publishOnsiteWidget', 'Admin\Brandboost@publishOnsiteWidget');
     Route::post('admin/brandboost/deleteReviewRequest', 'Admin\Brandboost@deleteReviewRequest');
@@ -247,6 +266,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
     Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
+    Route::post('admin/brandboost/saveOnsiteConfiguration', 'Admin\Brandboost@saveOnsiteConfiguration');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
@@ -434,6 +454,10 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/settings/updateEmailNotificationContent', 'Admin\Settings@updateEmailNotificationContent');
     Route::post('admin/settings/updateSMSNotificationContent', 'Admin\Settings@updateSMSNotificationContent');
     Route::post('admin/settings/updateSystemNotificationContent', 'Admin\Settings@updateSystemNotificationContent');
+//    Setting export
+    Route::get('admin/brandboost/exportMedia', 'Admin\Brandboost@exportMedia');
+    Route::get('admin/brandboost/exportReviews', 'Admin\Brandboost@exportReviews');
+    Route::get('admin/tags/exportTags', 'Admin\Tags@exportTags');
 
     Route::post('admin/webchat/favouriteUser', 'Admin\WebChat@favouriteUser');
     Route::post('admin/webchat/smallwfilter', 'Admin\WebChat@smallwfilter');

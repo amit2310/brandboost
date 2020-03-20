@@ -14,6 +14,7 @@ use App\Models\Admin\BrandModel;
 use App\Models\Admin\SubscriberModel;
 use App\Models\FeedbackModel;
 use App\Models\ReviewsModel;
+use App\Models\Admin\SettingsModel;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TemplatesModel;
 use App\Models\Admin\OffsiteModel;
@@ -249,8 +250,8 @@ class Brandboost extends Controller
         $userID = $aUser->id;
 
         $validatedData = $request->validate([
-            'campaignName' => ['required'],
-            'campaignDescription' => ['required']
+            'campaignName' => ['required']
+            //'campaignDescription' => ['required']
         ]);
 
         //Instantiate Brandboost model to get its methods and properties
@@ -278,7 +279,64 @@ class Brandboost extends Controller
         exit;
     }
 
+    /**
+     * Used to set onsite widget
+     * @return type
+     */
+    public function getWidget(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        $selectedTab = '';
+        $widgetID = $request->widgetID;
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
 
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+        $breadcrumb ='';
+        $aData = array(
+            'title' => 'Onsite Widget',
+            'pagename' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+
+
+        if (!empty($widgetID)) {
+//            Session::put("selectedOnsiteWidget", $widgetID);
+
+            $response = $aData;
+            echo json_encode($response);
+            exit;
+        }
+    }
     /**
      * Used to get onsite configuration related values
      * @param type $request
@@ -355,6 +413,9 @@ class Brandboost extends Controller
             }
         }*/
 
+        $oTwilio = getTwilioAccountCustom($userID);
+        $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
+
         $fromNumber = '';
 
         $aBreadcrumb = array(
@@ -364,13 +425,14 @@ class Brandboost extends Controller
             'Setup' => '',
         );
 
+
         $aData = array(
             'title' => 'Onsite Brand Boost Campaign',
             'breadcrumb' => $aBreadcrumb,
             'getOnsite' => $getBrandboost,
             'bActiveSubsription' => $bActiveSubsription,
             'feedbackResponse' => $getBrandboostFR,
-            'brandboostData' => $getBrandboost[0],
+            'brandboostData' =>  $getBrandboost[0],
             'campaignTitle' => $getBrandboost[0]->brand_title,
             'eventsData' => $eventsdata,
             'oEvents' => $oEvents,
@@ -394,7 +456,7 @@ class Brandboost extends Controller
             'smsTemplate' => $smsTemplate,
             'selectedCategory' => $selectedCategory,
             'fromNumber' => $fromNumber,
-            'aUserInfo' => $oUser
+            'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ]
         );
 
         //return view('admin.brandboost.onsite_setup', $aData);
@@ -1019,6 +1081,20 @@ class Brandboost extends Controller
         $reviewTags = getTagsByReviewID($reviewID);
         $totalComment = $mReviews->parentsCommentsCount($reviewID);
 
+        if(!empty($reviewData->media_url)) {
+            $media_url_arr = unserialize($reviewData->media_url);
+            foreach ($media_url_arr as $kArr => $vArr) {
+                //pre($vArr);
+                //$reviewData->media = $vArr['media_type']."^^^".$vArr['media_url'];
+                if($vArr['media_type'] == 'image') {
+                    $reviewData->mediaArr->image[] = $vArr['media_url'];
+                }
+                if($vArr['media_type'] == 'video') {
+                    $reviewData->mediaArr->video[] = $vArr['media_url'];
+                }
+            }
+        }
+
         if(!empty($reviewData)){
             $bbID = $reviewData->bbId;
             $aAllReviews = $mReviews->getCampaignAllReviews($bbID, true);
@@ -1449,8 +1525,7 @@ class Brandboost extends Controller
      * @param type $param
      * @return type
      */
-    public
-    function updateOnsiteStatus(Request $request)
+    public function updateOnsiteStatus(Request $request)
     {
 
         $response = array();
@@ -2316,14 +2391,86 @@ public function widgetStatisticDetailsStatsGraph(){
         }
     }
 
+    /**
+     * Used to get onsite widget configuration settings by widget id
+     * $param type $widgetID
+     * @return type
+     */
+    public  function widgetOnsiteSetup($widgetID)
+    {
+        $selectedTab = '';
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        if (!empty($selectedTab)) {
+            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
+                //set required session
+                Session::put("setTab", $selectedTab);
+            }
+        } else {
+            $setTab = Session::get('setTab');
+            if ($setTab == '') {
+                Session::put("setTab", 'Review Sources');
+            }
+        }
+
+        if (empty($widgetID)) {
+            redirect("admin/brandboost/widgets");
+            exit;
+        }
+
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite','','',false);
+        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
+        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
+        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
+        $bActiveSubsription = UsersModel::isActiveSubscription();
+        $setTab = Session::get("setTab");
+
+        $breadcrumb = array(
+            'Home' => '#/',
+            'Onsite Widgets' => '#/widgets/onsite',
+            'Setup' => '',
+        );
+        $aData = array(
+            'title' => 'Onsite Widget',
+            'breadcrumb' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab
+        );
+        $widget_preview = view('admin.brandboost.campaign-tabs.widget.onsite-widget-configuration-setup-preview', $aData)->render();
+        $response = array(
+            'title' => 'Onsite Widget',
+            'breadcrumb' => $breadcrumb,
+            'oWidgets' => $oWidgets,
+            'bActiveSubsription' => $bActiveSubsription,
+            'widgetData' => $oWidgets[0],
+            'oBrandboostList' => $oBrandboostList,
+            'oStats' => $oStats,
+            'setTab' => $setTab,
+            'widgetID' => $widgetID,
+            'widgetThemeData' => $widgetThemeData,
+            'selectedTab' => $selectedTab,
+            'widget_preview' => utf8_encode($widget_preview)
+        );
+
+        echo json_encode($response);
+        exit;
+        return view('admin.brandboost.onsite_widget_setup', $aData);
+    }
 
     /**
      * Used to get onsite widget configuration settings by widget id
      * $param type $widgetID
      * @return type
      */
-    public
-    function onsiteWidgetSetup($widgetID)
+    public  function onsiteWidgetSetup($widgetID)
     {
         $selectedTab = Request::input("t");
         $oUser = getLoggedUser();
@@ -2377,64 +2524,7 @@ public function widgetStatisticDetailsStatsGraph(){
 
         return view('admin.brandboost.onsite_widget_setup', $aData);
     }
-    /**
-     * Used to set onsite widget
-     * @return type
-     */
-    public function getWidget(Request $request)
-    {
-        $response = array("status" => "error", "msg" => "Something went wrong");
-        $selectedTab = '';
-        $widgetID = $request->widgetID;
-        $oUser = getLoggedUser();
-        $userID = $oUser->id;
 
-        if (!empty($selectedTab)) {
-            if (in_array($selectedTab, array('Review Sources', 'Configure Widgets', 'Integration'))) {
-                //set required session
-                Session::put("setTab", $selectedTab);
-            }
-        } else {
-            $setTab = Session::get('setTab');
-            if ($setTab == '') {
-                Session::put("setTab", 'Review Sources');
-            }
-        }
-        if (empty($widgetID)) {
-            redirect("admin/brandboost/widgets");
-            exit;
-        }
-
-        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
-        $oWidgets = BrandboostModel::getBBWidgets($widgetID);
-        $oStats = BrandboostModel::getBBWidgetStats($widgetID);
-        $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
-        $bActiveSubsription = UsersModel::isActiveSubscription();
-        $setTab = Session::get("setTab");
-        $breadcrumb ='';
-        $aData = array(
-            'title' => 'Onsite Widget',
-            'pagename' => $breadcrumb,
-            'oWidgets' => $oWidgets,
-            'bActiveSubsription' => $bActiveSubsription,
-            'widgetData' => $oWidgets[0],
-            'oBrandboostList' => $oBrandboostList,
-            'oStats' => $oStats,
-            'setTab' => $setTab,
-            'widgetID' => $widgetID,
-            'widgetThemeData' => $widgetThemeData,
-            'selectedTab' => $selectedTab
-        );
-
-
-        if (!empty($widgetID)) {
-//            Session::put("selectedOnsiteWidget", $widgetID);
-
-            $response = $aData;
-            echo json_encode($response);
-            exit;
-        }
-    }
     public function setWidgetType(Request $request)
     {
         $response = array("status" => "error", "msg" => "Something went wrong");
@@ -2445,6 +2535,26 @@ public function widgetStatisticDetailsStatsGraph(){
         $widgetID = $request->widgetID;
         $aData = array(
             'widget_type' => $widgetTypeID
+        );
+
+        if (!empty($widgetID)) {
+            Session::put("selectedOnsiteWidget", $widgetID);
+            $result = BrandboostModel::updateWidget($userID, $aData, $widgetID);
+            $response = array("status" => "success", "msg" => "Okay");
+            echo json_encode($response);
+            exit;
+        }
+    }
+    public function saveOnsiteWidgetSingleSettings(Request $request)
+    {
+        $response = array("status" => "error", "msg" => "Something went wrong");
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $fieldName = $request->fieldName;
+        $fieldVal = $request->fieldVal;
+        $widgetID = $request->widgetID;
+        $aData = array(
+            $fieldName => $fieldVal
         );
 
         if (!empty($widgetID)) {
@@ -2684,7 +2794,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $allow_branding = $request->allow_branding != '' ? '1' : '0';
         $notification = $request->notification != '' ? '1' : '0';
         $company_info_switch = $request->company_info_switch != '' ? '1' : '0';
-        $widgetID = $request->edit_widgetId;
+        $widgetID = ($request->edit_widgetId)? $request->edit_widgetId: $request->id;
         $solid_color = $request->solid_color;
         $main_colors = $request->main_colors;
         $custom_colors1 = $request->custom_colors1;
@@ -3066,6 +3176,130 @@ public function widgetStatisticDetailsStatsGraph(){
         echo json_encode($response);
         exit;
     }
+
+    /**
+     * This method used to save onsite configuration as per new logic
+     * @param Request $request
+     */
+    function saveOnsiteConfiguration(Request $request)
+    {
+
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+
+        $brandboostID = $request->brandboostId;
+        $type = $request->requestType;
+        if($type == 'feedback'){
+            $formData = [
+                'brandboost_id' => $brandboostID,
+                'from_name' => $request->from_name,
+                'from_email' => $request->from_email
+            ];
+            $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+            if (isset($aResponse->id)) {
+                $result = BrandboostModel::updateBrandboostFeedbackResponse($formData, $brandboostID);
+                $result2 = BrandboostModel::updateBrandboostEndCampaigns($formData, $brandboostID);
+            } else {
+                $aFeedbackData['brandboost_id'] = $brandboostID;
+                $aFeedbackData['created'] = date("Y-m-d H:i:s");
+                $result = BrandboostModel::addBrandboostFeedbackResponse($formData);
+            }
+        }else if($type =='subject'){
+            $formData = [
+                'subject' => $request->subject,
+                'preheader' => $request->preheader
+            ];
+            $result = BrandboostModel::updateBrandBoost($userID, $formData, $brandboostID);
+        }else if($type =='tracking'){
+            $formData = [
+                'tracking_conversation' => $request->tracking_conversation,
+                'tracking_google_analytics' => $request->tracking_google_analytics,
+                'tracking_open_read' => $request->tracking_open_read,
+                'tracking_expire_link' => $request->tracking_expire_link,
+            ];
+            $result = BrandboostModel::updateBrandBoost($userID, $formData, $brandboostID);
+        }
+
+
+
+        $fieldName = $request->fieldName;
+        $fieldValue = $request->fieldVal;
+
+
+        $aProductData = [];
+        $aBrandboostData = [];
+        $aFeedbackData = [];
+        $aExpiryData = [];
+        if (!empty($fieldName) && $brandboostID > 0) {
+            if ($type == 'product') {
+                $aProductData[$fieldName] = $fieldValue;
+            } else if ($type == 'brandboost') {
+                $aBrandboostData[$fieldName] = $fieldValue;
+                $result = BrandboostModel::updateBrandBoost($userID, $aBrandboostData, $brandboostID);
+            } else if ($type == 'feedback') {
+                $aFeedbackData[$fieldName] = $fieldValue;
+                $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
+                if (isset($aResponse->id)) {
+                    $result = BrandboostModel::updateBrandboostFeedbackResponse($aFeedbackData, $brandboostID);
+                    //Update in active campaigns
+                    $result2 = BrandboostModel::updateBrandboostEndCampaigns($aFeedbackData, $brandboostID);
+                } else {
+                    $aFeedbackData['brandboost_id'] = $brandboostID;
+                    $aFeedbackData['created'] = date("Y-m-d H:i:s");
+                    $result = BrandboostModel::addBrandboostFeedbackResponse($aFeedbackData);
+                }
+            }else if($type == 'expiry'){
+                $aLinkExpiryData = [];
+                $txtInteger = $exp_duration = '';
+                if ($fieldValue == 'custom' || $fieldName == 'txtInteger'  || $fieldName == 'exp_duration') {
+                    $aExpiry = $request->linkExpiryData;
+                    $aExpData = json_decode($aExpiry);
+                    if($fieldValue == 'txtInteger'){
+                        $txtInteger = $fieldValue;
+                        $exp_duration = $aExpData['delay_unit'];
+                    }
+
+                    if($fieldValue == 'exp_duration'){
+                        $exp_duration = $fieldValue;
+                        $txtInteger = $aExpData['delay_unit'];
+                    }
+
+                    $aLinkExpiryData['delay_value'] = $txtInteger;
+                    $aLinkExpiryData['delay_unit'] = $exp_duration;
+                } else {
+
+                    $aLinkExpiryData['delay_value'] = 'never';
+                    $aLinkExpiryData['delay_unit'] = 'never';
+                }
+
+                if($fieldValue == 'never'){
+                    $aExpiryData[$fieldName] = $fieldValue;
+                }else{
+                    $aExpiryData['link_expire_custom'] = json_encode($aLinkExpiryData);
+                }
+                pre($aExpiryData);
+
+                $result = BrandboostModel::updateBrandBoost($userID, $aExpiryData, $brandboostID);
+
+            }
+        }
+
+
+        if ($result) {
+            //Okay We also need to update "From" info into the campaigns
+
+            //$this->updateWorkflowFromInfo($feedbackData, $brandboostID);
+
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
     /**
      * Used to save onsite widget
      * @return type
@@ -3219,8 +3453,7 @@ public function widgetStatisticDetailsStatsGraph(){
      * Used to update onsite widget status
      * @return type
      */
-    public
-    function updateOnsiteWidgetStatus(Request $request)
+    public function updateOnsiteWidgetStatus(Request $request)
     {
 
         $response = array();
@@ -3347,14 +3580,15 @@ public function widgetStatisticDetailsStatsGraph(){
         $response = array();
 
         $validatedData = $request->validate([
-            'campaignName' => ['required'],
-            'OnsitecampaignDescription' => ['required']
+            'campaignName' => ['required']
+            //'OnsitecampaignDescription' => ['required']
         ]);
 
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $campaignName = $request->campaignName;
-        $OnsitecampaignDescription = $request->OnsitecampaignDescription;
+        $campaignType = $request->campaignType;
+        $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
 
         $str = rand();
         $hashcode = sha1($str);
@@ -3362,6 +3596,7 @@ public function widgetStatisticDetailsStatsGraph(){
 
         $aData = array(
             'review_type' => 'onsite',
+            'campaign_type' => $campaignType,
             'user_id' => $userID,
             'brand_title' => $campaignName,
             'brand_desc' => $OnsitecampaignDescription,
@@ -3579,47 +3814,43 @@ public function widgetStatisticDetailsStatsGraph(){
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
-            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite');
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite', '', '', false);
         } else {
-            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite');
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite', '', '', false);
         }
+        $subscribersData = SubscriberModel::getGlobalSubscribers($userID, false);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Add Review' => '',
+        );
 
         if (!empty($campaignId)) {
 
             $oCampaign = ReviewsModel::getBrandBoostCampaign($campaignId);
 
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a href="' . base_url('admin/brandboost/onsite_setup/' . $campaignId) . '" class="sidebar-control hidden-xs">' . $oCampaign->brand_title . '</a></li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
-				</ul>';
-
             $aData = array(
                 'title' => 'Brand Boost add Review',
-                'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'aBrandboostList' => $aBrandboostList,
                 'oCampaign' => $oCampaign,
+                'subscribers' => $subscribersData,
                 'aUser' => $aUser
             );
         } else {
 
-            $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
-				<li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
-				<li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Add Reviews" class="sidebar-control active hidden-xs ">Add Reviews</a></li>
-				</ul>';
-
             $aData = array(
                 'title' => 'Brand Boost add Review',
-                'pagename' => $breadcrumb,
+                'breadcrumb' => $aBreadcrumb,
                 'aBrandboostList' => $aBrandboostList,
+                'subscribers' => $subscribersData,
                 'aUser' => $aUser
             );
         }
 
-        return view('admin.brandboost.add_review', $aData);
+        return $aData;
+        //return view('admin.brandboost.add_review', $aData);
     }
 
     /**
@@ -3640,32 +3871,33 @@ public function widgetStatisticDetailsStatsGraph(){
             'delete_status' => '1'
         );
 
-        foreach ($multi_brandboost_id as $brandboostID) {
+        if(!empty($multi_brandboost_id)) {
+            foreach ($multi_brandboost_id as $brandboostID) {
 
-            $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
+                $result = BrandboostModel::updateBrandBoost($userID, $aData, $brandboostID);
 
-            if ($result) {
-                //Add Useractivity log
+                if ($result) {
+                    //Add Useractivity log
 
-                $aActivityData = array(
-                    'user_id' => $userID,
-                    'event_type' => 'brandboost_onsite_offsite',
-                    'action_name' => 'deleted_brandboost',
-                    'brandboost_id' => $brandboostID,
-                    'campaign_id' => '',
-                    'inviter_id' => '',
-                    'subscriber_id' => '',
-                    'feedback_id' => '',
-                    'activity_message' => 'Brandboost Deleted',
-                    'activity_created' => date("Y-m-d H:i:s")
-                );
-                logUserActivity($aActivityData);
-                $response['status'] = 'success';
-            } else {
-                $response['status'] = "Error";
+                    $aActivityData = array(
+                        'user_id' => $userID,
+                        'event_type' => 'brandboost_onsite_offsite',
+                        'action_name' => 'deleted_brandboost',
+                        'brandboost_id' => $brandboostID,
+                        'campaign_id' => '',
+                        'inviter_id' => '',
+                        'subscriber_id' => '',
+                        'feedback_id' => '',
+                        'activity_message' => 'Brandboost Deleted',
+                        'activity_created' => date("Y-m-d H:i:s")
+                    );
+                    logUserActivity($aActivityData);
+                    $response['status'] = 'success';
+                } else {
+                    $response['status'] = "Error";
+                }
             }
         }
-
         echo json_encode($response);
         exit;
     }
@@ -3749,6 +3981,10 @@ public function widgetStatisticDetailsStatsGraph(){
         exit;
     }
 
+    /**
+     * Used to delete/archive one or more widgets
+     * @param Request $request
+     */
     public
     function deleteWidgets(Request $request)
     {
@@ -4535,7 +4771,11 @@ public function widgetStatisticDetailsStatsGraph(){
     public
     function getWidgetThemeData($themeId)
     {
-        $result = $this->mBrandboost->getWidgetThemeData($themeId);
+
+        if(empty($this->mBrandboost)){
+            $this->mBrandboost =new BrandboostModel();
+        }
+        $result = $this->mBrandboost->getWidgetThemeDetails($themeId);
 
         if ($result) {
             $response = array('status' => 'ok', 'themeData' => $result[0]);
@@ -7426,24 +7666,24 @@ public function widgetStatisticDetailsStatsGraph(){
         return view('admin.brandboost.brandboost-stats', $aData);
     }
 
-    public
-    function exportReviews()
+    public function exportReviews()
     {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
-
+        $mReviews = new ReviewsModel();
+        $mSetting = new SettingsModel();
+        $oReviews = $mReviews->getMyBranboostReviews($userID);
+//        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
 
         $filename = 'reviews_' . time() . '.csv';
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
-        //echo "Hello";
-        //die;
+//        echo "Hello";
+//        die;
         // file creation
         $file = fopen('php://output', 'w');
-
         $header = array("CAMPAIGN_ID", "CAMPAIGN_NAME", "TYPE", "AUTHOR", "EMAIL", "PHONE", "REVIEW_TITLE", "REVIEW_DESCRIPTION", "REVIEW_DATE");
         fputcsv($file, $header);
         foreach ($oReviews as $key => $line) {
@@ -7458,18 +7698,20 @@ public function widgetStatisticDetailsStatsGraph(){
                 'item_count' => count($oReviews),
                 'created' => date("Y-m-d H:i:s")
             );
-            $this->mSettings->logExportHistory($aHistoryData);
+            $mSetting->logExportHistory($aHistoryData);
         }
         exit;
     }
 
-    public
-    function exportMedia()
+    public function exportMedia()
     {
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
-        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
+
+        $mReviews = new ReviewsModel();
+//        $oReviews = $this->mReviews->getMyBranboostReviews($userID);
+        $oReviews = $mReviews->getMyBranboostReviews($userID);
 
         $filename = 'reviews_' . time() . '.csv';
         header("Content-Description: File Transfer");
