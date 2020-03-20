@@ -18,8 +18,9 @@
 
 <style>
 	.sitemap ul{margin: 0; padding: 0;}
-	.sitemap ul li{margin: 0; padding: 0; list-style: none;}
-	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left top no-repeat}
+	.sitemap ul li{margin: 0; padding: 0; list-style: none; float: left; width: 100%; line-height: 29px;}
+	.sitemap ul li small{ font-size: 9px; font-style: italic; letter-spacing: 0.5px;}
+	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left 10px no-repeat; float: left; width: 250px;}
 	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
 	.sitemap ul li strong{color: #4f8af4; }
 	</style>
@@ -75,33 +76,54 @@
      		<hr>
      		<ul>
      			<li><strong>Review Feed</strong></li>
-				<li><a target="_blank" href="review_feed_new1.php">Review Feed 1</a> &nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 28th Feb 2020</small></li>
+				<li><a target="_blank" href="review_feed_new1.php">Review Feed 1</a> &nbsp; &nbsp; <small >Last Updated on 28th Feb 2020</small></li>
      			<li><a target="_blank" href="review_feed_new2.php">Review Feed 2</a></li>
-     			<li><strong>Review Request</strong></li>
-     			<li><a target="_blank" href="review_request_new1.php">Review Request 1</a></li>
-     			<li><a target="_blank" href="review_request_new2.php">Review Request 2 </a></li>
+     			
      			<li><strong>Review Widget</strong></li>
      			<li><a target="_blank" href="review_widget_new1.php">Review Widget 1</a></li>
      			<li><a target="_blank" href="review_widget_new2.php">Review Widget 2</a></li>
      			
      			<li><strong>Review Campaign</strong></li>
-     			<li><a target="_blank" href="review_campaign_new1.php">Review Campaign 1</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-     			<li><a target="_blank" href="review_campaign_new2.php">Review Campaign 2</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-     			<li><a target="_blank" href="review_campaign_new3.php">Review Campaign 3</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new4.php">Review Campaign 4</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new5.php">Review Campaign 5</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 2nd March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new6.php">Review Campaign 6</a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
+     			<li><a target="_blank" href="review_campaign_new1.php">Review Campaign 1</a>&nbsp; &nbsp; <small >Last Updated on 2nd March 2020</small></li>
+     			<li><a target="_blank" href="review_campaign_new2.php">Review Campaign 2</a>&nbsp; &nbsp; <small >Last Updated on 2nd March 2020</small></li>
+     			<li><a target="_blank" href="review_campaign_new3.php">Review Campaign 3</a>&nbsp; &nbsp; <small >Last Updated on 2nd March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new4.php">Review Campaign 4</a>&nbsp; &nbsp; <small >Last Updated on 2nd March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new5.php">Review Campaign 5</a>&nbsp; &nbsp; <small >Last Updated on 2nd March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new6.php">Review Campaign 6</a>&nbsp; &nbsp; <small >Last Updated on 6th March 2020</small></li>
                 <li><strong>Reviews</strong></li>
-                <li><a target="_blank" href="review_campaign_new7.php">Review 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new8.php">Review Single 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new9.php">Review Single 2 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
-                <li><a target="_blank" href="review_campaign_new10.php">Review Single 3 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 6th March 2020</small></li>
-                <li><a target="_blank" href="review_add_new1.php">Review Add 1 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 7th March 2020</small></li>
-                <li><a target="_blank" href="review_add_new2.php">Review Add 2 </a>&nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 7th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new7.php">Review 1 </a>&nbsp; &nbsp; <small >Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new8.php">Review Single 1 </a>&nbsp; &nbsp; <small >Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new9.php">Review Single 2 </a>&nbsp; &nbsp; <small >Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_campaign_new10.php">Review Single 3 </a>&nbsp; &nbsp; <small >Last Updated on 6th March 2020</small></li>
+                <li><a target="_blank" href="review_add_new1.php">Review Add 1 </a>&nbsp; &nbsp; <small >Last Updated on 7th March 2020</small></li>
+                <li><a target="_blank" href="review_add_new2.php">Review Add 2 </a>&nbsp; &nbsp; <small >Last Updated on 7th March 2020</small></li>
                 
                 
                 <li><strong>Review App Overview</strong></li>
-     			<li><a target="_blank" href="review_overview.php">Review Overview</a> &nbsp; &nbsp; <small class="fsize9" style="font-style: italic">Last Updated on 10th March 2020</small></li>
+     			<li><a target="_blank" href="review_overview.php">Review Overview</a> &nbsp; &nbsp; <small >Last Updated on 10th March 2020</small></li>
+     			
+     			<li><strong>Create Campaign</strong></li>
+     			<li><a target="_blank" href="create_campaign_new1.php">Create Campaign (Popup)</a> &nbsp; &nbsp; <small >Last Updated on 14th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new2.php">Create Campaign Overview (SMS)</a> &nbsp; &nbsp; <small >Last Updated on 17th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new3.php">Create Campaign Overview</a> &nbsp; &nbsp; <small >Last Updated on 17th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new4.php">Create Campaign</a> &nbsp; &nbsp; <small >Last Updated on 17th March 2020</small></li>
+     			
+     			
+     			<li><a target="_blank" href="create_campaign_new5.php">Campaign - Step 1 (From)</a> &nbsp; &nbsp; <small >Last Updated on 18th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new6.php">Campaign - Step 2 (Subject)</a> &nbsp; &nbsp; <small >Last Updated on 18th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new7.php">Campaign - Step 3 (Content)</a> &nbsp; &nbsp; <small >Last Updated on 18th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new8.php">Campaign - Step 4 (Settings)</a> &nbsp; &nbsp; <small >Last Updated on 18th March 2020</small></li>
+     			<li><a target="_blank" href="create_campaign_new9.php">Campaign - 100%</a> &nbsp; &nbsp; <small >Last Updated on 18th March 2020</small></li>
+     			
+     			
+                <li><strong>Review Request</strong></li>
+     			<li><a target="_blank" href="review_request_new1.php">Create Request (Popup)</a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
+     			<li><a target="_blank" href="review_request_new2.php">Review Requests (Table) </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
+                <li><a target="_blank" href="review_request_new3.php">Request - Overview </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
+                <li><a target="_blank" href="review_request_new4.php">Request - Step 1</a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
+                <li><a target="_blank" href="review_request_new5.php">Request - 100% </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
+     			
+     			
      		</ul>
      		</div>
      		<div class="card min-h-280">

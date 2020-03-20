@@ -8,8 +8,11 @@ CARD CLASSES
 .card .dot_dropdown{position: absolute; right: 15px; top: 20px; z-index: 8}
 .card .dot_dropdown .dropdown-toggle:after{display: none;}
 .card .dot_dropdown .dropdown-toggle img{width: 16px; height: 16px!important;}
-
 .card .status_icon{position: absolute; left: 15px; top: 15px; z-index: 8}
+
+
+
+.disabled{opacity: 0.5;}
 
 
 /******************************
@@ -26,26 +29,7 @@ SHADOWS STYLES
 /******************************
 SMART POPUP SLIDING BOX
 ******************************/
-/*.box {float: left; display: none;top: 0!important;height: 100%;width: 424px;position:fixed!important;box-sizing: border-box; right: 0!important; border-radius: 0px;   box-shadow: 0 10px 12px 0 rgba(1, 21, 64, 0.06)!important; padding: 0px; background: #fff!important; z-index: 99999; }*/
-
-.box {
-	float: left;
-	display: none;
-	top: 16px !important;
-	height: calc(100% - 32px);
-	width: 424px;
-	position: fixed !important;
-	box-sizing: border-box;
-	right: 85px !important;
-	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;
-	padding: 0px;
-	background: #fff !important;
-	z-index: 99;
-	border-radius: 6px;
-	border-top: 6px solid #5893FF;
-}
-
-
+.box {float: left;	display: none;	top: 16px !important;	height: calc(100% - 32px);	width: 424px;	position: fixed !important;	box-sizing: border-box;	right: 85px !important;	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;	padding: 0px;	background: #fff !important;	z-index: 99;	border-radius: 6px;	border-top: 6px solid #5893FF;}
 .box > div {position: relative!important;	background: #fff!important;	z-index: 999!important; border-radius: 6px;}
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
@@ -84,6 +68,7 @@ Misc
 .max_h_330{max-height: 330px!important}
 .max_h_260{max-height: 260px!important}
 .close_x_icon{width: 24px; height: 24px; position: absolute; right: 20px; top: 20px;}
+.close_x_icon2{width: 20px; height: 20px; position: absolute; right: 10px; top: 10px;}
 .max_w_225{max-width: 225px;}
 .max_w_250{max-width: 250px;}
 
@@ -104,6 +89,7 @@ FORMS GROUP
 .form-control::placeholder {color: #7B89A6; opacity: 1;}
 .form-control-dark::placeholder {color: #333D54; opacity: 1; font-size: 14px;}
 .form-group .form-control.emoji{ background: url(../images/Emoji.png) 95% 15px #fff no-repeat;}
+.form-group .form-control.emoji2{ background: url(../images/user_smile_line_18.svg) 98% 15px #fff no-repeat;}
 .form-group .form-control.search{ background: url(../images/search-2-line.svg) 15px 13px #fff no-repeat; padding-left: 45px;}
 .form-group .form-control.shadow{border: none!important;box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.3)!important;border-radius: 4px;}
 .review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
@@ -156,10 +142,10 @@ FORMS GROUP
 /*******************************
 CUSTOM SWITCH STYLES
 **********/
-.custom-form-switch {  display: inline-block;  margin-bottom: 8px;  position: relative;  align-items: center; width: 32px; height: 16px;}
+.custom-form-switch {  display: inline-block;  margin-bottom: 0px!important;  position: relative;  align-items: center; width: 32px; height: 16px; margin-top: 2px}
 .custom-form-switch > .field {  position: absolute;  top: 0;  left: 0;  opacity: 0; margin: 0;}
-.custom-form-switch > .toggle {  display: inline-block;  background-color: #c5d0e5;  width: 32px;  height: 16px;  vertical-align: middle;  border-radius: 15px;  border:none!important/* 2px solid #c5d0e5*/;  margin-right: 8px;  transition: all 0.6s; box-sizing: content-box;}
-.custom-form-switch > .toggle:before {  content: '';  display: block;  width: 8px;  height: 8px;  background-color: white;  border-radius: 11px;  transition: margin 0.3s; position: absolute; top: 12px; left: 5px}
+.custom-form-switch > .toggle {  display: inline-block;  background-color: #c5d0e5;  width: 32px;  height: 16px; border-radius: 15px;  border:none!important;  margin-right: 8px;  transition: all 0.6s; box-sizing: content-box;}
+.custom-form-switch > .toggle:before {  content: '';  display: block;  width: 8px;  height: 8px;  background-color: white;  border-radius: 11px;  transition: margin 0.3s; position:relative; top: 4px; left: 5px}
 .custom-form-switch .field:checked + .toggle:before {  margin-left: 13px;}
 .custom-form-switch .field:checked + .toggle {  border-color: #7f62df;  background-color: #7f62df;}
 .custom-form-switch .field:checked + .toggle.blue {  border-color: #3680dc;  background-color: #3680dc;}
@@ -176,6 +162,7 @@ CUSTOM SWITCH STYLES
 .custom-form-switch .field:checked + .toggle.yellow {  border-color: #ed8e8c;  background-color: #ed8e8c;}
 .custom-form-switch .field:checked + .toggle.greenl {  border-color: #9ecc78;  background-color: #9ecc78;}
 .custom-form-switch .field:checked + .toggle.green3 {  border-color: #7ECD99;  background-color: #7ECD99;}
+.custom-form-switch .field:checked + .toggle.reviews {  border-color: #8C95F8;  background-color: #8C95F8;}
 
 
 
@@ -295,6 +282,20 @@ List Styles Classes
 .list1 li a.active{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 500; border-radius: 45px;}
 .list1 li a:hover{background: url(../images/checkbox-blank-circle-line-active.svg) 17px 11px no-repeat #f1f7ff; color: #3970D9; font-weight: 500; border-radius: 45px;}
 
+
+.list_review{margin: 0 ;padding: 0;}
+.list_review li{margin: 5px 0 ;padding: 0; list-style: none; line-height: 36px;}
+.list_review li a{margin: 0 ;padding: 0 17px 0 45px; display: block;  font-weight: 400;font-size: 14px; color: #687693; background: url(../images/checkbox-blank-circle-line.svg) 17px 11px no-repeat;}
+.list_review li a.done{background: url(../images/review_check.svg) 17px 10px no-repeat; color: #333D54}
+.list_review li a.active{background: url(../images/review_blank_circle.svg) 17px 10px no-repeat #FFFFFF; color: #6672E8; border-radius: 45px; box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4);}
+.list_review li a:hover{background: url(../images/review_blank_circle.svg) 17px 10px no-repeat #FFFFFF; color: #6672E8; border-radius: 45px; box-shadow: 0px 1px 2px rgba(182, 193, 218, 0.4);}
+
+
+
+
+
+
+
 .list2{margin: 0 ;padding: 0;}
 .list2 li{margin: 0px 0 ;padding: 0; list-style: none; line-height: 36px; border-bottom: 1px solid #F4F6FA; width: 100%; float: left}
 .list2 li span{float: left}
@@ -375,6 +376,7 @@ Button CLASSES
 
 
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
+.circle-icon-36{width: 36px;height: 36px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 36px;  }
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
 .circle-icon-48{width: 48px;height: 48px;border-radius: 100px; border: none; display: inline-block; text-align: center; line-height: 48px;}
 .circle-icon-52{width: 52px;height: 52px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 52px;  }
@@ -448,6 +450,7 @@ BORDER RADIUS CLASSES
 .br8{border-radius: 8px;}
 .br9{border-radius: 9px;}
 .br10{border-radius: 10px;}
+.br35{border-radius: 35px;}
 
 
 
@@ -494,7 +497,7 @@ COLOR CLASSES
 .dark_100{color: #97A4BD!important}
 .dark_200{color: #7B89A6!important}
 .dark_300{color: #687693}
-.dark_400{color: #56627F}
+.dark_400{color: #56627F!important}
 .dark_500{color: #445069!important}
 .dark_600{color: #333D54!important}
 .dark_700{color: #242B3D}
@@ -723,6 +726,7 @@ PADDING CLASSES
 .p20{padding: 20px!important}
 .p25{padding: 25px!important}
 .p30{padding: 30px!important}
+.p35{padding: 35px!important}
 .p40{padding: 40px!important}
 .p50{padding: 50px!important}
 .p60{padding: 60px!important}
