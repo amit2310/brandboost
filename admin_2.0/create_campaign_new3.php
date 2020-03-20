@@ -27,24 +27,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-<<<<<<< HEAD
   
   
-=======
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
  <!--******************
   Top Heading area
  **********************-->
@@ -62,27 +53,16 @@
    </div>
     <div class="clearfix"></div>
 </div>
-<<<<<<< HEAD
 	 
 	  
 	  
 	  
-=======
-
-
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
  <!--******************
   Content Area
  **********************-->
    <div class="content-area">
     <div class="container-fluid">
-<<<<<<< HEAD
     
-=======
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
      <!--******************
 	 PAGE LEFT SIDEBAR
 	**********************-->
@@ -94,19 +74,11 @@
 	 			<div class="col"><p>Review Campaign</p></div>
 	 		</div>
 	 	</div>
-<<<<<<< HEAD
       
       <div class="p30 pb10 text-center">
       	<img src="assets/images/review_setup_graph.svg"/>
       </div>
        
-=======
-
-      <div class="p30 pb10 text-center">
-      	<img src="assets/images/review_setup_graph.svg"/>
-      </div>
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
       					<div class="p30 pb15">
      						<div class="row">
      							<div class="col-9">
@@ -126,15 +98,9 @@
      							<li><a href="#">Settings & Tracking</a></li>
      						</ul>
       					</div>
-<<<<<<< HEAD
       					
       					<div class="pl30 pr30"><hr class="m-0"></div>
       					
-=======
-
-      					<div class="pl30 pr30"><hr class="m-0"></div>
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
       					<div class="p30 pb15">
      						<div class="row">
      							<div class="col-9">
@@ -153,48 +119,27 @@
      							<li><a class="" href="#">Settings & Tracking</a></li>
      						</ul>
       					</div>
-<<<<<<< HEAD
       					
       					
       					
-=======
-
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
       					<div class="reviw_howtouse">
       						<a href="#" class="close_x_icon2"><img src="assets/images/close_grey_line.svg"/></a>
       						<p class="fsize12 fw300 light_000">Learn how to use <br><strong>Campaigns</strong> in 60 seconds</p>
 							<img src="assets/images/review_play.svg"/>
       					</div>
-<<<<<<< HEAD
         
        
 
     
     <div class="clearfix"></div> 
     </div>  
-=======
-
-
-
-
-    <div class="clearfix"></div>
-    </div>
->>>>>>> 12e58133be310c84255274bddc292049a6882225
 </div>
    <!--******************
 	 PAGE LEFT SIDEBAR END
 	**********************-->
-<<<<<<< HEAD
     
     
     
-=======
-
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     <div class="table_head_action pb0 mb15">
     <div class="row">
     	<div class="col">
@@ -210,13 +155,8 @@
     	</div>
     </div>
     </div>
-<<<<<<< HEAD
     
     
-=======
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     <div class="row">
     	<div class="col-12">
     		<div class="card p35 br6 mb10">
@@ -231,11 +171,7 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
-=======
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     		<div class="card p35 br6 mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span></div>
@@ -248,11 +184,7 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
-=======
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     		<div class="card p35 br6 mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
@@ -265,11 +197,7 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
-=======
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     		<div class="card p35 br6 mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">4</span></div>
@@ -282,21 +210,12 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
     		
     	</div>
     </div>
     
     
-=======
-
-
-    	</div>
-    </div>
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     <div class="table_head_action pb0 mb15 mt15">
     <div class="row">
     	<div class="col">
@@ -312,15 +231,9 @@
     	</div>
     </div>
     </div>
-<<<<<<< HEAD
     
     
     
-=======
-
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     <div class="row">
     	<div class="col-12">
     		<div class="card p35 br6 mb10">
@@ -335,15 +248,9 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
     		
     		
-=======
-
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     		<div class="card p35 br6 mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span></div>
@@ -356,11 +263,7 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
-=======
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
     		<div class="card p35 br6 mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
@@ -373,7 +276,6 @@
     				</div>
     			</div>
     		</div>
-<<<<<<< HEAD
     		
     		
     	</div>
@@ -388,28 +290,11 @@
       
       </div>
       
-=======
-
-
-    	</div>
-    </div>
-
-
-
-
-
-
-      </div>
-
-      </div>
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-<<<<<<< HEAD
   
   
 
@@ -417,15 +302,6 @@
 
  
  
-=======
-
-
-
-
-
-
-
->>>>>>> 12e58133be310c84255274bddc292049a6882225
  <!--******************
   jQuery
  **********************-->
@@ -454,8 +330,4 @@
 	});
 </script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 12e58133be310c84255274bddc292049a6882225

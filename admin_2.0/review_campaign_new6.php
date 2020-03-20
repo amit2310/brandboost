@@ -27,15 +27,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
-
+ 
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-
-
+  
+  
  <!--******************
   Top Heading area
  **********************-->
@@ -54,10 +54,10 @@
    </div>
     <div class="clearfix"></div>
 </div>
-
-
-
-
+	 
+	  
+	  
+	  
  <!--******************
   Content Area
  **********************-->
@@ -74,23 +74,23 @@
 	 			<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a></p></div>
 	 		</div>
 	 	</div>
-
+       
        <div class="p20 pt30 pb10">
 	 		<div class="row">
 	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Campaigns</h3></div>
 	 			<div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/add-fill-review.svg"></button></div>
 	 		</div>
 	 	</div>
-
+      
       <div class="p20 top_headings">
 	 		<div class="row">
 	 			<div class="col"><p><a href="#"><img src="assets/images/filter-line.svg"> &nbsp; Filter</a></p></div>
 	 			<div class="col text-right"><p><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a> &nbsp; <a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></p></div>
 	 		</div>
 	 	</div>
-
-
-
+      
+      
+      
       <div class="p20 pt0 pb0 bkg_light_050">
         	<ul class="list_with_icons3">
         	<li class="d-flex">
@@ -121,38 +121,38 @@
         	<span><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/start-fill-white.svg"></span>Louis Vuitton</span>
         	<strong>4.5 <i class="ri-star-fill green_400"></i></strong>
         	</li>
-
-
-
-
-
-
-
-
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
         </ul>
-
+       
         <div class="clearfix"></div>
         </div>
+       
+        
+        
+       
 
-
-
-
-
-
-    <div class="clearfix"></div>
-    </div>
+    
+    <div class="clearfix"></div> 
+    </div>  
 </div>
    <!--******************
 	 PAGE LEFT SIDEBAR END
 	**********************-->
-
-
-
-
-
-
-
-
+	
+	
+  
+  
+  
+  
+  
+   
      <div class="table_head_action">
     <div class="row">
     	<div class="col-md-6">
@@ -175,10 +175,10 @@
     	</div>
     </div>
     </div>
-
-
-
-
+     
+     
+     
+     
      <div class="row">
     	<div class="col-md-12">
     		<div class="table-responsive">
@@ -200,11 +200,11 @@
 					<td><span class="fsize10 fw500">REVIEW  </span></td>
 					<td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
 					<td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-
+					
 				  </tr>
-
-
-
+				  
+				  
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -222,7 +222,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -240,7 +240,7 @@
 					<td><img src="assets/images/checklineblack.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -258,7 +258,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -276,9 +276,9 @@
 					<td><img src="assets/images/check_double_green.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-
-
-
+				  
+				  
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -296,8 +296,8 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
-
+				  
+				  
 				   <tr>
 				   <td width="20">
 						<span>
@@ -315,7 +315,7 @@
 					<td><img src="assets/images/check_double_green.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -333,8 +333,8 @@
 					<td><img src="assets/images/check_double_green.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-
-
+				  
+				  
 				   <tr>
 				   <td width="20">
 						<span>
@@ -352,7 +352,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -370,7 +370,7 @@
 					<td><img src="assets/images/checklineblack.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -388,7 +388,7 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -406,9 +406,9 @@
 					<td><img src="assets/images/check_double_green.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-
-
-
+				  
+				  
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -426,8 +426,8 @@
 					<td>&nbsp;</td>
 					<td><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
-
-
+				  
+				  
 				   <tr>
 				   <td width="20">
 						<span>
@@ -445,7 +445,7 @@
 					<td><img src="assets/images/check_double_green.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-
+				  
 				  <tr>
 				   <td width="20">
 						<span>
@@ -463,16 +463,16 @@
 					<td><img src="assets/images/check_double_green.svg"></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-
-
-
-
-
-
-
+				 
+				 
+				  
+				  
+				  
+				  
+				  
 				</tbody>
 			    </table>
-
+			    
 			    <div class="custom_pagination">
 			    	<div class="row">
 			    		<div class="col-md-6">
@@ -492,37 +492,37 @@
 			    		</div>
 			    	</div>
 			    </div>
-
+			    
     		</div>
     	</div>
-
-
+    	
+    	
     </div>
-
-
-
-
+   
+  
+	
+  
   </div>
    </div>
-
+      
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-
-
-
-
+  
+  
+ 
+ 
 
 
  <!--******************
   Create Contact Sliding Smart Popup
  **********************-->
  <?php include("email_campaign_create_smart_popup.php"); ?>
-
-
-
+ 
+ 
+ 
  <!--******************
   jQuery
  **********************-->
@@ -541,8 +541,8 @@ $(document).ready(function(){
 		});
 	});
 });
-
-
+	
+	
 
 </script>
 

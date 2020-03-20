@@ -116,15 +116,12 @@
      			<li><a target="_blank" href="create_campaign_new9.php">Campaign - 100%</a> &nbsp; &nbsp; <small >Last Updated on 18th March 2020</small></li>
      			
      			
-<<<<<<< HEAD
                 <li><strong>Review Request</strong></li>
      			<li><a target="_blank" href="review_request_new1.php">Create Request (Popup)</a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
      			<li><a target="_blank" href="review_request_new2.php">Review Requests (Table) </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
                 <li><a target="_blank" href="review_request_new3.php">Request - Overview </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
                 <li><a target="_blank" href="review_request_new4.php">Request - Step 1</a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
                 <li><a target="_blank" href="review_request_new5.php">Request - 100% </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
-=======
->>>>>>> 12e58133be310c84255274bddc292049a6882225
      			
      			
      		</ul>
