@@ -30,15 +30,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
- 
+
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-  
-  
+
+
  <!--******************
   Top Heading area
  **********************-->
@@ -57,17 +57,17 @@
    </div>
     <div class="clearfix"></div>
 </div>
-	 
-	  
-	  
-	  
+
+
+
+
  <!--******************
   Content Area
  **********************-->
 <div class="content-area">
-   
+
     <div class="container-fluid">
-    	
+
 <div class="row">
   <div class="col-md-4">
     <div class="card p25 pt20 animate_top">
@@ -172,7 +172,7 @@
       </div>
     </div>
   </div>
-    
+
   <div class="col-md-4">
     <div class="card p25 pt20 animate_top h200">
       <div class="row">
@@ -296,16 +296,16 @@
             <div style="min-height: 40px; margin: 0px 0 0;" class="img_box">
 							<div id="openrate"></div>
 						</div>
-         
-         
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
 		</div>
-     
-     
+
+
 <div class="row">
   <div class="col-md-6">
     <div class="card p25 pt20 pb10">
@@ -325,8 +325,8 @@
           <hr class="mb-0">
         </div>
       </div>
-      
-      
+
+
       <div class="row">
         <div class="col">
     			<table class="table table-borderless mb-0">
@@ -343,7 +343,7 @@
 					<td><span class="dark_400">4.0</span></td>
 					<td class="text-right"><i class="ri-at-line email_400 fsize15"></i></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_yellow_400 lh_26">T</span></span> Ted Alexander</td>
 					<td>
@@ -356,7 +356,7 @@
 					<td><span class="dark_400">5.0</span></td>
 					<td class="text-right"><i class="ri-phone-line green_400 fsize15"></i></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200 lh_26">a</span></span> Arlene Fox</td>
 					<td>
@@ -369,7 +369,7 @@
 					<td><span class="dark_400">2.0</span></td>
 					<td class="text-right"><i class="ri-at-line email_400 fsize15"></i></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_brand_400 lh_26">j</span></span> Johnny Lane</td>
 					<td>
@@ -382,7 +382,7 @@
 					<td><span class="dark_400">5.0</span></td>
 					<td class="text-right"><i class="ri-phone-line green_400 fsize15"></i></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200 lh_26">B</span></span> Bernard Robertson</td>
 					<td>
@@ -395,40 +395,40 @@
 					<td><span class="dark_400">2.0</span></td>
 					<td class="text-right"><i class="ri-at-line email_400 fsize15"></i></td>
 				  </tr>
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				 
-				  
-				  
-				  
-				  
-				  
+
+
+
+
+
+
+
+
+
+
+
+
+
 				</tbody>
 			    </table>
-			    
-			   
-			    
-    	
-          
-          
+
+
+
+
+
+
         </div>
       </div>
-      
-      
-      
-      
-      
-      
-    
+
+
+
+
+
+
+
     </div>
   </div>
-  
-  
+
+
   <div class="col-md-6">
     <div class="card p25 pt20 pb10">
       <div class="row">
@@ -447,8 +447,8 @@
           <hr class="mb-0">
         </div>
       </div>
-      
-      
+
+
       <div class="row">
         <div class="col">
     			<table class="table table-borderless mb-0">
@@ -460,7 +460,7 @@
 					<td>86%</td>
 					<td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 green_400"></i> &nbsp; 4.5</span></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Customers</td>
 					<td>828</td>
@@ -468,7 +468,7 @@
 					<td>78%</td>
 					<td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 yellow_500"></i> &nbsp; 3.2</span></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Product Reviews</td>
 					<td>284</td>
@@ -476,7 +476,7 @@
 					<td>62%</td>
 					<td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 green_400"></i> &nbsp; 4.1</span></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_reviews_400"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Request Campaign</td>
 					<td>128</td>
@@ -484,7 +484,7 @@
 					<td>86%</td>
 					<td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 green_400"></i> &nbsp; 4.5</span></td>
 				  </tr>
-				  
+
 				  <tr>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/pricetag3-fill.svg" width="13"></span></span> Customers</td>
 					<td>828</td>
@@ -492,63 +492,63 @@
 					<td>78%</td>
 					<td class="text-right"><span class="dark_400"><i class="ri-star-s-fill fsize18 yellow_500"></i> &nbsp; 3.2</span></td>
 				  </tr>
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				 
-				  
-				  
-				  
-				  
-				  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				</tbody>
 			    </table>
-			    
-			   
-			    
-    	
-          
-          
+
+
+
+
+
+
         </div>
       </div>
-      
-      
-      
-      
-      
-      
-    
+
+
+
+
+
+
+
     </div>
   </div>
-  
-  
+
+
 </div>
-     
+
      </div>
 </div>
-      
+
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-  
-  
- 
- 
+
+
+
+
  <!--******************
   Create Contact Sliding Smart Popup
  **********************-->
  <?php include("email_campaign_create_smart_popup.php"); ?>
- 
- 
- 
+
+
+
  <!--******************
   jQuery
  **********************-->
@@ -582,13 +582,13 @@ $(document).ready(function(){
  <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
-  
+
   <script>
-		
+
 		/***************
 		CIRCLE PIE CHARTS
 		************/
-		
+
 		 var openrate = {
             chart: {
                 width: 110,
@@ -611,15 +611,15 @@ $(document).ready(function(){
         }
 
         var chart = new ApexCharts(document.querySelector("#openrate"), openrate).render();
-	  
-	  
-	  
-	  
-	  
+
+
+
+
+
 		/***************
 		COLUMN BAR CHARTS
 		************/
-		
+
        var question_answer = {
       chart: {
         type: 'bar',
@@ -630,12 +630,12 @@ $(document).ready(function(){
         }
       },
 		colors: ['#8c95f8'],
-		   
+
 
       plotOptions: {
         bar: {
           columnWidth: '40%',
-			endingShape: 'rounded'	
+			endingShape: 'rounded'
         }
       },
       series: [{
@@ -668,16 +668,16 @@ $(document).ready(function(){
     }
 
     new ApexCharts(document.querySelector("#question_answer"), question_answer).render();
-	  
-	
-	  
+
+
+
 	</script>
-	
-	
-	
+
+
+
 	<script>
-	  
-	  var series = 
+
+	  var series =
 {
   "monthDataSeries1": {
     "prices": [
@@ -1039,7 +1039,7 @@ $(document).ready(function(){
             zoom: {
               enabled: false
             },
-			  
+
 			  toolbar: {
 				  show: false
 			  }
@@ -1055,14 +1055,14 @@ $(document).ready(function(){
             name: "Widget",
             data: series.monthDataSeries1.prices
           }],
-			
+
 			colors: ['#8c95f8'],
-			
+
 			grid: {
 			  borderColor: '#eee',
 			  strokeDashArray: 5,
 			},
-         
+
           labels: series.monthDataSeries1.dates,
           xaxis: {
             type: 'datetime',
@@ -1079,9 +1079,9 @@ $(document).ready(function(){
       }
 
     })
-	
-	
-	
+
+
+
 	new Vue({
       el: '#widgetreview2',
       components: {
@@ -1097,7 +1097,7 @@ $(document).ready(function(){
             zoom: {
               enabled: false
             },
-			  
+
 			  toolbar: {
 				  show: false
 			  }
@@ -1113,28 +1113,28 @@ $(document).ready(function(){
             name: "Widget",
             data: series.monthDataSeries1.prices
           }],
-			
+
 			colors: ['#8c95f8'],
-			
+
 			grid: {
 			  borderColor: '#eee',
 			  strokeDashArray: 5,
-				
+
 				xaxis: {
 				lines: {
 					show: true
 				}
-				},   
+				},
 				yaxis: {
 					lines: {
 						show: false
 					}
-				},  
-				
-				
-				
+				},
+
+
+
 			},
-         
+
           labels: series.monthDataSeries1.dates,
           xaxis: {
             type: 'datetime',
@@ -1152,9 +1152,9 @@ $(document).ready(function(){
 
     })
   </script>
-	
-	
-	
+
+
+
 
 </body>
 </html>
