@@ -2842,4 +2842,21 @@ class BrandboostModel extends Model {
         return $oData;
     }
 
+    /**
+     * This function used to update the status of the campaign
+     * @param $id
+     * @param $status
+     * @return bool
+     */
+    public static function saveCampaignStatus($id, $status){
+        $result = DB::table('tbl_brandboost')
+            ->where('id', $id)
+            ->update(['status'=>$status]);
+        if ($result > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
