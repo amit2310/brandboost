@@ -23,6 +23,8 @@
           Content Area
          **********************-->
         <div class="content-area">
+            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+            <loading :isLoading="loading"></loading>
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
                 <!--<div class="row">
                     <div class="col-md-12">
@@ -44,23 +46,9 @@
 
                     <div class="row" v-if="viewType == 'Grid View && false'">
                         <div class="col-md-6">
-                            <!--<ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a></li>
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
-                            </ul>-->
                             <h3 class="htxt_medium_16 dark_400">Campaigns</h3>
                         </div>
                         <div class="col-md-6">
-                            <!--<ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                            </ul>-->
                             <div class="table_action">
                                 <div class="float-right">
                                     <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
@@ -98,7 +86,7 @@
                     <div class="row" v-else>
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="applySort('Name')">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">ALL</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
                                 <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a></li>-->
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
@@ -559,8 +547,12 @@
         },
         methods: {
             applySort: function(sortVal){
+                this.loading = true;
+
                 this.sortBy = sortVal;
                 this.deletedItems = [];
+
+                this.loading = false;
             },
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
