@@ -3313,6 +3313,24 @@ public function widgetStatisticDetailsStatsGraph(){
     }
 
     /**
+     * This method is used to change brandboost campaign status
+     * @param Request $request
+     */
+    public function changeStatus(Request $request){
+        $oUser = getLoggedUser();
+        $id = $request->brandboost_id;
+        $status = $request->status;
+        $result = BrandboostModel::saveCampaignStatus($id, $status);
+        if ($result) {
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
      * Used to save onsite widget
      * @return type
      */
