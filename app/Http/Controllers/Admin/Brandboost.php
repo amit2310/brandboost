@@ -743,6 +743,7 @@ class Brandboost extends Controller
      */
     public function reviews(Request $request)
     {
+        $items_per_page = $request->get('items_per_page');
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
@@ -756,7 +757,7 @@ class Brandboost extends Controller
 
         if (!empty($campaignId)) {
             $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
-            $aReviews = $mReviews->getCampaignReviews($campaignId, $searchBy, $sortBy);
+            $aReviews = $mReviews->getCampaignReviews($campaignId, $searchBy, $sortBy,$items_per_page);
 
             $aBreadcrumb = array(
                 'Home' => '#/',
@@ -785,7 +786,7 @@ class Brandboost extends Controller
         } else {
             $aUser = getLoggedUser();
             $userID = $aUser->id;
-            $aReviews = $mReviews->getMyBranboostReviews($userID, $searchBy, $sortBy);
+            $aReviews = $mReviews->getMyBranboostReviews($userID, $searchBy, $sortBy,$items_per_page);
 
             $aBreadcrumb = array(
                 'Home' => '#/',
