@@ -2,7 +2,13 @@
     <div class="custom_pagination" v-if="pagination.total > pagination.per_page">
         <div v-if="!noItemPerPage" class="row">
             <div class="col-md-6">
-                <span class="mr-4">ITEMS PER PAGE:<select v-model="pagination.per_page"><option>10</option><option>15</option><option>20</option></select></span>
+                <span class="mr-4">ITEMS PER PAGE:
+                    <select v-model="pagination.per_page" v-on:click.prevent="changeItemsPerPage()">
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                    </select>
+                </span>
                 <span>{{pagination.current_page}}-{{pagesNumber.length}} out of {{pagination.total}}</span>
             </div>
             <div class="col-md-6">
@@ -54,6 +60,9 @@
             changePage(page) {
                 this.pagination.current_page = page;
                 this.$emit('paginate', page);
+            },
+            changeItemsPerPage(page) {
+                this.$emit('paginate_per_page', this.pagination.per_page);
             }
         }
     }

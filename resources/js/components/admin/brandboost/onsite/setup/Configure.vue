@@ -8,7 +8,7 @@
                         <h3 class="htxt_medium_24 dark_700">Review Campaign</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
-                        <button class="btn btn-md bkg_light_800 light_000" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
+                        <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}" @click.prevent="saveCampaign" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,10 @@
                         </div>
 
                         <div class="p30 pb10 text-center">
-                            <img src="assets/images/review_setup_graph.svg"/>Progress: {{this.progressRate}}%
+                            <!--<img src="assets/images/review_setup_graph.svg"/>Progress: {{progressRate}}%-->
+                            <div id="chart_07">
+                            <apexchart type=radialBar height=170 :options="chartOptions" :series="series" />
+                            </div>
                         </div>
 
                         <div class="p30 pb15">
@@ -264,8 +267,8 @@
                                 <div :class="`${displayTrackingForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
                                     <ul class="review_camapaign_list_check" v-if="completedTrackingForm ==true && displayTrackingForm==false">
-                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
-                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
+                                        <li><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_conversation}"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_google_analytics}"></i> Google Analytics</strong></li>
+                                        <li><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_open_read}"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_expire_link}"></i> Track clicks</strong></li>
                                     </ul>
                                     <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize your default campaign’s settings</p>
                                 </div>
@@ -451,8 +454,8 @@
                                 <div :class="`${displaySMSTrackingForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
                                     <ul class="review_camapaign_list_check" v-if="completedSMSTrackingForm ==true && displaySMSTrackingForm==false">
-                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
-                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
+                                        <li><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_conversation}"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_google_analytics}"></i> Google Analytics</strong></li>
+                                        <li><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_open_read}"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill" :class="{'green_400': trackingForm.tracking_expire_link}"></i> Track clicks</strong></li>
                                     </ul>
                                     <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize your default campaign’s settings</p>
                                 </div>
@@ -540,6 +543,9 @@
 </template>
 <script>
     export default {
+        components: {
+            apexchart: VueApexCharts,
+        },
         data() {
             return {
                 refreshMessage: 1,
@@ -632,7 +638,20 @@
                     email_channel: '',
                     sms_channel: ''
                 },
-                progressRate: 0
+                progressRate: 0,
+                series: [25],
+                chartOptions: {
+                    plotOptions: {
+                        radialBar: {
+                            hollow: {
+                                size: '80%',
+                            }
+                        },
+                    },
+                    colors: ['#6672E8'],
+                    labels: ['Completed'],
+
+                }
             }
         },
         created() {
@@ -938,6 +957,17 @@
                     .then(response => {
                         if(response.data.status =='success'){
                             this.refreshMessage = Math.random();
+                            this.loading = false;
+                        }
+                    });
+            },
+            saveCampaign: function(){
+                this.loading = true;
+                axios.post('/admin/brandboost/changeStatus', {brandboost_id:this.$route.params.id, status: '1', _token: this.csrf_token()})
+                    .then(response => {
+                        if(response.data.status =='success'){
+                            this.refreshMessage = Math.random();
+                            this.successMsg="Campaign saved successfully!";
                             this.loading = false;
                         }
                     });

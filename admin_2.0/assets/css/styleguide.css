@@ -467,7 +467,7 @@ COLOR CLASSES
 .green_100{color: #9CE4AF}
 .green_200{color: #8CDAA4}
 .green_300{color: #7ECD99}
-.green_400{color: #62C08E}
+.green_400{color: #62C08E!important}
 .green_500{color: #4AAF85}
 
 .yellow_100{color: #FFEBB9}
