@@ -678,7 +678,9 @@
 
                         toolbar: {
                             show: false
-                        }
+                        },
+
+
                     },
                     dataLabels: {
                         enabled: false
@@ -1044,4 +1046,8 @@
         position: absolute;
     }
     #openrate .apexcharts-svg{z-index: 2!important; position: relative}
+    /*svg path,*/
+    /*svg rect{*/
+    /*    fill: #c2ccdc;*/
+    /*}*/
 </style>
