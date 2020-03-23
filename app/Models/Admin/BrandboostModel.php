@@ -15,7 +15,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='', $paginate=true) {
+    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='',$items_per_page=10, $paginate=true) {
         $query = DB::table('tbl_brandboost')
                 ->when(($userId > 0), function($query) use ($userId) {
                     return $query->where('user_id', $userId);
@@ -47,7 +47,7 @@ class BrandboostModel extends Model {
                 }
                 //->get();
         if($paginate == true)
-            $oData = $query->paginate(10);
+            $oData = $query->paginate($items_per_page);
         else
             $oData = $query->get();
         return $oData;
@@ -92,7 +92,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBBWidgets($id = 0, $userID = 0, $type = '', $searchBy='', $sortBy='') {
+    public static function getBBWidgets($id = 0, $userID = 0, $type = '', $searchBy='', $sortBy='',$items_per_page =10) {
         $query = DB::table('tbl_brandboost_widgets')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=', 'tbl_brandboost.id')
                 ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
@@ -127,7 +127,7 @@ class BrandboostModel extends Model {
         }else{
             $query->orderBy('tbl_brandboost_widgets.id', 'desc');
         }
-        $oData = $query->paginate(10);
+        $oData = $query->paginate($items_per_page);
         return $oData;
     }
 
@@ -426,7 +426,7 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='', $paginate=true) {
+    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='',$items_per_page=10, $paginate=true) {
 
         $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
@@ -458,7 +458,7 @@ class BrandboostModel extends Model {
             $query->orderBy('id', 'desc');
         }
         if($paginate == true)
-            $oData = $query->paginate(10);
+            $oData = $query->paginate($items_per_page);
         else
             $oData = $query->get();
         return $oData;
