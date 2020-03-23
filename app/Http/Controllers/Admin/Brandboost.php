@@ -3192,13 +3192,18 @@ public function widgetStatisticDetailsStatsGraph(){
         $type = $request->requestType;
         if($type == 'feedback'){
             $formData = [
-                'brandboost_id' => $brandboostID,
-                'from_name' => $request->from_name,
-                'from_email' => $request->from_email
+                'brandboost_id' => $brandboostID
             ];
+            if($request->from_name){
+                $formData['from_name'] = $request->from_name;
+            }
+            if($request->sms_sender){
+                $formData['sms_sender'] = $request->sms_sender;
+            }
             $aResponse = FeedbackModel::getFeedbackResponse($brandboostID);
             if (isset($aResponse->id)) {
                 $result = BrandboostModel::updateBrandboostFeedbackResponse($formData, $brandboostID);
+                unset($formData['brandboost_id']);
                 $result2 = BrandboostModel::updateBrandboostEndCampaigns($formData, $brandboostID);
             } else {
                 $aFeedbackData['brandboost_id'] = $brandboostID;
@@ -3217,6 +3222,12 @@ public function widgetStatisticDetailsStatsGraph(){
                 'tracking_google_analytics' => $request->tracking_google_analytics,
                 'tracking_open_read' => $request->tracking_open_read,
                 'tracking_expire_link' => $request->tracking_expire_link,
+            ];
+            $result = BrandboostModel::updateBrandBoost($userID, $formData, $brandboostID);
+        }else if($type =='channelStatus'){
+            $formData = [
+                'email_channel' => $request->email_channel,
+                'sms_channel' => $request->sms_channel
             ];
             $result = BrandboostModel::updateBrandBoost($userID, $formData, $brandboostID);
         }

@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="p30 pb10 text-center">
-                            <img src="assets/images/review_setup_graph.svg"/>
+                            <img src="assets/images/review_setup_graph.svg"/>Progress: {{this.progressRate}}%
                         </div>
 
                         <div class="p30 pb15">
@@ -42,12 +42,12 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="custom-form-switch mt-0 float-right">
-                                        <input class="field" type="checkbox" checked="">
+                                        <input class="field" type="checkbox" :checked="isEmailChannelActivated" @change="isEmailChannelActivated = !isEmailChannelActivated" >
                                         <span class="toggle reviews"></span>
                                     </label>
                                 </div>
                             </div>
-                            <ul class="list_review mt-3">
+                            <ul class="list_review mt-3" v-if="isEmailChannelActivated">
                                 <li><a :class="progressClass('sender')" @click="openForm('sender')" href="javascript:void(0);">From</a></li>
                                 <li><a :class="progressClass('subject')" @click="openForm('subject')" href="javascript:void(0);">Email Subject</a></li>
                                 <li><a :class="progressClass('content')" @click="openForm('content')" class="" href="javascript:void(0);">Content</a></li>
@@ -64,12 +64,12 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="custom-form-switch mt-0 float-right">
-                                        <input class="field" type="checkbox" checked="">
+                                        <input class="field" type="checkbox" :checked="isSMSChannelActivated" @change="isSMSChannelActivated = !isSMSChannelActivated">
                                         <span class="toggle reviews"></span>
                                     </label>
                                 </div>
                             </div>
-                            <ul class="list_review mt-3">
+                            <ul class="list_review mt-3" v-if="isSMSChannelActivated">
                                 <li><a class="" href="javascript:void(0);">From</a></li>
                                 <li><a href="javascript:void(0);">Content</a></li>
                                 <li><a class="" href="javascript:void(0);">Settings & Tracking</a></li>
@@ -102,7 +102,7 @@
                         <div class="col text-right">
                             <p class="fsize14 dark_600 m-0">Active &nbsp; &nbsp;
                                 <label class="custom-form-switch mt-0">
-                                    <input class="field" type="checkbox" checked="">
+                                    <input class="field" type="checkbox" :checked="isEmailChannelActivated" @change="isEmailChannelActivated = !isEmailChannelActivated">
                                     <span class="toggle green3"></span>
                                 </label>
                             </p>
@@ -111,7 +111,7 @@
                 </div>
 
 
-                <div class="row">
+                <div class="row" v-if="isEmailChannelActivated">
                     <div class="col-12">
                         <div class="card p35 br6 mb10" :class="{'disabled': disableSenderForm == true}">
                             <div class="row">
@@ -119,12 +119,18 @@
                                     <span v-if="completedSenderForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
                                     <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span>
                                 </div>
-                                <div class="col">
+                                <div :class="`${displaySenderForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">From</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Who is sending this email?</p>
+                                    <ul class="review_camapaign_list" v-if="completedSenderForm==true && displaySenderForm==false">
+                                        <li><span>From name</span><strong>{{senderForm.from_name}}</strong></li>
+                                        <li><span>From email address</span><strong>{{senderForm.from_email}}</strong></li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Who is sending this email?</p>
                                 </div>
                                 <div class="col text-right" v-if="displaySenderForm==false">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('sender')">Add sender</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSenderForm" @click="openForm('sender')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('sender')">Add sender</button>
+
                                 </div>
                                 <div class="col text-right" v-if="displaySenderForm==true">
                                     <!--<button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add sender</button>-->
@@ -167,12 +173,17 @@
                                     <span v-if="completedSubjectForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
                                     <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span>
                                 </div>
-                                <div class="col">
+                                <div :class="`${displaySubjectForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Subject</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Add your email’s subject line</p>
+                                    <ul class="review_camapaign_list" v-if="completedSubjectForm ==true && displaySubjectForm==false">
+                                        <li><span>Subject line</span><strong>{{subjectForm.subject}}</strong></li>
+                                        <li><span>Email preview text</span><strong>{{subjectForm.preheader}}</strong></li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>This text will be displayed in the Subject field in your recipient's email client</p>
                                 </div>
                                 <div class="col text-right" v-if="displaySubjectForm==false">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('subject')">Add subject</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSubjectForm" @click="openForm('subject')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('subject')">Add subject</button>
                                 </div>
                                 <div class="col text-right" v-if="displaySubjectForm==true">
                                     <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('subject')">Cancel</button>
@@ -227,12 +238,19 @@
                                     <span v-if="completedContentForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
                                     <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span>
                                 </div>
-                                <div class="col">
+                                <div :class="`${displayTrackingForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Content</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Customize the content of your email.</p>
+                                    <ul class="review_camapaign_list" v-if="completedTrackingForm ==true && displayContentForm==false">
+                                        <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong><a href="javascript:void(0);">Preview Template “Review Request Email”</a> <br>
+                                            <a href="javascript:void(0);">Preview plain text version</a><br>
+                                            <a href="javascript:void(0);">Send test email</a>
+                                        </strong></li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize the content of your email.</p>
                                 </div>
                                 <div class="col text-right">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit content</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedTrackingForm" @click="openForm('tracking')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else>Edit content</button>
                                 </div>
                             </div>
                         </div>
@@ -243,15 +261,20 @@
                                     <span v-if="completedTrackingForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
                                     <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">4</span>
                                 </div>
-                                <div class="col">
+                                <div :class="`${displayTrackingForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Customize your default campaign’s settings</p>
+                                    <ul class="review_camapaign_list_check" v-if="completedTrackingForm ==true && displayTrackingForm==false">
+                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
+                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize your default campaign’s settings</p>
                                 </div>
                                 <div class="col text-right" v-if="displayTrackingForm==false">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('tracking')">Edit Settings</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedTrackingForm" @click="openForm('tracking')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('tracking')">Edit Settings</button>
                                 </div>
                                 <div class="col text-right" v-if="displayTrackingForm==true">
-                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('sender')">Cancel</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('tracking')">Cancel</button>
                                     <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveTrackingInfo">Save</button>
                                 </div>
                             </div>
@@ -307,6 +330,15 @@
 
                     </div>
                 </div>
+                <div class="row" v-else>
+                    <div class="col-12">
+                        <div class="card p50 br6 mb-0 text-center">
+                            <span class="circle-icon-36 d-block m-auto bkg_green_000"><i class="ri-message-3-fill email_300 fsize17"></i></span>
+                            <h3 class="htxt_medium_16 dark_700 mt10 mb10">Email review requests</h3>
+                            <p class="htxt_regular_14 dark_400 m-0 ls4">Activate channel to send Email review requests</p>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="table_head_action pb0 mb15 mt15">
@@ -317,7 +349,7 @@
                         <div class="col text-right">
                             <p class="fsize14 dark_600 m-0">Active &nbsp; &nbsp;
                                 <label class="custom-form-switch mt-0">
-                                    <input class="field" type="checkbox" checked >
+                                    <input class="field" type="checkbox" :checked="isSMSChannelActivated" @change="isSMSChannelActivated = !isSMSChannelActivated" >
                                     <span class="toggle green3"></span>
                                 </label>
                             </p>
@@ -325,50 +357,172 @@
                     </div>
                 </div>
 
-
-
-                <div class="row">
+                <div class="row" v-if="isSMSChannelActivated">
                     <div class="col-12">
-                        <div class="card p35 br6 mb10" :class="isDisabled">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableSMSSenderForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span></div>
-                                <div class="col">
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedSMSSenderForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span>
+                                </div>
+                                <div :class="`${displaySMSSenderForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">From</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Who is sending this review request?</p>
+                                    <ul class="review_camapaign_list" v-if="completedSMSSenderForm==true && displaySMSSenderForm==false">
+                                        <li><span>From name</span><strong>{{senderSMSForm.from_name}}</strong></li>
+                                        <li><span>From sms number</span><strong>{{mobileNoFormat(senderSMSForm.sms_sender)}}</strong></li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Who is sending this sms?</p>
                                 </div>
-                                <div class="col text-right">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add sender</button>
+                                <div class="col text-right" v-if="displaySMSSenderForm==false">
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSSenderForm" @click="openForm('smsSender')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('smsSender')">Add sender</button>
+
+                                </div>
+                                <div class="col text-right" v-if="displaySMSSenderForm==true">
+                                    <!--<button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add sender</button>-->
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('smsSender')">Cancel</button>
+                                    <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSMSSenderInfo">Save</button>
                                 </div>
                             </div>
+
+                            <div class="btop mt30 pt30" v-if="displaySMSSenderForm==true">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label class="dark_600 fsize11 fw500 ls4">FROM NAME</label>
+                                            <label class="dark_400 fsize11 fw500 ls4 float-right">A/B TEST &nbsp; <img src="assets/images/Review_c.svg"/></label>
+                                            <input type="text" v-model="senderSMSForm.from_name" required class="form-control h48" placeholder="Enter sender name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label class="dark_600 fsize11 fw500 ls4">FROM PHONE NUMBER</label>
+                                            <!--<input type="text" class="form-control h48" placeholder="Select sender email address" />-->
+                                            <select v-model="senderSMSForm.sms_sender" class="form-control h48 form-control-custom" required>
+                                                <option>Select sender from number</option>
+                                                <option :value="user.twilioNumber">{{mobileNoFormat(user.twilioNumber)}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="card p35 br6 mb10" :class="isDisabled">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableSMSContentForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span></div>
-                                <div class="col">
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedSMSContentForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">2</span>
+                                </div>
+                                <div :class="`${displaySMSContentForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Content</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Customize the content of your email.</p>
+                                    <ul class="review_camapaign_list" v-if="completedSMSTrackingForm ==true && displaySMSContentForm==false">
+                                        <li>
+                                            <span class="smsbox">
+                                                <div class="row mb-1">
+                                                    <div class="col"><p class="m-0 fsize8 light_700"><img width="10" src="assets/images/message_icon_green.svg"> &nbsp; MESSAGES</p></div>
+                                                    <div class="col text-right"><p class="m-0 fsize8 light_700">now</p></div>
+                                                </div>
+                                                <p class="fsize9 fw500 dark_900 mb-1">Makers</p>
+                                                <p class="fsize9 fw300 dark_900 m-0">Hello Julia, It was a pleasure doing business with you. Thank you for giving us a try. You can click this link to leave your review...</p>
+                                            </span>
+                                            <strong>Hello <strong class="reviews_400">[Fist name]</strong>, It was a pleasure doing business with you... <br>
+                                                <a href="javascript:void(0);">Preview SMS Template “Review Request”</a><br>
+                                                <a href="javascript:void(0);">Send test SMS</a>
+                                            </strong>
+                                        </li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize the content of your sms.</p>
                                 </div>
                                 <div class="col text-right">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit content</button>
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSTrackingForm" @click="openForm('smsContent')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else>Edit content</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card p35 br6 mb10" :class="isDisabled">
+                        <div class="card p35 br6 mb10" :class="{'disabled': disableSMSTrackingForm == true}">
                             <div class="row">
-                                <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
-                                <div class="col">
+                                <div style="max-width: 64px" class="col mt-1">
+                                    <span v-if="completedSMSTrackingForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
+                                    <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">4</span>
+                                </div>
+                                <div :class="`${displaySMSTrackingForm == true ? 'col' : 'col-9'}`">
                                     <h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
-                                    <p class="htxt_regular_14 dark_400 m-0 ls4">Customize your default campaign’s settings</p>
+                                    <ul class="review_camapaign_list_check" v-if="completedSMSTrackingForm ==true && displaySMSTrackingForm==false">
+                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
+                                        <li><strong><i class="ri-checkbox-circle-fill"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
+                                    </ul>
+                                    <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize your default campaign’s settings</p>
                                 </div>
-                                <div class="col text-right">
-                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit Settings</button>
+                                <div class="col text-right" v-if="displaySMSTrackingForm==false">
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSTrackingForm" @click="openForm('smsTracking')"> Edit</button>
+                                    <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('smsTracking')">Edit Settings</button>
                                 </div>
+                                <div class="col text-right" v-if="displaySMSTrackingForm==true">
+                                    <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('smsTracking')">Cancel</button>
+                                    <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSMSTrackingInfo">Save</button>
+                                </div>
+                            </div>
+                            <div class="btop mt30 pt30" v-if="displaySMSTrackingForm==true">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="htxt_regular_14 dark_600 mb10">
+                                            <label class="custom-form-switch mt-0 float-left">
+                                                <input class="field" type="checkbox" value="1" v-model="trackingForm.tracking_conversation">
+                                                <span class="toggle reviews"></span>
+                                            </label> &nbsp; Use conversation to manage replies</p>
+                                        <p class="htxt_regular_12 dark_400 lh_19">When enabled, we’ll generate a special reply-to address for your campaign. We’ll filter “out of office” replies, then thread
+                                            conversations into your subscribers’ profiles and display them in reports.</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="htxt_regular_14 dark_600 mb10">
+                                            <label class="custom-form-switch mt-0 float-left">
+                                                <input class="field" type="checkbox" value="1" v-model="trackingForm.tracking_google_analytics">
+                                                <span class="toggle reviews"></span>
+                                            </label> &nbsp;
+                                            Google Analytics</p>
+                                        <p class="htxt_regular_12 dark_400 lh_19">Track clicks from your campaigns all the way to purchases on your website. Requires Google Analytics on your website or Shopify Integration.</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-4">
+                                    <div class="col-6">
+                                        <p class="htxt_regular_14 dark_600 mb10">
+                                            <label class="custom-form-switch mt-0 float-left">
+                                                <input class="field" type="checkbox" value="1" v-model="trackingForm.tracking_open_read">
+                                                <span class="toggle reviews"></span>
+                                            </label> &nbsp;
+                                            Track opens / read</p>
+                                        <p class="htxt_regular_12 dark_400 lh_19 m-0">Discover who opens your campaigns by tracking the number of times an invisible web beacon embedded in the campaign is downloaded. </p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="htxt_regular_14 dark_600 mb10">
+                                            <label class="custom-form-switch mt-0 float-left">
+                                                <input class="field" type="checkbox" value="1" v-model="trackingForm.tracking_expire_link">
+                                                <span class="toggle reviews"></span>
+                                            </label> &nbsp;
+                                            Automaticaly expire link</p>
+                                        <p class="htxt_regular_12 dark_400 lh_19 m-0">Discover which campaign links were clicked, how many times they were clicked, and who did the clicking.</p>
+                                    </div>
+                                </div>
+
+
+
                             </div>
                         </div>
 
-
+                    </div>
+                </div>
+                <div class="row" v-else>
+                    <div class="col-12">
+                        <div class="card p50 br6 mb-0 text-center">
+                            <span class="circle-icon-36 d-block m-auto bkg_green_000"><i class="ri-message-3-fill sms_300 fsize17"></i></span>
+                            <h3 class="htxt_medium_16 dark_700 mt10 mb10">SMS review requests</h3>
+                            <p class="htxt_regular_14 dark_400 m-0 ls4">Activate channel to send SMS review requests</p>
+                        </div>
                     </div>
                 </div>
 
@@ -406,14 +560,25 @@
                 displaySubjectForm: false,
                 displayContentForm: false,
                 displayTrackingForm: false,
+                displaySMSSenderForm: false,
+                displaySMSContentForm: false,
+                displaySMSTrackingForm: false,
                 completedSenderForm: false,
                 completedSubjectForm: false,
                 completedContentForm: false,
                 completedTrackingForm: false,
+                completedSMSSenderForm: false,
+                completedSMSContentForm: false,
+                completedSMSTrackingForm: false,
                 disableSenderForm: false,
                 disableSubjectForm: false,
                 disableContentForm: false,
                 disableTrackingForm: false,
+                disableSMSSenderForm: false,
+                disableSMSContentForm: false,
+                disableSMSTrackingForm: false,
+                isEmailChannelActivated: true,
+                isSMSChannelActivated:false,
                 senderForm: {
                     _token: this.csrf_token(),
                     requestType: 'feedback',
@@ -437,11 +602,41 @@
                     tracking_open_read: '',
                     tracking_expire_link : '',
                 },
+                senderSMSForm: {
+                    _token: this.csrf_token(),
+                    requestType: 'feedback',
+                    brandboostId: this.$route.params.id,
+                    from_name: '',
+                    sms_sender: ''
+                },
+                subjectForm: {
+                    _token: this.csrf_token(),
+                    requestType: 'subject',
+                    brandboostId: this.$route.params.id,
+                    subject: '',
+                    preheader: ''
+                },
+                trackingForm: {
+                    _token: this.csrf_token(),
+                    requestType: 'tracking',
+                    brandboostId: this.$route.params.id,
+                    tracking_conversation: '',
+                    tracking_google_analytics: '',
+                    tracking_open_read: '',
+                    tracking_expire_link : '',
+                },
+                channelForm: {
+                    _token: this.csrf_token(),
+                    requestType: 'channelStatus',
+                    brandboostId: this.$route.params.id,
+                    email_channel: '',
+                    sms_channel: ''
+                },
+                progressRate: 0
             }
         },
         created() {
             this.loadCampaignSettings();
-
         },
         mounted() {
             //loadJQScript(35);
@@ -459,6 +654,16 @@
             completedTrackingForm: function(){
                 this.validateStepCompletion();
             },
+            isEmailChannelActivated: function(){
+                this.channelForm.email_channel = this.isEmailChannelActivated;
+                this.saveChannelStatus();
+                this.validateStepCompletion();
+            },
+            isSMSChannelActivated: function(){
+                this.channelForm.sms_channel = this.isSMSChannelActivated;
+                this.saveChannelStatus();
+                this.validateStepCompletion();
+            }
 
         },
         computed: {
@@ -517,6 +722,10 @@
                 this.disableSubjectForm = false;
                 this.disableContentForm = false;
                 this.disableTrackingForm = false;
+
+                this.disableSMSSenderForm = false;
+                this.disableSMSContentForm = false;
+                this.disableSMSTrackingForm = false;
             },
             loadCampaignSettings: function(){
                 axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
@@ -534,6 +743,10 @@
                         this.senderForm.from_name = this.feedbackResponse.from_name;
                         this.senderForm.from_email = this.feedbackResponse.from_email;
                         this.senderForm.brandboostId = this.campaignId;
+
+                        this.senderSMSForm.from_name = this.feedbackResponse.from_name;
+                        this.senderSMSForm.sms_sender = this.feedbackResponse.sms_sender;
+                        this.senderSMSForm.brandboostId = this.campaignId;
                         //Set SubjectForm fields
                         this.subjectForm.subject = this.campaign.subject;
                         this.subjectForm.preheader = this.campaign.preheader;
@@ -542,9 +755,11 @@
                         this.trackingForm.tracking_google_analytics = this.campaign.tracking_google_analytics;
                         this.trackingForm.tracking_open_read = this.campaign.tracking_open_read;
                         this.trackingForm.tracking_expire_link = this.campaign.tracking_expire_link;
+                        //Set Channel Status
+                        this.isEmailChannelActivated = this.campaign.email_channel;
+                        this.isSMSChannelActivated = this.campaign.sms_channel;
                         //Validate Step Completion
                         this.validateStepCompletion();
-                        //loadJQScript(this.user.id);
                     });
             },
             validateStepCompletion: function(){
@@ -552,15 +767,51 @@
                 this.completedSenderForm = false;
                 this.completedSubjectForm = false;
                 this.completedTrackingForm = false;
-                if(this.senderForm.from_name && this.senderForm.from_email){
-                    this.completedSenderForm = true;
+
+                this.completedSMSSenderForm = false;
+                this.completedSMSTrackingForm = false;
+                let completedPercentage = 0;
+                let offset = 0;
+                if(this.isEmailChannelActivated && this.isSMSChannelActivated){
+                    offset = 14;
+                }else if(this.isEmailChannelActivated && this.isSMSChannelActivated == false){
+                    offset = 25;
+                }else if(this.isEmailChannelActivated == false && this.isSMSChannelActivated == true){
+                    offset = 33;
+                }else{
+                    offset = 0;
                 }
-                if(this.campaign.subject && this.campaign.preheader){
-                    this.completedSubjectForm = true;
+
+                if(this.isEmailChannelActivated == true){
+                    if(this.senderForm.from_name && this.senderForm.from_email){
+                        this.completedSenderForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.campaign.subject && this.campaign.preheader){
+                        this.completedSubjectForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
+                        this.completedTrackingForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
                 }
-                if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
-                    this.completedTrackingForm = true;
+
+                if(this.isSMSChannelActivated == true){
+                    if(this.senderSMSForm.from_name && this.senderSMSForm.sms_sender){
+                        this.completedSMSSenderForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+
+                    if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
+                        this.completedSMSTrackingForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
                 }
+
+
+
+                this.progressRate = completedPercentage;
 
             },
             progressClass: function(form){
@@ -592,26 +843,27 @@
                     this.displayContentForm = true;
                 }else if(form == 'tracking'){
                     this.displayTrackingForm = true;
+                }else if(form == 'smsSender'){
+                    this.displaySMSSenderForm = true;
+                }else if(form == 'smsContent'){
+                    this.displaySMSContentForm = true;
+                }else if(form == 'smsTracking'){
+                    this.displaySMSTrackingForm = true;
                 }
             },
             closeForm: function(form){
                 this.resetAllForms();
                 this.enableAllCards(form);
-                /*if(form == 'sender'){
-                    this.displaySenderForm = true;
-                }else if(form == 'subject'){
-                    this.displaySubjectForm = true;
-                }else if(form == 'content'){
-                    this.displayContentForm = true;
-                }else if(form == 'tracking'){
-                    this.displayTrackingForm = true;
-                }*/
             },
             resetAllForms: function(){
                 this.displaySenderForm = false;
                 this.displaySubjectForm = false;
                 this.displayContentForm = false;
                 this.displayTrackingForm = false;
+
+                this.displaySMSSenderForm = false;
+                this.displaySMSContentForm = false;
+                this.displaySMSTrackingForm = false;
             },
             saveSenderInfo: function(){
                 this.loading = true;
@@ -622,6 +874,20 @@
                             this.successMsg = 'Updated the changes successfully!!';
                             this.loading = false;
                             this.closeForm('sender');
+                            this.validateStepCompletion();
+                        }
+                    });
+
+            },
+            saveSMSSenderInfo: function(){
+                this.loading = true;
+                axios.post('/admin/brandboost/saveOnsiteConfiguration', this.senderSMSForm)
+                    .then(response => {
+                        if(response.data.status =='success'){
+                            this.refreshMessage = Math.random();
+                            this.successMsg = 'Updated the changes successfully!!';
+                            this.loading = false;
+                            this.closeForm('smsSender');
                             this.validateStepCompletion();
                         }
                     });
@@ -653,96 +919,31 @@
                         }
                     });
             },
-            displayStep: function(step){
-                let path = '';
-                if(!step){
-                    path = '/admin#/reviews/onsite';
-                }else{
-                    path = '/admin#/reviews/onsite/setup/'+this.campaignId+'/'+step;
-                }
-                window.location.href = path;
-            },
-            applyDefaultInfo: function (e) {
-                if (e.target.checked) {
-                    this.campaign.from_email = this.user.email;
-                    this.campaign.from_name = this.user.firstname + ' ' + this.user.lastname;
-                    this.updateSettings('from_email');
-                    this.updateSettings('from_name');
-                }
-            },
-            updateSettings: function (fieldName, fieldValue,  type) {
+            saveSMSTrackingInfo: function(){
                 this.loading = true;
-                if(type =='expiry'){
-                    this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
-                }
-                axios.post('/admin/brandboost/saveOnsiteSettings', {
-                    _token: this.csrf_token(),
-                    fieldName: fieldName,
-                    fieldVal: fieldValue,
-                    brandboostId: this.campaignId,
-                    linkExpiryData : this.campaign.link_expire_custom,
-                    //linkExpiryData :{delay_value: this.checkLinkExpiry.delay_value,delay_unit: this.checkLinkExpiry.delay_unit},
-                    requestType: type
-                }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
-                    this.loading = false;
-                });
-            },
-            saveDraft: function(){
-                this.loading = true;
-                axios.post('/admin/broadcast/updateBroadcast', {
-                    broadcastId: this.campaignId,
-                    status: 'draft',
-                    current_state: '',
-                    _token: this.csrf_token()
-                })
+                axios.post('/admin/brandboost/saveOnsiteConfiguration', this.trackingForm)
                     .then(response => {
-                        this.loading = false;
-                        if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
-                        }else{
-                            this.errorMsg = 'Something went wrong';
+                        if(response.data.status =='success'){
+                            this.refreshMessage = Math.random();
+                            this.successMsg = 'Updated the changes successfully!!';
+                            this.loading = false;
+                            this.closeForm('smsTracking');
+                            this.validateStepCompletion();
                         }
                     });
-            }
+            },
+            saveChannelStatus: function(){
+                this.loading = true;
+                axios.post('/admin/brandboost/saveOnsiteConfiguration', this.channelForm)
+                    .then(response => {
+                        if(response.data.status =='success'){
+                            this.refreshMessage = Math.random();
+                            this.loading = false;
+                        }
+                    });
+            },
         }
 
     };
-    function loadJQScript(userid){
-        alert('I am called');
-        var tkn = $('meta[name="_token"]').attr('content');
-        Dropzone.autoDiscover = false;
-        var myDropzoneLogoImg = new Dropzone(
-            '#myDropzone_logo_img', //id of drop zone element 1
-            {
-                url: '/dropzone/upload_s3_attachment/'+userid+'/onsite',
-                uploadMultiple: false,
-                maxFiles: 1,
-                maxFilesize: 600,
-                acceptedFiles: 'image/*',
-                addRemoveLinks: false,
-                success: function (response) {
-                    if (response.xhr.responseText != "") {
-                        $('#showLogoImage').attr('src', 'https://s3-us-west-2.amazonaws.com/brandboost.io/' + response.xhr.responseText).show();
-                        var dropImage = $('#logo_img').val();
-                        $.ajax({
-                            url: "/admin/brandboost/DeleteObjectFromS3",
-                            type: "POST",
-                            data: {dropImage: dropImage, _token: tkn},
-                            dataType: "json",
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-                        $('#logo_img').val(response.xhr.responseText);
-                        $('#logo_img').click();
-                    }
-                }
-            });
-        myDropzoneLogoImg.on("complete", function (file) {
-            myDropzoneLogoImg.removeFile(file);
-        });
-    }
 </script>
 
