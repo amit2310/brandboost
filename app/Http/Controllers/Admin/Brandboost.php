@@ -1461,17 +1461,17 @@ class Brandboost extends Controller
 .     * @param type $param
      * @return type
      */
-    public function offsite()
+    public function offsite(Request $request)
     {
-
+        $items_per_page = $request->get('items_per_page');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         Session::put("setTab", '');
         if ($user_role == 1) {
-            $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite');
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite','','',$items_per_page);
         } else {
-            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'offsite');
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'offsite','','',$items_per_page);
         }
 
         $moduleName = 'brandboost-offsite';
@@ -1858,6 +1858,7 @@ class Brandboost extends Controller
     public
     function widgets(Request $request)
     {
+        $items_per_page = $request->get('items_per_page');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
@@ -1866,9 +1867,9 @@ class Brandboost extends Controller
         //echo "Sort By ". $sortBy;
         //echo " Search By ". $searchBy;
         if ($user_role == 1) {
-            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite', $searchBy, $sortBy);
+            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite', $searchBy, $sortBy,$items_per_page);
         } else {
-            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite', $searchBy, $sortBy);
+            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite', $searchBy, $sortBy,$items_per_page);
         }
         foreach($oWidgetsList->items() as $wData) {
             $wid = $wData->id;

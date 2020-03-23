@@ -18,9 +18,9 @@ class Feedback extends Controller {
 	* @param type $request
 	* @return type
 	*/
-	public function getAllListingData($brandboostID = 0) {
+	public function getAllListingData($brandboostID = 0,Request $request) {
         $mFeedback  =  new FeedbackModel();
-
+        $items_per_page = $request->get('items_per_page');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -28,9 +28,9 @@ class Feedback extends Controller {
         $getBrandboost = '';
         if ($brandboostID > 0) {
             $getBrandboost = BrandboostModel::getBrandboost($brandboostID);
-            $result = $mFeedback->getFeedbackByBrandboostID($brandboostID);
+            $result = $mFeedback->getFeedbackByBrandboostID($brandboostID,$items_per_page);
         } else {
-            $result = $mFeedback->getFeedback($userID, $user_role);
+            $result = $mFeedback->getFeedback($userID, $user_role,$items_per_page);
         }
 
         if(!empty($result->items())){

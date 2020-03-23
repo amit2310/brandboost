@@ -121,6 +121,7 @@
             <pagination
                 :pagination="allData"
                 @paginate="navigatePagination"
+                @paginate_per_page="showPaginationItemsPerPage"
                 :offset="4">
             </pagination>
         </div>
@@ -196,8 +197,9 @@
                 moduleUnitID: '',
                 moduleAccountID: '',
                 current_page: '1',
+                items_per_page:10,
                 feedbacks: '',
-                allData: '',
+                allData: {},
                 feedbackTags: ''
 
             }
@@ -205,13 +207,20 @@
         mounted() {
             this.loadPaginatedData();
         },
+        watch: {
+            'items_per_page' : function(){
+                this.loadPaginatedData();
+            }
+        },
+
         methods: {
             loadPaginatedData: function () {
                 let srcUrl;
+
                 if(this.campaignId){
-                    srcUrl = '/admin/feedback/listall/'+this.campaignId+'?page='+this.current_page;
+                    srcUrl = '/admin/feedback/listall/'+this.campaignId+'?page='+this.current_page+ '&items_per_page='+this.items_per_page;
                 }else{
-                    srcUrl = '/admin/feedback/listall?page='+this.current_page;
+                    srcUrl = '/admin/feedback/listall?page='+this.current_page+ '&items_per_page='+this.items_per_page;
                 }
                 axios.get(srcUrl)
                     .then(response => {
@@ -244,6 +253,11 @@
             navigatePagination: function (p) {
                 this.loading = true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigateToCampaignDetails: function(campaign_id){
