@@ -781,24 +781,36 @@
                 }else{
                     offset = 0;
                 }
-                if(this.senderForm.from_name && this.senderForm.from_email){
-                    this.completedSenderForm = true;
-                    completedPercentage = completedPercentage + offset;
-                }
-                if(this.campaign.subject && this.campaign.preheader){
-                    this.completedSubjectForm = true;
-                    completedPercentage = completedPercentage + offset;
-                }
-                if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
-                    this.completedTrackingForm = true;
-                    this.completedSMSTrackingForm = true;
-                    completedPercentage = completedPercentage + offset;
+
+                if(this.isEmailChannelActivated == true){
+                    if(this.senderForm.from_name && this.senderForm.from_email){
+                        this.completedSenderForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.campaign.subject && this.campaign.preheader){
+                        this.completedSubjectForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
+                        this.completedTrackingForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
                 }
 
-                if(this.senderSMSForm.from_name && this.senderSMSForm.sms_sender){
-                    this.completedSMSSenderForm = true;
-                    completedPercentage = completedPercentage + offset;
+                if(this.isSMSChannelActivated == true){
+                    if(this.senderSMSForm.from_name && this.senderSMSForm.sms_sender){
+                        this.completedSMSSenderForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+
+                    if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
+                        this.completedSMSTrackingForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
                 }
+
+
+
                 this.progressRate = completedPercentage;
 
             },
