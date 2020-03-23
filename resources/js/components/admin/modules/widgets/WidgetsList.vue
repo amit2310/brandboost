@@ -223,6 +223,7 @@
                                 <pagination
                                     :pagination="allData"
                                     @paginate="showPaginationData"
+                                    @paginate_per_page="showPaginationItemsPerPage"
                                     :offset="4">
                                 </pagination>
 
@@ -348,6 +349,7 @@
                 allData: '',
                 widgets: '',
                 current_page: 1,
+                items_per_page: 10,
                 bActiveSubsription: '',
                 oStats: '',
                 user_role: '',
@@ -367,6 +369,9 @@
                 this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -517,7 +522,7 @@
             },
             loadPaginatedData: function () {
                 //getData
-                axios.get('/admin/brandboost/widgets?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/widgets?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         //console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
@@ -535,6 +540,11 @@
             },
             showPaginationData: function (current_page) {
                 this.navigatePagination(current_page);
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
             },
             navigatePagination: function (p) {
                 this.loading = true;
