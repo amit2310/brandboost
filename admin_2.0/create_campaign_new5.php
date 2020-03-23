@@ -76,7 +76,10 @@
 	 	</div>
       
       <div class="p30 pb10 text-center">
-      	<img src="assets/images/review_setup_graph.svg"/>
+      	<!--<img src="assets/images/review_setup_graph.svg"/>-->
+          <div id="chart_07">
+            <apexchart type=radialBar height=170 :options="chartOptions" :series="series" />
+          </div>
       </div>
        
       					<div class="p30 pb15">
@@ -361,5 +364,33 @@
 	  });
 	});
 </script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+  
+<script>
+    new Vue({
+      el: '#chart_07',
+      components: {
+        apexchart: VueApexCharts,
+      },
+	  
+      data: {
+        series: [25],
+        chartOptions: {
+          plotOptions: {
+            radialBar: {
+              hollow: {
+                size: '80%',
+              }
+            },
+          },
+		  colors: ['#6672E8'],
+          labels: ['Completed'],
+		  
+        }
+      },
+    })
+  </script>
 </body>
 </html>

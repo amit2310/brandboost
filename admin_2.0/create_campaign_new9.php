@@ -218,7 +218,7 @@
     				<div class="col-9">
     					<h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
     					<ul class="review_camapaign_list_check">
-    						<li><strong><i class="ri-checkbox-circle-fill"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
+    						<li><strong><i class="ri-checkbox-circle-fill green_400"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill green_400"></i> Google Analytics</strong></li>
     						<li><strong><i class="ri-checkbox-circle-fill"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
     					</ul>
     				</div>
@@ -313,8 +313,8 @@
     				<div class="col-9">
     					<h3 class="htxt_medium_16 dark_700 mb-2">Settings & Tracking</h3>
     					<ul class="review_camapaign_list_check">
-    						<li><strong><i class="ri-checkbox-circle-fill"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
-    						<li><strong><i class="ri-checkbox-circle-fill"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
+    						<li><strong><i class="ri-checkbox-circle-fill green_400"></i> Use conversation to manage replies</strong><strong><i class="ri-checkbox-circle-fill"></i> Google Analytics</strong></li>
+    						<li><strong><i class="ri-checkbox-circle-fill green_400"></i> Track opens / read</strong><strong><i class="ri-checkbox-circle-fill"></i> Track clicks</strong></li>
     					</ul>
     				</div>
     				<div class="col text-right">
