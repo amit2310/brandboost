@@ -117,13 +117,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-                            <pagination
-                                :pagination="allData"
-                                @paginate="showPaginationData"
-                                :offset="4">
-                            </pagination>
-
                         </div>
                     </div>
 
@@ -171,13 +164,14 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-                    <pagination
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        :offset="4">
-                    </pagination>
                 </div>
+
+                <div class="clearfix"></div>
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    :offset="4">
+                </pagination>
 
             </div>
 
