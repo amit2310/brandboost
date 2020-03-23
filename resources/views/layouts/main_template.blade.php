@@ -109,8 +109,8 @@
     **********************-->
     @include('layouts.main_partials._main_css')
     <style>
-        svg path,
-        svg rect{
+        .loading_svg svg path,
+        .loading_svg svg rect{
             fill: #FF6700;
         }
     </style>
@@ -164,7 +164,7 @@
 
         <div id="masterContainer2">
             <router-view>
-                <div style="width:100%;text-align:center;margin-top:30px;">
+                <div style="width:100%;text-align:center;margin-top:30px;"  class="loading_svg">
                     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                          x="0px" y="0px"
                          width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;display:block;margin:0 auto;" xml:space="preserve">
