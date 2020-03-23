@@ -117,18 +117,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-                            <pagination
-                                :pagination="allData"
-                                @paginate="showPaginationData"
-                                :offset="4">
-                            </pagination>
-
                         </div>
-                    </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
                     </div>
                 </div>
 
@@ -171,13 +160,15 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-                    <pagination
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        :offset="4">
-                    </pagination>
                 </div>
+
+                <div class="clearfix"></div>
+
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    :offset="4">
+                </pagination>
 
             </div>
 
@@ -197,12 +188,11 @@
 
                         </div>
                     </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
-                    </div>
                 </div>
+            </div>
 
+            <div class="col-md-12 text-center mt-3">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
             </div>
         </div>
         <!--******************
