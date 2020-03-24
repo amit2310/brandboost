@@ -629,6 +629,7 @@ class Brandboost extends Controller
         $param = $request->type;
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
+        $items_per_page = $request->get('items_per_page');
         $moduleName = 'brandboost';
         //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
@@ -637,9 +638,10 @@ class Brandboost extends Controller
             'Reviews' => '#/reviews/dashboard',
             ucwords($param).' Review Requests' => ''
         );
-        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy);
-        if($oRequests->items()){
-            foreach($oRequests->items() as $oRequest){
+        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
+        $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
+        if($oRequestsData){
+            foreach($oRequestsData as $oRequest){
                 $brandboostId = $oRequest->bbid;
                 $reviewUserId = $oRequest->uid;
                 $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
@@ -654,7 +656,7 @@ class Brandboost extends Controller
             'breadcrumb' => $aBreadcrumb,
             'param' => $param,
             'allData' => $oRequests,
-            'oRequest' => $oRequests->items(),
+            'oRequest' => $oRequestsData,
             'moduleName' => $moduleName
         );
         return $aData;
