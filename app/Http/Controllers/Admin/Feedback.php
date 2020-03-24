@@ -32,9 +32,9 @@ class Feedback extends Controller {
         } else {
             $result = $mFeedback->getFeedback($userID, $user_role,$items_per_page);
         }
-
-        if(!empty($result->items())){
-            foreach ($result->items() as $key => $data){
+        $resultData =($items_per_page =='All')? $result : $result->items();
+        if(!empty($resultData)){
+            foreach ($resultData as $key => $data){
                 if ($data->category == 'Positive') {
                     $ratingValue = 5;
                 } else if ($data->category == 'Neutral') {
@@ -45,7 +45,7 @@ class Feedback extends Controller {
                 $smily = ratingView($ratingValue);
                 $data->ratings = $ratingValue;
                 $data->smily = $smily;
-                $result->items()[$key] = $data;
+                $resultData[$key] = $data;
             }
         }
         list($canRead, $canWrite) = fetchPermissions('Feedbacks');
@@ -59,8 +59,8 @@ class Feedback extends Controller {
 
         //$feedbackTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
         $feedbackTags = array();
-        if(!empty($result->items())) {
-            foreach($result->items() as $kRev => $vRev) {
+        if(!empty($resultData)) {
+            foreach($resultData as $kRev => $vRev) {
                 $feedbackTags[$vRev->id] = TagsModel::getTagsDataByFeedbackID($vRev->id);
             }
         }
@@ -70,8 +70,8 @@ class Feedback extends Controller {
             'breadcrumb' => $aBreadcrumb,
             'brandboostDetail' => $getBrandboost,
             'allData' => $result,
-            'result' => $result->items(),
-            'totalResults' => count($result->items()),
+            'result' => $resultData,
+            'totalResults' => count($resultData),
             'feedbackTags' => $feedbackTags,
             'canRead' => $canRead,
             'canWrite' => $canWrite

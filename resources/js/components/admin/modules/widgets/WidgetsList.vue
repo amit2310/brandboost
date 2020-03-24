@@ -24,7 +24,7 @@
               Content Area
              **********************-->
             <div class="content-area">
-                <div class="container-fluid" v-if="allData.total>0">
+                <div class="container-fluid" v-if="widgets.length >0">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
@@ -349,7 +349,7 @@
                 allData: '',
                 widgets: '',
                 current_page: 1,
-                items_per_page: 10,
+                items_per_page:10,
                 bActiveSubsription: '',
                 oStats: '',
                 user_role: '',
