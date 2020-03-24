@@ -35,7 +35,12 @@
                                     <li><a href="javascript:void(0);" :class="{'active': sortBy == 'active'}" @click="applySort('active')">ACTIVE</a></li>
                                     <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">DRAFT</a></li>
                                     <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
-                                    <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                    <li><a :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                        <div class="dropdown-menu p10 mt-1">
+                                           <!--  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> -->
+                                            <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
@@ -297,7 +302,7 @@
                                         <input type="hidden" name="module_account_id" id="module_account_id"
                                                :value="moduleAccountID">
                                         <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                        <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
+                                        <a class="blue_300 fsize16 fw600 ml20 js-onsite-widget-slidebox2" href="javascript:void(0);">Close</a> </div>
                                 </div>
                             </div>
                         </form>

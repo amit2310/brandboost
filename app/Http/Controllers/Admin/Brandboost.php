@@ -2424,7 +2424,7 @@ public function widgetStatisticDetailsStatsGraph(){
             exit;
         }
 
-        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite','','',false);
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite','','','',false);
         $oWidgets = BrandboostModel::getBBWidgets($widgetID);
         $oStats = BrandboostModel::getBBWidgetStats($widgetID);
         $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);
