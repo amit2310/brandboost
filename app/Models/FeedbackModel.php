@@ -68,7 +68,7 @@ class FeedbackModel extends Model
 	* @return type
 	*/
 	public static function getFeedback($userID, $user_role='',$items_per_page =10) {
-		$oData = DB::table('tbl_brandboost_feedback')
+        $query = DB::table('tbl_brandboost_feedback')
 			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_desc', 'tbl_brandboost.brand_img', 'tbl_brandboost_users.subscriber_id as subscriber_id')
 			->when(($user_role > 1), function($query) use ($userID) {
 				return $query->where('tbl_brandboost_feedback.client_id', $userID);
@@ -76,9 +76,12 @@ class FeedbackModel extends Model
 			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=' , 'tbl_brandboost_feedback.subscriber_id')
 			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_users.user_id')
 			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
-			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
-			//->get();
-            ->paginate($items_per_page);
+			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id');
+			if($items_per_page =='All'){
+                $oData = $query->get();
+            }else{
+                $oData = $query->paginate($items_per_page);
+            }
 		return $oData;
     }
 
@@ -88,15 +91,18 @@ class FeedbackModel extends Model
 	* @return type
 	*/
 	public static function getFeedbackByBrandboostID($brandboostID,$items_per_page =10) {
-        $oData = DB::table('tbl_brandboost_feedback')
+        $query = DB::table('tbl_brandboost_feedback')
 			->select('tbl_brandboost_feedback.*', 'tbl_users.avatar', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_brandboost.brand_title', 'tbl_brandboost.brand_img')
 			->leftJoin('tbl_brandboost_users', 'tbl_brandboost_users.id', '=' , 'tbl_brandboost_feedback.subscriber_id')
 			->leftJoin('tbl_users', 'tbl_users.id', '=' , 'tbl_brandboost_users.user_id')
 			->leftJoin('tbl_subscribers', 'tbl_brandboost_users.subscriber_id', '=' , 'tbl_subscribers.id')
 			->leftJoin('tbl_brandboost', 'tbl_brandboost.id', '=' , 'tbl_brandboost_feedback.brandboost_id')
-			->where('tbl_brandboost_feedback.brandboost_id', $brandboostID)
-            ->paginate($items_per_page);
-			//->get();
+			->where('tbl_brandboost_feedback.brandboost_id', $brandboostID);
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
 		return $oData;
 
     }

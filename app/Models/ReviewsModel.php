@@ -136,8 +136,11 @@ class ReviewsModel extends Model {
         }else{
             $query->orderBy('tbl_reviews.id', 'desc');
         }
-        $oData = $query->paginate($items_per_page);
-
+        if($items_per_page == 'All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
         return $oData;
     }
 
@@ -247,9 +250,11 @@ class ReviewsModel extends Model {
         } else {
             $query->orderBy('tbl_reviews.id', 'desc');
         }
-
-        $oData = $query->paginate($items_per_page);
-
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
         return $oData;
     }
 

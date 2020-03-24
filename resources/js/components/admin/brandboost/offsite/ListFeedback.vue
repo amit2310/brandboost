@@ -1,11 +1,11 @@
 <template>
     <div>
-    <div class="row" v-if="allData.total>0">
+    <div class="row" v-if="feedbacks.length>0">
         <div class="col-md-12">
             <div class="table_head_action mt-2">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class="htxt_medium_16 dark_400">{{ allData.total }} &nbsp; Feedback</h3>
+                        <h3 class="htxt_medium_16 dark_400">{{ allData.total ?allData.total :feedbacks.length }} &nbsp; Feedback</h3>
                     </div>
                     <div class="col-md-6">
                         <div class="table_action">

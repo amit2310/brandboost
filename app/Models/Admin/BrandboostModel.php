@@ -15,41 +15,47 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='',$items_per_page=10, $paginate=true) {
+    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='',$items_per_page=10, $paginate=true)
+    {
         $query = DB::table('tbl_brandboost')
-                ->when(($userId > 0), function($query) use ($userId) {
-                    return $query->where('user_id', $userId);
-                })
-                ->when((!empty($type)), function($query) use ($type) {
-                    return $query->where('review_type', $type);
-                })
-                ->where('delete_status', 0);
-                if(!empty($searchBy)){
-                    $query->where('brand_title', 'LIKE',  "%$searchBy%");
-                    //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
-                }
-                if(!empty($sortBy)){
-                    if($sortBy == 'Date Created'){
-                        $query->orderBy('id', 'desc');
-                    }else  if($sortBy == 'Name'){
-                        $query->orderBy('brand_title', 'asc');
-                    }else  if($sortBy == 'Active'){
-                        $query->where('status', '1');
-                    }else  if($sortBy == 'Inactive'){
-                        $query->where('status', '0');
-                    }else  if($sortBy == 'Pending'){
-                        $query->where('status', '2');
-                    }else  if($sortBy == 'Archive'){
-                        $query->where('status', '3');
-                    }
-                }else{
-                    $query->orderBy('id', 'desc');
-                }
-                //->get();
-        if($paginate == true)
-            $oData = $query->paginate($items_per_page);
-        else
+            ->when(($userId > 0), function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            })
+            ->when((!empty($type)), function ($query) use ($type) {
+                return $query->where('review_type', $type);
+            })
+            ->where('delete_status', 0);
+        if (!empty($searchBy)) {
+            $query->where('brand_title', 'LIKE', "%$searchBy%");
+            //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
+        }
+        if (!empty($sortBy)) {
+            if ($sortBy == 'Date Created') {
+                $query->orderBy('id', 'desc');
+            } else if ($sortBy == 'Name') {
+                $query->orderBy('brand_title', 'asc');
+            } else if ($sortBy == 'Active') {
+                $query->where('status', '1');
+            } else if ($sortBy == 'Inactive') {
+                $query->where('status', '0');
+            } else if ($sortBy == 'Pending') {
+                $query->where('status', '2');
+            } else if ($sortBy == 'Archive') {
+                $query->where('status', '3');
+            }
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+        //->get();
+        if ($paginate == true) {
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        }else{
             $oData = $query->get();
+        }
         return $oData;
     }
 
@@ -127,7 +133,11 @@ class BrandboostModel extends Model {
         }else{
             $query->orderBy('tbl_brandboost_widgets.id', 'desc');
         }
-        $oData = $query->paginate($items_per_page);
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
         return $oData;
     }
 
@@ -457,10 +467,15 @@ class BrandboostModel extends Model {
         }else{
             $query->orderBy('id', 'desc');
         }
-        if($paginate == true)
-            $oData = $query->paginate($items_per_page);
-        else
+        if($paginate == true) {
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        }else {
             $oData = $query->get();
+        }
         return $oData;
     }
 
