@@ -274,8 +274,8 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='',  $searchBy='', $sortBy='') {
-        //DB::enableQueryLog();
+    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='',  $searchBy='', $sortBy='',$items_per_page =10) {
+        // DB::enableQueryLog();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -318,8 +318,12 @@ class BrandboostModel extends Model {
             $query->where('tbl_tracking_log_email_sms.archived', 0);
         }
         $query->orderBy('tbl_tracking_log_email_sms.id', 'DESC');
-        $oData = $query->paginate(10);
-        //dd(DB::getQueryLog());
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
+        // dd(DB::getQueryLog());
         return $oData;
     }
 
