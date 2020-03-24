@@ -274,6 +274,7 @@
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
                     :offset="4"
                 >
                 </pagination>
@@ -505,6 +506,7 @@
                 campaigns : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 form: new Form({
                     campaignName: '',
@@ -530,6 +532,9 @@
               this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -617,7 +622,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -632,6 +637,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){

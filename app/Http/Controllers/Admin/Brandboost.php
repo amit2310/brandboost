@@ -178,15 +178,16 @@ class Brandboost extends Controller
         $companyName = strtolower(str_replace(' ', '-', $company_name));
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
+        $items_per_page = $request->get('items_per_page');
 
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
 
         if ($user_role == 1) {
-            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy);
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy, $items_per_page);
         } else {
-            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy);
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy, $items_per_page);
         }
 
         foreach ($aBrandboostList->items() as $data) {
@@ -227,7 +228,7 @@ class Brandboost extends Controller
             'title' => 'Onsite Brand Boost Campaigns',
             'breadcrumb' => $aBreadcrumb,
             'allData' => $aBrandboostList,
-            'aBrandbosts' => $aBrandboostList->items(),
+            'aBrandbosts' => ($items_per_page =='All')? $aBrandboostList : $aBrandboostList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
             'company_name' => $companyName,
