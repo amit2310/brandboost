@@ -814,14 +814,13 @@ class Brandboost extends Controller
                     }
                 }
             }
-
             $aData = array(
                 'title' => 'Brand Boost Reviews',
                 'pagename' => $breadcrumb,
                 'breadcrumb' => $aBreadcrumb,
                 'oCampaign' => '',
                 'allData' => $aReviews,
-                'aReviews' => $aReviews->items(),
+                'aReviews' => ($items_per_page =='All')? $aReviews : $aReviews->items(),
                 'campaignId' => '',
                 'userId' => $userID,
                 'bActiveSubsription' => $bActiveSubsription
@@ -1496,8 +1495,11 @@ class Brandboost extends Controller
                 }
             }
         }
-
-        $aBradboosts = $this->processOffsiteOverview($aBrandboostList->items());
+        if($items_per_page =='All') {
+            $aBradboosts = $this->processOffsiteOverview($aBrandboostList);
+        }else {
+            $aBradboosts = $this->processOffsiteOverview($aBrandboostList->items());
+        }
 
         $aData = array(
             'title' => 'Offsite Brand Boost Campaigns',
@@ -1871,7 +1873,8 @@ class Brandboost extends Controller
         } else {
             $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite', $searchBy, $sortBy,$items_per_page);
         }
-        foreach($oWidgetsList->items() as $wData) {
+        $oWidgetsListData= ($items_per_page =='All')? $oWidgetsList : $oWidgetsList->items();
+        foreach($oWidgetsListData as $wData) {
             $wid = $wData->id;
             //$oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
             $oStats = BrandboostModel::getBBWidgetStats($wid);
@@ -1919,7 +1922,7 @@ class Brandboost extends Controller
             'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
             'allData' => $oWidgetsList,
-            'oWidgetsList' => $oWidgetsList->items(),
+            'oWidgetsList' => $oWidgetsListData,
             'bActiveSubsription' => $bActiveSubsription,
             'oStats' => $oStats,
             'user_role' => $user_role
