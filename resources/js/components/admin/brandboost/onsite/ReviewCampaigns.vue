@@ -556,8 +556,6 @@
 
                 this.sortBy = sortVal;
                 this.deletedItems = [];
-
-                this.loading = false;
             },
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
