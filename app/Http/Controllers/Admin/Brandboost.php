@@ -391,8 +391,8 @@ class Brandboost extends Controller
         $revCount = getCampaignReviewCount($brandboostID);
         $revRA = getCampaignReviewRA($brandboostID);
 
-        $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite');
-        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');
+        $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite'); //Not in use probably
+        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');//Not in use probably
 
         $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
 
@@ -402,6 +402,9 @@ class Brandboost extends Controller
         $setTab = Session::get("setTab");
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
+
+        $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
+        $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
 
         /*if ($this->use_default_accounts == true) {
             $aTwilioData = $this->defaultTwilioDetails;
@@ -456,7 +459,9 @@ class Brandboost extends Controller
             'smsTemplate' => $smsTemplate,
             'selectedCategory' => $selectedCategory,
             'fromNumber' => $fromNumber,
-            'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ]
+            'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ],
+            'oEmailTemplates' => $oEmailTemplates->items(),
+            'oSMSTemplates' => $oSMSTemplates->items(),
         );
 
         //return view('admin.brandboost.onsite_setup', $aData);
@@ -3650,6 +3655,17 @@ public function widgetStatisticDetailsStatsGraph(){
             } else {
                 $result = BrandModel::addBrandConfiguration($aBrandboostData);
             }
+            if($campaignType == 'manual'){
+                //Add Default Event
+                $eData = array(
+                    'brandboost_id' => $brandboostID,
+                    'event_type' => 'main',
+                    'status' => 'active',
+                    'created' => date("Y-m-d H:i:s")
+                );
+                $brandboostEventID = $mBrandboost->createBrandboostEvent($eData);
+            }
+
 
             //Add Default Response Data
             $oTwilio = getTwilioAccountCustom($userID);
@@ -7824,6 +7840,83 @@ public function widgetStatisticDetailsStatsGraph(){
             }
             exit;
         }
+    }
+
+    /**
+     * This function is used to update selected template in manual type of campaign
+     * @param Request $request
+     */
+    public function addCampaignToOnsite(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        //Instantiate Subscriber model to get its methods and properties
+        $mTemplates = new TemplatesModel();
+
+        $source = strip_tags($request->source);
+        $brandboostID = strip_tags($request->brandboost_id);
+        $templateID = strip_tags($request->template_id);
+        $moduleName = 'brandboost';
+        $isDraft = ($source == 'draft') ? true : false;
+
+        $response = array();
+        $response['status'] = 'error';
+        if ($brandboostID > 0) {
+            $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
+            if (!empty($oEvents)) {
+                $eventID = $oEvents->count()>0 ? $oEvents[0]->id : '';
+                if(empty($eventID)){
+                    //Add Default Event
+                    $eData = array(
+                        'brandboost_id' => $brandboostID,
+                        'event_type' => 'main',
+                        'status' => 'active',
+                        'created' => date("Y-m-d H:i:s")
+                    );
+                    $eventID = $mBrandboost->createBrandboostEvent($eData);
+                }
+
+                $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                if(!empty($aCampaigns)){
+                    $campaignID = $aCampaigns->count()>0 ? $aCampaigns[0]->id : '';
+                }
+                if ($eventID > 0) {
+                    if ($campaignID > 0) {
+                        //Update existing campaign
+                        $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
+                        $templateSID = $templateID;
+                        $aUpdateData = array(
+                            'name' => $oTemplate->template_name,
+                            'introduction' => $oTemplate->introduction,
+                            'greeting' => $oTemplate->greeting,
+                            'html' => $oTemplate->template_content,
+                            'stripo_html' => $oTemplate->stripo_html,
+                            'stripo_css' => $oTemplate->stripo_css,
+                            'stripo_compiled_html' => $oTemplate->stripo_compiled_html,
+                            'template_source' => $templateSID,
+                            'campaign_type' => $oTemplate->template_type
+                        );
+                        $bUpdated = $mWorkflow->updateWorkflowCampaign($aUpdateData, $campaignID, $moduleName);
+                        if ($bUpdated) {
+                            $response = array('status' => 'success', 'campaignId' => $campaignID);
+                        }
+                    } else {
+                        $bAdded = $mWorkflow->addEndCampaign($eventID, $templateID, $brandboostID, $moduleName, $isDraft);
+                        if ($bAdded) {
+                            $response = array('status' => 'success', 'campaignId' => $bAdded['id']);
+                        }
+                    }
+                }
+            }
+        }
+        echo json_encode($response);
+        exit;
     }
 
 

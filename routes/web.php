@@ -268,6 +268,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
     Route::post('admin/brandboost/changeStatus', 'Admin\Brandboost@changeStatus');
     Route::post('admin/brandboost/saveOnsiteConfiguration', 'Admin\Brandboost@saveOnsiteConfiguration');
+    Route::post('admin/brandboost/addCampaignToOnsite', 'Admin\Brandboost@addCampaignToOnsite');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');

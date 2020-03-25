@@ -2859,4 +2859,14 @@ class BrandboostModel extends Model {
         }
     }
 
+    /**
+     * Used to add default event for manual brandboost onsite event
+     * @param $aData
+     * @return mixed
+     */
+    public function createBrandboostEvent($aData) {
+        $insert_id = DB::table('tbl_brandboost_events')->insertGetId($aData);
+        return $insert_id;
+    }
+
 }

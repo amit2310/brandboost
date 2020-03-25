@@ -943,6 +943,7 @@ class WorkflowModel extends Model {
      * @return boolean
      */
     public static function getWorkflowDefaultTemplates($moduleName, $moduleCatName = '', $id = '', $categoryID = '') {
+        /* OLD METHOD*/
         if (empty($moduleName)) {
             return false;
         }
@@ -1339,6 +1340,16 @@ class WorkflowModel extends Model {
             return false;
     }
 
+    /**
+     * Used to add end campaign for email/sms
+     * @param $eventID
+     * @param $templateID
+     * @param $accountID
+     * @param $moduleName
+     * @param bool $isDraft
+     * @return array|bool
+     * @throws \Throwable
+     */
     public function addEndCampaign($eventID, $templateID, $accountID, $moduleName, $isDraft = false) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -1500,6 +1511,7 @@ class WorkflowModel extends Model {
     }
 
     public function addWorkflowCampaign($eventID, $templateID, $accountID, $moduleName, $isDraft = false) {
+        /*OLD Method*/
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
