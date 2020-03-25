@@ -37,17 +37,17 @@
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>-->
                             <ul class="table_filter">
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'all'}" @click="applySort('all')">ALL</a></li>
-                                <li><a :class="{'active': sortBy == 'sent'}" @click="applySort('sent')" href="javascript:void(0);">SENT</a></li>
-                                <li><a :class="{'active': sortBy == 'draft'}" @click="applySort('draft')" href="javascript:void(0);">DRAFT</a></li>
-                                <li><a :class="{'active': sortBy == 'submited'}" @click="applySort('submited')" href="javascript:void(0);">SUBMITED</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'sent'}" @click="applySort('sent')">SENT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'submited'}" @click="applySort('submited')">SUBMITED</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
-                                <li><a :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
                                     <div class="dropdown-menu p10 mt-1">
                                            <!--  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> -->
                                             <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
                                         </div>
                                     </li>
-                                
+
                             </ul>
                         </div>
                         <div class="col-md-6">
