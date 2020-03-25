@@ -195,6 +195,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/widgets', 'Admin\Brandboost@widgets');
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
     Route::post('admin/brandboost/deleteWidgets', 'Admin\Brandboost@deleteWidgets');
+    Route::get('admin/brandboost/export-review-request', 'Admin\Brandboost@exportReviewRequests');
     /**
      * --------------------------------------------------------------------------
      *  Add component of widget onsite section.

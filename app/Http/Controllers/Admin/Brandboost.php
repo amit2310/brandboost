@@ -646,13 +646,16 @@ class Brandboost extends Controller
         $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
         $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
         if($oRequestsData){
-            foreach($oRequestsData as $oRequest){
+            foreach($oRequestsData as $idx=>$oRequest){
                 $brandboostId = $oRequest->bbid;
                 $reviewUserId = $oRequest->uid;
                 $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
                 if(!empty($oReview)){
                     $oRequest->ratings = number_format($oReview->ratings, 1);
+                }else{
+                    $oRequest->ratings =0;
                 }
+                $oRequestsData[$idx] = $oRequest;
             }
         }
 
@@ -668,7 +671,104 @@ class Brandboost extends Controller
         //return view('admin.brandboost.review_request', $aData);
 
     }
+/**
+     * Used to get campaign review request data
+     * @param type $request
+     * @return type
+     */
+    public function exportReviewRequests(Request $request)
+    {
+        $aUser = getLoggedUser();
+        $param = $request->type;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $items_per_page = 'All';
+        $moduleName = 'brandboost';
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+         
+        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
+        $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
+        if($oRequestsData){
+            foreach($oRequestsData as $idx=>$oRequest){
+                $brandboostId = $oRequest->bbid;
+                $reviewUserId = $oRequest->uid;
+                $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
+                if(!empty($oReview)){
+                    $oRequest->ratings = number_format($oReview->ratings, 1);
+                }else{
+                    $oRequest->ratings =0;
+                }
+                $oRequestsData[$idx] = $oRequest;
+            }
+        }
+        // echo '<pre>';
+        // print_r($oRequestsData);
+        // exit;
 
+        $filename = 'review_requests_' . time() . '.csv';
+        
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/csv; ");
+        //echo "Hello";
+        //die;
+        // file creation
+        $file = fopen('php://output', 'w');
+
+        // $header = array("NAME","EMAIL / PHONE",  "CAMPAIGN");
+        // $header = array("NAME", "EMAIL / PHONE", "CAMPAIGN",'SENT');
+        $header = array("NAME", "EMAIL / PHONE", "CAMPAIGN",'SENT','REVIEW');
+        fputcsv($file, $header);
+
+        foreach ($oRequestsData as $key => $line) {
+            if($line->tracksubscribertype == 'email'){
+                fputcsv($file, array(
+                    $line->firstname.' '.$line->lastname, 
+                        $line->email, 
+                        $line->brand_title, 
+                        $line->requestdate,
+                        $line->ratings
+                    )
+                );
+            }
+            if($line->tracksubscribertype == 'sms'){
+               fputcsv($file, array(
+                    $line->firstname.' '.$line->lastname, 
+                        $line->phone, 
+                        $line->brand_title, 
+                        $line->requestdate,
+                        $line->ratings
+                    )
+                );
+            }
+            
+        }
+        fclose($file);
+        //Log Export History
+        // if (!empty($oTags)) {
+        //     $aHistoryData = array(
+        //         'user_id' => $userID,
+        //         'export_name' => 'Review Requests',
+        //         'item_count' => count($oRequestsData),
+        //         'created' => date("Y-m-d H:i:s")
+        //     );
+        //     $mSetting->logExportHistory($aHistoryData);
+        // }
+        exit;
+
+        // $aData = array(
+        //     'title' => 'Brand Boost Review Requests',
+        //     'breadcrumb' => $aBreadcrumb,
+        //     'param' => $param,
+        //     'allData' => $oRequests,
+        //     'oRequest' => $oRequestsData,
+        //     'moduleName' => $moduleName
+        // );
+        // return $aData;
+        //return view('admin.brandboost.review_request', $aData);
+
+    }
     public function reviewRequestOld(Request $request)
     {
         $aUser = getLoggedUser();
