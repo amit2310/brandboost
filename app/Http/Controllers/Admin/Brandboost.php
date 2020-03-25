@@ -178,7 +178,7 @@ class Brandboost extends Controller
         $companyName = strtolower(str_replace(' ', '-', $company_name));
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
-        $items_per_page = $request->get('items_per_page');
+        $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
