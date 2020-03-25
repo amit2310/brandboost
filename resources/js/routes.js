@@ -16,7 +16,8 @@ import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview
 import addReviews from './components/admin/brandboost/onsite/addReview';
 //import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import ReviewsOverview from './components/admin/brandboost/ReviewsOverview';
-import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
+import SingleCampaign from './components/admin/brandboost/SingleCampaign';
+//import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
 import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';
 import OnsiteCampaignsTab from './components/admin/brandboost/onsite/tabs/CampaignsSummary';
 import OnsiteReviewsSummary from './components/admin/brandboost/onsite/tabs/ReviewsSummary';
@@ -393,8 +394,9 @@ const routes = [
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
     /* Review Module */
-    { path: '/reviews/overview', component: ReviewsOverview, props: {pageColor: 'onsite_sec', title : 'Review Overview'} },
-    { path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
+    /*{ path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Overview'} },*/
+    { path: '/reviews/dashboard', component: ReviewsOverview, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
+    { path: '/reviews/overview', component: SingleCampaign, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
     { path: '/brandboost/review_campaigns/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
     { path: '/reviews/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
