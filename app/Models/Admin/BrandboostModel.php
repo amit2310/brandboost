@@ -314,6 +314,18 @@ class BrandboostModel extends Model {
             if($sortBy == 'archive'){
                 $query->where('tbl_tracking_log_email_sms.archived', 1);
             }
+            if($sortBy == 'sent'){
+                $query->where('tbl_tracking_log_email_sms.status', 'sent');
+            }
+            if($sortBy == 'draft'){
+                $query->where('tbl_tracking_log_email_sms.status', 'draft');
+            }
+            if($sortBy == 'submited'){
+                $query->where('tbl_tracking_log_email_sms.status', 'sent');
+            }
+            if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_tracking_log_email_sms.created', 'desc');
+            }
         }else{
             $query->where('tbl_tracking_log_email_sms.archived', 0);
         }
