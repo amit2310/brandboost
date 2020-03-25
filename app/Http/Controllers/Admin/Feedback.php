@@ -18,9 +18,9 @@ class Feedback extends Controller {
 	* @param type $request
 	* @return type
 	*/
-	public function getAllListingData($brandboostID = 0) {
+	public function getAllListingData($brandboostID = 0,Request $request) {
         $mFeedback  =  new FeedbackModel();
-
+        $items_per_page = $request->get('items_per_page');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -28,13 +28,13 @@ class Feedback extends Controller {
         $getBrandboost = '';
         if ($brandboostID > 0) {
             $getBrandboost = BrandboostModel::getBrandboost($brandboostID);
-            $result = $mFeedback->getFeedbackByBrandboostID($brandboostID);
+            $result = $mFeedback->getFeedbackByBrandboostID($brandboostID,$items_per_page);
         } else {
-            $result = $mFeedback->getFeedback($userID, $user_role);
+            $result = $mFeedback->getFeedback($userID, $user_role,$items_per_page);
         }
-
-        if(!empty($result->items())){
-            foreach ($result->items() as $key => $data){
+        $resultData =($items_per_page =='All')? $result : $result->items();
+        if(!empty($resultData)){
+            foreach ($resultData as $key => $data){
                 if ($data->category == 'Positive') {
                     $ratingValue = 5;
                 } else if ($data->category == 'Neutral') {
@@ -45,7 +45,7 @@ class Feedback extends Controller {
                 $smily = ratingView($ratingValue);
                 $data->ratings = $ratingValue;
                 $data->smily = $smily;
-                $result->items()[$key] = $data;
+                $resultData[$key] = $data;
             }
         }
         list($canRead, $canWrite) = fetchPermissions('Feedbacks');
@@ -59,8 +59,8 @@ class Feedback extends Controller {
 
         //$feedbackTags = TagsModel::getTagsDataByFeedbackID($feedbackID);
         $feedbackTags = array();
-        if(!empty($result->items())) {
-            foreach($result->items() as $kRev => $vRev) {
+        if(!empty($resultData)) {
+            foreach($resultData as $kRev => $vRev) {
                 $feedbackTags[$vRev->id] = TagsModel::getTagsDataByFeedbackID($vRev->id);
             }
         }
@@ -70,8 +70,8 @@ class Feedback extends Controller {
             'breadcrumb' => $aBreadcrumb,
             'brandboostDetail' => $getBrandboost,
             'allData' => $result,
-            'result' => $result->items(),
-            'totalResults' => count($result->items()),
+            'result' => $resultData,
+            'totalResults' => count($resultData),
             'feedbackTags' => $feedbackTags,
             'canRead' => $canRead,
             'canWrite' => $canWrite

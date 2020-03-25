@@ -128,6 +128,7 @@
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
                     :offset="4">
                 </pagination>
 
@@ -250,6 +251,7 @@
                 campaigns : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 form: {
                     campaignName: '',
@@ -257,6 +259,11 @@
                     campaign_id: ''
                 },
                 formLabel: 'Create'
+            }
+        },
+        watch: {
+            'items_per_page' : function(){
+                this.loadPaginatedData();
             }
         },
         mounted() {
@@ -274,7 +281,7 @@
                 window.location.href='#/for/'+companyName+'/'+campaignName+'-'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/offsite?page='+this.current_page)
+                axios.get('/admin/brandboost/offsite?items_per_page='+this.items_per_page+ '&page='+this.current_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -289,6 +296,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){

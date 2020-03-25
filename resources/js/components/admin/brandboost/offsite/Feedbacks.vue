@@ -111,6 +111,7 @@
                 feedbacks : '',
                 allData: {},
                 current_page: 1,
+                items_per_page:10,
                 breadcrumb: '',
                 feedbackTags: ''
             }
@@ -127,7 +128,7 @@
                 window.location.href='#/feedback/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/feedback/listall?page='+this.current_page)
+                axios.get('/admin/feedback/listall?items_per_page='+this.items_per_page+ '&page='+this.current_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);

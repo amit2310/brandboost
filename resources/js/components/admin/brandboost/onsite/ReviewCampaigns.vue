@@ -23,6 +23,8 @@
           Content Area
          **********************-->
         <div class="content-area">
+            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+            <loading :isLoading="loading"></loading>
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
                 <!--<div class="row">
                     <div class="col-md-12">
@@ -42,25 +44,11 @@
                 </div>-->
                 <div class="table_head_action">
 
-                    <div class="row" v-if="viewType == 'Grid View'">
+                    <div class="row" v-if="viewType == 'Grid View && false'">
                         <div class="col-md-6">
-                            <!--<ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">CREATED</a></li>
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
-                            </ul>-->
                             <h3 class="htxt_medium_16 dark_400">Campaigns</h3>
                         </div>
                         <div class="col-md-6">
-                            <!--<ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                            </ul>-->
                             <div class="table_action">
                                 <div class="float-right">
                                     <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
@@ -98,7 +86,7 @@
                     <div class="row" v-else>
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="applySort('Name')">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">ALL</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
                                 <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a></li>-->
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
@@ -116,10 +104,10 @@
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
                                 <!--<li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>-->
-                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
                                 <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -286,6 +274,7 @@
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
                     :offset="4"
                 >
                 </pagination>
@@ -305,10 +294,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
-                    </div>
                 </div>
+            </div>
+
+            <div class="col-md-12 text-center mt-3">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
             </div>
 
 
@@ -516,6 +506,7 @@
                 campaigns : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 form: new Form({
                     campaignName: '',
@@ -542,6 +533,9 @@
             },
             'searchBy' : function(){
                 this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
             }
         },
         computed:{
@@ -558,6 +552,8 @@
         },
         methods: {
             applySort: function(sortVal){
+                this.loading = true;
+
                 this.sortBy = sortVal;
                 this.deletedItems = [];
             },
@@ -624,7 +620,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -639,6 +635,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){

@@ -4,9 +4,13 @@
             <div class="col-md-6">
                 <span class="mr-4">ITEMS PER PAGE:
                     <select v-model="pagination.per_page" v-on:click.prevent="changeItemsPerPage()">
+                        <option>5</option>
                         <option>10</option>
                         <option>15</option>
                         <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>All</option>
                     </select>
                 </span>
                 <span>{{pagination.current_page}}-{{pagesNumber.length}} out of {{pagination.total}}</span>

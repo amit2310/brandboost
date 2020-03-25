@@ -178,15 +178,16 @@ class Brandboost extends Controller
         $companyName = strtolower(str_replace(' ', '-', $company_name));
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
+        $items_per_page = $request->get('items_per_page');
 
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
 
         if ($user_role == 1) {
-            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy);
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy, $items_per_page);
         } else {
-            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy);
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy, $items_per_page);
         }
 
         foreach ($aBrandboostList->items() as $data) {
@@ -227,7 +228,7 @@ class Brandboost extends Controller
             'title' => 'Onsite Brand Boost Campaigns',
             'breadcrumb' => $aBreadcrumb,
             'allData' => $aBrandboostList,
-            'aBrandbosts' => $aBrandboostList->items(),
+            'aBrandbosts' => ($items_per_page =='All')? $aBrandboostList : $aBrandboostList->items(),
             'bActiveSubsription' => $bActiveSubsription,
             'user_role' => $user_role,
             'company_name' => $companyName,
@@ -634,6 +635,7 @@ class Brandboost extends Controller
         $param = $request->type;
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
+        $items_per_page = $request->get('items_per_page');
         $moduleName = 'brandboost';
         //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
@@ -642,9 +644,10 @@ class Brandboost extends Controller
             'Reviews' => '#/reviews/dashboard',
             ucwords($param).' Review Requests' => ''
         );
-        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy);
-        if($oRequests->items()){
-            foreach($oRequests->items() as $oRequest){
+        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
+        $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
+        if($oRequestsData){
+            foreach($oRequestsData as $oRequest){
                 $brandboostId = $oRequest->bbid;
                 $reviewUserId = $oRequest->uid;
                 $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
@@ -659,7 +662,7 @@ class Brandboost extends Controller
             'breadcrumb' => $aBreadcrumb,
             'param' => $param,
             'allData' => $oRequests,
-            'oRequest' => $oRequests->items(),
+            'oRequest' => $oRequestsData,
             'moduleName' => $moduleName
         );
         return $aData;
@@ -819,14 +822,13 @@ class Brandboost extends Controller
                     }
                 }
             }
-
             $aData = array(
                 'title' => 'Brand Boost Reviews',
                 'pagename' => $breadcrumb,
                 'breadcrumb' => $aBreadcrumb,
                 'oCampaign' => '',
                 'allData' => $aReviews,
-                'aReviews' => $aReviews->items(),
+                'aReviews' => ($items_per_page =='All')? $aReviews : $aReviews->items(),
                 'campaignId' => '',
                 'userId' => $userID,
                 'bActiveSubsription' => $bActiveSubsription
@@ -1466,17 +1468,17 @@ class Brandboost extends Controller
 .     * @param type $param
      * @return type
      */
-    public function offsite()
+    public function offsite(Request $request)
     {
-
+        $items_per_page = $request->get('items_per_page');
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         Session::put("setTab", '');
         if ($user_role == 1) {
-            $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite');
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'offsite','','',$items_per_page);
         } else {
-            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'offsite');
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'offsite','','',$items_per_page);
         }
 
         $moduleName = 'brandboost-offsite';
@@ -1501,8 +1503,11 @@ class Brandboost extends Controller
                 }
             }
         }
-
-        $aBradboosts = $this->processOffsiteOverview($aBrandboostList->items());
+        if($items_per_page =='All') {
+            $aBradboosts = $this->processOffsiteOverview($aBrandboostList);
+        }else {
+            $aBradboosts = $this->processOffsiteOverview($aBrandboostList->items());
+        }
 
         $aData = array(
             'title' => 'Offsite Brand Boost Campaigns',
@@ -1863,6 +1868,7 @@ class Brandboost extends Controller
     public
     function widgets(Request $request)
     {
+        $items_per_page = $request->get('items_per_page');
         $oUser = getLoggedUser();
         $userID = $oUser->id;
         $user_role = $oUser->user_role;
@@ -1871,11 +1877,12 @@ class Brandboost extends Controller
         //echo "Sort By ". $sortBy;
         //echo " Search By ". $searchBy;
         if ($user_role == 1) {
-            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite', $searchBy, $sortBy);
+            $oWidgetsList = BrandboostModel::getBBWidgets('', '', 'onsite', $searchBy, $sortBy,$items_per_page);
         } else {
-            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite', $searchBy, $sortBy);
+            $oWidgetsList = BrandboostModel::getBBWidgets('', $userID, 'onsite', $searchBy, $sortBy,$items_per_page);
         }
-        foreach($oWidgetsList->items() as $wData) {
+        $oWidgetsListData= ($items_per_page =='All')? $oWidgetsList : $oWidgetsList->items();
+        foreach($oWidgetsListData as $wData) {
             $wid = $wData->id;
             //$oStats = BrandboostModel::getBBWidgetStats($userID, 'owner_id');
             $oStats = BrandboostModel::getBBWidgetStats($wid);
@@ -1923,7 +1930,7 @@ class Brandboost extends Controller
             'breadcrumb' => $aBreadcrumb,
             'pagename' => $breadcrumb,
             'allData' => $oWidgetsList,
-            'oWidgetsList' => $oWidgetsList->items(),
+            'oWidgetsList' => $oWidgetsListData,
             'bActiveSubsription' => $bActiveSubsription,
             'oStats' => $oStats,
             'user_role' => $user_role
@@ -2425,7 +2432,7 @@ public function widgetStatisticDetailsStatsGraph(){
             exit;
         }
 
-        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite','','',false);
+        $oBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite','','','',false);
         $oWidgets = BrandboostModel::getBBWidgets($widgetID);
         $oStats = BrandboostModel::getBBWidgetStats($widgetID);
         $widgetThemeData = BrandboostModel::getWidgetThemeByUserID($userID);

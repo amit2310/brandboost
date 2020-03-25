@@ -117,18 +117,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-                            <pagination
-                                :pagination="allData"
-                                @paginate="showPaginationData"
-                                :offset="4">
-                            </pagination>
-
                         </div>
-                    </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
                     </div>
                 </div>
 
@@ -171,13 +160,16 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-                    <pagination
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        :offset="4">
-                    </pagination>
                 </div>
+
+                <div class="clearfix"></div>
+
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
+                    :offset="4">
+                </pagination>
 
             </div>
 
@@ -197,12 +189,11 @@
 
                         </div>
                     </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
-                    </div>
                 </div>
+            </div>
 
+            <div class="col-md-12 text-center mt-3">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
             </div>
         </div>
         <!--******************
@@ -231,6 +222,7 @@
                 requests : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 viewType: 'List View',
                 sortBy: 'all',
@@ -249,6 +241,9 @@
                 this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -314,7 +309,7 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/review_request/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -330,6 +325,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){

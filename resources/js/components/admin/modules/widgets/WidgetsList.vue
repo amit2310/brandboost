@@ -24,7 +24,7 @@
               Content Area
              **********************-->
             <div class="content-area">
-                <div class="container-fluid" v-if="allData.total>0">
+                <div class="container-fluid" v-if="widgets.length >0">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
@@ -35,7 +35,12 @@
                                     <li><a href="javascript:void(0);" :class="{'active': sortBy == 'active'}" @click="applySort('active')">ACTIVE</a></li>
                                     <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">DRAFT</a></li>
                                     <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
-                                    <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                    <li><a :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                        <div class="dropdown-menu p10 mt-1">
+                                           <!--  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> -->
+                                            <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
@@ -223,6 +228,7 @@
                                 <pagination
                                     :pagination="allData"
                                     @paginate="showPaginationData"
+                                    @paginate_per_page="showPaginationItemsPerPage"
                                     :offset="4">
                                 </pagination>
 
@@ -296,7 +302,7 @@
                                         <input type="hidden" name="module_account_id" id="module_account_id"
                                                :value="moduleAccountID">
                                         <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">{{ formLabel }}</button>
-                                        <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
+                                        <a class="blue_300 fsize16 fw600 ml20 js-onsite-widget-slidebox2" href="javascript:void(0);">Close</a> </div>
                                 </div>
                             </div>
                         </form>
@@ -348,6 +354,7 @@
                 allData: '',
                 widgets: '',
                 current_page: 1,
+                items_per_page:10,
                 bActiveSubsription: '',
                 oStats: '',
                 user_role: '',
@@ -367,6 +374,9 @@
                 this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -517,7 +527,7 @@
             },
             loadPaginatedData: function () {
                 //getData
-                axios.get('/admin/brandboost/widgets?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/widgets?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         //console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
@@ -535,6 +545,11 @@
             },
             showPaginationData: function (current_page) {
                 this.navigatePagination(current_page);
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
             },
             navigatePagination: function (p) {
                 this.loading = true;
