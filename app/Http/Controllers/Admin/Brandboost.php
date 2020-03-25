@@ -179,7 +179,6 @@ class Brandboost extends Controller
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
         $items_per_page = $request->get('items_per_page');
-
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();
@@ -751,7 +750,7 @@ class Brandboost extends Controller
      */
     public function reviews(Request $request)
     {
-        $items_per_page = $request->get('items_per_page');
+        $items_per_page = ($request->get('items_per_page'))?$request->get('items_per_page'):10;
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mReviews = new ReviewsModel();

@@ -207,7 +207,6 @@
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     let tkn = $('meta[name="_token"]').attr('content');
-
     export default {
         props : ['pageColor', 'title', 'review_type'],
         components: {UserAvatar, Pagination},
@@ -294,11 +293,9 @@
                                 this.deletedItems.splice(idxx, 1);
                             }
                         });
-
                     }
                     return;
                 }
-
                 if(elem.checked){
                     this.deletedItems.push(itemId);
                 }else{
@@ -352,7 +349,6 @@
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
-
                         });
                 }
             },
@@ -371,7 +367,6 @@
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
-
                         });
                 }
             }
