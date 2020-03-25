@@ -167,6 +167,7 @@
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
                     :offset="4">
                 </pagination>
 
@@ -206,7 +207,6 @@
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     let tkn = $('meta[name="_token"]').attr('content');
-
     export default {
         props : ['pageColor', 'title', 'review_type'],
         components: {UserAvatar, Pagination},
@@ -221,6 +221,7 @@
                 requests : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 viewType: 'List View',
                 sortBy: 'all',
@@ -239,6 +240,9 @@
                 this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -289,11 +293,9 @@
                                 this.deletedItems.splice(idxx, 1);
                             }
                         });
-
                     }
                     return;
                 }
-
                 if(elem.checked){
                     this.deletedItems.push(itemId);
                 }else{
@@ -304,7 +306,7 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/review_request/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -320,6 +322,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
@@ -342,7 +349,6 @@
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
-
                         });
                 }
             },
@@ -361,7 +367,6 @@
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
-
                         });
                 }
             }
