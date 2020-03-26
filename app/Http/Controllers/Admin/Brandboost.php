@@ -266,30 +266,7 @@ class Brandboost extends Controller
         //     $mSetting->logExportHistory($aHistoryData);
         // }
         exit;
-
-        exit;
-
-        $moduleName = 'brandboost-onsite';
  
-
-        $bActiveSubsription = $mUsers->isActiveSubscription();
-        //$this->session->set_userdata('setTab', '');
-
-        $aData = array(
-            'title' => 'Onsite Brand Boost Campaigns',
-            'breadcrumb' => $aBreadcrumb,
-            'allData' => $aBrandboostList,
-            'aBrandbosts' => ($items_per_page =='All')? $aBrandboostList : $aBrandboostList->items(),
-            'bActiveSubsription' => $bActiveSubsription,
-            'user_role' => $user_role,
-            'company_name' => $companyName,
-            'moduleName' => $moduleName,
-            'viewstats' => true
-        );
-
- 
-        echo json_encode($aData);
-        exit;
     }
     /**
      * Used to get onsite brandboost data
