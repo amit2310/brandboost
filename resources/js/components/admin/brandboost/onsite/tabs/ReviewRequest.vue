@@ -8,13 +8,13 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="table_filter text-right">
-                        <!--<li>
-                            &lt;!&ndash;<a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>&ndash;&gt;
+                        <li>
+                            <!--<a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
                             <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                        </li>-->
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                        <!--<li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
+                        </li>
+                        <li v-if="viewType == 'Grid View'"><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                        <li v-if="viewType == 'List View'"><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
                             <div class="dropdown-menu p10 mt-1">
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'all'}" @click="sortBy='all'">ALL</a>
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'sent'}" @click="sortBy='sent'">SENT</a>
@@ -22,7 +22,7 @@
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'submitted'}" @click="sortBy='submitted'">SUBMITED</a>
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'archive'}" @click="sortBy='archive'">ARCHIVE</a>
                             </div>
-                        </li>-->
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -101,6 +101,14 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
+                        :offset="4"
+                        class="mt-4">
+                    </pagination>
                 </div>
             </div>
 
@@ -144,9 +152,9 @@
                 </div>
             </div>
 
-            <div class="clearfix"></div>
+            <div v-if="viewType == 'Grid View'" class="clearfix"></div>
 
-            <pagination
+            <pagination v-if="viewType == 'Grid View'"
                 :pagination="allData"
                 @paginate="showPaginationData"
                 @paginate_per_page="showPaginationItemsPerPage"
