@@ -229,9 +229,6 @@
         $(document).on("click", "#hidePreviewForm", function(){
             $("#EditPreview").modal('hide');
         })
-
-
-
     });
 </script>
 

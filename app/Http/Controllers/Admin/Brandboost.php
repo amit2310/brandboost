@@ -345,32 +345,15 @@ class Brandboost extends Controller
     public function onsiteSetup(Request $request)
     {
         $brandboostID = $request->id;
-        $selectedTab = $request->input("t");
         $selectedCategory = $request->input("cate");
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mFeedback = new FeedbackModel();
         $mWorkflow = new WorkflowModel();
         $mReviews = new ReviewsModel();
         $mTemplates = new TemplatesModel();
-        //$mInviter = new InviterModel();
-
-        if (!empty($selectedTab)) {
-            if (in_array($selectedTab, ['Campaign Preferences', 'Review Sources', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'])) {
-                //set required session
-                Session::put("setTab", $selectedTab);
-            }
-        } else {
-            $setTab = Session::get("setTab");
-            if ($setTab == '') {
-                Session::put("setTab", 'Campaign Preferences');
-            }
-        }
-
-        Session::put("setTab", 'Campaign Preferences');
 
         if (empty($brandboostID)) {
             redirect("admin/brandboost/onsite");
@@ -399,7 +382,7 @@ class Brandboost extends Controller
         $oEventsType = array('send-invite', 'followup');
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
-        $setTab = Session::get("setTab");
+
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
 
@@ -415,6 +398,14 @@ class Brandboost extends Controller
                 $fromNumber = $aTwilioAc->contact_no;
             }
         }*/
+        $endCampaign = '';
+        $eventID = $oEvents->count()>0 ? $oEvents[0]->id : '';
+        if($eventID>0){
+            $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+            if(!empty($aCampaigns)){
+                $endCampaign = $aCampaigns->count()>0 ? $aCampaigns : '';
+            }
+        }
 
         $oTwilio = getTwilioAccountCustom($userID);
         $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
@@ -447,14 +438,11 @@ class Brandboost extends Controller
             'oCampaignTags' => $oCampaignTags,
             'oDefaultTemplates' => $oDefaultTemplates,
             'subscribersData' => $oCampaignSubscribers, // $allSubscribers,
-            //'result' => $feedbackData,
-            'setTab' => $setTab,
             'brandboostID' => $brandboostID,
             'bbProductsData' => $bbProductsData,
             'aReviews' => $aReviews,
             'revCount' => $revCount,
             'revRA' => $revRA,
-            'selectedTab' => $selectedTab,
             'emailTemplate' => $emailTemplate,
             'smsTemplate' => $smsTemplate,
             'selectedCategory' => $selectedCategory,
@@ -462,11 +450,12 @@ class Brandboost extends Controller
             'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ],
             'oEmailTemplates' => $oEmailTemplates->items(),
             'oSMSTemplates' => $oSMSTemplates->items(),
+            'endCampaign' => $endCampaign
         );
-
+        return $aData;
         //return view('admin.brandboost.onsite_setup', $aData);
-        echo json_encode($aData);
-        exit;
+        //echo json_encode($aData);
+        //exit;
     }
 
     /**
