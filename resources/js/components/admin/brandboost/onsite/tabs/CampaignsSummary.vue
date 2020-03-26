@@ -348,7 +348,7 @@
             searchItem: function(){
                 this.loadPaginatedData();
             },
-            setupBroadcast: function(id){
+            setupBroadcast: function(id){ return false;
                 window.location.href='#/reviews/onsite/setup/'+id+'/1';
             },
             showContacts: function(id){
