@@ -9,6 +9,8 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}" @click.prevent="saveCampaign" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
+                        <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview</button>
+                        <button id="hideOverviewPreviewForm" type="button" style="display:none;">Hide</button>
                     </div>
                 </div>
             </div>
@@ -241,18 +243,24 @@
                                         <span v-if="completedContentForm" class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span>
                                         <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span>
                                     </div>
-                                    <div :class="`${displayTrackingForm == true ? 'col' : 'col-9'}`">
+                                    <div :class="`${displayContentForm == true ? 'col' : 'col-9'}`">
+
                                         <h3 class="htxt_medium_16 dark_700 mb-2">Content</h3>
-                                        <ul class="review_camapaign_list" v-if="completedTrackingForm ==true && displayContentForm==false">
-                                            <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong><a href="javascript:void(0);">Preview Template “Review Request Email”</a> <br>
-                                                <a href="javascript:void(0);">Preview plain text version</a><br>
-                                                <a href="javascript:void(0);">Send test email</a>
+                                        <ul class="review_camapaign_list" v-if="completedContentForm ==true && displayContentForm==false">
+                                            <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong><a href="javascript:void(0);" @click="loadEmailPreview">Preview Template “Review Request Email”</a> <br>
+                                                <a href="javascript:void(0);" @click="loadEmailPreview">Preview plain text version</a><br>
+                                                <a href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
+                                                <div class="p20" v-if="sendTestBox">
+                                                    Email Address: &nbsp;&nbsp;<input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                                    <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestEmail">Send</button>
+                                                    <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
+                                                </div>
                                             </strong></li>
                                         </ul>
                                         <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize the content of your email.</p>
                                     </div>
                                     <div class="col text-right">
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSContentForm" @click="openForm('content')"> Edit</button>
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedContentForm" @click="loadEmailPreview"> Edit</button>
                                         <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openEmailTemplates">Edit content</button>
                                     </div>
                                 </div>
@@ -536,12 +544,65 @@
 
         </div>
 
+        <div class="modal fade show" id="EditOverviewPreview">
+            <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
+                <div class="modal-content review" style="width: 1200px;">
+                    <div class="modal-body p0 mt0 br5" style="width: 1200px;">
+                        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+                        <loading :isLoading="loading"></loading>
+                        <div class="row">
+                            <div class="col-md-4 pr0">
+                                <div class="email_editor_left">
+                                    <div class="p10 bbot"><p class="m0 txt_dark fw500">Email Configuration</p></div>
+                                    <div class="p20">
+                                        <div class="form-group">
+                                            <label class="">Greetings</label>
+                                            <input v-model="greetings" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
+                                        </div>
+
+                                        <div class="form-group mb0">
+                                            <label class="">Content</label>
+                                            <a class="fsize14 open_editor" href="#"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
+                                            <textarea v-model="introduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="introduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
+
+										But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="p20 pt0" v-if="sendTestBox==false">
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="saveEditChanges">Save</button>
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="openEmailTemplates">Change Template</button>
+                                        <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
+                                    </div>
+                                    <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
+                                        <input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestEmail">Send</button>
+                                        <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 pl3">
+                                <div class="email_editor_right preview" style="max-height:800px;overflow:auto;border-left:5px solid;">
+                                    <div class="p10 bbot position-relative"><p class="m0 txt_dark fw500">Preview</p>
+                                    </div>
+                                    <div class="p30" id="wf_preview_edit_template_content">
+                                        <div class="email_preview_sec br5 pb20" style="min-height: 500px;" v-html="content">
+                                            Content goes here
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--Content Area End-->
     </div>
 </template>
 <script>
     import EmailTemplates from "./EmailTemplates";
     import SMSTemplates from "./SMSTemplates";
+    import jq from "jquery";
     export default {
         components: {
             EmailTemplates,
@@ -646,7 +707,14 @@
                     email_channel: '',
                     sms_channel: ''
                 },
+                endCampaign: '',
+                emailCampaignId: '',
+                smsCampaignId: '',
+                greetings: '',
+                introduction: '',
+                content: '',
                 progressRate: 0,
+                sendTestBox: false,
                 series: [0],
                 chartOptions: {
                     plotOptions: {
@@ -690,7 +758,13 @@
                 this.channelForm.sms_channel = this.isSMSChannelActivated;
                 this.saveChannelStatus();
                 this.validateStepCompletion();
-            }
+            },
+            greetings: function(){
+                jq("#wf_edit_template_greeting_EDITOR").text(this.greetings);
+            },
+            introduction: function(){
+                jq("#wf_edit_template_introduction_EDITOR").text(this.introduction);
+            },
 
         },
         computed: {
@@ -732,6 +806,7 @@
                 this.showEmailTemplates = true;
                 this.showSMSTemplates = false;
                 this.configureCampaign = false;
+                document.querySelector('#hideOverviewPreviewForm').click();
             },
             closeEmailTemplates: function(){
                 this.showEmailTemplates = false;
@@ -797,9 +872,24 @@
                         //Set Channel Status
                         this.isEmailChannelActivated = this.campaign.email_channel;
                         this.isSMSChannelActivated = this.campaign.sms_channel;
+                        this.endCampaign = response.data.endCampaign;
+                        this.assignCampaignIds(this.endCampaign);
                         //Validate Step Completion
                         this.validateStepCompletion();
                     });
+            },
+            assignCampaignIds: function(data){
+                data.forEach(campaign => {
+                    if(campaign.campaign_type.toLowerCase() == 'email'){
+                        this.emailCampaignId = campaign.id;
+                        this.completedContentForm = true;
+                        this.validateStepCompletion();
+                    }else if(campaign.campaign_type.toLowerCase() == 'sms'){
+                        this.smsCampaignId = campaign.id;
+                        this.completedSMSContentForm = true;
+                        this.validateStepCompletion();
+                    }
+                });
             },
             validateStepCompletion: function(){
                 //Sender form
@@ -826,8 +916,12 @@
                         this.completedSenderForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
-                    if(this.campaign.subject && this.campaign.preheader){
+                    if(this.subjectForm.subject && this.subjectForm.preheader){
                         this.completedSubjectForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.emailCampaignId>0){
+                        this.completedContentForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
                     if(this.trackingForm.tracking_conversation || this.trackingForm.tracking_google_analytics || this.trackingForm.tracking_open_read || this.trackingForm.tracking_expire_link){
@@ -1003,8 +1097,65 @@
                         }
                     });
             },
+            loadEmailPreview: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: 'brandboost',
+                    campaignId: this.emailCampaignId,
+                    moduleUnitId: this.$route.params.id,
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.content = response.data.content;
+                        this.introduction = response.data.introduction;
+                        this.greetings = response.data.greeting;
+                    });
+                document.querySelector('#displayOverviewPreviewForm').click();
+            },
+            saveEditChanges: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: 'brandboost',
+                    greeting: this.greetings,
+                    introduction: this.introduction,
+                    campaignId: this.emailCampaignId,
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Saved changes successfully!";
+                        }
+                    });
+            },
+            sendTestEmail: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: 'brandboost',
+                    moduleUnitID: this.$route.params.id,
+                    campaignId: this.emailCampaignId,
+                    email: this.user.email
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Test email sent successfully!";
+                        }
+                    });
+            },
         }
-
     };
+    $(document).ready(function(){
+        $(document).on("click", "#displayOverviewPreviewForm", function(){
+            $("#EditOverviewPreview").modal('show');
+        })
+        $(document).on("click", "#hideOverviewPreviewForm", function(){
+            $("#EditOverviewPreview").modal('hide');
+        })
+    });
 </script>
 
