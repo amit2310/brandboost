@@ -8,16 +8,13 @@
                     <h3 class="htxt_medium_14 dark_600">Reviews</h3>
                 </div>
                 <div class="col-md-6">
-                    <!--<ul class="table_filter text-right">
-                        <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                    </ul>-->
                     <ul class="table_filter text-right">
                         <li>
                             <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
                             <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
                         </li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li v-if="viewType == 'Grid View'"><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                        <li v-if="viewType == 'List View'"><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
                         <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
                             <div class="dropdown-menu p10 mt-1">
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a>
@@ -145,10 +142,18 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4"
+                        class="mt-4">
+                    </pagination>
                 </div>
             </div>
 
-            <pagination
+            <div v-if="viewType == 'Grid View'" class="clearfix"></div>
+            <pagination  v-if="viewType == 'Grid View'"
                 :pagination="allData"
                 @paginate="showPaginationData"
                 :offset="4"
