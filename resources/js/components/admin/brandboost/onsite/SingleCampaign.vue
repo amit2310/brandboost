@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review General</h3>
+                        <h3 class="htxt_medium_24 dark_700">Review General Electric</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
@@ -87,7 +87,9 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>-->
-                                                                                                                                                                                                                                                                                                                                             <OnsiteCampaignsTab></OnsiteCampaignsTab>
+
+                <OnsiteCampaignsTab></OnsiteCampaignsTab>
+
                 <!--******************
                   PAGE LEFT SIDEBAR END
                  **********************-->
@@ -218,6 +220,7 @@
                         </div>
                     </div>
                 </div>
+
                 <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)"></OnsiteReviewRequestsTab>
 
                 <OnsiteReviewsTab v-if="(seletedTab == 3)"></OnsiteReviewsTab>
