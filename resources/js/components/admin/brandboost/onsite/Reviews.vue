@@ -204,7 +204,15 @@
                                 <p class="fsize14 fw400 dark_600 lh_24" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
                                     {{ oReview.comment_text }}
                                 </p>
+                                
                                 <div class="reply_sec_link">
+
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}} 
+                                        <template v-if="oReview.getComm < 2">Comment </template>
+                                        <template v-else>Comments</template>
+                                    
+                                    </a> 
+                                    <!-- <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a> -->
                                     <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>

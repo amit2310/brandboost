@@ -12,7 +12,9 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/filter_review.svg"/></button>-->
-                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <a :href="'admin/brandboost/export-onsite-campaigns?sortBy='+sortBy+'&search='+searchBy" >
+                            <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        </a>
                         <button class="btn btn-md bkg_reviews_400 light_000" id="displayAddCampaignForm" @click="displayAddCampaignForm"> Create campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
