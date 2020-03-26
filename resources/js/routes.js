@@ -16,7 +16,7 @@ import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview
 import addReviews from './components/admin/brandboost/onsite/addReview';
 //import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import ReviewsOverview from './components/admin/brandboost/ReviewsOverview';
-import SingleCampaign from './components/admin/brandboost/SingleCampaign';
+import SingleCampaign from './components/admin/brandboost/onsite/SingleCampaign';
 import SingleCampaign2 from './components/admin/brandboost/onsite/SingleCampaignTemp';
 //import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
 import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';

@@ -526,6 +526,7 @@
                     });
             },
             loadPaginatedData: function () {
+                this.loading = true;
                 //getData
                 axios.get('/admin/brandboost/widgets?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
