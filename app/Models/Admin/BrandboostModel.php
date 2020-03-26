@@ -2900,4 +2900,18 @@ class BrandboostModel extends Model {
         return $insert_id;
     }
 
+    /**
+     * Used to store onsite review request
+     * @param $aData
+     * @return bool
+     */
+    public function createOnsiteRequest($aData){
+        $insert_id = DB::table('tbl_brandboost_request')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+
 }

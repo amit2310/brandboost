@@ -675,7 +675,7 @@ class Brandboost extends Controller
         $moduleName = 'brandboost';
         //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
-         
+
         $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
         $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
         if($oRequestsData){
@@ -696,7 +696,7 @@ class Brandboost extends Controller
         // exit;
 
         $filename = 'review_requests_' . time() . '.csv';
-        
+
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
@@ -713,9 +713,9 @@ class Brandboost extends Controller
         foreach ($oRequestsData as $key => $line) {
             if($line->tracksubscribertype == 'email'){
                 fputcsv($file, array(
-                    $line->firstname.' '.$line->lastname, 
-                        $line->email, 
-                        $line->brand_title, 
+                    $line->firstname.' '.$line->lastname,
+                        $line->email,
+                        $line->brand_title,
                         $line->requestdate,
                         $line->ratings
                     )
@@ -723,15 +723,15 @@ class Brandboost extends Controller
             }
             if($line->tracksubscribertype == 'sms'){
                fputcsv($file, array(
-                    $line->firstname.' '.$line->lastname, 
-                        $line->phone, 
-                        $line->brand_title, 
+                    $line->firstname.' '.$line->lastname,
+                        $line->phone,
+                        $line->brand_title,
                         $line->requestdate,
                         $line->ratings
                     )
                 );
             }
-            
+
         }
         fclose($file);
         //Log Export History
@@ -8012,6 +8012,84 @@ public function widgetStatisticDetailsStatsGraph(){
         }
         echo json_encode($response);
         exit;
+    }
+
+    /**
+     * This function is used to create new onsite review request
+     * @param Request $request
+     * @return array
+     */
+    public function addOnsiteRequest(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $brandboostID = $request->campaign_id;
+        $aRequestData = [
+            'user_id' => $userID,
+            'campaign_id' => $brandboostID,
+            'type' => $request->type,
+            'name' => $request->name,
+            'status' => 0,
+            'created' => date("Y-m-d H:i:s")
+        ];
+        if(!empty($brandboostID)){
+            //Fetch Configuration
+            $mFeedback = new FeedbackModel();
+            $oFeedbackResponse = $mFeedback->getFeedbackResponse($brandboostID);
+            if(!empty($oFeedbackResponse)){
+                $aRequestData['email_from_name'] = $oFeedbackResponse->from_name;
+                $aRequestData['email'] = $oFeedbackResponse->from_email;
+                $aRequestData['sms_from_name'] = $oFeedbackResponse->from_name;
+                $aRequestData['sms_from_number'] = $oFeedbackResponse->sms_sender;
+            }
+            //Fetch Campaign Details
+            $mBrandboost = new BrandboostModel();
+            $oBrandboost = $mBrandboost->getBrandboost($brandboostID);
+            if($oBrandboost->count()>0){
+                //Tracking Details
+                $aRequestData['tracking_conversation'] = $oBrandboost[0]->tracking_conversation;
+                $aRequestData['tracking_google_analytics'] = $oBrandboost[0]->tracking_google_analytics;
+                $aRequestData['tracking_open_read'] = $oBrandboost[0]->tracking_open_read;
+                $aRequestData['tracking_expire_link'] = $oBrandboost[0]->tracking_expire_link;
+            }
+            //Fetch EndCampaign Info
+            $mWorkflow = new WorkflowModel();
+            $moduleName = 'brandboost';
+            $endCampaign = '';
+            $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
+            $eventID = $oEvents->count()>0 ? $oEvents[0]->id : '';
+            if($eventID>0){
+                $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                if(!empty($aCampaigns)){
+                    $oCampaigns = $aCampaigns->count()>0 ? $aCampaigns : '';
+                    if(!empty($oCampaigns)){
+                        foreach($oCampaigns as $campaign){
+                            if(strtolower($campaign->campaign_type) == $request->type){
+                                $endCampaign = $campaign;
+                            }
+                        }
+                    }
+                }
+            }
+            if(!empty($endCampaign)){
+                $aRequestData['subject'] = $endCampaign->subject;
+                $aRequestData['preheader'] = $endCampaign->preheader;
+                $aRequestData['html_content'] = $endCampaign->stripo_compiled_html;
+                $aRequestData['plain_content'] = $endCampaign->html;
+                $aRequestData['sms_content'] = $endCampaign->stripo_compiled_html;
+            }
+            //All data has been collected, Now insert request array into the database
+            if(!empty($aRequestData)){
+                $requestId = $mBrandboost->createOnsiteRequest($aRequestData);
+            }
+            if($requestId){
+                return ['status'=>'success', 'requestId'=>$requestId];
+            }else{
+                return ['status'=>'error'];
+            }
+
+
+
+        }
     }
 
 
