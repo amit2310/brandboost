@@ -313,6 +313,7 @@
                 }
             },
             loadPaginatedData : function(){
+                this.loading = true;
                 axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
