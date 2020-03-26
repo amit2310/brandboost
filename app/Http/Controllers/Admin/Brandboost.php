@@ -345,32 +345,15 @@ class Brandboost extends Controller
     public function onsiteSetup(Request $request)
     {
         $brandboostID = $request->id;
-        $selectedTab = $request->input("t");
         $selectedCategory = $request->input("cate");
         $oUser = getLoggedUser();
         $userID = $oUser->id;
-
         $mBrandboost = new BrandboostModel();
         $mUsers = new UsersModel();
         $mFeedback = new FeedbackModel();
         $mWorkflow = new WorkflowModel();
         $mReviews = new ReviewsModel();
         $mTemplates = new TemplatesModel();
-        //$mInviter = new InviterModel();
-
-        if (!empty($selectedTab)) {
-            if (in_array($selectedTab, ['Campaign Preferences', 'Review Sources', 'Rewards & Gifts', 'Configure Widgets', 'Email Workflow', 'Campaign Clients', 'Reviews', 'Integration', 'Image', 'Video'])) {
-                //set required session
-                Session::put("setTab", $selectedTab);
-            }
-        } else {
-            $setTab = Session::get("setTab");
-            if ($setTab == '') {
-                Session::put("setTab", 'Campaign Preferences');
-            }
-        }
-
-        Session::put("setTab", 'Campaign Preferences');
 
         if (empty($brandboostID)) {
             redirect("admin/brandboost/onsite");
@@ -399,7 +382,7 @@ class Brandboost extends Controller
         $oEventsType = array('send-invite', 'followup');
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
         $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
-        $setTab = Session::get("setTab");
+
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
 
@@ -415,6 +398,14 @@ class Brandboost extends Controller
                 $fromNumber = $aTwilioAc->contact_no;
             }
         }*/
+        $endCampaign = '';
+        $eventID = $oEvents->count()>0 ? $oEvents[0]->id : '';
+        if($eventID>0){
+            $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+            if(!empty($aCampaigns)){
+                $endCampaign = $aCampaigns->count()>0 ? $aCampaigns : '';
+            }
+        }
 
         $oTwilio = getTwilioAccountCustom($userID);
         $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
@@ -447,14 +438,11 @@ class Brandboost extends Controller
             'oCampaignTags' => $oCampaignTags,
             'oDefaultTemplates' => $oDefaultTemplates,
             'subscribersData' => $oCampaignSubscribers, // $allSubscribers,
-            //'result' => $feedbackData,
-            'setTab' => $setTab,
             'brandboostID' => $brandboostID,
             'bbProductsData' => $bbProductsData,
             'aReviews' => $aReviews,
             'revCount' => $revCount,
             'revRA' => $revRA,
-            'selectedTab' => $selectedTab,
             'emailTemplate' => $emailTemplate,
             'smsTemplate' => $smsTemplate,
             'selectedCategory' => $selectedCategory,
@@ -462,11 +450,12 @@ class Brandboost extends Controller
             'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ],
             'oEmailTemplates' => $oEmailTemplates->items(),
             'oSMSTemplates' => $oSMSTemplates->items(),
+            'endCampaign' => $endCampaign
         );
-
+        return $aData;
         //return view('admin.brandboost.onsite_setup', $aData);
-        echo json_encode($aData);
-        exit;
+        //echo json_encode($aData);
+        //exit;
     }
 
     /**
@@ -646,13 +635,16 @@ class Brandboost extends Controller
         $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
         $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
         if($oRequestsData){
-            foreach($oRequestsData as $oRequest){
+            foreach($oRequestsData as $idx=>$oRequest){
                 $brandboostId = $oRequest->bbid;
                 $reviewUserId = $oRequest->uid;
                 $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
                 if(!empty($oReview)){
                     $oRequest->ratings = number_format($oReview->ratings, 1);
+                }else{
+                    $oRequest->ratings =0;
                 }
+                $oRequestsData[$idx] = $oRequest;
             }
         }
 
@@ -668,7 +660,104 @@ class Brandboost extends Controller
         //return view('admin.brandboost.review_request', $aData);
 
     }
+/**
+     * Used to get campaign review request data
+     * @param type $request
+     * @return type
+     */
+    public function exportReviewRequests(Request $request)
+    {
+        $aUser = getLoggedUser();
+        $param = $request->type;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $items_per_page = 'All';
+        $moduleName = 'brandboost';
+        //Instantiate Brandboost model to get its methods and properties
+        $mBrandboost = new BrandboostModel();
+         
+        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
+        $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
+        if($oRequestsData){
+            foreach($oRequestsData as $idx=>$oRequest){
+                $brandboostId = $oRequest->bbid;
+                $reviewUserId = $oRequest->uid;
+                $oReview = $mBrandboost->getUserCampaignReview($brandboostId,  $reviewUserId);
+                if(!empty($oReview)){
+                    $oRequest->ratings = number_format($oReview->ratings, 1);
+                }else{
+                    $oRequest->ratings =0;
+                }
+                $oRequestsData[$idx] = $oRequest;
+            }
+        }
+        // echo '<pre>';
+        // print_r($oRequestsData);
+        // exit;
 
+        $filename = 'review_requests_' . time() . '.csv';
+        
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/csv; ");
+        //echo "Hello";
+        //die;
+        // file creation
+        $file = fopen('php://output', 'w');
+
+        // $header = array("NAME","EMAIL / PHONE",  "CAMPAIGN");
+        // $header = array("NAME", "EMAIL / PHONE", "CAMPAIGN",'SENT');
+        $header = array("NAME", "EMAIL / PHONE", "CAMPAIGN",'SENT','REVIEW');
+        fputcsv($file, $header);
+
+        foreach ($oRequestsData as $key => $line) {
+            if($line->tracksubscribertype == 'email'){
+                fputcsv($file, array(
+                    $line->firstname.' '.$line->lastname, 
+                        $line->email, 
+                        $line->brand_title, 
+                        $line->requestdate,
+                        $line->ratings
+                    )
+                );
+            }
+            if($line->tracksubscribertype == 'sms'){
+               fputcsv($file, array(
+                    $line->firstname.' '.$line->lastname, 
+                        $line->phone, 
+                        $line->brand_title, 
+                        $line->requestdate,
+                        $line->ratings
+                    )
+                );
+            }
+            
+        }
+        fclose($file);
+        //Log Export History
+        // if (!empty($oTags)) {
+        //     $aHistoryData = array(
+        //         'user_id' => $userID,
+        //         'export_name' => 'Review Requests',
+        //         'item_count' => count($oRequestsData),
+        //         'created' => date("Y-m-d H:i:s")
+        //     );
+        //     $mSetting->logExportHistory($aHistoryData);
+        // }
+        exit;
+
+        // $aData = array(
+        //     'title' => 'Brand Boost Review Requests',
+        //     'breadcrumb' => $aBreadcrumb,
+        //     'param' => $param,
+        //     'allData' => $oRequests,
+        //     'oRequest' => $oRequestsData,
+        //     'moduleName' => $moduleName
+        // );
+        // return $aData;
+        //return view('admin.brandboost.review_request', $aData);
+
+    }
     public function reviewRequestOld(Request $request)
     {
         $aUser = getLoggedUser();
