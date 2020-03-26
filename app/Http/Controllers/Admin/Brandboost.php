@@ -886,7 +886,8 @@ class Brandboost extends Controller
 
             $aBreadcrumb = array(
                 'Home' => '#/',
-                'Reviews' => '#/brandboost/reviews'
+                'Reviews' => '#/brandboost/reviews',
+                'Onsite Reviews Feed' => ''
             );
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
