@@ -25,45 +25,7 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
-            <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
-                <!--<div class="table_head_action bbot pb30">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ oReviews.length }}&nbsp;Reviews</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="table_action">
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; {{sortBy}}
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
-                                    </div>
-                                </div>
-                                <div class="float-right ml10 mr10">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/list_view.svg"></span>&nbsp; {{viewType}}
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
-                                    </div>
-                                </div>
-                                <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+            <div class="container-fluid">
                 <div class="table_head_action">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
@@ -108,6 +70,47 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
+                <!--<div class="table_head_action bbot pb30">
+                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                    <loading :isLoading="loading"></loading>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="htxt_medium_16 dark_400">{{ oReviews.length }}&nbsp;Reviews</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table_action">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; {{sortBy}}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
+                                    </div>
+                                </div>
+                                <div class="float-right ml10 mr10">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/list_view.svg"></span>&nbsp; {{viewType}}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                
 
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
@@ -201,8 +204,15 @@
                                 <p class="fsize14 fw400 dark_600 lh_24" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
                                     {{ oReview.comment_text }}
                                 </p>
-
+                                
                                 <div class="reply_sec_link">
+
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}} 
+                                        <template v-if="oReview.getComm < 2">Comment </template>
+                                        <template v-else>Comments</template>
+                                    
+                                    </a> 
+                                    <!-- <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a> -->
                                     <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
@@ -308,7 +318,7 @@
                                     <input type="hidden" name="module_account_id" id="module_account_id"
                                            :value="moduleAccountID">
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Save</button>
-                                    <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
+                                    <a class="blue_300 fsize16 fw600 ml20 js-review-feedback-slidebox" href="javascript:void(0);">Close</a> </div>
                             </div>
                         </div>
                     </form>
@@ -701,6 +711,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
+                this.loading = true;
                 axios.get('/admin/brandboost/reviews?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;

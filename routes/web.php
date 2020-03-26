@@ -196,6 +196,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
     Route::post('admin/brandboost/deleteWidgets', 'Admin\Brandboost@deleteWidgets');
     Route::get('admin/brandboost/export-review-request', 'Admin\Brandboost@exportReviewRequests');
+    Route::get('admin/brandboost/export-onsite-campaigns', 'Admin\Brandboost@exportOnsiteCampaigns');
     /**
      * --------------------------------------------------------------------------
      *  Add component of widget onsite section.
@@ -270,6 +271,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/changeStatus', 'Admin\Brandboost@changeStatus');
     Route::post('admin/brandboost/saveOnsiteConfiguration', 'Admin\Brandboost@saveOnsiteConfiguration');
     Route::post('admin/brandboost/addCampaignToOnsite', 'Admin\Brandboost@addCampaignToOnsite');
+    Route::post('admin/brandboost/addOnsiteRequest', 'Admin\Brandboost@addOnsiteRequest');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');

@@ -164,7 +164,110 @@ class Brandboost extends Controller
 
     }
 
+/**
+     * Used to get onsite brandboost data
+     * @return type
+     */
+    public function exportOnsiteCampaigns(Request $request)
+    {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $user_role = $aUser->user_role;
+        $company_name = $aUser->company_name;
+        $companyName = strtolower(str_replace(' ', '-', $company_name));
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $items_per_page = 'All';
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mReviews = new ReviewsModel();
 
+        if ($user_role == 1) {
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy, $items_per_page);
+        } else {
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy, $items_per_page);
+        }
+
+        foreach ($aBrandboostList as $data) {
+            $data->revCount = getCampaignReviewCount($data->id);
+            $data->revRA = getCampaignReviewRA($data->id) != '' ? getCampaignReviewRA($data->id) : '';
+            $data->allSubscribers = ListsModel::getAllSubscribersList($data->id);
+
+            $data->reviewRequests = $mBrandboost->getReviewRequest($data->id, '');
+            $data->reviewRequestsCount = count($data->reviewRequests);
+            $data->reviewRequestsCountFormat = number_format(count($data->reviewRequests));
+            $data->reviewRequestsCountK = (int)(count($data->reviewRequests)/1000);
+            $data->getSendRequestSms = getSendRequest($data->id, 'sms');
+            $data->getSendRequestEmail = getSendRequest($data->id, 'email');
+
+            $data->reviewResponse = $mBrandboost->getReviewRequestResponse($data->id);
+            $data->reviewResponseCount = count($data->reviewResponse);
+
+            $data->reviewResponsePercent = 0;
+            if($data->reviewRequestsCount > 0) {
+                $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
+            }
+
+            //$data->reviewCommentsData = $mReviews->getReviewAllComments($data->id, 0, 5);
+        }
+
+        // echo '<pre>';
+        // print_r($aBrandboostList);
+        $filename = 'Onsite_campaigns_' . time() . '.csv';
+        
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/csv; ");
+        $file = fopen('php://output', 'w');
+ 
+        // $header = array("NAME", "EMAIL / PHONE", "CAMPAIGN",'SENT','REVIEW');
+        $header = array("CAMPAIGN", "TYPE", "SAND",'VIEW','RATING','SENT','STATUS');
+        // $header = array("CAMPAIGN");
+        fputcsv($file, $header);
+
+        foreach ($aBrandboostList as $key => $line) {
+            $status ='';
+            switch ($line->status) {
+                case 0:
+                    $status = 'Inactive';
+                    break;
+                case 1:
+                    $status = 'Active';
+                    break;
+                case 2:
+                    $status = 'Pending';
+                    break;
+                case 3:
+                    $status = 'Archive';
+                    break;
+            }
+            fputcsv($file, array(
+                        $line->brand_title, 
+                        $line->review_type . ' Review Requests', 
+                        $line->reviewRequestsCountFormat, 
+                        $line->reviewResponsePercent.'%',
+                        // $line->reviewResponsePercent.'%',
+                        $line->revRA,
+                        (($line->created) ? date("M d, Y",strtotime($line->created)) :''),
+                        $status,
+                    )
+                );
+            
+        }
+        fclose($file);
+        //Log Export History
+        // if (!empty($oTags)) {
+        //     $aHistoryData = array(
+        //         'user_id' => $userID,
+        //         'export_name' => 'Review Requests',
+        //         'item_count' => count($oRequestsData),
+        //         'created' => date("Y-m-d H:i:s")
+        //     );
+        //     $mSetting->logExportHistory($aHistoryData);
+        // }
+        exit;
+ 
+    }
     /**
      * Used to get onsite brandboost data
      * @return type
@@ -675,7 +778,7 @@ class Brandboost extends Controller
         $moduleName = 'brandboost';
         //Instantiate Brandboost model to get its methods and properties
         $mBrandboost = new BrandboostModel();
-         
+
         $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
         $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
         if($oRequestsData){
@@ -696,7 +799,7 @@ class Brandboost extends Controller
         // exit;
 
         $filename = 'review_requests_' . time() . '.csv';
-        
+
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
@@ -713,9 +816,9 @@ class Brandboost extends Controller
         foreach ($oRequestsData as $key => $line) {
             if($line->tracksubscribertype == 'email'){
                 fputcsv($file, array(
-                    $line->firstname.' '.$line->lastname, 
-                        $line->email, 
-                        $line->brand_title, 
+                    $line->firstname.' '.$line->lastname,
+                        $line->email,
+                        $line->brand_title,
                         $line->requestdate,
                         $line->ratings
                     )
@@ -723,15 +826,15 @@ class Brandboost extends Controller
             }
             if($line->tracksubscribertype == 'sms'){
                fputcsv($file, array(
-                    $line->firstname.' '.$line->lastname, 
-                        $line->phone, 
-                        $line->brand_title, 
+                    $line->firstname.' '.$line->lastname,
+                        $line->phone,
+                        $line->brand_title,
                         $line->requestdate,
                         $line->ratings
                     )
                 );
             }
-            
+
         }
         fclose($file);
         //Log Export History
@@ -886,7 +989,8 @@ class Brandboost extends Controller
 
             $aBreadcrumb = array(
                 'Home' => '#/',
-                'Reviews' => '#/brandboost/reviews'
+                'Reviews' => '#/brandboost/reviews',
+                'Onsite Reviews Feed' => ''
             );
 
             $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
@@ -8012,6 +8116,84 @@ public function widgetStatisticDetailsStatsGraph(){
         }
         echo json_encode($response);
         exit;
+    }
+
+    /**
+     * This function is used to create new onsite review request
+     * @param Request $request
+     * @return array
+     */
+    public function addOnsiteRequest(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $brandboostID = $request->campaign_id;
+        $aRequestData = [
+            'user_id' => $userID,
+            'campaign_id' => $brandboostID,
+            'type' => $request->type,
+            'name' => $request->name,
+            'status' => 0,
+            'created' => date("Y-m-d H:i:s")
+        ];
+        if(!empty($brandboostID)){
+            //Fetch Configuration
+            $mFeedback = new FeedbackModel();
+            $oFeedbackResponse = $mFeedback->getFeedbackResponse($brandboostID);
+            if(!empty($oFeedbackResponse)){
+                $aRequestData['email_from_name'] = $oFeedbackResponse->from_name;
+                $aRequestData['email'] = $oFeedbackResponse->from_email;
+                $aRequestData['sms_from_name'] = $oFeedbackResponse->from_name;
+                $aRequestData['sms_from_number'] = $oFeedbackResponse->sms_sender;
+            }
+            //Fetch Campaign Details
+            $mBrandboost = new BrandboostModel();
+            $oBrandboost = $mBrandboost->getBrandboost($brandboostID);
+            if($oBrandboost->count()>0){
+                //Tracking Details
+                $aRequestData['tracking_conversation'] = $oBrandboost[0]->tracking_conversation;
+                $aRequestData['tracking_google_analytics'] = $oBrandboost[0]->tracking_google_analytics;
+                $aRequestData['tracking_open_read'] = $oBrandboost[0]->tracking_open_read;
+                $aRequestData['tracking_expire_link'] = $oBrandboost[0]->tracking_expire_link;
+            }
+            //Fetch EndCampaign Info
+            $mWorkflow = new WorkflowModel();
+            $moduleName = 'brandboost';
+            $endCampaign = '';
+            $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
+            $eventID = $oEvents->count()>0 ? $oEvents[0]->id : '';
+            if($eventID>0){
+                $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                if(!empty($aCampaigns)){
+                    $oCampaigns = $aCampaigns->count()>0 ? $aCampaigns : '';
+                    if(!empty($oCampaigns)){
+                        foreach($oCampaigns as $campaign){
+                            if(strtolower($campaign->campaign_type) == $request->type){
+                                $endCampaign = $campaign;
+                            }
+                        }
+                    }
+                }
+            }
+            if(!empty($endCampaign)){
+                $aRequestData['subject'] = $endCampaign->subject;
+                $aRequestData['preheader'] = $endCampaign->preheader;
+                $aRequestData['html_content'] = $endCampaign->stripo_compiled_html;
+                $aRequestData['plain_content'] = $endCampaign->html;
+                $aRequestData['sms_content'] = $endCampaign->stripo_compiled_html;
+            }
+            //All data has been collected, Now insert request array into the database
+            if(!empty($aRequestData)){
+                $requestId = $mBrandboost->createOnsiteRequest($aRequestData);
+            }
+            if($requestId){
+                return ['status'=>'success', 'requestId'=>$requestId];
+            }else{
+                return ['status'=>'error'];
+            }
+
+
+
+        }
     }
 
 

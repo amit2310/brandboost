@@ -17,6 +17,7 @@ import addReviews from './components/admin/brandboost/onsite/addReview';
 //import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import ReviewsOverview from './components/admin/brandboost/ReviewsOverview';
 import SingleCampaign from './components/admin/brandboost/onsite/SingleCampaign';
+import SingleCampaign2 from './components/admin/brandboost/onsite/SingleCampaignTemp';
 //import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
 import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';
 import OnsiteCampaignsTab from './components/admin/brandboost/onsite/tabs/CampaignsSummary';
@@ -42,6 +43,7 @@ import onsiteStep3 from './components/admin/brandboost/onsite/setup/Setup3';
 import onsiteStep4 from './components/admin/brandboost/onsite/setup/Setup4';
 import onsiteStep5 from './components/admin/brandboost/onsite/setup/Setup5';
 import onsiteConfigure from './components/admin/brandboost/onsite/setup/Configure';
+import createNewReviewReqest from './components/admin/brandboost/onsite/RequestConfigure';
 
 import OffsiteReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
 /*Import Offsite Setup components*/
@@ -397,6 +399,7 @@ const routes = [
     /*{ path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Overview'} },*/
     { path: '/reviews/dashboard', component: ReviewsOverview, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
     { path: '/reviews/overview', component: SingleCampaign, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
+    { path: '/reviews/overview2', component: SingleCampaign2, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
     { path: '/brandboost/review_campaigns/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
     { path: '/reviews/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
@@ -406,6 +409,7 @@ const routes = [
     { path: '/reviews/onsite/setup/:id/4', component: onsiteStep4, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id', component: onsiteConfigure, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/request/prepare/:id', component: createNewReviewReqest, props : {title : 'Create New Review Request'} },
     { path: '/reviews/onsite/reviews/:id', component: onsiteReviewDetails, props : {title : 'On Site Reviews'} },
     { path: '/reviews/offsite', component: OffsiteReviewCampaigns },
     { path: '/reviews/offsite/setup/:id/1', component: offsiteStep1, props : {title : 'Off Site Campaign'} },
