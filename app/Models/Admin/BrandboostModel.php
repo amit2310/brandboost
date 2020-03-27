@@ -2914,4 +2914,34 @@ class BrandboostModel extends Model {
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getRequestDetails($id){
+        $oData = DB::table('tbl_brandboost_request')
+            ->where("id", $id)->first();
+        return $oData;
+    }
+
+    /**
+     * Used to update review request
+     * @param $aData
+     * @param $id
+     * @return bool
+     */
+    public function updateReviewRequest($aData, $id){
+        if($id>0){
+            $result = DB::table('tbl_brandboost_request')
+                ->where('id', $id)
+                ->update($aData);
+            if ($result > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
 }

@@ -13,7 +13,8 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
-                        <button class="btn btn-md bkg_reviews_400 light_000" data-toggle="modal" data-target="#CREATE_REQUEST_FORM">Send new request <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000" v-if="selected_campaign>0" data-toggle="modal" data-target="#CREATE_REQUEST_FORM">Send new request <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
+                        <button id="hideOverviewPreviewForm" style="display:none;"></button>
                     </div>
                 </div>
             </div>
@@ -337,7 +338,7 @@
         <!--******************
         Content Area End
         **********************-->
-        <div class="modal fade" id="CREATE_REQUEST_FORM">
+        <div class="modal fade" id="CREATE_REQUEST_FORM" v-if="selected_campaign>0">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content review">
                     <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
@@ -483,6 +484,7 @@
                             this.refreshMessage = Math.random();
                             this.successMsg = 'Review request created successfully!!';
                             this.loading = false;
+                            document.querySelector('#hideOverviewPreviewForm').click();
                             window.location.href='#/reviews/onsite/request/prepare/'+response.data.requestId;
                         }
                     });

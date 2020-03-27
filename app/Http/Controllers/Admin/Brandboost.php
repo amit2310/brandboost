@@ -8087,10 +8087,63 @@ public function widgetStatisticDetailsStatsGraph(){
             }else{
                 return ['status'=>'error'];
             }
-
-
-
         }
+    }
+
+    /**
+     * Used to get review request using request id
+     * @param Request $request
+     */
+    public function getReviewRequest(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $requestId = $request->request_id;
+        $mBrandboost = new BrandboostModel();
+        if($requestId>0){
+            $aData = $mBrandboost->getRequestDetails($requestId);
+        }
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Review Request' => '',
+        );
+        return ['breadcrumb'=>$aBreadcrumb, 'requestData'=>$aData];
+    }
+
+    /**
+     * Used to update review request form
+     * @param Request $request
+     */
+    public function updateReviewRequest(Request $request){
+        $response = array();
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $mBrandboost = new BrandboostModel();
+
+        $requestId = $request->requestId;
+        $aRequestData = [];
+        $type = $request->requestType;
+        if($type == 'sender'){
+            $aRequestData = [
+                'email_from_name' => $request->from_name,
+                'email' => $request->from_email,
+            ];
+        }else if($type == 'subject'){
+            $aRequestData = [
+                'subject' => $request->subject,
+                'preheader' => $request->preheader,
+            ];
+        }
+        if(!empty($aRequestData)){
+            $bUpdated = $mBrandboost->updateReviewRequest($aRequestData, $requestId);
+        }
+        if($bUpdated){
+            return ['status' => "success"];
+        }else{
+            return ['status' => "error"];
+        }
+
     }
 
 
