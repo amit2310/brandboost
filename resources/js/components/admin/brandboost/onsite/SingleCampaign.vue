@@ -223,7 +223,7 @@
 
                 <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)"></OnsiteReviewRequestsTab>
 
-                <OnsiteReviewsTab v-if="(seletedTab === 1 || seletedTab === 3)"></OnsiteReviewsTab>
+                <OnsiteReviewsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 3)"></OnsiteReviewsTab>
 
                 <!--<div v-if="(seletedTab == 4)">
                     <div class="row">

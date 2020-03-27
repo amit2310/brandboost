@@ -214,12 +214,12 @@ class Brandboost extends Controller
         // echo '<pre>';
         // print_r($aBrandboostList);
         $filename = 'Onsite_campaigns_' . time() . '.csv';
-        
+
         header("Content-Description: File Transfer");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/csv; ");
         $file = fopen('php://output', 'w');
- 
+
         // $header = array("NAME", "EMAIL / PHONE", "CAMPAIGN",'SENT','REVIEW');
         $header = array("CAMPAIGN", "TYPE", "SAND",'VIEW','RATING','SENT','STATUS');
         // $header = array("CAMPAIGN");
@@ -242,9 +242,9 @@ class Brandboost extends Controller
                     break;
             }
             fputcsv($file, array(
-                        $line->brand_title, 
-                        $line->review_type . ' Review Requests', 
-                        $line->reviewRequestsCountFormat, 
+                        $line->brand_title,
+                        $line->review_type . ' Review Requests',
+                        $line->reviewRequestsCountFormat,
                         $line->reviewResponsePercent.'%',
                         // $line->reviewResponsePercent.'%',
                         $line->revRA,
@@ -252,7 +252,7 @@ class Brandboost extends Controller
                         $status,
                     )
                 );
-            
+
         }
         fclose($file);
         //Log Export History
@@ -266,7 +266,7 @@ class Brandboost extends Controller
         //     $mSetting->logExportHistory($aHistoryData);
         // }
         exit;
- 
+
     }
     /**
      * Used to get onsite brandboost data
@@ -4213,6 +4213,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $response = array();
 
         $multipalIds = $request->multipal_id;
+
         foreach ($multipalIds as $recordId) {
             //$result = $mBrandboost->deleteReviewRequest($recordId);
             $result = $mBrandboost->archiveReviewRequest($recordId);
