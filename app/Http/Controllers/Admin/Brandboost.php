@@ -8176,6 +8176,8 @@ public function widgetStatisticDetailsStatsGraph(){
                 }
             }
             if(!empty($endCampaign)){
+                $aRequestData['greeting'] = $endCampaign->greeting;
+                $aRequestData['introduction'] = $endCampaign->introduction;
                 $aRequestData['subject'] = $endCampaign->subject;
                 $aRequestData['preheader'] = $endCampaign->preheader;
                 $aRequestData['html_content'] = $endCampaign->stripo_compiled_html;
@@ -8203,16 +8205,25 @@ public function widgetStatisticDetailsStatsGraph(){
         $userID = $aUser->id;
         $requestId = $request->request_id;
         $mBrandboost = new BrandboostModel();
+        $mTemplates = new TemplatesModel();
         if($requestId>0){
             $aData = $mBrandboost->getRequestDetails($requestId);
         }
+        $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
+        $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
         $aBreadcrumb = array(
             'Home' => '#/',
             'Reviews' => '#/reviews/dashboard',
             'Onsite' => '#/reviews/onsite',
             'Review Request' => '',
         );
-        return ['breadcrumb'=>$aBreadcrumb, 'requestData'=>$aData];
+        return [
+            'breadcrumb'=>$aBreadcrumb,
+            'requestData'=>$aData,
+            'oEmailTemplates'=>$oEmailTemplates,
+            'oSMSTemplates'=>$oSMSTemplates,
+            'aUserInfo' => ['fullname'=> $aUser->firstname. ' '. $aUser->lastname, 'email' => $aUser->email, 'avatar'=> $aUser->avatar, 'phone' => $aUser->mobile],
+        ];
     }
 
     /**
@@ -8238,6 +8249,18 @@ public function widgetStatisticDetailsStatsGraph(){
                 'subject' => $request->subject,
                 'preheader' => $request->preheader,
             ];
+        }else if($type == 'content'){
+            $aRequestData = [
+                'greeting' => $request->greeting,
+                'introduction' => $request->introduction
+            ];
+        }else if($type == 'tracking'){
+            $aRequestData = [
+                'tracking_conversation' => $request->tracking_conversation,
+                'tracking_google_analytics' => $request->tracking_google_analytics,
+                'tracking_open_read' => $request->tracking_open_read,
+                'tracking_expire_link' => $request->tracking_expire_link,
+            ];
         }
         if(!empty($aRequestData)){
             $bUpdated = $mBrandboost->updateReviewRequest($aRequestData, $requestId);
@@ -8249,6 +8272,205 @@ public function widgetStatisticDetailsStatsGraph(){
         }
 
     }
+
+    /**
+     * This function is used to display preview of email request
+     * @param Request $request
+     * @return mixed
+     */
+    public function previewRequest(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $requestId = $request->request_id;
+        $previewType = strip_tags($request->previewType);
+        $mBrandboost = new BrandboostModel();
+        if($requestId>0){
+            $aData = $mBrandboost->getRequestDetails($requestId);
+        }
+        if(!empty($aData)){
+            $defaultGreeting = '';
+            $defaultIntroduction = '';
+            $previewPrefix = ($previewType == 'onlyPreview') ? 'PREVIEW' : 'EDITOR';
+            $brandboostID = $aData->campaign_id;
+            $type = $aData->type; //email or sms
+            $cont = base64_decode($aData->html_content);
+            $content = str_replace('\n', "<br>", $cont);
+
+            $greeting = (!empty($aData->greeting)) ? $aData->greeting : $defaultGreeting;
+            $introduction = (!empty($aData->introduction)) ? $aData->introduction : $defaultIntroduction;
+
+            $content = str_replace(array('{{GREETING}}', '{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}', 'wf_edit_template_introduction', 'wf_edit_sms_template_introduction', 'wf_edit_template_greeting'), array($greeting, $greeting, $introduction, $introduction, 'wf_edit_template_introduction_' . $previewPrefix, 'wf_edit_sms_template_introduction_' . $previewPrefix, 'wf_edit_template_greeting_' . $previewPrefix), $content);
+            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
+            $content = $this->brandboostEmailTagReplace($brandboostID, $content, $type, $aUser);
+            $response['status'] = 'success';
+            $response['content'] = stripslashes(str_replace('<?php echo base_url();?>', '/',$content));
+            $response['subject'] = $aData->subject;
+            $response['greeting'] = str_replace(array('\n', '<br>'), array('', ''), $greeting);
+            $response['introduction'] = str_replace(array('\n', '<br>'), array('', ''), $introduction);
+        }else{
+            $response['status'] = 'error';
+        }
+        return $response;
+
+    }
+
+    /**
+     * Used to send request test emails
+     * @param Request $request
+     * @return array
+     * @throws \Throwable
+     */
+    public function sendRequestTestMail(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $requestId = $request->request_id;
+        $emailAddress = strip_tags($request->email);
+        $previewType = strip_tags($request->previewType);
+        $mBrandboost = new BrandboostModel();
+        if($requestId>0){
+            $aData = $mBrandboost->getRequestDetails($requestId);
+        }
+        if(!empty($aData)){
+            $defaultGreeting = '';
+            $defaultIntroduction = '';
+            $previewPrefix = ($previewType == 'onlyPreview') ? 'PREVIEW' : 'EDITOR';
+            $brandboostID = $aData->campaign_id;
+            $type = $aData->type; //email or sms
+            $cont = base64_decode($aData->html_content);
+            $content = str_replace('\n', "<br>", $cont);
+
+            $greeting = (!empty($aData->greeting)) ? $aData->greeting : $defaultGreeting;
+            $introduction = (!empty($aData->introduction)) ? $aData->introduction : $defaultIntroduction;
+
+            $content = str_replace(array('{{GREETING}}', '{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}', 'wf_edit_template_introduction', 'wf_edit_sms_template_introduction', 'wf_edit_template_greeting'), array($greeting, $greeting, $introduction, $introduction, 'wf_edit_template_introduction_' . $previewPrefix, 'wf_edit_sms_template_introduction_' . $previewPrefix, 'wf_edit_template_greeting_' . $previewPrefix), $content);
+            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
+            $content = $this->brandboostEmailTagReplace($brandboostID, $content, $type, $aUser);
+
+            $subject = $aData->subject;
+
+            $preheader = $aData->preheader;
+            $sPreheaderText = '';
+            if (!empty($preheader)) {
+                $sPreheaderText = '<span class="c3896 c5535" style="box-sizing: border-box;display:none;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">' . $preheader . '</span>';
+            }
+            //Get Sendgrid Info for client
+            $aSendgridData = getSendgridAccount($userID);
+            if (!empty($aSendgridData)) {
+                $userName = $aSendgridData->sg_username;
+                $password = $aSendgridData->sg_password;
+
+                $aEmailData = array(
+                    'username' => $userName,
+                    'password' => $password,
+                    'from_email' => $aData->email,
+                    'from_name' => $aData->email_from_name,
+                    'email' => $emailAddress,
+                    'message' => $sPreheaderText . $content,
+                    'subject' => $subject
+                );
+                $result = sendClientEmail($aEmailData);
+                if (empty($result['errors'])) {
+                    //Update credits
+                    $aUsage = array(
+                        'client_id' => $userID,
+                        'usage_type' => 'email',
+                        'direction' => 'outbound',
+                        'segment' => 1,
+                        'content' => $content,
+                        'spend_to' => $emailAddress,
+                        'spend_from' => '',
+                        'module_name' => 'brandboost',
+                        'module_unit_id' => ''
+                    );
+                    updateCreditUsage($aUsage);
+                    $response = array('status' => 'success', 'msg' => 'Email sent successfully');
+                }
+            }
+        }else{
+            $response['status'] = 'error';
+        }
+        return $response;
+
+    }
+
+    /**
+     * Parse template tags
+     * @param $brandboostID
+     * @param $sHtml
+     * @param string $campaignType
+     * @param $subscriberInfo
+     * @return string|string[]
+     * @throws \Throwable
+     */
+    public function brandboostEmailTagReplace($brandboostID, $sHtml, $campaignType = 'email', $subscriberInfo) {
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        $oBrandboost = $mWorkflow->getModuleUnitInfo('brandboost', $brandboostID);
+        $productsDetails = $mWorkflow->getProductDataByBBID($brandboostID);
+        if ($oBrandboost->review_type == 'offsite') {
+            $aOffsiteUrls = unserialize($oBrandboost->offsites_links);
+            if(!empty($aOffsiteUrls)){
+                $random_keys = array_rand($aOffsiteUrls, 1);
+            }else{
+                $random_keys = $aOffsiteUrls[0];
+            }
+            //$random_keys = array_rand($aOffsiteUrls, 1);
+            $offsiteURL = $aOffsiteUrls[$random_keys];
+        }
+
+
+        $aTags = config('bbconfig.email_tags');
+        if (!empty($aTags)) {
+            foreach ($aTags AS $sTag) {
+                $htmlData = '';
+                switch ($sTag) {
+                    case '{FIRST_NAME}':
+                        $htmlData = $subscriberInfo->firstname;
+                        break;
+
+                    case '{LAST_NAME}':
+                        $htmlData = $subscriberInfo->lastname;
+                        break;
+
+                    case '{EMAIL}':
+                        $htmlData = $subscriberInfo->email;
+                        break;
+
+                    case '{PHONE}':
+                        $htmlData = ($subscriberInfo->phone) ? $subscriberInfo->phone : $subscriberInfo->mobile;
+                        break;
+
+
+                    case '{ONSITE_REVIEW_URL}':
+                        $htmlData = base_url() . "reviews/addnew";
+                        break;
+
+                    case '{OFFSITE_REVIEW_URL}':
+                        $htmlData = isset($offsiteURL['shorturl']) ? $offsiteURL['shorturl'] : '';
+                        break;
+
+                    case '{BRAND_NAME}':
+                        $htmlData = $oBrandboost->brand_title;
+                        break;
+
+                    case '{PRODUCTS_LIST}':
+                        $htmlData = view('admin.workflow2.partials.products_list', ['productsDetails'=> $productsDetails])->render();
+                        break;
+
+                    case '{BRAND_LOGO}':
+                        if (!empty($oBrandboost->logo_img)) {
+                            $htmlData = 'https://s3-us-west-2.amazonaws.com/brandboost.io/campaigns/' . $oBrandboost->logo_img;
+                        } else {
+                            $htmlData = base_url() . 'assets/images/emailer/emailer-3-walker.png';
+                        }
+                        break;
+                }
+                $sHtml = str_replace($sTag, $htmlData, $sHtml);
+            }
+        }
+        return $sHtml;
+    }
+
 
 
 }
