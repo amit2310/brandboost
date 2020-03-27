@@ -8,13 +8,14 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="table_filter text-right">
-                        <!--<li>
-                            &lt;!&ndash;<a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>&ndash;&gt;
+                        <li>
+                            <!--<a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
                             <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                        </li>-->
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                        <!--<li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
+                        </li>
+                        <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                        <li v-if="viewType == 'Grid View'"><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                        <li v-if="viewType == 'List View'"><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
                             <div class="dropdown-menu p10 mt-1">
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'all'}" @click="sortBy='all'">ALL</a>
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'sent'}" @click="sortBy='sent'">SENT</a>
@@ -22,7 +23,7 @@
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'submitted'}" @click="sortBy='submitted'">SUBMITED</a>
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'archive'}" @click="sortBy='archive'">ARCHIVE</a>
                             </div>
-                        </li>-->
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -43,7 +44,7 @@
                             <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox">
+                                        <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
@@ -58,10 +59,10 @@
                         </tr>
 
                         <tr v-for="request in requests">
-                            <td width="20">
+                            <td width="20"><!--{{request.trackinglogid}}-->
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox">
+                                        <input type="checkbox" :checked="deletedItems.indexOf(request.id)>-1" @change="addtoDeleteCollection(request.trackinglogid, $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
@@ -101,6 +102,14 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
+                        :offset="4"
+                        class="mt-4">
+                    </pagination>
                 </div>
             </div>
 
@@ -144,9 +153,9 @@
                 </div>
             </div>
 
-            <div class="clearfix"></div>
+            <div v-if="viewType == 'Grid View'" class="clearfix"></div>
 
-            <pagination
+            <pagination v-if="viewType == 'Grid View'"
                 :pagination="allData"
                 @paginate="showPaginationData"
                 @paginate_per_page="showPaginationItemsPerPage"
@@ -202,7 +211,8 @@
                 viewType: 'List View',
                 sortBy: 'all',
                 items_per_page: 10,
-                searchBy: ''
+                searchBy: '',
+                deletedItems: []
             }
         },
         created() {
@@ -222,9 +232,64 @@
                 this.loadPaginatedData();
             }
         },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.requests.forEach(req => {
+                    let idx = this.deletedItems.indexOf(req.id);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
+            }
+        },
         methods: {
             searchItem: function(){
                 this.loadPaginatedData();
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/brandboost/deleteReviewRequest', {_token:this.csrf_token(), multipal_id:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.requests.length>0){
+                            this.requests.forEach(req => {
+                                let idxx = this.deletedItems.indexOf(req.id);
+                                if(idxx == -1){
+                                    this.deletedItems.push(req.id);
+                                }
+                            });
+                        }
+                    }else{
+                        this.requests.forEach(req => {
+                            let idxx = this.deletedItems.indexOf(req.id);
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
             },
             loadPaginatedData : function(){
                 axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
@@ -234,6 +299,7 @@
                         this.moduleName = response.data.moduleName;
                         this.requests = response.data.oRequest;
                         this.allData = response.data.allData;
+                        //console.log(this.requests)
                     });
             },
             showPaginationData: function(p){

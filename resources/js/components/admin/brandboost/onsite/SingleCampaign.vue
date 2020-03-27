@@ -98,9 +98,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li>
-                                    <a v-on:click="seletedTab=1" :class="{ active : seletedTab === 1 }"data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>
-                                    &nbsp;&nbsp;
+                                <li><a :class="{ active : seletedTab === 1 }" v-on:click="seletedTab=1" data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>&nbsp;&nbsp;
                                 <li><a :class="{ active : seletedTab === 2 }" v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
                                 <li><a :class="{ active : seletedTab === 3 }" v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
                                 <li><a :class="{ active : seletedTab === 4 }" v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
@@ -117,7 +115,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div v-if="(seletedTab === 1 || seletedTab === 5)" class="row">
                     <div class="col-md-4 d-flex">
 
 
@@ -225,7 +223,7 @@
 
                 <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)"></OnsiteReviewRequestsTab>
 
-                <OnsiteReviewsTab v-if="(seletedTab == 3)"></OnsiteReviewsTab>
+                <OnsiteReviewsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 3)"></OnsiteReviewsTab>
 
                 <!--<div v-if="(seletedTab == 4)">
                     <div class="row">
