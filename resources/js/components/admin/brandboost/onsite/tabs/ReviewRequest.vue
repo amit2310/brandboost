@@ -62,7 +62,7 @@
                             <td width="20"><!--{{request.trackinglogid}}-->
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox" :checked="deletedItems.indexOf(request.id)>-1" @change="addtoDeleteCollection(request.trackinglogid, $event.target)">
+                                        <input type="checkbox" :checked="deletedItems.indexOf(request.trackinglogid)>-1" @change="addtoDeleteCollection(request.trackinglogid, $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
@@ -236,7 +236,7 @@
             'allChecked' : function () {
                 let notFound = '';
                 this.requests.forEach(req => {
-                    let idx = this.deletedItems.indexOf(req.id);
+                    let idx = this.deletedItems.indexOf(req.trackinglogid);
                     if(idx == -1){
                         notFound = true;
                     }
@@ -265,15 +265,15 @@
                     if(elem.checked){
                         if(this.requests.length>0){
                             this.requests.forEach(req => {
-                                let idxx = this.deletedItems.indexOf(req.id);
+                                let idxx = this.deletedItems.indexOf(req.trackinglogid);
                                 if(idxx == -1){
-                                    this.deletedItems.push(req.id);
+                                    this.deletedItems.push(req.trackinglogid);
                                 }
                             });
                         }
                     }else{
                         this.requests.forEach(req => {
-                            let idxx = this.deletedItems.indexOf(req.id);
+                            let idxx = this.deletedItems.indexOf(req.trackinglogid);
                             if(idxx > -1){
                                 this.deletedItems.splice(idxx, 1);
                             }
