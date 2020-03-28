@@ -5,7 +5,7 @@
         <div class="table_head_action pb0 mt-4">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="htxt_medium_14 dark_600">Reviews</h3>
+                    <h3 class="htxt_medium_14 dark_600">Contacts</h3>
                 </div>
                 <div class="col-md-6">
                     <ul class="table_filter text-right">
@@ -32,45 +32,34 @@
             </div>
         </div>
 
-        <div v-if="oReviews.length > 0">
+        <div v-if="subscribers.length > 0">
 
             <div class="row" v-if="viewType == 'Grid View'">
-                <div class="col-md-3 d-flex" v-for="oReview in oReviews">
+                <div class="col-md-3 d-flex" v-for="subscriber in subscribers" v-if="subscriber.firstname != null">
                     <div class="card p0 pt30 text-center animate_top col">
                         <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
-                                <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                <a v-if="subscriber.status == '0' || subscriber.status == '2'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                <a v-if="subscriber.status == '1'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                <a v-if="subscriber.status != '3'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(subscriber.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                             </div>
                         </div>
                         <a href="javascript:void(0);" class="circle-icon-64 bkg_reviews_000 m0auto">
-                            <img v-if="oReview.rstatus == 1" src="assets/images/review_campaign.png">
-                            <img v-else src="assets/images/review_campaign.png">
+                            <img v-if="subscriber.status == 1" src="assets/images/folder-fill.svg">
+                            <img v-else src="assets/images/folder-fill.svg">
                         </a>
-                        <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
-                            {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
+                        <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" style="cursor: pointer;">
+                            <span>{{ capitalizeFirstLetter(subscriber.firstname) }} {{ capitalizeFirstLetter(subscriber.lastname) }}</span>
                         </h3>
-                        <p>{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
-                        <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 0" >INACTIVE</p>
-                        <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="oReview.rstatus == 1" >ACTIVE</p>
-                        <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 2" >PENDING</p>
-                        <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 3" >ARCHIVED</p>
+                        <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="subscriber.status == 0" >INACTIVE</p>
+                        <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="subscriber.status == 1" >ACTIVE</p>
+                        <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="subscriber.status == 2" >PENDING</p>
+                        <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="subscriber.status == 3" >ARCHIVED</p>
                         <div class="p15 pt15 btop">
-                            <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oReview.review_created) }} </em></p>
-                            <p class="htxt_regular_12 dark_300">
-                                <user-avatar
-                                    :avatar="oReview.avatar"
-                                    :firstname="oReview.firstname"
-                                    :lastname="oReview.lastname"
-                                ></user-avatar>
-                                <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
-                                <span v-if="oReview.email != ''"><br />{{ oReview.email }}</span>
-                            </p>
+                            <p v-if="subscriber.updated != null" class="htxt_regular_12 dark_300 mb15"><em> Updated On: {{ displayDateFormat('M d, h:i A', subscriber.updated) }} </em></p>
+                            <p v-else class="htxt_regular_12 dark_300 mb15"><em> Updated On: {{ '' }} </em></p>
                         </div>
                     </div>
                 </div>
@@ -89,56 +78,36 @@
                                     </label>
                                 </span>
                             </td>
-                            <td><span class="fsize10 fw500">CONTACT </span></td>
-                            <td><span class="fsize10 fw500">RATING</span></td>
-                            <td><span class="fsize10 fw500">REVIEW</span></td>
-                            <td><span class="fsize10 fw500"><img src="assets/images/circle_grey_right_arrow.svg"></span></td>
-                            <td><span class="fsize10 fw500">SUBMITTED <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                            <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                            <td><span class="fsize10 fw500">CONTACTS </span></td>
+                            <td><span class="fsize10 fw500">EMAIL</span></td>
+                            <td><span class="fsize10 fw500">SOURCE</span></td>
+                            <td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"/> </span></td>
+                            <td><span class="fsize10 fw500">STATUS</span></td>
                         </tr>
-                        <tr v-for="oReview in oReviews">
+                        <tr v-for="subscriber in subscribers" v-if="subscriber.firstname != null">
                             <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox" :checked="deletedItems.indexOf(oReview.reviewid)>-1" @change="addtoDeleteCollection(oReview.reviewid, $event.target)">
+                                        <input type="checkbox" :checked="deletedItems.indexOf(subscriber.id)>-1" @change="addtoDeleteCollection(subscriber.id, $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
                             </td>
-                            <td class="fw500 dark_600">
-                                <span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{ oReview.firstname.charAt(0) }}</span></span>
+                            <td>
+                                <span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{ subscriber.firstname.charAt(0) }}</span></span>
                                 <!--<user-avatar
-                                    :avatar="oReview.avatar"
-                                    :firstname="oReview.firstname"
-                                    :lastname="oReview.lastname"
+                                    :avatar="subscriber.avatar"
+                                    :firstname="subscriber.firstname"
+                                    :lastname="subscriber.lastname"
                                 ></user-avatar>-->
-                                <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
+                                <span>{{ subscriber.firstname }} {{ subscriber.lastname }}</span>
                             </td>
+                            <td>{{ subscriber.email }}</td>
+                            <td><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>{{ subscriber.source!=''?subscriber.source:'People CRM' }}</td>
+                            <td>{{ displayDateFormat('M d, Y', subscriber.updated) }}</td>
                             <td>
-                                    <span v-for="num in [1,2,3,4,5]">
-                                        <!--<i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
-                                        <i v-else class=""><img width="14" src="/assets/images/star-fill_grey_18.svg"></i>-->
-                                        <i v-if="num<=oReview.ratings && oReview.ratings > 3" class="ri-star-s-fill fsize18 green_400"></i>
-                                        <i v-else-if="num<=oReview.ratings && oReview.ratings == 3" class="ri-star-s-fill fsize18 yellow_400"></i>
-                                        <i v-else class="ri-star-s-fill fsize18 light_600"></i>
-                                    </span>
-                                <span>{{ oReview.ratings }}.0</span>
-                            </td>
-                            <td>
-                                <!--<span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
-                                <br />-->
-                                <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ setStringLimit(oReview.comment_text, 50) }}</span>
-                            </td>
-                            <td><i class="ri-at-line email_400 fsize15"></i></td>
-                            <!--<td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</td>-->
-                            <td>{{ timeAgo(oReview.review_created) }}</td>
-                            <td>
-                                <span class="float-right">
-                                    <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
-                                    <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
-                                    <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
-                                    <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
-                                </span>
+                                <span v-if="subscriber.status == 1"><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</span>
+                                <span v-else><span class="mr-3"><span class="status_icon bkg_dark_100"></span></span>Disable</span>
                             </td>
                         </tr>
                         </tbody>
@@ -165,37 +134,30 @@
 
         <div v-else class="row">
             <div class="col-md-12">
-                <div class="card card_shadow min_h_600">
+                <div class="card card_shadow min-h-280">
 
                     <div class="row mb65">
-                        <div class="col-md-6 text-left">
-                            <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="#">
-                                <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
-                                Set up reviews monitoring
-                            </a>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a class="lh_32 htxt_regular_12 dark_200 " href="#">
-                                Learn how use use contacts &nbsp; <img src="assets/images/question-line.svg">
+                        <div class="col-md-12 text-left">
+                            <a class="lh_32 blue_400 htxt_bold_14" href="#">
+                                <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
+                                Import contacts
                             </a>
                         </div>
                     </div>
 
                     <div class="row mb65">
                         <div class="col-md-12 text-center">
-                            <img class="mt40" style="max-width: 240px; " src="assets/images/reviews_icon_125.svg">
-                            <h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
-                            <h3 class="htxt_regular_14 dark_200 mt15 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
-                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>
+                            <img class="mt40" style="max-width: 225px; " src="assets/images/illustration2.png">
+                            <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any List contacts</h3>
+                            <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import!</h3>
+                            <button class="btn btn-sm bkg_blue_000 pr20 blue_300 slidebox">Add List Contact</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12 text-center mt-3">
-                <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT reviews</a>
+            <div class="col-md-12 text-center mt-2">
+                <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
             </div>
-
         </div>
 
     </div>
@@ -208,19 +170,20 @@
 
     export default {
         title: 'Onsite Reviews - Brand Boost',
-        name: "OnsiteReviewsTab",
-        props : ['pageColor', 'title', 'review_type'],
+        name: "OnsiteSubscribersTab",
+        props : ['pageColor'],
         components: {UserAvatar, Pagination},
         data(){
             return {
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                campaignId: this.$route.params.id,
                 allData: {},
-                oReviews : '',
-                oCampaign: '',
-                reviewTags: '',
-                campaignId: '',
+                subscribers : '',
+                campaign: '',
+                campaignTitle: '',
+                aUserInfo: '',
                 current_page: 1,
                 breadcrumb: '',
                 seletedTab: 1,
@@ -235,6 +198,7 @@
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
+            this.campaignId = this.$route.params.id;
         },
         watch: {
             'sortBy' : function(){
@@ -244,8 +208,8 @@
         computed:{
             'allChecked' : function () {
                 let notFound = '';
-                this.oReviews.forEach(rev => {
-                    let idx = this.deletedItems.indexOf(rev.reviewid);
+                this.subscribers.forEach(subs => {
+                    let idx = this.deletedItems.indexOf(subs.id);
                     if(idx == -1){
                         notFound = true;
                     }
@@ -256,9 +220,6 @@
         methods: {
             searchItem: function(){
                 this.loadPaginatedData();
-            },
-            showReview: function(id){
-                window.location.href='#/reviews/onsite/reviews/'+id;
             },
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
@@ -275,17 +236,17 @@
             addtoDeleteCollection: function(itemId, elem){
                 if(itemId == 'all'){
                     if(elem.checked){
-                        if(this.oReviews.length>0){
-                            this.oReviews.forEach(rev => {
-                                let idxx = this.deletedItems.indexOf(rev.reviewid);
+                        if(this.subscribers.length>0){
+                            this.subscribers.forEach(subs => {
+                                let idxx = this.deletedItems.indexOf(subs.id);
                                 if(idxx == -1){
-                                    this.deletedItems.push(rev.reviewid);
+                                    this.deletedItems.push(subs.id);
                                 }
                             });
                         }
                     }else{
-                        this.oReviews.forEach(rev => {
-                            let idxx = this.deletedItems.indexOf(rev.reviewid);
+                        this.subscribers.forEach(subs => {
+                            let idxx = this.deletedItems.indexOf(subs.id);
                             if(idxx > -1){
                                 this.deletedItems.splice(idxx, 1);
                             }
@@ -304,17 +265,15 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/onsiteSetupSubscribers/'+this.campaignId+'?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
-                        this.oCampaign = response.data.oCampaign;
                         this.allData = response.data.allData;
-                        this.oReviews = response.data.aReviews;
-                        this.reviewTags = response.data.reviewTags;
-                        this.reviewTags = response.data.reviewTags;
-                        //console.log(this.oReviews);
+                        this.subscribers = response.data.subscribers;
+                        this.campaign = response.data.brandboostData;
+                        this.user = response.data.aUserInfo;
                     });
             },
             showPaginationData: function(p){

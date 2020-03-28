@@ -31,7 +31,7 @@
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Campaign info</a></li>
                                 <li><a class="" href="javascript:void(0);" @click="displayStep(2)"><span class="num_circle"><span class="num">2</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Workflow</a></li>
-                                <li><a class="active" href="javascript:void(0);"><span class="num_circle"><span class="num">3</span><span
+                    script:void(0);"><span class="num_circle"><span class="num">3</span><span
                                     class="check_img"><img src="/assets/images/email_check.svg"/></span></span>Recipients</a>
                                 </li>
                                 <li><a href="javascript:void(0);" @click="displayStep(4)"><span class="num_circle"><span class="num">4</span><span

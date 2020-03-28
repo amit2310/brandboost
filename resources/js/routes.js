@@ -24,6 +24,7 @@ import OnsiteCampaignsTab from './components/admin/brandboost/onsite/tabs/Campai
 import OnsiteReviewsSummary from './components/admin/brandboost/onsite/tabs/ReviewsSummary';
 import LatestCampaigns from './components/admin/brandboost/onsite/tabs/LatestCampaigns';
 import OnsiteReviewsTab from './components/admin/brandboost/onsite/tabs/Reviews';
+import OnsiteSubscribersTab from './components/admin/brandboost/onsite/tabs/Subscribers';
 import LatestReviews from './components/admin/brandboost/onsite/tabs/LatestReviews';
 import OnsiteReviewRequestsTab from './components/admin/brandboost/onsite/tabs/ReviewRequest';
 import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
@@ -380,6 +381,7 @@ const routes = [
     /* Tab Option In Review Section */
     { path: '/brandboost/onsite/campaigns', component: OnsiteCampaignsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite campaigns - Brand Boost'} },
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
+    { path: '/brandboost/onsite/contacts', component: OnsiteSubscribersTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite contacts - Brand Boost'} },
     { path: '/brandboost/onsite/requests', component: OnsiteReviewRequestsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/onsite/reviewsSummary', component: OnsiteReviewsSummary, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     /* Tab Option In Review Section */
@@ -398,7 +400,7 @@ const routes = [
     /* Review Module */
     /*{ path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Overview'} },*/
     { path: '/reviews/dashboard', component: ReviewsOverview, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
-    { path: '/reviews/overview', component: SingleCampaign, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
+    { path: '/reviews/campaign/:id', component: SingleCampaign, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
     { path: '/reviews/overview2', component: SingleCampaign2, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
     { path: '/brandboost/review_campaigns/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
