@@ -681,7 +681,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.loading = false;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.campaign_id>0){
@@ -692,6 +692,7 @@
                 }
                 this.form.post(formActionSrc, this.form)
                 .then(response => {
+                    var elem = this;
                     if (response.data.status == 'success') {
                         if(response.data.brandboostID>0){
                             this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
@@ -702,25 +703,32 @@
                         //this.form = {};
                         //document.querySelector('.js-review-campaign-slidebox').click();
                         this.successMsg = 'Action completed successfully.';
-                        var elem = this;
-                        setTimeout(function () {
+                        
+                        $(".cross_icon").trigger('click');
                             elem.loadPaginatedData();
-                        }, 500);
                         syncContactSelectionSources();
-                    }
-                    else if (response.data.status == 'error') {
+                    }else if (response.data.status == 'error') {
                         if (response.data.type == 'duplicate') {
                             alert('Error: Campaign already exists.');
                         }
                         else {
                             alert('Error: Something went wrong.');
                         }
+                        setTimeout(function () {
+                            this.loading = false;
+                            $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
+                        }, 500,elem);
+                        
                     }else{
-                        this.loading = false;
+                       $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
                     }
                 })
                 .catch(errors => {
-                    this.loading = false;
+                    var elem = this;
+                    $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
                 })
             },
             changeStatus: function(campaign_id, status) {

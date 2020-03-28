@@ -426,6 +426,31 @@ class Reviews extends Controller {
         echo json_encode($response);
         exit;
     }
+     /**
+    * This function is used to get review data
+    * @param type $clientID
+    * @return type
+    */
+
+    public function getReviewFeedPopupData(Request $request) {
+        $response = array('status' => 'error', 'msg' => 'Something went wrong');
+
+        if (!empty($request)) {
+            $reviewID = $request->rid;
+            if ($reviewID > 0) {
+                $oReviewData = ReviewsModel::getReviewInfo($reviewID);
+                $oReviewNotes = ReviewsModel::listReviewNotes($reviewID);
+                $reviewCommentCount = getCampaignCommentCount($reviewID);
+                $reviewCommentsData = ReviewsModel::getReviewAllComments($reviewID, 0, 5);
+                $reviewTags = getTagsByReviewID($reviewID);
+
+                $popupContent = view("admin.brandboost.review_feed_details_popup", array('reviewData' => $oReviewData, 'reviewCommentCount' => $reviewCommentCount, 'reviewNotesData' => $oReviewNotes, 'reviewTags' => $reviewTags,'reviewCommentsData'=>$reviewCommentsData))->render();
+                $response = array('status' => 'success', 'popupData' => $popupContent);
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
 
 
 

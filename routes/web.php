@@ -811,6 +811,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/reviews/displayreview', 'Admin\Reviews@displayreview');
     Route::post('admin/reviews/saveReviewNotes', 'Admin\Reviews@saveReviewNotes');
     Route::post('admin/reviews/getReviewPopupData', 'Admin\Reviews@getReviewPopupData');
+    Route::post('admin/reviews/getReviewFeedPopupData', 'Admin\Reviews@getReviewFeedPopupData');
     Route::post('admin/reviews/getReviewById', 'Admin\Reviews@getReviewById');
     Route::post('admin/reviews/update_video_review', 'Admin\Reviews@update_video_review');
 

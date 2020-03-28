@@ -131,7 +131,7 @@
         }
     }
 
-</style>	
+</style>    
 <style type="text/css">
     .step_star ul > li.star > i.fa {
 
@@ -159,7 +159,7 @@
                         <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Refrence: </strong> <span>N/A</span></p>
                         <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Name: </strong> <span>{{ $reviewData->firstname }} {{ $reviewData->lastname }}</span></p>
                         <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Email: </strong> <span>{{ $reviewData->email }}</span></p>
-                        <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Mobile: </strong> <span>{{ ($reviewData->mobile == '') ? 'N/A' : $reviewData->mobile) }}</span></p>
+                        <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Mobile: </strong> <span>{{ ($reviewData->mobile == '') ? 'N/A' : $reviewData->mobile }}</span></p>
                         <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Date: </strong> <span>{{ date('F d, Y', strtotime($reviewData->user_joining_date)) }}</span></p>
                         <p><strong><i class="fa fa-angle-double-right"></i> &nbsp; Merchant: </strong> <span>Example retail merchant</span></p>
                     </div>
@@ -301,7 +301,7 @@
                                 } else {
                                     @endphp
                                     <div class="col-xs-12 col-md-12"> <a href="{{ base_url('assets/images/No_Image_Available.png') }}" class="thumbnail2"> <img class="mb0 big" src="{{ base_url('assets/images/No_Image_Available.png') }}" alt=""> </a> </div>
-                                @endphp	
+                                @endphp 
                             </div>
                         </div>
                     </div> 
@@ -417,4 +417,4 @@
         });
 
     });
-</script>	
+</script>   
