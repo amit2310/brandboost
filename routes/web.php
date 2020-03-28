@@ -272,6 +272,10 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/saveOnsiteConfiguration', 'Admin\Brandboost@saveOnsiteConfiguration');
     Route::post('admin/brandboost/addCampaignToOnsite', 'Admin\Brandboost@addCampaignToOnsite');
     Route::post('admin/brandboost/addOnsiteRequest', 'Admin\Brandboost@addOnsiteRequest');
+    Route::post('admin/brandboost/getReviewRequest', 'Admin\Brandboost@getReviewRequest');
+    Route::post('admin/brandboost/updateReviewRequest', 'Admin\Brandboost@updateReviewRequest');
+    Route::post('admin/brandboost/previewRequest', 'Admin\Brandboost@previewRequest');
+    Route::post('admin/brandboost/sendRequestTestMail', 'Admin\Brandboost@sendRequestTestMail');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
@@ -809,6 +813,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/reviews/displayreview', 'Admin\Reviews@displayreview');
     Route::post('admin/reviews/saveReviewNotes', 'Admin\Reviews@saveReviewNotes');
     Route::post('admin/reviews/getReviewPopupData', 'Admin\Reviews@getReviewPopupData');
+    Route::post('admin/reviews/getReviewFeedPopupData', 'Admin\Reviews@getReviewFeedPopupData');
     Route::post('admin/reviews/getReviewById', 'Admin\Reviews@getReviewById');
     Route::post('admin/reviews/update_video_review', 'Admin\Reviews@update_video_review');
 

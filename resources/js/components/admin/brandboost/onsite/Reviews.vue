@@ -177,9 +177,11 @@
                             </div>
                             <div class="p25">
                                 <div class="mb-2">
-                                    <div class="row">
+                                    <div class="row" :reviewid="oReview.reviewid">
                                         <div class="col-md-8">
-                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp;
+                                            <a href="javascript:void();" v-on:click="loodReviewPopup(oReview.reviewid,'')" class="js-review-feedback-slidebox2"> {{ oReview.firstname }} {{ oReview.lastname }}</a>
+                                            </p>
                                             <p class="mt-0 review_rating_start float-left">
                                                 <span v-for="num in [1,2,3,4,5]">
                                                     <i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
@@ -205,7 +207,7 @@
                                     {{ oReview.comment_text }}
                                 </p>
                                 
-                                <div class="reply_sec_link">
+                                <div class="reply_sec_link" >
 
                                     <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}} 
                                         <template v-if="oReview.getComm < 2">Comment </template>
@@ -286,7 +288,8 @@
          **********************-->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox">
+                    <i class=""><img src="assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="processForm">
                         <div class="p40">
                             <div class="row">
@@ -325,7 +328,27 @@
                 </div>
             </div>
         </div>
+         <div class="box" style="width:550px;">
+            <div style="width: 550px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox2">
+                            <i class=""><img src="assets/images/cross.svg"/></i>
+                        </a>
+                  
+                 <div class="p40">
+                    <div class="row">
+                        <div class="col-md-12"> 
+                            <img src="assets/images/list-icon.svg"/>
+                                <h3 class="htxt_medium_24 dark_800 mt20">Review </h3>
+                                <hr>
+                        </div>
+                    </div>
+                    <div id="reviewFeedPopupBox">
 
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
         <!--================================= CONTENT AFTER TAB===============================-->
 
         <!--=====================================Create new review================================-->
@@ -638,6 +661,11 @@
         </div>
         <!-- /newreviewpopup -->
 
+        <!--******************
+         Sliding Smart Popup
+         **********************-->
+       
+
         <div id="commentpopup" class="modal fade"></div>
     </div>
 
@@ -838,6 +866,22 @@
                         });
                 }
             },
+            loodReviewPopup:function(review_id, tabtype) {
+                axios.post('/admin/reviews/getReviewFeedPopupData', {
+                        rid: review_id,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if (response.data.status == "success") {
+                                $("#reviewFeedPopupBox").html(response.data.popupData);
+                                if (tabtype == 'note') {
+                                    $('.tabbable a[href="#note-tab"]').trigger('click');
+                                } else {
+                                    $('.tabbable a[href="#review-tab"]').trigger('click');
+                                }
+                            }
+                        });
+            },
             deleteItem: function(reviewID) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
@@ -859,11 +903,15 @@
     }
     $(document).ready(function () {
         $(document).on('click', '.js-review-feedback-slidebox', function(){
-            $(".box").animate({
+            $(".box:first").animate({
                 width: "toggle"
             });
         });
-
+    $(document).on('click', '.js-review-feedback-slidebox2', function(){
+            $(".box:last").animate({
+                width: "toggle"
+            });
+        });
         /*$(document).on('click', '.search_tables_open_close', function(){
             $(".reviewfeedSearch").animate({
                 width: "toggle"
