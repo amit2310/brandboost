@@ -592,6 +592,8 @@ class Brandboost extends Controller
             'Setup' => '',
         );
 
+        //pre($oCampaignSubscribers->items()); exit;
+
         $aData = array(
 
             'breadcrumb' => $aBreadcrumb,

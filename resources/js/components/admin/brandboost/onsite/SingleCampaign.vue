@@ -88,7 +88,7 @@
                     </div>
                 </div>-->
 
-                <OnsiteCampaignsTab></OnsiteCampaignsTab>
+                <OnsiteCampaignsTab @chooseCampaign="selectCampaign"></OnsiteCampaignsTab>
 
                 <!--******************
                   PAGE LEFT SIDEBAR END
@@ -225,6 +225,8 @@
 
                 <OnsiteReviewsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 3)"></OnsiteReviewsTab>
 
+                <OnsiteSubscribersTab v-if="seletedTab === 4"></OnsiteSubscribersTab>
+
                 <!--<div v-if="(seletedTab == 4)">
                     <div class="row">
                         <div class="col-md-4 d-flex">
@@ -348,12 +350,13 @@
     import Pagination from '@/components/helpers/Pagination';
     import OnsiteCampaignsTab from '@/components/admin/brandboost/onsite/tabs/CampaignsSummary';
     import OnsiteReviewsTab from '@/components/admin/brandboost/onsite/tabs/Reviews';
+    import OnsiteSubscribersTab from '@/components/admin/brandboost/onsite/tabs/Subscribers';
     import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 
     export default {
         props : ['pageColor', 'title', 'review_type'],
-        components: {UserAvatar, Pagination, OnsiteCampaignsTab, OnsiteReviewsTab, OnsiteReviewRequestsTab},
-        data(){
+        components: {UserAvatar, Pagination, OnsiteCampaignsTab, OnsiteReviewsTab, OnsiteReviewRequestsTab, OnsiteSubscribersTab},
+        data() {
             return {
                 moduleName: '',
                 moduleUnitID: '',
@@ -369,7 +372,15 @@
                 seletedTab: 1,
                 viewType: 'List View',
                 sortBy: 'Date Created',
-                searchBy: ''
+                searchBy: '',
+                selected_campaign: ''
+            }
+        },
+        methods: {
+            selectCampaign: function(data){ alert(data.id)
+                this.selected_campaign = data.id;
+                //this.requestFrom.campaign_id = data.id;
+                window.location.href = '#/reviews/campaign/'+this.selected_campaign;
             }
         }
     }
