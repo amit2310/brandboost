@@ -4310,16 +4310,7 @@ class WorkflowModel extends Model {
         $aData = DB::table('tbl_referral_rewards')
                 ->where('id', $id)
                 ->first();
-
         return $aData;
-
-
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_referral_rewards");
-        if ($result->num_rows() > 0) {
-            return $result->row();
-        }
-        return false;
     }
 
     public function createReferralLink($aData) {
