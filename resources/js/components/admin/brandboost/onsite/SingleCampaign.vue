@@ -377,10 +377,11 @@
             }
         },
         methods: {
-            selectCampaign: function(data){ alert(data.id)
+            selectCampaign: function(data){
                 this.selected_campaign = data.id;
                 //this.requestFrom.campaign_id = data.id;
                 window.location.href = '#/reviews/campaign/'+this.selected_campaign;
+                this.$forceUpdate()
             }
         }
     }

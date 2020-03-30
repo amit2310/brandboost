@@ -575,6 +575,9 @@ class Brandboost extends Controller
         $mUsers = new UsersModel();
         $mWorkflow = new WorkflowModel();
 
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+
         if (empty($brandboostID)) {
             redirect("#admin/reviews/onsite");
             exit;
@@ -584,7 +587,7 @@ class Brandboost extends Controller
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
-        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10);
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10, $searchBy, $sortBy);
         $aBreadcrumb = array(
             'Home' => '#/',
             'Reviews' => '#/reviews/dashboard',
