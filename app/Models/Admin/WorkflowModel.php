@@ -2897,7 +2897,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=5) {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=5, $searchBy='', $sortBy='') {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2931,13 +2931,30 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
+        $query = DB::table($tableName)
                 ->leftJoin('tbl_subscribers', "$tableName.subscriber_id", '=', "tbl_subscribers.id")
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
-                ->where("$tableName.$fieldName", $moduleUnitID)
-                ->orderBy("$tableName.id", "desc")
-                ->paginate($limit);
-                //->get();
+                ->where("$tableName.$fieldName", $moduleUnitID);
+        if(!empty($searchBy)){
+            $query->where("tbl_subscribers.firstname", 'LIKE',  "%$searchBy%");
+            //$query->orWhere("tbl_subscribers.lastname", 'LIKE',  "%$searchBy%");
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_subscribers.updated', 'desc');
+            }else  if($sortBy == 'Active'){
+                $query->where('tbl_subscribers.status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $query->where('tbl_subscribers.status', '0');
+            }else  if($sortBy == 'Archive'){
+                $query->where('tbl_subscribers.status', '2');
+            }
+        }
+        $query->orderBy("$tableName.id", "desc");
+
+        $oData = $query->paginate($limit);
+                //$query->get();
         return $oData;
     }
 
