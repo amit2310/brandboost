@@ -68,7 +68,10 @@
                                 <span v-else class="circle_icon_24 bkg_blue_200">
                                     <img src="assets/images/start-fill-white.svg">
                                 </span>
-                                <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                    <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                </a>-->
+                                <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
                                     <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                 </a>
                             </span>
@@ -348,7 +351,7 @@
             searchItem: function(){
                 this.loadPaginatedData();
             },
-            setupBroadcast: function(id){
+            setupBroadcast: function(id){ return false;
                 window.location.href='#/reviews/onsite/setup/'+id+'/1';
             },
             showContacts: function(id){

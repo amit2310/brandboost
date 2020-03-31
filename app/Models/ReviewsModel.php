@@ -43,7 +43,7 @@ class ReviewsModel extends Model {
                 })
                 ->where('tbl_reviews.media_url', '!=', 'a:0:{}')
                 ->orderBy('tbl_reviews.id', 'desc')
-                ->paginate(10);
+                ->paginate($pre_page);
 
         }
         return $oData;
@@ -104,7 +104,8 @@ class ReviewsModel extends Model {
      * @param type $campaignID
      * @return campaign all reviews
      */
-	public static function getCampaignReviews($campaignID, $searchBy = '', $sortBy='') {
+	public static function getCampaignReviews($campaignID, $searchBy = '', $sortBy='', $items_per_page =10) {
+
         $query = DB::table('tbl_reviews')
                 ->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
                 ->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
@@ -135,8 +136,11 @@ class ReviewsModel extends Model {
         }else{
             $query->orderBy('tbl_reviews.id', 'desc');
         }
-        $oData = $query->paginate(10);
-
+        if($items_per_page == 'All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
         return $oData;
     }
 
@@ -214,7 +218,7 @@ class ReviewsModel extends Model {
      * @param type $campaignID
      * @return campaign all reviews
      */
-	public function getMyBranboostReviews($userID, $searchBy = '', $sortBy='') {
+	public function getMyBranboostReviews($userID, $searchBy = '', $sortBy='',$items_per_page=10) {
         $query = DB::table('tbl_reviews')
 			->leftJoin('tbl_users', 'tbl_reviews.user_id', '=', 'tbl_users.id')
 			->leftJoin('tbl_brandboost', 'tbl_reviews.campaign_id', '=', 'tbl_brandboost.id')
@@ -246,9 +250,11 @@ class ReviewsModel extends Model {
         } else {
             $query->orderBy('tbl_reviews.id', 'desc');
         }
-
-        $oData = $query->paginate(10);
-
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
         return $oData;
     }
 
