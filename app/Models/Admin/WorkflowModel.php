@@ -2897,7 +2897,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=5, $searchBy='', $sortBy='') {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=10, $searchBy='', $sortBy='', $items_per_page = '') {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2951,10 +2951,20 @@ class WorkflowModel extends Model {
                 $query->where('tbl_subscribers.status', '2');
             }
         }
-        $query->orderBy("$tableName.id", "desc");
 
-        $oData = $query->paginate($limit);
-                //$query->get();
+        $query->orderBy("$tableName.id", "desc");
+        //$query->get();
+
+        if(!empty($items_per_page)) {
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        } else {
+            $oData = $query->paginate($limit);
+        }
+
         return $oData;
     }
 

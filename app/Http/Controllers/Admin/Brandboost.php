@@ -567,6 +567,7 @@ class Brandboost extends Controller
      */
     public function onsiteSetupSubscribers(Request $request)
     {
+        $items_per_page = ($request->get('items_per_page'))?$request->get('items_per_page'):10;
         $brandboostID = $request->id;
         $oUser = getLoggedUser();
         $userID = $oUser->id;
@@ -587,7 +588,7 @@ class Brandboost extends Controller
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
-        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10, $searchBy, $sortBy);
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10, $searchBy, $sortBy, $items_per_page);
         $aBreadcrumb = array(
             'Home' => '#/',
             'Reviews' => '#/reviews/dashboard',

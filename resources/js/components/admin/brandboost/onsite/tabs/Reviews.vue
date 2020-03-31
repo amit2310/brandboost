@@ -216,6 +216,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                campaignId: this.$route.params.id,
                 allData: {},
                 oReviews : '',
                 oCampaign: '',
@@ -235,6 +236,7 @@
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
+            this.campaignId = this.$route.params.id;
         },
         watch: {
             'sortBy' : function(){
@@ -304,7 +306,7 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/reviews?id='+this.campaignId+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);

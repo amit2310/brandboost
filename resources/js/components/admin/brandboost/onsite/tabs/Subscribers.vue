@@ -80,6 +80,7 @@
                             <td><span class="fsize10 fw500">SOURCE</span></td>
                             <td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"/> </span></td>
                             <td><span class="fsize10 fw500">STATUS</span></td>
+                            <td><span class="fsize10 fw500">&nbsp;</span></td>
                         </tr>
                         <tr v-for="subscriber in subscribers" v-if="subscriber.firstname != null">
                             <td width="20">
@@ -104,7 +105,19 @@
                             <td>{{ displayDateFormat('M d, Y', subscriber.updated) }}</td>
                             <td>
                                 <span v-if="subscriber.status == 1"><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</span>
+                                <span v-else-if="subscriber.status == 3"><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Archived</span>
                                 <span v-else><span class="mr-3"><span class="status_icon bkg_dark_100"></span></span>Disable</span>
+                            </td>
+                            <td>
+                                <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a v-if="subscriber.status == '0' || subscriber.status == '2'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                        <a v-if="subscriber.status == '1'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                        <a v-if="subscriber.status != '3'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(subscriber.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -113,6 +126,7 @@
                     <pagination
                         :pagination="allData"
                         @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
                         :offset="4"
                         class="mt-4">
                     </pagination>
@@ -123,6 +137,7 @@
             <pagination  v-if="viewType == 'Grid View'"
                 :pagination="allData"
                 @paginate="showPaginationData"
+                @paginate_per_page="showPaginationItemsPerPage"
                 :offset="4"
                 class="mt-4">
             </pagination>
@@ -182,6 +197,7 @@
                 campaignTitle: '',
                 aUserInfo: '',
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 seletedTab: 1,
                 viewType: 'List View',
@@ -199,6 +215,12 @@
         },
         watch: {
             'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -262,7 +284,7 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/onsiteSetupSubscribers/'+this.campaignId+'?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/onsiteSetupSubscribers/'+this.campaignId+'?items_per_page='+this.items_per_page+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -277,9 +299,51 @@
                 this.current_page = p;
                 this.loadPaginatedData();
             },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
+            },
             navigatePagination: function(p){
                 this.current_page = p;
                 this.loadPaginatedData();
+            },
+            changeStatus: function(contactId, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/contacts/update_status', {
+                        contactId:contactId,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            },
+            deleteList: function(subscriberId) {
+                if(confirm('Are you sure you want to delete this item?')){
+                    //Do axios
+                    axios.post('/admin/contacts/delete_contact', {
+                        subscriberId:subscriberId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
             }
         }
     }
