@@ -1323,8 +1323,8 @@ PAGE WITH SIDEBAR CSS
 .pagewithleftsidebar .content-area.withsidebar{padding:28px 64px 0 310px; position: inherit}*/
 
 .page_sidebar{float: left; width: 280px; height: 100vh; background: #f9fbff; border-right: 1px solid #e9eff8; padding:0px;/*position: fixed*/}
-.page_sidebar.absl{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 9999}
-.page_sidebar.fixed{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 9999}
+.page_sidebar.absl{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 999}
+.page_sidebar.fixed{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 999}
 .page_sidebar.width_360{width: 360px;}
 .page_sidebar .inner{padding:25px 20px;}
 .page_sidebar .inner2{padding:22px 20px;}
