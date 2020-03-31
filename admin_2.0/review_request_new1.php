@@ -15,10 +15,6 @@
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
-
-
-
-
 </head>
 <body id="ReviewSection">
 
@@ -80,25 +76,11 @@
      		</div>
      		</div>
 
-
-
-
-
-
      		</div>
     	</div>
 
 
     	<div class="col-md-12 text-center mt-3">
-    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
-    	</div>
-
-
-
-
-    </div>
-
-      </div>
 
       </div>
 
@@ -115,7 +97,6 @@
   CREATEFORM  Popup
  **********************-->
 
- <!-- The Modal -->
   <div class="modal fade" id="CREATEFORM">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content review">
@@ -139,20 +120,12 @@
                 		<div class="col-2">
                 	<div class="dropdown campaign_forms">
 					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="assets/images/circle-dot.svg"/>
-					  </button>
+						<img src="assets/images/circle-dot.svg"/>					  </button>
 					  <div class="dropdown-menu w-100 dropdown-menu-right">
 						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 1 </a>
 						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
-						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 3 </a>
-					  </div>
+						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 3 </a>					  </div>
 					</div>
-
-
-
-                		</div>
-                	</div>
-                </div>
 
               </div>
       		</div>
@@ -184,21 +157,6 @@
 
       		<div class="col-6">
             <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase">CONTINUE</button>
-            <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a>
-            </div>
-
-            <div class="col-6 text-right mt-2">
-           	<a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
-     				<span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
-     				LEARN MORE ABOUT REQUESTS
-     			</a>
-            </div>
-
-
-
-
-      	</div>
-
 
       </div>
     </div>
