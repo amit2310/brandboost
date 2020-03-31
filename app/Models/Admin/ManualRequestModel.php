@@ -112,6 +112,70 @@ class ManualRequestModel extends Model
     }
 
     /**
+     * This function used to get all queued pending request for cron processing
+     * @param $moduleName
+     * @return bool
+     */
+    public function getQueueRequest($moduleName){
+        switch ($moduleName){
+            case "brandboost":
+                $tableName = 'tbl_brandboost_request_queue';
+                break;
+        }
+        if(!empty($tableName)){
+            $aData = DB::table($tableName)
+                ->where('status', 1)
+                ->get();
+            return $aData;
+        }
+        return false;
+    }
+
+    /**
+     * This function is used to update sthe satatus of queue request
+     * @param $aData
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function updateQueueStatus($aData, $id, $moduleName){
+        switch ($moduleName){
+            case "brandboost":
+                $tableName = 'tbl_brandboost_request_queue';
+                break;
+        }
+        if(!empty($tableName)){
+            $aData = DB::table($tableName)
+                ->where('id', $id)
+                ->update($aData);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * This function is used to update the status of manual request
+     * @param $aData
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function updateRequestStatus($aData, $id, $moduleName){
+        switch ($moduleName){
+            case "brandboost":
+                $tableName = 'tbl_brandboost_request';
+                break;
+        }
+        if(!empty($tableName)){
+            $aData = DB::table($tableName)
+                ->where('id', $id)
+                ->update($aData);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Used to get products related details associated with the brandboost campaign
      * @param type $brandboostID
      * @return type
@@ -147,6 +211,29 @@ class ManualRequestModel extends Model
             ->where('status', 1)
             ->first();
         return $oData;
+    }
+
+    /**
+     * Used to get Twilio Account related information
+     * @param type $clientID
+     * @return type
+     */
+    public function getTwilioAccount($clientID) {
+        $oData = DB::table('tbl_twilio_accounts')
+            ->where('user_id', $clientID)
+            ->where('status', 1)
+            ->first();
+        return $oData;
+    }
+
+    /**
+     *
+     * @param type $aData
+     * @return type
+     */
+    public function saveShortURL($aData) {
+        $insertID = DB::table('tbl_sms_short_url')->insertGetId($aData);
+        return $insertID;
     }
 
     /**
