@@ -271,67 +271,201 @@
       	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
       	<div class="row">
       		<div class="col-12">
-      			<h3 class="htxt_medium_24 dark_800 mb-2">Add Contacts</h3>
-      			<p class="htxt_regular_14 dark_200 m-0">Choose how do you want to add contacts</p>
-      			<hr/>
+                <img class="float-left mr-3 mt-1" src="assets/images/lists_blue_44.svg"/>
+      			<h3 class="htxt_medium_24 dark_800 mb-2">Select Lists</h3>
+      			<p class="htxt_regular_14 dark_200 m-0">Choose lists do you want to the campaign</p>
       		</div>
       		
             
-            
-            <div class="col-4">
-                <div class="card border text-center shadow-none p20">
-                	<img class="mb-3" src="assets/images/contacts_blue_44.svg"/>
-                	<p class="htxt_medium_14 dark_600 mb-3">Contacts</p>
-                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Choose from <br>all available contacts. </p>
+            <div class="col-12">         
+            <div class="table_head_action bbot btop pb20 pt20 mb-0 mt20">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="table_filter">
+                            <li><a class="active" href="#">All</a></li>
+                            <li><a href="#">Active</a></li>
+                            <li><a href="#">Draft</a></li>
+                            <li><a href="#">Archive</a></li>
+                            <!--<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="table_filter text-right">
+                            <li><a href="#"><i><img src="assets/images/filter-line.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/list.svg"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
                 </div>
-                
-                <div class="col-4">
-            	<div class="card border text-center shadow-none p20">
-                	<img class="mb-3" src="assets/images/lists_blue_44.svg"/>
-                	<p class="htxt_medium_14 dark_600 mb-3">Lists</p>
-                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Select one or more<br> pre-made lists.</p>
-                </div>
-                </div>
-                
-                <div class="col-4">
-            	<div class="card border text-center shadow-none p20">
-                	<img class="mb-3" src="assets/images/tags_blue_44.svg"/>
-                	<p class="htxt_medium_14 dark_600 mb-3">Tags</p>
-                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Select contacts <br>that match specific tag.</p>
-                </div>
-                </div>
-                
-                
-                
-                <div class="col-4">
-               <div class="card border text-center shadow-none m-0 p20">
-                	<img class="mb-3" src="assets/images/segment_blue_44.svg"/>
-                	<p class="htxt_medium_14 dark_600 mb-3">Segments</p>
-                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Select one or more<br> pre-made segments. </p>
-                </div>
-                </div>
-                
-                <div class="col-4">
-            	<div class="card border text-center shadow-none m-0 p20">
-                	<img class="mb-3" src="assets/images/copy_blue_44.svg"/>
-                	<p class="htxt_medium_14 dark_600 mb-3">Copy campaign</p>
-                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Copy all contacts from<br> another campaign.</p>
-                </div>
-                </div>
-                
-                <div class="col-4">
-            	<div class="card border text-center shadow-none m-0 p20">
-                	<img class="mb-3" src="assets/images/import_grey_44.svg"/>
-                	<p class="htxt_medium_14 dark_600 mb-3">Import</p>
-                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Import contacts from<br> another app or file</p>
-                </div>
-                </div>
-      	
-      	
-      		
-      		
+            </div>
       	</div>
+        
+        
+        
+        <div class="row">
+    	<div class="col-md-12">
+    		<div class="">
+    			<table class="table table-borderless mb-0">
+				<tbody>
+			     <tr class="headings">
+		           <td width="20">
+				  	<span>
+						<label class="custmo_checkbox pull-left">
+							<input type="checkbox">
+							<span class="custmo_checkmark blue"></span>
+						</label>
+					</span>
+				    </td>
+					<td><span class="fsize10 fw500">LIST </span></td>
+					<td><span class="fsize10 fw500">CONTACTS</span></td>
+					<td><span class="fsize10 fw500">UPDATED <img src="assets/images/arrow-down-line-14.svg"> </span></td>
+					<td class="text-right"><span class="mr-1"><img src="assets/images/settings-2-line.svg"></span></td>
+				  </tr>
+				  
+				  
+				  
+				  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td>1,492</td>
+					<td>13 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+                  
+                  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox" checked>
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td>1,492</td>
+					<td>13 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+				  </tr>
+                  
+                   <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td>1,492</td>
+					<td>13 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+				  </tr>
+                  
+                  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox" checked>
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td>1,492</td>
+					<td>13 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+				  </tr>
+                  
+                   <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td>1,492</td>
+					<td>13 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+                  
+                  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox" checked>
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td>1,492</td>
+					<td>13 min ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+				  </tr>
+				  
+				
+				  
+				 
+				  
+				  
+				  
+				  
+				  
+				</tbody>
+			    </table>
+			    
+			    <div class="custom_pagination">
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<span class="mr-4">ITEMS PER PAGE:<select><option>5</option><option>10</option><option>15</option><option>20</option></select></span>
+			    			<span>1-10 out of 137</span>
+			    		</div>
+			    		<div class="col-md-6">
+			    			<ul class="page_list float-right">
+			    				<li><a href="#"><img src="assets/images/arrow-right-s-line.svg"></a></li>
+			    				<li><a class="active" href="#">1</a></li>
+			    				<li><a href="#">2</a></li>
+			    				<li><a href="#">3</a></li>
+			    				<li><a href="#">...</a></li>
+			    				<li><a href="#">9</a></li>
+			    				<li><a href="#"><img src="assets/images/arrow-left-s-line.svg"></a></li>
+			    			</ul>
+			    		</div>
+			    	</div>
+			    </div>
+			    
+    		</div>
+    	</div>
+    	
+    	
+    </div>
+	
+    
+    
+    		<div class="row">
+    			<div class="col-12">
+      				<hr class="mt-2">
+      			</div>
+            <div class="col-12">
+                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize13 fw500">Add Lists</button>
+                <button class="btn btn-lg bkg_light_000 dark_200 pr20 min_w_160 fsize13 fw500 ml20 shadow-none border">Back</button>
+            </div>
+    </div>
+    
+    
       </div>
     </div>
   </div>
