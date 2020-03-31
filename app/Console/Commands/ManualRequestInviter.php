@@ -1,19 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Console\Commands;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Console\Command;
 use App\Models\Admin\Crons\ManagerModel;
 use App\Models\Admin\WorkflowModel;
-use Illuminate\Http\Request;
 use App\Models\Admin\ManualRequestModel;
-use Cookie;
-use Session;
-use DB;
 
-class ManualRequest extends Controller
+class ManualRequestInviter extends Command
 {
-    public function __construct() {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'manualrequest:brandboost';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'This cron used to send emails/sms for Onsite/Offsite manual review request';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
         parent::__construct();
         $this->trackServer = 'http://brandboostx.com/trck';
         $this->enableQueue = false;
@@ -31,7 +47,16 @@ class ManualRequest extends Controller
             'from_number' => '+14695027654'
         );
         $this->use_default_accounts = false;
+    }
 
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $this->startCampaign();
     }
 
     /**
