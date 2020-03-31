@@ -121,9 +121,9 @@ class ReviewsModel extends Model {
         }
         if(!empty($sortBy)){
             if($sortBy == 'Date Created'){
-                $query->orderBy('review_created', 'desc');
+                $query->orderBy('tbl_reviews.created', 'desc');
             }else  if($sortBy == 'Name'){
-                $query->orderBy('review_title', 'desc');
+                $query->orderBy('tbl_reviews.review_title', 'desc');
             }else  if($sortBy == 'Active'){
                 $query->where('tbl_reviews.status', '1');
             }else  if($sortBy == 'Inactive'){

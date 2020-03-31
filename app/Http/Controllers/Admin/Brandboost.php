@@ -584,7 +584,6 @@ class Brandboost extends Controller
             exit;
         }
 
-
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
@@ -962,7 +961,8 @@ class Brandboost extends Controller
 
         if (!empty($campaignId)) {
             $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
-            $aReviews = $mReviews->getCampaignReviews($campaignId, $searchBy, $sortBy,$items_per_page);
+            $aReviews = $mReviews->getCampaignReviews($campaignId, $searchBy, $sortBy, $items_per_page);
+            //pre($aReviews); exit;
 
             $aBreadcrumb = array(
                 'Home' => '#/',
@@ -1020,20 +1020,20 @@ class Brandboost extends Controller
                     }
                 }
             }
-            $aData = array(
-                'title' => 'Brand Boost Reviews',
-                'pagename' => $breadcrumb,
-                'breadcrumb' => $aBreadcrumb,
-                'oCampaign' => '',
-                'allData' => $aReviews,
-                'aReviews' => ($items_per_page =='All')? $aReviews : $aReviews->items(),
-                'campaignId' => '',
-                'userId' => $userID,
-                'bActiveSubsription' => $bActiveSubsription
-            );
 
 			//return view('admin.brandboost.review_list', $aData);
         }
+        $aData = array(
+            'title' => 'Brand Boost Reviews',
+            'pagename' => $breadcrumb,
+            'breadcrumb' => $aBreadcrumb,
+            'oCampaign' => '',
+            'allData' => $aReviews,
+            'aReviews' => ($items_per_page =='All')? $aReviews : $aReviews->items(),
+            'campaignId' => (!empty($campaignId) ? $campaignId : ''),
+            'userId' => $userID,
+            'bActiveSubsription' => $bActiveSubsription
+        );
 
         echo json_encode($aData);
         exit;

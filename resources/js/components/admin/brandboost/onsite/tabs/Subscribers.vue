@@ -82,6 +82,7 @@
                             <td><span class="fsize10 fw500">STATUS</span></td>
                             <td><span class="fsize10 fw500">&nbsp;</span></td>
                         </tr>
+                        <!--<tr v-for="subscriber in subscribers" v-if="subscriber.firstname != null">-->
                         <tr v-for="subscriber in subscribers" v-if="subscriber.firstname != null">
                             <td width="20">
                                 <span>

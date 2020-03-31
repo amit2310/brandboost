@@ -147,6 +147,7 @@
                     <pagination
                         :pagination="allData"
                         @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
                         :offset="4"
                         class="mt-4">
                     </pagination>
@@ -157,6 +158,7 @@
             <pagination  v-if="viewType == 'Grid View'"
                 :pagination="allData"
                 @paginate="showPaginationData"
+                @paginate_per_page="showPaginationItemsPerPage"
                 :offset="4"
                 class="mt-4">
             </pagination>
@@ -223,6 +225,7 @@
                 reviewTags: '',
                 campaignId: '',
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 seletedTab: 1,
                 viewType: 'List View',
@@ -240,6 +243,12 @@
         },
         watch: {
             'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -306,7 +315,7 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/reviews?id='+this.campaignId+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/reviews?id='+this.$route.params.id+'&items_per_page='+this.items_per_page+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -321,6 +330,11 @@
             },
             showPaginationData: function(p){
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
