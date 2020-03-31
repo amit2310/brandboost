@@ -54,6 +54,7 @@
 
                     <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
+                        <!--<li v-for="campaign in campaigns" :key="campaign.id" v-if="campaign.id == campaignId" class="d-flex active">-->
                         <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex">
                             <span>
                                 <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
@@ -315,6 +316,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                campaignId: this.$route.params.id,
                 company_name: '',
                 count : 0,
                 campaigns : '',
@@ -338,6 +340,7 @@
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
+            this.campaignId = this.$route.params.id;
         },
         watch: {
             'sortBy' : function(){
