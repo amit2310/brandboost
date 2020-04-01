@@ -54,6 +54,7 @@
 
                     <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
+                        <!--<li v-for="campaign in campaigns" :key="campaign.id" v-if="campaign.id == campaignId" class="d-flex active">-->
                         <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex">
                             <span>
                                 <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
@@ -68,7 +69,10 @@
                                 <span v-else class="circle_icon_24 bkg_blue_200">
                                     <img src="assets/images/start-fill-white.svg">
                                 </span>
-                                <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                    <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                </a>-->
+                                <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
                                     <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                 </a>
                             </span>
@@ -312,6 +316,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                campaignId: this.$route.params.id,
                 company_name: '',
                 count : 0,
                 campaigns : '',
@@ -335,6 +340,7 @@
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
+            this.campaignId = this.$route.params.id;
         },
         watch: {
             'sortBy' : function(){
@@ -348,7 +354,7 @@
             searchItem: function(){
                 this.loadPaginatedData();
             },
-            setupBroadcast: function(id){
+            setupBroadcast: function(id){ return false;
                 window.location.href='#/reviews/onsite/setup/'+id+'/1';
             },
             showContacts: function(id){

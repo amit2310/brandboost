@@ -15,41 +15,47 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='', $paginate=true) {
+    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='',$items_per_page=10, $paginate=true)
+    {
         $query = DB::table('tbl_brandboost')
-                ->when(($userId > 0), function($query) use ($userId) {
-                    return $query->where('user_id', $userId);
-                })
-                ->when((!empty($type)), function($query) use ($type) {
-                    return $query->where('review_type', $type);
-                })
-                ->where('delete_status', 0);
-                if(!empty($searchBy)){
-                    $query->where('brand_title', 'LIKE',  "%$searchBy%");
-                    //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
-                }
-                if(!empty($sortBy)){
-                    if($sortBy == 'Date Created'){
-                        $query->orderBy('id', 'desc');
-                    }else  if($sortBy == 'Name'){
-                        $query->orderBy('brand_title', 'asc');
-                    }else  if($sortBy == 'Active'){
-                        $query->where('status', '1');
-                    }else  if($sortBy == 'Inactive'){
-                        $query->where('status', '0');
-                    }else  if($sortBy == 'Pending'){
-                        $query->where('status', '2');
-                    }else  if($sortBy == 'Archive'){
-                        $query->where('status', '3');
-                    }
-                }else{
-                    $query->orderBy('id', 'desc');
-                }
-                //->get();
-        if($paginate == true)
-            $oData = $query->paginate(10);
-        else
+            ->when(($userId > 0), function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            })
+            ->when((!empty($type)), function ($query) use ($type) {
+                return $query->where('review_type', $type);
+            })
+            ->where('delete_status', 0);
+        if (!empty($searchBy)) {
+            $query->where('brand_title', 'LIKE', "%$searchBy%");
+            //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
+        }
+        if (!empty($sortBy)) {
+            if ($sortBy == 'Date Created') {
+                $query->orderBy('id', 'desc');
+            } else if ($sortBy == 'Name') {
+                $query->orderBy('brand_title', 'asc');
+            } else if ($sortBy == 'Active') {
+                $query->where('status', '1');
+            } else if ($sortBy == 'Inactive') {
+                $query->where('status', '0');
+            } else if ($sortBy == 'Pending') {
+                $query->where('status', '2');
+            } else if ($sortBy == 'Archive') {
+                $query->where('status', '3');
+            }
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+        //->get();
+        if ($paginate == true) {
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        }else{
             $oData = $query->get();
+        }
         return $oData;
     }
 
@@ -92,7 +98,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBBWidgets($id = 0, $userID = 0, $type = '', $searchBy='', $sortBy='') {
+    public static function getBBWidgets($id = 0, $userID = 0, $type = '', $searchBy='', $sortBy='',$items_per_page =10) {
         $query = DB::table('tbl_brandboost_widgets')
                 ->leftJoin('tbl_brandboost', 'tbl_brandboost_widgets.brandboost_id', '=', 'tbl_brandboost.id')
                 ->select('tbl_brandboost_widgets.*', 'tbl_brandboost.hashcode as bbHash', 'tbl_brandboost.brand_title AS bbBrandTitle', 'tbl_brandboost.brand_desc AS bbBrandDesc', 'tbl_brandboost.brand_img AS campaignImg')
@@ -127,7 +133,11 @@ class BrandboostModel extends Model {
         }else{
             $query->orderBy('tbl_brandboost_widgets.id', 'desc');
         }
-        $oData = $query->paginate(10);
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
         return $oData;
     }
 
@@ -264,8 +274,8 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='',  $searchBy='', $sortBy='') {
-        //DB::enableQueryLog();
+    public static function getReviewRequest($brandboostId = '', $type = '', $reviewType='',  $searchBy='', $sortBy='',$items_per_page =10) {
+        // DB::enableQueryLog();
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
@@ -304,12 +314,28 @@ class BrandboostModel extends Model {
             if($sortBy == 'archive'){
                 $query->where('tbl_tracking_log_email_sms.archived', 1);
             }
+            if($sortBy == 'sent'){
+                $query->where('tbl_tracking_log_email_sms.status', 'sent');
+            }
+            if($sortBy == 'draft'){
+                $query->where('tbl_tracking_log_email_sms.status', 'draft');
+            }
+            if($sortBy == 'submited'){
+                $query->where('tbl_tracking_log_email_sms.status', 'sent');
+            }
+            if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_tracking_log_email_sms.created', 'desc');
+            }
         }else{
             $query->where('tbl_tracking_log_email_sms.archived', 0);
         }
         $query->orderBy('tbl_tracking_log_email_sms.id', 'DESC');
-        $oData = $query->paginate(10);
-        //dd(DB::getQueryLog());
+        if($items_per_page =='All'){
+            $oData = $query->get();
+        }else{
+            $oData = $query->paginate($items_per_page);
+        }
+        // dd(DB::getQueryLog());
         return $oData;
     }
 
@@ -426,7 +452,7 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='', $paginate=true) {
+    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='',$items_per_page=10, $paginate=true) {
 
         $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
@@ -457,10 +483,15 @@ class BrandboostModel extends Model {
         }else{
             $query->orderBy('id', 'desc');
         }
-        if($paginate == true)
-            $oData = $query->paginate(10);
-        else
+        if($paginate == true) {
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        }else {
             $oData = $query->get();
+        }
         return $oData;
     }
 
@@ -2840,6 +2871,77 @@ class BrandboostModel extends Model {
                 ->where('id', $id)
                 ->first();
         return $oData;
+    }
+
+    /**
+     * This function used to update the status of the campaign
+     * @param $id
+     * @param $status
+     * @return bool
+     */
+    public static function saveCampaignStatus($id, $status){
+        $result = DB::table('tbl_brandboost')
+            ->where('id', $id)
+            ->update(['status'=>$status]);
+        if ($result > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Used to add default event for manual brandboost onsite event
+     * @param $aData
+     * @return mixed
+     */
+    public function createBrandboostEvent($aData) {
+        $insert_id = DB::table('tbl_brandboost_events')->insertGetId($aData);
+        return $insert_id;
+    }
+
+    /**
+     * Used to store onsite review request
+     * @param $aData
+     * @return bool
+     */
+    public function createOnsiteRequest($aData){
+        $insert_id = DB::table('tbl_brandboost_request')->insertGetId($aData);
+        if ($insert_id) {
+            return $insert_id;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getRequestDetails($id){
+        $oData = DB::table('tbl_brandboost_request')
+            ->where("id", $id)->first();
+        return $oData;
+    }
+
+    /**
+     * Used to update review request
+     * @param $aData
+     * @param $id
+     * @return bool
+     */
+    public function updateReviewRequest($aData, $id){
+        if($id>0){
+            $result = DB::table('tbl_brandboost_request')
+                ->where('id', $id)
+                ->update($aData);
+            if ($result > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
 }

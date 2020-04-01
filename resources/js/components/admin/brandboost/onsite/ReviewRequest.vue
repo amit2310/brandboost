@@ -11,7 +11,7 @@
                         <h3 class="htxt_medium_24 dark_700">Review Requests</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
-                        <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                       <a :href="'admin/brandboost/export-review-request?sortBy='+sortBy+'&search='+searchBy"> <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button></a>
                         <button class="btn btn-md bkg_reviews_400 light_000 ">SEND NEW REQUEST <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                     </div>
                 </div>
@@ -37,11 +37,17 @@
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>-->
                             <ul class="table_filter">
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'all'}" @click="applySort('all')">ALL</a></li>
-                                <li><a href="javascript:void(0);">SENT</a></li>
-                                <li><a href="javascript:void(0);">DRAFT</a></li>
-                                <li><a href="javascript:void(0);">SUBMITED</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'sent'}" @click="applySort('sent')">SENT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'submited'}" @click="applySort('submited')">SUBMITED</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                           <!--  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> -->
+                                            <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                        </div>
+                                    </li>
+
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -97,6 +103,7 @@
                                     </td>
                                     <td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{request.firstname.charAt(0)}}</span></span> {{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</td>
                                     <td v-if="request.tracksubscribertype =='email'"><img src="assets/images/atline.svg"/>&nbsp; {{ request.email}}</td>
+
                                     <td v-if="request.tracksubscribertype =='sms'"><img src="assets/images/chatline.svg"/>&nbsp; {{ phoneNoFormat(request.phone)}}</td>
                                     <td>{{ request.brand_title ? setStringLimit(capitalizeFirstLetter(request.brand_title), 23) :  'No Data' }}</td>
                                     <td><span class="">{{ displayDateFormat('M d, Y', request.requestdate) }}</span></td>
@@ -117,18 +124,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-                            <pagination
-                                :pagination="allData"
-                                @paginate="showPaginationData"
-                                :offset="4">
-                            </pagination>
-
                         </div>
-                    </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
                     </div>
                 </div>
 
@@ -171,13 +167,16 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-                    <pagination
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        :offset="4">
-                    </pagination>
                 </div>
+
+                <div class="clearfix"></div>
+
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
+                    :offset="4">
+                </pagination>
 
             </div>
 
@@ -197,12 +196,11 @@
 
                         </div>
                     </div>
-
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
-                    </div>
                 </div>
+            </div>
 
+            <div class="col-md-12 text-center mt-3">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>
             </div>
         </div>
         <!--******************
@@ -216,7 +214,6 @@
     import UserAvatar from '@/components/helpers/UserAvatar';
     import Pagination from '@/components/helpers/Pagination';
     let tkn = $('meta[name="_token"]').attr('content');
-
     export default {
         props : ['pageColor', 'title', 'review_type'],
         components: {UserAvatar, Pagination},
@@ -231,6 +228,7 @@
                 requests : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 viewType: 'List View',
                 sortBy: 'all',
@@ -249,6 +247,9 @@
                 this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -299,11 +300,9 @@
                                 this.deletedItems.splice(idxx, 1);
                             }
                         });
-
                     }
                     return;
                 }
-
                 if(elem.checked){
                     this.deletedItems.push(itemId);
                 }else{
@@ -314,7 +313,8 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/review_request/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                this.loading = true;
+                axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -330,6 +330,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
@@ -352,7 +357,6 @@
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
-
                         });
                 }
             },
@@ -371,7 +375,6 @@
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
-
                         });
                 }
             }

@@ -943,6 +943,7 @@ class WorkflowModel extends Model {
      * @return boolean
      */
     public static function getWorkflowDefaultTemplates($moduleName, $moduleCatName = '', $id = '', $categoryID = '') {
+        /* OLD METHOD*/
         if (empty($moduleName)) {
             return false;
         }
@@ -1339,6 +1340,16 @@ class WorkflowModel extends Model {
             return false;
     }
 
+    /**
+     * Used to add end campaign for email/sms
+     * @param $eventID
+     * @param $templateID
+     * @param $accountID
+     * @param $moduleName
+     * @param bool $isDraft
+     * @return array|bool
+     * @throws \Throwable
+     */
     public function addEndCampaign($eventID, $templateID, $accountID, $moduleName, $isDraft = false) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -1500,6 +1511,7 @@ class WorkflowModel extends Model {
     }
 
     public function addWorkflowCampaign($eventID, $templateID, $accountID, $moduleName, $isDraft = false) {
+        /*OLD Method*/
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -2885,7 +2897,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=5) {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=10, $searchBy='', $sortBy='', $items_per_page = '') {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2919,13 +2931,40 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
+        $query = DB::table($tableName)
                 ->leftJoin('tbl_subscribers', "$tableName.subscriber_id", '=', "tbl_subscribers.id")
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
-                ->where("$tableName.$fieldName", $moduleUnitID)
-                ->orderBy("$tableName.id", "desc")
-                ->paginate($limit);
-                //->get();
+                ->where("$tableName.$fieldName", $moduleUnitID);
+        if(!empty($searchBy)){
+            $query->where("tbl_subscribers.firstname", 'LIKE',  "%$searchBy%");
+            //$query->orWhere("tbl_subscribers.lastname", 'LIKE',  "%$searchBy%");
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_subscribers.updated', 'desc');
+            }else  if($sortBy == 'Active'){
+                $query->where('tbl_subscribers.status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $query->where('tbl_subscribers.status', '0');
+            }else  if($sortBy == 'Archive'){
+                $query->where('tbl_subscribers.status', '2');
+            }
+        }
+
+        $query->orderBy("$tableName.id", "desc");
+        //$query->get();
+
+        if(!empty($items_per_page)) {
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        } else {
+            $oData = $query->paginate($limit);
+        }
+
         return $oData;
     }
 
@@ -4298,16 +4337,7 @@ class WorkflowModel extends Model {
         $aData = DB::table('tbl_referral_rewards')
                 ->where('id', $id)
                 ->first();
-
         return $aData;
-
-
-        $this->db->where("id", $id);
-        $result = $this->db->get("tbl_referral_rewards");
-        if ($result->num_rows() > 0) {
-            return $result->row();
-        }
-        return false;
     }
 
     public function createReferralLink($aData) {

@@ -25,6 +25,52 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
+            <div class="container-fluid">
+                <div class="table_head_action">
+                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+                    <loading :isLoading="loading"></loading>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="sortBy='Date Created'">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
+                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; ARCHIVE</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <li><a href="javascript:void(0);" class="search_tables_open_close"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                            </ul>
+                        </div>
+                        <!--<div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                            </ul>
+                        </div>-->
+                    </div>
+                    <div class="card p20 datasearcharea reviewfeedSearch br6 shadow3" style="z-index: 999999!important;">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
                 <!--<div class="table_head_action bbot pb30">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
@@ -64,50 +110,7 @@
                         </div>
                     </div>
                 </div>-->
-                <div class="table_head_action">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="sortBy='Date Created'">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
-                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
-                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
-                                    <div class="dropdown-menu p10 mt-1">
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; ARCHIVE</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><a href="javascript:void(0);" class="search_tables_open_close"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                            </ul>
-                        </div>
-                        <!--<div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                            </ul>
-                        </div>-->
-                    </div>
-                    <div class="card p20 datasearcharea reviewfeedSearch br6 shadow3" style="z-index: 999999!important;">
-                        <div class="form-group m-0 position-relative">
-                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
-                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
@@ -174,9 +177,11 @@
                             </div>
                             <div class="p25">
                                 <div class="mb-2">
-                                    <div class="row">
+                                    <div class="row" :reviewid="oReview.reviewid">
                                         <div class="col-md-8">
-                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp;
+                                            <a href="javascript:void();" v-on:click="loodReviewPopup(oReview.reviewid,'')" class="js-review-feedback-slidebox2"> {{ oReview.firstname }} {{ oReview.lastname }}</a>
+                                            </p>
                                             <p class="mt-0 review_rating_start float-left">
                                                 <span v-for="num in [1,2,3,4,5]">
                                                     <i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
@@ -201,8 +206,15 @@
                                 <p class="fsize14 fw400 dark_600 lh_24" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
                                     {{ oReview.comment_text }}
                                 </p>
+                                
+                                <div class="reply_sec_link" >
 
-                                <div class="reply_sec_link">
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}} 
+                                        <template v-if="oReview.getComm < 2">Comment </template>
+                                        <template v-else>Comments</template>
+                                    
+                                    </a> 
+                                    <!-- <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a> -->
                                     <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
@@ -215,6 +227,7 @@
                 <pagination
                     :pagination="allData"
                     @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
                     :offset="4"
                     class="mt-4">
                 </pagination>
@@ -275,7 +288,8 @@
          **********************-->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
-                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox">
+                    <i class=""><img src="assets/images/cross.svg"/></i></a>
                     <form method="post" @submit.prevent="processForm">
                         <div class="p40">
                             <div class="row">
@@ -307,14 +321,34 @@
                                     <input type="hidden" name="module_account_id" id="module_account_id"
                                            :value="moduleAccountID">
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">Save</button>
-                                    <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a> </div>
+                                    <a class="blue_300 fsize16 fw600 ml20 js-review-feedback-slidebox" href="javascript:void(0);">Close</a> </div>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+         <div class="box" style="width:550px;">
+            <div style="width: 550px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox2">
+                            <i class=""><img src="assets/images/cross.svg"/></i>
+                        </a>
+                  
+                 <div class="p40">
+                    <div class="row">
+                        <div class="col-md-12"> 
+                            <img src="assets/images/list-icon.svg"/>
+                                <h3 class="htxt_medium_24 dark_800 mt20">Review </h3>
+                                <hr>
+                        </div>
+                    </div>
+                    <div id="reviewFeedPopupBox">
 
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
         <!--================================= CONTENT AFTER TAB===============================-->
 
         <!--=====================================Create new review================================-->
@@ -627,6 +661,11 @@
         </div>
         <!-- /newreviewpopup -->
 
+        <!--******************
+         Sliding Smart Popup
+         **********************-->
+       
+
         <div id="commentpopup" class="modal fade"></div>
     </div>
 
@@ -656,6 +695,7 @@
                 reviewTags: '',
                 campaignId: '',
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 form: new Form({
                     campaignName: '',
@@ -680,6 +720,9 @@
             },
             'searchBy' : function(){
                 this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
             }
         },
         methods: {
@@ -696,7 +739,8 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                this.loading = true;
+                axios.get('/admin/brandboost/reviews?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -711,6 +755,16 @@
                     });
             },
             showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
+            },
+            navigatePagination: function(p){
                 this.loading=true;
                 this.current_page = p;
                 this.loadPaginatedData();
@@ -812,6 +866,22 @@
                         });
                 }
             },
+            loodReviewPopup:function(review_id, tabtype) {
+                axios.post('/admin/reviews/getReviewFeedPopupData', {
+                        rid: review_id,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if (response.data.status == "success") {
+                                $("#reviewFeedPopupBox").html(response.data.popupData);
+                                if (tabtype == 'note') {
+                                    $('.tabbable a[href="#note-tab"]').trigger('click');
+                                } else {
+                                    $('.tabbable a[href="#review-tab"]').trigger('click');
+                                }
+                            }
+                        });
+            },
             deleteItem: function(reviewID) {
                 if(confirm('Are you sure you want to delete this item?')){
                     //Do axios
@@ -833,11 +903,15 @@
     }
     $(document).ready(function () {
         $(document).on('click', '.js-review-feedback-slidebox', function(){
-            $(".box").animate({
+            $(".box:first").animate({
                 width: "toggle"
             });
         });
-
+    $(document).on('click', '.js-review-feedback-slidebox2', function(){
+            $(".box:last").animate({
+                width: "toggle"
+            });
+        });
         /*$(document).on('click', '.search_tables_open_close', function(){
             $(".reviewfeedSearch").animate({
                 width: "toggle"

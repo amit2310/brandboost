@@ -194,7 +194,11 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/widget_overview', 'Admin\Brandboost@widgetOverview');
     Route::get('admin/brandboost/widgets', 'Admin\Brandboost@widgets');
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
+    Route::post('admin/contacts/update_status', 'Admin\Contacts@update_status');
+    Route::post('admin/contacts/delete_contact', 'Admin\Contacts@delete_contact');
     Route::post('admin/brandboost/deleteWidgets', 'Admin\Brandboost@deleteWidgets');
+    Route::get('admin/brandboost/export-review-request', 'Admin\Brandboost@exportReviewRequests');
+    Route::get('admin/brandboost/export-onsite-campaigns', 'Admin\Brandboost@exportOnsiteCampaigns');
     /**
      * --------------------------------------------------------------------------
      *  Add component of widget onsite section.
@@ -266,7 +270,14 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/statistics/{bbid}', 'Admin\Brandboost@statistics');
     Route::post('admin/offsite/add_website', 'Admin\Offsite@add_website');
     Route::post('admin/brandboost/saveOnsiteSettings', 'Admin\Brandboost@saveOnsiteSettings');
+    Route::post('admin/brandboost/changeStatus', 'Admin\Brandboost@changeStatus');
     Route::post('admin/brandboost/saveOnsiteConfiguration', 'Admin\Brandboost@saveOnsiteConfiguration');
+    Route::post('admin/brandboost/addCampaignToOnsite', 'Admin\Brandboost@addCampaignToOnsite');
+    Route::post('admin/brandboost/addOnsiteRequest', 'Admin\Brandboost@addOnsiteRequest');
+    Route::post('admin/brandboost/getReviewRequest', 'Admin\Brandboost@getReviewRequest');
+    Route::post('admin/brandboost/updateReviewRequest', 'Admin\Brandboost@updateReviewRequest');
+    Route::post('admin/brandboost/previewRequest', 'Admin\Brandboost@previewRequest');
+    Route::post('admin/brandboost/sendRequestTestMail', 'Admin\Brandboost@sendRequestTestMail');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
@@ -804,6 +815,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/reviews/displayreview', 'Admin\Reviews@displayreview');
     Route::post('admin/reviews/saveReviewNotes', 'Admin\Reviews@saveReviewNotes');
     Route::post('admin/reviews/getReviewPopupData', 'Admin\Reviews@getReviewPopupData');
+    Route::post('admin/reviews/getReviewFeedPopupData', 'Admin\Reviews@getReviewFeedPopupData');
     Route::post('admin/reviews/getReviewById', 'Admin\Reviews@getReviewById');
     Route::post('admin/reviews/update_video_review', 'Admin\Reviews@update_video_review');
 

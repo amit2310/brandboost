@@ -8,6 +8,8 @@
 <script src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/jQuery.tagify.js') }}"></script>
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/datatables_basic.js') }}"></script>

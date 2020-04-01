@@ -584,13 +584,15 @@ class Contacts extends Controller
     public function delete_contact(Request $request) {
         $response = array();
 
+        $mSubscriber = new SubscriberModel();
+
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         if (!empty($request)) {
 
             $subscriberID = $request->subscriberId;
 
-            $result = $this->mSubscriber->deleteGlobalSubscriber($userID, $subscriberID);
+            $result = $mSubscriber->deleteGlobalSubscriber($userID, $subscriberID);
             if ($result) {
                 $response['status'] = 'success';
             } else {
@@ -746,6 +748,7 @@ class Contacts extends Controller
     public function update_status(Request $request) {
 
         $response = array();
+        $mSubscriber = new SubscriberModel();
 
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -758,7 +761,7 @@ class Contacts extends Controller
             $aData = array(
                 'status' => $status
             );
-            $result = $this->mSubscriber->updateGlobalSubscriber($aData, $userId);
+            $result = $mSubscriber->updateGlobalSubscriber($aData, $userId);
 
             if ($result) {
                 $response['status'] = 'success';

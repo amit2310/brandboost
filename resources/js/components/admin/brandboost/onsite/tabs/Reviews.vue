@@ -8,16 +8,14 @@
                     <h3 class="htxt_medium_14 dark_600">Reviews</h3>
                 </div>
                 <div class="col-md-6">
-                    <!--<ul class="table_filter text-right">
-                        <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                    </ul>-->
                     <ul class="table_filter text-right">
                         <li>
                             <!--<a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a>-->
                             <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
                         </li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                        <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                        <li v-if="viewType == 'Grid View'"><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                        <li v-if="viewType == 'List View'"><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
                         <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a>
                             <div class="dropdown-menu p10 mt-1">
                                 <a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a>
@@ -84,12 +82,12 @@
                         <tbody>
                         <tr class="headings">
                             <td width="20">
-                                    <span>
-                                        <label class="custmo_checkbox pull-left">
-                                            <input type="checkbox">
-                                            <span class="custmo_checkmark blue"></span>
-                                        </label>
-                                    </span>
+                                <span>
+                                    <label class="custmo_checkbox pull-left">
+                                        <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                        <span class="custmo_checkmark blue"></span>
+                                    </label>
+                                </span>
                             </td>
                             <td><span class="fsize10 fw500">CONTACT </span></td>
                             <td><span class="fsize10 fw500">RATING</span></td>
@@ -100,12 +98,12 @@
                         </tr>
                         <tr v-for="oReview in oReviews">
                             <td width="20">
-                                    <span>
-                                        <label class="custmo_checkbox pull-left">
-                                            <input type="checkbox">
-                                            <span class="custmo_checkmark blue"></span>
-                                        </label>
-                                    </span>
+                                <span>
+                                    <label class="custmo_checkbox pull-left">
+                                        <input type="checkbox" :checked="deletedItems.indexOf(oReview.reviewid)>-1" @change="addtoDeleteCollection(oReview.reviewid, $event.target)">
+                                        <span class="custmo_checkmark blue"></span>
+                                    </label>
+                                </span>
                             </td>
                             <td class="fw500 dark_600">
                                 <span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200">{{ oReview.firstname.charAt(0) }}</span></span>
@@ -145,12 +143,22 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
+                        :offset="4"
+                        class="mt-4">
+                    </pagination>
                 </div>
             </div>
 
-            <pagination
+            <div v-if="viewType == 'Grid View'" class="clearfix"></div>
+            <pagination  v-if="viewType == 'Grid View'"
                 :pagination="allData"
                 @paginate="showPaginationData"
+                @paginate_per_page="showPaginationItemsPerPage"
                 :offset="4"
                 class="mt-4">
             </pagination>
@@ -210,17 +218,20 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                campaignId: this.$route.params.id,
                 allData: {},
                 oReviews : '',
                 oCampaign: '',
                 reviewTags: '',
                 campaignId: '',
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 seletedTab: 1,
                 viewType: 'List View',
                 sortBy: 'Date Created',
-                searchBy: ''
+                searchBy: '',
+                deletedItems: []
             }
         },
         created() {
@@ -228,10 +239,29 @@
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
+            this.campaignId = this.$route.params.id;
         },
         watch: {
             'sortBy' : function(){
                 this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
+            }
+        },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.oReviews.forEach(rev => {
+                    let idx = this.deletedItems.indexOf(rev.reviewid);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
             }
         },
         methods: {
@@ -241,8 +271,51 @@
             showReview: function(id){
                 window.location.href='#/reviews/onsite/reviews/'+id;
             },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/reviews/deleteMultipalReview', {_token:this.csrf_token(), multiReviewid:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.oReviews.length>0){
+                            this.oReviews.forEach(rev => {
+                                let idxx = this.deletedItems.indexOf(rev.reviewid);
+                                if(idxx == -1){
+                                    this.deletedItems.push(rev.reviewid);
+                                }
+                            });
+                        }
+                    }else{
+                        this.oReviews.forEach(rev => {
+                            let idxx = this.deletedItems.indexOf(rev.reviewid);
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+            },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/reviews?id='+this.$route.params.id+'&items_per_page='+this.items_per_page+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -252,10 +325,16 @@
                         this.oReviews = response.data.aReviews;
                         this.reviewTags = response.data.reviewTags;
                         this.reviewTags = response.data.reviewTags;
+                        //console.log(this.oReviews);
                     });
             },
             showPaginationData: function(p){
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){

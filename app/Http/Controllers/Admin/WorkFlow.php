@@ -1128,7 +1128,7 @@ class WorkFlow extends Controller {
                 $content = $this->brandboostEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
             }
             $response['status'] = 'success';
-            $response['content'] = stripslashes($content);
+            $response['content'] = stripslashes(str_replace('<?php echo base_url();?>', '/',$content));
             $response['template_source'] = $oResponse->template_source;
             $response['subject'] = $oResponse->subject;
             $response['greeting'] = str_replace(array('\n', '<br>'), array('', ''), $greeting);

@@ -16,12 +16,15 @@ import OnsiteOverview from './components/admin/brandboost/onsite/onsite_overview
 import addReviews from './components/admin/brandboost/onsite/addReview';
 //import ReviewsDashboard from './components/admin/brandboost/Dashboard';
 import ReviewsOverview from './components/admin/brandboost/ReviewsOverview';
-import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
+import SingleCampaign from './components/admin/brandboost/onsite/SingleCampaign';
+import SingleCampaign2 from './components/admin/brandboost/onsite/SingleCampaignTemp';
+//import ReviewsDashboard from './components/admin/brandboost/DashboardNew';
 import OnsiteReviews from './components/admin/brandboost/onsite/Reviews';
 import OnsiteCampaignsTab from './components/admin/brandboost/onsite/tabs/CampaignsSummary';
 import OnsiteReviewsSummary from './components/admin/brandboost/onsite/tabs/ReviewsSummary';
 import LatestCampaigns from './components/admin/brandboost/onsite/tabs/LatestCampaigns';
 import OnsiteReviewsTab from './components/admin/brandboost/onsite/tabs/Reviews';
+import OnsiteSubscribersTab from './components/admin/brandboost/onsite/tabs/Subscribers';
 import LatestReviews from './components/admin/brandboost/onsite/tabs/LatestReviews';
 import OnsiteReviewRequestsTab from './components/admin/brandboost/onsite/tabs/ReviewRequest';
 import onsiteReviewDetails from './components/admin/brandboost/onsite/ReviewDetails';
@@ -41,6 +44,7 @@ import onsiteStep3 from './components/admin/brandboost/onsite/setup/Setup3';
 import onsiteStep4 from './components/admin/brandboost/onsite/setup/Setup4';
 import onsiteStep5 from './components/admin/brandboost/onsite/setup/Setup5';
 import onsiteConfigure from './components/admin/brandboost/onsite/setup/Configure';
+import createNewReviewReqest from './components/admin/brandboost/onsite/RequestConfigure';
 
 import OffsiteReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
 /*Import Offsite Setup components*/
@@ -377,6 +381,7 @@ const routes = [
     /* Tab Option In Review Section */
     { path: '/brandboost/onsite/campaigns', component: OnsiteCampaignsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite campaigns - Brand Boost'} },
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
+    { path: '/brandboost/onsite/contacts', component: OnsiteSubscribersTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite contacts - Brand Boost'} },
     { path: '/brandboost/onsite/requests', component: OnsiteReviewRequestsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/onsite/reviewsSummary', component: OnsiteReviewsSummary, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     /* Tab Option In Review Section */
@@ -393,8 +398,10 @@ const routes = [
     /*{ path: '/templates/email', component: ListTemplates, props : {pageColor: 'email_sec', title : 'Email Templates', type : 'email' } },
     { path: '/templates/sms', component: ListTemplates, props : {pageColor: 'sms_sec', title : 'Sms Templates', type : 'sms' } },*/
     /* Review Module */
-    { path: '/reviews/overview', component: ReviewsOverview, props: {pageColor: 'onsite_sec', title : 'Review Overview'} },
-    { path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
+    /*{ path: '/reviews/dashboard', component: ReviewsDashboard, props: {pageColor: 'onsite_sec', title : 'Review Overview'} },*/
+    { path: '/reviews/dashboard', component: ReviewsOverview, props: {pageColor: 'onsite_sec', title : 'Review Dashboard'} },
+    { path: '/reviews/campaign/:id', component: SingleCampaign, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
+    { path: '/reviews/overview2', component: SingleCampaign2, props: {pageColor: 'onsite_sec', title : 'Single Campaign'} },
     { path: '/brandboost/review_campaigns/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
     { path: '/brandboost/review_feedback', component: ReviewFeedback, props: {pageColor: 'onsite_sec', title : 'Review Feedback'} },
     { path: '/reviews/onsite', component: OnsiteReviewCampaigns, props: {pageColor: 'onsite_sec', title : 'Review Campaigns', review_type: 'onsite'} },
@@ -404,6 +411,7 @@ const routes = [
     { path: '/reviews/onsite/setup/:id/4', component: onsiteStep4, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id', component: onsiteConfigure, props : {title : 'On Site Campaign'} },
+    { path: '/reviews/onsite/request/prepare/:id', component: createNewReviewReqest, props : {title : 'Create New Review Request'} },
     { path: '/reviews/onsite/reviews/:id', component: onsiteReviewDetails, props : {title : 'On Site Reviews'} },
     { path: '/reviews/offsite', component: OffsiteReviewCampaigns },
     { path: '/reviews/offsite/setup/:id/1', component: offsiteStep1, props : {title : 'Off Site Campaign'} },

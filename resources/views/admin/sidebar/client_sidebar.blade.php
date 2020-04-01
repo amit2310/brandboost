@@ -202,7 +202,6 @@
                     <h6 class="menu-title">REVIEWS</h6>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/reviews/overview') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Overview</span></a></li>
                     <li class="nav-item"><a class="nav-link active loadReviewsTheme" href="{{ url('#/reviews/dashboard') }}"><i><img src="assets/images/analytics-icon.svg"/></i><span class="menu-item-text">Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/reviews/onsite') }}"><i><img src="assets/images/campaign_home.svg"/></i><span class="menu-item-text">Onsite Campaigns</span></a></li>
                     <li class="nav-item"><a class="nav-link loadReviewsTheme" href="{{ url('#/brandboost/reviews/onsite/requests') }}"><i><img src="assets/images/add-box-line.svg"/></i><span class="menu-item-text">Onsite Review Requests</span></a></li>
