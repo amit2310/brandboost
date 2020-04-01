@@ -47,7 +47,7 @@
    	<h3 class="htxt_medium_24 dark_700">Review Campaign</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
-   		<button class="btn btn-md bkg_light_800 light_000" data-toggle="modal" data-target="#RequestAddLists" >Send Request <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
+   		<button class="btn btn-md bkg_light_800 light_000" data-toggle="modal" data-target="#RequestAddContacts" >Send Request <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
    	</div>
    </div>
    </div>
@@ -263,17 +263,17 @@
   
   
  <!--******************
-  Request - Add Lists - 1
+  Request - Add Tags - 1
  **********************-->
-  <div class="modal fade" id="RequestAddLists">
+  <div class="modal fade" id="RequestAddContacts">
     <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width:680px!important">
       <div class="modal-content review">
       	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
       	<div class="row">
       		<div class="col-12">
-                <img class="float-left mr-3 mt-1" src="assets/images/lists_blue_44.svg"/>
-      			<h3 class="htxt_medium_24 dark_800 mb-2">Select Lists</h3>
-      			<p class="htxt_regular_14 dark_200 m-0">Choose lists do you want to the campaign</p>
+                <img class="float-left mr-3 mt-1" src="assets/images/contacts_blue_44.svg"/>
+      			<h3 class="htxt_medium_24 dark_800 mb-2">Select Contacts</h3>
+      			<p class="htxt_regular_14 dark_200 m-0">Choose contacts do you want to the campaign</p>
       		</div>
       		
             
@@ -318,9 +318,8 @@
 						</label>
 					</span>
 				    </td>
-					<td><span class="fsize10 fw500">LIST </span></td>
-					<td><span class="fsize10 fw500">CONTACTS</span></td>
-					<td><span class="fsize10 fw500">UPDATED <img src="assets/images/arrow-down-line-14.svg"> </span></td>
+					<td><span class="fsize10 fw500">NAME </span></td>
+					<td><span class="fsize10 fw500">Email</span></td>
 					<td class="text-right"><span class="mr-1"><img src="assets/images/settings-2-line.svg"></span></td>
 				  </tr>
 				  
@@ -330,14 +329,27 @@
 				   <td width="20" class="pl-0">
 						<span>
 							<label class="custmo_checkbox pull-left">
+								<input type="checkbox" checked>
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_300">D</span></span> Darrell Henry</td>
+					<td>jeff.brown@example.com</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
+				  </tr>
+                  
+                  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
 								<span class="custmo_checkmark blue"></span>
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
-					<td>1,492</td>
-					<td>13 min ago</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800">D</span></span> Darrell Henry</td>
+					<td>jeff.brown@example.com</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
                   
@@ -350,54 +362,22 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
-					<td>1,492</td>
-					<td>13 min ago</td>
-					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
-				  </tr>
-                  
-                   <tr>
-				   <td width="20" class="pl-0">
-						<span>
-							<label class="custmo_checkbox pull-left">
-								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
-					<td>1,492</td>
-					<td>13 min ago</td>
-					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_300">r</span></span> Randall Murphy</td>
+					<td>isaac.gibson@example.com</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
                   
                   <tr>
 				   <td width="20" class="pl-0">
 						<span>
 							<label class="custmo_checkbox pull-left">
-								<input type="checkbox" checked>
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
-					<td>1,492</td>
-					<td>13 min ago</td>
-					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
-				  </tr>
-                  
-                   <tr>
-				   <td width="20" class="pl-0">
-						<span>
-							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
 								<span class="custmo_checkmark blue"></span>
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
-					<td>1,492</td>
-					<td>13 min ago</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800">b</span></span> Brooklyn Simmmons</td>
+					<td>brooklyn.simmmonsr@example.com</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
                   
@@ -410,12 +390,28 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
-					<td>1,492</td>
-					<td>13 min ago</td>
-					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_300">j</span></span> Julie Fisher</td>
+					<td>beth.fernandez@example.com</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
+                  
+                  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800">D</span></span> Colleen Edwards</td>
+					<td>pamela.foster@example.com</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+                  
+                  
+                  
+                 
 				
 				  
 				 
@@ -460,7 +456,7 @@
       				<hr class="mt-2">
       			</div>
             <div class="col-12">
-                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize13 fw500">Add Lists</button>
+                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize13 fw500">Add Contacts</button>
                 <button class="btn btn-lg bkg_light_000 dark_200 pr20 min_w_160 fsize13 fw500 ml20 shadow-none border">Back</button>
             </div>
     </div>
@@ -496,7 +492,7 @@
 </script>
 <script>
     $(document).ready(function(){
-        $("#RequestAddLists").modal('show');
+        $("#RequestAddContacts").modal('show');
     });
 </script>
 
