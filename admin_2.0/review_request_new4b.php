@@ -47,7 +47,7 @@
    	<h3 class="htxt_medium_24 dark_700">Review Campaign</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
-   		<button class="btn btn-md bkg_light_800 light_000" data-toggle="modal" data-target="#RequestAddLists" >Send Request <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
+   		<button class="btn btn-md bkg_light_800 light_000" data-toggle="modal" data-target="#RequestAddTags" >Send Request <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
    	</div>
    </div>
    </div>
@@ -263,17 +263,17 @@
   
   
  <!--******************
-  Request - Add Lists - 1
+  Request - Add Tags - 1
  **********************-->
-  <div class="modal fade" id="RequestAddLists">
+  <div class="modal fade" id="RequestAddTags">
     <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width:680px!important">
       <div class="modal-content review">
       	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
       	<div class="row">
       		<div class="col-12">
-                <img class="float-left mr-3 mt-1" src="assets/images/lists_blue_44.svg"/>
-      			<h3 class="htxt_medium_24 dark_800 mb-2">Select Lists</h3>
-      			<p class="htxt_regular_14 dark_200 m-0">Choose lists do you want to the campaign</p>
+                <img class="float-left mr-3 mt-1" src="assets/images/tags_blue_44.svg"/>
+      			<h3 class="htxt_medium_24 dark_800 mb-2">Select Tags</h3>
+      			<p class="htxt_regular_14 dark_200 m-0">Choose tags do you want to the campaign</p>
       		</div>
       		
             
@@ -335,7 +335,7 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/price-tag-12-white.svg"></span></span> meet</td>
 					<td>1,492</td>
 					<td>13 min ago</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
@@ -350,9 +350,9 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span></span> store </td>
 					<td>1,492</td>
-					<td>13 min ago</td>
+					<td>8 hr ago</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
 				  </tr>
                   
@@ -365,9 +365,9 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span></span>material </td>
 					<td>1,492</td>
-					<td>13 min ago</td>
+					<td>3 days ago</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
 				  </tr>
                   
@@ -380,9 +380,9 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span></span> strange </td>
 					<td>1,492</td>
-					<td>13 min ago</td>
+					<td>1 week ago</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
 				  </tr>
                   
@@ -395,9 +395,9 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/price-tag-12-white.svg"></span></span> region </td>
 					<td>1,492</td>
-					<td>13 min ago</td>
+					<td>3 days ago</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
 				  </tr>
                   
@@ -410,12 +410,41 @@
 							</label>
 						</span>
 					</td>
-					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span></span> Nisi ut et elit laboris ut </td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span></span> art </td>
 					<td>1,492</td>
-					<td>13 min ago</td>
+					<td>1 month ago</td>
 					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
 				  </tr>
 				  
+                   <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_light_800"><img src="assets/images/price-tag-12-white.svg"></span></span> probable </td>
+					<td>1,492</td>
+					<td>2 month ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_light_800"></span></span></td>
+				  </tr>
+                  
+                  <tr>
+				   <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox" checked>
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+					</td>
+					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span></span> bright </td>
+					<td>1,492</td>
+					<td>3 days ago</td>
+					<td class="text-right"><span class="float-right"><span class="status_icon bkg_green_300"></span></span></td>
+				  </tr>
 				
 				  
 				 
@@ -460,7 +489,7 @@
       				<hr class="mt-2">
       			</div>
             <div class="col-12">
-                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize13 fw500">Add Lists</button>
+                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize13 fw500">Add Tags</button>
                 <button class="btn btn-lg bkg_light_000 dark_200 pr20 min_w_160 fsize13 fw500 ml20 shadow-none border">Back</button>
             </div>
     </div>
@@ -496,7 +525,7 @@
 </script>
 <script>
     $(document).ready(function(){
-        $("#RequestAddLists").modal('show');
+        $("#RequestAddTags").modal('show');
     });
 </script>
 
