@@ -8477,6 +8477,63 @@ public function widgetStatisticDetailsStatsGraph(){
         return $sHtml;
     }
 
+    /**
+     * Send manual review request now
+     * @param Request $request
+     */
+    public function sendManualReviewRequest(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $requestId = $request->request_id;
+        $aRequestData = [
+            'status' => 1,
+            'updated' => date("Y-m-d H:i:s")
+        ];
+        $mBrandboost = new BrandboostModel();
+        $bUpdated = $mBrandboost->updateReviewRequest($aRequestData, $requestId);
+        if($bUpdated){
+            //Add request into the queue for sending
+            $aQueueData = [
+                'request_id' => $requestId,
+                'created' => date("Y-m-d H:i:s")
+            ];
+            $bDone = $mBrandboost->addToQueue($aQueueData, $requestId);
+            if($bDone){
+                $response = array('status' => 'success');
+            }else{
+                $response = array('status' => 'error', 'msg'=>'This review request already added in the queue for sending');
+            }
+        }
+        return $response;
+    }
+
+    /**
+     * Used to get the list of rquest created under an onsite campaign
+     * @param Request $request
+     * @return array
+     */
+    public function getManualRequests(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $campaignId = $request->campaign_id;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $perPage = ($request->per_page) ? $request->per_page : 10;
+        $mBrandboost = new BrandboostModel();
+        $oRequests = $mBrandboost->getManualRequestStatus($campaignId, $searchBy, $sortBy, true, $perPage);
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Request' => '',
+        );
+        return [
+            'breadcrumb' => $aBreadcrumb,
+            'allData' => $oRequests,
+            'requests' => $oRequests->items(),
+        ];
+    }
+
 
 
 }

@@ -12,7 +12,7 @@
                         <h3 class="htxt_medium_24 dark_700">Review Campaign</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
-                        <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}">Send Request <span><img
+                        <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}" @click="sendReviewRequest">Send Request <span><img
                             src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
                         <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview</button>
                         <button id="hideOverviewPreviewForm" type="button" style="display:none;">Hide</button>
@@ -936,6 +936,26 @@
                         }
                     });
             },
+            sendReviewRequest: function(){
+                this.loading = true;
+                axios.post('/admin/brandboost/sendManualReviewRequest', {
+                    _token: this.csrf_token(),
+                    request_id: this.$route.params.id
+                })
+                    .then(response => {
+                        if(response.data.status =='success'){
+                            this.refreshMessage = Math.random();
+                            this.successMsg = 'Review request added to the queue for sending';
+                            this.loading = false;
+                        }
+                        if(response.data.status == 'error'){
+                            this.refreshMessage = Math.random();
+                            this.errorMsg = response.data.msg;
+                            this.loading = false;
+                        }
+                    });
+
+            }
         }
     }
     $(document).ready(function(){

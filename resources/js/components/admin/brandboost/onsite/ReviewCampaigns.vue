@@ -138,6 +138,7 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
+                                    <a class="dropdown-item" v-if="campaign.campaign_type=='manual'" :href="`#/reviews/onsite/request/list/${campaign.id}`"><i class="dripicons-user text-muted mr-2"></i> Review Requests</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
@@ -262,6 +263,7 @@
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
+                                                <a class="dropdown-item" v-if="campaign.campaign_type=='manual'" :href="`#/reviews/onsite/request/list/${campaign.id}`"><i class="dripicons-user text-muted mr-2"></i> Review Request</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
@@ -703,7 +705,7 @@
                         //this.form = {};
                         //document.querySelector('.js-review-campaign-slidebox').click();
                         this.successMsg = 'Action completed successfully.';
-                        
+
                         $(".cross_icon").trigger('click');
                             elem.loadPaginatedData();
                         syncContactSelectionSources();
@@ -719,7 +721,7 @@
                             $(".cross_icon").trigger('click');
                             elem.loadPaginatedData();
                         }, 500,elem);
-                        
+
                     }else{
                        $(".cross_icon").trigger('click');
                             elem.loadPaginatedData();
