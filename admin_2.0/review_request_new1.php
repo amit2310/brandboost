@@ -23,15 +23,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
-
+ 
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-
-
+  
+  
  <!--******************
   Top Heading area
  **********************-->
@@ -50,23 +50,23 @@
    </div>
     <div class="clearfix"></div>
 </div>
-
-
-
-
+	 
+	  
+	  
+	  
  <!--******************
   Content Area
  **********************-->
    <div class="content-area">
     <div class="container-fluid">
-
+    
     <div class="row">
     	<div class="col-md-12">
     		<div class="card card_shadow min-h-280 pt50 pb50">
-
-
-
-
+    		
+    		
+     		
+    		
      		<div class="row mb65">
      		<div class="col-md-12 text-center">
      			<img class="mt40" style="max-width: 250px; " src="assets/images/review_request_icon_big.svg">
@@ -75,28 +75,28 @@
      			<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400" data-toggle="modal" data-target="#CREATEFORM">Create review request</button>
      		</div>
      		</div>
-
      		</div>
     	</div>
-
-
+    	
+    	
     	<div class="col-md-12 text-center mt-3">
-
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT review requests</a>    	</div>
+    </div>
       </div>
-
+      </div>
+      
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-
-
-
-
+  
+  
+ 
+ 
  <!--******************
   CREATEFORM  Popup
  **********************-->
-
   <div class="modal fade" id="CREATEFORM">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content review">
@@ -107,16 +107,15 @@
       			<p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
       			<hr/>
       		</div>
-
+      		
       		<div class="col-12">
       			<div class="form-group">
                 <label for="fname" class="fsize11 fw500 dark_600">REQUEST NAME</label>
                 <!--<input type="text" class="form-control h48 fsize14 dark_200 br4" id="fname" placeholder="Enter new campaign name" name="fname">-->
-
+                
                 <div class="campaign_name_sec border br4 p10 pl20 pr20 fsize14 dark_200">
                 	<div class="row">
-                		<div class="col-10">
-                            <input type="text" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new request name" name="fname"></div>
+                		<div class="col-10"><input type="text" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new request name" name="fname"></div>
                 		<div class="col-2">
                 	<div class="dropdown campaign_forms">
 					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -126,10 +125,12 @@
 						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
 						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 3 </a>					  </div>
 					</div>
-
+                		</div>
+                	</div>
+                </div>
               </div>
       		</div>
-
+      		
       		<div class="col">
       			<div class="form-group m-0">
                 <label for="fname" class="fsize11 fw500 dark_600">REQUEST TYPE</label>
@@ -150,18 +151,24 @@
                 </div>
               </div>
       		</div>
-
+      		
       		<div class="col-12">
       			<hr/>
       		</div>
-
+      		
       		<div class="col-6">
             <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase">CONTINUE</button>
-
+            <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a>            </div>
+            
+            <div class="col-6 text-right mt-2">
+           	<a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
+     				<span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+     				LEARN MORE ABOUT REQUESTS     			</a>            </div>
+      	</div>
       </div>
     </div>
   </div>
-
+ 
  <!--******************
   jQuery
  **********************-->

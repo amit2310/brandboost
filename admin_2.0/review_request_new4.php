@@ -16,9 +16,6 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
-
-
-
 </head>
 <body id="ReviewSection">
 
@@ -158,24 +155,36 @@
     					<div class="col-12">
     						<div class="form-group">
     							<label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/addcirclegreen.svg"/> &nbsp; RECIPIENTS</label>
-    							
-    							<input type="text" class="form-control h48" placeholder="Enter sender name">
+                                <div class="card border shadow-none p10 pb5 d-block mb15">
+                                <span class="addtags"><i class="ri-menu-2-fill"></i> electricity <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                <span class="addtags"><i class="ri-pie-chart-fill"></i> impossible <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                <span class="addtags"><i class="ri-menu-2-fill"></i> without <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                <span class="addtags"><i class="ri-pie-chart-fill"></i> historian <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                
+                                <a class="addnewtags" href="#"><img src="assets/images/blue_plus.svg"/></a>
+                                </div>
     						</div>
     					</div>
     					<div class="col-12">
     						<div class="form-group mb-0">
     							<label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/minus_red.svg"/> &nbsp; EXCLUDE</label>
-    							
-    							<select class="form-control h48 form-control-custom">
-    								<option>Select sender email address</option>
-    								<option>iver.mdx@brandboost.com</option>
-    								<option>iver.mdx@brandboost.com</option>
-    								<option>iver.mdx@brandboost.com</option>
-    								<option>iver.mdx@brandboost.com</option>
-    							</select>
+                                
+                                <div class="card border shadow-none p10 pb5 d-block m-0">
+                                    <span class="addtags"><i class="ri-price-tag-3-fill"></i> mechanism <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                    <span class="addtags"><i class="ri-pie-chart-fill"></i> definition <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                    <a class="addnewtags" href="#"><img src="assets/images/blue_plus.svg"/></a>
+                                </div>
+                               
     							
     						</div>
     					</div>
+                        
+                        
+                       
+              
+              
+              
+              
     				</div>
     			</div>
     		</div>
