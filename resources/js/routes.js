@@ -45,6 +45,7 @@ import onsiteStep4 from './components/admin/brandboost/onsite/setup/Setup4';
 import onsiteStep5 from './components/admin/brandboost/onsite/setup/Setup5';
 import onsiteConfigure from './components/admin/brandboost/onsite/setup/Configure';
 import createNewReviewReqest from './components/admin/brandboost/onsite/RequestConfigure';
+import requestList from './components/admin/brandboost/onsite/RequestList';
 
 import OffsiteReviewCampaigns from './components/admin/brandboost/offsite/ReviewCampaigns.vue';
 /*Import Offsite Setup components*/
@@ -412,6 +413,7 @@ const routes = [
     { path: '/reviews/onsite/setup/:id/5', component: onsiteStep5, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/setup/:id', component: onsiteConfigure, props : {title : 'On Site Campaign'} },
     { path: '/reviews/onsite/request/prepare/:id', component: createNewReviewReqest, props : {title : 'Create New Review Request'} },
+    { path: '/reviews/onsite/request/list/:id?', component: requestList, props : {title : 'Create New Review Request'} },
     { path: '/reviews/onsite/reviews/:id', component: onsiteReviewDetails, props : {title : 'On Site Reviews'} },
     { path: '/reviews/offsite', component: OffsiteReviewCampaigns },
     { path: '/reviews/offsite/setup/:id/1', component: offsiteStep1, props : {title : 'Off Site Campaign'} },

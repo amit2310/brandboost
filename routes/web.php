@@ -276,6 +276,8 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/brandboost/updateReviewRequest', 'Admin\Brandboost@updateReviewRequest');
     Route::post('admin/brandboost/previewRequest', 'Admin\Brandboost@previewRequest');
     Route::post('admin/brandboost/sendRequestTestMail', 'Admin\Brandboost@sendRequestTestMail');
+    Route::post('admin/brandboost/sendManualReviewRequest', 'Admin\Brandboost@sendManualReviewRequest');
+    Route::post('admin/brandboost/getManualRequests', 'Admin\Brandboost@getManualRequests');
 
 
     Route::get('admin/modules/referral/widgets', 'Admin\Modules\Referral@widgets');
