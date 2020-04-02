@@ -2944,4 +2944,59 @@ class BrandboostModel extends Model {
         return false;
     }
 
+    /**
+     * Used to add request queue into the database
+     * @param $aData
+     * @param $id
+     * @return bool
+     */
+    public function addToQueue($aData, $id){
+        $oData = DB::table('tbl_brandboost_request_queue')
+            ->where("request_id", $id)->first();
+        if(empty($oData)){
+            // Add to queue
+            $insert_id = DB::table('tbl_brandboost_request_queue')->insertGetId($aData);
+            return $insert_id;
+        }
+        return false;
+    }
+
+    /**
+     * This function used to get review request data along with cron sending status
+     * @param $campaingId
+     * @param bool $pagination
+     * @param int $perPage
+     * @return mixed
+     */
+    public function getManualRequestStatus($campaingId, $searchBy='', $sortBy='', $pagination=false, $perPage=10){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $query = DB::table('tbl_brandboost_request')
+            ->select('tbl_brandboost_request.*', 'tbl_brandboost_request_queue.status as cronStatus', 'tbl_brandboost_request_queue.completed_date', 'tbl_brandboost.brand_title as campaignName')
+            ->leftJoin('tbl_brandboost_request_queue','tbl_brandboost_request.id', '=', 'tbl_brandboost_request_queue.request_id')
+            ->leftJoin('tbl_brandboost','tbl_brandboost_request.campaign_id', '=', 'tbl_brandboost.id');
+        if(!empty($campaingId)){
+            $query -> where("tbl_brandboost_request.campaign_id", $campaingId);
+        }
+        if(!empty($searchBy)){
+            $query->where('tbl_brandboost_request.user_id', $userID);
+            $query->where('tbl_brandboost_request.name', 'LIKE',  "%$searchBy%");
+        }
+        if(!empty($sortBy)){
+            $query->where('tbl_brandboost_request.user_id', $userID);
+            $query->where('tbl_brandboost_request_queue.status', '=',  $sortBy);
+        }
+        $query->orderBy('tbl_brandboost_request.id', 'DESC');
+        if($pagination == true){
+            if($perPage == 'all' || $perPage == 'All' || $perPage == 'ALL'){
+                $result = $query->get();
+            }else{
+                $result = $query->paginate($perPage);
+            }
+        }else{
+            $result = $query->get();
+        }
+        return $result;
+    }
+
 }

@@ -47,7 +47,7 @@
    	<h3 class="htxt_medium_24 dark_700">Review Campaign</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
-   		<button class="btn btn-md bkg_light_800 light_000" data-toggle="modal" data-target="#RequestAddContacts1" >Send Request <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
+   		<button class="btn btn-md bkg_light_800 light_000" data-toggle="modal" data-target="#RequestAddLists" >Send Request <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
    	</div>
    </div>
    </div>
@@ -263,9 +263,9 @@
   
   
  <!--******************
-  Request - Add Contacts - 1
+  Request - Add Lists - 1
  **********************-->
-  <div class="modal fade" id="RequestAddContacts1">
+  <div class="modal fade" id="RequestAddLists">
     <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width:680px!important">
       <div class="modal-content review">
       	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
@@ -496,7 +496,7 @@
 </script>
 <script>
     $(document).ready(function(){
-        $("#RequestAddContacts1").modal('show');
+        $("#RequestAddLists").modal('show');
     });
 </script>
 
