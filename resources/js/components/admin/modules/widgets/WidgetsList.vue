@@ -111,11 +111,6 @@
                                     </p>
                                 </div>
                             </div>
-                            <pagination
-                                :pagination="allData"
-                                @paginate="showPaginationData"
-                                :offset="4">
-                            </pagination>
                         </div>
 
                         <div class="col-md-3 text-center js-onsite-widget-slidebox2" style="cursor: pointer;">
@@ -126,6 +121,12 @@
                         </div>
 
                     </div>
+
+                    <pagination v-if="viewType == 'Grid View'"
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        :offset="4">
+                    </pagination>
 
                     <div class="row" v-if="viewType == 'List View'">
                         <div class="col-md-12">
