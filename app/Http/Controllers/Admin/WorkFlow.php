@@ -2937,7 +2937,7 @@ class WorkFlow extends Controller {
      */
     public function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID){
         $mWorkflow = new WorkflowModel();
-        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, 10);
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, '', 10);
         $aData = array(
             'allData' => $oCampaignSubscribers,
             'subscribers' => $oCampaignSubscribers->items()
