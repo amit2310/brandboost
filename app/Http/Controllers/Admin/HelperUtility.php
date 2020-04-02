@@ -177,7 +177,8 @@ class HelperUtility extends Controller
     public function getWorkflowContactSelectionInterfaceData(Request $request){
         $moduleName = $request->moduleName;
         $moduleUnitID = $request->moduleUnitID;
-        $aContactSelectionData = WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID);
+        $requestID = $request->request_id;
+        $aContactSelectionData = WorkflowModel::getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID, $requestID);
         echo json_encode(['contactSelectionData' => $aContactSelectionData]);
         exit;
     }

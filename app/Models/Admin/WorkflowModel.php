@@ -2517,7 +2517,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowImportLists($moduleName, $moduleUnitID) {
+    public function getWorkflowImportLists($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_lists';
@@ -2544,12 +2544,15 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
+        $query = DB::table($tableName)
                 ->leftJoin("tbl_common_lists", "tbl_common_lists.id", '=', "$tableName.list_id")
                 ->select("$tableName.*", "tbl_common_lists.list_name")
                 ->where("$tableName.$fieldName", $moduleUnitID)
-                ->where("tbl_common_lists.delete_status", 0)
-                ->get();
+                ->where("tbl_common_lists.delete_status", 0);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
         return $oData;
     }
 
@@ -2559,7 +2562,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowExcludeLists($moduleName, $moduleUnitID) {
+    public function getWorkflowExcludeLists($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_lists_excluded';
@@ -2586,12 +2589,15 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
+        $query = DB::table($tableName)
                 ->leftJoin("tbl_common_lists", "tbl_common_lists.id", '=', "$tableName.list_id")
                 ->select("$tableName.*", "tbl_common_lists.list_name")
                 ->where("$tableName.$fieldName", $moduleUnitID)
-                ->where("tbl_common_lists.delete_status", 0)
-                ->get();
+                ->where("tbl_common_lists.delete_status", 0);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
 
         return $oData;
     }
@@ -2652,7 +2658,7 @@ class WorkflowModel extends Model {
      * @param type $automationID
      * @return type
      */
-    public function getWorkflowImportContacts($moduleName, $moduleUnitID) {
+    public function getWorkflowImportContacts($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_users';
@@ -2682,9 +2688,12 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
-                ->where($fieldName, $moduleUnitID)
-                ->get();
+        $query = DB::table($tableName)
+                ->where($fieldName, $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
 
         return $oData;
     }
@@ -2695,7 +2704,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowExcludeContacts($moduleName, $moduleUnitID) {
+    public function getWorkflowExcludeContacts($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_users_excluded';
@@ -2722,9 +2731,12 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
-                ->where($fieldName, $moduleUnitID)
-                ->get();
+        $query = DB::table($tableName)
+                ->where($fieldName, $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
 
         return $oData;
     }
@@ -2735,7 +2747,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowImportTags($moduleName, $moduleUnitID) {
+    public function getWorkflowImportTags($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_campaigns_tags';
@@ -2762,9 +2774,12 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
-                ->where($fieldName, $moduleUnitID)
-                ->get();
+        $query = DB::table($tableName)
+                ->where($fieldName, $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
         return $oData;
     }
 
@@ -2774,7 +2789,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowExcludeTags($moduleName, $moduleUnitID) {
+    public function getWorkflowExcludeTags($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_campaigns_tags_exclude';
@@ -2801,9 +2816,12 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
-                ->where($fieldName, $moduleUnitID)
-                ->get();
+        $query = DB::table($tableName)
+                ->where($fieldName, $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
 
         return $oData;
     }
@@ -2814,7 +2832,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowImportSegments($moduleName, $moduleUnitID) {
+    public function getWorkflowImportSegments($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_campaigns_segments';
@@ -2841,11 +2859,14 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
+        $query = DB::table($tableName)
                 ->leftJoin("tbl_segments", "$tableName.segment_id", '=', "tbl_segments.id")
                 ->select("$tableName.*", "tbl_segments.segment_name")
-                ->where("$tableName.$fieldName", $moduleUnitID)
-                ->get();
+                ->where("$tableName.$fieldName", $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
         return $oData;
     }
 
@@ -2855,7 +2876,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public function getWorkflowExcludeSegments($moduleName, $moduleUnitID) {
+    public function getWorkflowExcludeSegments($moduleName, $moduleUnitID, $requestId='') {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_campaigns_segments_exclude';
@@ -2882,11 +2903,14 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
+        $query = DB::table($tableName)
                 ->leftJoin("tbl_segments", "$tableName.segment_id", '=', "tbl_segments.id")
                 ->select("$tableName.*", "tbl_segments.segment_name")
-                ->where("$tableName.$fieldName", $moduleUnitID)
-                ->get();
+                ->where("$tableName.$fieldName", $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
+        $oData = $query->get();
 
         return $oData;
     }
@@ -2897,7 +2921,7 @@ class WorkflowModel extends Model {
      * @param type $moduleUnitID
      * @return boolean
      */
-    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $limit=10, $searchBy='', $sortBy='', $items_per_page = '') {
+    public static function getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $requestId='', $limit=10, $searchBy='', $sortBy='', $items_per_page = '') {
 
         switch ($moduleName) {
             case "brandboost":
@@ -2935,6 +2959,9 @@ class WorkflowModel extends Model {
                 ->leftJoin('tbl_subscribers', "$tableName.subscriber_id", '=', "tbl_subscribers.id")
                 ->select("$tableName.id as local_user_id", "tbl_subscribers.*", "tbl_subscribers.id as subscriber_id", "tbl_subscribers.status AS globalStatus", "tbl_subscribers.id AS global_user_id")
                 ->where("$tableName.$fieldName", $moduleUnitID);
+        if(!empty($requestId)){
+            $query->where("$tableName.request_id", $requestId);
+        }
         if(!empty($searchBy)){
             $query->where("tbl_subscribers.firstname", 'LIKE',  "%$searchBy%");
             //$query->orWhere("tbl_subscribers.lastname", 'LIKE',  "%$searchBy%");
@@ -2973,7 +3000,7 @@ class WorkflowModel extends Model {
      * @param string $moduleName
      * @param type $moduleUnitID
      */
-    public static function getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID) {
+    public static function getWorkflowContactSelectionInterfaceData($moduleName, $moduleUnitID, $requestId='') {
         if (!empty($moduleName) && $moduleUnitID > 0) {
 
             $aUser = getLoggedUser();
@@ -2988,7 +3015,7 @@ class WorkflowModel extends Model {
 
             $aTags = \App\Models\Admin\TagsModel::getClientTags($userID);
 
-            $oCampaignSubscribersAll = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
+            $oCampaignSubscribersAll = self::getWorkflowCampaignSubscribers($moduleName, $moduleUnitID, $requestId);
 
             $oCampaignSubscribers = $oCampaignSubscribersAll->items();
 
@@ -2998,26 +3025,26 @@ class WorkflowModel extends Model {
             //Import Specific Data
             $oTotalImportedSubscribers = (new self)->getWorkflowImportListSubscribers($moduleName, $moduleUnitID);
 
-            $oImportLists = (new self)->getWorkflowImportLists($moduleName, $moduleUnitID);
+            $oImportLists = (new self)->getWorkflowImportLists($moduleName, $moduleUnitID, $requestId);
 
-            $oCampaignImportContacts = (new self)->getWorkflowImportContacts($moduleName, $moduleUnitID);
+            $oCampaignImportContacts = (new self)->getWorkflowImportContacts($moduleName, $moduleUnitID, $requestId);
 
 
-            $oCampaignImportTags = (new self)->getWorkflowImportTags($moduleName, $moduleUnitID);
+            $oCampaignImportTags = (new self)->getWorkflowImportTags($moduleName, $moduleUnitID, $requestId);
 
-            $oCampaignImportSegments = (new self)->getWorkflowImportSegments($moduleName, $moduleUnitID);
+            $oCampaignImportSegments = (new self)->getWorkflowImportSegments($moduleName, $moduleUnitID, $requestId);
 
 
             //Exclude Specific Data
             $oTotalExcludeSubscribers = (new self)->getWorkflowExcludeListSubscribers($moduleName, $moduleUnitID);
 
-            $oExcludeLists = (new self)->getWorkflowExcludeLists($moduleName, $moduleUnitID);
+            $oExcludeLists = (new self)->getWorkflowExcludeLists($moduleName, $moduleUnitID, $requestId);
 
-            $oCampaignExcludeContacts = (new self)->getWorkflowExcludeContacts($moduleName, $moduleUnitID);
+            $oCampaignExcludeContacts = (new self)->getWorkflowExcludeContacts($moduleName, $moduleUnitID, $requestId);
 
-            $oCampaignExcludeTags = (new self)->getWorkflowExcludeTags($moduleName, $moduleUnitID);
+            $oCampaignExcludeTags = (new self)->getWorkflowExcludeTags($moduleName, $moduleUnitID, $requestId);
 
-            $oCampaignExcludeSegments = (new self)->getWorkflowExcludeSegments($moduleName, $moduleUnitID);
+            $oCampaignExcludeSegments = (new self)->getWorkflowExcludeSegments($moduleName, $moduleUnitID, $requestId);
 
 
             //Get Import/exclude buttons
