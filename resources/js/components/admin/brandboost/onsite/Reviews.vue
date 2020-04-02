@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>-->
-                
+
 
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
@@ -206,14 +206,14 @@
                                 <p class="fsize14 fw400 dark_600 lh_24" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
                                     {{ oReview.comment_text }}
                                 </p>
-                                
+
                                 <div class="reply_sec_link" >
 
-                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}} 
+                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}}
                                         <template v-if="oReview.getComm < 2">Comment </template>
                                         <template v-else>Comments</template>
-                                    
-                                    </a> 
+
+                                    </a>
                                     <!-- <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a> -->
                                     <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
@@ -333,10 +333,10 @@
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox2">
                             <i class=""><img src="assets/images/cross.svg"/></i>
                         </a>
-                  
+
                  <div class="p40">
                     <div class="row">
-                        <div class="col-md-12"> 
+                        <div class="col-md-12">
                             <img src="assets/images/list-icon.svg"/>
                                 <h3 class="htxt_medium_24 dark_800 mt20">Review </h3>
                                 <hr>
@@ -664,7 +664,7 @@
         <!--******************
          Sliding Smart Popup
          **********************-->
-       
+
 
         <div id="commentpopup" class="modal fade"></div>
     </div>

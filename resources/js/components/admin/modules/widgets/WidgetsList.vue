@@ -24,7 +24,7 @@
               Content Area
              **********************-->
             <div class="content-area">
-                <div class="container-fluid" v-if="widgets.length >0">
+                <div class="container-fluid" v-if="widgets.length > 0 || searchBy.length > 0">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
@@ -125,6 +125,7 @@
                     <pagination v-if="viewType == 'Grid View'"
                         :pagination="allData"
                         @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
                         :offset="4">
                     </pagination>
 
