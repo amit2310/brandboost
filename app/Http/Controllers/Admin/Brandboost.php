@@ -587,7 +587,7 @@ class Brandboost extends Controller
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
         $moduleName = 'brandboost';
         $moduleUnitID = '';
-        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, 10, $searchBy, $sortBy, $items_per_page);
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID, '', 10, $searchBy, $sortBy, $items_per_page);
         $aBreadcrumb = array(
             'Home' => '#/',
             'Reviews' => '#/reviews/dashboard',
