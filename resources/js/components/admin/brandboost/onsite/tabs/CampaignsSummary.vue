@@ -55,7 +55,7 @@
                     <div class="p20 pt0 pb0 bkg_light_050">
                     <ul class="list_with_icons3">
                         <!--<li v-for="campaign in campaigns" :key="campaign.id" v-if="campaign.id == campaignId" class="d-flex active">-->
-                        <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex">
+                        <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex" :class="{ active : campaignId == campaign.id }">
                             <span>
                                 <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
                                     <img src="assets/images/start-fill-white.svg">

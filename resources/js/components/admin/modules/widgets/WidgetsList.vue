@@ -24,7 +24,7 @@
               Content Area
              **********************-->
             <div class="content-area">
-                <div class="container-fluid" v-if="widgets.length >0">
+                <div class="container-fluid" v-if="widgets.length > 0 || searchBy.length > 0">
                     <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
                     <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
@@ -111,11 +111,6 @@
                                     </p>
                                 </div>
                             </div>
-                            <pagination
-                                :pagination="allData"
-                                @paginate="showPaginationData"
-                                :offset="4">
-                            </pagination>
                         </div>
 
                         <div class="col-md-3 text-center js-onsite-widget-slidebox2" style="cursor: pointer;">
@@ -126,6 +121,13 @@
                         </div>
 
                     </div>
+
+                    <pagination v-if="viewType == 'Grid View'"
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
+                        :offset="4">
+                    </pagination>
 
                     <div class="row" v-if="viewType == 'List View'">
                         <div class="col-md-12">
