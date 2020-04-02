@@ -381,7 +381,8 @@
                 this.selected_campaign = data.id;
                 //this.requestFrom.campaign_id = data.id;
                 window.location.href = '#/reviews/campaign/'+this.selected_campaign;
-                this.$forceUpdate()
+                this.$forceUpdate();
+                location.reload();
             }
         }
     }

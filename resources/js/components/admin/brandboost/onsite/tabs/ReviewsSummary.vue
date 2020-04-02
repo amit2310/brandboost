@@ -164,6 +164,8 @@
             showReview: function(id){
                 window.location.href='#/reviews/onsite/reviews/'+id;
                 this.active_el = id;
+                this.$forceUpdate();
+                location.reload();
             },
             showQuestions: function(id){
                 window.location.href='#/brandboost/questions/'+id;
