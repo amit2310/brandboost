@@ -241,6 +241,8 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 
 .status_icon{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 5px;}
 .status_icon:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
+.status_icon_modal{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 5px;}
+.status_icon_modal:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
 .circle_icon_24{width: 24px; height: 24px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; text-align: center; line-height: 23px; font-weight: 500;
 font-size: 12px;letter-spacing: 0.02em;color: #FFFFFF; text-transform: uppercase}
 
