@@ -116,29 +116,7 @@
                                     </div>
                                 </div>
                                 <div class="btop mt30 pt30" v-if="displayAudienceForm==true">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/addcirclegreen.svg"/> &nbsp; RECIPIENTS</label>
-
-                                                <input type="text" class="form-control h48" placeholder="Enter sender name">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group mb-0">
-                                                <label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/minus_red.svg"/> &nbsp; EXCLUDE</label>
-
-                                                <select class="form-control h48 form-control-custom">
-                                                    <option>Select sender email address</option>
-                                                    <option>iver.mdx@brandboost.com</option>
-                                                    <option>iver.mdx@brandboost.com</option>
-                                                    <option>iver.mdx@brandboost.com</option>
-                                                    <option>iver.mdx@brandboost.com</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <choose-audience :moduleName="moduleName" :moduleUnitId="moduleUnitID"></choose-audience>
                                 </div>
                             </div>
 
@@ -430,8 +408,10 @@
 
 <script>
     import jq from "jquery";
+    import ChooseAudience from '@/components/admin/manual_workflow/ChooseAudience';
     export default {
         components: {
+            ChooseAudience,
             apexchart: VueApexCharts,
         },
         data() {
@@ -450,7 +430,7 @@
                 moduleUnitID: '',
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
-                campaign: {},
+                request: {},
                 user: {},
                 breadcrumb: '',
                 feedbackResponse: '',
@@ -473,6 +453,7 @@
                 completedSMSSenderForm: false,
                 completedSMSContentForm: false,
                 completedSMSTrackingForm: false,
+                disableAudienceForm: false,
                 disableSenderForm: false,
                 disableSubjectForm: false,
                 disableContentForm: false,
@@ -577,6 +558,7 @@
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
+                        this.moduleUnitID = response.data.moduleUnitID;
                         this.request = response.data.requestData;
                         if(this.request.type == 'email'){
                             this.isEmailChannelActivated = true;

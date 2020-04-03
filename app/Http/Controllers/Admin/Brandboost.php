@@ -8225,6 +8225,8 @@ public function widgetStatisticDetailsStatsGraph(){
         );
         return [
             'breadcrumb'=>$aBreadcrumb,
+            'moduleName' => 'brandboost',
+            'moduleUnitID' => $aData->campaign_id,
             'requestData'=>$aData,
             'oEmailTemplates'=>$oEmailTemplates,
             'oSMSTemplates'=>$oSMSTemplates,
