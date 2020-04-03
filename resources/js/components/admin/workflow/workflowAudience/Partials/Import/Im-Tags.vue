@@ -1,70 +1,112 @@
 <template>
-    <div class="p40">
+    <div>
         <loading :isLoading="loading"></loading>
-        <div class="p10">
-            <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="backtoOption"><span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button>
-            <h3 style="float: right;">Add from Tags <span id="includeContactTag">{{selected_tags.length}}</span></h3>
+        <div class="row">
+            <div class="col-12">
+                <img class="float-left mr-3 mt-1" src="assets/images/tags_blue_44.svg"/>
+                <h3 class="htxt_medium_24 dark_800 mb-2">Select Tags</h3>
+                <h3 style="float: right;display:none;">Add from Tags <span>{{selected_tags.length}}</span></h3>
+                <p class="htxt_regular_14 dark_200 m-0">Choose tags do you want to the campaign</p>
+            </div>
+
+
+            <div class="col-12">
+                <div class="table_head_action bbot btop pb20 pt20 mb-0 mt20">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="table_filter">
+                                <li><a class="active" href="#">All</a></li>
+                                <li><a href="#">Active</a></li>
+                                <li><a href="#">Draft</a></li>
+                                <li><a href="#">Archive</a></li>
+                                <!--<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="table_filter text-right">
+                                <li><a href="#"><i><img src="assets/images/filter-line.svg"></i></a></li>
+                                <li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a href="#"><i><img src="assets/images/list.svg"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-flat">
-                    <div class="p0 bkg_white bbot">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th style="display: none;"></th>
-                                <th style="display: none;"></th>
-                                <th></th>
-                                <th><i class=""></i> Tag Name</th>
-                                <th><i class=""></i> Group Name</th>
-                                <th><i class=""></i> Contacts</th>
-                                <th class="text-right"><i class=""><img
-                                    src="/assets/images/icon_created.png"></i> Created
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                <div class="">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                        <tr class="headings">
+                            <td width="20">
+				  	<span>
+						<label class="custmo_checkbox pull-left">
+							<input type="checkbox">
+							<span class="custmo_checkmark blue"></span>
+						</label>
+					</span>
+                            </td>
+                            <td><span class="fsize10 fw500">TAG </span></td>
+                            <td><span class="fsize10 fw500">CONTACTS</span></td>
+                            <td><span class="fsize10 fw500">UPDATED <img src="assets/images/arrow-down-line-14.svg"> </span></td>
+                            <td class="text-right"><span class="mr-1"><img src="assets/images/settings-2-line.svg"></span></td>
+                        </tr>
 
-                            <tr v-for="tag in tags">
-                                <td style="display: none;">{{ tag.tag_created ? displayDateFormat('m/d/Y', tag.tag_created): 'Not Available' }}</td>
-                                <td style="display: none;">{{ tag.tagid }}</td>
-                                <td>
-                                    <label class="custmo_checkbox ">
-                                        <input type="checkbox" name="checkRows[]" class="addToCampaign" @click="addToTags($event,tag.tagid)"
-                                               :value="tag.tagid" :checked="selected_tags.includes(tag.tagid)" />
-                                        <span class="custmo_checkmark sblue"></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    {{ tag.tag_name }}
-                                </td>
-                                <td>
-                                    {{ tag.group_name }}
-                                </td>
-                                <td class="text-left">{{ tag.subscribersData.total }}</td>
-                                <td class="text-right">
-                                    <div class="media-left text-right pull-right">
-                                        <div class=""><a href="#" class="txt_grey">{{ tag.tag_created ? displayDateFormat('m d, Y', tag.tag_created) : 'Not Available' }}
-                                            <span
-                                                class="txt_grey">{{ tag.tag_created ? displayDateFormat('h:i A', tag.tag_created) : '' }}</span></a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <pagination
-                            :pagination="allData"
-                            @paginate="navigatePagination"
-                            :offset="4">
-                        </pagination>
-                    </div>
+                        <tr v-for="tag in tags">
+                            <td width="20" class="pl-0">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input
+                                    type="checkbox"
+                                    name="checkRows[]"
+                                    class="addToCampaign"
+                                    @click="addToTags($event,tag.tagid)"
+                                    :value="tag.tagid"
+                                    :checked="selected_tags.includes(tag.tagid)">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+                            </td>
+                            <td>
+                                <span class="table-img mr15">
+                                    <span class="circle_icon_24" :class="tag.status =='1' ? 'bkg_blue_300' : 'bkg_light_800'">
+                                        <img src="assets/images/price-tag-12-white.svg">
+                                    </span>
+                                </span> {{ tag.tag_name }}</td>
+                            <td>{{ tag.subscribersData.total }}</td>
+                            <td>{{ timeAgo(tag.tag_created) }}</td>
+                            <td class="text-right">
+                                <span class="float-right">
+                                    <span class="status_icon_modal" :class="tag.status =='1' ? 'bkg_blue_300' : 'bkg_light_800'"></span>
+                                </span>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <pagination
+                        :pagination="allData"
+                        @paginate="navigatePagination"
+                        :offset="4">
+                    </pagination>
                 </div>
             </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
+                <hr class="mt-2">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize13 fw500">Add Tags</button>
+                <button class="btn btn-lg bkg_light_000 dark_200 pr20 min_w_160 fsize13 fw500 ml20 shadow-none border" @click="backtoOption">Back</button>
+            </div>
         </div>
     </div>
+
 </template>
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
