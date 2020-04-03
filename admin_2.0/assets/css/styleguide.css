@@ -34,6 +34,7 @@ SMART POPUP SLIDING BOX
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
 .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
+.cross_icon.back{right: 70px;  width: 78px; }
 .box hr{border-color: #edf1f6!important}
 @media only screen and (min-height:900px){
 	.bottom-position{position: absolute; bottom: 40px; width: 100%; max-width: 368px;}
@@ -103,6 +104,7 @@ FORMS GROUP
 
 .img_vid_upload{width: 100%; min-height: 320px; border-radius: 4px; background:url(../../assets/images/upload_bkg.png) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_medium{width: 100%; min-height: 180px; border-radius: 4px; background:url(../../assets/images/addfile_txt.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
+.img_vid_upload_medium2{width: 100%; min-height: 222px; border-radius: 4px; background:url(../../assets/images/add_contact_txt.svg) center center no-repeat #fff; border:1px dashed #D5DFEF;}
 .img_vid_upload_small{width: 100%; min-height: 50px; border-radius: 4px; background:url(../../assets/images/no_image.png) 20px 17px no-repeat #fff; border: 1px solid #dfe5f0;}
 .img_vid_upload_circle{width: 125px; height: 125px;  border-radius: 100px; background:url(../../assets/images/browse_img.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
 .img_vid_upload_media{width: 100%; min-height: 90px; border-radius: 4px; background:url(../../assets/images/drag-drop-file.svg) center center no-repeat #fff; border: 1px dashed #dfe5f0;}
