@@ -301,6 +301,60 @@
                 this.displayImportOptions = true;
             },
 
+            addContact: function (id, actionName) {
+                axios.post('/admin/workflow/addContactToWorkflowCampaign', {
+                    contactId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //this.$emit('syncWorkflowAudience');
+                        //this.$emit('loadFreshSelectionData');
+                    });
+            },
+            addList: function (id, actionName) {
+                axios.post('/admin/workflow/addListToWorkflowCampaign', {
+                    selectedLists: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //this.$emit('syncWorkflowAudience');
+                        //this.$emit('loadFreshSelectionData');
+                    });
+            },
+            addSegment: function (id, actionName) {
+                axios.post('/admin/workflow/addSegmentToWorkflowCampaign', {
+                    segmentId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //this.$emit('syncWorkflowAudience');
+                        //this.$emit('loadFreshSelectionData');
+                    });
+            },
+            addTag: function (id, actionName) {
+                axios.post('/admin/workflow/addTagToWorkflowCampaign', {
+                    tagId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        //this.$emit('syncWorkflowAudience');
+                        //this.$emit('loadFreshSelectionData');
+
+                    });
+            },
+
             loadPaginatedData: function(){
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData?page='+this.current_page, {moduleName: this.moduleName, moduleUnitID:this.moduleUnitId})
                     .then(response => {
