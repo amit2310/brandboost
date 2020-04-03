@@ -64,6 +64,9 @@ export default {
             var placeVal = placeVal != '' ? placeVal : 2;
             return parseFloat(Math.round(num * 100) / 100).toFixed(placeVal);
         },
+        numberWithCommas(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
         Base64EncodeUrl(str){
             return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
         },

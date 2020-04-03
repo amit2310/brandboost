@@ -131,7 +131,7 @@
                             </td>
                             <td><i class="ri-at-line email_400 fsize15"></i></td>
                             <!--<td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</td>-->
-                            <td>{{ timeAgo(oReview.review_created) }}</td>
+                            <td>{{ timeAgo(oReview.created) }}</td>
                             <td>
                                 <span class="float-right">
                                     <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_600" title="INACTIVE"></span>
