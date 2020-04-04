@@ -2395,16 +2395,39 @@ class WorkflowModel extends Model {
      * @param type $id
      * @return type
      */
-    public function getWorkflowSegments($userID, $id = '') {
-        $oData = DB::table('tbl_segments')
+    public function getWorkflowSegments($userID, $id = '', $paginated='true', $searchBy='', $sortBy='', $items_per_page='10') {
+        $query = DB::table('tbl_segments')
                 ->when(!empty($userID), function ($query) use ($userID) {
                     return $query->where('user_id', $userID);
                 })
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('id', $id);
-                })
-            ->paginate(10);
-                //->get();
+                });
+        if(!empty($searchBy)){
+            $query->where('user_id', $userID);
+            $query->where('segment_name', 'LIKE', "%$searchBy%");
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('created', 'desc');
+            }else  if($sortBy == 'Name'){
+                $query->orderBy('segment_name', 'asc');
+            }else  if($sortBy == 'Active'){
+                $query->where('status', '1');
+            }else  if($sortBy == 'Draft'){
+                $query->where('status', '0');
+            }else  if($sortBy == 'Pending'){
+                $query->where('status', '2');
+            }else  if($sortBy == 'Archive'){
+                $query->where('status', '3');
+            }
+        }
+        if($paginated == true){
+            $oData = $query->paginate($items_per_page);
+        }else{
+            $oData = $query->get();
+        }
         return $oData;
     }
 

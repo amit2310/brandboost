@@ -14,20 +14,31 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <ul class="table_filter">
-                                    <li><a class="active" href="javascript:void(0);">All</a></li>
-                                    <li><a href="javascript:void(0);">Active</a></li>
-                                    <li><a href="javascript:void(0);">Draft</a></li>
-                                    <li><a href="javascript:void(0);">Archive</a></li>
-                                    <!--<li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                                    <li><a :class="{'active': sortBy == ''}" @click="sortBy=''" href="javascript:void(0);">All</a></li>
+                                    <li><a :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'" href="javascript:void(0);">Active</a></li>
+                                    <li><a :class="{'active': sortBy == 'Draft'}" @click="sortBy='Draft'" href="javascript:void(0);">Draft</a></li>
+                                    <li><a :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'" href="javascript:void(0);">Archive</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-4">
                                 <ul class="table_filter text-right">
-                                    <li><a href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                    <li>
+                                        <a href="javascript:void(0);" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter-line.svg"></i></a>
+                                        <!--<div class="dropdown-menu p10 mt-1">
+                                            <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Name'}" @click="sortBy='Name'"><i class="ri-check-double-fill"></i> &nbsp; Name</a>
+                                            <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="sortBy='Date Created'"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                        </div>-->
+                                    </li>
+                                    <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
                                     <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
                                     <li><a href="javascript:void(0);"><i><img src="assets/images/list.svg"></i></a></li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="card p20 datasearcharea br6 shadow3" style="z-index: 999999!important;">
+                            <div class="form-group m-0 position-relative">
+                                <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                                <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                             </div>
                         </div>
                     </div>
@@ -84,6 +95,7 @@
                         <pagination
                             :pagination="allData"
                             @paginate="navigatePagination"
+                            @paginate_per_page="navigatePaginationPerPage"
                             :offset="4">
                         </pagination>
 
@@ -118,6 +130,20 @@
                 allData: '',
                 userData: '',
                 current_page: 1,
+                items_per_page: 10,
+                searchBy: '',
+                sortBy: 'Active'
+            }
+        },
+        watch: {
+            'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
             }
         },
         mounted() {
@@ -125,7 +151,7 @@
         },
         methods: {
             loadPaginatedData: function(){
-                axios.post('/admin/workflow/loadWorkflowAudience?page='+this.current_page, {
+                axios.post('/admin/workflow/loadWorkflowAudience?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy, {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     audienceType: 'contacts',
@@ -143,6 +169,11 @@
             navigatePagination: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            navigatePaginationPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             loadProfile: function(id){

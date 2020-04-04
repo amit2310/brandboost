@@ -14,9 +14,9 @@ class TagsModel extends Model {
      * @param type $userid
      * @return type object
      */
-    public static function getClientTags($userID = "") {
+    public static function getClientTags($userID = "", $paginated=true, $searchBy='', $sortBy='', $items_per_page='10') {
 
-        $oData = DB::table('tbl_tag_groups')
+        $query = DB::table('tbl_tag_groups')
                 ->leftJoin('tbl_tag_groups_entity', 'tbl_tag_groups.id', '=', 'tbl_tag_groups_entity.group_id')
                 ->select('tbl_tag_groups.*', 'tbl_tag_groups_entity.id AS tagid', 'tbl_tag_groups_entity.tag_name', 'tbl_tag_groups_entity.tag_created')
                 ->whereNotNull('tag_name')
@@ -24,10 +24,30 @@ class TagsModel extends Model {
                     return $query->where('tbl_tag_groups.user_id', $userID);
                 })
                 ->orderBy('tbl_tag_groups.id', 'DESC')
-                ->orderBy('tbl_tag_groups_entity.id', 'DESC')
-                ->paginate(10);
-                //->get();
+                ->orderBy('tbl_tag_groups_entity.id', 'DESC');
 
+        if(!empty($searchBy)){
+            $query->where('tbl_tag_groups.user_id', $userID);
+            $query->where('tbl_tag_groups_entity.tag_name', 'LIKE', "%$searchBy%");
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'Active'){
+                $query->where('tbl_tag_groups.status', '1');
+            }else  if($sortBy == 'Draft'){
+                $query->where('tbl_tag_groups.status', '0');
+            }else  if($sortBy == 'Pending'){
+                $query->where('tbl_tag_groups.status', '2');
+            }else  if($sortBy == 'Archive'){
+                $query->where('tbl_tag_groups.status', '2');
+            }
+
+        }
+        if($paginated == true){
+            $oData = $query->paginate($items_per_page);
+        }else{
+            $oData = $query->get();
+        }
         return $oData;
     }
 
