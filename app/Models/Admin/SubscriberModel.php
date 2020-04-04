@@ -15,19 +15,38 @@ class SubscriberModel extends Model {
      * @param type $userID
      * @return type
      */
-    public static function getGlobalSubscribers($userID, $paginated = true) {
+    public static function getGlobalSubscribers($userID, $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10') {
         $query = DB::table('tbl_subscribers')
                 ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus', 'tbl_users.avatar')
                 ->where('tbl_subscribers.owner_id', $userID)
                 ->where('tbl_subscribers.firstname', '!=', 'NA')
-                ->where('tbl_subscribers.status', 1)
+                /*->where('tbl_subscribers.status', 1)*/
                 ->orderBy('tbl_subscribers.id', 'desc');
-            if($paginated){
-                $oData = $query->paginate(10);
-            }else{
-                $oData = $query->get();
+        if(!empty($searchBy)){
+            $query->where('tbl_subscribers.owner_id', $userID);
+            $query->where('tbl_subscribers.firstname', 'LIKE', "%$searchBy%");
+            $query->orWhere('tbl_subscribers.lastname', 'LIKE', "%$searchBy%");
+            $query->orWhere('tbl_subscribers.email', 'LIKE', "%$searchBy%");
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'Active'){
+                $query->where('tbl_subscribers.status', '1');
+            }else  if($sortBy == 'Draft'){
+                $query->where('tbl_subscribers.status', '0');
+            }else  if($sortBy == 'Pending'){
+                $query->where('tbl_subscribers.status', '2');
+            }else  if($sortBy == 'Archive'){
+                $query->where('tbl_subscribers.status', '2');
             }
+
+        }
+        if($paginated == true){
+            $oData = $query->paginate($items_per_page);
+        }else{
+            $oData = $query->get();
+        }
         return $oData;
     }
 

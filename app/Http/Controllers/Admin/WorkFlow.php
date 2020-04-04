@@ -2811,6 +2811,11 @@ class WorkFlow extends Controller {
             $moduleName = strip_tags($request->moduleName);
             $moduleUnitId = strip_tags($request->moduleUnitId);
             $actionType = strip_tags($request->actionType);
+            //Filter entities
+            $sortBy = $request->get('sortBy');
+            $searchBy = $request->get('search');
+            $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
+
             if ($moduleUnitId > 0) {
 
                 $aUser = getLoggedUser();
@@ -2827,9 +2832,9 @@ class WorkFlow extends Controller {
                 $oLists = $mWorkflow->getWorkflowMyLists($userID);
 
                 $oCampaign = $mWorkflow->getWorkflowCampaign($moduleUnitId,  $moduleName);
-                $oSegments = $mWorkflow->getWorkflowSegments($userID);
-                $subscribersData = SubscriberModel::getGlobalSubscribers($userID);
-                $aTags = TagsModel::getClientTags($userID);
+                $oSegments = $mWorkflow->getWorkflowSegments($userID, '', true, $searchBy, $sortBy, $items_per_page);
+                $subscribersData = SubscriberModel::getGlobalSubscribers($userID, true, $searchBy, $sortBy, $items_per_page);
+                $aTags = TagsModel::getClientTags($userID , true, $searchBy, $sortBy, $items_per_page);
 
                 if ($actionType == 'import') {
                     $oCampaignContacts = $mWorkflow->getWorkflowImportContacts($moduleName, $moduleUnitId);

@@ -115,8 +115,8 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="btop mt30 pt30" v-if="displayAudienceForm==true">
-                                    <choose-audience :moduleName="moduleName" :moduleUnitId="moduleUnitID"></choose-audience>
+                                <div class="btop mt30 pt30" v-show="displayAudienceForm==true">
+                                    <choose-audience v-if="moduleName !=''" :moduleName="moduleName" :moduleUnitId="moduleUnitID"></choose-audience>
                                 </div>
                             </div>
 
