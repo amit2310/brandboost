@@ -5,7 +5,7 @@
             <div class="col-12">
                 <img class="float-left mr-3 mt-1" src="assets/images/lists_blue_44.svg"/>
                 <h3 class="htxt_medium_24 dark_800 mb-2">Select Lists</h3>
-                <h3 style="float: right;display:none;">Add from Lists <span>{{selected_lists.length}}</span></h3>
+                <h3 style="float: right;display:none;">Add from Lists <span id="includeContactList">{{selected_lists.length}}</span></h3>
                 <p class="htxt_regular_14 dark_200 m-0">Choose lists do you want to the campaign</p>
             </div>
 
@@ -15,19 +15,19 @@
                     <div class="row">
                         <div class="col-md-8">
                             <ul class="table_filter">
-                                <li><a class="active" href="#">All</a></li>
-                                <li><a href="#">Active</a></li>
-                                <li><a href="#">Draft</a></li>
-                                <li><a href="#">Archive</a></li>
-                                <!--<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
+                                <li><a class="active" href="javascript:void(0);">All</a></li>
+                                <li><a href="javascript:void(0);">Active</a></li>
+                                <li><a href="javascript:void(0);">Draft</a></li>
+                                <li><a href="javascript:void(0);">Archive</a></li>
+                                <!--<li><a href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
                             </ul>
                         </div>
                         <div class="col-md-4">
                             <ul class="table_filter text-right">
-                                <li><a href="#"><i><img src="assets/images/filter-line.svg"></i></a></li>
-                                <li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a href="#"><i><img src="assets/images/list.svg"></i></a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i></a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
+                                <li><a href="javascript:void(0);"><i><img src="assets/images/list.svg"></i></a></li>
                             </ul>
                         </div>
                     </div>
