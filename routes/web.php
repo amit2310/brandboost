@@ -176,6 +176,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/onsite_setup/{id}', 'Admin\Brandboost@onsiteSetup');
     Route::get('admin/brandboost/onsiteSetupSubscribers/{id}', 'Admin\Brandboost@onsiteSetupSubscribers');
     Route::get('admin/brandboost/onsiteSetupReview/{id}', 'Admin\Brandboost@onsiteSetupReview');
+    Route::get('admin/brandboost/info', 'Admin\Brandboost@campaignInfo');
     Route::get('admin/brandboost/reviews', 'Admin\Brandboost@reviews');
     Route::get('admin/brandboost/reviews/{id}', 'Admin\Brandboost@reviews');
     Route::get('admin/brandboost/media', 'Admin\Brandboost@media');
