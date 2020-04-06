@@ -167,9 +167,9 @@
 
         <div v-else class="row">
             <div class="col-md-12">
-                <div class="card card_shadow min_h_600">
+                <div class="card card_shadow min_h_280">
 
-                    <div class="row mb65">
+                    <!--<div class="row mb65">
                         <div class="col-md-6 text-left">
                             <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="#">
                                 <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
@@ -181,7 +181,7 @@
                                 Learn how use use contacts &nbsp; <img src="assets/images/question-line.svg">
                             </a>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="row mb65">
                         <div class="col-md-12 text-center">
