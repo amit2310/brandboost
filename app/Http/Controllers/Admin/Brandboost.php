@@ -729,6 +729,7 @@ class Brandboost extends Controller
     {
         $aUser = getLoggedUser();
         $param = $request->type;
+        $campaignId = $request->id;
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
         $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
@@ -740,7 +741,12 @@ class Brandboost extends Controller
             'Reviews' => '#/reviews/dashboard',
             ucwords($param).' Review Requests' => ''
         );
-        $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
+        if(!empty($campaignId)) {
+            $oRequests = $mBrandboost->getReviewRequest($campaignId, '', $param,  $searchBy, $sortBy,$items_per_page);
+        } else {
+            $oRequests = $mBrandboost->getReviewRequest('', '', $param,  $searchBy, $sortBy,$items_per_page);
+        }
+
         $oRequestsData = ($items_per_page =='All')? $oRequests : $oRequests->items();
         if($oRequestsData){
             foreach($oRequestsData as $idx=>$oRequest){

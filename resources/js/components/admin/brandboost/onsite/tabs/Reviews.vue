@@ -188,7 +188,8 @@
                             <img class="mt40" style="max-width: 240px; " src="assets/images/reviews_icon_125.svg">
                             <h3 class="htxt_bold_18 dark_700 mt30">No reviews so far. Connect reviews site!</h3>
                             <h3 class="htxt_regular_14 dark_200 mt15 mb25">Reviews from 50+ review sites, at your fingertips...</h3>
-                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>
+                            <!--<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>-->
+                            <button class="btn btn-md bkg_reviews_400 light_000" @click="displayAddReviewForm">Add Review <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                         </div>
                     </div>
                 </div>
@@ -270,6 +271,9 @@
             },
             showReview: function(id){
                 window.location.href='#/reviews/onsite/reviews/'+id;
+            },
+            displayAddReviewForm: function(){
+                window.location.href='#/reviews/onsite/add';
             },
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
