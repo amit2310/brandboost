@@ -14,6 +14,7 @@
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
                         <!--<button class="btn btn-md bkg_reviews_400 light_000" data-toggle="modal" data-target="#CREATEFORM">CREATE CAMPAIGN <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
+                        <button class="btn btn-md bkg_reviews_400 light_000" @click="setupBroadcast(selected_campaign)"> Edit Campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
                     </div>
                 </div>
             </div>
@@ -376,7 +377,14 @@
                 selected_campaign: ''
             }
         },
+        mounted() {
+            this.$parent.pageColor = this.pageColor;
+            this.selected_campaign = this.$route.params.id;
+        },
         methods: {
+            setupBroadcast: function(id){
+                window.location.href='#/reviews/onsite/setup/'+id;
+            },
             selectCampaign: function(data){
                 this.selected_campaign = data.id;
                 //this.requestFrom.campaign_id = data.id;
