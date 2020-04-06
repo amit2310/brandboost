@@ -945,6 +945,36 @@ class Brandboost extends Controller
         exit;
     }
 
+    /**
+     * Used to get all info of campaign
+     * @param type $request
+     * @return type
+     */
+    public function campaignInfo(Request $request) {
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mReviews = new ReviewsModel();
+        $mTags = new TagsModel();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bActiveSubsription = $mUsers->isActiveSubscription();
+
+        $campaignId = $request->id;
+
+        if (!empty($campaignId)) {
+            $oCampaign = $mReviews->getBrandBoostCampaign($campaignId);
+        }
+        $aData = array(
+            'title' => 'Brand Boost Info',
+            'userId' => $userID,
+            'campaignId' => (!empty($campaignId) ? $campaignId : ''),
+            'oCampaign' => $oCampaign,
+            'bActiveSubsription' => $bActiveSubsription
+        );
+
+        return $aData;
+    }
+
 
     /**
      * Used to get all reviews of campaign

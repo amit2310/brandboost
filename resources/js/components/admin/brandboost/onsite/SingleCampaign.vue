@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review General Electric</h3>
+                        <h3 class="htxt_medium_24 dark_700">{{ oCampaign.brand_title }}</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
@@ -377,6 +377,9 @@
                 selected_campaign: ''
             }
         },
+        created() {
+            this.loadData();
+        },
         mounted() {
             this.$parent.pageColor = this.pageColor;
             this.selected_campaign = this.$route.params.id;
@@ -390,7 +393,15 @@
                 //this.requestFrom.campaign_id = data.id;
                 window.location.href = '#/reviews/campaign/'+this.selected_campaign;
                 this.$forceUpdate();
-                location.reload();
+                //location.reload();
+                this.loadData();
+            },
+            loadData: function(){
+                axios.get('/admin/brandboost/info?id='+this.$route.params.id)
+                    .then(response => {
+                        this.campaignId = response.data.campaignId;
+                        this.oCampaign = response.data.oCampaign;
+                    });
             }
         }
     }
