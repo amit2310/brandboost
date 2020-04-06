@@ -2378,7 +2378,18 @@ class WorkflowModel extends Model {
                 ->leftJoin('tbl_automation_users', 'tbl_automation_users.list_id', '=', 'tbl_common_lists.id')
                 ->leftJoin('tbl_subscribers', 'tbl_automation_users.subscriber_id', '=', 'tbl_subscribers.id')
                 ->join('tbl_users', 'tbl_users.id', '=', 'tbl_common_lists.user_id')
-                ->select("tbl_common_lists.*", "tbl_automation_users.list_id as l_list_id", "tbl_automation_users.user_id as l_user_id", "tbl_subscribers.firstname as l_firstname", "tbl_subscribers.lastname as l_lastname", "tbl_subscribers.email as l_email", "tbl_subscribers.phone as l_phone", "tbl_subscribers.created as l_created", "tbl_automation_users.status as l_status", DB::raw("CONCAT(tbl_users.firstname,' ', tbl_users.lastname) as lCreateUsername"), "tbl_users.email as cEmail", "tbl_users.mobile as cMobile")
+                ->select("tbl_common_lists.*",
+                    "tbl_automation_users.list_id as l_list_id",
+                    "tbl_automation_users.user_id as l_user_id",
+                    "tbl_subscribers.firstname as l_firstname",
+                    "tbl_subscribers.lastname as l_lastname",
+                    "tbl_subscribers.email as l_email",
+                    "tbl_subscribers.phone as l_phone",
+                    "tbl_subscribers.created as l_created",
+                    "tbl_automation_users.status as l_status",
+                    DB::raw("CONCAT(tbl_users.firstname,' ', tbl_users.lastname) as lCreateUsername"),
+                    "tbl_users.email as cEmail",
+                    "tbl_users.mobile as cMobile")
                 ->where('tbl_common_lists.delete_status', 0)
                 ->where("tbl_common_lists.status", 'active')
                 ->when(($userID > 0), function($query) use($userID) {
@@ -2386,6 +2397,47 @@ class WorkflowModel extends Model {
                 })
                 ->orderBy('tbl_common_lists.id', 'desc')
                 ->get();
+        return $oData;
+    }
+
+    /**
+     * This function returns all user lists
+     * @param type $userID
+     * @return type
+     */
+    public function getWorkflowMyListsNew($userID, $paginated='true', $searchBy='', $sortBy='', $items_per_page='10') {
+        $query = DB::table('tbl_common_lists')
+                ->where('delete_status', 0)
+                ->where("status", 'active')
+                ->when(($userID > 0), function($query) use($userID) {
+                    return $query->where('user_id', $userID);
+                })
+                ->orderBy('id', 'desc');
+        if(!empty($searchBy)){
+            $query->where('list_name', 'LIKE', "%$searchBy%");
+            $query->where('user_id', $userID);
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'Date Created'){
+                $query->orderBy('list_created', 'desc');
+            }else  if($sortBy == 'Name'){
+                $query->orderBy('list_name', 'asc');
+            }else  if($sortBy == 'Active'){
+                $query->where('status', 'active');
+            }else  if($sortBy == 'Draft'){
+                $query->where('status', 'draft');
+            }else  if($sortBy == 'Pending'){
+                $query->where('status', 'pending');
+            }else  if($sortBy == 'Archive'){
+                $query->where('status', 'archive');
+            }
+        }
+        if($paginated == true){
+            $oData = $query->paginate($items_per_page);
+        }else{
+            $oData = $query->get();
+        }
         return $oData;
     }
 

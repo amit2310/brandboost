@@ -35,7 +35,7 @@
         <div class="modal fade" id="includeAudience">
             <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width:680px!important">
                 <div class="modal-content review">
-                    <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+                    <a class="cross_icon" href="javascript:void(0);" @click="closeAllPopups"><i class=""><img src="assets/images/cross.svg"></i></a>
                     <div class="row" v-show="displayImportOptions">
                         <div class="col-12">
                             <h3 class="htxt_medium_24 dark_800 mb-2">Add Contacts</h3>
@@ -142,7 +142,7 @@
         <div class="modal fade" id="excludeAudience">
             <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width:680px!important">
                 <div class="modal-content review">
-                    <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+                    <a class="cross_icon" href="javascript:void(0);" @click="closeAllPopups"><i class=""><img src="assets/images/cross.svg"></i></a>
                     <div class="row" v-show="displayExcludeOptions">
                         <div class="col-12">
                             <h3 class="htxt_medium_24 dark_800 mb-2">Exclude Contacts</h3>
@@ -315,9 +315,17 @@
                 this.closeExcludeOptions();
             },
             closeImportOptions: function(){
+                this.displayContacts = false;
+                this.displayLists = false;
+                this.displaySegments = false;
+                this.displayTags = false;
                 document.querySelector('#btnCloseImportOptions').click();
             },
             closeExcludeOptions: function(){
+                this.displayContactsExclude = false;
+                this.displayListsExclude = false;
+                this.displaySegmentsExclude = false;
+                this.displayTagsExclude = false;
                 document.querySelector('#btnCloseExcludeOptions').click();
             },
             resetAllOptions: function () {
