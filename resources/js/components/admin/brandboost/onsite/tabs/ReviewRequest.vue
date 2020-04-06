@@ -173,7 +173,8 @@
                             <img class="mt40" style="max-width: 250px; " src="assets/images/Review_request_image.svg">
                             <h3 class="htxt_bold_18 dark_700 mt30">No review request so far. But you can change it!</h3>
                             <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import review request!</h3>
-                            <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>
+                            <!--<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>-->
+                            <button class="btn btn-md bkg_reviews_400 light_000 ">SEND NEW REQUEST <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                         </div>
                     </div>
 
@@ -204,6 +205,7 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                campaignId: this.$route.params.id,
                 requests : '',
                 allData: {},
                 current_page: 1,
@@ -220,6 +222,7 @@
         },
         mounted() {
             this.$parent.pageColor = this.pageColor;
+            this.campaignId = this.$route.params.id;
         },
         watch: {
             'sortBy' : function(){
@@ -292,7 +295,7 @@
                 }
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/review_request/onsite?id='+this.$route.params.id+'&items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
