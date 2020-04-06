@@ -609,7 +609,8 @@
                 this.loadPaginatedData();
             },
             setupBroadcast: function(id){
-                window.location.href='#/reviews/onsite/setup/'+id;
+                //window.location.href='#/reviews/onsite/setup/'+id;
+                window.location.href='#/reviews/campaign/'+id;
             },
             showContacts: function(id){
                 window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
