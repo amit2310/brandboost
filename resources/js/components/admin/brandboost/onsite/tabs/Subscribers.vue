@@ -149,14 +149,14 @@
             <div class="col-md-12">
                 <div class="card card_shadow min-h-280">
 
-                    <div class="row mb65">
+                    <!--<div class="row mb65">
                         <div class="col-md-12 text-left">
                             <a class="lh_32 blue_400 htxt_bold_14" href="#">
                                 <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
                                 Import contacts
                             </a>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="row mb65">
                         <div class="col-md-12 text-center">

@@ -222,11 +222,11 @@
                     </div>
                 </div>
 
-                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)"></OnsiteReviewRequestsTab>
+                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)" :key="componentKey"></OnsiteReviewRequestsTab>
 
-                <OnsiteReviewsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 3)"></OnsiteReviewsTab>
+                <OnsiteReviewsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 3)" :key="componentKey"></OnsiteReviewsTab>
 
-                <OnsiteSubscribersTab v-if="seletedTab === 4"></OnsiteSubscribersTab>
+                <OnsiteSubscribersTab v-if="seletedTab === 4" :key="componentKey"></OnsiteSubscribersTab>
 
                 <!--<div v-if="(seletedTab == 4)">
                     <div class="row">
@@ -374,7 +374,8 @@
                 viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: '',
-                selected_campaign: ''
+                selected_campaign: '',
+                componentKey: 0
             }
         },
         created() {
@@ -393,6 +394,7 @@
                 //this.requestFrom.campaign_id = data.id;
                 window.location.href = '#/reviews/campaign/'+this.selected_campaign;
                 this.$forceUpdate();
+                this.componentKey += 1;
                 //location.reload();
                 this.loadData();
             },
