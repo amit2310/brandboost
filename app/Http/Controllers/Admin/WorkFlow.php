@@ -2829,7 +2829,7 @@ class WorkFlow extends Controller {
 
                 $duplicateCount = 0;
 
-                $oLists = $mWorkflow->getWorkflowMyLists($userID);
+                $oLists = $mWorkflow->getWorkflowMyListsNew($userID, true, $searchBy, $sortBy, $items_per_page);
 
                 $oCampaign = $mWorkflow->getWorkflowCampaign($moduleUnitId,  $moduleName);
                 $oSegments = $mWorkflow->getWorkflowSegments($userID, '', true, $searchBy, $sortBy, $items_per_page);
@@ -2869,8 +2869,12 @@ class WorkFlow extends Controller {
 
                 $newolists = array();
 
-                foreach ($oLists as $key => $value) {
-                    $newolists[$value->id][] = $value;
+                foreach ($oLists as $oList) {
+                    $listID = $oList->id;
+                    //Get Subscriber under this list id
+                    $oListSubscribers = $mWorkflow->getWorkflowCommonListContacts($userID, $listID);
+                    $oList->subscribers = $oListSubscribers;
+                    $newolists[$oList->id][] = $oListSubscribers;
                 }
 
                 //For Segments
@@ -2906,10 +2910,11 @@ class WorkFlow extends Controller {
                 }
 
                 $aData = array(
-                    'oAutomationLists' => $oAutomationLists,
-                    'oLists' => $oLists,
-                    'newolists' => $newolists,
-                    'aSelectedListIDs' => $aSelectedListIDs,
+                    'oAutomationLists' => $oAutomationLists, //campaign Lists Data
+                    'oLists' => $oLists->items(), //Common Lists Data
+                    'newolists' => $newolists, //Array of lists having subscribers, index=listId, value=All Subscribers
+                    'aSelectedListIDs' => $aSelectedListIDs, //Selected Lists Ids
+                    'allDataLists' => $oLists,
                     'subscribersData' => $subscribersData->items(),
                     'allDataContacts' => $subscribersData,
                     'aSelectedContacts' => $aSelectedContacts,
