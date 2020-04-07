@@ -8248,9 +8248,13 @@ public function widgetStatisticDetailsStatsGraph(){
         $requestId = $request->request_id;
         $mBrandboost = new BrandboostModel();
         $mTemplates = new TemplatesModel();
+        $mWorkflow = new WorkflowModel();
         if($requestId>0){
             $aData = $mBrandboost->getRequestDetails($requestId);
         }
+        $moduleName = 'brandboost';
+        $moduleUnitID = $aData->campaign_id;
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $moduleUnitID);
         $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
         $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
         $aBreadcrumb = array(
@@ -8266,6 +8270,7 @@ public function widgetStatisticDetailsStatsGraph(){
             'requestData'=>$aData,
             'oEmailTemplates'=>$oEmailTemplates,
             'oSMSTemplates'=>$oSMSTemplates,
+            'subscribers' => $oCampaignSubscribers,
             'aUserInfo' => ['fullname'=> $aUser->firstname. ' '. $aUser->lastname, 'email' => $aUser->email, 'avatar'=> $aUser->avatar, 'phone' => $aUser->mobile],
         ];
     }
