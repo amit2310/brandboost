@@ -110,7 +110,8 @@
                                         <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20">Save</button>
                                     </div>
                                     <div class="col text-right" v-if="displayAudienceForm==false">
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('audience')">
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedAudienceForm" @click="openForm('audience')"> Edit</button>
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('audience')">
                                             Add recipients
                                         </button>
                                     </div>
@@ -435,6 +436,7 @@
                 breadcrumb: '',
                 feedbackResponse: '',
                 fromNumber: '',
+                subscribers: {},
                 displayCustomLinkExpiry: false,
                 displayAudienceForm: false,
                 displaySenderForm: false,
@@ -560,6 +562,10 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.request = response.data.requestData;
+                        this.subscribers = response.data.subscribers;
+                        if(this.subscribers.total>0){
+                            this.completedAudienceForm = true;
+                        }
                         if(this.request.type == 'email'){
                             this.isEmailChannelActivated = true;
                         }
@@ -587,7 +593,7 @@
                         this.trackingForm.tracking_google_analytics = this.request.tracking_google_analytics;
                         this.trackingForm.tracking_open_read = this.request.tracking_open_read;
                         this.trackingForm.tracking_expire_link = this.request.tracking_expire_link;
-                        //Set Channel Status
+                        //Set Channel Status.
                         this.assignCampaignIds(this.request);
                         //Validate Step Completion
                         this.validateStepCompletion();
@@ -615,7 +621,7 @@
                 }
 
                 if(this.isEmailChannelActivated == true){
-                    if(this.addedAudience == true){
+                    if(this.subscribers.total > 0){
                         this.completedAudienceForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
@@ -684,64 +690,6 @@
                 this.disableSMSSenderForm = false;
                 this.disableSMSContentForm = false;
                 this.disableSMSTrackingForm = false;
-            },
-            validateStepCompletion: function(){
-                //Sender form
-                this.completedAudienceForm = false;
-                this.completedSenderForm = false;
-                this.completedSubjectForm = false;
-                this.completedTrackingForm = false;
-
-                this.completedSMSSenderForm = false;
-                this.completedSMSTrackingForm = false;
-                let completedPercentage = 0;
-                let offset = 0;
-                if(this.isEmailChannelActivated && this.isSMSChannelActivated){
-                    offset = 14;
-                }else if(this.isEmailChannelActivated && this.isSMSChannelActivated == false){
-                    offset = 20;
-                }else if(this.isEmailChannelActivated == false && this.isSMSChannelActivated == true){
-                    offset = 33;
-                }else{
-                    offset = 0;
-                }
-
-                if(this.isEmailChannelActivated == true){
-                    if(this.senderForm.from_name && this.senderForm.from_email){
-                        this.completedSenderForm = true;
-                        completedPercentage = completedPercentage + offset;
-                    }
-                    if(this.subjectForm.subject && this.subjectForm.preheader){
-                        this.completedSubjectForm = true;
-                        completedPercentage = completedPercentage + offset;
-                    }
-                    if(this.emailCampaignId>0){
-                        this.completedContentForm = true;
-                        completedPercentage = completedPercentage + offset;
-                    }
-                    if(this.trackingForm.tracking_conversation || this.trackingForm.tracking_google_analytics || this.trackingForm.tracking_open_read || this.trackingForm.tracking_expire_link){
-                        this.completedTrackingForm = true;
-                        completedPercentage = completedPercentage + offset;
-                    }
-                }
-
-                if(this.isSMSChannelActivated == true){
-                    if(this.senderSMSForm.from_name && this.senderSMSForm.sms_sender){
-                        this.completedSMSSenderForm = true;
-                        completedPercentage = completedPercentage + offset;
-                    }
-
-                    if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
-                        this.completedSMSTrackingForm = true;
-                        completedPercentage = completedPercentage + offset;
-                    }
-                }
-
-
-
-                this.progressRate = completedPercentage;
-                this.series = [this.progressRate];
-
             },
             progressClass: function(form){
                 let className;
