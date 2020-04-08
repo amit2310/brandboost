@@ -913,7 +913,7 @@ color: #7B89A6;
 #ReviewSection .top-breadcrumb li a{color: #6672E8}
 
 .top-bar-top-section{padding: 20px 100px 0px 34px; height: 54px }
-.top-bar-top-section h3{margin-top: 3px}
+.top-bar-top-section h3{margin-top: 3px; color:#151A25!important; letter-spacing: -0.01em!important;}
 .top-bar-top-section.bbot{border: none!important}
 .top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; /*text-transform: uppercase;*/ font-weight: 500; line-height: 32px; padding: 0 15px 0 15px; letter-spacing: 0.04em; text-transform: capitalize!important }
 .top-bar-top-section span.float-left{display: none!important}
@@ -1325,6 +1325,9 @@ PAGE WITH SIDEBAR CSS
 .page_sidebar{float: left; width: 280px; height: 100vh; background: #f9fbff; border-right: 1px solid #e9eff8; padding:0px;/*position: fixed*/}
 .page_sidebar.absl{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 999}
 .page_sidebar.fixed{float: left; width: 280px; height: 100vh; background: #F9FBFF!important;  padding:0px; position: fixed; top: 0px; left: 64px; z-index: 999}
+
+
+/*.sidebar_inner_list:hover{ height:100%; overflow-y:auto; overflow-x:hidden}*/
 .page_sidebar.width_360{width: 360px;}
 .page_sidebar .inner{padding:25px 20px;}
 .page_sidebar .inner2{padding:22px 20px;}
@@ -1358,6 +1361,14 @@ PAGE WITH SIDEBAR CSS
 .page_sidebar .top_headings{height: 57px;}
 .page_sidebar .top_headings p, .page_sidebar .top_headings a{ font-weight: 500;font-size: 12px;letter-spacing: 0.04em;text-transform: uppercase;color: #7B89A6;}
 
+
+.sidebar_pagination{ position:absolute; bottom:15px;  height:34px; background:#F9FBFF; z-index:9; padding:0 20px; width:100% }
+.sidebar_pagination .white_bkg{background: #FFFFFF;border-radius: 64px; height:32px; padding:7px 12px;}
+.sidebar_pagination .white_bkg.left{ float:left; width:73px;}
+.sidebar_pagination select{border: none; -webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 100% 4px no-repeat #fff; width: 30px; margin-left: 0px; font-size:10px; font-weight:500; color:#445069; float:right; margin:2px 0 0 0;}
+.sidebar_pagination .white_bkg.right{ float:right; width:155px; padding:7px 8px!important}
+.sidebar_pagination .white_bkg.right .page_list li a{ width:17px!important; height:17px!important;}
+.sidebar_pagination .white_bkg.right .page_list li a img{ vertical-align:top}
 
 .list_with_icons{margin: 0; padding: 0;}
 .list_with_icons li{padding: 15px 0; border-bottom: 1px solid #eef2f9; border-top: 1px solid #eef2f9; list-style: none; float: left; width: 100%; margin-top: -1px; position: relative; z-index: 9}
