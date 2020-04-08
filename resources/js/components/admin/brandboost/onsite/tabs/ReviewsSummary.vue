@@ -50,7 +50,8 @@
                     </div>
 
                     <div class="p20 pt0 pb0 bkg_light_050">
-                    <ul class="list_with_icons3">
+                        <div v-if="(items_per_page > 10 || items_per_page == 'All')" style="overflow:auto; height:700px">
+                            <ul class="list_with_icons3">
                         <li v-for="oReview in oReviews" :key="oReview.reviewid" class="d-flex" :class="{ active : active_el == oReview.reviewid }">
                             <span @click="showReview(oReview.reviewid)" style="cursor: pointer;">
 
@@ -71,15 +72,40 @@
                             </strong>
                         </li>
                     </ul>
-                    <div class="clearfix"></div>
-                    <pagination
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        :offset="4"
-                        :noItemPerPage="true"
-                        class="mt-4">
-                    </pagination>
-                </div>
+                        </div>
+                        <div v-else>
+                            <ul class="list_with_icons3">
+                                <li v-for="oReview in oReviews" :key="oReview.reviewid" class="d-flex" :class="{ active : active_el == oReview.reviewid }">
+                            <span @click="showReview(oReview.reviewid)" style="cursor: pointer;">
+
+                                <span v-if="oReview.ratings > 3" class="circle_icon_24 bkg_green_200">{{ oReview.firstname.charAt(0) }}</span>
+                                <span v-else-if="oReview.ratings == 3" class="circle_icon_24 bkg_yellow_200">{{ oReview.firstname.charAt(0) }}</span>
+                                <span v-else class="circle_icon_24 bkg_reviews_400">{{ oReview.firstname.charAt(0) }}</span>
+
+                                <span>{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
+
+                            </span>
+                                    <strong>
+                                        <span v-if="oReview.ratings != ''">{{ number_format(oReview.ratings, 1) }}&nbsp;</span>
+                                        <span v-else>&nbsp;</span>
+                                        <i v-if="(oReview.ratings != '' && oReview.ratings > '3')" class="ri-star-fill green_400"></i>
+                                        <i v-else-if="(oReview.ratings != '' && oReview.ratings == '3')" class="ri-star-fill yellow_400"></i>
+                                        <i v-else-if="(oReview.ratings != '' && oReview.ratings < '3')" class="ri-star-fill red_400"></i>
+                                        <i v-else class=""></i>
+                                    </strong>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <pagination
+                            :pagination="allData"
+                            @paginate="showPaginationData"
+                            @paginate_per_page="showPaginationItemsPerPage"
+                            :offset="2"
+                            :lessSpace="true"
+                            class="mt-4">
+                        </pagination>
+                    </div>
                 </div>
 
                 <div v-else>
@@ -133,6 +159,7 @@
                 reviewTags: '',
                 campaignId: '',
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 viewType: 'List View',
                 sortBy: 'Date Created',
@@ -151,6 +178,9 @@
                 this.loadPaginatedData();
             },
             'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
                 this.loadPaginatedData();
             }
         },
@@ -171,7 +201,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/reviews?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/reviews?items_per_page='+this.items_per_page+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -187,6 +217,11 @@
             showPaginationData: function(p){
                 this.loading=true;
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
