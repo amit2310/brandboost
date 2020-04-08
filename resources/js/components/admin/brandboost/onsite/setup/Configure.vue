@@ -9,8 +9,9 @@
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}" @click.prevent="saveCampaign" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
-                        <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview</button>
+                        <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview Email</button>
                         <button id="hideOverviewPreviewForm" type="button" style="display:none;">Hide</button>
+                        <button id="displaySMSPreviewForm" type="button" style="display:none;">Display Edit & Preview SMS</button>
                         <button id="hideSMSPreviewForm" type="button" style="display:none;">Hide</button>
                     </div>
                 </div>
@@ -440,8 +441,8 @@
                                                 <p class="fsize9 fw300 dark_900 m-0">Hello Julia, It was a pleasure doing business with you. Thank you for giving us a try. You can click this link to leave your review...</p>
                                             </span>
                                                 <strong>Hello <strong class="reviews_400">[Fist name]</strong>, It was a pleasure doing business with you... <br>
-                                                    <a href="javascript:void(0);">Preview SMS Template “Review Request”</a><br>
-                                                    <a href="javascript:void(0);">Send test SMS</a>
+                                                    <a href="javascript:void(0);" @click="loadSMSPreview">Preview SMS Template “Review Request”</a><br>
+                                                    <a href="javascript:void(0);" @click="loadSMSPreview">Send test SMS</a>
                                                 </strong>
                                             </li>
                                         </ul>
@@ -611,25 +612,25 @@
                                     <div class="p20">
                                         <div class="form-group">
                                             <label class="">Greetings</label>
-                                            <input v-model="greetings" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
+                                            <input v-model="smsGreetings" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
                                         </div>
 
                                         <div class="form-group mb0">
                                             <label class="">Content</label>
                                             <a class="fsize14 open_editor" href="#"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
-                                            <textarea v-model="introduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="introduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
+                                            <textarea v-model="smsIntroduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="smsIntroduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
 
 										But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
                                         </div>
                                     </div>
                                     <div class="p20 pt0" v-if="sendTestBox==false">
-                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="saveEditChanges">Save</button>
-                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="openEmailTemplates">Change Template</button>
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="saveSMSEditChanges">Save</button>
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="openSMSTemplates">Change Template</button>
                                         <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
                                     </div>
                                     <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
                                         <input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
-                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestEmail">Send</button>
+                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestSMS">Send</button>
                                         <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
                                     </div>
                                 </div>
@@ -638,9 +639,13 @@
                                 <div class="email_editor_right preview" style="max-height:800px;overflow:auto;border-left:5px solid;">
                                     <div class="p10 bbot position-relative"><p class="m0 txt_dark fw500">Preview</p>
                                     </div>
-                                    <div class="p30" id="wf_preview_edit_template_content">
-                                        <div class="email_preview_sec br5 pb20" style="min-height: 500px;" v-html="content">
-                                            Content goes here
+                                    <div class="sms_preview">
+                                        <div class="phone_sms">
+                                            <div class="inner">
+                                                <p v-html="smsContent"></p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <p><small>{{ timestampToDateFormat(Math.floor(Date.now() / 1000)) }}</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -767,6 +772,9 @@
                 greetings: '',
                 introduction: '',
                 content: '',
+                smsGreetings: '',
+                smsIntroduction: '',
+                smsContent: '',
                 progressRate: 0,
                 sendTestBox: false,
                 series: [0],
@@ -815,9 +823,17 @@
             },
             greetings: function(){
                 jq("#wf_edit_template_greeting_EDITOR").text(this.greetings);
+                jq("#wf_edit_sms_template_greeting_Preview").text(this.greetings);
             },
             introduction: function(){
                 jq("#wf_edit_template_introduction_EDITOR").text(this.introduction);
+                jq("#wf_edit_sms_template_introduction_Preview").text(this.introduction);
+            },
+            smsGreetings: function(){
+                jq("#wf_edit_sms_template_greeting_Preview").text(this.smsGreetings);
+            },
+            smsIntroduction: function(){
+                jq("#wf_edit_sms_template_introduction_Preview").text(this.smsIntroduction);
             },
 
         },
@@ -1168,6 +1184,22 @@
                     });
                 document.querySelector('#displayOverviewPreviewForm').click();
             },
+            loadSMSPreview: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: 'brandboost',
+                    campaignId: this.smsCampaignId,
+                    moduleUnitId: this.$route.params.id,
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.smsContent = response.data.content.replace(/\r\n|\r|\n/g, "<br />").replace('wf_edit_sms_template_greeting', 'wf_edit_sms_template_greeting_Preview').replace('wf_edit_sms_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_Preview');
+                        this.smsIntroduction = response.data.introduction;
+                        this.smsGreetings = response.data.greeting;
+                    });
+                document.querySelector('#displaySMSPreviewForm').click();
+            },
             saveEditChanges: function(){
                 this.loading = true;
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
@@ -1176,6 +1208,23 @@
                     greeting: this.greetings,
                     introduction: this.introduction,
                     campaignId: this.emailCampaignId,
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Saved changes successfully!";
+                        }
+                    });
+            },
+            saveSMSEditChanges: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: 'brandboost',
+                    greeting: this.smsGreetings,
+                    introduction: this.smsIntroduction,
+                    campaignId: this.smsCampaignId,
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
@@ -1202,6 +1251,23 @@
                         }
                     });
             },
+            sendTestSMS: function(){
+                this.loading = true;
+                /*axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: 'brandboost',
+                    moduleUnitID: this.$route.params.id,
+                    campaignId: this.emailCampaignId,
+                    email: this.user.email
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Test email sent successfully!";
+                        }
+                    });*/
+            },
             openSMSTemplates: function(){
                 this.showSMSTemplates = true;
                 this.showEmailTemplates = false;
@@ -1222,9 +1288,16 @@
         $(document).on("click", "#hideOverviewPreviewForm", function(){
             $("#EditOverviewPreview").modal('hide');
         })
+        $(document).on("click", "#displaySMSPreviewForm", function(){
+            $("#EditSMSPreview").modal('show');
+        })
         $(document).on("click", "#hideSMSPreviewForm", function(){
             $("#EditSMSPreview").modal('hide');
         })
+
     });
 </script>
-
+<style>
+    .sms_preview{width: 276px; height: 553px; background: url(/assets/images/iphone.png) center top no-repeat; margin: 100px auto; padding: 100px 30px}
+    .sms_preview .inner {background: #e5e5ea;padding: 10px;	font-size: 11px;border-radius: 15px;margin-bottom: 10px;float: left; max-width: 100%;width: 100%;max-height:300px;overflow-y:auto;word-wrap: break-word;}
+</style>

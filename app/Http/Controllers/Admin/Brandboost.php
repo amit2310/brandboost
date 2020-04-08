@@ -491,6 +491,18 @@ class Brandboost extends Controller
 
         $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
         $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
+        if(!empty($oSMSTemplates)){
+            foreach($oSMSTemplates as $oTemplate){
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                    $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                    $oTemplate->stripo_compiled_html = $compiledContent;
+                }
+            }
+        }
+
 
         /*if ($this->use_default_accounts == true) {
             $aTwilioData = $this->defaultTwilioDetails;
@@ -8104,6 +8116,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $source = strip_tags($request->source);
         $brandboostID = strip_tags($request->brandboost_id);
         $templateID = strip_tags($request->template_id);
+        $templateType = strip_tags($request->template_type);
         $moduleName = 'brandboost';
         $isDraft = ($source == 'draft') ? true : false;
 
@@ -8125,14 +8138,31 @@ public function widgetStatisticDetailsStatsGraph(){
                 }
 
                 $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
-                if(!empty($aCampaigns)){
-                    $campaignID = $aCampaigns->count()>0 ? $aCampaigns[0]->id : '';
+                $campaignID = '';
+                if($aCampaigns->count()>0){
+                    foreach($aCampaigns as $aCampaign){
+                        if(strtolower($aCampaign->campaign_type) == $templateType){
+                            $campaignID = $aCampaign->id;
+                            break;
+                        }
+                    }
                 }
                 if ($eventID > 0) {
                     if ($campaignID > 0) {
                         //Update existing campaign
-                        $oTemplate = $mTemplates->getCommonTemplateInfo($templateID);
+                        $oTemplate = $mWorkflow->getCommonTemplateInfo($templateID);
+                        $categoryStatus = $oTemplate->category_status;
                         $templateSID = $templateID;
+                        if($categoryStatus == 2){
+                            //Static Templates
+                            if ($templateType == 'email') {
+                                $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            } else if ($templateType == 'sms') {
+                                $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            }
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
                         $aUpdateData = array(
                             'name' => $oTemplate->template_name,
                             'introduction' => $oTemplate->introduction,
