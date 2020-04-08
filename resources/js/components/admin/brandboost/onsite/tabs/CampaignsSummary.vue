@@ -53,48 +53,84 @@
                     </div>
 
                     <div class="p20 pt0 pb0 bkg_light_050">
-                    <ul class="list_with_icons3">
-                        <!--<li v-for="campaign in campaigns" :key="campaign.id" v-if="campaign.id == campaignId" class="d-flex active">-->
-                        <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex" :class="{ active : campaignId == campaign.id }">
-                            <span><!--{{campaignId }} {{ campaign.id}}-->
-                                <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
-                                    <img src="assets/images/start-fill-white.svg">
+                        <div v-if="(items_per_page > 10 || items_per_page == 'All')" style="overflow:auto; height:700px">
+                            <ul class="list_with_icons3">
+                            <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex" :class="{ active : campaignId == campaign.id }">
+                                <span><!--{{campaignId }} {{ campaign.id}}-->
+                                    <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <span v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="circle_icon_24 bkg_yellow_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <span v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="circle_icon_24 bkg_red_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <span v-else class="circle_icon_24 bkg_blue_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                        <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                    </a>-->
+                                    <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
+                                        <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                    </a>
                                 </span>
-                                <span v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="circle_icon_24 bkg_yellow_200">
-                                    <img src="assets/images/start-fill-white.svg">
+                                <strong>
+                                    <span v-if="campaign.revRA != ''">{{ number_format(campaign.revRA, 1) }}&nbsp;</span>
+                                    <span v-else>&nbsp;</span>
+                                    <i v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="ri-star-fill green_400"></i>
+                                    <i v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="ri-star-fill yellow_400"></i>
+                                    <i v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="ri-star-fill red_400"></i>
+                                    <i v-else class=""></i>
+                                </strong>
+                            </li>
+                        </ul>
+                        </div>
+                        <div v-else>
+                            <ul class="list_with_icons3">
+                                <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex" :class="{ active : campaignId == campaign.id }">
+                                <span><!--{{campaignId }} {{ campaign.id}}-->
+                                    <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <span v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="circle_icon_24 bkg_yellow_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <span v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="circle_icon_24 bkg_red_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <span v-else class="circle_icon_24 bkg_blue_200">
+                                        <img src="assets/images/start-fill-white.svg">
+                                    </span>
+                                    <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                        <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                    </a>-->
+                                    <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
+                                        <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                    </a>
                                 </span>
-                                <span v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="circle_icon_24 bkg_red_200">
-                                    <img src="assets/images/start-fill-white.svg">
-                                </span>
-                                <span v-else class="circle_icon_24 bkg_blue_200">
-                                    <img src="assets/images/start-fill-white.svg">
-                                </span>
-                                <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
-                                    <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
-                                </a>-->
-                                <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
-                                    <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
-                                </a>
-                            </span>
-                            <strong>
-                                <span v-if="campaign.revRA != ''">{{ number_format(campaign.revRA, 1) }}&nbsp;</span>
-                                <span v-else>&nbsp;</span>
-                                <i v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="ri-star-fill green_400"></i>
-                                <i v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="ri-star-fill yellow_400"></i>
-                                <i v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="ri-star-fill red_400"></i>
-                                <i v-else class=""></i>
-                            </strong>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                    <pagination
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        :offset="4"
-                        :noItemPerPage="true"
-                        class="mt-4">
-                    </pagination>
-                </div>
+                                    <strong>
+                                        <span v-if="campaign.revRA != ''">{{ number_format(campaign.revRA, 1) }}&nbsp;</span>
+                                        <span v-else>&nbsp;</span>
+                                        <i v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="ri-star-fill green_400"></i>
+                                        <i v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="ri-star-fill yellow_400"></i>
+                                        <i v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="ri-star-fill red_400"></i>
+                                        <i v-else class=""></i>
+                                    </strong>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <pagination
+                            :pagination="allData"
+                            @paginate="showPaginationData"
+                            @paginate_per_page="showPaginationItemsPerPage"
+                            :offset="2"
+                            :lessSpace="true"
+                            class="mt-4">
+                        </pagination>
+                    </div>
                 </div>
 
                 <div v-else>
@@ -322,6 +358,7 @@
                 campaigns : '',
                 allData: {},
                 current_page: 1,
+                items_per_page: 10,
                 breadcrumb: '',
                 form: new Form({
                     campaignName: '',
@@ -348,6 +385,9 @@
             },
             'searchBy' : function(){
                 this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
             }
         },
         methods: {
@@ -370,7 +410,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/onsite?page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/onsite?items_per_page='+this.items_per_page+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -384,6 +424,11 @@
             },
             showPaginationData: function(p){
                 this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
