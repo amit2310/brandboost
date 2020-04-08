@@ -69,7 +69,7 @@
 	**********************-->
 	<a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a>
 	<div class="page_sidebar bkg_light_000 fixed">
- 	<div style="width: 279px;">
+ 	<div style="width: 279px;" class="sidebar_inner_list">
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
 	 			<div class="col"><p>ReviewS</p></div>
@@ -123,7 +123,7 @@
         	<span><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/start-fill-white.svg"></span>Louis Vuitton</span>
         	<strong>4.5 <i class="ri-star-fill green_400"></i></strong>
         	</li>
-        	
+            
         	
         	
         	
@@ -143,7 +143,29 @@
     
     <div class="clearfix"></div> 
     </div>  
-</div>
+    
+    <div class="sidebar_pagination">
+    <div class="white_bkg shadow3 left">
+     <i class="ri-file-list-2-line float-left dark_200"></i> 
+     <select><option>10</option><option>10</option><option>15</option><option>20</option></select>
+    </div>
+    
+    <div class="white_bkg shadow3 right custom_pagination">
+    <ul class="page_list float-right">
+			    				<li><a href="#"><img src="assets/images/arrow-right-s-line.svg"></a></li>
+			    				<li><a class="active" href="#">1</a></li>
+			    				<li><a href="#">2</a></li>
+			    				<li><a href="#">3</a></li>
+			    				<li><a href="#">...</a></li>
+			    				<li><a href="#">9</a></li>
+			    				<li><a href="#"><img src="assets/images/arrow-left-s-line.svg"></a></li>
+			    			</ul>
+    </div>
+    
+    </div>
+    
+    
+	</div>
    <!--******************
 	 PAGE LEFT SIDEBAR END
 	**********************-->
