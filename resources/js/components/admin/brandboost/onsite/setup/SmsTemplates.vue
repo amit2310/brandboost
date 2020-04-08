@@ -25,7 +25,7 @@
             <div class="col-md-3 d-flex" v-for="template in templates" @click="addTemplateToCampaign(template.id)" style="cursor:pointer;">
                 <div class="card p-1 pb0 animate_top col">
                     <div class="sms_template_outer">
-                        <div class="sms_box" v-html="template.con">
+                        <div class="sms_box" v-html="getDecodeContent(template.stripo_compiled_html)">
                             <img :src="template.thumbnail" style="transform: scale(2.5);margin-top:35%;">
                         </div>
                     </div>
@@ -102,9 +102,13 @@
                                 <div class="email_editor_right preview" style="max-height:800px;overflow:auto;border-left:5px solid;">
                                     <div class="p10 bbot position-relative"><p class="m0 txt_dark fw500">Preview</p>
                                     </div>
-                                    <div class="p30" id="wf_preview_edit_template_content">
-                                        <div class="email_preview_sec br5 pb20" style="min-height: 500px;" v-html="content">
-                                            Content goes here
+                                    <div class="sms_preview">
+                                        <div class="phone_sms">
+                                            <div class="inner">
+                                                <p v-html="content"></p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <p><small>{{ timestampToDateFormat(Math.floor(Date.now() / 1000)) }}</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -143,10 +147,10 @@
         },
         watch: {
             'greetings': function(){
-                jq("#wf_edit_template_greeting_EDITOR").text(this.greetings);
+                jq("#wf_edit_sms_template_greeting_EDITOR").text(this.greetings);
             },
             'introduction': function(){
-                jq("#wf_edit_template_introduction_EDITOR").text(this.introduction);
+                jq("#wf_edit_sms_template_introduction_EDITOR").text(this.introduction);
             },
         },
         methods: {
@@ -189,7 +193,7 @@
                     });
             },
             getDecodeContent: function(content){
-                return atob(content);
+                return atob(content).replace("<br>", "<br><br>");
             },
             loadPreview: function(){
                 this.loading = true;
@@ -201,7 +205,7 @@
                 })
                     .then(response => {
                         this.loading = false;
-                        this.content = response.data.content.replace(/\r\n|\r|\n/g, "<br />");
+                        this.content = response.data.content.replace(/\r\n|\r|\n/g, "<br />").replace('wf_edit_sms_template_greeting', 'wf_edit_sms_template_greeting_EDITOR');
                         this.introduction = response.data.introduction;
                         this.greetings = response.data.greeting;
                     });
@@ -213,6 +217,7 @@
                 axios.post('/admin/brandboost/addCampaignToOnsite', {
                     brandboost_id: this.$route.params.id,
                     template_id: templateId,
+                    template_type: 'sms',
                     _token: this.csrf_token()
                 })
                     .then(response => {
@@ -236,4 +241,8 @@
         })
     });
 </script>
+<style>
+    .sms_preview{width: 276px; height: 553px; background: url(/assets/images/iphone.png) center top no-repeat; margin: 100px auto; padding: 100px 30px}
+    .sms_preview .inner {background: #e5e5ea;padding: 10px;	font-size: 11px;border-radius: 15px;margin-bottom: 10px;float: left; max-width: 100%;width: 100%;max-height:300px;overflow-y:auto;word-wrap: break-word;}
+</style>
 

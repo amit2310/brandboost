@@ -214,6 +214,7 @@
                 axios.post('/admin/brandboost/addCampaignToOnsite', {
                     brandboost_id: this.$route.params.id,
                     template_id: templateId,
+                    template_type: 'email',
                     _token: this.csrf_token()
                 })
                     .then(response => {
