@@ -5,12 +5,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700">Review Campaign</h3>
+                        <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}}</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
                         <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}" @click.prevent="saveCampaign" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
                         <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview</button>
                         <button id="hideOverviewPreviewForm" type="button" style="display:none;">Hide</button>
+                        <button id="hideSMSPreviewForm" type="button" style="display:none;">Hide</button>
                     </div>
                 </div>
             </div>
@@ -447,8 +448,8 @@
                                         <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize the content of your sms.</p>
                                     </div>
                                     <div class="col text-right">
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSTrackingForm" @click="openForm('smsContent')"> Edit</button>
-                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else>Edit content</button>
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSContentForm" @click="openForm('smsContent')"> Edit</button>
+                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openSMSTemplates">Edit content</button>
                                     </div>
                                 </div>
                             </div>
@@ -538,7 +539,7 @@
                     </div>
                 </template>
                 <email-templates v-if="showEmailTemplates" :templates="emailTemplates" :user="user" @hideEmailTemplate="closeEmailTemplates"></email-templates>
-                <sms-templates v-if="showSMSTemplates" :templates="smsTemplates"></sms-templates>
+                <sms-templates v-if="showSMSTemplates" :templates="smsTemplates" :user="user" @hideSMSTemplate="closeSMSTemplates"></sms-templates>
 
             </div>
 
@@ -596,17 +597,70 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade show" id="EditSMSPreview">
+            <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
+                <div class="modal-content review" style="width: 1200px;">
+                    <div class="modal-body p0 mt0 br5" style="width: 1200px;">
+                        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+                        <loading :isLoading="loading"></loading>
+                        <div class="row">
+                            <div class="col-md-4 pr0">
+                                <div class="email_editor_left">
+                                    <div class="p10 bbot"><p class="m0 txt_dark fw500">SMS Configuration</p></div>
+                                    <div class="p20">
+                                        <div class="form-group">
+                                            <label class="">Greetings</label>
+                                            <input v-model="greetings" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
+                                        </div>
+
+                                        <div class="form-group mb0">
+                                            <label class="">Content</label>
+                                            <a class="fsize14 open_editor" href="#"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
+                                            <textarea v-model="introduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="introduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
+
+										But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="p20 pt0" v-if="sendTestBox==false">
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="saveEditChanges">Save</button>
+                                        <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="openEmailTemplates">Change Template</button>
+                                        <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
+                                    </div>
+                                    <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
+                                        <input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestEmail">Send</button>
+                                        <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 pl3">
+                                <div class="email_editor_right preview" style="max-height:800px;overflow:auto;border-left:5px solid;">
+                                    <div class="p10 bbot position-relative"><p class="m0 txt_dark fw500">Preview</p>
+                                    </div>
+                                    <div class="p30" id="wf_preview_edit_template_content">
+                                        <div class="email_preview_sec br5 pb20" style="min-height: 500px;" v-html="content">
+                                            Content goes here
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--Content Area End-->
     </div>
 </template>
 <script>
     import EmailTemplates from "./EmailTemplates";
-    import SMSTemplates from "./SMSTemplates";
+    import SmsTemplates from "./SmsTemplates";
     import jq from "jquery";
     export default {
         components: {
             EmailTemplates,
-            SMSTemplates,
+            SmsTemplates,
             apexchart: VueApexCharts,
         },
         data() {
@@ -991,6 +1045,7 @@
                     this.displaySMSSenderForm = true;
                 }else if(form == 'smsContent'){
                     this.displaySMSContentForm = true;
+                    this.openSMSTemplates();
                 }else if(form == 'smsTracking'){
                     this.displaySMSTrackingForm = true;
                 }
@@ -1147,6 +1202,17 @@
                         }
                     });
             },
+            openSMSTemplates: function(){
+                this.showSMSTemplates = true;
+                this.showEmailTemplates = false;
+                this.configureCampaign = false;
+                document.querySelector('#hideSMSPreviewForm').click();
+            },
+            closeSMSTemplates: function(){
+                this.showSMSTemplates = false;
+                this.showEmailTemplates = false;
+                this.configureCampaign = true;
+            },
         }
     };
     $(document).ready(function(){
@@ -1155,6 +1221,9 @@
         })
         $(document).on("click", "#hideOverviewPreviewForm", function(){
             $("#EditOverviewPreview").modal('hide');
+        })
+        $(document).on("click", "#hideSMSPreviewForm", function(){
+            $("#EditSMSPreview").modal('hide');
         })
     });
 </script>
