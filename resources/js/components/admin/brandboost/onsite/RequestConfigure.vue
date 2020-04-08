@@ -96,12 +96,27 @@
                                     </div>
                                     <div :class="`${displayAudienceForm == true ? 'col' : 'col-9'}`">
                                         <h3 class="htxt_medium_16 dark_700 mb-2">Recipients</h3>
-                                        <ul class="review_camapaign_list" v-if="completedAudienceForm==true && displayAudienceForm==false">
-                                            <li><span>Recipients</span><strong> <img src="assets/images/addcirclegreen.svg">
-                                                &nbsp; Core Subscribers List </strong></li>
-                                            <li><span>Exclude</span><strong><img src="assets/images/minus_red.svg"> &nbsp;
-                                                Spam Tag</strong></li>
-                                        </ul>
+                                        <div class="row" v-if="completedAudienceForm==true && displayAudienceForm==false">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/addcirclegreen.svg"/> &nbsp; RECIPIENTS</label>
+                                                    <div class="card shadow-none p10 pb5 d-block mb15">
+                                                        <span v-html="importButtons"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group mb-0">
+                                                    <label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/minus_red.svg"/> &nbsp; EXCLUDE</label>
+
+                                                    <div class="card shadow-none p10 pb5 d-block m-0">
+                                                        <span v-html="excludeButtons"></span>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Who are you sending your request to?</p>
                                     </div>
                                     <div class="col text-right" v-if="displayAudienceForm==true">
@@ -527,6 +542,9 @@
                 progressRate: 0,
                 sendTestBox: false,
                 addedAudience: false,
+                contactSelectionData: '',
+                importButtons: '',
+                excludeButtons: '',
                 series: [0],
                 chartOptions: {
                     plotOptions: {
@@ -554,6 +572,15 @@
             this.loadCampaignSettings();
         },
         methods: {
+            loadAudience: function(){
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData', {moduleName: this.moduleName, moduleUnitID:this.moduleUnitID})
+                    .then(response => {
+                        this.contactSelectionData = response.data.contactSelectionData;
+                        this.importButtons = this.contactSelectionData.sImportButtons;
+                        this.excludeButtons = this.contactSelectionData.sExcludButtons;
+
+                    });
+            },
             loadCampaignSettings: function(){
                 axios.post('/admin/brandboost/getReviewRequest', {request_id:this.$route.params.id, _token: this.csrf_token()})
                     .then(response => {
@@ -561,6 +588,7 @@
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
+                        this.loadAudience();
                         this.request = response.data.requestData;
                         this.subscribers = response.data.subscribers;
                         if(this.subscribers.total>0){

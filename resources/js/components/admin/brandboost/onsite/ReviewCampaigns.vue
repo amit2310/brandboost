@@ -381,8 +381,8 @@
                             <div class="col-6">
                                 <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
                                 <input type="hidden" name="module_account_id" id="module_account_id" :value="moduleAccountID">
-                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" :disabled="form.errors.any()">CONTINUE</button>
-                                <a class="dark_200 fsize12 fw500 ml20 text-uppercase" data-dismiss="modal" href="javascript:void(0);">Close</a>
+                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" :disabled="form.errors.any() || isProcessing == true">CONTINUE</button>
+                                <a class="dark_200 fsize12 fw500 ml20 text-uppercase" id="hidePopupForm" data-dismiss="modal" href="javascript:void(0);">Close</a>
                             </div>
 
                             <div class="col-6 text-right mt-2">
@@ -522,7 +522,8 @@
                 viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: '',
-                deletedItems: []
+                deletedItems: [],
+                isProcessing: false
             }
         },
         created() {
@@ -684,6 +685,7 @@
                     });
             },
             processForm : function(){
+                this.isProcessing = true;
                 this.loading = false;
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
@@ -697,8 +699,10 @@
                 .then(response => {
                     var elem = this;
                     if (response.data.status == 'success') {
+                        this.isProcessing = false;
                         if(response.data.brandboostID>0){
                             this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
+                            document.querySelector('#hidePopupForm').click();
                             window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID;
                             return false;
                         }
@@ -711,6 +715,7 @@
                             elem.loadPaginatedData();
                         syncContactSelectionSources();
                     }else if (response.data.status == 'error') {
+                        this.isProcessing = false;
                         if (response.data.type == 'duplicate') {
                             alert('Error: Campaign already exists.');
                         }
