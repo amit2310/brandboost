@@ -74,9 +74,9 @@
                                     </button>
 
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
-                                        <!--<div class="p10">
+                                        <div class="p10">
                                             <input type="text" v-model="searchContactBy" placeholder="Search" class="form-control"/>
-                                        </div>-->
+                                        </div>
 
                                         <a class="dropdown-item" href="javascript:void(0);" v-for="subscriber in filteredContacts" @click="selectContact(subscriber)" :class="{'active': selectedSubscriber == subscriber.id}">{{subscriber.firstname}} {{subscriber.lastname}}</a>
 
@@ -149,9 +149,9 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                                         {{ selectedCampaignName }}
                                     </button>
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
-                                        <!--<div class="p10">
+                                        <div class="p10">
                                             <input type="text" v-model="searchCampaignBy" placeholder="Search" class="form-control"/>
-                                        </div>-->
+                                        </div>
                                         <a class="dropdown-item" href="javascript:void(0);" v-for="campaign in filteredCampaigns" v-if="campaign.status=='1'" @click="selectCampaign(campaign)" :class="{'active': selectedCampaign == campaign.id}">{{campaign.brand_title}}</a>
 
                                     </div>
@@ -252,6 +252,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                 displayStatus: 'No Data',
                 displayVisibility: 'No Data',
                 publishDate: 'No Data',
+                tagsData: ''
             }
         },
         created() {
@@ -369,6 +370,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                                 this.displayStatus = reviewData.status == '1' ? 'Published' : 'Draft';
                                 this.displayVisibility = reviewData.status == '1' ? 'Public' : 'Private';
                                 this.publishDate = this.displayDateFormat('M d, h:i A', reviewData.created);
+                                this.tagsData = response.data.reviewTags;
                                 //this.resetForm()
                             }
                         });

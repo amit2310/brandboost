@@ -1361,15 +1361,15 @@ class Brandboost extends Controller
             $aReviewStats = [
                 'totalReviews' => $totalReviews,
                 'oneStar' => $oneStar,
-                'oneStarPercent' => number_format((($oneStar*100)/$totalReviews),2),
+                'oneStarPercent' => ($totalReviews > 0 ? number_format((($oneStar*100)/$totalReviews),2) : 0),
                 'twoStar' => $twoStar,
-                'twoStarPercent' => number_format((($twoStar*100)/$totalReviews),2),
+                'twoStarPercent' => ($totalReviews > 0 ? number_format((($twoStar*100)/$totalReviews),2) : 0),
                 'threeStar' => $threeStar,
-                'threeStarPercent' => number_format((($threeStar*100)/$totalReviews),2),
+                'threeStarPercent' => ($totalReviews > 0 ? number_format((($threeStar*100)/$totalReviews),2) : 0),
                 'fourStar' => $fourStar,
-                'fourStarPercent' => number_format((($fourStar*100)/$totalReviews),2),
+                'fourStarPercent' => ($totalReviews > 0 ? number_format((($fourStar*100)/$totalReviews),2) : 0),
                 'fiveStar' => $fiveStar,
-                'fiveStarPercent' => number_format((($fiveStar*100)/$totalReviews),2)
+                'fiveStarPercent' => ($totalReviews > 0 ? number_format((($fiveStar*100)/$totalReviews),2) : 0)
             ];
         }
         if (!empty($reviewData->product_id)) {
@@ -4096,14 +4096,14 @@ public function widgetStatisticDetailsStatsGraph(){
     public
     function addReview($campaignId = 0)
     {
-
+        $items_per_page = '10';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
-            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite', '', '', false);
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite', '', '', $items_per_page, false);
         } else {
-            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite', '', '', false);
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite', '', '', $items_per_page, false);
         }
         $subscribersData = SubscriberModel::getGlobalSubscribers($userID, false);
         $aBreadcrumb = array(
