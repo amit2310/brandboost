@@ -28,7 +28,7 @@
                                 </p>-->
                                 <a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i> &nbsp;Filter</a>
                                 <div class="dropdown-menu p10 mt-1">
-                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">ALL</a><br />
                                     <a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a><br />
                                     <a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a><br />
                                     <a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">DRAFT</a><br />

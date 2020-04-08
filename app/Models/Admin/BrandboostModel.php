@@ -15,7 +15,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='',$items_per_page=10, $paginate=true)
+    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='', $items_per_page=10, $paginate=true)
     {
         $query = DB::table('tbl_brandboost')
             ->when(($userId > 0), function ($query) use ($userId) {
@@ -452,7 +452,7 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='',$items_per_page=10, $paginate=true) {
+    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='', $items_per_page=10, $paginate=true) {
 
         $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {

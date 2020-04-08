@@ -42,11 +42,11 @@
                             </div>
 
                             <div class="form-group m-0 review_forms" v-if="reviewType=='product'">
-                                <label class="fw500 fsize11 dark_600 ls_4">PRODUCT dropdown</label>
+                                <label class="fw500 fsize11 dark_600 ls_4">PRODUCT </label>
                                 <a class="fw500 fsize11 reviews_400 ls_4 float-right" href="javascript:void(0);">CREATE NEW <i class="ri-add-circle-fill"></i></a>
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{selectedProduct}}
+                                        {{ selectedProduct }}
                                     </button>
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                                         <div class="p10">
@@ -55,6 +55,7 @@
 
                                         <a class="dropdown-item" href="javascript:void(0);" @click="selectProduct('Any')">Any</a>
                                         <a class="dropdown-item" href="javascript:void(0);" @click="selectProduct('Specific Product')">Specific Product</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -65,12 +66,13 @@
                             <h3 class="htxt_medium_12 dark_200 text-uppercase ls_4">FROM</h3>
                             <hr>
                             <div class="form-group m-0 review_forms">
-                                <label class="fw500 fsize11 dark_600 ls_4">REVIEW AUTHOR dropdown</label>
+                                <label class="fw500 fsize11 dark_600 ls_4">REVIEW AUTHOR </label>
                                 <a class="fw500 fsize11 reviews_400 ls_4 float-right" href="javascript:void(0);">CREATE NEW <i class="ri-add-circle-fill"></i></a>
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{selectedSubscriberName}}
+                                        {{ selectedSubscriberName }}
                                     </button>
+
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
                                         <div class="p10">
                                             <input type="text" v-model="searchContactBy" placeholder="Search" class="form-control"/>
@@ -123,24 +125,17 @@
 I had a problem with my order, and despite repeated attempts, I could not get Printerpix to sort it out. I contacted them via Paypal, and Kayla took up my case. She understood the problem, and fixed it. Thanks Kayla."></textarea>
                             </div>
 
-
-
-
                         </div>
-
-
-
                     </div>
 
                     <div class="col-md-4">
-
                         <div class="card p25">
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">STATUS</h3>
                             <hr>
                             <ul class="info_list">
-                                <li><span>Status</span><strong>{{displayStatus}} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong> </li>
-                                <li><span>Visibility</span><strong>{{displayVisibility}} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
-                                <li><span>Publish date</span><strong>{{publishDate}} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
+                                <li><span>Status</span><strong>{{ displayStatus }} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong> </li>
+                                <li><span>Visibility</span><strong>{{ displayVisibility }} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
+                                <li><span>Publish date</span><strong>{{ publishDate }} &nbsp; <i class="ri-checkbox-blank-circle-fill green_400 fsize8"></i> </strong></li>
 
                             </ul>
                         </div>
@@ -151,7 +146,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                             <div class="form-group m-0 review_forms">
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{selectedCampaignName}}
+                                        {{ selectedCampaignName }}
                                     </button>
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
                                         <div class="p10">
@@ -246,7 +241,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                 searchContactBy: '',
                 searchProductBy: '',
                 searchCampaignBy: '',
-                selectedRating: '4',
+                selectedRating: '5',
                 title: '',
                 description: '',
                 firstname: '',
@@ -257,6 +252,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                 displayStatus: 'No Data',
                 displayVisibility: 'No Data',
                 publishDate: 'No Data',
+                tagsData: ''
             }
         },
         created() {
@@ -306,7 +302,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                     this.searchContactBy = '';
                     this.searchProductBy = '';
                     this.searchCampaignBy = '';
-                    this.selectedRating = '4';
+                    this.selectedRating = '5';
                     this.title = '';
                     this.description = '';
                     this.firstname = '';
@@ -374,6 +370,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                                 this.displayStatus = reviewData.status == '1' ? 'Published' : 'Draft';
                                 this.displayVisibility = reviewData.status == '1' ? 'Public' : 'Private';
                                 this.publishDate = this.displayDateFormat('M d, h:i A', reviewData.created);
+                                this.tagsData = response.data.reviewTags;
                                 //this.resetForm()
                             }
                         });
