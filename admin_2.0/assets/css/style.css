@@ -1419,6 +1419,7 @@ PAGE WITH SIDEBAR CSS
 .review_forms .dropdown-toggle::after{display: none!important}
 .review_forms .dropdown-toggle {background: url(../images/select_bkg.svg) 97% 21px no-repeat #fff;}
 
+.campaign_name_sec.active.border{ border:2px solid #73ABFF!important}
 .campaign_name_sec .textfield{width: 100%; border: none;  color: #7B89A6; font-size: 14px; height: 28px!important }
 .campaign_name_sec .textfield.emoji2{ background: url(../images/user_smile_line_18.svg) 98% 5px #fff no-repeat;}
 
