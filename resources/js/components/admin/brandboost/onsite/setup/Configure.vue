@@ -8,7 +8,7 @@
                         <h3 class="htxt_medium_24 dark_700">{{campaign.brand_title}}</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
-                        <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<96" :class="{'bkg_reviews_400': progressRate > 95}" @click.prevent="saveCampaign" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
+                        <button class="btn btn-md bkg_light_800 light_000" :disabled="progressRate<100" :class="{'bkg_reviews_400': progressRate == 100}" @click.prevent="saveCampaign" >Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
                         <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview Email</button>
                         <button id="hideOverviewPreviewForm" type="button" style="display:none;">Hide</button>
                         <button id="displaySMSPreviewForm" type="button" style="display:none;">Display Edit & Preview SMS</button>
@@ -978,11 +978,11 @@
                 let completedPercentage = 0;
                 let offset = 0;
                 if(this.isEmailChannelActivated && this.isSMSChannelActivated){
-                    offset = 14;
+                    offset = 14.28;
                 }else if(this.isEmailChannelActivated && this.isSMSChannelActivated == false){
                     offset = 25;
                 }else if(this.isEmailChannelActivated == false && this.isSMSChannelActivated == true){
-                    offset = 33;
+                    offset = 33.33;
                 }else{
                     offset = 0;
                 }
@@ -1011,16 +1011,17 @@
                         this.completedSMSSenderForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
+                    if(this.smsCampaignId>0){
+                        this.completedSMSContentForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
 
-                    if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
+                    if(this.trackingForm.tracking_conversation || this.trackingForm.tracking_google_analytics || this.trackingForm.tracking_open_read || this.trackingForm.tracking_expire_link){
                         this.completedSMSTrackingForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
                 }
-
-
-
-                this.progressRate = completedPercentage;
+                this.progressRate = Math.ceil(completedPercentage);
                 this.series = [this.progressRate];
 
             },
@@ -1171,6 +1172,7 @@
                             this.refreshMessage = Math.random();
                             this.successMsg="Campaign saved successfully!";
                             this.loading = false;
+                            window.location.href = '/admin#/reviews/campaign/'+this.$route.params.id;
                         }
                     });
             },
