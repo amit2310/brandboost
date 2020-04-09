@@ -121,16 +121,16 @@
                                 </li>
                             </ul>
                         </div>
-
-                        <pagination
-                            :pagination="allData"
-                            @paginate="showPaginationData"
-                            @paginate_per_page="showPaginationItemsPerPage"
-                            :offset="2"
-                            :lessSpace="true"
-                            class="mt-4">
-                        </pagination>
                     </div>
+
+                    <pagination
+                        :pagination="allData"
+                        @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
+                        :offset="2"
+                        :lessSpace="true"
+                        class="mt-4">
+                    </pagination>
                 </div>
 
                 <div v-else>
