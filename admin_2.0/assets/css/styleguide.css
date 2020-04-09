@@ -455,7 +455,7 @@ BORDER RADIUS CLASSES
 .br8{border-radius: 8px;}
 .br9{border-radius: 9px;}
 .br10{border-radius: 10px;}
-.br35{border-radius: 35px;}
+.br35{border-radius: 35px!important;}
 
 
 

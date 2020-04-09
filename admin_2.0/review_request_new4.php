@@ -188,6 +188,43 @@
     				</div>
     			</div>
     		</div>
+            
+            
+            <div class="card p35 br6 mb10">
+    			<div class="row">
+    				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_reviews_000 reviews_400 d-block fsize16 fw500"><i class="ri-check-line"></i></span></div>
+    				<div class="col-9">
+    					<h3 class="htxt_medium_16 dark_700 mb-3">Recipients</h3>
+    					<div class="row">
+    					<div class="col-12">
+    						<div class="form-group">
+    							<label class="dark_400 fsize14 fw400 ls4"><img src="assets/images/addcirclegreen.svg"/> &nbsp; Recipients</label>
+                                <div class="card shadow-none p0 d-block mb15 mt-1">
+                                <span class="addtags br35"><i class="ri-menu-2-fill"></i> electricity <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                <span class="addtags br35"><i class="ri-pie-chart-fill"></i> impossible <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                <span class="addtags br35"><i class="ri-menu-2-fill"></i> without <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                <span class="addtags br35"><i class="ri-pie-chart-fill"></i> historian <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                </div>
+    						</div>
+    					</div>
+    					<div class="col-12">
+    						<div class="form-group mb-0">
+    							<label class="dark_400 fsize14 fw400 ls4"><img src="assets/images/minus_red.svg"/> &nbsp; Exclude</label>
+                                <div class="card shadow-none p0 d-block m-0 mt-1">
+                                    <span class="addtags br35"><i class="ri-price-tag-3-fill"></i> mechanism <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                    <span class="addtags br35"><i class="ri-pie-chart-fill"></i> definition <a class="closetags"><i class="ri-close-circle-fill"></i></a></span>
+                                </div>
+    						</div>
+    					</div>
+                       
+              
+    				</div>
+    				</div>
+    				<div class="col text-right">
+    					<button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit</button>
+    				</div>
+    			</div>
+    		</div>
     		
     		<div class="card p35 br6 mb10">
     			<div class="row">
