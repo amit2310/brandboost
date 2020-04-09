@@ -15,10 +15,6 @@
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
-
-
-
-
 </head>
 <body id="ReviewSection">
 
@@ -76,8 +72,7 @@
 	 	</div>
       
       <div class="p30 pb10 text-center">
-      	<img src="assets/images/review_setup_graph2.svg"/>
-      </div>
+      	<img src="assets/images/review_setup_graph2.svg"/>      </div>
        
       					<div class="p30 pb15">
      						<div class="row">
@@ -87,8 +82,7 @@
      							<div class="col-3">
      								<label class="custom-form-switch mt-0 float-right">
 										<input class="field" type="checkbox" checked="">
-										<span class="toggle reviews"></span>
-									</label>
+										<span class="toggle reviews"></span>									</label>
      							</div>
      						</div>
       						<ul class="list_review mt-3">
@@ -109,8 +103,7 @@
      							<div class="col-3">
      								<label class="custom-form-switch mt-0 float-right">
 										<input class="field" type="checkbox" checked="">
-										<span class="toggle reviews"></span>
-									</label>
+										<span class="toggle reviews"></span>									</label>
      							</div>
      						</div>
       						<ul class="list_review mt-3">
@@ -125,8 +118,7 @@
       					<div class="reviw_howtouse">
       						<a href="#" class="close_x_icon2"><img src="assets/images/close_grey_line.svg"/></a>
       						<p class="fsize12 fw300 light_000">Learn how to use <br><strong>Campaigns</strong> in 60 seconds</p>
-							<img src="assets/images/review_play.svg"/>
-      					</div>
+							<img src="assets/images/review_play.svg"/>      					</div>
         
        
 
@@ -149,8 +141,7 @@
     	<p class="fsize14 dark_600 m-0">Active &nbsp; &nbsp;
     	<label class="custom-form-switch mt-0">
 			<input class="field" type="checkbox" checked="">
-			<span class="toggle green3"></span>
-		</label>
+			<span class="toggle green3"></span>		</label>
    		</p>
     	</div>
     </div>
@@ -210,20 +201,15 @@
                 		<div class="col-4">
 							<div class="dropdown campaign_forms big">
 							  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none dark_200" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Insert personalisation
-							  </button>
+								Insert personalisation							  </button>
 							  <div class="dropdown-menu w-100 dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-96px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
 								<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"> Option 1 </a>
 								<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"> Option 2 </a>
-								<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"> Option 3 </a>
-							  </div>
+								<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"> Option 3 </a>							  </div>
 							</div>
                 		</div>
                 	</div>
                 </div>
-                
-                
-                
     						</div>
     					</div>
     					<div class="col-12">
@@ -234,8 +220,6 @@
     					</div>
     				</div>
     			</div>
-    			
-    			
     		</div>
     		
     		<div class="card p35 br6 mb10 disabled">
@@ -263,8 +247,6 @@
     				</div>
     			</div>
     		</div>
-    		
-    		
     	</div>
     </div>
     
@@ -278,8 +260,7 @@
     	<p class="fsize14 dark_600 m-0">Active &nbsp; &nbsp;
     	<label class="custom-form-switch mt-0">
 			<input class="field" type="checkbox" checked >
-			<span class="toggle green3"></span>
-		</label>
+			<span class="toggle green3"></span>		</label>
    		</p>
     	</div>
     </div>
@@ -329,18 +310,9 @@
     				</div>
     			</div>
     		</div>
-    		
-    		
     	</div>
     </div>
-    
-  
-    
-    
-    
-     
       </div>
-      
       </div>
       
 <!--******************

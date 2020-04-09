@@ -21,6 +21,7 @@ SHADOWS STYLES
 .shadow1{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);}
 .shadow2{box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.06)!important;}
 .shadow3{box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05)!important;}
+.shadow4{box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1)!important;}
 .shadow_none{box-shadow: none!important;}
 
 
@@ -53,7 +54,7 @@ Misc
 .h235{height: 235px;}
 .h200{height: 200px!important;}
 .min_h_56{min-height: 56px;}
-
+.min_h_65{min-height: 65px;}
 .min_h_185{min-height: 185px;}
 .min_h_240{min-height: 240px;}
 .min_h_275{min-height: 275px;}
@@ -240,7 +241,7 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .page_list li a{margin: 0; padding: 0; display: inline-block; width: 18px; height: 18px; line-height: 19px; text-align: center}
 .page_list li a.active, .page_list li a:hover{background: #eff3fc; border-radius: 4px;}
 
-.status_icon{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 1px;}
+.status_icon{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 5px;}
 .status_icon:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
 .status_icon_modal{width: 12px; height: 12px; border-radius: 100%; display: inline-block; background: #ddd; position: relative; float: left; margin-top: 5px;}
 .status_icon_modal:after{position: absolute; content: ''; left: 3px; top: 3px; background: #fff; border-radius: 100px; width: 6px; height: 6px;}
@@ -380,7 +381,7 @@ Button CLASSES
 .btn-sm-24{height: 24px; line-height: 11px;}
 
 
-.circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center;  }
+.circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; border: 1px solid rgba(0, 21, 66, 0.1);  }
 .circle-icon-36{width: 36px;height: 36px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 36px;  }
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
 .circle-icon-48{width: 48px;height: 48px;border-radius: 100px; border: none; display: inline-block; text-align: center; line-height: 48px;}
@@ -455,6 +456,7 @@ BORDER RADIUS CLASSES
 .br8{border-radius: 8px;}
 .br9{border-radius: 9px;}
 .br10{border-radius: 10px;}
+.br12{border-radius: 12px!important;}
 .br35{border-radius: 35px!important;}
 
 
