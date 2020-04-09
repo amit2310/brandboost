@@ -95,23 +95,19 @@
                                         <span v-else class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">1</span>
                                     </div>
                                     <div :class="`${displayAudienceForm == true ? 'col' : 'col-9'}`">
-                                        <h3 class="htxt_medium_16 dark_700 mb-2">Recipients</h3>
+                                        <h3 class="htxt_medium_16 dark_700" :class="displayAudienceForm==false ? 'mb-3' : 'mb-2'">Recipients</h3>
                                         <div class="row" v-if="completedAudienceForm==true && displayAudienceForm==false">
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/addcirclegreen.svg"/> &nbsp; RECIPIENTS</label>
-                                                    <div class="card shadow-none p10 pb5 d-block mb15">
-                                                        <span v-html="importButtons"></span>
-                                                    </div>
+                                                    <div class="card shadow-none p0 d-block mb15 mt-1" v-html="importButtons"></div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group mb-0">
                                                     <label class="dark_600 fsize11 fw500 ls4"><img src="assets/images/minus_red.svg"/> &nbsp; EXCLUDE</label>
 
-                                                    <div class="card shadow-none p10 pb5 d-block m-0">
-                                                        <span v-html="excludeButtons"></span>
-                                                    </div>
+                                                    <div class="card shadow-none p0 d-block m-0 mt-1" v-html="excludeButtons"></div>
 
 
                                                 </div>
@@ -576,9 +572,8 @@
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData', {moduleName: this.moduleName, moduleUnitID:this.moduleUnitID})
                     .then(response => {
                         this.contactSelectionData = response.data.contactSelectionData;
-                        this.importButtons = this.contactSelectionData.sImportButtons;
-                        this.excludeButtons = this.contactSelectionData.sExcludButtons;
-
+                        this.importButtons = this.contactSelectionData.sImportButtons.replace(/addtags/g, 'addtags br35');
+                        this.excludeButtons = this.contactSelectionData.sExcludButtons.replace(/addtags/g, 'addtags br35');
                     });
             },
             loadCampaignSettings: function(){
