@@ -1,7 +1,7 @@
 /******************************
 CARD CLASSES
 ******************************/
-.card{background: #FFFFFF;box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04);border-radius: 4px;padding: 30px 40px;	border: none!important;	margin-bottom: 24px; position: relative}
+.card{background: #FFFFFF;box-shadow: 0px 2px 2px rgba(0, 39, 115, 0.08), 0px 0px 4px rgba(0, 39, 115, 0.04);border-radius: 6px;padding: 30px 40px;	border: none!important;	margin-bottom: 24px; position: relative}
 .card hr{border-color: #f0f1f4!important}
 .card.card_shadow{position: relative; z-index: 1;}
 .card.card_shadow:before{position: absolute; height: 11px; box-shadow: 0px 3px 3px rgba(0, 57, 168, 0.04);border-radius:0 0 4px 4px; width: 90%; left: 5%; bottom: -11px; content: ''; background:url(../images/shadow_bkg.png) left top repeat-x #fff; z-index: 0;}
@@ -380,7 +380,7 @@ Button CLASSES
 .btn-sm-32{height: 32px; line-height: 17px;}
 .btn-sm-24{height: 24px; line-height: 11px;}
 
-
+.circle-icon-20{width: 20px;height: 20px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; border: 1px solid rgba(0, 21, 66, 0.1);   }
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; border: 1px solid rgba(0, 21, 66, 0.1);  }
 .circle-icon-36{width: 36px;height: 36px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 36px;  }
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}

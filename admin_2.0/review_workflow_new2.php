@@ -17,7 +17,17 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
 <style>
+@media (max-height:800px) {
+.workflow_list_box{ height:532px; overflow:hidden}
+.workflow_list_box:hover{ overflow:auto}
+}
+.workflow_list_new{ padding:0;}
+.workflow_list_new li{ list-style:none; padding:0; line-height:20px; margin-bottom:20px; position:relative;}
+.workflow_list_new li a{ font-size:14px; color: #687693; line-height:20px;}
+.workflow_list_new li a span.circle-icon-20{ display:inline-block!important; line-height:20px; margin-right:7px; position:relative; vertical-align:top; border:none; font-weight:500; color:#ffffff!important; border-radius:6px; font-size:11px;}
 
+.workflow_list_new li .workflow_switch_div_small{ margin:0 auto; display:inline-block; position:relative }
+.workflow_list_new li.buttons:after{ position:absolute; height:1px; width:100%; background:#eef2f9; content:''; left:0; top:14px;}
 </style>
 
 
@@ -90,6 +100,43 @@
                 <div class="col text-right"><p class="fsize14 fw400 dark_300 m-0"><img width="16" src="assets/images/list_check2.svg"/> &nbsp; Flow View</p></div>
 	 		</div>
         </div>
+        
+        <div class="p30 workflow_list_box">
+        <ul class="workflow_list_new">
+        <li><a href="#"><span class="circle-icon-20 br35 bkg_dark_100 "><i class="ri-play-fill"></i></span> Start</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_blue_400"><i class="ri-price-tag-3-fill"></i></span> Triger: People Tag</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Sale campaign #1</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Thank you campaign...</a></li>	
+        <li class="buttons text-center">
+        <div class="workflow_switch_div_small" style="z-index:9">
+    	<a class="workflow_switch" href="#"><i class="ri-git-merge-fill"></i> SPLIT </a>
+        <a class="workflow_switch active" href="#">50/50</a>
+        </div>
+        </li>
+        
+        
+        <li><a href="#"><span class="circle-icon-20 br35 bkg_dark_100">A</span> Variant A</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_sms_400"><i class="ri-message-3-line"></i></span> SMS: Greeting</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_blue_400"><i class="ri-message-3-line"></i></span> Request: SMS Request</a></li>
+        
+        
+        <li><hr></li>
+        
+        <li><a href="#"><span class="circle-icon-20 br35 bkg_dark_100">B</span> Variant A</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Greeting</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_reviews_400"><i class="ri-mail-open-fill"></i></span> Request: Email Request</a></li>
+        
+          <li class="buttons text-center">
+        <div class="workflow_switch_div_small" style="z-index:9">
+    	<a class="workflow_switch" href="#"><i class="ri-add-line"></i> MERGE </a>
+        </div>
+        </li>
+         <li><a href="#"><span class="circle-icon-20 bkg_blue_400"><i class="ri-price-tag-3-fill"></i></span> Tag: Review</a></li>
+        <li><a href="#"><span class="circle-icon-20 bkg_blue_400"><i class="ri-folder-fill"></i></span> List: Customers</a></li>
+        <li><a href="#"><span class="circle-icon-20 br35 bkg_dark_100"><i class="ri-check-fill"></i></span> End</a></li>
+        
+        </ul>
+        </div>
       
 
         
@@ -121,13 +168,13 @@
     
     <div class="row">
     	<div class="col-12">
-        <div class="card p35 br6 mb10">
+        <div class="card p35  mb10">
     			<div class="row">
-    				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 br12 bkg_blue_400 light_000 d-block fsize16 fw500"><i class="ri-price-tag-3-fill"></i></span></div>
+    				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 br12 bkg_blue_400 light_000 d-block fsize16 fw500 rotate45"><i class="ri-price-tag-3-fill"></i></span></div>
     				<div class="col-9">
     					<h3 class="htxt_medium_16 dark_700 mb-2">Triger: Tag</h3>
     					<ul class="review_camapaign_list">
-    						<li><span>Tag</span><strong>New Customer</strong></li>
+    						<li><span>Tag</span><strong><i class="ri-add-circle-fill green_400"></i> New Customer</strong></li>
     						<li><span>Contacts</span><strong>1,356</strong></li>
     					</ul>
     				</div>
@@ -139,7 +186,7 @@
         </div>
         
         <div class="col-12">
-        <div class="card p35 br6 mb10">
+        <div class="card p35  mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 br12 bkg_email_300 light_000 d-block fsize16 fw500"><i class="ri-mail-open-fill"></i></span></div>
     				<div class="col-9">
@@ -161,7 +208,7 @@
         </div>
         
         <div class="col-12">
-        <div class="card p35 br6 mb10">
+        <div class="card p35  mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 br12 bkg_email_300 light_000 d-block fsize16 fw500"><i class="ri-mail-open-fill"></i></span></div>
     				<div class="col-9">
@@ -195,7 +242,7 @@
         </div>
         
         <div class="col-12">
-        <div class="card p35 br6 mb10">
+        <div class="card p35  mb10">
     			<div class="row">
     				<div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 last br12 bkg_sms_400 light_000 d-block fsize16 fw500"><i class="ri-message-3-line"></i></span></div>
     				<div class="col-9">
