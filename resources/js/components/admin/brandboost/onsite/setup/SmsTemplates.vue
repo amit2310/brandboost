@@ -92,8 +92,8 @@
 
                                     </div>
                                     <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
-                                        <input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
-                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestEmail">Send</button>
+                                        <input type="text" class="mr20" placeholder="Email Address" v-model="user.phone" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestSMS">Send</button>
                                         <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
                                     </div>
                                 </div>
@@ -175,14 +175,14 @@
                         }
                     });
             },
-            sendTestEmail: function(){
+            sendTestSMS: function(){
                 this.loading = true;
-                axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
                     moduleUnitID: this.$route.params.id,
                     campaignId: this.selected_campaignId,
-                    email: this.user.email
+                    number: this.user.phone
                 })
                     .then(response => {
                         if(response.data.status == 'success'){

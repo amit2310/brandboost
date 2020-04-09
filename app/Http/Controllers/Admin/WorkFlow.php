@@ -992,9 +992,9 @@ class WorkFlow extends Controller {
         if (!empty($oResponse)) {
             $templateSource = $oResponse->template_source;
             if ($templateSource > 0) {
-                $oDefaultTemplate = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateSource);
-                $defaultGreeting = $oDefaultTemplate[0]->greeting;
-                $defaultIntroduction = $oDefaultTemplate[0]->introduction;
+                $oDefaultTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
+                $defaultGreeting = $oDefaultTemplate->greeting;
+                $defaultIntroduction = $oDefaultTemplate->introduction;
             }
 
             $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
