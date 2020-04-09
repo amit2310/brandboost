@@ -672,6 +672,11 @@
                         completedPercentage = completedPercentage + offset;
                     }
 
+                    if(this.smsCampaignId>0){
+                        this.completedSMSContentForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+
                     if(this.campaign.tracking_conversation || this.campaign.tracking_google_analytics || this.campaign.tracking_open_read || this.campaign.tracking_expire_link){
                         this.completedSMSTrackingForm = true;
                         completedPercentage = completedPercentage + offset;

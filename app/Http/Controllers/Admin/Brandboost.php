@@ -3453,9 +3453,9 @@ public function widgetStatisticDetailsStatsGraph(){
             $formData = [
                 'brandboost_id' => $brandboostID
             ];
-            if($request->from_name){
-                $formData['from_name'] = $request->from_name;
-            }
+
+            $formData['from_name'] = $request->from_name;
+
             if($request->sms_sender){
                 $formData['sms_sender'] = $request->sms_sender;
             }
