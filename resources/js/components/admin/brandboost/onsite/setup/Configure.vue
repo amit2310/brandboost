@@ -442,7 +442,12 @@
                                             </span>
                                                 <strong>Hello <strong class="reviews_400">[Fist name]</strong>, It was a pleasure doing business with you... <br>
                                                     <a href="javascript:void(0);" @click="loadSMSPreview">Preview SMS Template “Review Request”</a><br>
-                                                    <a href="javascript:void(0);" @click="loadSMSPreview">Send test SMS</a>
+                                                    <a href="javascript:void(0);" @click="sendTestSMSBox=true">Send test SMS</a>
+                                                    <div class="p20" v-if="sendTestSMSBox">
+                                                        Phone Number: &nbsp;&nbsp;<input type="text" class="mr20" placeholder="Phone Number" v-model="user.phone" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                                        <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestSMS">Send</button>
+                                                        <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestSMSBox=false">Cancel</a>
+                                                    </div>
                                                 </strong>
                                             </li>
                                         </ul>
@@ -629,7 +634,7 @@
                                         <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
                                     </div>
                                     <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
-                                        <input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                        <input type="text" class="mr20" placeholder="Phone Number" v-model="user.mobile" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
                                         <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestSMS">Send</button>
                                         <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
                                     </div>
@@ -777,6 +782,7 @@
                 smsContent: '',
                 progressRate: 0,
                 sendTestBox: false,
+                sendTestSMSBox: false,
                 series: [0],
                 chartOptions: {
                     plotOptions: {
@@ -1253,12 +1259,12 @@
             },
             sendTestSMS: function(){
                 this.loading = true;
-                /*axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
                     moduleUnitID: this.$route.params.id,
-                    campaignId: this.emailCampaignId,
-                    email: this.user.email
+                    campaignId: this.smsCampaignId,
+                    number: this.user.phone
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
@@ -1266,7 +1272,7 @@
                             this.refreshMessage = Math.random();
                             this.successMsg = "Test email sent successfully!";
                         }
-                    });*/
+                    });
             },
             openSMSTemplates: function(){
                 this.showSMSTemplates = true;

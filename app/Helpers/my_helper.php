@@ -4,11 +4,12 @@
   use Aws\S3\S3Client;
   use Aws\Exception\AwsException; */
 
-//require_once 'vendor/autoload.php'; // Loads the library
+require_once 'trck/vendor/autoload.php'; // Loads the library
 
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 use Twilio\Jwt\ClientToken;
+
 
 /**
  * Used to check where or not user logged in and if yes then return complete user information
