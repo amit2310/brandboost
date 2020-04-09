@@ -563,11 +563,11 @@ Background COLOR CLASSES
 ******************************/
 .bkg_none{background: rgba(0,0,0,0.0)}
 .bkg_blue_000{background: #e3eeff}
-.bkg_blue_100{background: #A5CEFF}
-.bkg_blue_200{background: #73ABFF}
-.bkg_blue_300{background: #4F8AF4}
-.bkg_blue_400{background: #3970D9}
-.bkg_blue_500{background: #2657B3}
+.bkg_blue_100{background: #A5CEFF!important}
+.bkg_blue_200{background: #73ABFF!important}
+.bkg_blue_300{background: #4F8AF4!important}
+.bkg_blue_400{background: #3970D9!important}
+.bkg_blue_500{background: #2657B3!important}
 
 .bkg_green_000{background: #d9efe8}
 .bkg_green_100{background: #9CE4AF}
