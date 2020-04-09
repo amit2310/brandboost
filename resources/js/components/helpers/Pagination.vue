@@ -1,16 +1,8 @@
 <template>
     <div class="custom_pagination" v-if="pagination.total > pagination.per_page">
-        <div v-if="lessSpace" class="row">
-            <!--<div class="col-md-12">
-                <ul class="page_list float-right">
-                    <li v-if="pagination.current_page > 1"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page - 1)"><img src="assets/images/arrow-right-s-line.svg"></a></li>
-                    <li v-for="page in pagesNumber"><a :class="{'active': page == pagination.current_page}" href="javascript:void(0);" v-on:click.prevent="changePage(page)">{{ page }}</a></li>
-                    <li v-if="pagination.current_page < pagination.last_page"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page + 1)"><img src="assets/images/arrow-left-s-line.svg"></a></li>
-                </ul>
-            </div>-->
+        <div v-if="lessSpace" class="sidebar_pagination">
 
-            <div class="sidebar_pagination">
-
+            <!--<div class="sidebar_pagination">-->
                 <div class="col-md-4 white_bkg shadow3 left">
                     <i class="ri-file-list-2-line float-left dark_200"></i>
                     <select v-model="pagination.per_page" v-on:click.prevent="changeItemsPerPage()">
@@ -31,8 +23,8 @@
                         <li v-if="pagination.current_page < pagination.last_page"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page + 1)"><img src="assets/images/arrow-left-s-line.svg"></a></li>
                     </ul>
                 </div>
+            <!--</div>-->
 
-            </div>
         </div>
 
         <div v-else class="row">
