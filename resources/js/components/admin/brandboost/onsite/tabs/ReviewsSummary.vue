@@ -136,7 +136,7 @@
 
 <script>
     import UserAvatar from '@/components/helpers/UserAvatar';
-    import Pagination from '@/components/helpers/Pagination';
+    import Pagination from '@/components/helpers/PaginationLessSpace';
 
     export default {
         title: 'Onsite Reviews - Brand Boost',
