@@ -174,7 +174,7 @@
                             <h3 class="htxt_bold_18 dark_700 mt30">No review request so far. But you can change it!</h3>
                             <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import review request!</h3>
                             <!--<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Create review request</button>-->
-                            <button class="btn btn-md bkg_reviews_400 light_000 ">SEND NEW REQUEST <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
+                            <button class="btn btn-md bkg_reviews_400 light_000" v-if="campaignType=='manual'" @click="$emit('sendNewRequest')">SEND NEW REQUEST <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                         </div>
                     </div>
 
@@ -198,7 +198,7 @@
     export default {
         title: 'Onsite Reviews - Brand Boost',
         name: "OnsiteReviewsTab",
-        props : ['pageColor', 'title', 'review_type'],
+        props : ['pageColor', 'title', 'review_type', 'campaignType'],
         components: {UserAvatar, Pagination},
         data(){
             return {

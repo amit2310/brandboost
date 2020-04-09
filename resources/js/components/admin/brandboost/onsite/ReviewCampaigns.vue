@@ -213,10 +213,10 @@
                                     </td>
                                     <td>
                                         <span class="table-img mr15">
-                                            <span v-if="campaign.status == 1" class="circle_icon_24 bkg_reviews_400">
+                                            <span v-if="campaign.campaign_color" class="circle_icon_24" :class="campaign.campaign_color">
                                                 <img src="assets/images/pricetag3-fill.svg" width="14">
                                             </span>
-                                            <span v-else class="circle_icon_24 bkg_light_800">
+                                            <span v-else class="circle_icon_24 bkg_reviews_400">
                                                 <img src="assets/images/pricetag3-fill.svg" width="14">
                                             </span>
                                         </span>
@@ -331,18 +331,16 @@
                                             </div>
                                             <div class="col-2">
                                                 <div class="dropdown campaign_forms">
-                                                    <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <img src="assets/images/circle-dot.svg"/>
+                                                    <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="inner_color_dot_selected" :class="form.campaignColor"></span>
                                                     </button>
-                                                    <div class="dropdown-menu w-100 dropdown-menu-right">
-                                                        <a class="dropdown-item" href="javascript:void(0);"><img src="assets/images/circle-dot.svg"/> Option 1 </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);"><img src="assets/images/circle-dot.svg"/> Option 3 </a>
+                                                    <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
+                                                        <p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
+                                                        <a class="campaign_color_dot" href="javascript:void(0);" v-for="colorClass in getColors()">
+                                                            <span class="inner_color_dot" :class="campaignColorClass(colorClass)" @click="form.campaignColor=colorClass"></span>
+                                                        </a>
                                                     </div>
                                                 </div>
-
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -516,7 +514,8 @@
                     campaignName: '',
                     OnsitecampaignDescription: '',
                     campaign_id: '',
-                    campaignType: 'manual'
+                    campaignType: 'manual',
+                    campaignColor: '',
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
@@ -556,6 +555,13 @@
             }
         },
         methods: {
+            'campaignColorClass': function(color){
+                if(color == this.form.campaignColor){
+                    return color+ ' active';
+                }else{
+                    return color;
+                }
+            },
             applySort: function(sortVal){
                 this.loading = true;
 
@@ -679,6 +685,7 @@
                             this.form.campaign_id = formData.campaign_id;
                             this.form.campaignName = formData.campaignName;
                             this.form.OnsitecampaignDescription = formData.description;
+                            this.form.campaignColor = formData.campaignColor;
                             this.formLabel = 'Update';
                             this.displayForm(this.formLabel);
                         }

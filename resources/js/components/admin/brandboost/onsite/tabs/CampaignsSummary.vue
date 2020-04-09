@@ -91,21 +91,12 @@
                             <ul class="list_with_icons3">
                                 <li v-for="campaign in campaigns" :key="campaign.id" class="d-flex" :class="{ active : campaignId == campaign.id }">
                                 <span><!--{{campaignId }} {{ campaign.id}}-->
-                                    <span v-if="(campaign.revRA != '' && campaign.revRA > '3')" class="circle_icon_24 bkg_green_200">
-                                        <img src="assets/images/start-fill-white.svg">
-                                    </span>
-                                    <span v-else-if="(campaign.revRA != '' && campaign.revRA == '3')" class="circle_icon_24 bkg_yellow_200">
-                                        <img src="assets/images/start-fill-white.svg">
-                                    </span>
-                                    <span v-else-if="(campaign.revRA != '' && campaign.revRA < '3')" class="circle_icon_24 bkg_red_200">
+                                    <span v-if="campaign.campaign_color" class="circle_icon_24 bkg_green_200" :class="campaign.campaign_color">
                                         <img src="assets/images/start-fill-white.svg">
                                     </span>
                                     <span v-else class="circle_icon_24 bkg_blue_200">
                                         <img src="assets/images/start-fill-white.svg">
                                     </span>
-                                    <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
-                                        <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
-                                    </a>-->
                                     <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
                                         <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                     </a>

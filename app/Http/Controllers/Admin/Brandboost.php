@@ -366,9 +366,11 @@ class Brandboost extends Controller
 
         $campaignName = $request->campaignName;
         $description = $request->campaignDescription;
+        $campaignColor = $request->campaignColor;
         $cData = array(
             'brand_title' => $campaignName,
-            'brand_desc' => $description
+            'brand_desc' => $description,
+            'campaign_color' => $campaignColor
         );
         $result = $mBrandboost->updateBrandboost($userID, $cData, $campaign_id);
 
@@ -3877,6 +3879,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $campaignName = $request->campaignName;
         $campaignType = $request->campaignType;
         $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
+        $campaignColor = $request->campaignColor;
 
         $str = rand();
         $hashcode = sha1($str);
@@ -3885,6 +3888,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $aData = array(
             'review_type' => 'onsite',
             'campaign_type' => $campaignType,
+            'campaign_color' => $campaignColor,
             'user_id' => $userID,
             'brand_title' => $campaignName,
             'brand_desc' => $OnsitecampaignDescription,
@@ -6592,6 +6596,7 @@ public function widgetStatisticDetailsStatsGraph(){
             $response['campaign_id'] = $result[0]->id;
             $response['campaignName'] = $result[0]->brand_title;
             $response['description'] = $result[0]->brand_desc;
+            $response['campaignColor'] = $result[0]->campaign_color;
         } else {
             $response['status'] = "Error";
         }
