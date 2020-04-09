@@ -17,6 +17,9 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
 
+<style>
+
+</style>
 
 
 </head>
@@ -137,13 +140,24 @@
                 		<div class="col-10"><input type="text" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new campaign name" name="fname"></div>
                 		<div class="col-2">
                 	<div class="dropdown campaign_forms">
-					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="assets/images/circle-dot.svg"/>
+					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="inner_color_dot_selected bkg_blue_400"></span>
 					  </button>
-					  <div class="dropdown-menu w-100 dropdown-menu-right">
-						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 1 </a>
-						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
-						<a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 3 </a>
+					  <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
+						<p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
+                        
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_300"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_200"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_100"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_green_400"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_green_200 active"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_yellow_400"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_red_300"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_red_500"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_brand_300"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_light_800"></span></a>
 					  </div>
 					</div>
                		
