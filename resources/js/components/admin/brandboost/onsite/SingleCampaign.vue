@@ -15,7 +15,7 @@
                         <button class="circle-icon-40 mr15"><img src="assets/images/settings-2-line-reviews.svg"></button>
                         <!--<button class="btn btn-md bkg_reviews_400 light_000" data-toggle="modal" data-target="#CREATEFORM">CREATE CAMPAIGN <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
                         <button class="btn btn-md bkg_reviews_400 light_000 mr15" @click="setupBroadcast(selected_campaign)"> Edit Campaign <span><img src="/assets/images/reviews_plus_icon.svg"/></span></button>
-                        <button class="btn btn-md bkg_reviews_400 light_000" v-if="selected_campaign>0" data-toggle="modal" data-target="#CREATE_REQUEST_FORM">Send new request <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000" v-if="oCampaign.campaign_type=='manual' && selected_campaign>0" id="sendNewRequest" data-toggle="modal" data-target="#CREATE_REQUEST_FORM">Send new request <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                         <button id="hideOverviewPreviewForm" style="display:none;"></button>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                     </div>
                 </div>
 
-                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)" :key="componentKey"></OnsiteReviewRequestsTab>
+                <OnsiteReviewRequestsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 2)" :campaignType="oCampaign.campaign_type" @sendNewRequest="sendNewRequest" :key="componentKey"></OnsiteReviewRequestsTab>
 
                 <OnsiteReviewsTab v-if="(seletedTab === '' || seletedTab === 1 || seletedTab === 3)" :key="componentKey"></OnsiteReviewsTab>
 
@@ -363,23 +363,31 @@
 
                                 <div class="campaign_name_sec border br4 p10 pl20 pr20 fsize14 dark_200">
                                     <div class="row">
-                                        <div class="col-10">
+                                        <div class="col-12">
                                             <input type="text" class="textfield fsize14 dark_200" v-model="requestFrom.name" id="fname" placeholder="Enter new request name" name="fname"></div>
-                                        <div class="col-2">
+                                        <!--<div class="col-2">
                                             <div class="dropdown campaign_forms">
-                                                <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="assets/images/circle-dot.svg"/>
+                                                <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="inner_color_dot_selected bkg_blue_400"></span>
                                                 </button>
-                                                <div class="dropdown-menu w-100 dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 1 </a>
-                                                    <a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 2 </a>
-                                                    <a class="dropdown-item" href="#"><img src="assets/images/circle-dot.svg"/> Option 3 </a>
+                                                <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
+                                                    <p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
+
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_300"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_200"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_100"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_green_400"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_green_200 active"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_yellow_400"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_red_300"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_red_500"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_brand_300"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
+                                                    <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_light_800"></span></a>
                                                 </div>
                                             </div>
-
-
-
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
 
@@ -483,6 +491,9 @@
             this.selected_campaign = this.$route.params.id;
         },
         methods: {
+            sendNewRequest: function(){
+                document.querySelector("#sendNewRequest").click();
+            },
             addRequest: function(){
                 this.loading = true;
                 axios.post('/admin/brandboost/addOnsiteRequest', this.requestFrom)
