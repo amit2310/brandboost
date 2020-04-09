@@ -1614,6 +1614,29 @@ PAGE WITH SIDEBAR CSS
 .ratinglist li{ padding: 12px ; border-top: 1px solid #F4F6FA; list-style: none}
 
 
+
+/**************
+WORKFLOW CSS
+*****************/
+.reviews_workflows .topbar{ background:#ffffff!important;}
+.reviews_workflows .top-bar-top-section{ background:#ffffff!important; min-height:65px; padding-top:17px;}
+
+.reviews_workflows .workflow_switch_div{ background:#fff; border-radius:44px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05); height:32px; line-height:32px; padding:0 10px; position:relative;}
+.reviews_workflows .workflow_switch_div:after{ position:absolute; content:''; left:51%; top:8px; height:16px; width:1px; background:#EFF3FC}
+.reviews_workflows .workflow_switch_div a.workflow_switch{ display:inline-block; padding:0 8px; color:#7B89A6; font-size:14px;}
+.reviews_workflows .workflow_switch_div a.workflow_switch.active{  color:#6F7CFF; }
+
+.reviews_workflows .workflow_switch_div_small{ background:#fff; border-radius:44px; box-shadow: 0px 1px 2px rgba(0, 39, 115, 0.1), 0px 0px 2px rgba(0, 39, 115, 0.05); height:28px; line-height:28px; padding:0 13px; position:relative;}
+.reviews_workflows .workflow_switch_div_small a.workflow_switch{ display:inline-block; padding:0px; color:#7B89A6; font-size:11px; font-weight:500}
+.reviews_workflows .workflow_switch_div_small a.workflow_switch.active{  color:#6F7CFF; }
+
+
+.reviews_workflows .circle-icon-36{ position:relative; z-index:2}
+.reviews_workflows .circle-icon-36:after{ position:absolute; content:''; width:3px; height:220px; background:url(../images/workflow_dot.png) center center repeat-y;  z-index: 1;	left: 17px;	top: 36px; opacity:0.4}
+.reviews_workflows .circle-icon-36.last:after{  position:absolute; content:''; width:3px; height:220px; background:url(../images/workflow_dot.png) center center repeat-y;  z-index: 1;	left: 17px;	bottom: 0; top:auto; opacity:0.4}
+
+
+
 /**************
 LOGIN & SIGN UP CSS
 *****************/

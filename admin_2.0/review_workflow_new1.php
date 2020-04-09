@@ -44,11 +44,11 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Reviews Workflow</h3>
+   	<h3 class="htxt_medium_24 dark_700">Workflows</h3>
    	</div>
-   	<div class="col-md-6 text-right">
-   		<button class="circle-icon-40"><img src="assets/images/filter_review.svg"/></button>
-   		
+   	<div class="col-md-6 col-6 text-right">
+   		<button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+   		<button class="btn btn-md bkg_reviews_400 light_000 slidebox">Crete Workflow <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
    	</div>
    </div>
    </div>

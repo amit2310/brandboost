@@ -20,8 +20,6 @@
 <style>
 
 </style>
-
-
 </head>
 <body id="ReviewSection">
 
@@ -81,27 +79,14 @@
      			<button class="btn btn-sm bkg_reviews_000 pr20 reviews_400" data-toggle="modal" data-target="#CREATEFORM">Create review campaign</button>
      		</div>
      		</div>
-     		
-     		
-     		
-     		
-     		
-     			
      		</div>
     	</div>
     	
     	
     	<div class="col-md-12 text-center mt-3">
-    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
-    	</div>
-    	
-    	
-    	
-    	
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>    	</div>
     </div>
-     
       </div>
-      
       </div>
       
 <!--******************
@@ -141,8 +126,7 @@
                 		<div class="col-2">
                 	<div class="dropdown campaign_forms">
 					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span class="inner_color_dot_selected bkg_light_800"></span>
-					  </button>
+						<span class="inner_color_dot_selected bkg_light_800"></span>					  </button>
 					  <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
 						<p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
                         
@@ -157,26 +141,21 @@
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_red_500"></span></a>
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_brand_300"></span></a>
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
-                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_light_800"></span></a>
-					  </div>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_light_800"></span></a>					  </div>
 					</div>
-               		
-               		
-               		
                 		</div>
                 	</div>
                 </div>
                 
                 
                 
-                <div class="campaign_name_sec active border br4 p10 pl20 pr20 fsize14 dark_200 mt-2">
+                <!--<div class="campaign_name_sec active border br4 p10 pl20 pr20 fsize14 dark_200 mt-2">
                 	<div class="row">
                 		<div class="col-10"><input type="text" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new campaign name" name="fname"></div>
                 		<div class="col-2">
                 	<div class="dropdown campaign_forms">
 					  <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span class="inner_color_dot_selected bkg_blue_400"></span>
-					  </button>
+						<span class="inner_color_dot_selected bkg_blue_400"></span>					  </button>
 					  <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
 						<p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
                         
@@ -191,16 +170,11 @@
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_red_500"></span></a>
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_brand_300"></span></a>
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
-                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_light_800"></span></a>
-					  </div>
+                        <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_light_800"></span></a>					  </div>
 					</div>
-               		
-               		
-               		
                 		</div>
                 	</div>
-                </div>
-                
+                </div>-->
               </div>
       		</div>
       		
@@ -231,22 +205,13 @@
       		
       		<div class="col-6">
             <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase">CONTINUE</button>
-            <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a> 
-            </div>
+            <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a>            </div>
             
             <div class="col-6 text-right mt-2">
            	<a class="lh_32 htxt_regular_12 dark_200 ls_4" href="#">
      				<span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
-     				LEARN MORE ABOUT CAMPAIGNS
-     			</a>
-            </div>
-            
-            
-      		
-      		
+     				LEARN MORE ABOUT CAMPAIGNS     			</a>            </div>
       	</div>
-      	
-        
       </div>
     </div>
   </div>
@@ -280,7 +245,5 @@
     });
 
 </script>
-
-
 </body>
 </html>
