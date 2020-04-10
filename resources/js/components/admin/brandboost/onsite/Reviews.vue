@@ -153,8 +153,8 @@
                                 <div class="row">
                                     <div class="col-5 text-left">
                                         <p v-if="oReview.ratings < 3" class="fsize14 dark_400 m-0"><i class="ri-star-fill red_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
-                                        <p v-else-if="oReview.ratings == 3" class="fsize14 dark_400 m-0"><i class="ri-star-fill sms_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
-                                        <p v-else class="fsize14 dark_400 m-0"><i class="ri-star-fill yellow_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
+                                        <p v-else-if="oReview.ratings == 3" class="fsize14 dark_400 m-0"><i class="ri-star-fill yellow_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
+                                        <p v-else class="fsize14 dark_400 m-0"><i class="ri-star-fill green_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
                                     </div>
                                     <div class="col-7 text-right pl0"><p class="fsize14 dark_400 m-0">{{ timeAgo(oReview.review_created) }}</p></div>
 
