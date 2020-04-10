@@ -221,7 +221,7 @@
                         this.loading = false;
                         this.selected_campaignId = response.data.campaignId;
                         this.loadPreview();
-                        this.$emit("updateEmailCampaignId", this.selected_campaignId);
+                        this.$emit("updateEmailCampaignId", this.selected_campaignId, response.data.templateName);
                     });
 
             },

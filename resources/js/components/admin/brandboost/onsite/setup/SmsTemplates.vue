@@ -139,7 +139,8 @@
                 introduction: '',
                 content: '',
                 selected_campaignId: '',
-                sendTestBox: false
+                sendTestBox: false,
+                selectedTemplateName: ''
             }
         },
         created() {
@@ -173,6 +174,7 @@
                             this.loading = false;
                             this.refreshMessage = Math.random();
                             this.successMsg = "Saved changes successfully!";
+                            this.$emit("updateSMSCampaignId", this.selected_campaignId, this.selectedTemplateName, response.data.campaignInfo);
                         }
                     });
             },
@@ -225,9 +227,9 @@
                         this.loading = false;
                         this.selected_campaignId = response.data.campaignId;
                         this.loadPreview();
-                        this.$emit("updateSMSCampaignId", this.selected_campaignId);
+                        this.selectedTemplateName = response.data.templateName;
+                        this.$emit("updateSMSCampaignId", this.selected_campaignId, response.data.templateName, response.data.campaignInfo);
                     });
-
             },
             loadEmailReviewTemplates: function(){
                 this.loading = false;
