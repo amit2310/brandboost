@@ -479,8 +479,8 @@ class Brandboost extends Controller
         $revCount = getCampaignReviewCount($brandboostID);
         $revRA = getCampaignReviewRA($brandboostID);
 
-        $emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite'); //Not in use probably
-        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');//Not in use probably
+        /*$emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite'); //Not in use probably
+        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');//Not in use probably*/
 
         $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
 
@@ -490,22 +490,6 @@ class Brandboost extends Controller
 
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
-
-        $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
-        $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
-        if(!empty($oSMSTemplates)){
-            foreach($oSMSTemplates as $oTemplate){
-                $categoryStatus = $oTemplate->category_status;
-                if($categoryStatus == 2){
-                    //Static Templates
-                    $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
-                    $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
-                    $oTemplate->stripo_compiled_html = $compiledContent;
-                }
-            }
-        }
-
-
         /*if ($this->use_default_accounts == true) {
             $aTwilioData = $this->defaultTwilioDetails;
             $fromNumber = $aData['from_entity'];
@@ -523,6 +507,64 @@ class Brandboost extends Controller
                 $endCampaign = $aCampaigns->count()>0 ? $aCampaigns : '';
             }
         }
+
+        $campaignType = isset($getBrandboost[0]) ? $getBrandboost[0]->campaign_type : '';
+        //Get Email/SMS preview meta data
+        $emailCampaignId = '';
+        $emailTemplateId = '';
+        $smsCampaignId = '';
+        $smsTemplateId = '';
+        if($campaignType == 'manual'){
+            if(!empty($endCampaign)){
+                foreach($endCampaign as $oCampaign){
+                    if(strtolower($oCampaign->campaign_type) == 'email'){
+                         $emailCampaignId = $oCampaign->id;
+                         $emailTemplateId = $oCampaign->template_source;
+                         $emailData = $oCampaign;
+                    }else if(strtolower($oCampaign->campaign_type) == 'sms'){
+                        $smsCampaignId = $oCampaign->id;
+                        $smsTemplateId = $oCampaign->template_source;
+                        $smsData = $oCampaign;
+                    }
+                }
+            }
+        }
+
+        $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
+        $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
+        $selectedEmailTemplate = [];
+        $selectedSMSTemplate = [];
+        if(!empty($oEmailTemplates)){
+            foreach($oEmailTemplates as $oTemplate){
+                if($oTemplate->id == $emailTemplateId){
+                    $selectedEmailTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                    $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                    $oTemplate->stripo_compiled_html = $compiledContent;
+                }
+            }
+        }
+
+        if(!empty($oSMSTemplates)){
+            foreach($oSMSTemplates as $oTemplate){
+                if($oTemplate->id == $smsTemplateId){
+                    $selectedSMSTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                    $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                    $oTemplate->stripo_compiled_html = $compiledContent;
+                }
+            }
+        }
+
+
 
         $oTwilio = getTwilioAccountCustom($userID);
         $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
@@ -560,8 +602,10 @@ class Brandboost extends Controller
             'aReviews' => $aReviews,
             'revCount' => $revCount,
             'revRA' => $revRA,
-            'emailTemplate' => $emailTemplate,
-            'smsTemplate' => $smsTemplate,
+            'emailTemplate' => $selectedEmailTemplate,
+            'smsTemplate' => $selectedSMSTemplate,
+            'emailData' =>$emailData,
+            'smsData' =>$smsData,
             'selectedCategory' => $selectedCategory,
             'fromNumber' => $fromNumber,
             'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ],
@@ -8157,6 +8201,7 @@ public function widgetStatisticDetailsStatsGraph(){
                         //Update existing campaign
                         $oTemplate = $mWorkflow->getCommonTemplateInfo($templateID);
                         $categoryStatus = $oTemplate->category_status;
+                        $templateName = $oTemplate->template_name;
                         $templateSID = $templateID;
                         if($categoryStatus == 2){
                             //Static Templates
@@ -8181,12 +8226,17 @@ public function widgetStatisticDetailsStatsGraph(){
                         );
                         $bUpdated = $mWorkflow->updateWorkflowCampaign($aUpdateData, $campaignID, $moduleName);
                         if ($bUpdated) {
-                            $response = array('status' => 'success', 'campaignId' => $campaignID);
+                            $aCampaingInfo = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
+                            $response = array('status' => 'success', 'campaignId' => $campaignID, 'templateName' => $templateName, 'campaignInfo' =>$aCampaingInfo);
                         }
                     } else {
                         $bAdded = $mWorkflow->addEndCampaign($eventID, $templateID, $brandboostID, $moduleName, $isDraft);
+                        $oTemplate = $mWorkflow->getCommonTemplateInfo($templateID);
+                        $templateName = $oTemplate->template_name;
+
                         if ($bAdded) {
-                            $response = array('status' => 'success', 'campaignId' => $bAdded['id']);
+                            $aCampaingInfo = $mWorkflow->getWorkflowCampaign($bAdded['id'], $moduleName);
+                            $response = array('status' => 'success', 'campaignId' => $bAdded['id'], 'templateName' => $templateName, 'campaignInfo' =>$aCampaingInfo);
                         }
                     }
                 }

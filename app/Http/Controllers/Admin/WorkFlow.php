@@ -504,7 +504,9 @@ class WorkFlow extends Controller {
         }
 
         if ($bUpdated) {
+            $aCampaingInfo = $mWorkflow->getWorkflowCampaign($campaignID, $moduleName);
             $response['status'] = 'success';
+            $response['campaignInfo'] = $aCampaingInfo;
         } else {
             $response['status'] = 'Error';
         }
