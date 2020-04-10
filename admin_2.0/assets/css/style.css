@@ -915,7 +915,7 @@ color: #7B89A6;
 .top-bar-top-section{padding: 20px 100px 0px 34px; height: 54px }
 .top-bar-top-section h3{margin-top: 3px; color:#151A25!important; letter-spacing: -0.01em!important;}
 .top-bar-top-section.bbot{border: none!important}
-.top-bar-top-section .btn.btn-md{height: 32px; font-size: 12px!important; /*text-transform: uppercase;*/ font-weight: 500; line-height: 32px; padding: 0 15px 0 15px; letter-spacing: 0.04em; text-transform: capitalize!important }
+.top-bar-top-section .btn.btn-md{height: 32px; font-size: 13px!important; font-weight: 500; line-height: 31px; padding: 0 15px 0 15px; letter-spacing: 0.04em; text-transform: capitalize!important }
 .top-bar-top-section span.float-left{display: none!important}
 /*.top-bar-top-section .btn.btn-md span{margin: 0 10px 0 0; float: left;}*/
 .top-bar-top-section .btn.btn-md span {	margin: 0 0px 0 10px;	float: right;}
@@ -3164,6 +3164,10 @@ NPS EMAIL PREVIEW
 
 
 
+
+
+.reply_links a{ color:#56627F; font-size:14px; line-height:17px; text-align:center; margin:0 7px;}
+.reply_links a img{ margin:-2px 5px 0 0}
 
 /* ------------------------------------------------------------------------------
 *
