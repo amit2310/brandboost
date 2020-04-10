@@ -32,27 +32,34 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="sortBy='Date Created'">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">POSTED</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="sortBy='Date Created'">All</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">Posted</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">Draft</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">Positive</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">Negative</a></li>
                                 <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
                                 <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
-                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
+                                <!--<li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
                                     <div class="dropdown-menu p10 mt-1">
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; ARCHIVE</a>
                                     </div>
-                                </li>
+                                </li>-->
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i><img src="assets/images/filter_line_18.svg"></i></a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; Inactive</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; Archive</a>
+                                    </div>
+                                </li>
                                 <li><a href="javascript:void(0);" class="search_tables_open_close"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>-->
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
                             </ul>
                         </div>
                         <!--<div class="col-md-6">
@@ -115,6 +122,10 @@
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
                         <div class="card p0 pt30 text-center animate_top col">
+                            <span v-if="oReview.rstatus == 0" class="status_icon bkg_light_800" title="INACTIVE"></span>
+                            <span v-if="oReview.rstatus == 1" class="status_icon bkg_green_400" title="ACTIVE"></span>
+                            <span v-if="oReview.rstatus == 2" class="status_icon bkg_reviews_300" title="PENDING"></span>
+                            <span v-if="oReview.rstatus == 3" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
@@ -126,32 +137,32 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <a href="javascript:void(0);" class="circle-icon-64 bkg_reviews_000 m0auto">
-                                <img v-if="oReview.rstatus == 1" src="assets/images/review_campaign.png">
-                                <img v-else src="assets/images/review_campaign.png">
+                            <a href="#" class="circle-icon-36 bkg_blue_300 m0auto lh_34">
+                                <span v-if="oReview.domain_name.indexOf('facebook')" class=""><img src="assets/images/google_fill.svg"/></span>
+                                <span v-else class=""><img src="assets/images/google_fill.svg"/></span>
                             </a>
-                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
-                                {{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 23) }}
-                            </h3>
-                            <p>{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 31) }}</p>
-                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 0" >INACTIVE</p>
-                            <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="oReview.rstatus == 1" >ACTIVE</p>
-                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 2" >PENDING</p>
-                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="oReview.rstatus == 3" >ARCHIVED</p>
-                            <div class="p15 pt15 btop">
-                                <p class="htxt_regular_12 dark_300 mb15"><em> Created On: {{ displayDateFormat('M d, h:i A', oReview.review_created) }} </em></p>
-                                <p class="htxt_regular_12 dark_300">
-                                    <user-avatar
-                                        :avatar="oReview.avatar"
-                                        :firstname="oReview.firstname"
-                                        :lastname="oReview.lastname"
-                                    ></user-avatar>
-                                    <span>{{ oReview.firstname }} {{ oReview.lastname }}</span>
-                                    <span v-if="oReview.email != ''"><br />{{ oReview.email }}</span>
-                                </p>
+                            <h3 class="htxt_medium_14 dark_600 mb-2 mt-3">{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</h3>
+                            <p class="fsize13 dark_600 mb-1 pl10 pr10 lh_21 min_h_85">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 130) }}</p>
+                            <div class="p20 pl0 pr0 reply_links">
+                                <a href="#"><img src="assets/images/chat_grey_16.svg" />{{ oReview.getComm }}</a>
+                                <!--<a href="#"><img src="assets/images/thumbs_up_16.svg" />13</a>-->
+                                <a class="js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg" />Reply</a>
+                            </div>
+
+                            <div class="p20 btop">
+                                <div class="row">
+                                    <div class="col-5 text-left">
+                                        <p v-if="oReview.ratings < 3" class="fsize14 dark_400 m-0"><i class="ri-star-fill red_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
+                                        <p v-else-if="oReview.ratings == 3" class="fsize14 dark_400 m-0"><i class="ri-star-fill sms_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
+                                        <p v-else class="fsize14 dark_400 m-0"><i class="ri-star-fill yellow_400"></i> {{ number_format(oReview.ratings, 1) }}</p>
+                                    </div>
+                                    <div class="col-7 text-right pl0"><p class="fsize14 dark_400 m-0">{{ timeAgo(oReview.review_created) }}</p></div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
 
