@@ -485,13 +485,13 @@ COLOR CLASSES
 .yellow_100{color: #FFEBB9}
 .yellow_200{color: #FFE49D}
 .yellow_300{color: #FFDD85}
-.yellow_400{color: #F9C573}
+.yellow_400{color: #F9C573!important}
 .yellow_500{color: #F2A561}
 
 .red_100{color: #FFA1A6}
 .red_200{color: #FF8B92}
 .red_300{color: #F47A81}
-.red_400{color: #E4667D}
+.red_400{color: #E4667D!important}
 .red_500{color: #CC537A}
 
 .light_000{color: #FFFFFF}
