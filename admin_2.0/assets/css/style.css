@@ -1566,7 +1566,7 @@ PAGE WITH SIDEBAR CSS
 
 
 
-.review_rating_start i{margin: 0 3px;}
+.review_rating_start i{margin:-2px 0 0 0px; color:#D5DFEF; font-size:16px;}
 .review_sites_list{margin: 0; padding: 0;}
 .review_sites_list li{list-style: none; margin: 0 0 8px; padding: 0; float: left; width: 100%; font-size: 14px; color: #56627F}
 .review_sites_list li img{ margin-right: 5px;}
@@ -1574,7 +1574,7 @@ PAGE WITH SIDEBAR CSS
 
 
 .reply_sec_link a{ margin-right: 25px; float: left; display: inline-block}
-.reply_sec_link a img{float: left;}
+.reply_sec_link a img{float: left; margin:2px 0 0 0}
 
 
 
