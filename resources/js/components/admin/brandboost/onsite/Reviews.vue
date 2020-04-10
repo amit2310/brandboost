@@ -142,7 +142,7 @@
                                 <span v-else class=""><img src="assets/images/google_fill.svg"/></span>
                             </a>
                             <h3 class="htxt_medium_14 dark_600 mb-2 mt-3">{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</h3>
-                            <p class="fsize13 dark_600 mb-1 pl10 pr10 lh_21 min_h_85">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 130) }}</p>
+                            <p class="fsize13 dark_600 mb-1 pl10 pr10 lh_21 min_h_85" @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 130) }}</p>
                             <div class="p20 pl0 pr0 reply_links">
                                 <a href="#"><img src="assets/images/chat_grey_16.svg" />{{ oReview.getComm }}</a>
                                 <!--<a href="#"><img src="assets/images/thumbs_up_16.svg" />13</a>-->
