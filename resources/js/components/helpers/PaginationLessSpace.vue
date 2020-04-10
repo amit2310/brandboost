@@ -1,6 +1,8 @@
 <template>
-    <div v-if="pagination.total > pagination.per_page">
-        <div v-if="lessSpace" class="sidebar_pagination">
+    <!--<div v-if="pagination.total > pagination.per_page">-->
+    <div>
+        <!--<div v-if="lessSpace" class="sidebar_pagination">-->
+        <div class="sidebar_pagination">
             <div class="col-md-4 white_bkg shadow3 left">
                 <i class="ri-file-list-2-line float-left dark_200"></i>
                 <select v-model="pagination.per_page" v-on:click.prevent="changeItemsPerPage()">
