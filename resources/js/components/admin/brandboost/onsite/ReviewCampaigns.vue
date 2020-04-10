@@ -228,7 +228,8 @@
                                         </a>-->
                                     </td>
                                     <td>
-                                        <span v-if="campaign.review_type == 'onsite'"><img src="assets/images/window-fill.svg"> {{ capitalizeFirstLetter(campaign.review_type) }} Review Requests</span>
+                                        <span v-if="campaign.campaign_type == 'manual'"><img src="assets/images/manual_icon_grey_16.svg">&nbsp; Manual Requests</span>
+                                        <span v-else-if="campaign.campaign_type == 'automated'"><img src="assets/images/automation_icon_grey_16.svg">&nbsp; Automation</span>
                                         <span v-else><img src="assets/images/share-circle-line.svg"> {{ capitalizeFirstLetter(campaign.review_type) }} Review Requests</span>
                                     </td>
                                     <td>{{ campaign.reviewRequestsCountFormat }}</td>
