@@ -47,7 +47,7 @@
    	<h3 class="htxt_medium_24 dark_700">Reviews Feed</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
-   		<button class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
+   		<button class="circle-icon-40 mr15"><img width="16" src="assets/images/setting_3line_grey.svg"></button>
    		<!--<button class="btn btn-md bkg_reviews_400 light_000 slidebox">ADD New Contact <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
    	</div>
    </div>
@@ -68,25 +68,20 @@
     <div class="row">
     	<div class="col-md-6">
     		<ul class="table_filter">
-    			<li><a class="active" href="#">ALL</a></li>
-    			<li><a href="#">POSTED</a></li>
-    			<li><a href="#">DRAFT</a></li>
-    			<li><a href="#">POSITIVE</a></li>
-    			<li><a href="#">NEGATIVE</a></li>
-    			<li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
-    			<div class="dropdown-menu p10 mt-1"> 
-    			<a class="dropdown-item" href="#"><i class="ri-check-double-fill"></i> &nbsp; Link 1</a> 
-    			<a class="dropdown-item" href="#"><i class="ri-check-double-fill"></i> &nbsp; Link 2</a> 
-    			<a class="dropdown-item" href="#"><i class="ri-check-double-fill"></i> &nbsp; Link 3</a> 
-    			</div>
-    			</li>
+    			<li><a class="active" href="#">All</a></li>
+    			<li><a href="#">Posted</a></li>
+    			<li><a href="#">Draft</a></li>
+    			<li><a href="#">Positive</a></li>
+    			<li><a href="#">Negative</a></li>
+    			
     		</ul>
     	</div>
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
-    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img width="16" src="assets/images/search_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
     		</ul>
     	</div>
     </div>

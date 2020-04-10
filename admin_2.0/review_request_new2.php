@@ -47,8 +47,8 @@
    	<h3 class="htxt_medium_24 dark_700">Review Requests</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
-   		<button class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
-   		<button class="btn btn-md bkg_reviews_400 light_000 slidebox">SEND NEW REQUEST <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
+   		<button class="circle-icon-40 mr15"><img width="16" src="assets/images/setting_3line_grey.svg"></button>
+   		<button class="btn btn-md bkg_reviews_400 light_000 slidebox">Send new request <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
    	</div>
    </div>
    </div>
@@ -66,23 +66,22 @@
     
     <div class="table_head_action">
     <div class="row">
-    	<div class="col-md-6">
+    	<div class="col-md-9">
     		<ul class="table_filter">
-    			<li><a class="active" href="#">ALL</a></li>
-    			<li><a href="#">SENT</a></li>
-    			<li><a href="#">DRAFT</a></li>
-    			<li><a href="#">SUBMITED</a></li>
-    			<li><a href="#">ARCHIVE</a></li>
-    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+    			<li><a class="active" href="#">All</a></li>
+    			<li><a href="#">Sent</a></li>
+    			<li><a href="#">Draft</a></li>
+    			<li><a href="#">Submited</a></li>
+    			<li><a href="#">Archive</a></li>
+    			
     		</ul>
     	</div>
-    	<div class="col-md-6">
+    	<div class="col-md-3">
     		<ul class="table_filter text-right">
-    			<li><a class="search_tables_open_close" href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-    			<!--<li><a href="#"><i class="ri-delete-bin-line fsize17 dark_100 red_400"></i></a></li>-->
-    			<li><a href="#"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+    			<li><a class="search_tables_open_close" href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img width="16" src="assets/images/search_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
     		</ul>
     	</div>
     </div>
