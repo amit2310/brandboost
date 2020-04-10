@@ -294,7 +294,7 @@
                 current_page: 1,
                 items_per_page: 10,
                 breadcrumb: '',
-                viewType: 'Grid View',
+                viewType: 'List View',
                 sortBy: 'all',
                 searchBy: '',
                 deletedItems: []
