@@ -28,34 +28,35 @@
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
-                            <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">PENDING</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Positive'}" @click="sortBy='Positive'">POSITIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Negative'}" @click="sortBy='Negative'">NEGATIVE</a></li>-->
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'all'}" @click="applySort('all')">ALL</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'sent'}" @click="applySort('sent')">SENT</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">DRAFT</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'submited'}" @click="applySort('submited')">SUBMITED</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">ARCHIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
-                                    <div class="dropdown-menu p10 mt-1">
-                                           <!--  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> -->
-                                            <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
-                                        </div>
-                                    </li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'all'}" @click="applySort('all')">All</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'sent'}" @click="applySort('sent')">Sent</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">Draft</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'submited'}" @click="applySort('submited')">Submited</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">Archive</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                <div class="dropdown-menu p10 mt-1">
+                                       &lt;!&ndash;  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> &ndash;&gt;
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
+                                    </div>
+                                </li>-->
 
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
+                                <!--<li><a href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>-->
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter_line_18.svg"></i></a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <!--  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> -->
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
+                                    </div>
+                                </li>
                                 <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
                                 <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+                                <!--<li><a href="javascript:void(0);" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>-->
+                                <li><a href="javascript:void(0);" @click="viewType='Grid View'"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -128,7 +129,29 @@
                     </div>
                 </div>
 
-                <div class="row" v-if="viewType == 'Grid View'">
+                <!--<div class="row" v-if="viewType == 'Grid View'">
+                    <div class="col-md-3 d-flex">
+                        <div class="card p0 pt30 text-center animate_top col">
+                            <span class="status_icon bkg_green_400"></span>
+                            <span class="check_icon green_400 fsize18"><i class="ri-check-double-line"></i></span>
+
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                            </div>
+                            <a href="#" class="circle-icon-48 bkg_reviews_300 m0auto"><span class="fsize16 fw500 light_000 text-uppercase">CS</span> </a>
+                            <h3 class="htxt_medium_14 dark_600 mb-2 mt-3">Francisco Miles</h3>
+                            <p class="fsize14 dark_400 mb-1">francisco.m@example.com</p>
+                            <p class="fsize14 dark_400 mb20"><img src="assets/images/dot_blue_6.svg"/></i> New Customers</p>
+                            <div class="p20 btop">
+                                <div class="row">
+                                    <div class="col-7 text-left"><p class="fsize14 dark_400 m-0">11 min ago</p></div>
+                                    <div class="col-5 text-right"><p class="fsize14 dark_400 m-0"><i class="ri-star-fill sms_400"></i> 4.5</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-3 d-flex" v-for="request in requests">
                         <div class="card p0 pt30 text-center animate_top col">
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
@@ -167,6 +190,47 @@
                         </div>
                     </div>
 
+                </div>-->
+
+                <div class="row" v-if="viewType == 'Grid View'">
+                    <div class="col-md-3 d-flex" v-for="request in requests">
+                        <div class="card p0 pt30 text-center animate_top col">
+                            <span class="status_icon bkg_green_400" v-if="request.subscriberstatus == 1"></span>
+                            <span class="status_icon bkg_light_800" v-else></span>
+
+                            <!--<span class="check_icon green_400 fsize18"><i class="ri-check-double-line"></i></span>-->
+                            <span v-if="request.tracksubscribertype =='email'" class="check_icon green_400 fsize18"></span>
+                            <span v-if="request.tracksubscribertype =='sms'" class="check_icon green_400 fsize18"><i class="ri-check-line"></i></span>
+
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Link 1</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Link 2</a>
+                                </div>
+                            </div>
+                            <a href="#" class="circle-icon-48 bkg_reviews_300 m0auto"><span class="fsize16 fw500 light_000 text-uppercase">{{request.firstname.charAt(0)}}{{request.lastname.charAt(0)}}</span> </a>
+                            <h3 class="htxt_medium_14 dark_600 mb-2 mt-3">{{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</h3>
+
+                            <p v-if="request.tracksubscribertype =='email'" class="fsize14 dark_400 mb-1">{{ ((request.email!='' && request.email!=null) ? request.email : '&nbsp;') }}</p>
+                            <p v-if="request.tracksubscribertype =='sms'" class="fsize14 dark_400 mb-1">{{ ((request.phone!='' && request.phone != null) ? phoneNoFormat(request.phone) : '&nbsp;') }}</p>
+
+                            <p class="fsize14 dark_400 mb20"><img src="assets/images/dot_blue_6.svg"/></i> New Customers</p>
+                            <div class="p20 btop">
+                                <div class="row">
+                                    <div class="col-7 text-left"><p class="fsize14 dark_400 m-0">{{ timeAgo(request.requestdate) }}</p></div>
+                                    <div class="col-5 text-right">
+                                        <p class="fsize14 dark_400 m-0">
+                                            <i v-if="request.ratings>0" class="ri-star-fill sms_400"></i>
+                                            <i v-else class="ri-star-fill light_600"></i>
+                                            <span v-if="request.ratings>0" class="dark_400">{{ request.ratings }}</span>
+                                            <span v-else class="light_400"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="clearfix"></div>
@@ -230,7 +294,7 @@
                 current_page: 1,
                 items_per_page: 10,
                 breadcrumb: '',
-                viewType: 'List View',
+                viewType: 'Grid View',
                 sortBy: 'all',
                 searchBy: '',
                 deletedItems: []
