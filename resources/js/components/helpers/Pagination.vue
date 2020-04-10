@@ -3,7 +3,7 @@
     <div class="custom_pagination">
         <div class="row">
             <div class="col-md-6">
-                <span class="mr-4">ITEMS PER PAGE:
+                <span class="mr-4">Items per page:
                     <select v-model="pagination.per_page" v-on:click.prevent="changeItemsPerPage()">
                         <option>5</option>
                         <option>10</option>
