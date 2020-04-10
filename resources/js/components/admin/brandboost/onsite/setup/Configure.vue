@@ -454,7 +454,7 @@
                                         <p class="htxt_regular_14 dark_400 m-0 ls4" v-else>Customize the content of your sms.</p>
                                     </div>
                                     <div class="col text-right">
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSContentForm" @click="openForm('smsContent')"> Edit</button>
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSMSContentForm" @click="loadSMSPreview"> Edit</button>
                                         <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openSMSTemplates">Edit content</button>
                                     </div>
                                 </div>
@@ -544,8 +544,20 @@
                         </div>
                     </div>
                 </template>
-                <email-templates v-if="showEmailTemplates" :templates="emailTemplates" :user="user" @hideEmailTemplate="closeEmailTemplates"></email-templates>
-                <sms-templates v-if="showSMSTemplates" :templates="smsTemplates" :user="user" @hideSMSTemplate="closeSMSTemplates"></sms-templates>
+                <email-templates
+                    v-if="showEmailTemplates"
+                    :templates="emailTemplates"
+                    :user="user"
+                    @hideEmailTemplate="closeEmailTemplates"
+                    @updateEmailCampaignId="setEmailCampaignId"
+                ></email-templates>
+                <sms-templates
+                    v-if="showSMSTemplates"
+                    :templates="smsTemplates"
+                    :user="user"
+                    @hideSMSTemplate="closeSMSTemplates"
+                    @updateSMSCampaignId="setSMSCampaignId"
+                ></sms-templates>
 
             </div>
 
@@ -555,7 +567,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+                        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="4"></system-messages>-->
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">
@@ -608,7 +620,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+                        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="5"></system-messages>-->
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">
@@ -1287,6 +1299,14 @@
                 this.showEmailTemplates = false;
                 this.configureCampaign = true;
             },
+            setEmailCampaignId: function(id){
+                this.emailCampaignId = id;
+                this.validateStepCompletion();
+            },
+            setSMSCampaignId: function(id){
+                this.smsCampaignId = id;
+                this.validateStepCompletion();
+            }
         }
     };
     $(document).ready(function(){

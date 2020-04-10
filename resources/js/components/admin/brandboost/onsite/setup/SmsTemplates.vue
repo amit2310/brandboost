@@ -127,7 +127,7 @@
         props: ['templates', 'user'],
         data() {
             return {
-                refreshMessage: 1,
+                refreshMessage: 3,
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
@@ -143,6 +143,7 @@
             }
         },
         created() {
+            this.successMsg = '';
             this.loadEmailReviewTemplates();
         },
         watch: {
@@ -224,6 +225,7 @@
                         this.loading = false;
                         this.selected_campaignId = response.data.campaignId;
                         this.loadPreview();
+                        this.$emit("updateSMSCampaignId", this.selected_campaignId);
                     });
 
             },
