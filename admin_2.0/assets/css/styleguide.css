@@ -31,8 +31,8 @@ SHADOWS STYLES
 /******************************
 SMART POPUP SLIDING BOX
 ******************************/
-.box {float: left;	display: none;	top: 16px !important;	height: calc(100% - 32px);	width: 424px;	position: fixed !important;	box-sizing: border-box;	right: 85px !important;	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;	padding: 0px;	background: #fff !important;	z-index: 99;	border-radius: 6px;	border-top: 6px solid #5893FF;}
-.box > div {position: relative!important;	background: #fff!important;	z-index: 999!important; border-radius: 6px;}
+.box {float: left;	display: none;	top: 16px !important;	height: calc(100% - 32px);	width: 424px;	position: fixed !important;	box-sizing: border-box;	right: 85px !important;	box-shadow: 0px 4px 4px rgba(0, 39, 115, 0.1), 0px 0px 4px rgba(0, 39, 115, 0.05)!important;	padding: 0px;	background: #fff !important;	z-index: 1000;	border-radius: 6px;	border-top: 6px solid #5893FF;}
+.box > div {position: relative!important;	background: #fff!important;	z-index: 1000!important; border-radius: 6px;}
 .box:after {position: fixed;	content: '';	left: 0;	top: 0;	right:0;	bottom:0;	width: 100%;	height: 100%;	z-index: -1;	background:rgba(38, 87, 179, 0.05)}
 .box .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
 .cross_icon{right: 30px; top: 30px; position: absolute; width: 28px; height: 28px; cursor: pointer; z-index: 99}
@@ -389,6 +389,7 @@ Button CLASSES
 .circle-icon-32{width: 32px;height: 32px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; border: 1px solid rgba(0, 21, 66, 0.1);  }
 .circle-icon-36{width: 36px;height: 36px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 36px;  }
 .circle-icon-40{width: 40px;height: 40px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none;}
+.circle-icon-44{width: 44px;height: 44px;background: #FFFFFF;box-shadow: 0px 3px 2px rgba(0, 35, 111, 0.04);border-radius: 100px; border: none; line-height: 44px;}
 .circle-icon-48{width: 48px;height: 48px;border-radius: 100px; border: none; display: inline-block; text-align: center; line-height: 48px;}
 .circle-icon-52{width: 52px;height: 52px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 52px;  }
 .circle-icon-56{width: 56px;height: 56px;background: #FFFFFF;box-shadow:none;border-radius: 100px; border: none; text-align: center; line-height: 56px;  }
@@ -442,7 +443,8 @@ BORDER CLASSES
 .border2{border: 1px solid #D5DFEF!important;}
 .border.active{border: 1px solid #67BAE4!important;}
 .border.active2{border: 1px solid #5998F8!important;}
-.border.reviews{border: 1px solid #8C95F8!important;}
+.border.reviews{border: 1.5px solid #8C95F8!important;}
+.border.email{border: 1.5px solid #67B7E4!important;}
 .bbot{border-bottom: 1px solid #e9eff8;}
 .btop{border-top: 1px solid #e9eff8;}
 .brig{border-right: 1px solid #e9eff8;}
@@ -746,6 +748,7 @@ PADDING CLASSES
 .pt-1{padding-top: 1px!important;}
 .pt0{padding-top: 0px!important;}
 .pt10{padding-top: 10px!important;}
+.pt12{padding-top: 12px!important;}
 .pt15{padding-top: 15px!important;}
 .pt20{padding-top: 20px!important;}
 .pt25{padding-top: 25px!important;}
@@ -783,6 +786,7 @@ PADDING CLASSES
 .pl60{padding-left: 60px!important;}
 
 .pr0{padding-right: 0px!important;}
+.pr5{padding-right: 5px!important;}
 .pr10{padding-right: 10px!important;}
 .pr15{padding-right: 15px!important;}
 .pr20{padding-right: 20px!important;}

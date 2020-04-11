@@ -274,13 +274,79 @@
   
   
  
- 
+  
  <!--******************
-  Create Contact Sliding Smart Popup
+  CREATEFORM  Popup
  **********************-->
- <?php include("email_campaign_create_smart_popup.php"); ?>
  
- 
+ <!-- The Modal -->
+ <div class="modal fade" id="CREATEFORM">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content review">
+      	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+      	<div class="row">
+      		<div class="col-12">
+      			<h3 class="htxt_medium_24 dark_800 mb-3">New Email</h3>
+      			<p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
+      			<hr/>
+      		</div>
+      		
+      		<div class="col-12">
+      			<div class="form-group">
+                <label for="fname" class="fsize11 fw500 dark_600">EMAIL NAME</label>
+                <input type="text" class="form-control h48 fsize14 dark_200 br4" id="fname" placeholder="Enter new email name" name="fname">
+                
+                
+                
+                
+                
+            
+              </div>
+      		</div>
+      		
+      		<div class="col">
+      			<div class="form-group m-0">
+                <label for="fname" class="fsize11 fw500 dark_600">SELECT EMAIL TYPE</label>
+                <div class="card border text-center shadow-none m-0 email">
+                	<img class="mb-3" src="assets/images/edit_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-3">Blank Email</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Send a single email to promote<br>
+ a product, share news or <br>
+stay connected.</p>
+                </div>
+              </div>
+      		</div>
+      		<div class="col">
+      			<div class="form-group m-0">
+                <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
+                <div class="card border text-center shadow-none m-0">
+                	<img class="mb-3" src="assets/images/file2_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-3">Start with Template</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Send a series of emails that can <br>be triggered subscriber’s <br>
+specific action</p>
+                </div>
+              </div>
+      		</div>
+      		
+      		<div class="col-12">
+      			<hr/>
+      		</div>
+      		
+      		<div class="col-6">
+            <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase">CONTINUE</button>
+            <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a>            </div>
+            
+            <div class="col-6 text-right mt-3">
+			   <a class="htxt_regular_12 dark_200 ls_4 lh_24" href="#">LEARN MORE ABOUT EMAIL <img src="assets/images/information-line.svg"/></a> 
+		    </div>
+      	</div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
  
  <!--******************
   jQuery
@@ -292,15 +358,8 @@
 <script src="assets/js/jquery.slimscroll.min.js"></script>
 <script src="assets/js/app.js"></script>
 
-<script>
-$(document).ready(function(){
-	$(".slidebox").click(function(){
-		$(".box").animate({
-			width: "toggle"
-		});
-	});
-});
-</script>
+
+
 
 
 <script>
@@ -310,7 +369,13 @@ $(document).ready(function(){
 	$(".main-icon-menu-pane.review").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
 </script>
+<script>
 
+    $(document).ready(function(){
+        $("#CREATEFORM").modal('show');
+    });
+
+</script>
 
 </body>
 </html>
