@@ -12,8 +12,7 @@
                         <h3 class="htxt_medium_24 dark_700">Reviews Feed</h3>
                     </div>
                     <div class="col-md-6 col-6 text-right">
-                        <button v-if="oReviews.length > 0 || searchBy.length>0" class="circle-icon-40 mr15"><img width="16" src="assets/images/settings-2-line.svg"></button>
-                        <button v-else class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>
+                        <button class="circle-icon-40 mr15"><img width="16" src="assets/images/setting_3line_grey.svg"></button>
                         <button class="btn btn-md bkg_reviews_400 light_000" @click="displayAddReviewForm">Add Review <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
                         <!--<button class="btn btn-md bkg_reviews_400 light_000 slidebox">ADD New Contact <span><img src="assets/images/reviews_plus_icon.svg"></span></button>-->
                     </div>
@@ -37,15 +36,7 @@
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">Draft</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Positive'}" @click="sortBy='Positive'">Positive</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Negative'}" @click="sortBy='Negative'">Negative</a></li>
-                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a></li>
-                                <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>-->
-                                <!--<li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="ri-filter-3-line"></i> &nbsp; FILTER</a>
-                                    <div class="dropdown-menu p10 mt-1">
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; ARCHIVE</a>
-                                    </div>
-                                </li>-->
+
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -56,69 +47,15 @@
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; Archive</a>
                                     </div>
                                 </li>
-                                <li><a href="javascript:void(0);" class="search_tables_open_close"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <!--<li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>-->
+                                <li><a href="javascript:void(0);" class="search_tables_open_close"><i><img width="16" src="assets/images/search_line_18.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
                             </ul>
-                        </div>
-                        <!--<div class="col-md-6">
-                            <ul class="table_filter text-right">
-                                <li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
-                            </ul>
-                        </div>-->
-                    </div>
-                    <div class="card p20 datasearcharea reviewfeedSearch br6 shadow3" style="z-index: 999999!important;">
-                        <div class="form-group m-0 position-relative">
-                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
-                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="container-fluid" v-if="oReviews.length > 0 || searchBy.length>0">
-                <!--<div class="table_head_action bbot pb30">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="htxt_medium_16 dark_400">{{ oReviews.length }}&nbsp;Reviews</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="table_action">
-                                <div class="float-right">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; {{sortBy}}
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Name'}" @click="sortBy='Name'">Name</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">Active</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">Inactive</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">Pending</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">Archive</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">Date Created</a>
-                                    </div>
-                                </div>
-                                <div class="float-right ml10 mr10">
-                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-                                        <span><img src="assets/images/list_view.svg"></span>&nbsp; {{viewType}}
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
-                                    </div>
-                                </div>
-                                <div class="float-right">
-                                    <input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
-
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="oReview in oReviews">
                         <div class="card p0 pt30 text-center animate_top col">
@@ -169,69 +106,59 @@
                 <div class="row" v-if="viewType == 'List View'">
                     <div class="col-md-12">
 
-                        <div class="card p0" v-for="oReview in oReviews">
-                            <!--<span style="right: 25px; top: 23px; left: auto" class="status_icon bkg_green_300"></span>-->
-                            <span v-if="oReview.rstatus == 0" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_light_600" title="INACTIVE"></span>
-                            <span v-if="oReview.rstatus == 1" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_green_300" title="ACTIVE"></span>
-                            <span v-if="oReview.rstatus == 2" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="PENDING"></span>
-                            <span v-if="oReview.rstatus == 3" style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
-                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
-                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
-                                    <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
-                                    <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
-                                    <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
-                                </div>
-                            </div>
+                        <div class="card p0 mb10" v-for="oReview in oReviews">
                             <div class="p25">
                                 <div class="mb-2">
                                     <div class="row" :reviewid="oReview.reviewid">
-                                        <div class="col-md-8">
-                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp;
-                                            <a href="javascript:void();" v-on:click="loodReviewPopup(oReview.reviewid,'')" class="js-review-feedback-slidebox2"> {{ oReview.firstname }} {{ oReview.lastname }}</a>
-                                            </p>
-                                            <p class="mt-0 review_rating_start float-left">
-                                                <span v-for="num in [1,2,3,4,5]">
-                                                    <i v-if="num<=oReview.ratings" class=""><img width="14" src="/assets/images/star-fill_yellow_18.svg"></i>
-                                                    <i v-else class=""><img width="14" src="/assets/images/star-fill_grey_18.svg"></i>
-                                                </span>
-                                            </p>
-                                            <p class="float-left ml-3 dark_400">{{ oReview.ratings }}.0</p>
-                                            <!--<p class="float-left ml-3 dark_400">
-                                                <span v-if="oReview.ratings > 3">Positive</span>
-                                                <span v-else-if="oReview.ratings == 3">Neutral</span>
-                                                <span v-else>Negative</span>
-                                            </p>-->
+                                        <div class="col-md-5">
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26 js-review-feedback-slidebox2" @click="loadReviewPopup(oReview.reviewid,'')"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
                                         </div>
-
-                                        <div class="col-md-4 text-right">
-                                            <p class="float-right fsize14 dark_400 mt-0 mb-0 mr-5">{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</p>
+                                        <div class="col-md-7 text-right">
+                                            <span v-if="oReview.rstatus == 0" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_light_600" title="INACTIVE"></span>
+                                            <span v-if="oReview.rstatus == 1" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_green_300" title="ACTIVE"></span>
+                                            <span v-if="oReview.rstatus == 2" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_reviews_300" title="PENDING"></span>
+                                            <span v-if="oReview.rstatus == 3" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
+                                            &nbsp;<div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
+                                                <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
+                                                <a v-if="oReview.rstatus == '1'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
+                                                <a v-if="oReview.rstatus != '3'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showReview(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> View Review</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                            <div style="position:absolute; top:0; right:180px;">
+                                                <p class=" m-0 review_rating_start float-left">
+                                                    <template v-for="num in [1,2,3,4,5]">
+                                                        <i v-if="num<=oReview.ratings" class="ri-star-fill green_400"></i>
+                                                        <i v-else class="ri-star-fill"></i>
+                                                    </template>
+                                                </p>
+                                                <p class="float-left fsize14 ml-2 dark_400 mb-0" style="margin-top:2px;">{{ oReview.ratings }}.0</p>
+                                            </div>
+                                            <p class="float-right fsize14 dark_400 m-0" style="position:absolute; top:0px; right:60px;">{{timeAgo(oReview.review_created)}} </p>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <p class="fsize14 fw400 dark_600 lh_24" @click="showReview(oReview.reviewid)" style="cursor: pointer;">
+                                <p class="fsize14 fw400 dark_600 lh_22 mb25" @click="showReview(oReview.reviewid)">
                                     {{ oReview.comment_text }}
                                 </p>
-
-                                <div class="reply_sec_link" >
-
-                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; {{oReview.getComm}}
+                                <div class="reply_sec_link">
+                                    <a class="dark_400 fsize14" href="#"><img src="assets/images/comment_grey_16.svg"> &nbsp; {{oReview.getComm}}
                                         <template v-if="oReview.getComm < 2">Comment </template>
                                         <template v-else>Comments</template>
-
                                     </a>
-                                    <!-- <a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a> -->
-                                    <a class="text-uppercase dark_200 fsize11 fw500 ls_4 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+                                    <a class="dark_400 fsize14" href="#"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 0 Likes</a>
+                                    <a class="dark_400 fsize14 js-review-feedback-slidebox" href="#"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
+
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -877,7 +804,7 @@
                         });
                 }
             },
-            loodReviewPopup:function(review_id, tabtype) {
+            loadReviewPopup:function(review_id, tabtype) {
                 axios.post('/admin/reviews/getReviewFeedPopupData', {
                         rid: review_id,
                         _token: this.csrf_token()
