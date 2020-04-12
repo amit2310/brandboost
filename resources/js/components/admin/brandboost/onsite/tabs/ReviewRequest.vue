@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div v-show="pageRendered == true">
         <div class="table_head_action pb0 mt-3">
             <div class="row">
                 <div class="col-md-6">
@@ -202,6 +202,7 @@
         components: {UserAvatar, Pagination},
         data(){
             return {
+                pageRendered: false,
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
@@ -302,6 +303,7 @@
                         this.moduleName = response.data.moduleName;
                         this.requests = response.data.oRequest;
                         this.allData = response.data.allData;
+                        this.pageRendered = true;
                         //console.log(this.requests)
                     });
             },

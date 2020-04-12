@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div v-show="pageRendered==true">
 
         <div class="table_head_action pb0 mt-4">
             <div class="row">
@@ -216,6 +216,7 @@
         components: {UserAvatar, Pagination},
         data(){
             return {
+                pageRendered: false,
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
@@ -329,6 +330,7 @@
                         this.oReviews = response.data.aReviews;
                         this.reviewTags = response.data.reviewTags;
                         this.reviewTags = response.data.reviewTags;
+                        this.pageRendered = true;
                         //console.log(this.oReviews);
                     });
             },

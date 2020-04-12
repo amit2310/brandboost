@@ -116,8 +116,8 @@ class ReviewsModel extends Model {
                     return $query->where('tbl_reviews.campaign_id', $campaignID);
                 });
         if(!empty($searchBy)){
-            $query->where('review_title', 'LIKE',  "%$searchBy%");
-            //$query->orWhere('comment_text', 'LIKE',  "%$searchBy%");
+            //$query->where('review_title', 'LIKE',  "%$searchBy%");
+            $query->where('comment_text', 'LIKE',  "%$searchBy%");
         }
         if(!empty($sortBy)){
             if($sortBy == 'Date Created'){
