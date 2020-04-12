@@ -24,9 +24,9 @@
         <!--******************
           Content Area
          **********************-->
-        <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-            <loading :isLoading="loading"></loading>
+        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+        <loading :isLoading="loading"></loading>
+        <div class="content-area" v-show="pageRendered==true">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
                 <!--<div class="row">
                     <div class="col-md-12">
@@ -498,6 +498,7 @@
         components: {UserAvatar, Pagination},
         data(){
             return {
+                pageRendered: false,
                 successMsg : '',
                 errorMsg: '',
                 loading: true,
@@ -642,6 +643,7 @@
                         this.allData = response.data.allData;
                         this.campaigns = response.data.aBrandbosts;
                         this.loading = false;
+                        this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
             },

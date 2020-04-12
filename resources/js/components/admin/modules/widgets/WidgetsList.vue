@@ -23,10 +23,10 @@
             <!--******************
               Content Area
              **********************-->
-            <div class="content-area">
+        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+        <loading :isLoading="loading"></loading>
+            <div class="content-area" v-show="pageRendered==true" >
                 <div class="container-fluid" v-if="widgets.length > 0 || searchBy.length > 0">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
                         <div class="row">
                             <div class="col-md-6">
@@ -342,6 +342,7 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
+                pageRendered: false,
                 form: {
                     campaignName: '',
                 },
@@ -544,6 +545,7 @@
                         this.oStats = response.data.oStats;
                         this.bActiveSubsription = response.data.bActiveSubsription;
                         this.user_role = response.data.user_role;
+                        this.pageRendered = true;
                     });
             },
             showPaginationData: function (current_page) {

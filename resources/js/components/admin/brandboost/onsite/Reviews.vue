@@ -23,11 +23,11 @@
         <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-        <div class="content-area">
+        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+        <loading :isLoading="loading"></loading>
+        <div class="content-area" v-show="pageRendered==true">
             <div class="container-fluid">
                 <div class="table_head_action">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
-                    <loading :isLoading="loading"></loading>
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="table_filter">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
-                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i><img src="assets/images/filter_line_18.svg"></i></a>
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter_line_18.svg"></i></a>
                                     <div class="dropdown-menu p10 mt-1">
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'"><i class="ri-check-double-fill"></i> &nbsp; Inactive</a>
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'"><i class="ri-check-double-fill"></i> &nbsp; Archive</a>
@@ -51,6 +51,12 @@
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="card p20 datasearcharea reviewfeedSearch br6 shadow3" style="z-index: 999999!important;">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                         </div>
                     </div>
                 </div>
@@ -74,15 +80,15 @@
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(oReview.reviewid)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
                             </div>
-                            <a href="#" class="circle-icon-36 bkg_blue_300 m0auto lh_34">
+                            <a href="javascript:void(0);" class="circle-icon-36 bkg_blue_300 m0auto lh_34">
                                 <span v-if="oReview.domain_name.indexOf('facebook')" class=""><img src="assets/images/google_fill.svg"/></span>
                                 <span v-else class=""><img src="assets/images/google_fill.svg"/></span>
                             </a>
                             <h3 class="htxt_medium_14 dark_600 mb-2 mt-3">{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</h3>
                             <p class="fsize13 dark_600 mb-1 pl10 pr10 lh_21 min_h_85" @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ setStringLimit(capitalizeFirstLetter(oReview.comment_text), 130) }}</p>
                             <div class="p20 pl0 pr0 reply_links">
-                                <a href="#"><img src="assets/images/chat_grey_16.svg" />{{ oReview.getComm }}</a>
-                                <!--<a href="#"><img src="assets/images/thumbs_up_16.svg" />13</a>-->
+                                <a href="javascript:void(0);"><img src="assets/images/chat_grey_16.svg" />{{ oReview.getComm }}</a>
+                                <!--<a href="javascript:void(0);"><img src="assets/images/thumbs_up_16.svg" />13</a>-->
                                 <a class="js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg" />Reply</a>
                             </div>
 
@@ -118,7 +124,7 @@
                                             <span v-if="oReview.rstatus == 1" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_green_300" title="ACTIVE"></span>
                                             <span v-if="oReview.rstatus == 2" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_reviews_300" title="PENDING"></span>
                                             <span v-if="oReview.rstatus == 3" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_reviews_300" title="ARCHIVED"></span>
-                                            &nbsp;<div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                            <div class="dot_dropdown" style="position: absolute; top: 0px; right: -8px;"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                 <!--<a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(oReview.reviewid)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>-->
                                                 <a v-if="oReview.rstatus == '0' || oReview.rstatus == '2'" :review_id="oReview.reviewid" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(oReview.reviewid, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
@@ -148,12 +154,12 @@
                                     {{ oReview.comment_text }}
                                 </p>
                                 <div class="reply_sec_link">
-                                    <a class="dark_400 fsize14" href="#"><img src="assets/images/comment_grey_16.svg"> &nbsp; {{oReview.getComm}}
+                                    <a class="dark_400 fsize14" href="javascript:void(0);"><img src="assets/images/comment_grey_16.svg"> &nbsp; {{oReview.getComm}}
                                         <template v-if="oReview.getComm < 2">Comment </template>
                                         <template v-else>Comments</template>
                                     </a>
-                                    <a class="dark_400 fsize14" href="#"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 0 Likes</a>
-                                    <a class="dark_400 fsize14 js-review-feedback-slidebox" href="#"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
+                                    <a class="dark_400 fsize14" href="javascript:void(0);"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 0 Likes</a>
+                                    <a class="dark_400 fsize14 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
 
@@ -179,13 +185,13 @@
 
                             <div class="row mb65">
                                 <div class="col-md-6 text-left">
-                                    <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="#">
+                                    <a class="lh_32 reviews_400 htxt_bold_14 d-none" href="javascript:void(0);">
                                         <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/settings-3-fill-review.svg"></span>
                                         Set up reviews monitoring
                                     </a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_12 dark_200 " href="#">
+                                    <a class="lh_32 htxt_regular_12 dark_200 " href="javascript:void(0);">
                                         Learn how use use contacts &nbsp; <img src="assets/images/question-line.svg">
                                     </a>
                                 </div>
@@ -211,7 +217,7 @@
 
 
                     <!--<div class="col-md-12 text-center mt-3">
-                        <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
+                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
                     </div>-->
 
 
@@ -380,7 +386,7 @@
         <div id="editReview" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" class="form-horizontal" id="updateReview" action="javascript:void();">
+                    <form method="post" class="form-horizontal" id="updateReview" action="javascript:void(0);">
 
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -462,7 +468,7 @@
         <div id="editVideoReview" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" class="form-horizontal" id="updateVideoReview" action="javascript:void();">
+                    <form method="post" class="form-horizontal" id="updateVideoReview" action="javascript:void(0);">
 
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -571,7 +577,7 @@
         <div id="ReviewTagListModal" class="modal fade">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void();">
+                    <form method="post" name="frmReviewTagListModal" id="frmReviewTagListModal" action="javascript:void(0);">
 
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -619,6 +625,7 @@
         components: {UserAvatar, Pagination},
         data(){
             return {
+                pageRendered: false,
                 successMsg : '',
                 errorMsg: '',
                 loading: true,
@@ -689,6 +696,7 @@
                         this.reviewTags = response.data.reviewTags;
                         this.reviewTags = response.data.reviewTags;
                         this.loading = false;
+                        this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
             },
