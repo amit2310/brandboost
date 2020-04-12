@@ -275,12 +275,97 @@
   
  
  
+  
  <!--******************
-  Create Contact Sliding Smart Popup
+  Request - Import Contacts - 1
  **********************-->
- <?php include("email_campaign_create_smart_popup.php"); ?>
- 
- 
+ <div class="modal fade" id="ImportContacts1">
+    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width:680px!important">
+      <div class="modal-content review">
+      	<a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+        <a class="cross_icon back" data-dismiss="modal"><i class=""><img src="assets/images/modal_back.svg"></i></a>
+      	<div class="row">
+      		<div class="col-12 mb-3">
+      			<h3 class="htxt_medium_24 dark_800 mb-2">Add Contacts</h3>
+      			<p class="htxt_regular_14 dark_200 m-0">Choose how do you want to add contacts</p>
+      			<hr/>
+      		</div>
+      		
+    
+          </div>
+          
+
+        <div class="row">
+        <div class="col-4 d-flex">
+                <div class="card border text-center shadow-none p20 col">
+                	<img class="mb-3" src="assets/images/contact_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-2">Contacts</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Choose from <br>all available contacts. </p>
+                </div>
+                </div>
+                
+                <div class="col-4 d-flex">
+            	<div class="card border text-center shadow-none p20 col">
+                	<img class="mb-3" src="assets/images/lists_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-2">Lists</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Select one or more<br> pre-made lists.</p>
+                </div>
+                </div>
+                
+                <div class="col-4 d-flex">
+            	<div class="card border text-center shadow-none p20 col">
+                	<img class="mb-3" src="assets/images/tags_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-2">Tags</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Select contacts <br>that match specific tag.</p>
+                </div>
+                </div>
+
+
+        </div>
+
+
+        <div class="row">
+        <div class="col-4 d-flex">
+                <div class="card border text-center shadow-none p20 col m0">
+                	<img class="mb-3" src="assets/images/segment_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-2">Segments</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Select one or more <br> pre-made segments.  </p>
+                </div>
+                </div>
+                
+                <div class="col-4 d-flex">
+            	<div class="card border text-center shadow-none p20 col m0">
+                	<img class="mb-3" src="assets/images/copy2_blue_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-2">Copy campaign</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Copy all contacts from <br>another campaign.</p>
+                </div>
+                </div>
+                
+                <div class="col-4 d-flex">
+            	<div class="card border text-center shadow-none p20 col m0">
+                	<img class="mb-3" src="assets/images/import_grey_44.svg"/>
+                	<p class="htxt_medium_14 dark_600 mb-2">Import</p>
+                	<p class="htxt_regular_12 dark_300 m-0 lh_17">Import contacts from <br>another app or file</p>
+                </div>
+                </div>
+        
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
  
  <!--******************
   jQuery
@@ -292,15 +377,8 @@
 <script src="assets/js/jquery.slimscroll.min.js"></script>
 <script src="assets/js/app.js"></script>
 
-<script>
-$(document).ready(function(){
-	$(".slidebox").click(function(){
-		$(".box").animate({
-			width: "toggle"
-		});
-	});
-});
-</script>
+
+
 
 
 <script>
@@ -310,7 +388,13 @@ $(document).ready(function(){
 	$(".main-icon-menu-pane.review").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
 </script>
+<script>
 
+    $(document).ready(function(){
+        $("#ImportContacts1").modal('show');
+    });
+
+</script>
 
 </body>
 </html>
