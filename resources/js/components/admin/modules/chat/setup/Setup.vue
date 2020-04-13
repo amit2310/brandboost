@@ -162,8 +162,8 @@
                                                             </div>
                                                             <div class="col-ms-6">
                                                                 <br/>
-                                                                <button type="button" class="btn white_btn ml20 h40 p10 removeMessage" v-if="index != 0 "  v-on:click="removeMessageSec(index)"><i class="icon-minus3"></i></button>
-                                                                <button type="button" class="btn white_btn ml20 h40 p10 addMessage" v-if="index == (message_sec.length-1) " v-on:click="addMessageSec()"><i class="icon-plus3"></i></button>
+                                                                <button type="button" class="btn white_btn ml20 h40 p10 removeMessage" v-if="index != 0 "  @click="removeMessageSec(index)"><i class="icon-minus3"></i></button>
+                                                                <button type="button" class="btn white_btn ml20 h40 p10 addMessage" v-if="index == (message_sec.length-1) " @click="addMessageSec()"><i class="icon-plus3"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>

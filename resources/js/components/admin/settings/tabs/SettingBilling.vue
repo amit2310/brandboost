@@ -164,7 +164,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn dark_btn ml20 bkg_purple" v-on:click="saveUserOtherInfo()">Save</button>
+                                        <button type="submit" class="btn dark_btn ml20 bkg_purple" @click="saveUserOtherInfo()">Save</button>
 
                                     </div>
                                 </div>
@@ -392,7 +392,7 @@
                         </div>
                         <div class="modal-footer p40">
                             <button data-dismiss="modal" type="button" class="btn white_btn h52">Cancel</button>
-                            <button type="submit" class="btn dark_btn bkg_sblue h52" v-on:click="frmSaveCCDetails()"><i class="fa fa-cart-plus"></i> Save</button>
+                            <button type="submit" class="btn dark_btn bkg_sblue h52" @click="frmSaveCCDetails()"><i class="fa fa-cart-plus"></i> Save</button>
                         </div>
 <!--                    </form>-->
                 </div>

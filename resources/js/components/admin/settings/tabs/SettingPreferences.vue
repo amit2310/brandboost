@@ -265,7 +265,7 @@
                                 <div class="p30">
                                     <div class="row">
                                         <div class="col-md-12 text-right">
-                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" v-on:click="saveGeneralPreferences()"><span>Save</span> </button>
+                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" @click="saveGeneralPreferences()"><span>Save</span> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -327,7 +327,7 @@
                                     <div class="row">
                                         <div class="col-md-12 text-right">
                                             <input type="hidden" id="settingsUserId" :value="oUser.id" />
-                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" v-on:click="saveFieldsSettings()"><span>Save</span> </button>
+                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" @click="saveFieldsSettings()"><span>Save</span> </button>
                                         </div>
                                     </div>
                                 </div>
