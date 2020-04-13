@@ -19,14 +19,14 @@ a.filterByColumn.active{
 	<div class="panel panel-flat">
 		<div class="panel-heading">
 			<h6 class="panel-title" style="width: 150px;float: left;">{{ count($oFeedbacks) }} NPS Score</h6>
-			
-			<div class="heading_links pull-left">				
+
+			<div class="heading_links pull-left">
 				<a class="top_links active filterByColumn">All</a>
 				<a class="top_links filterByColumn" fil="promoters" style="cursor: pointer;">Promoters</a>
-				<a class="top_links filterByColumn" fil="passive" style="cursor: pointer;">Passive</a> 
+				<a class="top_links filterByColumn" fil="passive" style="cursor: pointer;">Passive</a>
 				<a class="top_links filterByColumn" fil="detractors" style="cursor: pointer;">Detractors</a>
 			</div>
-			
+
 			<div class="heading-elements">
 				<div style="display: inline-block; margin: 0;" class="form-group has-feedback has-feedback-left">
 					<input class="form-control input-sm cus_search" placeholder="Search by name" type="text">
@@ -36,7 +36,7 @@ a.filterByColumn.active{
 				</div>&nbsp; &nbsp;
 			</div>
 		</div>
-		
+
 		<div class="panel-body p0">
 			@if(!empty($oFeedbacks))
 			<table class="table" id="scorePage">
@@ -52,9 +52,9 @@ a.filterByColumn.active{
 						<th data-filter="score" style="display:none;"></th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
-					
+
 					@php
 						foreach ($oFeedbacks as $oFeedback) {
 							$score = ($oFeedback->score) ? $oFeedback->score : 0;
@@ -90,17 +90,17 @@ a.filterByColumn.active{
 									<div class="text-muted text-size-small">
 										{{ setStringLimit($feedback) }}
 									</div>
-								</div> 
+								</div>
 							</td>
 							<td style="display:none;">
 								@if($score > 8)
 									{{ 'Promoters' }}
 								@endif
-								
+
 								@if($score > 6 && $score < 9)
 									{{ 'Passive' }}
 								@endif
-								
+
 								@if($score < 7)
 									{{'Detractors' }}
 								@endif
@@ -148,7 +148,7 @@ a.filterByColumn.active{
 		@endif
 		</div>
 	</div>
-	
+
 	<!-- /dashboard content -->
 	@if($oNPS->platform == 'web' || $oNPS->platform == 'link')
 		<div class="row pull-right">
@@ -163,7 +163,7 @@ a.filterByColumn.active{
 			</div>
 		</div>
 	@endif
-	
+
 	<div id="editSurveyModel" class="modal fade in">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -173,14 +173,14 @@ a.filterByColumn.active{
 						<button type="button" class="close" data-dismiss="modal">×</button>
 						<h5 class="modal-title"><i class="icon-menu7"></i> &nbsp;Edit Survey</h5>
 					</div>
-					
+
 					<div id="npsTitleEdit">
 						<div class="modal-body">
 							<p>Survey Name:</p>
 							<input class="form-control" id="edit_title" name="title" placeholder="Enter Survey Name" type="text" required="required"><br>
 							<div id="editSurveyValidation" style="color:#FF0000;display:none;"></div>
 						</div>
-						
+
 						<div class="modal-footer">
 							<input type="hidden" name="nps_id" id="hidnpsid" value="" />
 							<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -191,26 +191,26 @@ a.filterByColumn.active{
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<!-- add New Survey -->
 	<div id="addNPSModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="javascript:void();">
-					@csrf	
+				<form method="post" name="frmaddNPSModal" id="frmaddNPSModal" action="javascript:void(0);">
+					@csrf
                     <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Add New Survey</h5>
 					</div>
-					
+
 					<div id="npsTitle">
 						<div class="modal-body">
 							<p>Survey Name:</p>
 							<input class="form-control" id="title" name="title" placeholder="Enter Survey Name" type="text" required="required"><br>
 							<div id="addNPSValidation" style="color:#FF0000;display:none;"></div>
 						</div>
-						
+
 						<div class="modal-footer">
 							<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 							<button type="submit" class="btn btn-primary">Create</button>
@@ -220,13 +220,13 @@ a.filterByColumn.active{
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="NPSTagListModal" class="modal fade">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
                 <form method="post" name="frmNPSTagListModal" id="frmNPSTagListModal" action="javascript:void();">
-					@csrf	
+					@csrf
                     <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h5 class="modal-title">Apply Tags</h5>
@@ -244,17 +244,17 @@ a.filterByColumn.active{
 </div>
 <!-- /content area -->
 <script type="text/javascript">
-	
+
 	$(document).ready(function () {
         // Setup - add a text input to each footer cell
         $('#scorePage thead tr').clone(true).appendTo('#scorePage thead');
-		
+
         $('#scorePage thead tr:eq(1) th').each(function (i) {
 			var dataFilter = $(this).attr('data-filter');
             if (dataFilter === 'score') {
                 var title = $(this).text();
                 $(this).html('<input type="text" id="filterByStatus" value="" placeholder="Search ' + title + '" />');
-				
+
                 $('input', this).on('keyup change', function () {
                     if (tableBase.column(i).search() !== this.value) {
                         tableBase
@@ -265,7 +265,7 @@ a.filterByColumn.active{
 				});
 			}
 		});
-		
+
         $(document).on('click', '.filterByColumn', function () {
             $('.nav-tabs').each(function (i) {
                 $('.filterByColumn').removeClass('active');
@@ -275,16 +275,16 @@ a.filterByColumn.active{
             $('#filterByStatus').val(fil);
             $('#filterByStatus').keyup();
 		});
-		
+
         var tableId = 'scorePage';
         var tableBase = custom_data_table(tableId);
-		
+
         $('table#scorePage thead tr:eq(1)').hide();
 	});
-	
-	
+
+
 	$(document).ready(function () {
-		
+
 		$('#checkAll').change(function () {
 			if (false == $(this).prop("checked")) {
 				$(".checkRows").prop('checked', false);
@@ -296,17 +296,17 @@ a.filterByColumn.active{
 				$('.custom_action_box').show();
 			}
 		});
-		
+
 		$(document).on('click', '.checkRows', function () {
 			var inc = 0;
 			var rowId = $(this).val();
-			
+
 			if (false == $(this).prop("checked")) {
 				$('#append-' + rowId).removeClass('success');
 				} else {
 				$('#append-' + rowId).addClass('success');
 			}
-			
+
 			$('.checkRows:checkbox:checked').each(function (i) {
 				inc++;
 			});
@@ -315,14 +315,14 @@ a.filterByColumn.active{
 				} else {
 				$('.custom_action_box').show();
 			}
-			
+
 			var numberOfChecked = $('.checkRows:checkbox:checked').length;
 			var totalCheckboxes = $('.checkRows:checkbox').length;
 			if (totalCheckboxes > numberOfChecked) {
 				$('#checkAll').prop('checked', false);
 			}
 		});
-		
+
 		$(document).on('click', '#deleteBulkNPS', function () {
 			var val = [];
 			$('.checkRows:checkbox:checked').each(function (i) {
@@ -331,7 +331,7 @@ a.filterByColumn.active{
 			if (val.length === 0) {
 				alert('Please select a row.')
 				} else {
-				
+
 				var elem = $(this);
 				swal({
 					title: "Are you sure? You want to delete this record!",
@@ -363,7 +363,7 @@ a.filterByColumn.active{
 				});
 			}
 		});
-		
+
 		$(document).on('click', '#archiveBulkNPS', function () {
 			var val = [];
 			$('.checkRows:checkbox:checked').each(function (i) {
@@ -372,7 +372,7 @@ a.filterByColumn.active{
 			if (val.length === 0) {
 				alert('Please select a row.')
 				} else {
-				
+
 				var elem = $(this);
 				swal({
 					title: "Are you sure? You want to move to archive this record!",
@@ -404,13 +404,13 @@ a.filterByColumn.active{
 				});
 			}
 		});
-		
+
 		$('#addNpsSurvery').click(function () {
 			$('#addNPSModal').modal();
 		});
-		
+
 		$('#frmaddNPSModal').on('submit', function () {
-			
+
 			$('.overlaynew').show();
 			var formdata = $("#frmaddNPSModal").serialize();
 			$.ajax({
@@ -433,7 +433,7 @@ a.filterByColumn.active{
 			});
 			return false;
 		});
-		
+
 		$(document).on("click", ".editSurvey", function () {
 			$('.overlaynew').show();
 			var nps_id = $(this).attr('nps_id');
@@ -454,7 +454,7 @@ a.filterByColumn.active{
 				}
 			});
 		});
-		
+
 		$(document).on("click", ".moveToArchiveNPS", function () {
 			$('.overlaynew').show();
 			var nps_id = $(this).attr('nps_id');
@@ -472,7 +472,7 @@ a.filterByColumn.active{
 				}
 			});
 		});
-		
+
 		$('#frmeditSurveyModel').on('submit', function () {
 			$('.overlaynew').show();
 			var formdata = $("#frmeditSurveyModel").serialize();
@@ -496,7 +496,7 @@ a.filterByColumn.active{
 			});
 			return false;
 		});
-		
+
 		$(document).on('click', '.deleteNPS', function () {
 			var elem = $(this);
 			swal({
@@ -529,8 +529,8 @@ a.filterByColumn.active{
 				}
 			});
 		});
-		
-		
+
+
 		$(document).on("click", ".applyInsightTags", function () {
 			var score_id = $(this).attr("scoreid");
 			var action_name = $(this).attr("action_name");
@@ -557,7 +557,7 @@ a.filterByColumn.active{
 				}
 			});
 		});
-		
+
 		$("#frmNPSTagListModal").submit(function () {
 			var formdata = $("#frmNPSTagListModal").serialize();
 			$.ajax({
@@ -574,7 +574,7 @@ a.filterByColumn.active{
 			});
 			return false;
 		});
-	
+
 	});
-	
-</script>				
+
+</script>
