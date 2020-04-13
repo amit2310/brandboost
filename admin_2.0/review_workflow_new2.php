@@ -16,19 +16,6 @@
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
-<style>
-@media (max-height:800px) {
-.workflow_list_box{ height:532px; overflow:hidden}
-.workflow_list_box:hover{ overflow:auto}
-}
-.workflow_list_new{ padding:0;}
-.workflow_list_new li{ list-style:none; padding:0; line-height:20px; margin-bottom:20px; position:relative;}
-.workflow_list_new li a{ font-size:14px; color: #687693; line-height:20px;}
-.workflow_list_new li a span.circle-icon-20{ display:inline-block!important; line-height:20px; margin-right:7px; position:relative; vertical-align:top; border:none; font-weight:500; color:#ffffff!important; border-radius:6px; font-size:11px;}
-
-.workflow_list_new li .workflow_switch_div_small{ margin:0 auto; display:inline-block; position:relative }
-.workflow_list_new li.buttons:after{ position:absolute; height:1px; width:100%; background:#eef2f9; content:''; left:0; top:14px;}
-</style>
 
 
 </head>

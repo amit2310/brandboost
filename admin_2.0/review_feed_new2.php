@@ -92,138 +92,165 @@
     
     <div class="row">
     	<div class="col-md-12">
-    		<div class="card p0">
-    			<span style="right: 25px; top: 23px; left: auto" class="status_icon bkg_green_300"></span>
+    		<div class="card p0 mb10">
+    			
 						<div class="p25">
 							<div class="mb-2">
 								<div class="row">
-									<div class="col-md-8">
-										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/pie_chart_fill_12.svg"></span> &nbsp; Gladys Russell</p>
-										<p class="mt-0 review_rating_start float-left"><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_grey_18.svg"></i></p>
-
-										<p class="float-left ml-3 dark_400">4.0</p>
+									<div class="col-md-5">
+										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; Mitchell Russell</p>
 									</div>
-									
-									<div class="col-md-4 text-right">
-						  			<p class="float-right fsize14 dark_400 mt-0 mb-0 mr-5">Mar 17, 2014 1:06 AM </p>
+									<div class="col-md-7 text-right">
+                                    <span style="right: 15px; top: 0px; left: auto" class="status_icon bkg_green_300"></span>
+                                    <div style="position:absolute; top:0; right:180px;">
+                                    <p class=" m-0 review_rating_start float-left">
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill"></i>
+                                    </p>
+									<p class="float-left fsize14 ml-2 dark_400 mb-0" style="margin-top:2px;">4.0</p>
+                                    </div>
+						  			<p class="float-right fsize14 dark_400 m-0" style="position:absolute; top:0px; right:60px;">3 month ago </p>
 									</div>
 								</div>
 							</div>
 							
 							
-							<p class="fsize14 fw400 dark_600 lh_24">
+							<p class="fsize14 fw400 dark_600 lh_22 mb25">
 								The Top Forex Brokers Review is a great website that provided me with insightful information about Forex Trading by incorporating a list of the top brokers in the world, it gave me an idea of where i should make trades. The use of Forex Education is fantastic as it helped me gain a better understanding of various aspects related to the Forex Trading, which allowed me to make my decision of which broker to trade with. 
 								I highly recommend using this website it gave me an idea of where i should make trades.
 							</p>
-							
 							<div class="reply_sec_link">
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/comment_grey_16.svg"> &nbsp; 3 Comments</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 13 Likes</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
 							<div class="clearfix"></div>	
 							</div>
 							
 						</div>
 					</div>
-					
-					
-					<div class="card p0">
-    			<span style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300"></span>
-						<div class="p25">
+                    
+                    <div class="card p0 mb10">
+    				<div class="p25">
 							<div class="mb-2">
 								<div class="row">
-									<div class="col-md-8">
-										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; Mitchell Russell</p>
-										<p class="mt-0 review_rating_start float-left"><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_grey_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_grey_18.svg"></i></p>
-
-										<p class="float-left ml-3 dark_400">3.0</p>
+									<div class="col-md-5">
+										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; Brooklyn Simmmons</p>
 									</div>
-									
-									<div class="col-md-4 text-right">
-						  			<p class="float-right fsize14 dark_400 mt-0 mb-0 mr-5">Mar 17, 2014 1:06 AM </p>
+									<div class="col-md-7 text-right">
+                                    <span style="right: 15px; top: 0px; left: auto" class="status_icon bkg_green_300"></span>
+                                    <div style="position:absolute; top:0; right:180px;">
+                                    <p class=" m-0 review_rating_start float-left">
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill"></i>
+                                    </p>
+									<p class="float-left fsize14 ml-2 dark_400 mb-0" style="margin-top:2px;">4.0</p>
+                                    </div>
+						  			<p class="float-right fsize14 dark_400 m-0" style="position:absolute; top:0px; right:60px;">3 month ago </p>
 									</div>
 								</div>
 							</div>
 							
 							
-							<p class="fsize14 fw400 dark_600 lh_24">
+							<p class="fsize14 fw400 dark_600 lh_22 mb25">
 								Ea commodo occaecat sunt aute nostrud dolore duis consectetur esse. Occaecat minim nisi duis magna labore occaecat in minim tempor voluptate ut laboris do dolore. Pariatur in deserunt aute officia dolore veniam velit. Deserunt qui ullamco aute exercitation ad exercitation consectetur excepteur dolore excepteur eiusmod nostrud.
 							</p>
 							<div class="reply_sec_link">
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; 3 Comments</a>	
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a>	
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+							<!--<a class="dark_400 fsize14" href="#"><img src="assets/images/comment_grey_16.svg"> &nbsp; 3 Comments</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 13 Likes</a>	-->
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
 							<div class="clearfix"></div>	
 							</div>
 							
 						</div>
 					</div>
-					
-					<div class="card p0">
-    			<span style="right: 25px; top: 23px; left: auto" class="status_icon bkg_light_600"></span>
+                    
+                    <div class="card p0 mb10">
 						<div class="p25">
 							<div class="mb-2">
 								<div class="row">
-									<div class="col-md-8">
-										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_400 mr-2"><img src="assets/images/facebook_white_14.svg"></span> &nbsp; Floyd Black</p>
-										<p class="mt-0 review_rating_start float-left"><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i></p>
-
-										<p class="float-left ml-3 dark_400">5.0</p>
+									<div class="col-md-5">
+										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_200 mr-2"><img width="14" src="assets/images/facebook_fill.svg"></span> &nbsp; Victoria Lane</p>
 									</div>
-									
-									<div class="col-md-4 text-right">
-						  			<p class="float-right fsize14 dark_400 mt-0 mb-0 mr-5">Mar 17, 2014 1:06 AM </p>
+									<div class="col-md-7 text-right">
+                                    <span style="right: 15px; top: 0px; left: auto" class="status_icon bkg_green_300"></span>
+                                    <div style="position:absolute; top:0; right:180px;">
+                                    <p class=" m-0 review_rating_start float-left">
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill"></i>
+                                    </p>
+									<p class="float-left fsize14 ml-2 dark_400 mb-0" style="margin-top:2px;">4.0</p>
+                                    </div>
+						  			<p class="float-right fsize14 dark_400 m-0" style="position:absolute; top:0px; right:60px;">3 month ago </p>
 									</div>
 								</div>
 							</div>
 							
 							
-							<p class="fsize14 fw400 dark_600 lh_24">
+							<p class="fsize14 fw400 dark_600 lh_22 mb25">
 								The Top Forex Brokers Review is a great website that provided me with insightful information about Forex Trading by incorporating a list of the top brokers in the world, it gave me an idea of where i should make trades. The use of Forex Education is fantastic as it helped me gain a better understanding of various aspects related to the Forex Trading, which allowed me to make my decision of which broker to trade with. 
-I highly recommend using this website it gave me an idea of where i should make trades.
+								I highly recommend using this website it gave me an idea of where i should make trades.
 							</p>
 							<div class="reply_sec_link">
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; 3 Comments</a>	
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a>	
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/comment_grey_16.svg"> &nbsp; 3 Comments</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 13 Likes</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
 							<div class="clearfix"></div>	
 							</div>
 							
 						</div>
 					</div>
-					
-					
-					<div class="card p0">
-    			<span style="right: 25px; top: 23px; left: auto" class="status_icon bkg_reviews_300"></span>
+                    
+                    <div class="card p0 mb10">
 						<div class="p25">
 							<div class="mb-2">
 								<div class="row">
-									<div class="col-md-8">
-										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp; Arlene Lane</p>
-										<p class="mt-0 review_rating_start float-left"><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_yellow_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_grey_18.svg"></i><i class=""><img width="14" src="assets/images/star-fill_grey_18.svg"></i></p>
-
-										<p class="float-left ml-3 dark_400">3.0</p>
+									<div class="col-md-5">
+										<p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_blue_200 mr-2"><img width="14" src="assets/images/facebook_fill.svg"></span> &nbsp; Audrey Cooper</p>
 									</div>
-									
-									<div class="col-md-4 text-right">
-						  			<p class="float-right fsize14 dark_400 mt-0 mb-0 mr-5">Mar 17, 2014 1:06 AM </p>
+									<div class="col-md-7 text-right">
+                                    <span style="right: 15px; top: 0px; left: auto" class="status_icon bkg_green_300"></span>
+                                    <div style="position:absolute; top:0; right:180px;">
+                                    <p class=" m-0 review_rating_start float-left">
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill green_400"></i>
+                                    <i class="ri-star-fill"></i>
+                                    </p>
+									<p class="float-left fsize14 ml-2 dark_400 mb-0" style="margin-top:2px;">4.0</p>
+                                    </div>
+						  			<p class="float-right fsize14 dark_400 m-0" style="position:absolute; top:0px; right:60px;">3 month ago </p>
 									</div>
 								</div>
 							</div>
 							
 							
-							<p class="fsize14 fw400 dark_600 lh_24">
-								Eiusmod deserunt mollit cillum nostrud aute eiusmod. Lorem minim exercitation Lorem cillum non qui adipisicing amet laborum cupidatat commodo dolore sunt. Proident voluptate exercitation voluptate id. Eiusmod deserunt mollit cillum nostrud aute eiusmod. Lorem minim exercitation Lorem cillum non qui adipisicing amet laborum cupidatat commodo dolore sunt. Proident voluptate exercitation voluptate id. Eiusmod deserunt mollit cillum nostrud aute eiusmod. Lorem minim exercitation Lorem cillum non qui adipisicing amet laborum cupidatat commodo dolore sunt. Proident voluptate exercitation voluptate id.
+							<p class="fsize14 fw400 dark_600 lh_22 mb25">
+								 Ea commodo occaecat sunt aute nostrud dolore duis consectetur esse. Occaecat minim nisi duis magna labore occaecat in minim tempor voluptate ut laboris do dolore. Pariatur in deserunt aute officia dolore veniam velit. Deserunt qui ullamco aute exercitation ad exercitation consectetur excepteur dolore excepteur eiusmod nostrud. 
 							</p>
 							<div class="reply_sec_link">
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/comment_grey_16.svg"/> &nbsp; 3 Comments</a>	
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/thumb-up-grey-16.svg"/> &nbsp; 13 Likes</a>	
-							<a class="text-uppercase dark_200 fsize11 fw500 ls_4" href="#"><img src="assets/images/reply_grey_16.svg"/> &nbsp; Reply</a>
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/comment_grey_16.svg"> &nbsp; 3 Comments</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 13 Likes</a>	
+							<a class="dark_400 fsize14" href="#"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
 							<div class="clearfix"></div>	
 							</div>
 							
 						</div>
 					</div>
+                    
+                  
 					
 					
+				
 					
     	</div>
     </div>

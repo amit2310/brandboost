@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div v-show="pageRendered==true">
         <a class="close_sidebar" href="javascript:void(0);"><!--OPEN MENU &nbsp;--> <img src="assets/images/menu-2-line.svg"></a>
         <div class="page_sidebar bkg_light_000 fixed">
             <div style="width: 279px;">
@@ -71,7 +71,7 @@
                                     <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
                                         <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                     </a>-->
-                                    <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
+                                    <a href="javascript:void(0);" @click="loadCampaignData(campaign)">
                                         <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                     </a>
                                 </span>
@@ -96,7 +96,7 @@
                                     <span v-else class="circle_icon_24 bkg_blue_200">
                                         <img src="assets/images/start-fill-white.svg">
                                     </span>
-                                    <a href="javascript:void(0);" @click="$emit('chooseCampaign', campaign)">
+                                    <a href="javascript:void(0);" @click="loadCampaignData(campaign)">
                                         <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                     </a>
                                 </span>
@@ -336,6 +336,7 @@
         components: {UserAvatar, Pagination},
         data(){
             return {
+                pageRendered: false,
                 successMsg : '',
                 errorMsg: '',
                 loading: true,
@@ -381,6 +382,10 @@
             }
         },
         methods: {
+            loadCampaignData: function(data){
+                this.$emit('chooseCampaign', data);
+                this.campaignId = data.id;
+            },
             searchItem: function(){
                 this.loadPaginatedData();
             },
@@ -409,6 +414,7 @@
                         this.allData = response.data.allData;
                         this.campaigns = response.data.aBrandbosts;
                         this.loading = false;
+                        this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
             },

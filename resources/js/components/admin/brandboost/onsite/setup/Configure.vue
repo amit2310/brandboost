@@ -249,7 +249,7 @@
 
                                         <h3 class="htxt_medium_16 dark_700 mb-2">Content</h3>
                                         <ul class="review_camapaign_list" v-if="completedContentForm ==true && displayContentForm==false">
-                                            <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong><a href="javascript:void(0);" @click="loadEmailPreview">Preview Template “Review Request Email”</a> <br>
+                                            <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong><a href="javascript:void(0);" @click="loadEmailPreview">Preview Template “{{emailTemplate.template_name}}”</a> <br>
                                                 <a href="javascript:void(0);" @click="loadEmailPreview">Preview plain text version</a><br>
                                                 <a href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
                                                 <div class="p20" v-if="sendTestBox">
@@ -437,11 +437,11 @@
                                                     <div class="col"><p class="m-0 fsize8 light_700"><img width="10" src="assets/images/message_icon_green.svg"> &nbsp; MESSAGES</p></div>
                                                     <div class="col text-right"><p class="m-0 fsize8 light_700">now</p></div>
                                                 </div>
-                                                <p class="fsize9 fw500 dark_900 mb-1">Makers</p>
-                                                <p class="fsize9 fw300 dark_900 m-0">Hello Julia, It was a pleasure doing business with you. Thank you for giving us a try. You can click this link to leave your review...</p>
+                                                <p class="fsize9 fw500 dark_900 mb-1">{{smsData.greeting}}</p>
+                                                <p class="fsize9 fw300 dark_900 m-0" v-html="setStringLimit(smsData.introduction + ' '+ getDecodeContent(smsData.stripo_compiled_html), 150)">Hello Julia, It was a pleasure doing business with you. Thank you for giving us a try. You can click this link to leave your review...</p>
                                             </span>
-                                                <strong>Hello <strong class="reviews_400">[Fist name]</strong>, It was a pleasure doing business with you... <br>
-                                                    <a href="javascript:void(0);" @click="loadSMSPreview">Preview SMS Template “Review Request”</a><br>
+                                                <strong>{{setStringLimit(smsData.greeting+' '+smsData.introduction, 55)}} <br>
+                                                    <a href="javascript:void(0);" @click="loadSMSPreview">Preview SMS Template “{{smsTemplate.template_name}}”</a><br>
                                                     <a href="javascript:void(0);" @click="sendTestSMSBox=true">Send test SMS</a>
                                                     <div class="p20" v-if="sendTestSMSBox">
                                                         Phone Number: &nbsp;&nbsp;<input type="text" class="mr20" placeholder="Phone Number" v-model="user.phone" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
@@ -795,6 +795,10 @@
                 progressRate: 0,
                 sendTestBox: false,
                 sendTestSMSBox: false,
+                emailTemplate: '',
+                smsTemplate: '',
+                emailData: '',
+                smsData: '',
                 series: [0],
                 chartOptions: {
                     plotOptions: {
@@ -962,6 +966,10 @@
                         this.isSMSChannelActivated = this.campaign.sms_channel;
                         this.endCampaign = response.data.endCampaign;
                         this.assignCampaignIds(this.endCampaign);
+                        this.emailTemplate = response.data.emailTemplate;
+                        this.smsTemplate = response.data.smsTemplate;
+                        this.emailData = response.data.emailData;
+                        this.smsData = response.data.smsData;
                         //Validate Step Completion
                         this.validateStepCompletion();
                     });
@@ -1251,6 +1259,7 @@
                             this.loading = false;
                             this.refreshMessage = Math.random();
                             this.successMsg = "Saved changes successfully!";
+                            this.setSMSCampaignId(this.smsCampaignId, this.smsTemplate.template_name, response.data.campaignInfo);
                         }
                     });
             },
@@ -1299,14 +1308,20 @@
                 this.showEmailTemplates = false;
                 this.configureCampaign = true;
             },
-            setEmailCampaignId: function(id){
+            setEmailCampaignId: function(id, templateName){
                 this.emailCampaignId = id;
+                this.emailTemplate.template_name = templateName;
                 this.validateStepCompletion();
             },
-            setSMSCampaignId: function(id){
+            setSMSCampaignId: function(id, templateName, oCampaign){
                 this.smsCampaignId = id;
+                this.smsTemplate.template_name = templateName;
+                this.smsData = oCampaign;
                 this.validateStepCompletion();
-            }
+            },
+            getDecodeContent: function(content){
+                return atob(content);
+            },
         }
     };
     $(document).ready(function(){
