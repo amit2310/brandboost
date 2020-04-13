@@ -57,7 +57,7 @@
                                     <input class="d-none" type="file" name="" value="" id="companylogo">
                                 </div>-->
                                 Files
-                                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" required/>
+                                <input type="file" id="file" ref="file" @change="handleFileUpload()" required/>
 
                             </label>
                         </div>

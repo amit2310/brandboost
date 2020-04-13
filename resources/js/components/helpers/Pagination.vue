@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-6">
                 <span class="mr-4">Items per page:
-                    <select v-model="pagination.per_page" v-on:click.prevent="changeItemsPerPage()">
+                    <select v-model="pagination.per_page" @click.prevent="changeItemsPerPage()">
                         <option>5</option>
                         <option>10</option>
                         <option>15</option>
@@ -18,9 +18,9 @@
             </div>
             <div class="col-md-6">
                 <ul class="page_list float-right">
-                    <li v-if="pagination.current_page > 1"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page - 1)"><img src="assets/images/arrow-right-s-line.svg"></a></li>
-                    <li v-for="page in pagesNumber"><a :class="{'active': page == pagination.current_page}" href="javascript:void(0);" v-on:click.prevent="changePage(page)">{{ page }}</a></li>
-                    <li v-if="pagination.current_page < pagination.last_page"><a href="javascript:void(0);" v-on:click.prevent="changePage(pagination.current_page + 1)"><img src="assets/images/arrow-left-s-line.svg"></a></li>
+                    <li v-if="pagination.current_page > 1"><a href="javascript:void(0);" @click.prevent="changePage(pagination.current_page - 1)"><img src="assets/images/arrow-right-s-line.svg"></a></li>
+                    <li v-for="page in pagesNumber"><a :class="{'active': page == pagination.current_page}" href="javascript:void(0);" @click.prevent="changePage(page)">{{ page }}</a></li>
+                    <li v-if="pagination.current_page < pagination.last_page"><a href="javascript:void(0);" @click.prevent="changePage(pagination.current_page + 1)"><img src="assets/images/arrow-left-s-line.svg"></a></li>
                 </ul>
             </div>
         </div>

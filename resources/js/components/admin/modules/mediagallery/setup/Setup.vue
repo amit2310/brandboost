@@ -348,7 +348,7 @@
                                 <div class="col-md-12">
                                     <div class="row p30">
                                         <div class="col-md-6 review_source_new onerowCWBox" current-class="onerow">
-                                            <label for="radiocheck_sp_1" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_1" @change="synGalleryDesignType">
                                                 <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'onerow'}">
                                                     <span class="custmo_checkbox checkboxs">
                                                         <input :checked="campaign.gallery_design_type == 'onerow'" id="radiocheck_sp_1" type="radio" name="widgetDesignType" class="selectwidget1" value="onerow" v-model="campaign.gallery_design_type">
@@ -365,7 +365,7 @@
                                         </div>
 
                                         <div class="col-md-6 review_source_new squareCWBox" current-class="square">
-                                            <label for="radiocheck_sp_2" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_2" @change="synGalleryDesignType">
                                             <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'square'}">
                                                     <span class="custmo_checkbox checkboxs">
                                                         <input :checked="campaign.gallery_design_type == 'square'" id="radiocheck_sp_2" type="radio" name="widgetDesignType" v-model="campaign.gallery_design_type" class="selectwidget1" value="square">
@@ -381,7 +381,7 @@
                                         </div>
                                     <div class="row p30">
                                         <div class="col-md-6 review_source_new horizontalCWBox" current-class="horizontal">
-                                            <label for="radiocheck_sp_3" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_3" @change="synGalleryDesignType">
                                                 <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'horizontal'}">
 									<span class="custmo_checkbox checkboxs">
 										<input :checked="campaign.gallery_design_type == 'horizontal'" id="radiocheck_sp_3" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="horizontal">
@@ -396,7 +396,7 @@
                                         </div>
 
                                         <div class="col-md-6 review_source_new verticalCWBox" current-class="vertical">
-                                            <label for="radiocheck_sp_4" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_4" @change="synGalleryDesignType">
                                                 <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'vertical'}">
 									<span class="custmo_checkbox checkboxs">
 										<input :checked="campaign.gallery_design_type == 'vertical'" id="radiocheck_sp_4" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="vertical">
