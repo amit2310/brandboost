@@ -51,8 +51,8 @@
                                 <div class="col-md-3 col-xs-3">
                                     <p class="pull-left text-muted fsize13 mr-20">Billing Type:</p>
                                     <div class="btn-group display-inline-block">
-                                        <button id="grid" type="button" class="btn btn-xs btn-default" v-on:click="dispUpgradePlan('yearly')">Annual</button>
-                                        <button id="list" type="button" class="btn btn-xs btn-default" v-on:click="dispUpgradePlan('monthly')">Monthly</button>
+                                        <button id="grid" type="button" class="btn btn-xs btn-default" @click="dispUpgradePlan('yearly')">Annual</button>
+                                        <button id="list" type="button" class="btn btn-xs btn-default" @click="dispUpgradePlan('monthly')">Monthly</button>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
 
                                             <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade"
                                                     data-target="#confirm_level_upgrade"
-                                                    v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.plan_id)" >
+                                                    @click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.plan_id)" >
                                                 <span v-if="oCurrentPlanData == ''">Buy</span>
                                                 <span v-else-if="oMembership.isMembershipActive != ''">Upgrade</span>
                                                 <span v-else>Downgrade</span>
@@ -182,7 +182,7 @@
 
                                             <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmManualUpgrade"
                                                     data-toggle="modal" data-target="#confirm_level_upgrade"
-                                                    v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.plan_id)" >
+                                                    @click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.plan_id)" >
                                                 <span v-if="(oMembership.isMembershipActive != '' && oCurrentPlanData.level_name == 'Pro')">Upgrade</span>
                                                 <span v-else>Downgrade</span>
                                             </button>
@@ -244,7 +244,7 @@
                                         <div class="p30">
                                             <button v-if="(oUser.topup_plan_id == oMembership.plan_id)" type="button" class="btn white_btn w100 h40 txt_purple"><span>Active</span> </button>
                                             <button v-else type="button" class="btn dark_btn w100 bkg_purple h40 confirmTopupUpgrade"
-                                                    v-on:click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.topup_plan_id)" data-toggle="modal" data-target="#confirm_topup_level_upgrade">
+                                                    @click="confirmTopupUpgradePopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name,oUser.topup_plan_id)" data-toggle="modal" data-target="#confirm_topup_level_upgrade">
                                                 <span v-if="oMembership.isTopupMembershipActive == ''">Buy</span>
                                                 <span v-if="oMembership.isTopupMembershipActive == 'true'">Upgrade</span>
                                                 <span v-else>Downgrade</span>
@@ -288,7 +288,7 @@
                                         </div>
 
                                         <div class="p30">
-                                            <button type="button" class="btn dark_btn w100 bkg_purple h40 " v-on:click="confirmBuyCustomAddonPopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name)" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>
+                                            <button type="button" class="btn dark_btn w100 bkg_purple h40 " @click="confirmBuyCustomAddonPopup(oMembership.credits,oMembership.price,oMembership.plan_id,oMembership.level_name)" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>
 
 <!--                                            <button type="button" class="btn dark_btn w100 bkg_purple h40 confirmBuyAddon" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_addon_plan"><span>Buy</span> </button>-->
                                         </div>
@@ -315,7 +315,7 @@
 
                                     <div class="col-md-1 col-xs-1">
                                         <p class="fsize13">&nbsp;</p>
-                                        <button type="button" class="btn dark_btn w100 bkg_purple h40 " v-on:click="confirmBuyCustomAddonPopup('1000','10','custom-pack','Custom Pack')" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_custom_addon_plan"><span>Buy</span> </button>
+                                        <button type="button" class="btn dark_btn w100 bkg_purple h40 " @click="confirmBuyCustomAddonPopup('1000','10','custom-pack','Custom Pack')" :topup_plan_name="oMembership.level_name" :topup_plan_id="oMembership.plan_id" :topup_plan_price="oMembership.price" data-toggle="modal" data-target="#confirm_buy_custom_addon_plan"><span>Buy</span> </button>
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +401,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
-                        <button type="button" class="btn btn-primary"  v-on:click="confirmLevelUpgrade()">Yes, Upgrade Now</button>
+                        <button type="button" class="btn btn-primary"  @click="confirmLevelUpgrade()">Yes, Upgrade Now</button>
                     </div>
                 </div>
             </div>
@@ -469,7 +469,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
-                        <button type="button" class="btn btn-primary"  v-on:click="confirmTopupLevelUpdate()">Yes, Upgrade Now</button>
+                        <button type="button" class="btn btn-primary"  @click="confirmTopupLevelUpdate()">Yes, Upgrade Now</button>
                     </div>
                 </div>
             </div>
@@ -537,7 +537,7 @@
                     <div class="modal-footer">
                         <input type="hidden" name="hidLevelTopupPlanId" id="hidAddonPlanId" value=""/>
                         <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
-                        <button type="button" id="confirmAddOnBuy" class="btn btn-primary" v-on:click="confirmbuyCreditAddons()">Yes, Buy Now</button>
+                        <button type="button" id="confirmAddOnBuy" class="btn btn-primary" @click="confirmbuyCreditAddons()">Yes, Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -606,7 +606,7 @@
                     <div class="modal-footer">
                         <input type="hidden" name="hidLevelTopupPlanId" id="hidCustomAddonPlanId" value="custom-pack"/>
                         <button type="button" class="btn btn-default" data-dismiss="modal">No, Cancel</button>
-                        <button type="button" id="confirmCustomAddOnBuy" class="btn btn-primary" v-on:click="confirmCustomAddOnBuy()">Yes, Buy Now</button>
+                        <button type="button" id="confirmCustomAddOnBuy" class="btn btn-primary" @click="confirmCustomAddOnBuy()">Yes, Buy Now</button>
                     </div>
                 </div>
             </div>

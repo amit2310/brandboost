@@ -9,10 +9,10 @@
                 <div class="col-md-7">
                     <h3><img src="/assets/images/onsite_icons.png"> &nbsp; On Site Questions</h3>
                     <ul class="nav nav-tabs nav-tabs-bottom">
-                        <li class="active all"><a style="javascript:void();" class="filterByColumn" fil="">All</a></li>
-                        <li><a style="javascript:void();" class="filterByColumn" fil="1">Approved</a></li>
+                        <li class="active all"><a href="javascript:void(0);" class="filterByColumn" fil="">All</a></li>
+                        <li><a href="javascript:void(0);" class="filterByColumn" fil="1">Approved</a></li>
                         <li><a style="cursor:pointer" class="filterByColumn" fil="0">Dispproved</a></li>
-                        <li><a style="javascript:void();" class="filterByColumn" fil="2">Pending</a></li>
+                        <li><a href="javascript:void(0);" class="filterByColumn" fil="2">Pending</a></li>
 
                     </ul>
                 </div>
@@ -188,9 +188,9 @@
                                     </div>
 
                                     <div class="table_action_tool">
-                                        <a href="javascript:void();"><i class="icon-calendar2"></i></a>
-                                        <a href="javascript:void();" class="editDataQuestion"><i class="icon-pencil4"></i></a>
-                                        <a href="javascript:void();" style="display: none;" id="deleteButtonQuestionList" class="custom_action_box"><i class="icon-trash position-left"></i></a>
+                                        <a href="javascript:void(0);"><i class="icon-calendar2"></i></a>
+                                        <a href="javascript:void(0);" class="editDataQuestion"><i class="icon-pencil4"></i></a>
+                                        <a href="javascript:void(0);" style="display: none;" id="deleteButtonQuestionList" class="custom_action_box"><i class="icon-trash position-left"></i></a>
                                     </div>
 
                                 </div>
@@ -314,7 +314,7 @@
                                             <div class="tdropdown">
                                                 <a class="table_more dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="/assets/images/more.svg"></a>
                                                 <ul class="dropdown-menu dropdown-menu-right more_act">
-                                                    <a href="javascript:void();" class="dropdown_close">X</a>
+                                                    <a href="javascript:void(0);" class="dropdown_close">X</a>
 
                                                     <!-- if ($canWrite) { -->
 
@@ -391,7 +391,7 @@
         <div id="QuestionTagListModal" class="modal fade">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="post" name="frmQuestionTagListModal" id="frmQuestionTagListModal" action="javascript:void();">
+                    <form method="post" name="frmQuestionTagListModal" id="frmQuestionTagListModal" action="javascript:void(0);">
                         @csrf
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>

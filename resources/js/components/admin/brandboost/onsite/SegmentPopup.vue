@@ -4,7 +4,7 @@
     <div id="addSegmentModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" name="frmAddSegment" id="frmAddSegment" action="javascript:void();">
+                <form method="post" name="frmAddSegment" id="frmAddSegment" action="javascript:void(0);">
                     @csrf
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">×</button>

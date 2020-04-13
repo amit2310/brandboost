@@ -91,13 +91,13 @@
                             <span class="htxt_medium_16 dark_400"><strong>{{ allData.total }} Records</strong></span>
                         </div>
                         <div class="col-md-8">
-<!--                            <a v-on:click="setReq('today')" class="htxt_medium_16 dark_400">Today</a>-->
-                            <a v-on:click="setReq('all')" href="javascript:void(0)" class="htxt_regular_12 dark_400">All Time</a> |
-                            <a v-on:click="setReq('today')" href="javascript:void(0)" class="htxt_regular_12 dark_400">Today</a> |
-                            <a v-on:click="setReq('yest')" href="javascript:void(0)" class="htxt_regular_12 dark_400">Yesterday</a> |
-                            <a v-on:click="setReq('week')" href="javascript:void(0)"class="htxt_regular_12 dark_400">Week</a> |
-                            <a v-on:click="setReq('month')" href="javascript:void(0)" class="htxt_regular_12 dark_400">Month</a> |
-                            <a v-on:click="setReq('3month')" href="javascript:void(0)" class="htxt_regular_12 dark_400">3 Month</a>
+<!--                            <a @click="setReq('today')" class="htxt_medium_16 dark_400">Today</a>-->
+                            <a @click="setReq('all')" href="javascript:void(0)" class="htxt_regular_12 dark_400">All Time</a> |
+                            <a @click="setReq('today')" href="javascript:void(0)" class="htxt_regular_12 dark_400">Today</a> |
+                            <a @click="setReq('yest')" href="javascript:void(0)" class="htxt_regular_12 dark_400">Yesterday</a> |
+                            <a @click="setReq('week')" href="javascript:void(0)"class="htxt_regular_12 dark_400">Week</a> |
+                            <a @click="setReq('month')" href="javascript:void(0)" class="htxt_regular_12 dark_400">Month</a> |
+                            <a @click="setReq('3month')" href="javascript:void(0)" class="htxt_regular_12 dark_400">3 Month</a>
                         </div>
                     </div>
                     <br/>

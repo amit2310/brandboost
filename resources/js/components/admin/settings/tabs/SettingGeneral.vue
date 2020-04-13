@@ -175,7 +175,7 @@
                                     <div class="row">
                                         <div class="col-md-12 text-right">
                                             <!-- saveUserOtherInfo<button type="button" class="btn white_btn ml20 txt_purple" >Preview</span> </button> -->
-                                            <button type="submit" class="btn btn-success btn-sm bkg_green_300 light_000 float-right mr-3" v-on:click="saveGeneralInfo()"><span>Save</span> </button>
+                                            <button type="submit" class="btn btn-success btn-sm bkg_green_300 light_000 float-right mr-3" @click="saveGeneralInfo()"><span>Save</span> </button>
 
                                         </div>
                                     </div>
@@ -320,7 +320,7 @@
                                     <div class="row">
                                         <div class="col-md-12 text-right">
                                             <a href="http://pleasereviewmehere.com/campaign/raymond-194" target="_blank"><button type="button" class="btn white_btn ml20 txt_purple">Preview </button></a>
-                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" v-on:click="savePublicProfile()">Save </button>
+                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" @click="savePublicProfile()">Save </button>
                                         </div>
                                     </div>
                                 </div>

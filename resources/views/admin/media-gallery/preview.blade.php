@@ -491,10 +491,10 @@
         @endif
     @if($galleryDesign == 'onerow')
         <div class="arrow reviewArrowBH {{ $allowArrows != '0' ? '' : 'hidden' }}">
-            <a href="javascript:void(0);" class="left_arrow" bb_direction="left" v-on:click="imageSlider(-1)"><img
+            <a href="javascript:void(0);" class="left_arrow" bb_direction="left" @click="imageSlider(-1)"><img
                     src="{{ base_url() }}assets/images/widget/arrow-left.png"></a>
             <a href="javascript:void(0);" class="right_arrow" bb_direction="right"><img
-                    src="{{ base_url() }}assets/images/widget/arrow-right.png" v-on:click="imageSlider(1)"></a>
+                    src="{{ base_url() }}assets/images/widget/arrow-right.png" @click="imageSlider(1)"></a>
         </div>
         <div style="overflow:hidden; float:left; width:100%;"
              class="@if($galleryData->allow_border_shadow == 1) borderBoxShadow @endif">

@@ -98,12 +98,12 @@
                         <div class="col-md-6">
                             <ul class="table_filter">
                                 <li>
-                                    <a v-on:click="seletedTab=1" :class="{ active : seletedTab === 1 }"data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>
+                                    <a @click="seletedTab=1" :class="{ active : seletedTab === 1 }"data-toggle="tab" style="cursor:pointer; padding: 5px;">Overview&nbsp;</a></li>
                                     &nbsp;&nbsp;
-                                <li><a :class="{ active : seletedTab === 2 }" v-on:click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
-                                <li><a :class="{ active : seletedTab === 3 }" v-on:click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
-                                <li><a :class="{ active : seletedTab === 4 }" v-on:click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
-                                <li><a :class="{ active : seletedTab === 5 }" v-on:click="seletedTab=5" data-toggle="tab" style="cursor:pointer; padding: 5px;">Stats&nbsp;</a></li>&nbsp;&nbsp;
+                                <li><a :class="{ active : seletedTab === 2 }" @click="seletedTab=2" data-toggle="tab" style="cursor:pointer; padding: 5px;">Requests&nbsp;</a></li>&nbsp;&nbsp;
+                                <li><a :class="{ active : seletedTab === 3 }" @click="seletedTab=3" data-toggle="tab" style="cursor:pointer; padding: 5px;">Reviews </a></li>&nbsp;&nbsp;
+                                <li><a :class="{ active : seletedTab === 4 }" @click="seletedTab=4" data-toggle="tab" style="cursor:pointer; padding: 5px;">Contacts&nbsp;</a></li>&nbsp;&nbsp;
+                                <li><a :class="{ active : seletedTab === 5 }" @click="seletedTab=5" data-toggle="tab" style="cursor:pointer; padding: 5px;">Stats&nbsp;</a></li>&nbsp;&nbsp;
                             </ul>
                         </div>
                         <div class="col-md-6">

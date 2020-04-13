@@ -180,13 +180,13 @@
                                     <div class="form-group">
                                         <div class="color_box">
                                             <input type="hidden" name="main_colors" id="main_colors"  :value="campaign.gradient_color">
-                                            <div v-on:click="synMainColor('white')" class="color_cube white selectMainColor " :class="{ 'active' : campaign.gradient_color == 'white'}" color-class="bbw_white_color"></div>
-                                            <div v-on:click="synMainColor('red')" class="color_cube dred selectMainColor " :class="{ 'active' : campaign.gradient_color == 'red'}"  color-class="bbw_red_color"></div>
-                                            <div v-on:click="synMainColor('yellow')" class="color_cube yellow selectMainColor " :class="{ 'active' : campaign.gradient_color == 'yellow'}" color-class="bbw_yellow_color"></div>
-                                            <div v-on:click="synMainColor('orange')" class="color_cube red selectMainColor " :class="{ 'active' : campaign.gradient_color == 'orange'}" color-class="bbw_orange_color"></div>
-                                            <div v-on:click="synMainColor('green')" class="color_cube green selectMainColor " :class="{ 'active' : campaign.gradient_color == 'green'}" color-class="bbw_green_color"></div>
-                                            <div v-on:click="synMainColor('blue')" class="color_cube blue selectMainColor " :class="{ 'active' : campaign.gradient_color == 'blue'}" color-class="bbw_blue_color"></div>
-                                            <div v-on:click="synMainColor('purple')" class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
+                                            <div @click="synMainColor('white')" class="color_cube white selectMainColor " :class="{ 'active' : campaign.gradient_color == 'white'}" color-class="bbw_white_color"></div>
+                                            <div @click="synMainColor('red')" class="color_cube dred selectMainColor " :class="{ 'active' : campaign.gradient_color == 'red'}"  color-class="bbw_red_color"></div>
+                                            <div @click="synMainColor('yellow')" class="color_cube yellow selectMainColor " :class="{ 'active' : campaign.gradient_color == 'yellow'}" color-class="bbw_yellow_color"></div>
+                                            <div @click="synMainColor('orange')" class="color_cube red selectMainColor " :class="{ 'active' : campaign.gradient_color == 'orange'}" color-class="bbw_orange_color"></div>
+                                            <div @click="synMainColor('green')" class="color_cube green selectMainColor " :class="{ 'active' : campaign.gradient_color == 'green'}" color-class="bbw_green_color"></div>
+                                            <div @click="synMainColor('blue')" class="color_cube blue selectMainColor " :class="{ 'active' : campaign.gradient_color == 'blue'}" color-class="bbw_blue_color"></div>
+                                            <div @click="synMainColor('purple')" class="color_cube black selectMainColor " color-data="purple" color-class="bbw_purple_color"></div>
                                             <div class="clearfix"></div>
                                         </div>
                                     </div>
@@ -198,15 +198,15 @@
                                         <input type="hidden" id="color_orientation" name="color_orientation" :value="campaign.gradient_orientation">
                                         <!-- gradient_orientation -->
                                         <ul class="choose_orientation">
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')"   main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')"  main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
-                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right top'}" @click="synGradientOrientation('to right top')" main-orientation-class="toRightTop" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right'}" @click="synGradientOrientation('to right')"  main-orientation-class="toRight" href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to right bottom'}" @click="synGradientOrientation('to right bottom')"   main-orientation-class="toRightBottom" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to bottom'}" @click="synGradientOrientation('to bottom')"   main-orientation-class="toBottom" href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left bottom'}" @click="synGradientOrientation('to left bottom')" main-orientation-class="toLeftBottom" href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left'}" @click="synGradientOrientation('to left')"  main-orientation-class="toLeft" href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to left top'}" @click="synGradientOrientation('to left top')"  main-orientation-class="toLeftTop" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'to top'}" @click="synGradientOrientation('to top')"  main-orientation-class="toTop" href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                            <li><a class="gradientOrientation " :class="{ 'active' : campaign.gradient_orientation == 'circle'}" @click="synGradientOrientation('circle')"  main-orientation-class="orientationCircle" href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -348,7 +348,7 @@
                                 <div class="col-md-12">
                                     <div class="row p30">
                                         <div class="col-md-6 review_source_new onerowCWBox" current-class="onerow">
-                                            <label for="radiocheck_sp_1" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_1" @change="synGalleryDesignType">
                                                 <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'onerow'}">
                                                     <span class="custmo_checkbox checkboxs">
                                                         <input :checked="campaign.gallery_design_type == 'onerow'" id="radiocheck_sp_1" type="radio" name="widgetDesignType" class="selectwidget1" value="onerow" v-model="campaign.gallery_design_type">
@@ -365,7 +365,7 @@
                                         </div>
 
                                         <div class="col-md-6 review_source_new squareCWBox" current-class="square">
-                                            <label for="radiocheck_sp_2" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_2" @change="synGalleryDesignType">
                                             <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'square'}">
                                                     <span class="custmo_checkbox checkboxs">
                                                         <input :checked="campaign.gallery_design_type == 'square'" id="radiocheck_sp_2" type="radio" name="widgetDesignType" v-model="campaign.gallery_design_type" class="selectwidget1" value="square">
@@ -381,7 +381,7 @@
                                         </div>
                                     <div class="row p30">
                                         <div class="col-md-6 review_source_new horizontalCWBox" current-class="horizontal">
-                                            <label for="radiocheck_sp_3" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_3" @change="synGalleryDesignType">
                                                 <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'horizontal'}">
 									<span class="custmo_checkbox checkboxs">
 										<input :checked="campaign.gallery_design_type == 'horizontal'" id="radiocheck_sp_3" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="horizontal">
@@ -396,7 +396,7 @@
                                         </div>
 
                                         <div class="col-md-6 review_source_new verticalCWBox" current-class="vertical">
-                                            <label for="radiocheck_sp_4" v-on:change="synGalleryDesignType">
+                                            <label for="radiocheck_sp_4" @change="synGalleryDesignType">
                                                 <div style="min-height: 150px" class="inner " :class="{ 'active' : campaign.gallery_design_type == 'vertical'}">
 									<span class="custmo_checkbox checkboxs">
 										<input :checked="campaign.gallery_design_type == 'vertical'" id="radiocheck_sp_4" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="vertical">

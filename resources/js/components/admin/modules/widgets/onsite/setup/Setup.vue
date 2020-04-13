@@ -46,7 +46,7 @@
 
                 <div class="row">
                     <div class="col-md-2 review_source_new bwwCWBox reviewWidgetBox">
-                        <label for="radiocheck1"  v-on:change="setWidgetType">
+                        <label for="radiocheck1"  @change="setWidgetType">
                             <div class="inner" :class="{ 'active': campaign.widget_type == 'bww'}" >
                                     <span class="custmo_checkbox checkboxs">
                                         <input :checked="campaign.widget_type == 'bww'" v-model="campaign.widget_type" value="bww"   id="radiocheck1" type="radio" name="widgetList" class="selectwidget" widget-id="bww">
@@ -61,7 +61,7 @@
                         </label>
                     </div>
                     <div class="col-md-2 review_source_new bfwCWBox reviewWidgetBox">
-                        <label for="radiocheck2" v-on:change="setWidgetType">
+                        <label for="radiocheck2" @change="setWidgetType">
                             <div class="inner" :class="{ 'active': campaign.widget_type == 'bfw'}">
                             <span class="custmo_checkbox checkboxs">
                                 <input  :checked="campaign.widget_type == 'bfw'" value="bfw" v-model="campaign.widget_type"  id="radiocheck2" type="radio" name="widgetList" class="selectwidget" widget-id="bfw">
@@ -76,7 +76,7 @@
                         </label>
                     </div>
                     <div class="col-md-2 review_source_new cpwCWBox reviewWidgetBox">
-                        <label for="radiocheck3" v-on:change="setWidgetType">
+                        <label for="radiocheck3" @change="setWidgetType">
                             <div class="inner" :class="{ 'active': campaign.widget_type == 'cpw'}">
                             <span class="custmo_checkbox checkboxs">
                                 <input :checked="campaign.widget_type == 'cpw'" value="cpw" v-model="campaign.widget_type" id="radiocheck3" type="radio" name="widgetList" class="selectwidget" widget-id="cpw">
@@ -92,7 +92,7 @@
                         </label>
                     </div>
                     <div class="col-md-2 review_source_new vpwCWBox reviewWidgetBox">
-                        <label for="radiocheck4" v-on:change="setWidgetType">
+                        <label for="radiocheck4" @change="setWidgetType">
                             <div class="inner" :class="{ 'active': campaign.widget_type == 'vpw'}">
                             <span class="custmo_checkbox checkboxs">
                                 <input :checked="campaign.widget_type == 'vpw'" value="vpw" v-model="campaign.widget_type" id="radiocheck4" type="radio" name="widgetList" class="selectwidget" widget-id="vpw">
@@ -108,7 +108,7 @@
                         </label>
                     </div>
                     <div class="col-md-2 review_source_new rfwCWBox reviewWidgetBox">
-                        <label for="radiocheck5" v-on:change="setWidgetType">
+                        <label for="radiocheck5" @change="setWidgetType">
                             <div class="inner"  :class="{ 'active': campaign.widget_type == 'rfw'}">
                                 <span class="custmo_checkbox checkboxs">
                                     <input :checked="campaign.widget_type == 'rfw'"  value="rfw" v-model="campaign.widget_type" id="radiocheck5" type="radio" name="widgetList" class="selectwidget" widget-id="rfw">

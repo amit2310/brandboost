@@ -257,13 +257,13 @@
 
                                                         <div class="form-group">
                                                             <div class="color_box">
-                                                                <div v-on:click="synMainColor('white')" class="color_cube white " :class="{ 'active' : campaign.header_color == 'white'}"></div>
-                                                                <div v-on:click="synMainColor('red')" class="color_cube dred " :class="{ 'active' : campaign.header_color == 'red'}"></div>
-                                                                <div v-on:click="synMainColor('yellow')" class="color_cube yellow " :class="{ 'active' : campaign.header_color == 'yellow'}"></div>
-                                                                <div v-on:click="synMainColor('orange')" class="color_cube red " :class="{ 'active' : campaign.header_color == 'orange'}"></div>
-                                                                <div v-on:click="synMainColor('green')" class="color_cube green " :class="{ 'active' : campaign.header_color == 'green'}"></div>
-                                                                <div v-on:click="synMainColor('blue')" class="color_cube blue " :class="{ 'active' : campaign.header_color == 'blue'}"></div>
-                                                                <div v-on:click="synMainColor('purple')" class="color_cube black " :class="{ 'active' : campaign.header_color == 'purple'}"></div>
+                                                                <div @click="synMainColor('white')" class="color_cube white " :class="{ 'active' : campaign.header_color == 'white'}"></div>
+                                                                <div @click="synMainColor('red')" class="color_cube dred " :class="{ 'active' : campaign.header_color == 'red'}"></div>
+                                                                <div @click="synMainColor('yellow')" class="color_cube yellow " :class="{ 'active' : campaign.header_color == 'yellow'}"></div>
+                                                                <div @click="synMainColor('orange')" class="color_cube red " :class="{ 'active' : campaign.header_color == 'orange'}"></div>
+                                                                <div @click="synMainColor('green')" class="color_cube green " :class="{ 'active' : campaign.header_color == 'green'}"></div>
+                                                                <div @click="synMainColor('blue')" class="color_cube blue " :class="{ 'active' : campaign.header_color == 'blue'}"></div>
+                                                                <div @click="synMainColor('purple')" class="color_cube black " :class="{ 'active' : campaign.header_color == 'purple'}"></div>
                                                                 <div class="clearfix"></div>
                                                             </div>
                                                         </div>
@@ -307,15 +307,15 @@
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <ul class="choose_orientation">
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right top'}" v-on:click="synGradientOrientation('to right top')" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right'}" v-on:click="synGradientOrientation('to right')"  href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right bottom'}" v-on:click="synGradientOrientation('to right bottom')" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to bottom'}" v-on:click="synGradientOrientation('to bottom')"   href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left bottom'}" v-on:click="synGradientOrientation('to left bottom')"  href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left'}" v-on:click="synGradientOrientation('to left')"  href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left top'}" v-on:click="synGradientOrientation('to left top')" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to top'}" v-on:click="synGradientOrientation('to top')"  href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
-                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'circle'}" v-on:click="synGradientOrientation('circle')"  href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right top'}" @click="synGradientOrientation('to right top')" href="javascript:void(0);"><i class="fa fa-arrow-right degtop" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right'}" @click="synGradientOrientation('to right')"  href="javascript:void(0);"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to right bottom'}" @click="synGradientOrientation('to right bottom')" href="javascript:void(0);"><i class="fa fa-arrow-right degbot" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to bottom'}" @click="synGradientOrientation('to bottom')"   href="javascript:void(0);"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left bottom'}" @click="synGradientOrientation('to left bottom')"  href="javascript:void(0);"><i class="fa fa-arrow-left degtop" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left'}" @click="synGradientOrientation('to left')"  href="javascript:void(0);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to left top'}" @click="synGradientOrientation('to left top')" href="javascript:void(0);"><i class="fa fa-arrow-left degbot" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'to top'}" @click="synGradientOrientation('to top')"  href="javascript:void(0);"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+                                                                    <li><a class="gradientOrientation " :class="{ 'active' : campaign.color_orientation == 'circle'}" @click="synGradientOrientation('circle')"  href="javascript:void(0);"><i class="fa fa-undo" aria-hidden="true"></i></a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -502,7 +502,7 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-4 review_source_new bwwCWBox reviewWidgetBox">
-                                            <label for="radiocheck1"  v-on:change="setWidgetType">
+                                            <label for="radiocheck1" @change="setWidgetType">
                                                 <div class="inner" :class="{ 'active': campaign.widget_type == 'bww'}" >
                                     <span class="custmo_checkbox checkboxs">
                                         <input :checked="campaign.widget_type == 'bww'" v-model="campaign.widget_type" value="bww"   id="radiocheck1" type="radio" name="widgetList" class="selectwidget" widget-id="bww">
@@ -517,7 +517,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-4 review_source_new bfwCWBox reviewWidgetBox">
-                                            <label for="radiocheck2" v-on:change="setWidgetType">
+                                            <label for="radiocheck2" @change="setWidgetType">
                                                 <div class="inner" :class="{ 'active': campaign.widget_type == 'bfw'}">
                             <span class="custmo_checkbox checkboxs">
                                 <input  :checked="campaign.widget_type == 'bfw'" value="bfw" v-model="campaign.widget_type"  id="radiocheck2" type="radio" name="widgetList" class="selectwidget" widget-id="bfw">
@@ -532,7 +532,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-4 review_source_new cpwCWBox reviewWidgetBox">
-                                            <label for="radiocheck3" v-on:change="setWidgetType">
+                                            <label for="radiocheck3" @change="setWidgetType">
                                                 <div class="inner" :class="{ 'active': campaign.widget_type == 'cpw'}">
                             <span class="custmo_checkbox checkboxs">
                                 <input :checked="campaign.widget_type == 'cpw'" value="cpw" v-model="campaign.widget_type" id="radiocheck3" type="radio" name="widgetList" class="selectwidget" widget-id="cpw">
@@ -548,7 +548,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-4 review_source_new vpwCWBox reviewWidgetBox">
-                                            <label for="radiocheck4" v-on:change="setWidgetType">
+                                            <label for="radiocheck4" @change="setWidgetType">
                                                 <div class="inner" :class="{ 'active': campaign.widget_type == 'vpw'}">
                             <span class="custmo_checkbox checkboxs">
                                 <input :checked="campaign.widget_type == 'vpw'" value="vpw" v-model="campaign.widget_type" id="radiocheck4" type="radio" name="widgetList" class="selectwidget" widget-id="vpw">
@@ -564,7 +564,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-4 review_source_new rfwCWBox reviewWidgetBox">
-                                            <label for="radiocheck5" v-on:change="setWidgetType">
+                                            <label for="radiocheck5" @change="setWidgetType">
                                                 <div class="inner"  :class="{ 'active': campaign.widget_type == 'rfw'}">
                                 <span class="custmo_checkbox checkboxs">
                                     <input :checked="campaign.widget_type == 'rfw'"  value="rfw" v-model="campaign.widget_type" id="radiocheck5" type="radio" name="widgetList" class="selectwidget" widget-id="rfw">

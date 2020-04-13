@@ -4,16 +4,16 @@
             <ul class="pagination">
                 <li v-if="pagination.current_page > 1" class="page-item">
                     <a class="page-link" href="javascript:void(0)" aria-label="Previous"
-                       v-on:click.prevent="changePage(pagination.current_page - 1)">
+                       @click.prevent="changePage(pagination.current_page - 1)">
                         <span aria-hidden="true">Previous</span>
                     </a>
                 </li>
                 <li v-for="page in pagesNumber" :class="{'active': page == pagination.current_page}" class="page-item">
-                    <a class="page-link" href="javascript:void(0)" v-on:click.prevent="changePage(page)">{{ page }}</a>
+                    <a class="page-link" href="javascript:void(0)" @click.prevent="changePage(page)">{{ page }}</a>
                 </li>
                 <li v-if="pagination.current_page < pagination.last_page" class="page-item">
                     <a class="page-link" href="javascript:void(0)" aria-label="Next"
-                       v-on:click.prevent="changePage(pagination.current_page + 1)">
+                       @click.prevent="changePage(pagination.current_page + 1)">
                         <span aria-hidden="true">Next</span>
                     </a>
                 </li>

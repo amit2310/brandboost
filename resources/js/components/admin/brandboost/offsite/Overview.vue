@@ -18,9 +18,9 @@
                 <div class="col-md-5" v-else>
                     <h3><img src="/assets/images/offsite_icon_19.png" style="width: 16px;"> &nbsp; Off Site Review  Campaigns</h3>
                     <ul class="nav nav-tabs nav-tabs-bottom">
-                        <li class="active all"><a style="javascript:void();" id="activeCampaign"
+                        <li class="active all"><a style="javascript:void(0);" id="activeCampaign"
                                                   class="filterByColumn" fil="1|0|2">Active Campaigns</a></li>
-                        <li><a style="javascript:void();" class="filterByColumn" fil="3">Archive</a></li>
+                        <li><a style="javascript:void(0);" class="filterByColumn" fil="3">Archive</a></li>
                     </ul>
                 </div>
 

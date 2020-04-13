@@ -191,7 +191,7 @@
                                     <div class="row" :reviewid="oReview.reviewid">
                                         <div class="col-md-8">
                                             <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26"><span class="circle_icon_24 bkg_reviews_400 mr-2"><img src="assets/images/window_w_14.svg"></span> &nbsp;
-                                            <a href="javascript:void();" v-on:click="loodReviewPopup(oReview.reviewid,'')" class="js-review-feedback-slidebox2"> {{ oReview.firstname }} {{ oReview.lastname }}</a>
+                                            <a href="javascript:void(0);" @click="loodReviewPopup(oReview.reviewid,'')" class="js-review-feedback-slidebox2"> {{ oReview.firstname }} {{ oReview.lastname }}</a>
                                             </p>
                                             <p class="mt-0 review_rating_start float-left">
                                                 <span v-for="num in [1,2,3,4,5]">
