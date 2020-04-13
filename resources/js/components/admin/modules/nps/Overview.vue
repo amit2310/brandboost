@@ -218,7 +218,7 @@
         <div id="addSegment" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" name="addBroadcastSegment" id="addBroadcastSegment" action="javascript:void();">
+                    <form method="post" name="addBroadcastSegment" id="addBroadcastSegment" action="javascript:void(0);">
                         <div class="modal-header">
                             <h5 class="modal-title"><img src="/assets/css/menu_icons/Email_Color.svg"/> Add Segment &nbsp; <i class="icon-info22 fsize12 txt_grey"></i></h5>
                             <button type="button" class="close" data-dismiss="modal">×</button>
