@@ -1,0 +1,713 @@
+<template>
+    <div class="content">
+        <!--******************
+        Top Heading area
+        **********************-->
+        <div class="top-bar-top-section bbot">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
+                        <h3 class="htxt_medium_24 dark_700">Workflows</h3>
+                    </div>
+                    <div class="col-md-6 col-6 text-right">
+                        <button class="circle-icon-40 mr15"><a :href="'admin/brandboost/export-onsite-campaigns?sortBy='+sortBy+'&search='+searchBy" ><img src="assets/images/download-fill.svg"></a></button>
+                        <button class="btn btn-md bkg_reviews_400 light_000" id="displayAddWorkflowForm" @click="displayAddWorkflowForm">Crete Workflow <span><img src="assets/images/reviews_plus_icon.svg"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--******************
+          Content Area
+         **********************-->
+        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+        <loading :isLoading="loading"></loading>
+        <div class="content-area" v-show="pageRendered==true">
+            <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
+                <div class="table_head_action">
+                    <div class="row" v-if="viewType == 'Grid View && false'">
+                        <div class="col-md-6">
+                            <h3 class="htxt_medium_16 dark_400">Workflows</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table_action">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Name'}" @click="applySort('Name')">Name</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">PENDING</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">CREATED</a>
+                                    </div>
+                                </div>
+                                <div class="float-right ml10 mr10">
+                                    <button v-if="viewType='Grid View'" type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/cards_16_grey.svg"></span>&nbsp; Grid View
+                                    </button>
+                                    <button v-else type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
+                                        <span><img src="assets/images/sort_16_grey.svg"></span>&nbsp; List View
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'">List View</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'">Grid View</a>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <!--<input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">-->
+                                    <a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" v-else>
+                        <div class="col-md-6">
+                            <ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">INACTIVE</a></li>-->
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">CREATED</a></li>-->
+
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <!--<li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>-->
+                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
+                                <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" v-if="viewType == 'Grid View'">
+                    <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
+                        <div class="card p0 pt30 text-center animate_top col">
+                            <span v-if="campaign.status == '1'" class="status_icon bkg_green_400"></span>
+                            <span v-else class="status_icon bkg_light_800"></span>
+                            <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                    <a v-if="campaign.status == '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Start</a>
+                                    <a v-if="campaign.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
+                                    <a v-if="campaign.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showContacts(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Contacts</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
+                                    <a class="dropdown-item" v-if="campaign.campaign_type=='manual'" :href="`#/reviews/onsite/request/list/${campaign.id}`"><i class="dripicons-user text-muted mr-2"></i> Review Requests</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                </div>
+                            </div>
+                            <!--<a href="javascript:void(0);" @click="setupWorkflow(campaign.id)" class="circle-icon-64 bkg_reviews_000 m0auto">
+                                <img v-if="campaign.status == 1" src="assets/images/star-fill-review-24.svg">
+                                <img v-else src="assets/images/star-fill-grey.svg">
+                            </a>-->
+
+                            <a v-if="campaign.status == 1" href="javascript:void(0);" @click="setupWorkflow(campaign.id)" class="circle-icon-64 bkg_reviews_300 m0auto">
+                                <img src="assets/images/star_fill_white_25.svg">
+                            </a>
+                            <a v-else href="javascript:void(0);" @click="setupWorkflow(campaign.id)" class="circle-icon-64 bkg_light_800 m0auto">
+                                <img src="assets/images/star_fill_white_25.svg">
+                            </a>
+
+                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="setupWorkflow(campaign.id)">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 0" @click="setupWorkflow(campaign.id)">INACTIVE</p>
+                            <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="campaign.status == 1" @click="setupWorkflow(campaign.id)">RUNNING</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 2" @click="setupWorkflow(campaign.id)">PENDING</p>
+                            <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 3" @click="setupWorkflow(campaign.id)">ARCHIVE</p>
+                            <div class="p15 pt15 btop" @click="setupWorkflow(campaign.id)">
+                                <ul class="workflow_list">
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/send-plane-grey.svg"></span> {{ campaign.reviewRequestsCountK }}k</a></li>
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/mail_open_fill_grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                    <li><a href="javascript:void(0);"><span><img src="assets/images/cursorline-fill-grey.svg"></span> {{ campaign.reviewResponsePercent }}%</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex" @click="displayAddWorkflowForm" style="cursor: pointer;">
+                        <div class="card p0 pt50 text-center animate_top col">
+                            <a href="javascript:void(0);" class="circle-icon-64 bkg_light_200 m0auto"><img src="assets/images/plus_grey_24.svg"> </a>
+                            <h3 class="htxt_bold_12 dark_200 mb-0 mt-4 text-uppercase">Create<br>new campaign</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" v-if="viewType == 'List View'">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td><span class="fsize10 fw500">CAMPAIGN </span></td>
+                                    <td><span class="fsize10 fw500">TYPE </span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/send-plain-line.svg"></span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/eyeline.svg"></span></td>
+                                    <td><span class="fsize10 fw500"><img src="assets/images/cursor-line.svg"></span></td>
+                                    <td><span class="fsize10 fw500">RATING</span></td>
+                                    <td><span class="fsize10 fw500">SENT <img src="assets/images/arrow-down-line-14.svg"> </span></td>
+                                    <td><span class="fsize10 fw500">STATUS</span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
+
+                                <tr v-for="campaign in campaigns" :key="campaign.id">
+                                    <td width="20">
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox" :checked="deletedItems.indexOf(campaign.id)>-1" @change="addtoDeleteCollection(campaign.id, $event.target)">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="table-img mr15">
+                                            <span v-if="campaign.campaign_color" class="circle_icon_24" :class="campaign.campaign_color">
+                                                <img src="assets/images/pricetag3-fill.svg" width="14">
+                                            </span>
+                                            <span v-else class="circle_icon_24 bkg_reviews_400">
+                                                <img src="assets/images/pricetag3-fill.svg" width="14">
+                                            </span>
+                                        </span>
+                                        <a href="javascript:void(0);" @click="setupWorkflow(campaign.id)">
+                                            <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
+                                        </a>
+                                        <!--<a href="javascript:void(0);" @click="setupWorkflow(campaign.id)">
+                                            <p class="fsize12 green_400 ml-4">{{ setStringLimit(campaign.brand_desc, 100) }}</p>
+                                        </a>-->
+                                    </td>
+                                    <td>
+                                        <span v-if="campaign.campaign_type == 'manual'"><img src="assets/images/manual_icon_grey_16.svg">&nbsp; Manual Requests</span>
+                                        <span v-else-if="campaign.campaign_type == 'automated'"><img src="assets/images/automation_icon_grey_16.svg">&nbsp; Automation</span>
+                                        <span v-else><img src="assets/images/share-circle-line.svg"> {{ capitalizeFirstLetter(campaign.review_type) }} Review Requests</span>
+                                    </td>
+                                    <td>{{ campaign.reviewRequestsCountFormat }}</td>
+                                    <td>{{ campaign.reviewResponsePercent }}%</td>
+                                    <td>{{ campaign.reviewResponsePercent }}%</td>
+                                    <td>
+                                        <span v-if="campaign.revRA != ''" class="mr-2">
+                                            <img v-if="campaign.revRA > '3'" src="assets/images/emojie-eye-face-l.svg">
+                                            <img v-if="campaign.revRA == '3'" src="assets/images/emojie-face-smile.svg">
+                                        </span>
+                                        <span v-if="campaign.revRA != ''">{{ campaign.revRA }}/5</span>
+                                        <span v-else>&nbsp;</span>
+                                    </td>
+                                    <td>{{ displayDateFormat("M d, Y", campaign.created) }}</td>
+                                    <td>
+                                        <span v-if="campaign.status == 0" class="mr-3"><span class="status_icon bkg_light_600"></span> &nbsp;Inactive</span>
+                                        <span v-if="campaign.status == 1" class="mr-3"><span class="status_icon bkg_green_300"></span> &nbsp;Active</span>
+                                        <span v-if="campaign.status == 2" class="mr-3"><span class="status_icon bkg_reviews_300"></span> &nbsp;Pending</span>
+                                        <span v-if="campaign.status == 3" class="mr-3"><span class="status_icon bkg_reviews_300"></span> &nbsp;Archive</span>
+                                    </td>
+                                    <td>
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+                                                <span><img src="assets/images/more-2-fill.svg"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                                <a v-if="campaign.status == '2'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Start</a>
+                                                <a v-if="campaign.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
+                                                <a v-if="campaign.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showContacts(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Contacts</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
+                                                <a class="dropdown-item" v-if="campaign.campaign_type=='manual'" :href="`#/reviews/onsite/request/list/${campaign.id}`"><i class="dripicons-user text-muted mr-2"></i> Review Request</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <pagination
+                    :pagination="allData"
+                    @paginate="showPaginationData"
+                    @paginate_per_page="showPaginationItemsPerPage"
+                    :offset="4"
+                >
+                </pagination>
+            </div>
+
+            <div class="container-fluid" v-else>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card_shadow min-h-280">
+
+                            <div class="row mb65">
+                                <div class="col-md-6 text-left">
+                                    <a class="lh_32 reviews_400 htxt_bold_14" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-left bkg_reviews_000 mr10"><img src="assets/images/download-fill-review.svg"></span>
+                                        Import workflow
+                                    </a>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"></span>
+                                        Learn how to use reviews monitoring
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row mb65">
+                                <div class="col-md-12 text-center">
+                                    <img class="mt40" style="max-width: 250px; " src="assets/images/review_workflow.svg">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">No workflows so far. But you can change it!</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import workflows!</h3>
+                                    <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400" @click="displayAddWorkflowForm">Create new workflow</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Campaign Popup -->
+            <div class="modal fade show" id="CREATEFORM">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content review">
+                        <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+                        <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="htxt_medium_24 dark_800 mb-3">Review Campaign</h3>
+                                <p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
+                                <hr/>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN NAME</label>
+                                    <!--<input type="text" class="form-control h48 fsize14 dark_200 br4" id="fname" placeholder="Enter new campaign name" name="fname">-->
+
+                                    <div class="campaign_name_sec border br4 p10 pl20 pr20 fsize14 dark_200">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <input type="text" v-model="form.campaignName" class="textfield fsize14 dark_200" id="fname" placeholder="Enter new campaign name" name="campaignName">
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="dropdown campaign_forms">
+                                                    <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="inner_color_dot_selected" :class="form.campaignColor"></span>
+                                                    </button>
+                                                    <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
+                                                        <p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
+                                                        <a class="campaign_color_dot" href="javascript:void(0);" v-for="colorClass in getColors()">
+                                                            <span class="inner_color_dot" :class="campaignColorClass(colorClass)" @click="form.campaignColor=colorClass"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="help alert-danger" v-if="form.errors.has('campaignName')" v-text="form.errors.get('campaignName')"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
+                                    <div class="card border text-center shadow-none m-0" :class="{'reviews': form.campaignType =='manual'}" style="cursor:not-allowed;">
+                                        <img class="mb-3" src="assets/images/review_icon1.svg"/>
+                                        <p class="htxt_medium_14 dark_600 mb-3">Manual Campaign</p>
+                                        <p class="htxt_regular_12 dark_300 m-0 lh_17">Send review requests emails <br>& sms instantly to all or part <br>of your customers</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label >
+                                    <div class="card border text-center shadow-none m-0" :class="{'reviews': form.campaignType =='automated'}" @click="form.campaignType='automated'" style="cursor: pointer;">
+                                        <img class="mb-3" src="assets/images/review_icon2.svg"/>
+                                        <p class="htxt_medium_14 dark_600 mb-3">Automated Campaign</p>
+                                        <p class="htxt_regular_12 dark_300 m-0 lh_17">Automaticaly send email or sms<br> every time a new purchase or<br> contact is added</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <hr/>
+                            </div>
+
+                            <div class="col-6">
+                                <input type="hidden" name="module_name" id="active_module_name" :value="moduleName">
+                                <input type="hidden" name="module_account_id" id="module_account_id" :value="moduleAccountID">
+                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" :disabled="form.errors.any() || isProcessing == true">CONTINUE</button>
+                                <a class="dark_200 fsize12 fw500 ml20 text-uppercase" id="hidePopupForm" data-dismiss="modal" href="javascript:void(0);">Close</a>
+                            </div>
+
+                            <div class="col-6 text-right mt-2">
+                                <a class="lh_32 htxt_regular_12 dark_200 ls_4" href="javascript:void(0);">
+                                    <span class="circle-icon-32 float-right ml10 bkg_light_200"><img src="assets/images/question-line.svg"/></span>
+                                    LEARN MORE ABOUT CAMPAIGNS
+                                </a>
+                            </div>
+
+
+
+
+                        </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- /Add Campaign -->
+        </div>
+        <!--******************
+          Content Area End
+         **********************-->
+    </div>
+</template>
+<script>
+    import UserAvatar from '@/components/helpers/UserAvatar';
+    import Pagination from '@/components/helpers/Pagination';
+    import jq from 'jquery';
+    let tkn = $('meta[name="_token"]').attr('content');
+
+    export default {
+        props : ['pageColor', 'title', 'review_type'],
+        components: {UserAvatar, Pagination},
+        data(){
+            return {
+                pageRendered: false,
+                successMsg : '',
+                errorMsg: '',
+                loading: true,
+                moduleName: '',
+                moduleUnitID: '',
+                moduleAccountID: '',
+                company_name: '',
+                count : 0,
+                campaigns : '',
+                allData: {},
+                current_page: 1,
+                items_per_page: 10,
+                breadcrumb: '',
+                form: new Form({
+                    campaignName: '',
+                    OnsitecampaignDescription: '',
+                    campaign_id: '',
+                    campaignType: 'automated',
+                    campaignColor: '',
+                }),
+                formLabel: 'Create',
+                viewType: 'List View',
+                sortBy: 'Date Created',
+                searchBy: '',
+                deletedItems: [],
+                isProcessing: false
+            }
+        },
+        created() {
+            this.loadPaginatedData();
+        },
+        mounted() {
+            this.$parent.pageColor = this.pageColor;
+        },
+        watch: {
+            'sortBy' : function(){
+              this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
+            }
+        },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.campaigns.forEach(camp => {
+                    let idx = this.deletedItems.indexOf(camp.id);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
+            }
+        },
+        methods: {
+            'campaignColorClass': function(color){
+                if(color == this.form.campaignColor){
+                    return color+ ' active';
+                }else{
+                    return color;
+                }
+            },
+            applySort: function(sortVal){
+                this.loading = true;
+
+                this.sortBy = sortVal;
+                this.deletedItems = [];
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/brandboost/delete_multipal_brandboost', {_token:this.csrf_token(), multi_brandboost_id:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.campaigns.length>0){
+                            this.campaigns.forEach(camp => {
+                                let idxx = this.deletedItems.indexOf(camp.id);
+                                if(idxx == -1){
+                                    this.deletedItems.push(camp.id);
+                                }
+                            });
+                        }
+                    }else{
+                        this.campaigns.forEach(camp => {
+                            let idxx = this.deletedItems.indexOf(camp.id);
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+
+            },
+            searchItem: function(){
+                this.loadPaginatedData();
+            },
+            setupWorkflow: function(id){
+                window.location.href='#/reviews/onsite/workflow/setup/'+id;
+            },
+            showContacts: function(id){
+                window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
+            },
+            showCampaignPage: function(id,companyName,campaignName){
+                window.location.href='#/for/'+companyName+'/'+campaignName+'-'+id;
+            },
+            showReviews: function(id){
+                window.location.href='#/brandboost/reviews/'+id;
+            },
+            showQuestions: function(id){
+                window.location.href='#/brandboost/questions/'+id;
+            },
+            loadPaginatedData : function(){
+                axios.get('/admin/brandboost/onsite?type=automated&items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                    .then(response => {
+                        this.breadcrumb = response.data.breadcrumb;
+                        this.makeBreadcrumb(this.breadcrumb);
+                        this.moduleName = response.data.moduleName;
+                        this.company_name = response.data.company_name;
+                        this.allData = response.data.allData;
+                        this.campaigns = response.data.aBrandbosts;
+                        this.loading = false;
+                        this.pageRendered = true;
+                        //console.log(this.campaigns)
+                    });
+            },
+            showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
+            },
+            navigatePagination: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            displayForm : function(lbl){
+                if(lbl == 'Create'){
+                    this.form={};
+                }
+                this.formLabel = lbl;
+                document.querySelector('#displayAddWorkflowForm').click();
+            },
+            displayAddWorkflowForm: function(){
+                document.querySelector('#displayAddWorkflowForm').click();
+            },
+            prepareItemUpdate: function(campaign_id) {
+                this.getItemInfo(campaign_id);
+            },
+            getItemInfo: function(campaign_id){
+                axios.post('/admin/brandboost/getReviewCampaign', {
+                    campaign_id: campaign_id,
+                    moduleName: this.moduleName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            //Fill up the form fields
+                            let formData = response.data;
+                            this.form.campaign_id = formData.campaign_id;
+                            this.form.campaignName = formData.campaignName;
+                            this.form.OnsitecampaignDescription = formData.description;
+                            this.form.campaignColor = formData.campaignColor;
+                            this.formLabel = 'Update';
+                            this.displayForm(this.formLabel);
+                        }
+                    });
+            },
+            processForm : function(){
+                this.isProcessing = true;
+                this.loading = false;
+                let formActionSrc = '';
+                this.form.module_name = this.moduleName;
+                if(this.form.campaign_id>0){
+                    formActionSrc = '/admin/brandboost/updateReviewCampaign';
+                }else{
+                    formActionSrc = '/admin/brandboost/addOnsite';
+                    this.form.module_account_id = this.moduleAccountID;
+                }
+                this.form.post(formActionSrc, this.form)
+                .then(response => {
+                    var elem = this;
+                    if (response.data.status == 'success') {
+                        this.isProcessing = false;
+                        if(response.data.brandboostID>0){
+                            this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
+                            document.querySelector('#hidePopupForm').click();
+                            window.location.href='#/reviews/onsite/workflow/setup/'+response.data.brandboostID;
+                            return false;
+                        }
+
+                        //this.form = {};
+                        //document.querySelector('.js-review-campaign-slidebox').click();
+                        this.successMsg = 'Action completed successfully.';
+
+                        $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
+                        syncContactSelectionSources();
+                    }else if (response.data.status == 'error') {
+                        this.isProcessing = false;
+                        if (response.data.type == 'duplicate') {
+                            alert('Error: Campaign already exists.');
+                        }
+                        else {
+                            alert('Error: Something went wrong.');
+                        }
+                        setTimeout(function () {
+                            this.loading = false;
+                            $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
+                        }, 500,elem);
+
+                    }else{
+                       $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
+                    }
+                })
+                .catch(errors => {
+                    var elem = this;
+                    $(".cross_icon").trigger('click');
+                            elem.loadPaginatedData();
+                })
+            },
+            changeStatus: function(campaign_id, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/brandboost/updateOnsiteStatus', {
+                        brandboostID:campaign_id,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            },
+            deleteItem: function(campaign_id) {
+                if(confirm('Are you sure you want to delete this item?')){
+                    //Do axios
+                    axios.post('/admin/brandboost/delete_brandboost', {
+                        brandboost_id:campaign_id,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+                                this.showPaginationData(this.current_page);
+                            }
+                        });
+                }
+            }
+        }
+    }
+    $(document).ready(function(){
+        $(document).on("click", "#displayAddWorkflowForm", function(){
+            $("#CREATEFORM").modal('show');
+        })
+
+    });
+</script>
