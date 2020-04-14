@@ -348,13 +348,17 @@
     import OnsiteReviewRequestsTab from '@/components/admin/brandboost/onsite/tabs/ReviewRequest';
 
     export default {
-        props : ['pageColor', 'title', 'review_type'],
+        //props : ['pageColor', 'title', 'review_type'],
         components: {UserAvatar, Pagination, OnsiteCampaignsTab, OnsiteReviewsTab, OnsiteReviewRequestsTab, OnsiteSubscribersTab},
         data() {
             return {
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
+                successMsg: '',
+                refreshMessage: '',
+                errorMsg: '',
+                loading: true,
                 allData: {},
                 requests : '',
                 oReviews : '',
@@ -381,7 +385,7 @@
             this.loadData();
         },
         mounted() {
-            this.$parent.pageColor = this.pageColor;
+            //this.$parent.pageColor = this.pageColor;
             this.selected_campaign = this.$route.params.id;
         },
         methods: {
