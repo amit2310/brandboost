@@ -14,7 +14,7 @@
                         <option>All</option>
                     </select>
                 </span>
-                <span>{{pagination.current_page}}-{{pagesNumber.length}} out of {{pagination.total}}</span>
+                <span v-if="(pagination.per_page != 'all' && pagination.per_page != undefined)">{{pagination.current_page}}-{{pagesNumber.length}} out of {{pagination.total}}</span>
             </div>
             <div class="col-md-6">
                 <ul class="page_list float-right">
@@ -56,7 +56,7 @@
                 this.pagination.current_page = page;
                 this.$emit('paginate', page);
             },
-            changeItemsPerPage(page) {
+            changeItemsPerPage() {
                 this.$emit('paginate_per_page', this.pagination.per_page);
             }
         }

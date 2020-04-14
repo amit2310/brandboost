@@ -292,27 +292,56 @@ class Brandboost extends Controller
             $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy, $items_per_page);
         }
 
-        foreach ($aBrandboostList->items() as $data) {
-            $data->revCount = getCampaignReviewCount($data->id);
-            $data->revRA = getCampaignReviewRA($data->id) != '' ? getCampaignReviewRA($data->id) : '';
-            $data->allSubscribers = ListsModel::getAllSubscribersList($data->id);
+        if($items_per_page =='All') {
+            if(!empty($aBrandboostList)) {
+                foreach ($aBrandboostList as $data) {
+                    $data->revCount = getCampaignReviewCount($data->id);
+                    $data->revRA = getCampaignReviewRA($data->id) != '' ? getCampaignReviewRA($data->id) : '';
+                    $data->allSubscribers = ListsModel::getAllSubscribersList($data->id);
 
-            $data->reviewRequests = $mBrandboost->getReviewRequest($data->id, '');
-            $data->reviewRequestsCount = count($data->reviewRequests);
-            $data->reviewRequestsCountFormat = number_format(count($data->reviewRequests));
-            $data->reviewRequestsCountK = (int)(count($data->reviewRequests)/1000);
-            $data->getSendRequestSms = getSendRequest($data->id, 'sms');
-            $data->getSendRequestEmail = getSendRequest($data->id, 'email');
+                    $data->reviewRequests = $mBrandboost->getReviewRequest($data->id, '');
+                    $data->reviewRequestsCount = count($data->reviewRequests);
+                    $data->reviewRequestsCountFormat = number_format(count($data->reviewRequests));
+                    $data->reviewRequestsCountK = (int)(count($data->reviewRequests) / 1000);
+                    $data->getSendRequestSms = getSendRequest($data->id, 'sms');
+                    $data->getSendRequestEmail = getSendRequest($data->id, 'email');
 
-            $data->reviewResponse = $mBrandboost->getReviewRequestResponse($data->id);
-            $data->reviewResponseCount = count($data->reviewResponse);
+                    $data->reviewResponse = $mBrandboost->getReviewRequestResponse($data->id);
+                    $data->reviewResponseCount = count($data->reviewResponse);
 
-            $data->reviewResponsePercent = 0;
-            if($data->reviewRequestsCount > 0) {
-                $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
+                    $data->reviewResponsePercent = 0;
+                    if ($data->reviewRequestsCount > 0) {
+                        $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
+                    }
+
+                    //$data->reviewCommentsData = $mReviews->getReviewAllComments($data->id, 0, 5);
+                }
             }
+        } else {
+            if(!empty($aBrandboostList->items())) {
+                foreach ($aBrandboostList->items() as $data) {
+                    $data->revCount = getCampaignReviewCount($data->id);
+                    $data->revRA = getCampaignReviewRA($data->id) != '' ? getCampaignReviewRA($data->id) : '';
+                    $data->allSubscribers = ListsModel::getAllSubscribersList($data->id);
 
-            //$data->reviewCommentsData = $mReviews->getReviewAllComments($data->id, 0, 5);
+                    $data->reviewRequests = $mBrandboost->getReviewRequest($data->id, '');
+                    $data->reviewRequestsCount = count($data->reviewRequests);
+                    $data->reviewRequestsCountFormat = number_format(count($data->reviewRequests));
+                    $data->reviewRequestsCountK = (int)(count($data->reviewRequests) / 1000);
+                    $data->getSendRequestSms = getSendRequest($data->id, 'sms');
+                    $data->getSendRequestEmail = getSendRequest($data->id, 'email');
+
+                    $data->reviewResponse = $mBrandboost->getReviewRequestResponse($data->id);
+                    $data->reviewResponseCount = count($data->reviewResponse);
+
+                    $data->reviewResponsePercent = 0;
+                    if ($data->reviewRequestsCount > 0) {
+                        $data->reviewResponsePercent = round(($data->reviewResponseCount / $data->reviewRequestsCount) * 100);
+                    }
+
+                    //$data->reviewCommentsData = $mReviews->getReviewAllComments($data->id, 0, 5);
+                }
+            }
         }
 
         $moduleName = 'brandboost-onsite';
@@ -1073,10 +1102,18 @@ class Brandboost extends Controller
                 </ul>';
 
             $reviewTags = array();
-            if(!empty($aReviews->items())) {
-                foreach($aReviews->items() as $kRev => $vRev) {
-                    //$vRev->id = 108;
-                    $reviewTags[$vRev->id] = getTagsByReviewID($vRev->id);
+            if($items_per_page =='All') {
+                if (!empty($aReviews)) {
+                    foreach ($aReviews as $kRev => $vRev) {
+                        $reviewTags[$vRev->id] = getTagsByReviewID($vRev->id);
+                    }
+                }
+            } else {
+                if (!empty($aReviews->items())) {
+                    foreach ($aReviews->items() as $kRev => $vRev) {
+                        //$vRev->id = 108;
+                        $reviewTags[$vRev->id] = getTagsByReviewID($vRev->id);
+                    }
                 }
             }
 

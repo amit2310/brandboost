@@ -203,11 +203,11 @@
                             <span v-if="request.tracksubscribertype =='sms'" class="check_icon green_400 fsize18"><i class="ri-check-line"></i></span>
 
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
-                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <!--<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Link 1</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Link 2</a>
-                                </div>
+                                </div>-->
                             </div>
                             <a href="#" class="circle-icon-48 bkg_reviews_300 m0auto"><span class="fsize16 fw500 light_000 text-uppercase">{{request.firstname.charAt(0)}}{{request.lastname.charAt(0)}}</span> </a>
                             <h3 class="htxt_medium_14 dark_600 mb-2 mt-3">{{ capitalizeFirstLetter(request.firstname) }} {{ capitalizeFirstLetter(request.lastname) }}</h3>

@@ -174,7 +174,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                             <h3 class="htxt_medium_12 dark_600 text-uppercase ls_4">Tags</h3>
                             <hr>
                             <div>
-                                <button class="tags_btn mb-3">customer</button>
+                                <!--<button class="tags_btn mb-3">customer</button>
                                 <button class="tags_btn mb-3">email</button>
                                 <button class="tags_btn mb-3">4 star</button>
                                 <button class="tags_btn mb-3">website about</button>
@@ -182,7 +182,8 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                                 <button class="tags_btn mb-3">4 star</button>
                                 <button class="tags_btn mb-3">male</button>
                                 <button class="tags_btn mb-3">user</button>
-                                <button class="tags_btn mb-3">+</button>
+                                <button class="tags_btn mb-3">+</button>-->
+                                <button class="tags_btn mb-3 applyInsightTagsReviewsNew" action_name="review-tag" title="Click to add tags">+</button>
                             </div>
                         </div>
 
@@ -203,6 +204,27 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
             </div>
 
         </div>
+
+        <div id="ReviewTagListModalNew" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" name="frmReviewTagListModalNew" id="frmReviewTagListModalNew" action="javascript:void();">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Apply Tags</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body" id="tagEntireListReview"></div>
+
+                        <div class="modal-footer modalFooterBtn">
+                            <input type="hidden" name="review_id" id="tag_review_id" />
+                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn dark_btn frmReviewTagListModalBtn">Apply Tag</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -380,4 +402,66 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
 
         }
     }
+
+    $(document).ready(function () {
+
+        $(document).on("click", ".applyInsightTagsReviewsNew", function () {
+            var review_id = $(this).attr("reviewid");
+            var feedback_id = $(this).attr("feedback_id");
+            var action_name = $(this).attr("action_name");
+
+            $.ajax({
+                url: '/admin/tags/listAllTags',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: {review_id: review_id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        var dataString = data.list_tags;
+                        if (dataString.search('have any tags yet :-') > 0) {
+                            $('.modalFooterBtn').hide();
+                        } else {
+                            $('.modalFooterBtn').show();
+                        }
+
+                        $("#tagEntireListReview").html(dataString);
+                        $("#tag_review_id").val(review_id);
+                        $("#tag_feedback_id").val(feedback_id);
+                        if (action_name == 'review-tag') {
+                            $("#ReviewTagListModalNew").modal("show");
+                        } else if (action_name == 'feedback-tag') {
+                            $("#FeedbackTagListModalNew").modal("show");
+                        }
+                    }
+                }
+            });
+        });
+
+        //$("#frmReviewTagListModalNew").submit(function () { alert("here")
+        $(document).on("click", ".frmReviewTagListModalBtn", function () {
+            var formdata = $("#frmReviewTagListModalNew").serialize();
+            $.ajax({
+                url: '/admin/tags/applyReviewTag',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                type: "POST",
+                data: formdata,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        $('.overlaynew').hide();
+                        $("#review_tag_" + data.id).html(data.refreshTags);
+                        $("#ReviewTagListModalNew").modal("hide");
+                        //window.location.href = '';
+                    } else {
+                        $('.overlaynew').hide();
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
 </script>

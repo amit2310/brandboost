@@ -18,7 +18,7 @@
             <div class="col-md-8 white_bkg shadow3 right custom_pagination">
                 <ul class="page_list float-right">
                     <li v-if="pagination.current_page > 1"><a href="javascript:void(0);" @click.prevent="changePage(pagination.current_page - 1)"><img src="assets/images/arrow-right-s-line.svg"></a></li>
-                    <li v-for="(page, key) in pagesNumber" :key="key"><a :class="{'active': page == pagination.current_page}" href="javascript:void(0);" @click.prevent="changePage(page)">{{ page }}</a></li>
+                    <li v-if="(pagination.per_page != 'all' && pagination.per_page != undefined)" v-for="(page, key) in pagesNumber" :key="key"><a :class="{'active': page == pagination.current_page}" href="javascript:void(0);" @click.prevent="changePage(page)">{{ page }}</a></li>
                     <li v-if="pagination.current_page < pagination.last_page"><a href="javascript:void(0);" @click.prevent="changePage(pagination.current_page + 1)"><img src="assets/images/arrow-left-s-line.svg"></a></li>
                 </ul>
             </div>

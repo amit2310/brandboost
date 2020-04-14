@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    <pagination v-if="allData.total > 10"
+                    <pagination v-if="(allData.total > 10 || items_per_page == 'All')"
                         :pagination="allData"
                         @paginate="showPaginationData"
                         @paginate_per_page="showPaginationItemsPerPage"
