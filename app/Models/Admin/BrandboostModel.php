@@ -15,7 +15,7 @@ class BrandboostModel extends Model {
      * @param type $type
      * @return type
      */
-    public static function getBrandboostByUserId($userId, $type = '', $searchBy='', $sortBy='', $items_per_page=10, $paginate=true)
+    public static function getBrandboostByUserId($userId, $type = '', $campaignType='', $searchBy='', $sortBy='', $items_per_page=10, $paginate=true)
     {
         $query = DB::table('tbl_brandboost')
             ->when(($userId > 0), function ($query) use ($userId) {
@@ -25,6 +25,9 @@ class BrandboostModel extends Model {
                 return $query->where('review_type', $type);
             })
             ->where('delete_status', 0);
+        if(!empty($campaignType)){
+            $query->where('campaign_type', $campaignType);
+        }
         if (!empty($searchBy)) {
             $query->where('brand_title', 'LIKE', "%$searchBy%");
             //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");
@@ -452,7 +455,7 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '', $searchBy = '', $sortBy='', $items_per_page=10, $paginate=true) {
+    public static function getBrandboost($id = 0, $type = '', $campaignType='', $searchBy = '', $sortBy='', $items_per_page=10, $paginate=true) {
 
         $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
@@ -462,6 +465,9 @@ class BrandboostModel extends Model {
 				return $query->where('review_type', $type);
 			})
 			->where('delete_status', 0);
+        if(!empty($campaignType)){
+            $query->where('campaign_type', $campaignType);
+        }
         if(!empty($searchBy)){
             $query->where('brand_title', 'LIKE',  "%$searchBy%");
             //$query->orWhere('brand_desc', 'LIKE',  "%$searchBy%");

@@ -279,6 +279,7 @@ class Brandboost extends Controller
         $user_role = $aUser->user_role;
         $company_name = $aUser->company_name;
         $companyName = strtolower(str_replace(' ', '-', $company_name));
+        $campaignType = (!empty($request->type)) ? $request->type : '';
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
         $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
@@ -287,9 +288,9 @@ class Brandboost extends Controller
         $mReviews = new ReviewsModel();
 
         if ($user_role == 1) {
-            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $searchBy, $sortBy, $items_per_page);
+            $aBrandboostList = $mBrandboost->getBrandboost('', 'onsite', $campaignType, $searchBy, $sortBy, $items_per_page);
         } else {
-            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $searchBy, $sortBy, $items_per_page);
+            $aBrandboostList = $mBrandboost->getBrandboostByUserId($userID, 'onsite', $campaignType, $searchBy, $sortBy, $items_per_page);
         }
 
         if($items_per_page =='All') {
@@ -346,12 +347,20 @@ class Brandboost extends Controller
 
         $moduleName = 'brandboost-onsite';
 
-        $aBreadcrumb = array(
-            'Home' => '#/',
-            'Reviews' => '#/reviews/dashboard',
-            'Onsite' => ''
-        );
+        if($campaignType == 'automated'){
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Reviews' => '#/reviews/dashboard',
+                'Workflows' => ''
+            );
 
+        }else{
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Reviews' => '#/reviews/dashboard',
+                'Onsite' => ''
+            );
+        }
         $bActiveSubsription = $mUsers->isActiveSubscription();
         //$this->session->set_userdata('setTab', '');
 
