@@ -504,7 +504,6 @@
                     });
 
             },
-
             displayTemplateInterface: function(nodeType, currentId, previousId, eventType){
                 this.nodeType = nodeType; //'email' // 'sms';
                 this.eventType= eventType;
