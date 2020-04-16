@@ -2958,4 +2958,34 @@ class WorkFlow extends Controller {
         exit;
     }
 
+    /**
+     * Used to get workflow tree related common data
+     * @param Request $request
+     * @return array
+     */
+    public function getWorkflowData(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitId);
+        $oEvents = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        $title = '';
+        if($moduleName == 'brandboost'){
+            $title = $oUnitData->brand_title;
+        }else if($moduleName == 'automation' || $moduleName == 'broadcast'){
+            $title = $oUnitData->title;
+        }else if($moduleName == 'nps' || $moduleName == 'referral'){
+            $title = $oUnitData->title;
+        }
+        return [
+            'title' => $title,
+            'oEvents' => $oEvents,
+            'moduleName' => $moduleName,
+            'moduleUnitId' => $moduleUnitId,
+            'moduleUnitData' => $oUnitData
+        ];
+    }
+
 }

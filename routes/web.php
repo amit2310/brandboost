@@ -965,6 +965,8 @@ Route::post('admin/helperutility/getFeedbackTags', 'Admin\HelperUtility@getFeedb
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/eventCampaigns', 'Admin\HelperUtility@eventCampaigns');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', 'Admin\HelperUtility@workflowSubscribers');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData', 'Admin\HelperUtility@getWorkflowContactSelectionInterfaceData');
+//New Workflow Tree
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', 'Admin\WorkFlow@getWorkflowData');
 
 
 
