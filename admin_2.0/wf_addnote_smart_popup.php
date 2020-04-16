@@ -20,7 +20,7 @@
           </div>
           <div class="col-6 pl5 text-center"> 
             <div class="card border shadow-none p20 pl10 pr10 mb10">
-                <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
+                <span class="circle-icon-44 bkg_yellow_500 m-auto br12 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-mail-open-fill light_000 fsize18"></i></span></span>
                 <p class="fw500 fsize14 dark_600 mt-2 mb-1">Decision</p>
                 <p class="fw400 fsize12 dark_300 m0">Send people down a single path based on selected criteria.</p>
             </div>
@@ -38,7 +38,7 @@
           </div>
           <div class="col-6 pl5 text-center"> 
             <div class="card border shadow-none p20 pl10 pr10 mb10">
-                <span class="circle-icon-44 bkg_email_300 m-auto br12 "><img src="assets/images/split.svg"/></span>
+                <span class="circle-icon-44 bkg_email_300 m-auto br12 rotate_45 "><span class="rotate_45_minus d-block"><img src="assets/images/split.svg"/></span></span>
                 <p class="fw500 fsize14 dark_600 mt-2 mb-1">Split Test</p>
                 <p class="fw400 fsize12 dark_300 m0">Split trafic to determine which is the most effective</p>
             </div>
