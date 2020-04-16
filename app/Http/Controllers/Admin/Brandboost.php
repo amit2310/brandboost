@@ -1328,7 +1328,7 @@ class Brandboost extends Controller
         $reviewID = $request->id;
         $selectedTab = $request->input('t');
 
-        $revID = $request->reviewid;
+        $revID = !empty($request->reviewid) ? $request->reviewid : '0';
         $actionName = $request->action;
         $mUser = new UsersModel();
         $product_id = "";
@@ -1346,7 +1346,8 @@ class Brandboost extends Controller
         $reviewNotesData = ReviewsModel::listReviewNotes($reviewID);
         $reviewCommentsData = ReviewsModel::getReviewAllParentsComments($reviewID, $start = 0);
         $reviewData = ReviewsModel::getReviewInfo($reviewID);
-        if($reviewData->isNotEmpty()){
+        //if($reviewData->isNotEmpty()){
+        if(!empty($reviewData)){
             $bbID = $reviewData->bbId;
         }
         $reviewTags = getTagsByReviewID($reviewID);
@@ -1357,7 +1358,6 @@ class Brandboost extends Controller
             $product_name = $productData->product_name;
             $brand_title = $reviewData->brand_title;
             $bbId = $reviewData->bbId;
-
         }
 
         $productName = $product_id > 0 ? $product_name : $brand_title;
@@ -1392,8 +1392,11 @@ class Brandboost extends Controller
             echo json_encode($response);
             exit;
         } else {
-            return view('admin.brandboost.review_details', $aData);
-
+            //return view('admin.brandboost.review_details', $aData);
+            $response['status'] = 'success';
+            $response['content'] = $aData;
+            echo json_encode($response);
+            exit;
         }
     }
 
