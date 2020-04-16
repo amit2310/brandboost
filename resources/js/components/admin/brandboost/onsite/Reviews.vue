@@ -149,7 +149,6 @@
                                     </div>
                                 </div>
 
-
                                 <p class="fsize14 fw400 dark_600 lh_22 mb25" @click="showReview(oReview.reviewid)">
                                     {{ oReview.comment_text }}
                                 </p>
@@ -159,7 +158,7 @@
                                         <template v-else>Comments</template>
                                     </a>
                                     <a class="dark_400 fsize14" href="javascript:void(0);"><img src="assets/images/thumb-up-grey-16.svg"> &nbsp; 0 Likes</a>
-                                    <a class="dark_400 fsize14 js-review-feedback-slidebox" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
+                                    <a class="dark_400 fsize14 js-review-feedback-slidebox" @click="loadReplyPopup(oReview.reviewid)" href="javascript:void(0);"><img src="assets/images/reply_grey_16.svg"> &nbsp; Reply</a>
                                     <div class="clearfix"></div>
                                 </div>
 
@@ -197,7 +196,6 @@
                                 </div>
                             </div>
 
-
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
                                     <img class="mt40" style="max-width: 240px; " src="assets/images/reviews_icon_125.svg">
@@ -206,22 +204,12 @@
                                     <button class="btn btn-sm bkg_reviews_000 pr20 reviews_400 slidebox">Connect</button>
                                 </div>
                             </div>
-
-
-
-
-
-
                         </div>
                     </div>
-
 
                     <!--<div class="col-md-12 text-center mt-3">
                         <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
                     </div>-->
-
-
-
 
                 </div>
             </div>
@@ -272,7 +260,8 @@
                 </div>
             </div>
         </div>
-         <div class="box" style="width:550px;">
+
+        <div class="box" style="width:550px;">
             <div style="width: 550px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox2">
                             <i class=""><img src="assets/images/cross.svg"/></i>
@@ -297,7 +286,7 @@
 
         <!--=====================================Create new review================================-->
         <div id="addPeopleList" class="modal fade">
-            <div style="max-width: 440px;ss" class="modal-dialog">
+            <div style="max-width: 440px;" class="modal-dialog">
                 <div class="modal-content">
                     <form method="post" class="form-horizontal">
 
@@ -338,7 +327,7 @@
 
         <!--=====================================Create new campaign================================-->
         <div id="addPeopleList" class="modal fade">
-            <div style="max-width: 440px;ss" class="modal-dialog">
+            <div style="max-width: 440px;" class="modal-dialog">
                 <div class="modal-content">
                     <form method="post" class="form-horizontal">
 
@@ -825,6 +814,17 @@
                                 } else {
                                     $('.tabbable a[href="#review-tab"]').trigger('click');
                                 }
+                            }
+                        });
+            },
+            loadReplyPopup:function(review_id) {
+                axios.post('/admin/brandboost/reviewdetails/'+review_id, {
+                        id: review_id,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if (response.data.status == "success") {
+                                alert("Success: "+response.data.status);
                             }
                         });
             },
