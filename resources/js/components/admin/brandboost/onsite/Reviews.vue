@@ -847,22 +847,27 @@
             }
         }
     }
+
     $(document).ready(function () {
+
         $(document).on('click', '.js-review-feedback-slidebox', function(){
             $(".box:first").animate({
                 width: "toggle"
             });
         });
-    $(document).on('click', '.js-review-feedback-slidebox2', function(){
+
+        $(document).on('click', '.js-review-feedback-slidebox2', function(){
             $(".box:last").animate({
                 width: "toggle"
             });
         });
+
         /*$(document).on('click', '.search_tables_open_close', function(){
             $(".reviewfeedSearch").animate({
                 width: "toggle"
             });
             $('#InputToFocus').focus();
         });*/
+
     });
 </script>
