@@ -68,38 +68,8 @@
 
                         <div class="p30 workflow_list_box">
                             <ul class="workflow_list_new">
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100 "><i class="ri-play-fill"></i></span> Start</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-price-tag-3-fill"></i></span> Triger: People Tag</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Sale campaign #1</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Thank you campaign...</a></li>
-                                <li class="buttons text-center">
-                                    <div class="workflow_switch_div_small" style="z-index:9">
-                                        <a class="workflow_switch" href="javascript:void(0);"><i class="ri-git-merge-fill"></i> SPLIT </a>
-                                        <a class="workflow_switch active" href="javascript:void(0);">50/50</a>
-                                    </div>
-                                </li>
-
-
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100">A</span> Variant A</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_sms_400"><i class="ri-message-3-line"></i></span> SMS: Greeting</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-message-3-line"></i></span> Request: SMS Request</a></li>
-
-
-                                <li><hr></li>
-
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100">B</span> Variant B</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Greeting</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_reviews_400"><i class="ri-mail-open-fill"></i></span> Request: Email Request</a></li>
-
-                                <li class="buttons text-center">
-                                    <div class="workflow_switch_div_small" style="z-index:9">
-                                        <a class="workflow_switch" href="javascript:void(0);"><i class="ri-add-line"></i> MERGE </a>
-                                    </div>
-                                </li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-price-tag-3-fill"></i></span> Tag: Review</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-folder-fill"></i></span> List: Customers</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100"><i class="ri-check-fill"></i></span> End</a></li>
-
+                                <li><a href="javascript:void(0);" class="slideTriggerbox" @click="metaData.selectedClass='trigger'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-play-fill"></i></span></span> Entry Trigger: {{(unitInfo.workflow_entry_trigger) ? capitalizeFirstLetter(unitInfo.workflow_entry_trigger): 'Empty'}}</a></li>
+                                <li><a href="javascript:void(0);" class="slideGoalbox" @click="metaData.selectedClass='goal'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: {{(unitInfo.workflow_goal) ? capitalizeFirstLetter(unitInfo.workflow_goal): 'Empty'}}</a></li>
                             </ul>
                         </div>
 
@@ -140,10 +110,10 @@
                 </div>
 
                 <!--List View-->
-                <list-view v-show="viewType=='list'"></list-view>
+                <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData"></list-view>
 
                 <!--Canvas View-->
-                <canvas-view v-show="viewType=='canvas'"></canvas-view>
+                <canvas-view v-show="viewType=='canvas'" :events="events" :unitInfo="unitInfo" :metaData="metaData"></canvas-view>
 
                 <!--Action Modal-->
                 <div class="box actionBoxContent" style="width: 424px; display:none;">
@@ -237,11 +207,13 @@
                                         <div class="form-group">
                                             <label for="triggerControl" class="fsize11 fw500 dark_600 ls4">SELECT TRIGGER</label>
 
-                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl">
-                                                <option>Submitted a form</option>
-                                                <option>Submitted a form</option>
-                                                <option>Choose a trigger...</option>
-                                                <option>Choose a trigger...</option>
+                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl" v-model="unitInfo.workflow_entry_trigger">
+                                                <option value="">Choose a trigger...</option>
+                                                <option value="contact">Added Contact</option>
+                                                <option value="tags">Applied Tag</option>
+                                                <option value="lists">Added to List</option>
+                                                <option value="segment">Added to Segment</option>
+                                                <option value="form">Submitted a form</option>
                                             </select>
                                         </div>
 
@@ -266,7 +238,61 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20">Update Trigger</button>
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click.prevent="updateTrigger">Update Trigger</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+                <!--Goal Modal-->
+                <div class="box goalBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideGoalbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/trigger_grey_45.png"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Goal </h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Choose goal what to do next?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="goalControl" class="fsize11 fw500 dark_600 ls4">SELECT Goal</label>
+
+                                            <select class="form-control h50 form-control-custom dark_800" id="goalControl" v-model="unitInfo.workflow_goal">
+                                                <option value="">Choose a goal...</option>
+                                                <option value="conversion goal">Conversion Goal</option>
+                                                <option value="stop">Stop</option>
+                                                <option value="report">Send Report</option>
+                                                <option value="new automation">Start Another Automation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click.prevent="updateGoal">Update Goal</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
 
                                     </div>
@@ -301,23 +327,57 @@
                 pageRendered: false,
                 successMsg : '',
                 errorMsg: '',
-                viewType: 'list',
+                viewType: 'canvas',
                 title: '',
                 events: {},
+                unitInfo: {},
+                metaData: {
+                    selectedClass: ''
+                },
             }
         },
         created(){
-            this.loading = true;
-            axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', { moduleName: this.moduleName, moduleUnitId: this.moduleUnitId})
-                .then(response => {
-                    this.title = response.data.title;
-                    this.events = response.data.oEvents;
-                    this.loading = false;
-                    this.pageRendered = true;
-                    //console.log(this.campaigns)
-                });
+            this.getWorkflowData();
         },
         methods: {
+            getWorkflowData: function(){
+                this.loading = true;
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', { moduleName: this.moduleName, moduleUnitId: this.moduleUnitId})
+                    .then(response => {
+                        this.title = response.data.title;
+                        this.events = response.data.oEvents;
+                        this.unitInfo = response.data.moduleUnitData;
+                        this.loading = false;
+                        this.pageRendered = true;
+                        //console.log(this.campaigns)
+                    });
+            },
+            updateTrigger: function(){
+                let formData = {
+                    workflow_entry_trigger: this.unitInfo.workflow_entry_trigger,
+                }
+                this.updateUnitData(formData);
+            },
+            updateGoal: function(){
+                let formData = {
+                    workflow_goal: this.unitInfo.workflow_goal,
+                }
+                this.updateUnitData(formData);
+            },
+            updateUnitData: function(data){
+                this.loading = true;
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowUnitInfo',
+                    {
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        formData: data
+                }).then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.getWorkflowData();
+                        }
+                    });
+            },
             stopShift(){
                 clearInterval(shiftInterval);
             },
@@ -364,8 +424,19 @@
                 width: "toggle"
             });
         });
+
+        $(".slideGoalbox").click(function(){
+            $(".goalBoxContent").animate({
+                width: "toggle"
+            });
+        });
     });
 </script>
+<style>
+    .workflowSelectedBorder {
+        border:2px solid #97A4BD;
+    }
+</style>
 
 
 

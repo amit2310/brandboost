@@ -108,6 +108,7 @@
 </template>
 <script>
     export default {
+        props: ['events', 'unitInfo', 'metaData'],
         data(){
             return {
                 viewType: 'list'
