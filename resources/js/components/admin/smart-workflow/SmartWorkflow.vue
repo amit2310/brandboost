@@ -6,25 +6,34 @@
         <div class="top-bar-top-section bbot shadow4">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="table_head_action mb0 mt-1">
-                        <ul class="table_filter">
-                            <li><a class="active" href="#">Actions</a></li>
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">Analytics</a></li>
-                            <li><a href="#">History</a></li>
+                    <div class="col-md-4 wf_nodes_top_icon">
+                        <ul class="wf_nodes">
+                            <li><a class="circle-icon-28 bkg_blue_300" href="javascript:void(0);"><img src="assets/images/flashlight-fill-white.svg"/> </a></li>
+                            <li><a class="circle-icon-28 bkg_brand_300" href="javascript:void(0);"><img src="assets/images/time-fill-14.svg"/> </a></li>
+                            <li><a class="circle-icon-28 bkg_sms_400" href="javascript:void(0);"><img src="assets/images/checkbox-circle-fill-white.svg"/> </a></li>
+                            <li><a class="circle-icon-28 bkg_yellow_500" href="javascript:void(0);"><img src="assets/images/mail-open-fill-white.svg"/> </a></li>
+                            <li><a class="circle-icon-28 bkg_email_300" href="javascript:void(0);"><img src="assets/images/split-white.svg"/> </a></li>
+                            <li><a class="circle-icon-28 bkg_dark_100" href="javascript:void(0);"><img src="assets/images/flag-2-fill.svg"/> </a></li>
                         </ul>
                     </div>
+                    <div class="col-md-5">
+                        <div class="table_head_action mb0 mt-1">
+                            <ul class="table_filter">
+                                <li><a class="active" href="javascript:void(0);">Actions</a></li>
+                                <li><a href="javascript:void(0);">Settings</a></li>
+                                <li><a href="javascript:void(0);">Analytics</a></li>
+                                <li><a href="javascript:void(0);">History</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-6 text-right">
+                    <div class="col-md-3 col-3 text-right">
                         <!--<button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"></button>-->
                         <button class="btn btn-md bkg_reviews_400 light_000 float-right">Save</button>
-                        <div class="float-right mr-4">
+                        <div class="float-right mr-3">
                             <p class="fsize14 dark_600 m-0 float-left mr-3" style="line-height:33px;">Active </p>
                             <label class="custom-form-switch mt-2">
                                 <input class="field" type="checkbox" checked="">
-                                <span class="toggle green3"></span>
-                            </label>
+                                <span class="toggle green3"></span>		</label>
                         </div>
                     </div>
                 </div>
@@ -136,7 +145,8 @@
                 <!--Canvas View-->
                 <canvas-view v-show="viewType=='canvas'"></canvas-view>
 
-                 <div class="box actionBoxContent" style="width: 424px; display:none;">
+                <!--Action Modal-->
+                <div class="box actionBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideActionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
@@ -210,8 +220,71 @@
                     </div>
                 </div>
 
-            </div>
+                <!--Trigger Modal-->
+                <div class="box triggerBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideTriggerbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/trigger_grey_45.png"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Trigger </h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Which event should trigger this automation?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="triggerControl" class="fsize11 fw500 dark_600 ls4">SELECT TRIGGER</label>
+
+                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl">
+                                                <option>Submitted a form</option>
+                                                <option>Submitted a form</option>
+                                                <option>Choose a trigger...</option>
+                                                <option>Choose a trigger...</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT FORM</label>
+
+                                            <select class="form-control h50 form-control-custom dark_800" id="formControl">
+                                                <option>Lead Generation Homepage Form </option>
+                                                <option>Submitted a form</option>
+                                                <option>Choose a trigger...</option>
+                                                <option>Choose a trigger...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20">Update Trigger</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
         </div>
+    </div>
     </div>
 </template>
 
@@ -282,6 +355,12 @@
     $(document).ready(function(){
         $(".slideActionbox").click(function(){
             $(".actionBoxContent").animate({
+                width: "toggle"
+            });
+        });
+
+        $(".slideTriggerbox").click(function(){
+            $(".triggerBoxContent").animate({
                 width: "toggle"
             });
         });

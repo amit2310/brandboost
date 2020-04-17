@@ -99,6 +99,8 @@ FORMS GROUP
 .review_forms .form-group select.form-control{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 17px no-repeat #fff}
 .form-group select.form-control-custom{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 97% 20px no-repeat #fff}
 .form-group select.form-control-custom2{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 97% 10px no-repeat #fff}
+.form-group select.form-control-custom.small{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 85% 20px no-repeat #fff}
+
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 2px; height: 56px; padding: 5px 17px;}
 .phonenumber.h50{ height: 50px;}
@@ -467,7 +469,7 @@ BORDER RADIUS CLASSES
 .br10{border-radius: 10px;}
 .br12{border-radius: 12px!important;}
 .br35{border-radius: 35px!important;}
-
+.br100{border-radius: 100px!important;}
 
 
 

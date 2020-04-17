@@ -2360,12 +2360,12 @@ PAGE WITH SIDEBAR CSS
   left: 50%;
   margin-left: -18px;
   border-radius: 100px;
-  line-height: 36px;
+  line-height: 33px;
   text-align: center;
   z-index: 9;
 }
 .workflow_card .wf_icons.border{
-border: 2px solid #FFFFFF!important;}
+border: 2px solid #FFFFFF!important; width:40px; height:40px;}
 
 .workflow_card .wf_icons.br8 {
   border-radius: 8px !important;
@@ -2375,7 +2375,7 @@ border: 2px solid #FFFFFF!important;}
   width: 16px;
   height: 16px;
 }
-.workflow_card .wf_icons img.small{width:9px; margin:-8px 0 0 3px; display:inline-block;}
+.workflow_card .wf_icons img.small{width:9px; margin:-2px 0 0 0px; display:inline-block;}
 .rotate-45 {
   transform: rotate(-45deg);
 }
