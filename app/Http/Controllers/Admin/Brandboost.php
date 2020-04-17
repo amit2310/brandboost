@@ -1326,6 +1326,7 @@ class Brandboost extends Controller
         $response['status'] = 'error';
 
         $reviewID = $request->id;
+        $env = !empty($request->env) ? $request->env : '';
         $selectedTab = $request->input('t');
 
         $revID = !empty($request->reviewid) ? $request->reviewid : '0';
@@ -1370,6 +1371,25 @@ class Brandboost extends Controller
 			<li><a href="' . base_url('admin/brandboost/reviews/') . $bbId . '" data-toggle="tooltip" data-placement="bottom" title="' . $productName . ' Review" class="sidebar-control active hidden-xs ">' . $productName . ' Review</a></li>
 			</ul>';
 
+        if($env == 'vue') {
+            if (!empty($reviewCommentsData)) {
+
+                foreach ($reviewCommentsData as $commentData) {
+                    $commentData->likeData = $mReviews->getCommentLSByCommentID($commentData->id, 1);
+                    $commentData->disLikeData = $mReviews->getCommentLSByCommentID($commentData->id, 0);
+                    $commentData->childComments = $mReviews->getReviewAllChildComments($reviewID, $commentData->id);
+
+                    if (!empty($commentData->childComments)) {
+                        foreach ($commentData->childComments as $childComment) {
+
+                            $childComment->likeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 1);
+                            $childComment->disLikeChildData = $mReviews->getCommentLSByCommentID($childComment->id, 0);
+                        }
+                    }
+                }
+            }
+        }
+
         $aData = array(
             'title' => 'Brand Boost Review Details',
             'pagename' => $breadcrumb,
@@ -1392,11 +1412,14 @@ class Brandboost extends Controller
             echo json_encode($response);
             exit;
         } else {
-            //return view('admin.brandboost.review_details', $aData);
-            $response['status'] = 'success';
-            $response['content'] = $aData;
-            echo json_encode($response);
-            exit;
+            if($env == 'vue') {
+                $response['status'] = 'success';
+                $response['content'] = $aData;
+                echo json_encode($response);
+                exit;
+            } else {
+                return view('admin.brandboost.review_details', $aData);
+            }
         }
     }
 

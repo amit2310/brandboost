@@ -230,6 +230,95 @@
                                     <hr>
                                 </div>
 
+                                <div class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Latest Comments {{ reviewdetails.totalComment > 0 ? '(' + reviewdetails.totalComment + ')' : '' }}</h6>
+                                    </div>
+
+                                    <div class="panel-body p0">
+                                        <div class="comment_sec">
+                                            <ul class="addMoreComment">
+                                                <li class="bbot" v-for="reviewComment in reviewdetails.reviewCommentsData">
+
+                                                    <!--<div class="media-left">{!! showUserAvtar($commentData->avatar, $commentData->firstname, $commentData->lastname) !!}</div>-->
+
+                                                    <div class="media-left pr0 w100">
+
+                                                        <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ reviewComment.firstname + ' ' + reviewComment.lastname }} <span class="dot">.</span> {{ timeAgo(reviewComment.created) }} <span class="dot">.</span>
+
+                                                            <span v-if="reviewComment.status == 0" class="txt_red"><i class="icon-checkmark3 fsize12 txt_red"></i> Disapproved</span>
+                                                            <span v-else-if="reviewComment.status == 2" class="media-annotation">
+                                                                <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" :comment_id="reviewComment.id">
+                                                                    Approve
+                                                                </span>
+                                                            </span>
+                                                            <span v-else-if="reviewComment.status == 2" class="media-annotation dotted">
+                                                                <span class="label bkg_red txt_white br5 chg_status addtag" change_status="0" :comment_id="reviewComment.id">
+                                                                    Disapprove</span>
+                                                            </span>
+                                                            <span v-else class="txt_red"><i class="icon-checkmark3 fsize12 txt_red"></i> Approve</span>
+
+                                                        </p>
+
+                                                        <p class="fsize13 mb10 lh23 txt_grey2">{{ reviewComment.content }}</p>
+
+                                                        <!--<div class="button_sec">
+                                                            <button class="btn btn-link pl0 txt_green">{{ reviewComment.likeData }}</button>
+                                                            <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ reviewComment.id }}', '1')"><i class="icon-thumbs-up2 txt_green"></i></a>
+                                                            <button class="btn btn-link pl0 txt_red">{{ count($disLikeData) }}</button>
+                                                            <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ reviewComment.id }}', '0')"><i class="icon-thumbs-down2 txt_red"></i></a>
+                                                            <a style="cursor: pointer;" class="btn comment_btn txt_purple replyCommentAction">Reply</a>
+                                                            <a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" commentid="{{ reviewComment.id }}">Edit</a>
+                                                        </div>-->
+
+                                                        <div class="replyCommentBox" style="display:none;">
+                                                            <form method="post" class="form-horizontal" action="javascript:void();">
+                                                                <div class="mt10 mb10">
+                                                                    <textarea name="comment_content" class="form-control comment_content" style="padding: 15px; height: 75px;" placeholder="Comment Reply..." required></textarea>
+                                                                </div>
+
+                                                                <div class="text-right">
+                                                                    <input name="reviweId" class="reviweId" :value="reviewComment.review_id" type="hidden">
+                                                                    <input name="parent_comment_id" class="parent_comment_id" :value="reviewComment.id" type="hidden">
+                                                                    <button style="width: 128px;" type="button" class="btn dark_btn addReplyComment"> Reply</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                        <div v-for="childComment in reviewComment.childComments" class="reply_sec mt30">
+                                                            <!--<div class="media-left">
+                                                                {!! showUserAvtar($childComment->avatar, $childComment->firstname, $childComment->lastname) !!}
+                                                            </div>-->
+                                                            <div class="media-left pr0">
+                                                                <p class="fsize14 txt_grey2 lh14 mb10 ">{{ childComment.firstname + ' ' + childComment.lastname }} <span class="dot">.</span> {{ timeAgo(childComment.created) }} </p>
+                                                                <p class="fsize13 mb10 lh23 txt_grey2">
+                                                                    {{ childComment.content }}
+                                                                </p>
+                                                                <!--<div class="button_sec">
+                                                                    <button class="btn btn-link pl0 txt_green">{{ childComment.likeChildData }}</button>
+                                                                    <a href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ childComment.id }}', '1')" class="btn comment_btn p7"><i class="icon-thumbs-up2 txt_green"></i></a>
+                                                                    <button class="btn btn-link pl0 txt_red">{{ childComment.disLikeChildData }}</button>
+                                                                    <a href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ childComment.id }}', '0')" class="btn comment_btn p7"><i class="icon-thumbs-down2 txt_red"></i></a>
+                                                                    <a href="javascript:void(0);" commentid="{{ childComment.id }}" class="btn comment_btn txt_purple editComment">Edit</a>
+                                                                </div>-->
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                            <input v-if="reviewdetails.totalComment > 5" type="hidden" id="numOfComment" value="5">
+                                            <div v-if="reviewdetails.totalComment > 5" class="loadMoreRecord">
+                                                <a style="cursor: pointer;" id='loadMoreComment' :revId="reviewdetails.id">Load more</a>
+                                                <img class="loaderImage hidden" height="20px" width="20px" src="/assets/images/widget_load.gif">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="replyCommentBox">
                                         <div class="mt10 mb10">
@@ -627,6 +716,7 @@
                 oReviews : '',
                 oCampaign: '',
                 reviewTags: '',
+                reviewdetails: '',
                 campaignId: '',
                 current_page: 1,
                 items_per_page: 10,
@@ -820,11 +910,14 @@
             loadReplyPopup:function(review_id) {
                 axios.post('/admin/brandboost/reviewdetails/'+review_id, {
                         id: review_id,
+                        env: 'vue',
                         _token: this.csrf_token()
                     })
                         .then(response => {
                             if (response.data.status == "success") {
-                                alert("Success: "+response.data.status);
+                                //console.log(response.data);
+                                this.reviewdetails = response.data.content;
+                                console.log(this.reviewdetails);
                             }
                         });
             },

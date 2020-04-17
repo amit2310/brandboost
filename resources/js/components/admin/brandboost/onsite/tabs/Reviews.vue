@@ -106,7 +106,7 @@
                             <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox" :checked="deletedItems.indexOf(oReview.reviewid)>-1" @change="addtoDeleteCollection(oReview.reviewid, $event.target)">
+                                        <input type="checkbox" :checked="deletedItems.indexOf(oReview.id)>-1" @change="addtoDeleteCollection(oReview.id, $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
@@ -131,9 +131,9 @@
                                 <span>{{ oReview.ratings }}.0</span>
                             </td>
                             <td>
-                                <!--<span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
+                                <!--<span href="javascript:void(0);" @click="showReview(oReview.id)" style="cursor: pointer;"><strong>{{ setStringLimit(capitalizeFirstLetter(oReview.review_title), 30) }}</strong></span>
                                 <br />-->
-                                <span href="javascript:void(0);" @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ setStringLimit(oReview.comment_text, 50) }}</span>
+                                <span href="javascript:void(0);" @click="showReview(oReview.id)" style="cursor: pointer;">{{ setStringLimit(oReview.comment_text, 50) }}</span>
                             </td>
                             <td><i class="ri-at-line email_400 fsize15"></i></td>
                             <!--<td>{{ displayDateFormat('M d, Y h:i A', oReview.review_created) }}</td>-->
