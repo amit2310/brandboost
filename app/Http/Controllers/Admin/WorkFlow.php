@@ -2988,4 +2988,25 @@ class WorkFlow extends Controller {
         ];
     }
 
+    /**
+     * Used to update workflow unit info
+     * @param Request $request
+     * @return string[]
+     */
+    public function updateWorkflowUnitInfo(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $aData = $request->formData;
+        $bUpdated = $mWorkflow->updateModuleUnitInfo($moduleName, $moduleUnitId, $aData);
+        if($bUpdated){
+            return ['status'=> 'success'];
+        }else{
+            return ['status'=> 'error'];
+        }
+
+    }
+
 }

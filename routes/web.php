@@ -967,6 +967,7 @@ Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/workflowSubscribers', 'Ad
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelectionInterfaceData', 'Admin\HelperUtility@getWorkflowContactSelectionInterfaceData');
 //New Workflow Tree
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', 'Admin\WorkFlow@getWorkflowData');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowUnitInfo', 'Admin\WorkFlow@updateWorkflowUnitInfo');
 
 
 
