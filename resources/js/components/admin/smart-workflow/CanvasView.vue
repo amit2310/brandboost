@@ -33,6 +33,16 @@
                     </div>
                     <!--Trigger-->
 
+                    <!--Nodes-->
+                    <canvas-node
+                        v-for="oEvent in events"
+                        :event="oEvent"
+                        :unitInfo="unitInfo"
+                        :metaData="metaData"
+                        :key="oEvent.id"
+                    ></canvas-node>
+                    <!--Nodes-->
+
                     <!--Connector-->
                     <div class="col-12 text-center">
                         <a class="workflowadds slideActionbox" href="javascript:void(0);" @click="metaData.selectedClass = ''"><i class="ri-add-fill"></i></a>
@@ -71,10 +81,13 @@
             </div>
         </div>
 
+
     </div>
 </template>
 <script>
+    import CanvasNode from "./components/CanvasNode";
     export default {
+        components: {CanvasNode},
         props: ['events', 'unitInfo', 'metaData'],
         data(){
             return {
@@ -82,7 +95,6 @@
             }
         },
         methods: {
-
 
         }
     }

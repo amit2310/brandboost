@@ -2970,7 +2970,11 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitId = strip_tags($request->moduleUnitId);
         $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitId);
-        $oEvents = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+
         $title = '';
         if($moduleName == 'brandboost'){
             $title = $oUnitData->brand_title;
