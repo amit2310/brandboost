@@ -878,7 +878,7 @@ class WorkflowModel extends Model {
                 ->where('id', $id)
                 ->update($aData);
 
-        if ($oData) {
+        if ($oData > -1) {
             return $id;
         } else {
             return false;

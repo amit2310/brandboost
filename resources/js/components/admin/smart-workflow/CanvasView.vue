@@ -40,12 +40,13 @@
                         :unitInfo="unitInfo"
                         :metaData="metaData"
                         :key="oEvent.id"
+                        @setAddActionProps="setAddActionProps"
                     ></canvas-node>
                     <!--Nodes-->
 
                     <!--Connector-->
                     <div class="col-12 text-center">
-                        <a class="workflowadds slideActionbox" href="javascript:void(0);" @click="metaData.selectedClass = ''"><i class="ri-add-fill"></i></a>
+                        <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="metaData.selectedClass = ''"><i class="ri-add-fill"></i></a>
                     </div>
                     <!--Connector-->
 
@@ -95,7 +96,9 @@
             }
         },
         methods: {
-
+            setAddActionProps: function(eventData){
+                this.$emit("setActionProps", eventData);
+            }
         }
     }
 </script>

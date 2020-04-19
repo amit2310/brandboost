@@ -3013,4 +3013,81 @@ class WorkFlow extends Controller {
 
     }
 
+    /**
+     * Used to create blank node at any position in the workflow tree
+     * @param Request $request
+     * @return string[]
+     */
+    public function createWorkflowBlankAction(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $actionName = strip_tags($request->actionName);
+        $actionTitle = strip_tags($request->actionTitle);
+        $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+        //Prepare meta data for the event
+        $triggerParam =[
+            'action_name' => $actionName,
+            'action_title' => $actionTitle,
+        ];
+        $oCurrentNode = $request->eventData;
+        $eventID = '';
+        $previousID = '';
+        if(!empty($oCurrentNode)){
+            $eventID = $oCurrentNode['id'];
+            $previousID = $oCurrentNode['previous_event_id'];
+        }
+
+        if($events->isNotEmpty() && empty($eventID)){
+            //Last Node
+            $oLastNode = getLastNode($oEvents);
+            $eventType = 'followup';
+            $newNodeEventID = $mWorkflow->createWorkflowEvent($moduleUnitId, $eventType, $previousID=$oLastNode->id, $triggerParam, $moduleName);
+            $bSuccess = true;
+        }else if(empty($previousID) || empty($eventID)){
+            //Blank Node will be the first node
+            //Insert Node and update insert id into the next node e.i current node
+            $eventType = 'main';
+            $newNodeEventID = $mWorkflow->createWorkflowEvent($moduleUnitId, $eventType, $previousID, $triggerParam, $moduleName);
+            if($newNodeEventID>0){
+                //Update Next Node previous_event_id
+                $bUpdateId = $mWorkflow->updateWorkflowEvent(['previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $eventID, $moduleName);
+                $bSuccess = true;
+            }
+        }else{
+            $eventType = 'followup';
+            //Blank Node will be the middle or last node
+            //Insert Node and update insert id into the next node's previous_event_id
+            $newNodeEventID = $mWorkflow->createWorkflowEvent($moduleUnitId, $eventType, $previousID=$eventID, $triggerParam, $moduleName);
+            if($newNodeEventID>0){
+                //Update Next Node previous_event_id
+                //Get next node info
+                if($eventID>0){
+                    $oNextNode = $mWorkflow->getNextNodeInfo($eventID, $moduleName);
+                    if(isset($oNextNode->id)){
+                        $bUpdateId = $mWorkflow->updateWorkflowEvent(['previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $oNextNode->id, $moduleName);
+                        $bSuccess = true;
+                    }
+                }
+            }
+        }
+        if($bSuccess){
+            $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+            //Reassemble events Order
+            $orderedEvents = sortWorkflowEvents($events);
+            $oEvents = $orderedEvents['oEvents'];
+            return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$newNodeEventID];
+        }else{
+            return ['status' => 'error'];
+        }
+
+
+    }
+
 }
