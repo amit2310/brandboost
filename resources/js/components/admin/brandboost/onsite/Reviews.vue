@@ -235,12 +235,22 @@
                                         <h6 class="panel-title">Latest Comments {{ reviewdetails.totalComment > 0 ? '(' + reviewdetails.totalComment + ')' : '' }}</h6>
                                     </div>
 
-                                    <div class="panel-body p0">
+                                    <div class="panel-body p20">
                                         <div class="comment_sec">
                                             <ul class="addMoreComment">
                                                 <li class="bbot" v-for="reviewComment in reviewdetails.reviewCommentsData">
 
                                                     <!--<div class="media-left">{!! showUserAvtar($commentData->avatar, $commentData->firstname, $commentData->lastname) !!}</div>-->
+                                                    <span class="table-img mr15">
+                                                        <user-avatar
+                                                            :avatar="reviewComment.avatar"
+                                                            :firstname="reviewComment.firstname"
+                                                            :lastname="reviewComment.lastname"
+                                                            :width="32"
+                                                            :height="32"
+                                                            :fontsize="12"
+                                                        ></user-avatar>
+                                                    </span>
 
                                                     <div class="media-left pr0 w100">
 
@@ -262,14 +272,14 @@
 
                                                         <p class="fsize13 mb10 lh23 txt_grey2">{{ reviewComment.content }}</p>
 
-                                                        <!--<div class="button_sec">
-                                                            <button class="btn btn-link pl0 txt_green">{{ reviewComment.likeData }}</button>
-                                                            <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ reviewComment.id }}', '1')"><i class="icon-thumbs-up2 txt_green"></i></a>
-                                                            <button class="btn btn-link pl0 txt_red">{{ count($disLikeData) }}</button>
-                                                            <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ reviewComment.id }}', '0')"><i class="icon-thumbs-down2 txt_red"></i></a>
+                                                        <div class="button_sec">
+                                                            <!--<button class="btn btn-link pl0 txt_green">{{ reviewComment.likeData }}</button>-->
+                                                            <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '1')"><i class="icon-thumbs-up2 txt_green"></i></a>
+                                                            <!--<button class="btn btn-link pl0 txt_red">{{ reviewComment.disLikeData }}</button>-->
+                                                            <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '0')"><i class="icon-thumbs-down2 txt_red"></i></a>
                                                             <a style="cursor: pointer;" class="btn comment_btn txt_purple replyCommentAction">Reply</a>
-                                                            <a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" commentid="{{ reviewComment.id }}">Edit</a>
-                                                        </div>-->
+                                                            <a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" :commentid="reviewComment.id">Edit</a>
+                                                        </div>
 
                                                         <div class="replyCommentBox" style="display:none;">
                                                             <form method="post" class="form-horizontal" action="javascript:void();">
@@ -319,7 +329,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <!--<div class="col-md-12">
                                     <div class="replyCommentBox">
                                         <div class="mt10 mb10">
                                             <textarea name="comment_content" class="form-control comment_content" style="padding: 15px; height: 75px; border:1px solid #eee" placeholder="Comment Reply..." required></textarea>
@@ -330,7 +340,7 @@
                                             <button style="width: 128px;" type="button" class="btn dark_btn addSmartReplyComment"> Reply</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                             </div>
                             <div class="row bottom-position">
