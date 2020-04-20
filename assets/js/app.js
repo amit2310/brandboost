@@ -167,3 +167,29 @@ $(document).ready(function(){
         });
     });
 });
+
+$(document).ready(function(){
+    $(document).on("click", ".slideAddNodebox", function(){
+        $(".addNodeBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
+    $(document).on("click", ".slideAddActionbox", function(){
+        $(".addActionBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
+    $(document).on("click", ".slideTriggerbox", function(){
+        $(".triggerBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
+    $(document).on("click", ".slideGoalbox", function(){
+        $(".goalBoxContent").animate({
+            width: "toggle"
+        });
+    });
+});

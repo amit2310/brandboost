@@ -1,5 +1,5 @@
 <template>
-    <div class="reviews_workflows">
+    <div class="reviews_workflows" :class="{'canvas_view': viewType=='canvas'}" style="width:100%;position:relative;min-height:calc(100vh - 0px);">
         <!--******************
           Top Heading area
         **********************-->
@@ -68,38 +68,13 @@
 
                         <div class="p30 workflow_list_box">
                             <ul class="workflow_list_new">
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100 "><i class="ri-play-fill"></i></span> Start</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-price-tag-3-fill"></i></span> Triger: People Tag</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Sale campaign #1</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Thank you campaign...</a></li>
-                                <li class="buttons text-center">
-                                    <div class="workflow_switch_div_small" style="z-index:9">
-                                        <a class="workflow_switch" href="javascript:void(0);"><i class="ri-git-merge-fill"></i> SPLIT </a>
-                                        <a class="workflow_switch active" href="javascript:void(0);">50/50</a>
-                                    </div>
+                                <li><a href="javascript:void(0);" class="slideTriggerbox" @click="metaData.selectedClass='trigger'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-play-fill"></i></span></span> Entry Trigger: {{(unitInfo.workflow_entry_trigger) ? capitalizeFirstLetter(unitInfo.workflow_entry_trigger): 'Empty'}}</a></li>
+                                <li v-for="evt in events">
+                                    <a href="javascript:void(0);" @click="metaData.selectedClass=evt.id">
+                                        <span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span>  Action: {{nodeName(evt)}}
+                                    </a>
                                 </li>
-
-
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100">A</span> Variant A</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_sms_400"><i class="ri-message-3-line"></i></span> SMS: Greeting</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-message-3-line"></i></span> Request: SMS Request</a></li>
-
-
-                                <li><hr></li>
-
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100">B</span> Variant B</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_email_400"><i class="ri-mail-open-fill"></i></span> Email: Greeting</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_reviews_400"><i class="ri-mail-open-fill"></i></span> Request: Email Request</a></li>
-
-                                <li class="buttons text-center">
-                                    <div class="workflow_switch_div_small" style="z-index:9">
-                                        <a class="workflow_switch" href="javascript:void(0);"><i class="ri-add-line"></i> MERGE </a>
-                                    </div>
-                                </li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-price-tag-3-fill"></i></span> Tag: Review</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 bkg_blue_400"><i class="ri-folder-fill"></i></span> List: Customers</a></li>
-                                <li><a href="javascript:void(0);"><span class="circle-icon-20 br35 bkg_dark_100"><i class="ri-check-fill"></i></span> End</a></li>
-
+                                <li><a href="javascript:void(0);" class="slideGoalbox" @click="metaData.selectedClass='goal'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: {{(unitInfo.workflow_goal) ? capitalizeFirstLetter(unitInfo.workflow_goal): 'Empty'}}</a></li>
                             </ul>
                         </div>
 
@@ -116,7 +91,7 @@
                 **********************-->
 
                 <div class="row mb20">
-                    <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left slideActionbox"><img src="assets/images/plus_white_10.svg"></button>
+                    <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left slideAddNodebox"><img src="assets/images/plus_white_10.svg"></button>
                         <div class="workflow_switch_div float-left" v-if="viewType=='canvas'">
                             <a class="workflow_switch"
                                href="javascript:void(0);"
@@ -140,15 +115,15 @@
                 </div>
 
                 <!--List View-->
-                <list-view v-show="viewType=='list'"></list-view>
+                <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></list-view>
 
                 <!--Canvas View-->
-                <canvas-view v-show="viewType=='canvas'"></canvas-view>
+                <canvas-view v-show="viewType=='canvas'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></canvas-view>
 
-                <!--Action Modal-->
-                <div class="box actionBoxContent" style="width: 424px; display:none;">
+                <!--Add Node Modal-->
+                <div class="box addNodeBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideActionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddNodebox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img src="assets/images/addnote44.svg"/>
@@ -160,14 +135,14 @@
 
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddActionbox" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Action</p>
                                             <p class="fw400 fsize12 dark_300 m0">Perform an action, such as add tag or send single email</p>
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Decision</p>
                                             <p class="fw400 fsize12 dark_300 m0">Send people down a single path based on selected criteria.</p>
@@ -178,14 +153,14 @@
 
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_reviews_300 m-auto  "><i class="ri-time-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Delay</p>
                                             <p class="fw400 fsize12 dark_300 m0">Wait for a given period of time before continue down the path</p>
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_email_300 m-auto br12 "><img src="assets/images/split.svg"/></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Split Test</p>
                                             <p class="fw400 fsize12 dark_300 m0">Split trafic to determine which is the most effective</p>
@@ -196,14 +171,14 @@
 
                                 <div class="row">
                                     <div class="col-6 pr5 text-center d-flex">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 col">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 col" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_sms_400 m-auto "><i class="ri-checkbox-circle-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Goal</p>
                                             <p class="fw400 fsize12 dark_300 m0">Define a goal that will pull people to this point when achived</p>
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center d-flex">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 col">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 col" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_dark_100 m-auto "><i class="ri-flag-2-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Exit</p>
                                             <p class="fw400 fsize12 dark_300 m0">Exit the path<br> the person <br> is currently on.</p>
@@ -237,11 +212,13 @@
                                         <div class="form-group">
                                             <label for="triggerControl" class="fsize11 fw500 dark_600 ls4">SELECT TRIGGER</label>
 
-                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl">
-                                                <option>Submitted a form</option>
-                                                <option>Submitted a form</option>
-                                                <option>Choose a trigger...</option>
-                                                <option>Choose a trigger...</option>
+                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl" v-model="unitInfo.workflow_entry_trigger">
+                                                <option value="">Choose a trigger...</option>
+                                                <option value="contact">Added Contact</option>
+                                                <option value="tags">Applied Tag</option>
+                                                <option value="lists">Added to List</option>
+                                                <option value="segment">Added to Segment</option>
+                                                <option value="form">Submitted a form</option>
                                             </select>
                                         </div>
 
@@ -266,7 +243,7 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20">Update Trigger</button>
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click.prevent="updateTrigger">Update Trigger</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
 
                                     </div>
@@ -283,7 +260,166 @@
 
 
                 </div>
-        </div>
+
+                <!--Goal Modal-->
+                <div class="box goalBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideGoalbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/trigger_grey_45.png"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Goal </h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Choose goal what to do next?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="goalControl" class="fsize11 fw500 dark_600 ls4">SELECT Goal</label>
+
+                                            <select class="form-control h50 form-control-custom dark_800" id="goalControl" v-model="unitInfo.workflow_goal">
+                                                <option value="">Choose a goal...</option>
+                                                <option value="conversion goal">Conversion Goal</option>
+                                                <option value="stop">Stop</option>
+                                                <option value="report">Send Report</option>
+                                                <option value="new automation">Start Another Automation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click.prevent="updateGoal">Update Goal</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+                <!--Action Modal-->
+                <div class="box addActionBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddActionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Add Action</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">What kind of step would you like to add?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="actionName" class="fsize11 fw500 dark_600 ls4">ACTION NAME</label>
+                                            <input type="text" class="form-control h50" v-model="actionTitle" id="actionName" placeholder="Enter new action name" />
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('field')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Field</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Edit contact field</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('tag')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-price-tag-3-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Tag</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Apply, delete tag</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('list')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-folder-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">List</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Subscribe to a list</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('contact')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-user-6-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Contact</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Create, delete contact</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('status')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Status</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Apply, edit status</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('segment')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-price-tag-3-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">List</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Subscribe to a list</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('email')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Email</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Send Email</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('sms')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-price-tag-3-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">SMS</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Send SMS</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    </div>
     </div>
     </div>
 </template>
@@ -301,23 +437,59 @@
                 pageRendered: false,
                 successMsg : '',
                 errorMsg: '',
-                viewType: 'list',
+                viewType: 'canvas',
                 title: '',
                 events: {},
+                unitInfo: {},
+                metaData: {
+                    selectedClass: ''
+                },
+                selectedEvent: '',
+                actionTitle: ''
             }
         },
         created(){
-            this.loading = true;
-            axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', { moduleName: this.moduleName, moduleUnitId: this.moduleUnitId})
-                .then(response => {
-                    this.title = response.data.title;
-                    this.events = response.data.oEvents;
-                    this.loading = false;
-                    this.pageRendered = true;
-                    //console.log(this.campaigns)
-                });
+            this.getWorkflowData();
         },
         methods: {
+            getWorkflowData: function(){
+                this.loading = true;
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', { moduleName: this.moduleName, moduleUnitId: this.moduleUnitId})
+                    .then(response => {
+                        this.title = response.data.title;
+                        this.events = response.data.oEvents;
+                        this.unitInfo = response.data.moduleUnitData;
+                        this.loading = false;
+                        this.pageRendered = true;
+                        //console.log(this.campaigns)
+                    });
+            },
+            updateTrigger: function(){
+                let formData = {
+                    workflow_entry_trigger: this.unitInfo.workflow_entry_trigger,
+                }
+                this.updateUnitData(formData);
+            },
+            updateGoal: function(){
+                let formData = {
+                    workflow_goal: this.unitInfo.workflow_goal,
+                }
+                this.updateUnitData(formData);
+            },
+            updateUnitData: function(data){
+                this.loading = true;
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowUnitInfo',
+                    {
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        formData: data
+                }).then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.getWorkflowData();
+                        }
+                    });
+            },
             stopShift(){
                 clearInterval(shiftInterval);
             },
@@ -348,24 +520,47 @@
             moveRight: function(){
                 let leftOffset = document.querySelector("#canvasDragger").style.left.replace('%', '').replace('px','');
                 document.querySelector("#canvasDragger").style.left = (Number(leftOffset)+1) + '%';
-            }
+            },
+            setActionProps: function(event){
+                this.clearActionProps();
+                this.selectedEvent = event;
+            },
+            clearActionProps: function(){
+                this.selectedEvent = '';
+            },
+            addBlankAction: function(action){
+                this.loading = true;
+                let formData = {
+                    actionName: action,
+                    actionTitle: this.actionTitle,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: this.selectedEvent
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.metaData.selectedClass = response.data.newEventId;
+                    }
+                });
+            },
+            nodeName : function(event){
+                return this.capitalizeFirstLetter(JSON.parse(event.data)['action_name']);
+            },
+            nodeTitle : function(event){
+                return this.capitalizeFirstLetter(JSON.parse(event.data)['action_title']);
+            },
 
         }
     }
-    $(document).ready(function(){
-        $(".slideActionbox").click(function(){
-            $(".actionBoxContent").animate({
-                width: "toggle"
-            });
-        });
 
-        $(".slideTriggerbox").click(function(){
-            $(".triggerBoxContent").animate({
-                width: "toggle"
-            });
-        });
-    });
 </script>
+<style>
+    .workflowSelectedBorder {
+        border:2px solid #97A4BD;
+    }
+</style>
 
 
 

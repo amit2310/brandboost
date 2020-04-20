@@ -774,6 +774,40 @@ class WorkflowModel extends Model {
     }
 
     /**
+     * Used to update workflow unit info
+     * @param $moduleName
+     * @param $id
+     * @param $data
+     * @return bool
+     */
+    public function updateModuleUnitInfo($moduleName, $id, $data) {
+
+        if ($moduleName == 'brandboost' || $moduleName == 'onsite' || $moduleName == 'offsite') {
+            $tableName = 'tbl_brandboost';
+        } else if ($moduleName == 'referral') {
+            $tableName = 'tbl_referral_rewards';
+        } else if ($moduleName == 'nps') {
+            $tableName = 'tbl_nps_main';
+        } else if ($moduleName == 'automation' || $moduleName == 'broadcast') {
+            $tableName = 'tbl_automations_emails';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+                ->where('id', $id)
+                ->update($data);
+
+        if ($oData > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Used to get the list of automation subscribers
      * @param type $automationID
      * @return type
@@ -844,7 +878,7 @@ class WorkflowModel extends Model {
                 ->where('id', $id)
                 ->update($aData);
 
-        if ($oData) {
+        if ($oData > -1) {
             return $id;
         } else {
             return false;

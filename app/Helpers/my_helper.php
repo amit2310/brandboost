@@ -4112,4 +4112,18 @@ if (!function_exists('sortWorkflowEvents')) {
 
 }
 
+/**
+ * This function used to get the last event node
+ */
+if (!function_exists('getLastNode')) {
+    function getLastNode($oEvents){
+        if(!empty($oEvents)){
+            foreach($oEvents as $oEvent){
+                $oLastNode = $oEvent;
+            }
+        }
+        return $oLastNode;
+    }
+}
+
 ?>
