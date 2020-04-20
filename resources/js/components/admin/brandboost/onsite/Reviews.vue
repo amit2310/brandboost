@@ -274,9 +274,9 @@
 
                                                         <div class="button_sec">
                                                             <!--<button class="btn btn-link pl0 txt_green">{{ reviewComment.likeData }}</button>-->
-                                                            <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '1')"><i class="icon-thumbs-up2 txt_green"></i></a>
+                                                            <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '1')"><i class="icon-thumbs-up2 txt_green"></i></a>{{ reviewComment.likeData.length > 0 ? reviewComment.likeData.length : '0' }}
                                                             <!--<button class="btn btn-link pl0 txt_red">{{ reviewComment.disLikeData }}</button>-->
-                                                            <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '0')"><i class="icon-thumbs-down2 txt_red"></i></a>
+                                                            <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '0')"><i class="icon-thumbs-down2 txt_red"></i></a>{{ reviewComment.disLikeData.length > 0 ? reviewComment.disLikeData.length : '0' }}
                                                             <a style="cursor: pointer;" class="btn comment_btn txt_purple replyCommentAction">Reply</a>
                                                             <a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" :commentid="reviewComment.id">Edit</a>
                                                         </div>
