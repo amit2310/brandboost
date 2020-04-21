@@ -56,39 +56,39 @@ class Comments extends Controller {
 
         $mComment = new CommentModel();
 
-            $reviewID = strip_tags($request->reviweId);
-            $parentCommentId = strip_tags($request->parent_comment_id);
-            $comment_content = strip_tags($request->comment_content);
-            $aUser = getLoggedUser();
-            $userID = $aUser->id;
-            $parentCommentId = $parentCommentId == '' ? '0' : $parentCommentId;
+        $reviewID = strip_tags($request->reviweId);
+        $parentCommentId = strip_tags($request->parent_comment_id);
+        $comment_content = strip_tags($request->comment_content);
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $parentCommentId = $parentCommentId == '' ? '0' : $parentCommentId;
 
-            if(!empty($reviewID)){
-                $oReviews = $mComment->getCommentReviewInfo($reviewID);
-            }
+        if(!empty($reviewID)){
+            $oReviews = $mComment->getCommentReviewInfo($reviewID);
+        }
 
-            $aData = array(
-                'review_id' => $reviewID,
-                'user_id' => $userID,
-                'content' => $comment_content,
-                'parent_comment_id' => $parentCommentId,
-                'created' => date("Y-m-d H:i:s")
-            );
+        $aData = array(
+            'review_id' => $reviewID,
+            'user_id' => $userID,
+            'content' => $comment_content,
+            'parent_comment_id' => $parentCommentId,
+            'created' => date("Y-m-d H:i:s")
+        );
 
-            if($oReviews->ownerID == $userID){
-                $aData['status'] = 1;
-            }
+        if($oReviews->ownerID == $userID){
+            $aData['status'] = 1;
+        }
 
-            $result = $mComment->addComment($aData);
-            if ($result) {
-                $response['status'] = 'success';
-                $response['message'] = "Comment has been added successfully.";
-            } else {
-                $response['message'] = "Error: Something went wrong, try again";
-            }
+        $result = $mComment->addComment($aData);
+        if ($result) {
+            $response['status'] = 'success';
+            $response['message'] = "Comment has been added successfully.";
+        } else {
+            $response['message'] = "Error: Something went wrong, try again";
+        }
 
-            echo json_encode($response);
-            exit;
+        echo json_encode($response);
+        exit;
 
     }
 

@@ -117,7 +117,7 @@
                                 <div class="mb-2">
                                     <div class="row" :reviewid="oReview.reviewid">
                                         <div class="col-md-5">
-                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26 js-review-feedback-slidebox2" @click="loadReviewPopup(oReview.reviewid,'')"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26 js-review-feedback-slidebox2"<!-- @click="loadReviewPopup(oReview.reviewid,'')"-->><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
                                         </div>
                                         <div class="col-md-7 text-right">
                                             <span v-if="oReview.rstatus == 0" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_light_600" title="INACTIVE"></span>
@@ -222,13 +222,14 @@
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-review-feedback-slidebox">
                     <i class=""><img src="assets/images/cross.svg"/></i></a>
-                    <form method="post" @submit.prevent="processForm">
+
                         <div class="p40">
                             <div class="row">
                                 <div class="col-md-12"> <img src="assets/images/list-icon.svg"/>
-                                    <h3 class="htxt_medium_24 dark_800 mt20">Review </h3>
+                                    <h3 class="htxt_medium_24 dark_800 mt20">Review Reply</h3>
                                     <hr>
                                 </div>
+                                <system-messages :successMsg="successMsgPopup"></system-messages>
 
                                 <div class="panel panel-flat">
                                     <div class="panel-heading">
@@ -254,19 +255,19 @@
 
                                                     <div class="media-left pr0 w100">
 
-                                                        <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ reviewComment.firstname + ' ' + reviewComment.lastname }} <span class="dot">.</span> {{ timeAgo(reviewComment.created) }} <span class="dot">.</span>
+                                                        <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ capitalizeFirstLetter(reviewComment.firstname) + ' ' + (reviewComment.lastname!=null?capitalizeFirstLetter(reviewComment.lastname):'') }} <span class="dot">.</span> {{ timeAgo(reviewComment.created) }} <span class="dot">.</span>
 
                                                             <span v-if="reviewComment.status == 0" class="txt_red"><i class="icon-checkmark3 fsize12 txt_red"></i> Disapproved</span>
                                                             <span v-else-if="reviewComment.status == 2" class="media-annotation">
-                                                                <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" :comment_id="reviewComment.id">
-                                                                    Approve
+                                                                <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" @click="changeCommentStatus(reviewComment.id, '1')" :comment_id="reviewComment.id">
+                                                                 Approve
                                                                 </span>
                                                             </span>
                                                             <span v-else-if="reviewComment.status == 2" class="media-annotation dotted">
-                                                                <span class="label bkg_red txt_white br5 chg_status addtag" change_status="0" :comment_id="reviewComment.id">
-                                                                    Disapprove</span>
+                                                                <span class="label bkg_red txt_white br5 chg_status addtag" @click="changeCommentStatus(reviewComment.id, '0')" :comment_id="reviewComment.id">
+                                                                 Disapprove</span>
                                                             </span>
-                                                            <span v-else class="txt_red"><i class="icon-checkmark3 fsize12 txt_red"></i> Approve</span>
+                                                            <span v-else class="txt_red"><i class="icon-checkmark3 fsize12 txt_red"></i> Approved</span>
 
                                                         </p>
 
@@ -278,13 +279,14 @@
                                                             <!--<button class="btn btn-link pl0 txt_red">{{ reviewComment.disLikeData }}</button>-->
                                                             <a class="btn comment_btn p7" href="javascript:void(0);" @click="saveCommentLikeStatus(reviewComment.id, '0')"><i class="icon-thumbs-down2 txt_red"></i></a>{{ reviewComment.disLikeData.length > 0 ? reviewComment.disLikeData.length : '0' }}
                                                             <a style="cursor: pointer;" class="btn comment_btn txt_purple replyCommentAction">Reply</a>
-                                                            <a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" :commentid="reviewComment.id">Edit</a>
+                                                            <!--<a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" :commentid="reviewComment.id">Edit</a>-->
                                                         </div>
 
                                                         <div class="replyCommentBox" style="display:none;">
-                                                            <form method="post" class="form-horizontal" action="javascript:void();">
+                                                            <!--<form method="post" class="form-horizontal" action="javascript:void();">-->
+                                                            <form method="post" @submit.prevent="processForm">
                                                                 <div class="mt10 mb10">
-                                                                    <textarea name="comment_content" class="form-control comment_content" style="padding: 15px; height: 75px;" placeholder="Comment Reply..." required></textarea>
+                                                                    <textarea name="comment_content" v-model="form.comment_content" class="form-control comment_content" style="padding: 15px; height: 75px;" placeholder="Comment Reply..." required></textarea>
                                                                 </div>
 
                                                                 <div class="text-right">
@@ -355,7 +357,7 @@
                                     <a class="blue_300 fsize16 fw600 ml20 js-review-feedback-slidebox" href="javascript:void(0);">Close</a> </div>
                             </div>
                         </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -715,6 +717,7 @@
             return {
                 pageRendered: false,
                 successMsg : '',
+                successMsgPopup : '',
                 errorMsg: '',
                 loading: true,
                 moduleName: '',
@@ -734,7 +737,8 @@
                 form: new Form({
                     campaignName: '',
                     OnsitecampaignDescription: '',
-                    campaign_id: ''
+                    campaign_id: '',
+                    comment_content: ''
                 }),
                 formLabel: 'Create',
                 viewType: 'List View',
@@ -840,30 +844,16 @@
             processForm : function(){
                 this.loading = true;
                 let formActionSrc = '';
+                formActionSrc = '/admin/comments/add_comment';
                 this.form.module_name = this.moduleName;
-                if(this.form.campaign_id>0){
-                    formActionSrc = '/admin/brandboost/updateReviewCampaign';
-                }else{
-                    formActionSrc = '/admin/brandboost/addOnsite';
-                    this.form.module_account_id = this.moduleAccountID;
-                }
-                this.form.post(formActionSrc, this.form)
+                this.form.module_account_id = this.moduleAccountID;
+                axios.post(formActionSrc, this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            if(response.data.brandboostID>0){
-                                this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
-                                window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID+'/1';
-                                return false;
-                            }
-
                             //this.form = {};
-                            document.querySelector('.js-review-feedback-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
-                            var elem = this;
-                            setTimeout(function () {
-                                elem.loadPaginatedData();
-                            }, 500);
-                            syncContactSelectionSources();
+                            //document.querySelector('.js-review-feedback-slidebox').click();
+                            this.successMsgPopup = response.data.message;//'Action completed successfully.';
+                            window.location.href = window.location.href;
                         }
                         else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate') {
@@ -896,6 +886,26 @@
 
                                 this.successMsg = 'Action completed successfully.';
                                 this.showPaginationData(this.current_page);
+                            }
+
+                        });
+                }
+            },
+            changeCommentStatus: function(comment_id, status) {
+                if(confirm('Are you sure you want to change the status of this item?')){
+                    //Do axios
+                    axios.post('/admin/comments/update_comment_status', {
+                        comment_id:comment_id,
+                        status:status,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                syncContactSelectionSources();
+
+                                this.successMsgPopup = 'Action completed successfully.';
                             }
 
                         });
@@ -944,6 +954,21 @@
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
+                            }
+                        });
+                }
+            },
+            saveCommentLikeStatus: function(commentID, statusType) {
+                if(confirm('Are you sure you want to like/dislike?')){
+                    //Do axios
+                    axios.post('/admin/reviews/saveCommentLikeStatus', {
+                        commentId:commentID,
+                        status:statusType,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                this.successMsgPopup = 'Action completed successfully.';
                             }
                         });
                 }

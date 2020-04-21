@@ -1,4 +1,4 @@
-@extends('layouts.main_template') 
+@extends('layouts.main_template')
 
 @section('title')
 {{ $title }}
@@ -134,10 +134,10 @@ $reviewTags = getTagsByReviewID($reviewData->id);
     }
 
     @keyframes sk-bounce{
-        0%, 100% { 
+        0%, 100% {
             transform: scale(0.0);
             -webkit-transform: scale(0.0);
-        } 50% { 
+        } 50% {
             transform: scale(1.0);
             -webkit-transform: scale(1.0);
         }
@@ -147,7 +147,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
 <style type="text/css">
     .loadMoreRecord {text-align: center; padding: 20px; margin: 0; border-top: 1px solid #eee;}
     .applyInsightTags.btn.btn-xs.plus_icon { position: relative; top: -8px;}
-</style>	
+</style>
 
 <div class="content">
 
@@ -159,7 +159,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                 <h3 class="mt30">
                     @if ($reviewData->ratings >= 4)
                         <img style="width:18px;" src="{{ base_url() }}assets/images/smiley_green.png">
-                    @elseif ($reviewData->ratings >= 2) 
+                    @elseif ($reviewData->ratings >= 2)
                         <img style="width:18px;" src="{{ base_url() }}assets/images/smiley_grey2.png">
                     @else
                         <img style="width:18px;" src="{{ base_url() }}assets/images/smiley_red.png">
@@ -208,10 +208,10 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                                     @endphp
 
                                     <div class="p25 bbot">
-                                        <div class="media-left media-middle pr40"> 
+                                        <div class="media-left media-middle pr40">
                                             <a class="thumbnail2" href="{{ $videoImage }}"><img src="{{ $videoImage }}" class="br5" height="45px" width="60px"/></a>
                                         </div>
-                                        <div class="media-left media-middle pr10"> 
+                                        <div class="media-left media-middle pr10">
                                             <a class="icons" href="javascript:void(0)">
                                                 @if ($ext == 'png')
                                                     <img src="{{ base_url() }}assets/images/png.png" class="img-xs file" alt="">
@@ -219,7 +219,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                                                     <img src="{{ base_url() }}assets/images/jpg.png" class="img-xs file" alt="">
                                                 @endif
 
-                                            </a> 
+                                            </a>
                                         </div>
                                         <div class="media-left">
                                             <div class="pt-5">
@@ -240,7 +240,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
 
 
                                     <div class="p25 bbot">
-                                        <div class="media-left media-middle pr40"> 
+                                        <div class="media-left media-middle pr40">
                                             <a class="videoReview" style="cursor: pointer;" filepath="{{ $videoImage }}" fileext="{{ $ext }}">
                                                 <!-- <img src="{{ base_url() }}assets/images/media2.jpg"/> -->
                                                 <video class="media br5" height="50px" width="60px">
@@ -248,18 +248,18 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                                                 </video>
                                             </a>
                                         </div>
-                                        <div class="media-left media-middle pr10"> 
+                                        <div class="media-left media-middle pr10">
                                             <a class="icons" href="javascript:void(0)">
                                                 <img src="{{ base_url() }}assets/images/mp4.png" class="img-xs file" alt="">
-                                            </a> 
+                                            </a>
                                         </div>
                                         <div class="media-left">
                                             <div class="pt-5">
-                                                <a href="javascript:void(0)" class="text-default text-semibold">{{ $getFileSize }}</a> 
+                                                <a href="javascript:void(0)" class="text-default text-semibold">{{ $getFileSize }}</a>
                                             </div>
                                             <div class="text-muted text-size-small" style="word-break: break-all;">{{ $media['media_name'] }}</div>
                                         </div>
-                                    </div> 
+                                    </div>
 
 
 
@@ -288,8 +288,8 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                 <div class="panel-body p0" >
                     <div class="profile_sec">
                         <div class="p25">
-                            @if (!empty($reviewTags)) 
-                                @foreach ($reviewTags as $tag) 
+                            @if (!empty($reviewTags))
+                                @foreach ($reviewTags as $tag)
                                     <button class="btn btn-xs btn_white_table">{{ $tag->tag_name }}</button>
                                 @endforeach
                             @endif
@@ -332,26 +332,26 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                 </div>
                 <div class="panel-footer p20 pl30 pr30 ">
                     <p class="mb0 fsize13">
-                        @if ($reviewData->ratings >= 4) 
+                        @if ($reviewData->ratings >= 4)
                             <img width="26" class="mr10" src="{{ base_url() }}assets/images/smiley_green.png">
-                        @elseif ($reviewData->ratings >= 2) 
+                        @elseif ($reviewData->ratings >= 2)
                             <img width="26" class="mr10" src="{{ base_url() }}assets/images/smiley_grey2.png">
                         @else
                             <img width="26" class="mr10" src="{{ base_url() }}assets/images/smiley_red.png">
-                        @endif    
+                        @endif
 
                         <span>
-                            @for ($i = 1; $i <= 5; $i++) 
-                                @if ($i <= $reviewData->ratings) 
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $reviewData->ratings)
                                     <i class="icon-star-full2 fsize11 txt_yellow"></i>
                                 @else
                                     <i class="icon-star-full2 fsize11 txt_grey"></i>
                                 @endif
                             @endfor
-                        </span>  
+                        </span>
                         <span class="ml20">
                             {{ $reviewData->ratings > 0 ? number_format($reviewData->ratings, 1) : 'N/A' }} Out of 5 Stars
-                        </span> 
+                        </span>
                         <span class="ml20">
                             <i class="icon-comment fsize11 txt_purple"></i> &nbsp; {{ $reviewCommentCount > 0 ? $reviewCommentCount . ' Comments' : '0 Comment' }}
                         </span>
@@ -359,7 +359,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                 </div>
             </div>
             <!--=========Latest Comments===========-->
-            @if ($totalComment > 0) 
+            @if ($totalComment > 0)
                 <div class="panel panel-flat">
                     <div class="panel-heading">
                         <h6 class="panel-title">Latest Comments {{ $totalComment > 0 ? '(' . $totalComment . ')' : '' }}</h6>
@@ -383,7 +383,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                                         $likeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 1);
                                         $disLikeData = App\Models\ReviewsModel::getCommentLSByCommentID($commentData->id, 0);
                                         $childComments = App\Models\ReviewsModel::getReviewAllChildComments($reviewID, $commentData->id);
-                                       
+
                                         @endphp
                                         <li class="bbot">
 
@@ -391,27 +391,27 @@ $reviewTags = getTagsByReviewID($reviewData->id);
 
                                             <div class="media-left pr0 w100">
 
-                                                <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $commentData->firstname . ' ' . $commentData->lastname }} <span class="dot">.</span> {{ timeAgo($commentData->created) }} <span class="dot">.</span> 
+                                                <p class="fsize14 txt_grey2 lh14 mb-15 ">{{ $commentData->firstname . ' ' . $commentData->lastname }} <span class="dot">.</span> {{ timeAgo($commentData->created) }} <span class="dot">.</span>
 
-                                                    @if ($commentData->status == '1') 
+                                                    @if ($commentData->status == '1')
                                                         <span class="txt_green"><i class="icon-checkmark3 fsize12 txt_green"></i> Approve</span>
                                                     @endif
-                                                    @if ($commentData->status == 0) 
+                                                    @if ($commentData->status == 0)
 
                                                         <span class="txt_red">
                                                             <i class="icon-checkmark3 fsize12 txt_red"></i> Disapproved
                                                         </span>
 
                                                     @endif
-                                                    @if ($commentData->status == '2') 
-                                                        <span class="media-annotation"> 
-                                                            <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" comment_id="{{ $commentData->id }}"> 
+                                                    @if ($commentData->status == '2')
+                                                        <span class="media-annotation">
+                                                            <span class="label bkg_grey txt_white br5 chg_status addtag" style="cursor: pointer;" change_status="1" comment_id="{{ $commentData->id }}">
                                                                 Approve
-                                                            </span> 
+                                                            </span>
                                                         </span>
-                                                        <span class="media-annotation dotted"> 
-                                                            <span class="label bkg_red txt_white br5 chg_status addtag" change_status="0" comment_id="{{ $commentData->id }}"> 
-                                                                Disapprove</span> 
+                                                        <span class="media-annotation dotted">
+                                                            <span class="label bkg_red txt_white br5 chg_status addtag" change_status="0" comment_id="{{ $commentData->id }}">
+                                                                Disapprove</span>
                                                         </span>
                                                     @endif
                                                 </p>
@@ -424,7 +424,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                                                     <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ $commentData->id }}', '1')"><i class="icon-thumbs-up2 txt_green"></i></a>
                                                     <button class="btn btn-link pl0 txt_red">{{ count($disLikeData) }}</button>
                                                     <a class="btn comment_btn p7" href="javascript:void(0);" onclick="saveCommentLikeStatus('{{ $commentData->id }}', '0')"><i class="icon-thumbs-down2 txt_red"></i></a>
-                                                    <a style="cursor: pointer;" class="btn comment_btn txt_purple replyCommentAction">Reply</a> 
+                                                    <a style="cursor: pointer;" class="btn comment_btn txt_purple replyCommentAction">Reply</a>
                                                     <a  href="javascript:void(0);" class="btn comment_btn txt_purple editComment" commentid="{{ $commentData->id }}">Edit</a>
                                                 </div>
 
@@ -486,14 +486,14 @@ $reviewTags = getTagsByReviewID($reviewData->id);
 
                             </ul>
 
-                            @if ($totalComment > 5) 
-                                
+                            @if ($totalComment > 5)
+
                                 <input type="hidden" id="numOfComment" value="5">
                                 <div class="loadMoreRecord">
                                     <a style="cursor: pointer;" id='loadMoreComment' revId="{{ $reviewData->id }}">Load more</a>
                                     <img class="loaderImage hidden" height="20px" width="20px" src="{{ base_url() }}assets/images/widget_load.gif">
                                 </div>
-                                
+
                             @endif
 
                         </div>
@@ -554,7 +554,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
                     <div class="profile_headings">Review Notes <a class="pull-right plus_icon" href="javascript:void();"><i class="icon-plus3"></i></a></div>
 
                     @if (!empty($reviewNotesData))
-                        @foreach ($reviewNotesData as $key => $noteData) 
+                        @foreach ($reviewNotesData as $key => $noteData)
                             <div class="p25 bbot">
                                 <p class="fsize12">{!! $noteData->notes !!}</p>
                                 <p><small class="text-muted">On {{ date('F d, Y h:i A', strtotime($noteData->created)) }} <br>by {{ $noteData->firstname . ' ' . $noteData->lastname }}</small></p>
@@ -884,7 +884,7 @@ $reviewTags = getTagsByReviewID($reviewData->id);
     var status = $(this).attr('change_status');
     var comment_id = $(this).attr('comment_id');
     $.ajax({
-    url: "{{ base_url('admin/comments/update_comment_status') }}",
+        url: "{{ base_url('admin/comments/update_comment_status') }}",
             type: "POST",
             data: {status: status, comment_id: comment_id, _token: '{{csrf_token()}}'},
             dataType: "json",
