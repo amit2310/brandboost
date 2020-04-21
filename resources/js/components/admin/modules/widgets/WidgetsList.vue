@@ -19,10 +19,9 @@
             <div class="clearfix"></div>
         </div>
 
-
-            <!--******************
-              Content Area
-             **********************-->
+        <!--******************
+          Content Area
+         **********************-->
         <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
         <loading :isLoading="loading"></loading>
             <div class="content-area" v-show="pageRendered==true" >
@@ -153,8 +152,6 @@
                                         <td><span class="fsize10 fw500">STATUS</span></td>
                                         <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
                                     </tr>
-
-
 
                                     <tr v-for="widget in widgets">
                                         <td width="20">
@@ -362,7 +359,7 @@
                 oStats: '',
                 user_role: '',
                 viewType: 'List View',
-                sortBy: 'all',
+                sortBy: 'Date Created',
                 searchBy: '',
                 deletedItems: []
             }
@@ -412,7 +409,7 @@
                 }
             },
             addtoDeleteCollection: function(itemId, elem){
-                if(itemId == 'all'){
+                if(itemId == 'all') {
                     if(elem.checked){
                         if(this.widgets.length>0){
                             this.widgets.forEach(req => {
