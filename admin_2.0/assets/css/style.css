@@ -2336,7 +2336,7 @@ PAGE WITH SIDEBAR CSS
   color: #7b89a6;
 }
 .workflow_box {
-  width: 570px;
+  width: 571px;
   margin: 0px auto;
   text-align: center;
 }
@@ -2358,7 +2358,7 @@ PAGE WITH SIDEBAR CSS
   position: absolute;
   top: -18px;
   left: 50%;
-  margin-left: -18px;
+  margin-left: -20px;
   border-radius: 100px;
   line-height: 33px;
   text-align: center;
@@ -2960,7 +2960,21 @@ WORKFLOW CSS
 .reviews_workflows .workflow_switch_div_small.canvas i {
   color: #6f7cff;
 }
-
+.split_icons_ab{ height:26px; width:300px; position:absolute; left:50%; margin-left:-150px; top:24px;}
+.split_icons_ab span.circle-icon-20 {
+	display: inline-block !important;
+	line-height: 24px;
+	margin:0 60px;
+	position: relative;
+	vertical-align: top;
+	border: none;
+	font-weight: 500;
+	color: #ffffff;
+	border-radius: 6px;
+	font-size: 11px;
+	text-transform: uppercase;
+	height:24px; width:24px;
+}
 .reviews_workflows .workflowadds{ position:relative; margin:20px auto; display:inline-block; background:#C4CFE1; width:14px; height:14px; border-radius:100%; text-align:center; line-height:13px;}
 .reviews_workflows .workflowadds i{ color:#fff; font-size:10px; font-weight:bold }
 .reviews_workflows .workflowadds:after {
@@ -3004,8 +3018,19 @@ WORKFLOW CSS
   background: #d6dfee;
   content: "";
   left: 50%;
-  margin-left: -1px;
+  margin-left: -2px;
   bottom: -52px;
+  z-index: 0;
+}
+.top_line_20::before {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: #d6dfee;
+  content: "";
+  left: 50%;
+  margin-left: -1px;
+  top: -20px;
   z-index: 0;
 }
 
@@ -3057,8 +3082,11 @@ WORKFLOW CSS
     overflow: auto;
   }
 }
+
+.workflow_list_box hr{ margin:12px 0!important}
 .workflow_list_new {
   padding: 0;
+  margin:0;
 }
 .workflow_list_new li {
   list-style: none;
@@ -3067,7 +3095,7 @@ WORKFLOW CSS
   margin-bottom: 20px;
   position: relative;
 }
-
+.workflow_list_new li:last-child{ margin:0}
 
 
 
@@ -3084,9 +3112,10 @@ WORKFLOW CSS
   vertical-align: top;
   border: none;
   font-weight: 500;
-  color: #ffffff !important;
+  color: #ffffff ;
   border-radius: 6px;
   font-size: 11px;
+  text-transform:uppercase;
   
 }
 .workflow_list_new li:after{ position:absolute; background:url(../images/wf_list_dots.svg) center center no-repeat; height:10px; width:2px; left:10px; content:''; top:25px; }
