@@ -181,6 +181,12 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on("click", ".slideAddDecisionbox", function(){
+        $(".addDecisionBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
     $(document).on("click", ".slideTriggerbox", function(){
         $(".triggerBoxContent").animate({
             width: "toggle"

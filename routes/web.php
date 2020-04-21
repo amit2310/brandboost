@@ -969,6 +969,7 @@ Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowContactSelecti
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', 'Admin\WorkFlow@getWorkflowData');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowUnitInfo', 'Admin\WorkFlow@updateWorkflowUnitInfo');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', 'Admin\WorkFlow@createWorkflowBlankAction');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent', 'Admin\WorkFlow@deleteWorkflowEvent');
 
 
 

@@ -13,7 +13,11 @@
                     <div class="col-md-12">
                         <div class="workflow_card" :class="{'workflowSelectedBorder': metaData.selectedClass == event.id}" @click="metaData.selectedClass=event.id">
                             <div class="wf_icons br12 bkg_blue_300"><img width="18" src="assets/images/flashlight-fill-white.svg"></div>
-                            <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">ACTION </p>
+                            <div class="edit_delete">
+                                <a href="javascript:void(0);"><i class="icon-gear fsize12 dark_100"></i></a>
+                                <a href="javascript:void(0);" @click="deleteEvent"><i class="icon-bin2 fsize10 dark_100"></i></a>
+                            </div>
+                            <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">ACTION</p>
                             <p class="dark_200 fsize13 fw500 mb15 ls4">{{nodeName ? nodeName : 'Empty Action'}} </p>
                             <div class="p0 pt12 btop">
                                 <ul class="workflow_list">
@@ -54,7 +58,12 @@
         },
         methods: {
             prepareToAddAction: function(){
-                this.$emit('setAddActionProps', this.event)
+                this.$emit('setAddActionProps', this.event);
+            },
+            deleteEvent: function(){
+                if(confirm("Are you sure you want to delete this node?")){
+                    this.$emit('deleteEventNode', this.event);
+                }
             }
         }
     };

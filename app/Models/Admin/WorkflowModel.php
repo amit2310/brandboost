@@ -1739,6 +1739,44 @@ class WorkflowModel extends Model {
     }
 
     /**
+     * Used to get previous node info
+     * @param $previousEventID
+     * @param $moduleName
+     * @return bool
+     */
+    public function getPreviousNodeInfo($previousEventID, $moduleName) {
+        if (empty($previousEventID) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_emails_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_events';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+                ->where('id', $previousEventID)
+                ->first();
+        return $oData;
+    }
+
+    /**
      * Used to update workflow end campaign
      * @param type $aData
      * @param type $id
@@ -2161,23 +2199,27 @@ class WorkflowModel extends Model {
      * @param type $moduleName
      * @return boolean
      */
-    public function deleteNode($id, $moduleName) {
+    public function deleteNode($id, $moduleName, $moduleUnitId='') {
         if (empty($id) || empty($moduleName)) {
             return false;
         }
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_events';
+                $fieldName = 'brandboost_id';
                 break;
             case "automation":
             case "broadcast":
                 $tableName = 'tbl_automations_emails_events';
+                $fieldName = 'automation_id';
                 break;
             case "referral":
                 $tableName = 'tbl_referral_automations_events';
+                $fieldName = 'referral_id';
                 break;
             case "nps":
                 $tableName = 'tbl_nps_automations_events';
+                $fieldName = 'nps_id';
                 break;
             default :
                 $tableName = '';
@@ -2189,6 +2231,7 @@ class WorkflowModel extends Model {
 
         $oData = DB::table($tableName)
                 ->where('id', $id)
+                ->where($fieldName, $moduleUnitId)
                 ->delete();
         if ($oData) {
             $bCampaignDeleted = $this->deleteWorflowCampaign($id, $moduleName);
