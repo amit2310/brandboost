@@ -117,7 +117,7 @@
                                 <div class="mb-2">
                                     <div class="row" :reviewid="oReview.reviewid">
                                         <div class="col-md-5">
-                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26 js-review-feedback-slidebox2" @click="loadReviewPopup(oReview.reviewid,'')"><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
+                                            <p class="fsize14 fw400 dark_600 float-left mr-3 lh_26 js-review-feedback-slidebox2"<!-- @click="loadReviewPopup(oReview.reviewid,'')"-->><span class="circle_icon_24 bkg_blue_200 mr-2"><img src="assets/images/google_14_white.svg"></span> &nbsp; {{ oReview.firstname }} {{ oReview.lastname }}</p>
                                         </div>
                                         <div class="col-md-7 text-right">
                                             <span v-if="oReview.rstatus == 0" style="right: 15px; top: 0px; left: auto" class="status_icon bkg_light_600" title="INACTIVE"></span>

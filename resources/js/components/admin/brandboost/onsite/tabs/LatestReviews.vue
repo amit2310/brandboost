@@ -10,7 +10,7 @@
                 <div class="col">
                     <div class="float-right">
                         <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown" aria-expanded="false"> <span><img src="assets/images/more-vertical.svg"></span> </button>
-                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>
+                        <!--<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(647px, 102px, 0px);"> <a class="dropdown-item" href="#">Link 1</a> <a class="dropdown-item" href="#">Link 2</a> <a class="dropdown-item" href="#">Link 3</a> </div>-->
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                                     <span v-else-if="oReview.ratings == 3" class="circle_icon_24 bkg_yellow_200 lh_26">{{ oReview.firstname.charAt(0) }}</span>
                                     <span v-else class="circle_icon_24 bkg_blue_200 lh_26">{{ oReview.firstname.charAt(0) }}</span>
                                 </span>
-                                <span>{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
+                                <span @click="showReview(oReview.reviewid)" style="cursor: pointer;">{{ capitalizeFirstLetter(oReview.firstname) }} {{ capitalizeFirstLetter(oReview.lastname) }}</span>
                             </td>
                             <td>
                                 <span v-for="num in [1,2,3,4,5]">

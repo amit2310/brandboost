@@ -82,7 +82,7 @@
                             <td><span class="fsize10 fw500">STATUS</span></td>
                             <td><span class="fsize10 fw500">&nbsp;</span></td>
                         </tr>
-                        <!--<tr v-for="subscriber in subscribers" v-if="subscriber.firstname != null">-->
+
                         <tr v-for="subscriber in subscribers" v-if="subscriber.firstname != null">
                             <td width="20">
                                 <span>
@@ -110,7 +110,7 @@
                                 <span v-else><span class="mr-3"><span class="status_icon bkg_dark_100"></span></span>Disable</span>
                             </td>
                             <td>
-                                <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                                <div class="dot_dropdown"> <a class="dropdown-toggle2" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                         <a v-if="subscriber.status == '0' || subscriber.status == '2'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '1')"><i class="dripicons-user text-muted mr-2"></i> Active</a>
                                         <a v-if="subscriber.status == '1'" :subscriber_id="subscriber.id" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(subscriber.id, '0')"><i class="dripicons-user text-muted mr-2"></i> Inactive</a>
@@ -294,6 +294,7 @@
                         this.subscribers = response.data.subscribers;
                         this.campaign = response.data.brandboostData;
                         this.user = response.data.aUserInfo;
+                        console.log(this.subscribers);
                     });
             },
             showPaginationData: function(p){
