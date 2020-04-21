@@ -1229,6 +1229,7 @@ class WorkFlow extends Controller {
         $userID = $aUser->id;
         $eventID = strip_tags($request->event_id);
         $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
 
         //Instantiate workflow model to get its methods and properties
         $mWorkflow = new WorkflowModel();
@@ -1248,7 +1249,7 @@ class WorkFlow extends Controller {
             $oNextNode = $mWorkflow->getNextNodeInfo($eventID, $moduleName);
 
             //Delete Node Now
-            $bDeleted = $mWorkflow->deleteNode($eventID, $moduleName);
+            $bDeleted = $mWorkflow->deleteNode($eventID, $moduleName, $moduleUnitId);
 
             if ($bDeleted) {
                 //Connect adjacent nodes
@@ -1256,7 +1257,7 @@ class WorkFlow extends Controller {
                 if (!empty($oNextNode)) {
 
                     $aData = array(
-                        'previous_event_id' => isset($oPreviousNode->id) ? $oPreviousNode->id : ''
+                        'previous_event_id' => isset($oPreviousNode->id) ? $oPreviousNode->id : NULL
                     );
 
                     if ($oCurrentNode->event_type != 'followup') {
@@ -1272,16 +1273,22 @@ class WorkFlow extends Controller {
 
                     $nextNodeTriggerData = json_decode($oNextNode->data);
                     $currentNodeTriggerData = json_decode($oCurrentNode->data);
-                    if ($nextNodeTriggerData->delay_value == 0 && $nextNodeTriggerData->delay_unit == 'minute') {
+                    //As per the new smart workflow, this variable is not more flexible, so we can't fix variables here
+                    /*if ($nextNodeTriggerData->delay_value == 0 && $nextNodeTriggerData->delay_unit == 'minute') {
                         if (!empty($currentNodeTriggerData)) {
                             $eventDataArr = array("delay_type" => "after", "delay_value" => $currentNodeTriggerData->delay_value, "delay_unit" => $currentNodeTriggerData->delay_unit, "event_type" => 'followup');
                             $aData['data'] = json_encode($eventDataArr);
                         }
-                    }
+                    }*/
                     $bUpdated = $mWorkflow->updateNode($aData, $oNextNode->id, $moduleName);
                 }
-
+                //Fetch events
+                $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+                //Reassemble events Order
+                $orderedEvents = sortWorkflowEvents($events);
+                $oEvents = $orderedEvents['oEvents'];
                 $response['status'] = 'success';
+                $response['oEvents'] = $oEvents;
             } else {
                 $response['status'] = 'error';
             }
@@ -3057,19 +3064,19 @@ class WorkFlow extends Controller {
             $newNodeEventID = $mWorkflow->createWorkflowEvent($moduleUnitId, $eventType, $previousID, $triggerParam, $moduleName);
             if($newNodeEventID>0){
                 //Update Next Node previous_event_id
-                $bUpdateId = $mWorkflow->updateWorkflowEvent(['previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $eventID, $moduleName);
+                $bUpdateId = $mWorkflow->updateWorkflowEvent(['event_type'=>'followup', 'previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $eventID, $moduleName);
                 $bSuccess = true;
             }
         }else{
             $eventType = 'followup';
             //Blank Node will be the middle or last node
             //Insert Node and update insert id into the next node's previous_event_id
-            $newNodeEventID = $mWorkflow->createWorkflowEvent($moduleUnitId, $eventType, $previousID=$eventID, $triggerParam, $moduleName);
+            $newNodeEventID = $mWorkflow->createWorkflowEvent($moduleUnitId, $eventType, $previousID, $triggerParam, $moduleName);
             if($newNodeEventID>0){
                 //Update Next Node previous_event_id
                 //Get next node info
                 if($eventID>0){
-                    $oNextNode = $mWorkflow->getNextNodeInfo($eventID, $moduleName);
+                    $oNextNode = $mWorkflow->getNextNodeInfo($previousID, $moduleName);
                     if(isset($oNextNode->id)){
                         $bUpdateId = $mWorkflow->updateWorkflowEvent(['previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $oNextNode->id, $moduleName);
                         $bSuccess = true;

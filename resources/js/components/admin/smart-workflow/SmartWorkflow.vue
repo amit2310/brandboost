@@ -118,7 +118,14 @@
                 <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></list-view>
 
                 <!--Canvas View-->
-                <canvas-view v-show="viewType=='canvas'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></canvas-view>
+                <canvas-view
+                    v-show="viewType=='canvas'"
+                    :events="events"
+                    :unitInfo="unitInfo"
+                    :metaData="metaData"
+                    @setActionProps="setActionProps"
+                    @deleteWorkflowNode="deleteWorkflowNode"
+                ></canvas-view>
 
                 <!--Add Node Modal-->
                 <div class="box addNodeBoxContent" style="width: 424px; display:none;">
@@ -142,7 +149,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10" style="cursor: pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddDecisionbox" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Decision</p>
                                             <p class="fw400 fsize12 dark_300 m0">Send people down a single path based on selected criteria.</p>
@@ -419,6 +426,74 @@
                     </div>
 
                 </div>
+
+                <!--Decision Modal -->
+                <div class="box addDecisionBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Add Decision</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">What kind of step would you like to add?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="decisionName" class="fsize11 fw500 dark_600 ls4">DECISION NAME</label>
+                                            <input type="text" class="form-control h50" v-model="decisionTitle" id="decisionName" placeholder="Enter new decision name" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('decision 1')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 1</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 1</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('Decision 2')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 2</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 2</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('decision 3')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 3</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 3</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 pr5 text-center">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('decision 4')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 4</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 4</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
     </div>
     </div>
     </div>
@@ -445,7 +520,8 @@
                     selectedClass: ''
                 },
                 selectedEvent: '',
-                actionTitle: ''
+                actionTitle: '',
+                decisionTitle: '',
             }
         },
         created(){
@@ -525,6 +601,21 @@
                 this.clearActionProps();
                 this.selectedEvent = event;
             },
+            deleteWorkflowNode: function(event){
+                this.clearActionProps();
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    event_id: event.id
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                    }
+                });
+            },
             clearActionProps: function(){
                 this.selectedEvent = '';
             },
@@ -533,6 +624,23 @@
                 let formData = {
                     actionName: action,
                     actionTitle: this.actionTitle,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: this.selectedEvent
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.metaData.selectedClass = response.data.newEventId;
+                    }
+                });
+            },
+            addBlankDecision: function(decision){
+                this.loading = true;
+                let formData = {
+                    actionName: decision,
+                    actionTitle: this.decisionTitle,
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
