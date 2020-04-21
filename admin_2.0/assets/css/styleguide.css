@@ -172,7 +172,6 @@ CUSTOM SWITCH STYLES
 .custom-form-switch .field:checked + .toggle.reviews {  border-color: #8C95F8;  background-color: #8C95F8;}
 
 
-
 /******************************
 TABLES STYLES
 ******************************/
@@ -525,7 +524,7 @@ COLOR CLASSES
 
 .email_100{color: #A8E0EE}
 .email_200{color: #8AD4EB}
-.email_300{color: #72C9EA}
+.email_300{color: #72C9EA!important}
 .email_400{color: #56ACD8!important}
 .email_500{color: #3C91CE}
 
