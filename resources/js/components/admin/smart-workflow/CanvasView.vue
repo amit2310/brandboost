@@ -41,12 +41,13 @@
                         :metaData="metaData"
                         :key="oEvent.id"
                         @setAddActionProps="setAddActionProps"
+                        @deleteEventNode="deleteEventNode"
                     ></canvas-node>
                     <!--Nodes-->
 
                     <!--Connector-->
                     <div class="col-12 text-center">
-                        <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="metaData.selectedClass = ''"><i class="ri-add-fill"></i></a>
+                        <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="addCoherentAction"><i class="ri-add-fill"></i></a>
                     </div>
                     <!--Connector-->
 
@@ -78,6 +79,7 @@
                         </div>
                     </div>
                     <!--Goal-->
+
                 </div>
             </div>
         </div>
@@ -98,6 +100,13 @@
         methods: {
             setAddActionProps: function(eventData){
                 this.$emit("setActionProps", eventData);
+            },
+            deleteEventNode: function(eventData){
+                this.$emit("deleteWorkflowNode", eventData);
+            },
+            addCoherentAction: function(){
+                this.metaData.selectedClass = '';
+                this.$emit("setActionProps");
             }
         }
     }
