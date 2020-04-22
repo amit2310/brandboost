@@ -187,6 +187,12 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on("click", ".slideAddDelaybox", function(){
+        $(".addDelayBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
     $(document).on("click", ".slideTriggerbox", function(){
         $(".triggerBoxContent").animate({
             width: "toggle"

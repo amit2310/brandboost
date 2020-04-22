@@ -71,7 +71,7 @@
                                 <li><a href="javascript:void(0);" class="slideTriggerbox" @click="metaData.selectedClass='trigger'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-play-fill"></i></span></span> Entry Trigger: {{(unitInfo.workflow_entry_trigger) ? capitalizeFirstLetter(unitInfo.workflow_entry_trigger): 'Empty'}}</a></li>
                                 <li v-for="evt in events">
                                     <a href="javascript:void(0);" @click="metaData.selectedClass=evt.id">
-                                        <span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span>  Action: {{nodeName(evt)}}
+                                        <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeName(evt)}}
                                     </a>
                                 </li>
                                 <li><a href="javascript:void(0);" class="slideGoalbox" @click="metaData.selectedClass='goal'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: {{(unitInfo.workflow_goal) ? capitalizeFirstLetter(unitInfo.workflow_goal): 'Empty'}}</a></li>
@@ -160,7 +160,7 @@
 
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10" style="cursor: pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddDelaybox" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_reviews_300 m-auto  "><i class="ri-time-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Delay</p>
                                             <p class="fw400 fsize12 dark_300 m0">Wait for a given period of time before continue down the path</p>
@@ -433,7 +433,7 @@
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
-                                    <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
+                                    <div class="col-md-12"> <img width="44" src="assets/images/node_decision.svg"/>
                                         <h3 class="htxt_medium_24 dark_800 mt20">Add Decision</h3>
                                         <p class="fsize14 dark_200 mb0 mt-1">What kind of step would you like to add?</p>
                                         <hr class="mt25 mb30">
@@ -454,7 +454,7 @@
 
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('decision 1')" style="cursor:pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('decision 1')" style="cursor:pointer;">
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 1</p>
                                             <p class="fw400 fsize12 dark_300 m0">Add Decision 1</p>
@@ -462,7 +462,7 @@
                                     </div>
 
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('Decision 2')" style="cursor:pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('Decision 2')" style="cursor:pointer;">
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 2</p>
                                             <p class="fw400 fsize12 dark_300 m0">Add Decision 2</p>
@@ -473,7 +473,7 @@
 
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('decision 3')" style="cursor:pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('decision 3')" style="cursor:pointer;">
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 3</p>
                                             <p class="fw400 fsize12 dark_300 m0">Add Decision 3</p>
@@ -481,7 +481,7 @@
                                     </div>
 
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankDecision('decision 4')" style="cursor:pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('decision 4')" style="cursor:pointer;">
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 4</p>
                                             <p class="fw400 fsize12 dark_300 m0">Add Decision 4</p>
@@ -494,7 +494,149 @@
                     </div>
 
                 </div>
-    </div>
+
+                <!--Delay Modal-->
+                <div class="box addDelayBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDelaybox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/time_blue_44.svg"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Delay</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Which event should trigger this automation?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="waitfor" class="fsize11 fw500 dark_600 ls4">WAIT FOR</label>
+                                            <div class="campaign_name_sec border br4 p10 pl20 pr20 fsize14 dark_200">
+                                                <div class="row">
+                                                    <div class="col-6"><input type="text" v-model="delayProperties.delay_value" class="textfield fsize14 dark_200" id="waitfor" placeholder="1"></div>
+                                                    <div class="col-6 pl0">
+                                                        <div class="dropdown campaign_forms" style="width:100%!important;">
+                                                            <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days</button>
+                                                            <div class="dropdown-menu w-100 dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-97px, 30px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="javascript:void(0);"> Days </a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"> Month </a>
+                                                                <a class="dropdown-item" href="javascript:void(0);"> Hour </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb30">
+                                            <label for="resume" class="fsize11 fw500 dark_600 ls4">WHAT DAYS OF THE WEEK CAN WE RESUME?</label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="resume">
+                                                <option value="all">All Days</option>
+                                                <option value="1">Monday</option>
+                                                <option value="2">Tuesday</option>
+                                                <option value="3">Wednesday</option>
+                                                <option value="4">Thursday</option>
+                                                <option value="5">Friday</option>
+                                                <option value="6">Saturday</option>
+                                                <option value="7">Sunday</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="resume2" class="fsize11 fw500 dark_600 ls4">RESUME THE SAME TIME AS PAUSED</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p class="m0 fsize11 blue_400 fw500 float-left">NO</p>
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" id="resume2" >
+                                            <span class="toggle blue"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group mb30">
+                                            <label for="resumeTime" class="fsize11 fw500 dark_600 ls4">WHAT TIME SHOULD WE RESUME?</label>
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <select class="form-control small h50 form-control-custom dark_800" id="resumeTime">
+                                                        <option>01</option>
+                                                        <option>02</option>
+                                                        <option>03</option>
+                                                        <option>04</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col">
+                                                    <select class="form-control small h50 form-control-custom dark_800">
+                                                        <option>25</option>
+                                                        <option>26</option>
+                                                        <option>27</option>
+                                                        <option>28</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-control small h50 form-control-custom dark_800">
+                                                        <option>AM</option>
+                                                        <option>PM</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="timezone" class="fsize11 fw500 dark_600 ls4">USE CUSTOMER TIME ZONES</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p class="m0 fsize11 blue_400 fw500 float-left">NO</p>
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" id="timezone" >
+                                            <span class="toggle blue"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="timezone2" class="fsize11 fw500 dark_600 ls4">TIME ZONE</label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="timezone2">
+                                                <option>(GMT -05:00) Eastern Daylight Time</option>
+                                                <option>(GMT -05:00) Eastern Daylight Time</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20">Create Contact</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddDelaybox">Close</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                </div>
     </div>
     </div>
 </template>
@@ -522,6 +664,17 @@
                 selectedEvent: '',
                 actionTitle: '',
                 decisionTitle: '',
+                delayProperties: {
+                    delay_type: 'after',
+                    delay_unit: 'minute',
+                    delay_value: 10,
+                    delay_paused: false,
+                    delay_hour: 8,
+                    delay_minute: 30,
+                    delay_ampm: 'am',
+                    delay_custom_zone: false,
+                    delay_time_zone: 'est'
+                }
             }
         },
         created(){
@@ -622,8 +775,9 @@
             addBlankAction: function(action){
                 this.loading = true;
                 let formData = {
-                    actionName: action,
-                    actionTitle: this.actionTitle,
+                    nodeType: 'action',
+                    name: action,
+                    title: this.actionTitle,
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
@@ -639,8 +793,9 @@
             addBlankDecision: function(decision){
                 this.loading = true;
                 let formData = {
-                    actionName: decision,
-                    actionTitle: this.decisionTitle,
+                    nodeType: 'decision',
+                    name: decision,
+                    title: this.decisionTitle,
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
@@ -653,12 +808,45 @@
                     }
                 });
             },
+            nodeClass : function(event){
+                let className = JSON.parse(event.data)['node_type'];
+                if(className == 'action'){
+                    return 'bkg_blue_300';
+                }else if(className == 'decision'){
+                    return 'bkg_yellow_400';
+                }else if(className == 'delay'){
+                    return 'bkg_reviews_300';
+                }else if(className == 'split'){
+                    return 'bkg_email_300';
+                }else if(className == 'goal'){
+                    return 'bkg_sms_400';
+                }else if(className == 'exit'){
+                    return 'bkg_dark_100';
+                }
+                return '';
+            },
+            nodeType : function(event){
+                return JSON.parse(event.data)['node_type'];
+            },
             nodeName : function(event){
-                return this.capitalizeFirstLetter(JSON.parse(event.data)['action_name']);
+                return this.capitalizeFirstLetter(JSON.parse(event.data)['name']);
             },
             nodeTitle : function(event){
-                return this.capitalizeFirstLetter(JSON.parse(event.data)['action_title']);
+                return this.capitalizeFirstLetter(JSON.parse(event.data)['title']);
             },
+            clearDelayProperties: function(){
+                this.delayProperties = {
+                    delay_type: 'after',
+                    delay_unit: 'minute',
+                    delay_value: 10,
+                    delay_paused: false,
+                    delay_hour: 8,
+                    delay_minute: 30,
+                    delay_ampm: 'am',
+                    delay_custom_zone: false,
+                    delay_time_zone: 'est'
+                };
+            }
 
         }
     }

@@ -3032,16 +3032,18 @@ class WorkFlow extends Controller {
         $mWorkflow = new WorkflowModel();
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitId = strip_tags($request->moduleUnitId);
-        $actionName = strip_tags($request->actionName);
-        $actionTitle = strip_tags($request->actionTitle);
+        $nodeType = strip_tags($request->nodeType);
+        $name = strip_tags($request->name);
+        $title = strip_tags($request->title);
         $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
         //Reassemble events Order
         $orderedEvents = sortWorkflowEvents($events);
         $oEvents = $orderedEvents['oEvents'];
         //Prepare meta data for the event
         $triggerParam =[
-            'action_name' => $actionName,
-            'action_title' => $actionTitle,
+            'node_type' => $nodeType,
+            'name' => $name,
+            'title' => $title,
         ];
         $oCurrentNode = $request->eventData;
         $eventID = '';

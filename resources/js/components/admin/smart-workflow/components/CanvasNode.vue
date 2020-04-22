@@ -12,12 +12,19 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="workflow_card" :class="{'workflowSelectedBorder': metaData.selectedClass == event.id}" @click="metaData.selectedClass=event.id">
-                            <div class="wf_icons br12 bkg_blue_300"><img width="18" src="assets/images/flashlight-fill-white.svg"></div>
+                            <div class="wf_icons br12" :class="nodeClass">
+                                <img v-if="nodeType=='action'" width="18" src="assets/images/flashlight-fill-white.svg">
+                                <img v-if="nodeType=='decision'" width="18" src="assets/images/mail-open-fill-white.svg">
+                                <img v-if="nodeType=='delay'" width="18" src="assets/images/time-fill-14.svg">
+                                <img v-if="nodeType=='split'" width="18" src="assets/images/split-white.svg">
+                                <img v-if="nodeType=='goal'" width="18" src="assets/images/checkbox-circle-fill-white.svg">
+                                <img v-if="nodeType=='exit'" width="18" src="assets/images/flag-2-fill.svg">
+                            </div>
                             <div class="edit_delete">
                                 <a href="javascript:void(0);"><i class="icon-gear fsize12 dark_100"></i></a>
                                 <a href="javascript:void(0);" @click="deleteEvent"><i class="icon-bin2 fsize10 dark_100"></i></a>
                             </div>
-                            <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">ACTION</p>
+                            <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">{{nodeType.toUpperCase()}}</p>
                             <p class="dark_200 fsize13 fw500 mb15 ls4">{{nodeName ? nodeName : 'Empty Action'}} </p>
                             <div class="p0 pt12 btop">
                                 <ul class="workflow_list">
@@ -48,11 +55,31 @@
           }
         },
         computed :{
+            nodeClass : function(){
+                let className = JSON.parse(this.event.data)['node_type'];
+                if(className == 'action'){
+                    return 'bkg_blue_300';
+                }else if(className == 'decision'){
+                    return 'bkg_yellow_400';
+                }else if(className == 'delay'){
+                    return 'bkg_reviews_300';
+                }else if(className == 'split'){
+                    return 'bkg_email_300';
+                }else if(className == 'goal'){
+                    return 'bkg_sms_400';
+                }else if(className == 'exit'){
+                    return 'bkg_dark_100';
+                }
+                return '';
+            },
+            nodeType : function(){
+                return JSON.parse(this.event.data)['node_type'];
+            },
             nodeName : function(){
-                return this.capitalizeFirstLetter(JSON.parse(this.event.data)['action_name']);
+                return this.capitalizeFirstLetter(JSON.parse(this.event.data)['name']);
             },
             nodeTitle : function(){
-                return this.capitalizeFirstLetter(JSON.parse(this.event.data)['action_title']);
+                return this.capitalizeFirstLetter(JSON.parse(this.event.data)['title']);
             },
 
         },
