@@ -51,8 +51,40 @@
 			<span class="toggle email"></span>		</label>
           </div>
           
-          
-          
+          <div class="col-md-12">
+          	<div class="form-group">
+                <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATHS PERCENTAGES</label>
+                <div class="row">
+                <div class="col-12">
+                <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+                </div>
+                <div class="col-6 pr5">
+                <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text blue_300" style="width:48px; padding:0 17px; background: rgba(165, 206, 255, 0.1); border-color:#E1E9F6;">A</span>
+  </div>
+  <input type="text" class="form-control h48 brig_nonr" value="75">
+  <div class="input-group-append bkg_light_000">
+    <span class="input-group-text bkg_light_000 dark_100" style="border-color:#E1E9F6; width:48px; padding:0 17px;">%</span>
+  </div>
+</div>
+                </div>
+                <div class="col-6 pl5">
+                <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text green_400" style="width:48px; padding:0 17px; background: rgba(148, 215, 169, 0.1); border-color:#E1E9F6;">B</span>
+  </div>
+  <input type="text" class="form-control h48 brig_nonr" value="25">
+  <div class="input-group-append bkg_light_000">
+    <span class="input-group-text bkg_light_000 dark_100" style="border-color:#E1E9F6; width:48px; padding:0 17px;">%</span>
+  </div>
+</div>
+                </div>
+                </div>
+                
+              </div>
+          </div>
+         
           
           
           
@@ -65,10 +97,34 @@
           </div>
           
           <div class="col-md-3">
-          <p class="m0 fsize11 light_800 fw500 float-left">NO</p>
+          <p class="m0 fsize11 light_800 fw500 float-left">YES</p>
             <label class="custom-form-switch float-right">
-			  <input class="field" type="checkbox" >
+			  <input class="field" type="checkbox" checked="checked" >
 			<span class="toggle email"></span>		</label>
+          </div>
+          
+          
+           <div class="col-md-12">
+           <hr class="mt0" />
+          <p class="fsize14 dark_400">Spit traffic and send contacts to Path B until...</p>
+          <div class="form-group">
+                <label for="campaignname" class="fsize11 fw500 dark_600 ls4">THE FOLLOWING condition is met:</label>
+                <select class="form-control h50 form-control-custom dark_800">
+                	<option>X contacts have been sent to Path B</option>
+                    <option>X contacts have been sent to Path B</option>
+                    
+                </select>
+              </div>
+              
+              <div class="form-group mb30">
+                <label for="campaignname" class="fsize11 fw500 dark_600 ls4">NUMBER OF CONTACTS</label>
+                <select class="form-control h50 form-control-custom dark_800">
+                	<option>500</option>
+                    <option>1000</option>
+                    
+                </select>
+              </div>
+           
           </div>
           
           
@@ -81,7 +137,8 @@
         </div>
 
 
-        <div class="row bottom-position">
+       <!-- <div class="row bottom-position">-->
+        <div class="row">
           <div class="col-md-12 mb15">
             <hr>
           </div>
