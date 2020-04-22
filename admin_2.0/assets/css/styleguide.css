@@ -453,7 +453,7 @@ BORDER CLASSES
 .brig{border-right: 1px solid #e9eff8;}
 .blef{border-left: 1px solid #e9eff8;}
 .border_dashed{border: 1px dashed #D5DFEF!important}
-
+.brig_nonr{ border-right:none!important}
 
 
 /******************************

@@ -15,16 +15,9 @@
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
-<link href="https://seiyria.com/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet" type="text/css">
-
-
 
 <style>
-.slider.slider-horizontal{ width:100%; margin:15px 0 20px}
-#ex1Slider .slider-handle{ width:24px; height:24px; background:#B4C0D4; border: 6px solid #FFFFFF;
-box-shadow: 0px 0px 1px rgba(0, 16, 47, 0.08), 0px 1px 1px rgba(0, 21, 62, 0.06); top:-2px;}
-#ex1Slider .slider-track{ background:#7ECD99}
-#ex1Slider .slider-selection {	background: #4489F2;}
+
 </style>
 </head>
 <body id="ReviewSection">
@@ -207,13 +200,20 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
         <div class="col-12 text-center"> <a class="workflowadds slidebox" href="#"><i class="ri-add-fill"></i></a> </div>
         <!--=====ADD SPLIT TEST=============-->
         <div class="col-md-12">
-          <div class="workflow_switch_div_small canvas mb0 mt0 text-center" style="width:142px; border:2px solid #72C9EA ;"> <a class="workflow_switch email_300" href="#"><i class="ri-percent-line email_300"></i> ADD SPLIT TEST</a> </div>
+          <!--<div class="workflow_switch_div_small canvas mb0 mt0 text-center" style="width:142px;"> <a class="workflow_switch email_300" href="#"><i class="ri-percent-line email_300"></i> ADD SPLIT TEST</a> </div>-->
+          
+          <div class="workflow_switch_div_small canvas mb0 mt0">
+                    <a class="workflow_switch" href="#"> <i><img src="assets/images/play_split.svg"/></i> SPLIT </a> &nbsp;
+                    <a class="workflow_switch active" href="#">50/50</a>
+                    </div>
+                    
+                    
         </div>
         <!--=====Split Image top=============-->
         <div class="col-md-12 text-center">
         <div class="split_icons_ab">
-         <span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">a</span>
-         <span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">b</span>
+         <span class="circle-icon-20 bkg_light_000 br35 blue_300 shadow3">a</span>
+         <span class="circle-icon-20 bkg_light_000 br35 green_400 shadow3">b</span>
         </div>
         <img src="assets/images/wfline.png"></div>
         <!--=====ADD nodes 2 circle icon ========-->
@@ -309,10 +309,7 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
   
   
   
-  <!--******************
-  Create Contact Sliding Smart Popup
- **********************-->
- <?php include("wf_split_smart_popup.php"); ?>
+
  
  <!--******************
   jQuery
@@ -322,9 +319,8 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
 <script src="assets/js/metisMenu.min.js"></script>
 <script src="assets/js/waves.min.js"></script>
 <script src="assets/js/jquery.slimscroll.min.js"></script>
-
-<script src="https://seiyria.com/bootstrap-slider/js/bootstrap-slider.js"></script>
 <script src="assets/js/app.js"></script>
+
 <script>
 $(document).ready(function(){
 	$(".slidebox").click(function(){
@@ -340,16 +336,6 @@ $(document).ready(function(){
 	$(".nav-link.people").removeClass("active");
 	$(".main-icon-menu-pane.review").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
-	
-	
-	
-	var slider = new Slider('#ex1', {
-	formatter: function(value) {
-		return 'Current value: ' + value;
-	}
-});
-
-
 </script>
 </body>
 </html>
