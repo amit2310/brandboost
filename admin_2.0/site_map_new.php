@@ -149,6 +149,11 @@
                 
                 <li><a target="_blank" href="flow_builder5.php">Workflows Builder 5 </a> &nbsp; &nbsp; <small >Last Updated on 16th April 2020</small></li>
                 <li><a target="_blank" href="flow_builder5a.php">Workflows Builder 5a </a> &nbsp; &nbsp; <small >Last Updated on 16th April 2020</small></li>
+                
+                <li><a target="_blank" href="flow_builder6.php">Workflows Builder 6 </a> &nbsp; &nbsp; <small >Last Updated on 23rd April 2020</small></li>
+                <li><a target="_blank" href="flow_builder6a.php">Workflows Builder 6a </a> &nbsp; &nbsp; <small >Last Updated on 23rd April 2020</small></li>
+                <li><a target="_blank" href="flow_builder6b.php">Workflows Builder 6b </a> &nbsp; &nbsp; <small >Last Updated on 23rd April 2020</small></li>
+                
      			
      			
      			
