@@ -17,7 +17,12 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
 <style>
-
+#div1 {
+  width: 350px;
+  height: 70px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
 </style>
 </head>
 <body id="ReviewSection">
@@ -43,13 +48,23 @@
   <div class="container-fluid">
    <div class="row">
    <div class="col-md-4 wf_nodes_top_icon">
+   
+   		<!--<ul class="wf_nodes">
+         <li><a class="circle-icon-28 bkg_blue_300" href="#" id="drag1" draggable="true" ondragstart="drag(event)"><img src="assets/images/flashlight-fill-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_brand_300" href="#"><img src="assets/images/time-fill-14.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_sms_400" href="#"><img src="assets/images/checkbox-circle-fill-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_yellow_500" href="#"><img src="assets/images/mail-open-fill-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_email_300" href="#"><img src="assets/images/split-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_dark_100" href="#"><img src="assets/images/flag-2-fill.svg"> </a></li>
+        </ul>-->
+        
    		<ul class="wf_nodes">
-         <li><a class="circle-icon-28 bkg_blue_300" href="#"><img src="assets/images/flashlight-fill-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_brand_300" href="#"><img src="assets/images/time-fill-14.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_sms_400" href="#"><img src="assets/images/checkbox-circle-fill-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_yellow_500" href="#"><img src="assets/images/mail-open-fill-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_email_300" href="#"><img src="assets/images/split-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_dark_100" href="#"><img src="assets/images/flag-2-fill.svg"/> </a></li>
+         <li><img id="drag1" draggable="true" ondragstart="drag(event)" src="assets/images/wf_drag_icon1.svg"/> </li>
+         <li><img src="assets/images/wf_drag_icon2.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon3.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon4.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon5.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon6.svg"/></li>
         </ul>
    </div>
    	<div class="col-md-5">
@@ -162,6 +177,13 @@
     </div>
     </div>
     </div>
+    
+    
+   <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    
+    
+    
+    
 <!--$$$$$$$$$$$$$$$$$$$$
 WORKFLOW START
 $$$$$$$$$$$$$$$$$$$$$$$-->
@@ -358,5 +380,24 @@ $(document).ready(function(){
 		
 		
 </script>
+
+
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+
 </body>
 </html>
