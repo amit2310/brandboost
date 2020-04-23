@@ -3035,6 +3035,9 @@ class WorkFlow extends Controller {
         $nodeType = strip_tags($request->nodeType);
         $name = strip_tags($request->name);
         $title = strip_tags($request->title);
+        if($nodeType == 'delay'){
+            $delayProperties = $request->delayData;
+        }
         $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
         //Reassemble events Order
         $orderedEvents = sortWorkflowEvents($events);
@@ -3045,6 +3048,9 @@ class WorkFlow extends Controller {
             'name' => $name,
             'title' => $title,
         ];
+        if($nodeType == 'delay'){
+            $triggerParam['delay_propeties'] = $delayProperties;
+        }
         $oCurrentNode = $request->eventData;
         $eventID = '';
         $previousID = '';

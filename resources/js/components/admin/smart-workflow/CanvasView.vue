@@ -2,7 +2,7 @@
     <div class="row">
 
         <div class="col-md-12 mb-3">
-            <div class="workflow_box" id="canvasDragger" style="position:absolute;left:25.44%;top:0px;cursor:move;">
+            <div class="workflow_box" id="canvasDragger" style="position:relative;top:0px;cursor:move;">
                 <div class="row">
                     <!--Trigger-->
                     <div class="col-md-12">
