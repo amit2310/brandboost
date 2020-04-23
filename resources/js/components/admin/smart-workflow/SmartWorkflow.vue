@@ -71,7 +71,7 @@
                                 <li><a href="javascript:void(0);" class="slideTriggerbox" @click="metaData.selectedClass='trigger'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-play-fill"></i></span></span> Entry Trigger: {{(unitInfo.workflow_entry_trigger) ? capitalizeFirstLetter(unitInfo.workflow_entry_trigger): 'Empty'}}</a></li>
                                 <li v-for="evt in events">
                                     <a href="javascript:void(0);" @click="metaData.selectedClass=evt.id">
-                                        <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeName(evt)}}
+                                        <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
                                     </a>
                                 </li>
                                 <li><a href="javascript:void(0);" class="slideGoalbox" @click="metaData.selectedClass='goal'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: {{(unitInfo.workflow_goal) ? capitalizeFirstLetter(unitInfo.workflow_goal): 'Empty'}}</a></li>
@@ -427,6 +427,39 @@
 
                 </div>
 
+                <!--Action Field-->
+                <div class="box addActionFieldBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddActionFieldbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Field</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">What field you want to edit/update?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="actionName" class="fsize11 fw500 dark_600 ls4">Description</label>
+                                            <input type="text" class="form-control h50" v-model="actionTitle" id="actionName" placeholder="Enter new action name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddDelaybox" @click="addDelay">Update Field</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddDelaybox">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
                 <!--Decision Modal -->
                 <div class="box addDecisionBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
@@ -516,11 +549,12 @@
                                                     <div class="col-6"><input type="text" v-model="delayProperties.delay_value" class="textfield fsize14 dark_200" id="waitfor" placeholder="1"></div>
                                                     <div class="col-6 pl0">
                                                         <div class="dropdown campaign_forms" style="width:100%!important;">
-                                                            <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days</button>
+                                                            <button class="btn dropdown-toggle bkg_light_000 w-100 p-1 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{capitalizeFirstLetter(delayProperties.delay_unit)}}</button>
                                                             <div class="dropdown-menu w-100 dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-97px, 30px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                                <a class="dropdown-item" href="javascript:void(0);"> Days </a>
-                                                                <a class="dropdown-item" href="javascript:void(0);"> Month </a>
-                                                                <a class="dropdown-item" href="javascript:void(0);"> Hour </a>
+                                                                <a class="dropdown-item" :class="{'active': delayProperties.delay_unit=='days'}" href="javascript:void(0);" @click="delayProperties.delay_unit='days'"> Days </a>
+                                                                <a class="dropdown-item" :class="{'active': delayProperties.delay_unit=='month'}" href="javascript:void(0);" @click="delayProperties.delay_unit='month'"> Month </a>
+                                                                <a class="dropdown-item" :class="{'active': delayProperties.delay_unit=='hour'}" href="javascript:void(0);" @click="delayProperties.delay_unit='hour'"> Hour </a>
+                                                                <a class="dropdown-item" :class="{'active': delayProperties.delay_unit=='minute'}" href="javascript:void(0);" @click="delayProperties.delay_unit='minute'"> Minute </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -530,7 +564,7 @@
 
                                         <div class="form-group mb30">
                                             <label for="resume" class="fsize11 fw500 dark_600 ls4">WHAT DAYS OF THE WEEK CAN WE RESUME?</label>
-                                            <select class="form-control h50 form-control-custom dark_800" id="resume">
+                                            <select v-model="delayProperties.delay_weekday" class="form-control h50 form-control-custom dark_800" id="resume">
                                                 <option value="all">All Days</option>
                                                 <option value="1">Monday</option>
                                                 <option value="2">Tuesday</option>
@@ -552,7 +586,7 @@
                                     <div class="col-md-3">
                                         <p class="m0 fsize11 blue_400 fw500 float-left">NO</p>
                                         <label class="custom-form-switch float-right">
-                                            <input class="field" type="checkbox" id="resume2" >
+                                            <input class="field" type="checkbox" id="resume2" v-model="delayProperties.delay_paused" >
                                             <span class="toggle blue"></span>
                                         </label>
                                     </div>
@@ -563,26 +597,31 @@
 
                                             <div class="row">
                                                 <div class="col">
-                                                    <select class="form-control small h50 form-control-custom dark_800" id="resumeTime">
-                                                        <option>01</option>
-                                                        <option>02</option>
-                                                        <option>03</option>
-                                                        <option>04</option>
+                                                    <select v-model="delayProperties.delay_hour" class="form-control small h50 form-control-custom dark_800" id="resumeTime">
+                                                        <option value="1">01</option>
+                                                        <option value="2">02</option>
+                                                        <option value="3">03</option>
+                                                        <option value="4">04</option>
+                                                        <option value="5">05</option>
+                                                        <option value="6">06</option>
+                                                        <option value="7">07</option>
+                                                        <option value="8">08</option>
+                                                        <option value="9">09</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="col">
-                                                    <select class="form-control small h50 form-control-custom dark_800">
-                                                        <option>25</option>
-                                                        <option>26</option>
-                                                        <option>27</option>
-                                                        <option>28</option>
+                                                    <select v-model="delayProperties.delay_minute" class="form-control small h50 form-control-custom dark_800">
+                                                        <option v-for="i in 59">{{(i<10)? ("0"+i): i}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="col">
-                                                    <select class="form-control small h50 form-control-custom dark_800">
-                                                        <option>AM</option>
-                                                        <option>PM</option>
+                                                    <select v-model="delayProperties.delay_ampm" class="form-control small h50 form-control-custom dark_800">
+                                                        <option value="am">AM</option>
+                                                        <option value="pm">PM</option>
                                                     </select>
                                                 </div>
 
@@ -597,19 +636,22 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <p class="m0 fsize11 blue_400 fw500 float-left">NO</p>
+                                        <p class="m0 fsize11 blue_400 fw500 float-left">{{delayProperties.delay_custom_zone ? 'YES': 'NO'}}</p>
                                         <label class="custom-form-switch float-right">
-                                            <input class="field" type="checkbox" id="timezone" >
+                                            <input class="field" type="checkbox" id="timezone" v-model="delayProperties.delay_custom_zone" >
                                             <span class="toggle blue"></span>
                                         </label>
                                     </div>
 
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" v-if="delayProperties.delay_custom_zone">
                                         <div class="form-group">
                                             <label for="timezone2" class="fsize11 fw500 dark_600 ls4">TIME ZONE</label>
-                                            <select class="form-control h50 form-control-custom dark_800" id="timezone2">
-                                                <option>(GMT -05:00) Eastern Daylight Time</option>
-                                                <option>(GMT -05:00) Eastern Daylight Time</option>
+                                            <select v-model="delayProperties.delay_time_zone" class="form-control h50 form-control-custom dark_800" id="timezone2">
+                                                <option value="est">(GMT -05:00) Eastern Standard Time</option>
+                                                <option value="edt">(GMT -04:00) Eastern Daylight Time</option>
+                                                <option value="cst">(GMT -06:00) Central Standard Time</option>
+                                                <option value="cdt">(GMT -05:00) Central Daylight Time</option>
+                                                <option value="default">Default Timezone</option>
                                             </select>
                                         </div>
                                     </div>
@@ -622,7 +664,7 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20">Create Contact</button>
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddDelaybox" @click="addDelay">Add Delay</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddDelaybox">Close</button>
 
                                     </div>
@@ -668,6 +710,7 @@
                     delay_type: 'after',
                     delay_unit: 'minute',
                     delay_value: 10,
+                    delay_weekday: '7',
                     delay_paused: false,
                     delay_hour: 8,
                     delay_minute: 30,
@@ -799,6 +842,25 @@
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.metaData.selectedClass = response.data.newEventId;
+                    }
+                });
+            },
+            addDelay: function(){
+                this.loading = true;
+                let formData = {
+                    nodeType: 'delay',
+                    name: 'delay',
+                    title: 'Wait for '+this.delayProperties.delay_value+' '+ this.capitalizeFirstLetter(this.delayProperties.delay_unit),
+                    delayData: this.delayProperties,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: this.selectedEvent,
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
                     if(response.data.status == 'success'){
