@@ -39,7 +39,7 @@
  <!--******************
   Top Heading area
  **********************-->
-  <div class="top-bar-top-section bbot shadow4">
+  <div id="wf_top_bar" class="top-bar-top-section bbot shadow4">
   <div class="container-fluid">
    <div class="row">
    <div class="col-md-4 wf_nodes_top_icon">
@@ -148,7 +148,7 @@
     <!--******************
 	 PAGE LEFT SIDEBAR END
 	**********************-->
-    
+    <div id="wf_top_btn_area" class="">
     <div class="row mb20">
     <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left"><img src="assets/images/plus_white_10.svg"></button>
     <div class="workflow_switch_div float-left">
@@ -159,6 +159,7 @@
     <div class="workflow_switch_div float-right">
     	<a class="workflow_switch" href="#"><i class="ri-list-check-2"></i> List view</a>
         <a class="workflow_switch active" href="#"><i class="ri-drag-move-line"></i> Canvas</a>    </div>
+    </div>
     </div>
     </div>
 <!--$$$$$$$$$$$$$$$$$$$$
@@ -332,6 +333,30 @@ $(document).ready(function(){
 	$(".nav-link.people").removeClass("active");
 	$(".main-icon-menu-pane.review").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
+	
+	
+	  // wf  top navigation fixed on scroll 
+		$( window ).scroll( function () {
+			var sc = $( window ).scrollTop();
+			if ( sc > 100 ) {
+				$( "#wf_top_bar" ).addClass( "wf_top_area_fixed" );
+			} else {
+				$( "#wf_top_bar" ).removeClass( "wf_top_area_fixed" );
+			}
+		} );
+		
+		
+		// wf  top navigation fixed on scroll 
+		$( window ).scroll( function () {
+			var sc = $( window ).scrollTop();
+			if ( sc > 100 ) {
+				$( "#wf_top_btn_area" ).addClass( "wf_button_fixed" );
+			} else {
+				$( "#wf_top_btn_area" ).removeClass( "wf_button_fixed" );
+			}
+		} );
+		
+		
 </script>
 </body>
 </html>
