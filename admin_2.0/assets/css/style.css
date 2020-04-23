@@ -2059,6 +2059,9 @@ PAGE WITH SIDEBAR CSS
 .campaign_name_sec.active.border {
   border: 2px solid #73abff !important;
 }
+.campaign_name_sec_blue.active.border {
+  border: 1.5px solid #8C95F8!important;
+}
 .campaign_name_sec .textfield {
   width: 100%;
   border: none;
