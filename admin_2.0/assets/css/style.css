@@ -3140,6 +3140,11 @@ WORKFLOW CSS
   background: url(../images/canvas_bkg.png) center center repeat;
 }
 
+
+.wf_top_area_fixed{position: fixed;width: calc(100% - 350px);top: 0;z-index: 99;min-height:56px!important;padding-top:14px!important;}
+.wf_button_fixed{position: fixed;width: calc(100% - 510px);top: 60px;z-index: 99;min-height:56px!important;padding-top:14px!important;}
+
+
 /**************
 LOGIN & SIGN UP CSS
 *****************/
