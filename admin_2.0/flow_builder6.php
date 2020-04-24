@@ -17,7 +17,12 @@
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
 <style>
-
+#div1 {
+  width: 350px;
+  height: 70px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
 </style>
 </head>
 <body id="ReviewSection">
@@ -39,17 +44,27 @@
  <!--******************
   Top Heading area
  **********************-->
-  <div class="top-bar-top-section bbot shadow4">
+  <div id="wf_top_bar" class="top-bar-top-section bbot shadow4">
   <div class="container-fluid">
    <div class="row">
    <div class="col-md-4 wf_nodes_top_icon">
+   
+   		<!--<ul class="wf_nodes">
+         <li><a class="circle-icon-28 bkg_blue_300" href="#" id="drag1" draggable="true" ondragstart="drag(event)"><img src="assets/images/flashlight-fill-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_brand_300" href="#"><img src="assets/images/time-fill-14.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_sms_400" href="#"><img src="assets/images/checkbox-circle-fill-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_yellow_500" href="#"><img src="assets/images/mail-open-fill-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_email_300" href="#"><img src="assets/images/split-white.svg"> </a></li>
+         <li><a class="circle-icon-28 bkg_dark_100" href="#"><img src="assets/images/flag-2-fill.svg"> </a></li>
+        </ul>-->
+        
    		<ul class="wf_nodes">
-         <li><a class="circle-icon-28 bkg_blue_300" href="#"><img src="assets/images/flashlight-fill-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_brand_300" href="#"><img src="assets/images/time-fill-14.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_sms_400" href="#"><img src="assets/images/checkbox-circle-fill-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_yellow_500" href="#"><img src="assets/images/mail-open-fill-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_email_300" href="#"><img src="assets/images/split-white.svg"/> </a></li>
-         <li><a class="circle-icon-28 bkg_dark_100" href="#"><img src="assets/images/flag-2-fill.svg"/> </a></li>
+         <li><img id="drag1" draggable="true" ondragstart="drag(event)" src="assets/images/wf_drag_icon1.svg"/> </li>
+         <li><img src="assets/images/wf_drag_icon2.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon3.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon4.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon5.svg"/></li>
+         <li><img src="assets/images/wf_drag_icon6.svg"/></li>
         </ul>
    </div>
    	<div class="col-md-5">
@@ -148,7 +163,7 @@
     <!--******************
 	 PAGE LEFT SIDEBAR END
 	**********************-->
-    
+    <div id="wf_top_btn_area" class="">
     <div class="row mb20">
     <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left"><img src="assets/images/plus_white_10.svg"></button>
     <div class="workflow_switch_div float-left">
@@ -161,6 +176,14 @@
         <a class="workflow_switch active" href="#"><i class="ri-drag-move-line"></i> Canvas</a>    </div>
     </div>
     </div>
+    </div>
+    
+    
+   <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    
+    
+    
+    
 <!--$$$$$$$$$$$$$$$$$$$$
 WORKFLOW START
 $$$$$$$$$$$$$$$$$$$$$$$-->
@@ -332,6 +355,49 @@ $(document).ready(function(){
 	$(".nav-link.people").removeClass("active");
 	$(".main-icon-menu-pane.review").addClass("active");
 	$(".main-icon-menu-pane.people").removeClass("active");
+	
+	
+	  // wf  top navigation fixed on scroll 
+		$( window ).scroll( function () {
+			var sc = $( window ).scrollTop();
+			if ( sc > 100 ) {
+				$( "#wf_top_bar" ).addClass( "wf_top_area_fixed" );
+			} else {
+				$( "#wf_top_bar" ).removeClass( "wf_top_area_fixed" );
+			}
+		} );
+		
+		
+		// wf  top navigation fixed on scroll 
+		$( window ).scroll( function () {
+			var sc = $( window ).scrollTop();
+			if ( sc > 100 ) {
+				$( "#wf_top_btn_area" ).addClass( "wf_button_fixed" );
+			} else {
+				$( "#wf_top_btn_area" ).removeClass( "wf_button_fixed" );
+			}
+		} );
+		
+		
 </script>
+
+
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+
 </body>
 </html>
