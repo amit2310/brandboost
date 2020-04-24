@@ -3,17 +3,17 @@
         <!--******************
           Top Heading area
         **********************-->
-        <div class="top-bar-top-section bbot shadow4">
+        <div id="wf_top_bar" class="top-bar-top-section bbot shadow4">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4 wf_nodes_top_icon">
                         <ul class="wf_nodes">
-                            <li><a class="circle-icon-28 bkg_blue_300" href="javascript:void(0);"><img src="assets/images/flashlight-fill-white.svg"/> </a></li>
-                            <li><a class="circle-icon-28 bkg_brand_300" href="javascript:void(0);"><img src="assets/images/time-fill-14.svg"/> </a></li>
-                            <li><a class="circle-icon-28 bkg_sms_400" href="javascript:void(0);"><img src="assets/images/checkbox-circle-fill-white.svg"/> </a></li>
-                            <li><a class="circle-icon-28 bkg_yellow_500" href="javascript:void(0);"><img src="assets/images/mail-open-fill-white.svg"/> </a></li>
-                            <li><a class="circle-icon-28 bkg_email_300" href="javascript:void(0);"><img src="assets/images/split-white.svg"/> </a></li>
-                            <li><a class="circle-icon-28 bkg_dark_100" href="javascript:void(0);"><img src="assets/images/flag-2-fill.svg"/> </a></li>
+                            <li><img id="action" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon1.svg"/></li>
+                            <li><img id="delay" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon2.svg"/></li>
+                            <li><img id="goal" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon3.svg"/></li>
+                            <li><img id="decision" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon4.svg"/></li>
+                            <li><img id="split" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon5.svg"/></li>
+                            <li><img id="exit" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon6.svg"/></li>
                         </ul>
                     </div>
                     <div class="col-md-5">
@@ -70,10 +70,22 @@
                             <ul class="workflow_list_new">
                                 <li><a href="javascript:void(0);" class="slideTriggerbox" @click="metaData.selectedClass='trigger'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-play-fill"></i></span></span> Entry Trigger: {{(unitInfo.workflow_entry_trigger) ? capitalizeFirstLetter(unitInfo.workflow_entry_trigger): 'Empty'}}</a></li>
                                 <li v-for="evt in events">
-                                    <a href="javascript:void(0);" @click="metaData.selectedClass=evt.id">
+                                    <div
+                                        class="col-12 text-center droppable_grid droppable_grid_linear"
+                                        @drop="onDrop($event, evt)"
+                                        @dragover="$event.preventDefault()"
+                                        style="height: 3px!important;">
+                                    </div>
+                                    <a id="jsMoveNode" href="javascript:void(0);" @click="metaData.selectedClass=evt.id" draggable="true" @dragstart="onLinearDrag($event, evt)">
                                         <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
                                     </a>
                                 </li>
+                                <div
+                                    class="col-12 text-center droppable_grid droppable_grid_linear"
+                                    @drop="onDrop($event)"
+                                    @dragover="$event.preventDefault()"
+                                    style="height: 3px!important;">
+                                </div>
                                 <li><a href="javascript:void(0);" class="slideGoalbox" @click="metaData.selectedClass='goal'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: {{(unitInfo.workflow_goal) ? capitalizeFirstLetter(unitInfo.workflow_goal): 'Empty'}}</a></li>
                             </ul>
                         </div>
@@ -89,8 +101,8 @@
                 <!--******************
                  PAGE LEFT SIDEBAR END
                 **********************-->
-
-                <div class="row mb20">
+                <div id="wf_top_btn_area" class="">
+                    <div class="row mb20">
                     <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left slideAddNodebox"><img src="assets/images/plus_white_10.svg"></button>
                         <div class="workflow_switch_div float-left" v-if="viewType=='canvas'">
                             <a class="workflow_switch"
@@ -113,6 +125,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
 
                 <!--List View-->
                 <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></list-view>
@@ -125,6 +138,9 @@
                     :metaData="metaData"
                     @setActionProps="setActionProps"
                     @deleteWorkflowNode="deleteWorkflowNode"
+                    @addBlankAction="addBlankAction"
+                    @addBlankDecision="addBlankDecision"
+                    @addDelay="addDelay"
                 ></canvas-view>
 
                 <!--Add Node Modal-->
@@ -717,7 +733,10 @@
                     delay_ampm: 'am',
                     delay_custom_zone: false,
                     delay_time_zone: 'est'
-                }
+                },
+                isDragStarted: false,
+                draggableEvent: '',
+                draggedEvent: ''
             }
         },
         created(){
@@ -795,7 +814,9 @@
             },
             setActionProps: function(event){
                 this.clearActionProps();
-                this.selectedEvent = event;
+                if(event){
+                    this.selectedEvent = event;
+                }
             },
             deleteWorkflowNode: function(event){
                 this.clearActionProps();
@@ -891,7 +912,9 @@
                 return JSON.parse(event.data)['node_type'];
             },
             nodeName : function(event){
-                return this.capitalizeFirstLetter(JSON.parse(event.data)['name']);
+                let name = JSON.parse(event.data)['name'];
+                let displayName = name ? this.capitalizeFirstLetter(name) : 'Empty '+ this.capitalizeFirstLetter(JSON.parse(event.data)['node_type']);
+                return displayName;
             },
             nodeTitle : function(event){
                 return this.capitalizeFirstLetter(JSON.parse(event.data)['title']);
@@ -908,15 +931,61 @@
                     delay_custom_zone: false,
                     delay_time_zone: 'est'
                 };
-            }
+            },
+            onLinearDrag: function(ev, selectedEventData){
+                this.isDragStarted = true;
+                this.draggableEvent = selectedEventData;
+                ev.dataTransfer.setData("nodetype", ev.target.id);
+                let elems = document.querySelectorAll(".droppable_grid_linear");
+                elems.forEach(function(elem){
+                    elem.classList.add('droppable_highlight');
+                })
+            },
+            onLinearStopDrag: function(ev){
+                this.isDragStarted = false;
+            },
+            onDrag: function(ev){
+                this.isDragStarted = true;
+                this.draggableEvent = '';
+                ev.dataTransfer.setData("nodetype", ev.target.id);
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.add('droppable_highlight');
+                })
+            },
+            onDrop: function(ev, selectedEventData){
+                this.isDragStarted = false;
+                this.setActionProps(selectedEventData);
+                this.draggedEvent = selectedEventData;
+                var nodetype = ev.dataTransfer.getData("nodetype");
+                if(nodetype =='action'){
+                    this.addBlankAction();
+                }else if(nodetype =='decision'){
+                    this.addBlankDecision();
+                }else if(nodetype =='delay'){
+                    this.clearDelayProperties();
+                    this.addDelay();
+                }else if(nodetype =='jsMoveNode'){
+                    alert('Moving Node');
+                }
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.remove('droppable_highlight');
+                })
 
+            }
         }
     }
-
 </script>
 <style>
     .workflowSelectedBorder {
         border:2px solid #97A4BD;
+    }
+    .droppable_highlight{
+        border:1px solid #cccccc !important;
+        height: 70px !important;
+        background: #ffff00 !important;
+        border-style: dashed !important;
     }
 </style>
 

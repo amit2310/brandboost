@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--Connector-->
-        <div class="col-12 text-center">
+        <div class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
             <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="prepareToAddAction"><i class="ri-add-fill"></i></a>
         </div>
         <!--Connector-->
@@ -91,6 +91,22 @@
                 if(confirm("Are you sure you want to delete this node?")){
                     this.$emit('deleteEventNode', this.event);
                 }
+            },
+            onDrop: function(ev){
+                var nodetype = ev.dataTransfer.getData("nodetype");
+                this.prepareToAddAction();
+                if(nodetype =='action'){
+                    this.$emit('createBlankAction');
+                }else if(nodetype =='decision'){
+                    this.$emit('createBlankDecision');
+                }else if(nodetype =='delay'){
+                    this.$emit('createBlankDelay');
+                }
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.remove('droppable_highlight');
+                })
+
             }
         }
     };
