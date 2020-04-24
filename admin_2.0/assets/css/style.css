@@ -2603,6 +2603,16 @@ border: 2px solid #FFFFFF!important; width:40px; height:40px;}
   font-weight: 500 !important;
 }
 
+.nav.nav-pills.source_tab a {
+  color: #7B89A6;
+  font-weight: 500 !important;
+}
+.nav.nav-pills.source_tab a.active {
+  color: #242B3D;
+}
+
+
+
 .nav.nav-pills.chat_contact_tab a {
   color: #445069;
   font-weight: 400 !important;
