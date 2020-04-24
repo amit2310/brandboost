@@ -42,11 +42,14 @@
                         :key="oEvent.id"
                         @setAddActionProps="setAddActionProps"
                         @deleteEventNode="deleteEventNode"
+                        @createBlankAction="createBlankAction"
+                        @createBlankDecision="createBlankDecision"
+                        @createBlankDelay="createBlankDelay"
                     ></canvas-node>
                     <!--Nodes-->
 
                     <!--Connector-->
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
                         <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="addCoherentAction"><i class="ri-add-fill"></i></a>
                     </div>
                     <!--Connector-->
@@ -104,9 +107,33 @@
             deleteEventNode: function(eventData){
                 this.$emit("deleteWorkflowNode", eventData);
             },
+            createBlankAction: function(eventData){
+                this.$emit("addBlankAction", eventData);
+            },
+            createBlankDecision: function(eventData){
+                this.$emit("addBlankDecision", eventData);
+            },
+            createBlankDelay: function(eventData){
+                this.$emit("addDelay", eventData);
+            },
             addCoherentAction: function(){
                 this.metaData.selectedClass = '';
                 this.$emit("setActionProps");
+            },
+            onDrop: function(ev){
+                var nodetype = ev.dataTransfer.getData("nodetype");
+                if(nodetype =='action'){
+                    this.createBlankAction();
+                }else if(nodetype =='decision'){
+                    this.createBlankDecision();
+                }else if(nodetype =='delay'){
+                    this.createBlankDelay();
+                }
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.remove('droppable_highlight');
+                })
+
             }
         }
     }

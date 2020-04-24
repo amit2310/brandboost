@@ -169,6 +169,26 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    // wf  top navigation fixed on scroll
+    $( window ).scroll( function () {
+        var sc = $( window ).scrollTop();
+        if ( sc > 100 ) {
+            $( "#wf_top_bar" ).addClass( "wf_top_area_fixed" );
+        } else {
+            $( "#wf_top_bar" ).removeClass( "wf_top_area_fixed" );
+        }
+    } );
+
+    // wf  top navigation fixed on scroll
+    $( window ).scroll( function () {
+        var sc = $( window ).scrollTop();
+        if ( sc > 100 ) {
+            $( "#wf_top_btn_area" ).addClass( "wf_button_fixed" );
+        } else {
+            $( "#wf_top_btn_area" ).removeClass( "wf_button_fixed" );
+        }
+    } );
+
     $(document).on("click", ".slideAddNodebox", function(){
         $(".addNodeBoxContent").animate({
             width: "toggle"
@@ -204,4 +224,12 @@ $(document).ready(function(){
             width: "toggle"
         });
     });
+
+    $(document).on('dragend', function(){
+        let elems = document.querySelectorAll(".droppable_grid");
+        elems.forEach(function(elem){
+            elem.classList.remove('droppable_highlight');
+        })
+    });
+
 });
