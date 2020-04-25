@@ -20,6 +20,13 @@
                 Workflows: '#/reviews/onsite/workflow',
                 Setup: ''
             });
+        },
+        beforeRouteLeave(to, from, next){
+            if(document.querySelector('.topbar')){
+                let elem = document.querySelector('.topbar');
+                elem.classList.remove('workflowtopbar');
+            }
+            next();
         }
     };
 </script>
