@@ -73,8 +73,7 @@
                                     <div
                                         class="col-12 text-center droppable_grid droppable_grid_linear"
                                         @drop="onDrop($event, evt)"
-                                        @dragover="$event.preventDefault()"
-                                        style="height: 3px!important;">
+                                        @dragover="$event.preventDefault()">
                                     </div>
                                     <a id="jsMoveNode" href="javascript:void(0);" @click="metaData.selectedClass=evt.id" draggable="true" @dragstart="onLinearDrag($event, evt)">
                                         <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
@@ -84,7 +83,7 @@
                                     class="col-12 text-center droppable_grid droppable_grid_linear"
                                     @drop="onDrop($event)"
                                     @dragover="$event.preventDefault()"
-                                    style="height: 3px!important;">
+                                    >
                                 </div>
                                 <li><a href="javascript:void(0);" class="slideGoalbox" @click="metaData.selectedClass='goal'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: {{(unitInfo.workflow_goal) ? capitalizeFirstLetter(unitInfo.workflow_goal): 'Empty'}}</a></li>
                             </ul>
@@ -739,6 +738,12 @@
                 draggedEvent: ''
             }
         },
+        mounted() {
+            if(document.querySelector('.topbar')){
+                let elem = document.querySelector('.topbar');
+                elem.classList.add('workflowtopbar');
+            }
+        },
         created(){
             this.getWorkflowData();
         },
@@ -827,6 +832,21 @@
                     event_id: event.id
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                    }
+                });
+            },
+            moveWorkflowNode: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    sourceNode: this.draggableEvent,
+                    destinationNode: this.draggedEvent
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/moveWorkflowNode', formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.events = response.data.oEvents;
@@ -966,7 +986,7 @@
                     this.clearDelayProperties();
                     this.addDelay();
                 }else if(nodetype =='jsMoveNode'){
-                    alert('Moving Node');
+                    this.moveWorkflowNode();
                 }
                 let elems = document.querySelectorAll(".droppable_grid");
                 elems.forEach(function(elem){
@@ -974,18 +994,31 @@
                 })
 
             }
-        }
+        },
+
     }
 </script>
 <style>
+    .workflowtopbar {
+     background: #ffffff !important;
+    }
+
     .workflowSelectedBorder {
         border:2px solid #97A4BD;
     }
     .droppable_highlight{
-        border:1px solid #cccccc !important;
-        height: 70px !important;
-        background: #ffff00 !important;
+        border:1px solid #FF0000 !important;
+        height: 57px !important;
+        background: #eed8d8 !important;
         border-style: dashed !important;
+    }
+    .workflow_list_new .droppable_highlight{
+        border:1px solid #FF0000 !important;
+        height: 3px !important;
+        background: #eed8d8 !important;
+        border-style: dashed !important;
+        margin-top:-11px;
+        margin-bottom: 8px;
     }
 </style>
 
