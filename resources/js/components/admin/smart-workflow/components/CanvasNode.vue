@@ -7,7 +7,7 @@
         <!--Connector-->
 
         <!--Empty Node-->
-        <div class="col-md-12 mb0">
+        <div v-if="nodeType != 'split'" class="col-md-12 mb0">
             <div class="workflow_box" >
                 <div class="row">
                     <div class="col-md-12">
@@ -44,6 +44,76 @@
             </div>
         </div>
         <!--Empty Node-->
+
+        <!--Empty Split Node-->
+        <template v-else>
+            <div class="col-md-12">
+                <div class="workflow_switch_div_small canvas mb0 mt0 text-center" style="width:142px; border:2px solid #72C9EA ;">
+                    <a class="workflow_switch email_300" href="#"><i class="ri-percent-line email_300"></i> ADD SPLIT TEST</a>
+                </div>
+            </div>
+            <!--=====Split Image top=============-->
+            <div class="col-md-12 text-center">
+                <div class="split_icons_ab">
+                    <span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">a</span>
+                    <span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">b</span>
+                </div>
+                <img src="assets/images/wfline.png"></div>
+            <!--=====ADD nodes 2 circle icon ========-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-2" href="#"><i class="ri-add-fill"></i></a> </div>
+                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-2" href="#"><i class="ri-add-fill"></i></a> </div>
+                </div>
+            </div>
+            <!--=====Splited two cards ========-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="workflow_card ">
+                            <div class="wf_icons br12 bkg_blue_300 border"><img width="18" src="assets/images/flashlight-fill-white.svg"></div>
+                            <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">ACTION </p>
+                            <p class="dark_200 fsize13 fw500 mb15 ls4">Conversion Goal </p>
+                            <div class="p0 pt12 btop">
+                                <ul class="workflow_list">
+                                    <li style="border:none;"><a class="blue_300 fw500 fsize11" href="#"><span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> ADD ACTION</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="workflow_card top_line_20">
+
+                            <img class="mb-2" src="assets/images/plus_circle_36.svg"/><br>
+
+                            <a class="blue_300 fw500 fsize11" href="#"> ADD NODE</a>
+                            <!--<div class="edit_delete"> <a href="#"><i class="icon-gear fsize12 dark_100"></i></a> <a href="#"><i class="icon-bin2 fsize10 dark_100"></i></a> </div>
+                            <div class="wf_icons br12 bkg_sms_400"><img src="assets/images/sms-white-16.svg"></div>
+                            <p class="dark_200 fsize11 fw500 mb-1 text-uppercase ls_4">SMS </p>
+                            <p class="dark_600 htxt_medium_14 mb15">Sale Campaign #1 </p>
+                            <div class="p0 pt12 btop">
+                              <ul class="workflow_list">
+                                <li><a href="#"><span><img src="assets/images/send-plane-2-fill.svg"></span> 28%</a></li>
+                                <li><a href="#"><span><img src="assets/images/cursor_fill_16.svg"></span> 12%</a></li>
+                              </ul>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--=====ADD nodes 2 circle plus icon ========-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-4 mb-2" href="#"><i class="ri-add-fill"></i></a> </div>
+                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-4 mb-2" href="#"><i class="ri-add-fill"></i></a> </div>
+                </div>
+            </div>
+            <!--=====Split Image bot=============-->
+            <div class="col-md-12">
+                <img src="assets/images/wfline_reverse.png">
+            </div>
+        </template>
+        <!--Empty Split Node-->
     </div>
 </template>
 <script>

@@ -213,6 +213,12 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on("click", ".slideAddSplitbox", function(){
+        $(".addSplitBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
     $(document).on("click", ".slideTriggerbox", function(){
         $(".triggerBoxContent").animate({
             width: "toggle"
@@ -231,5 +237,11 @@ $(document).ready(function(){
             elem.classList.remove('droppable_highlight');
         })
     });
-
 });
+function triggerSlider(){
+    var slider = new Slider('#ex1', {
+        formatter: function (value) {
+            return 'Current value: ' + value;
+        }
+    });
+}
