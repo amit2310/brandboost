@@ -6,6 +6,7 @@
 <link href="{{ URL::asset('assets/dropzone-master/dist/dropzone.css') }}" rel="stylesheet" type="text/css">
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://seiyria.com/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet" type="text/css">
 
 <!-- Sub User Css -->
 @if(!$isLoginPage)
@@ -13,6 +14,7 @@
     <link href="{{ URL::asset('assets/css/theme1.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('assets/profile_css/profile.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
+
 @endif
 @endif
 

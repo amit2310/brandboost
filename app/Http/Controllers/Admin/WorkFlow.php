@@ -3049,8 +3049,9 @@ class WorkFlow extends Controller {
             'title' => $title,
         ];
         if($nodeType == 'delay'){
-            $triggerParam['delay_propeties'] = $delayProperties;
+            $triggerParam['delay_properties'] = $delayProperties;
         }
+
         $oCurrentNode = $request->eventData;
         $eventID = '';
         $previousID = '';
@@ -3092,6 +3093,14 @@ class WorkFlow extends Controller {
                 }
             }
         }
+        if($newNodeEventID>0){
+            //Add Split data in case split node
+            if($nodeType == 'split'){
+                $splitData = $request->splitData;
+                $mWorkflow->addWorkflowSplitTest($splitData, $newNodeEventID, $moduleName);
+            }
+        }
+
         if($bSuccess){
             $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
             //Reassemble events Order

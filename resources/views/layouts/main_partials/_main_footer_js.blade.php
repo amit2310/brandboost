@@ -6,6 +6,7 @@
 <script src="{{ URL::asset('assets/js/metisMenu.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/waves.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+<script src="https://seiyria.com/bootstrap-slider/js/bootstrap-slider.js"></script>
 <script src="{{ URL::asset('assets/js/jQuery.tagify.js') }}"></script>
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
@@ -19,6 +20,7 @@
 <script src="{{ URL::asset('assets/js/pages/gallery.js') }}"></script>
 <script src="{{ URL::asset('assets/js/datetime.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/spectrum.js') }}"></script>
+
 
 <script>
     function displayMessagePopup(msgType = '', msgHeading = '', msgDescription = '') {

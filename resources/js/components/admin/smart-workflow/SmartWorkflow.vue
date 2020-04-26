@@ -182,7 +182,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10" style="cursor: pointer;">
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddSplitbox" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_email_300 m-auto br12 "><img src="assets/images/split.svg"/></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Split Test</p>
                                             <p class="fw400 fsize12 dark_300 m0">Split trafic to determine which is the most effective</p>
@@ -690,6 +690,162 @@
                     </div>
                 </div>
 
+                <!--Split Modal-->
+                <div class="box addSplitBoxContent" style="width: 424px; display:none; border-color:#67B7E4!important">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddSplitbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/split_icon_44.svg"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Split Test</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Which event should trigger this automation?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="testname" class="fsize11 fw500 dark_600 ls4">SPLIT TEST NAME</label>
+                                            <input type="text" v-model="splitProperties.test_name" class="form-control h50" placeholder="Enter new split test name" id="testname"/>
+                                        </div>
+
+                                        <div class="form-group mb30">
+                                            <label for="splitPath" class="fsize11 fw500 dark_600 ls4">SPLIT INTO</label>
+                                            <select v-model="splitProperties.total_path" class="form-control h50 form-control-custom dark_800" id="splitPath">
+                                                <option value="2">2 paths (A/B)</option>
+                                                <option value="3">3 paths (A/B/C)</option>
+                                                <option value="4">4 paths (A/B/C/D)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="evenTraffic" class="fsize11 fw500 dark_600 ls4">DISTRIBUTE TRAFFIC EVENLY</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p class="m0 fsize11 fw500 float-left" :class="splitProperties.even_traffic? 'email_400': 'light_800'">{{splitProperties.even_traffic? 'YES' : 'NO'}}</p>
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="splitProperties.even_traffic" id="evenTraffic" >
+                                            <span class="toggle email"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="ex1" class="fsize11 fw500 dark_600 ls4">PATHS PERCENTAGES</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" @change="alert('changing value')"/>
+                                                </div>
+                                                <div class="col-6 pr5">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text blue_300" style="width:48px; padding:0 17px; background: rgba(165, 206, 255, 0.1); border-color:#E1E9F6;">A</span>
+                                                        </div>
+                                                        <input type="text" class="form-control h48 brig_nonr" v-model="splitProperties.path_a">
+                                                        <div class="input-group-append bkg_light_000">
+                                                            <span class="input-group-text bkg_light_000 dark_100" style="border-color:#E1E9F6; width:48px; padding:0 17px;">%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 pl5">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text green_400" style="width:48px; padding:0 17px; background: rgba(148, 215, 169, 0.1); border-color:#E1E9F6;">B</span>
+                                                        </div>
+                                                        <input type="text" class="form-control h48 brig_nonr" v-model="splitProperties.path_b">
+                                                        <div class="input-group-append bkg_light_000">
+                                                            <span class="input-group-text bkg_light_000 dark_100" style="border-color:#E1E9F6; width:48px; padding:0 17px;">%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div v-if="splitProperties.total_path >=3" class="col-6 pr5">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text blue_300" style="width:48px; padding:0 17px; background: rgba(148, 215, 169, 0.1); border-color:#E1E9F6;">C</span>
+                                                        </div>
+                                                        <input type="text" class="form-control h48 brig_nonr" v-model="splitProperties.path_c">
+                                                        <div class="input-group-append bkg_light_000">
+                                                            <span class="input-group-text bkg_light_000 dark_100" style="border-color:#E1E9F6; width:48px; padding:0 17px;">%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div v-if="splitProperties.total_path==4" class="col-6 pl5">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text green_400" style="width:48px; padding:0 17px; background: rgba(148, 215, 169, 0.1); border-color:#E1E9F6;">D</span>
+                                                        </div>
+                                                        <input type="text" class="form-control h48 brig_nonr" v-model="splitProperties.path_d">
+                                                        <div class="input-group-append bkg_light_000">
+                                                            <span class="input-group-text bkg_light_000 dark_100" style="border-color:#E1E9F6; width:48px; padding:0 17px;">%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="conditionalsplit" class="fsize11 fw500 dark_600 ls4 text-uppercase">Conditional Split</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <p class="m0 fsize11 fw500 float-left" :class="splitProperties.conditional_split? 'email_400': 'light_800'">{{splitProperties.conditional_split? 'YES' : 'NO'}}</p>
+                                        <label class="custom-form-switch float-right">
+                                            <input class="field" type="checkbox" v-model="splitProperties.conditional_split" id="conditionalsplit" >
+                                            <span class="toggle email"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-12" v-if="splitProperties.conditional_split">
+                                        <hr class="mt0" />
+                                        <p class="fsize14 dark_400">Split traffic and send contacts to Path B until...</p>
+                                        <div class="form-group">
+                                            <label for="splitcondition" class="fsize11 fw500 dark_600 ls4">THE FOLLOWING condition is met:</label>
+                                            <select v-model="splitProperties.sent_to" class="form-control h50 form-control-custom dark_800" id="splitcondition">
+                                                <option value="b">X contacts have been sent to Path B</option>
+                                                <option value="a">X contacts have been sent to Path A</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mb30">
+                                            <label for="numberofcontact" class="fsize11 fw500 dark_600 ls4">NUMBER OF CONTACTS</label>
+                                            <select v-model="splitProperties.total_sent_to" class="form-control h50 form-control-custom dark_800" id="numberofcontact">
+                                                <option value="500">500</option>
+                                                <option value="1000">1000</option>
+                                                <option value="1500">1500</option>
+                                                <option value="2000">2000</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="row bottom-position">-->
+                                <div class="row">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_email_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddSplitbox" @click="addSplitTest">Save Split Test</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddSplitbox">Close</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
 
@@ -733,6 +889,18 @@
                     delay_custom_zone: false,
                     delay_time_zone: 'est'
                 },
+                splitProperties: {
+                    test_name: '',
+                    total_path: 2,
+                    even_traffic: true,
+                    path_a: 75,
+                    path_b: 25,
+                    path_c: 0,
+                    path_d: 0,
+                    conditional_split: false,
+                    total_sent_to: 500,
+                    sent_to: 'a'
+                },
                 isDragStarted: false,
                 draggableEvent: '',
                 draggedEvent: ''
@@ -743,6 +911,10 @@
                 let elem = document.querySelector('.topbar');
                 elem.classList.add('workflowtopbar');
             }
+            setTimeout(function(){
+                triggerSplitSlider();
+            }, 5000);
+
         },
         created(){
             this.getWorkflowData();
@@ -911,6 +1083,25 @@
                     }
                 });
             },
+            addSplitTest: function(){
+                this.loading = true;
+                let formData = {
+                    nodeType: 'split',
+                    name: 'split Test',
+                    title: this.splitProperties.test_name,
+                    splitData: this.splitProperties,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: this.selectedEvent,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.metaData.selectedClass = response.data.newEventId;
+                    }
+                });
+            },
             nodeClass : function(event){
                 let className = JSON.parse(event.data)['node_type'];
                 if(className == 'action'){
@@ -997,8 +1188,17 @@
         },
 
     }
+    function triggerSplitSlider(){
+        triggerSlider();
+    }
 </script>
 <style>
+    .slider.slider-horizontal{ width:100%; margin:15px 0 20px}
+    #ex1Slider .slider-handle{ width:24px; height:24px; background:#B4C0D4; border: 6px solid #FFFFFF;
+        box-shadow: 0px 0px 1px rgba(0, 16, 47, 0.08), 0px 1px 1px rgba(0, 21, 62, 0.06); top:-2px;}
+    #ex1Slider .slider-track{ background:#7ECD99}
+    #ex1Slider .slider-selection {	background: #4489F2;}
+
     .workflowtopbar {
      background: #ffffff !important;
     }
