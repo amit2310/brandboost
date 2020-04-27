@@ -202,9 +202,10 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
         <div class="col-md-12">
           <!--<div class="workflow_switch_div_small canvas mb0 mt0 text-center" style="width:142px;"> <a class="workflow_switch email_300" href="#"><i class="ri-percent-line email_300"></i> ADD SPLIT TEST</a> </div>-->
           
-          <div class="workflow_switch_div_small canvas mb0 mt0">
+                    <div class="workflow_switch_div_small canvas mb0 mt0 d-inline-block" style="width:auto;">
                     <a class="workflow_switch" href="#"> <i><img src="assets/images/play_split.svg"/></i> SPLIT </a> &nbsp;
-                    <a class="workflow_switch active" href="#">50/50</a>
+                    <a class="workflow_switch active" href="#">50/50</a>&nbsp;
+                    <a class="workflow_switch" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>
                     </div>
                     
                     
