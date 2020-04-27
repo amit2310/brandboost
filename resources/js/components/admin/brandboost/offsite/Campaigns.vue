@@ -67,12 +67,12 @@
                     <div class="row" v-else>
                         <div class="col-md-6">
                             <ul class="table_filter">
-                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">All</a></li>
+                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">All</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">Active</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">Draft</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">Archive</a></li>
 
-                                <!--<li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
                                     <div class="dropdown-menu p10 mt-1">
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; Inactive</a>
                                         <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
@@ -84,8 +84,12 @@
                             <ul class="table_filter text-right">
                                 <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter_line_18.svg"></i></a>
                                     <div class="dropdown-menu p10 mt-1">
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; Inactive</a>
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
+                                        <a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">All</a>
+                                        <a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">Active</a>
+                                        <a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">Draft</a>
+                                        <a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">Archive</a>
+                                        <a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')">Inactive</a>
+                                        <a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">Created</a>
                                     </div>
                                 </li>
                                 <!--<li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>-->
@@ -171,7 +175,7 @@
                 <div class="row" v-if="viewType == 'List View'">
                     <div class="col-md-12">
                         <div class="table-responsive mb20">
-                            <p class="bbot fsize13 fw500 dark_500 m-0 pb10 pt10"><img src="assets/images/record-circ.svg"/> &nbsp; Site Campaigns</p>
+                            <p class="bbot fsize13 fw500 dark_500 m-0 pb10 pt10"><img src="assets/images/record-circ.svg"/> &nbsp; Off Site Campaigns</p>
 
                             <table class="table table-borderless mb-0">
                                 <tbody>
@@ -548,7 +552,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                axios.get('/admin/brandboost/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/brandboost/offsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
