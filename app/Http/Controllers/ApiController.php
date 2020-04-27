@@ -6,10 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Controllers\Admin\Login;
 use App\Http\Controllers\Admin\Subscribers;
 
 class ApiController extends Controller
 {
+    /**
+     * method to take inputs for the login
+     */
+    public function loginAppUser(Request $request) {
+        $email = $request->email;
+        if(!empty($email)) {
+            echo "Email = ".$email; exit;
+            $cLogin = new Login();
+            $doLogin = $cLogin->index($request);
+            return $doLogin;
+        }
+    }
+
     /**
      * method to take inputs for the subscription
      */

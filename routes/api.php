@@ -17,13 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', function (Request $request) {
-    return response()->json(['name' => 'Andrew J']);
-});
-
-Route::prefix('api')->group(function() {
-    //Route::post('login','ApiController@loginAppUser');
-});
+Route::post('v1/login','ApiController@loginAppUser')->name('appUser.login');
 Route::post('v1/subscribe','ApiController@subscribeAppUser')->name('appUser.subscribe');
 
 
