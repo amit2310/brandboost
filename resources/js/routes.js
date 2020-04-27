@@ -39,6 +39,8 @@ import OnsiteMedia from './components/admin/brandboost/onsite/Media';
 import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequest.vue';
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import OnsiteReviewCampaigns from './components/admin/brandboost/onsite/ReviewCampaigns.vue';
+import Campaigns from './components/admin/brandboost/Campaigns';
+
 /*Import Onsite Setup components*/
 import onsiteStep1 from './components/admin/brandboost/onsite/setup/Setup';
 import onsiteStep2 from './components/admin/brandboost/onsite/setup/Setup2';
@@ -85,7 +87,6 @@ import SmsAutomationCampaigns from './components/admin/modules/sms/Workflow';
 
 /*Referral Module*/
 
-
 /*Brand Page*/
 import BrandSetting from './components/admin/brand/Settings';
 import BrandConfiguration from './components/admin/brand/Configurations';
@@ -98,8 +99,6 @@ import ChatShortcut from './components/admin/chat/Shortcuts';
 /*Widget Section*/
 import WidgetOverview from './components/admin/brandboost/WidgetOverview';
 // import OnsiteWidgets from './components/admin/brandboost/Widgets';
-
-
 
 import MediaGalleryWidget from './components/admin/MediaGallery';
 import OnsiteWidgetSetup from './components/admin/brandboost/onsite/widget_setup/ReviewWidgets';
@@ -131,7 +130,6 @@ import Configurations from './components/admin/contact/Configurations';
 import PeopleDeals from './components/admin/deals/Deals';
 
 import Profile from './components/admin/Profile';
-
 
 /* Sub User Section */
 import UserProfile from './components/user/Profile';
@@ -384,6 +382,7 @@ const routes = [
     { path: '/reviews/onsite/workflow/setup/:id', component: onsiteWorkflowSetup, meta: { title: 'Workflow Setup'} },
 
     /* Tab Option In Review Section */
+    { path: '/campaigns', component: Campaigns, props: {pageColor: 'onsite_sec'}, meta: { title: 'Review campaigns - Brand Boost'} },
     { path: '/brandboost/onsite/campaigns', component: OnsiteCampaignsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite campaigns - Brand Boost'} },
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/onsite/contacts', component: OnsiteSubscribersTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite contacts - Brand Boost'} },
