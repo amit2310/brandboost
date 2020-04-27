@@ -1834,7 +1834,7 @@ class Brandboost extends Controller
      */
     public function offsite(Request $request)
     {
-        $items_per_page = $request->get('items_per_page');
+        $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $user_role = $aUser->user_role;

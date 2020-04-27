@@ -455,7 +455,7 @@ class BrandboostModel extends Model {
      * @param type $brandboostID
      * @return type
      */
-    public static function getBrandboost($id = 0, $type = '', $campaignType='', $searchBy = '', $sortBy='', $items_per_page=5, $paginate=true) {
+    public static function getBrandboost($id = 0, $type = '', $campaignType='', $searchBy = '', $sortBy='', $items_per_page=10, $paginate=true) {
 
         $query = DB::table('tbl_brandboost')
 			->when(($id > 0), function ($query) use ($id) {
