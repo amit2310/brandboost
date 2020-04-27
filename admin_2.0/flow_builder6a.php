@@ -207,7 +207,7 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
         <div class="col-12 text-center"> <a class="workflowadds slidebox" href="#"><i class="ri-add-fill"></i></a> </div>
         <!--=====ADD SPLIT TEST=============-->
         <div class="col-md-12">
-          <div class="workflow_switch_div_small canvas mb0 mt0 text-center" style="width:142px; border:2px solid #72C9EA ;"> <a class="workflow_switch email_300" href="#"><i class="ri-percent-line email_300"></i> ADD SPLIT TEST</a> </div>
+          <div class="workflow_switch_div_small canvas mb0 mt0 text-center d-inline-block" style="width:auto; border:2px solid #72C9EA ;"> <a class="workflow_switch email_300" href="#"><i class="ri-percent-line email_300"></i> ADD SPLIT TEST</a> <a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a> </div>
         </div>
         <!--=====Split Image top=============-->
         <div class="col-md-12 text-center">

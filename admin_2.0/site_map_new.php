@@ -158,7 +158,7 @@
      			<li><a target="_blank" href="offsite_campaign_list.php">Offsite Campaigns List </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
                 <li><a target="_blank" href="offsite_campaign_setup1.php">Offsite Campaigns Setup 1 </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
                 <li><a target="_blank" href="offsite_campaign_setup2.php">Offsite Campaigns Setup 2 </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
-                
+                <li><a target="_blank" href="offsite_campaign_setup3.php">Offsite Campaigns Setup 3 </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
      			
      			
      		</ul>

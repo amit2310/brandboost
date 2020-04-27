@@ -3049,8 +3049,9 @@ class WorkFlow extends Controller {
             'title' => $title,
         ];
         if($nodeType == 'delay'){
-            $triggerParam['delay_propeties'] = $delayProperties;
+            $triggerParam['delay_properties'] = $delayProperties;
         }
+
         $oCurrentNode = $request->eventData;
         $eventID = '';
         $previousID = '';
@@ -3092,6 +3093,14 @@ class WorkFlow extends Controller {
                 }
             }
         }
+        if($newNodeEventID>0){
+            //Add Split data in case split node
+            if($nodeType == 'split'){
+                $splitData = $request->splitData;
+                $mWorkflow->addWorkflowSplitTest($splitData, $newNodeEventID, $moduleName);
+            }
+        }
+
         if($bSuccess){
             $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
             //Reassemble events Order
@@ -3102,6 +3111,123 @@ class WorkFlow extends Controller {
             return ['status' => 'error'];
         }
 
+
+    }
+
+    /**
+     * This function used to move existing workflow node move back and forth
+     * @param Request $request
+     * @return array|string[]
+     */
+    public function moveWorkflowNode(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $sourceNode = $request->sourceNode;
+        $sourceEventId = $sourceNode['id'];
+        $destinationNode = $request->destinationNode;
+        $destinEventId = $destinationNode['id'];
+        $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oLastNode = getLastNode($orderedEvents['oEvents']);
+        if(!empty($sourceNode) || !empty($destinationNode)){
+            //Step-1: If both node are same, then do nothing
+            if($sourceEventId == $destinEventId){
+                return [];
+            }
+            //Step-2: De-attach source node from the tree
+            $bSourceDeattached = false;
+            if ($sourceEventId > 0) {
+                $sourcePreviousID = $sourceNode['previous_event_id'];
+
+                //Get Previous Node
+                $sourcePreviousNode = $mWorkflow->getNodeInfo($sourcePreviousID, $moduleName);
+
+                //Get Next Node
+                $sourceNextNode = $mWorkflow->getNextNodeInfo($sourceEventId, $moduleName);
+
+                //Connect adjacent nodes
+                $aData = array();
+                if (!empty($sourceNextNode)) {
+                    //Not a last node
+                    $aData = array(
+                        'previous_event_id' => isset($sourcePreviousNode->id) ? $sourcePreviousNode->id : NULL
+                    );
+
+                    if ($sourceNode['event_type'] != 'followup') {
+                        $aData['event_type'] = $sourceNode['event_type'];
+                    }
+
+                    if (empty($sourcePreviousNode)) {
+                        //We are de-attaching main event so now assign next node as a main event
+                        $aData['event_type'] = $sourceNode['event_type'];
+                    }
+                    $bUpdated = $mWorkflow->updateNode($aData, $sourceNextNode->id, $moduleName);
+                    $bSourceDeattached = true;
+                }else{
+                    //Last node, not need to do anything
+                    $bSourceDeattached = true;
+                }
+
+            }
+
+
+            //Step-3: Attach source node into the destination
+            if($bSourceDeattached == true){
+                if(empty($destinationNode)){
+                    //Trying to drop at the end of the tree
+                    //Get Last node
+                    //Last Node = $oLastNode;
+                    $destinEventId = $oLastNode->id;
+                    $aData = array(
+                        'previous_event_id' => $destinEventId,
+                        'event_type' => 'followup'
+                    );
+                    $bUpdated = $mWorkflow->updateNode($aData, $sourceEventId, $moduleName);
+                }else{
+                    $destinPreviousID = $destinationNode['previous_event_id'];
+                    $destinEventId = $destinationNode['id'];
+
+                    //Updated dropped node(source node)
+                    $droppedEventId = $sourceEventId;
+                    if(empty($destinPreviousID)){
+                        //Dropped node will be the first node
+                        $aData = array(
+                            'previous_event_id' => NULL
+                        );
+                        if ($destinationNode['event_type'] != 'followup') {
+                            $aData['event_type'] = $destinationNode['event_type'];
+                        }
+                    }else{
+                        $aData = array(
+                            'previous_event_id' => $destinPreviousID
+                        );
+                    }
+                    $bUpdated = $mWorkflow->updateNode($aData, $droppedEventId, $moduleName);
+
+                    //Update destination node
+                    $aData = array(
+                        'previous_event_id' => $sourceEventId
+                    );
+                    if(empty($destinPreviousID)){
+                        $aData['event_type'] = 'followup';
+                    }
+                    $bUpdated = $mWorkflow->updateNode($aData, $destinEventId, $moduleName);
+                }
+
+                $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+                //Reassemble events Order
+                $orderedEvents = sortWorkflowEvents($events);
+                $oEvents = $orderedEvents['oEvents'];
+                return ['status' => 'success', 'oEvents' => $oEvents];
+
+            }
+        }
+        return ['status' => 'error'];
 
     }
 

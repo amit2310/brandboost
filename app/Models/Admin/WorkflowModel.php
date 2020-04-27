@@ -4700,4 +4700,51 @@ class WorkflowModel extends Model {
         return true;
     }
 
+    /**
+     * This function is used to add split test campaigns in all modules
+     * @param $aData
+     * @param $moduleUnitId
+     * @param $moduleName
+     * @return bool
+     */
+    public function addWorkflowSplitTest($aData, $eventId, $moduleName){
+        if (empty($eventId) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_split';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_split';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_split';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_split';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+        $aData['event_id'] = $eventId;
+        $aData['created'] = date("Y-m-d H:i:s");
+        $insert_id = DB::table($tableName)->insertGetId($aData);
+        if($insert_id>0){
+            $oEvent = $this->getNodeInfo($eventId, $moduleName);
+            if(!empty($oEvent)){
+                $triggerParam = json_decode($oEvent->data);
+                $triggerParam->split_properties = ['split_id'=>$insert_id];
+                $bUpdated = $this->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+            }
+        }
+        return $insert_id;
+
+    }
+
 }
