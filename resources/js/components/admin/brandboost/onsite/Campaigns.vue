@@ -192,7 +192,7 @@
                                     <td><span class="fsize10 fw500">Rating</span></td>
                                     <td><span class="fsize10 fw500">Updated <img src="assets/images/arrow-down-line-14.svg"> </span></td>
                                     <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                                    <!--<td>&nbsp;</td>-->
+                                    <td>&nbsp;</td>
                                 </tr>
 
                                 <tr v-for="campaign in campaigns" :key="campaign.id">
@@ -244,8 +244,8 @@
                                             <span v-if="campaign.status == 2" class="float-right"><span class="status_icon bkg_reviews_300" title="Pending"></span></span>
                                             <span v-if="campaign.status == 3" class="float-right"><span class="status_icon bkg_reviews_300" title="Archive"></span></span>
                                     </td>
-                                    <!--<td>
-                                        <div style="padding-left: 5px;">
+                                    <td>
+                                        <div>
                                             <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
                                                 <span><img src="assets/images/more-2-fill.svg"></span>
                                             </button>
@@ -262,7 +262,7 @@
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
-                                    </td>-->
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
