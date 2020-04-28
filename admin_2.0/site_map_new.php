@@ -130,7 +130,8 @@
                 <li><a target="_blank" href="review_request_new4c.php">Request - Add Contact</a> &nbsp; &nbsp; <small >Last Updated on 1st April 2020</small></li>
                 <li><a target="_blank" href="review_request_new5.php">Request - 100% </a> &nbsp; &nbsp; <small >Last Updated on 21st March 2020</small></li>
                 <li><a target="_blank" href="review_request_new6.php">Review Request Single Page </a> &nbsp; &nbsp; <small >Last Updated on 24st March 2020</small></li>
-     			
+     			<li><a target="_blank" href="review_request_new7_list.php">Review Request List </a> &nbsp; &nbsp; <small >Last Updated on 29th April 2020</small></li>
+                <li><a target="_blank" href="review_request_new8_grid.php">Review Request Grid </a> &nbsp; &nbsp; <small >Last Updated on 29th April 2020</small></li>
                 
                 <li><strong>Review Popups</strong></li>
      			<li><a target="_blank" href="reviews_popups.php">Reviews Popups </a> &nbsp; &nbsp; <small >Last Updated on 2nd April 2020</small></li>
