@@ -126,30 +126,28 @@
         <li><a href="#"><span class="circle-icon-20 bkg_blue_300 br35"><i class="ri-time-fill"></i></span> Delay: 3 days </a></li>
         <li><a href="#"><span class="circle-icon-20 bkg_email_300 rotate_45 "><span class="rotate_45_minus d-block"><i><img class="align-top mt-1" width="12" src="assets/images/split-white.svg"/></i></span></span> Split Test</a></li>
         
-        </ul>
+       
         
         <hr>
         
-        <ul class="workflow_list_new">
+        
         <li><a href="#"><span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">a</span> </a></li>
         <li><a href="#"><span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span> Action: Subscribe on List</a></li>
-        </ul>
+       
         
         <hr>
         
-        <ul class="workflow_list_new">
+       
         <li><a href="#"><span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">b</span> </a></li>
         <li><a href="#"><span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span> Action: Subscribe on List</a></li>
-        </ul>
+       
         
         <hr>
         
         
-        <ul class="workflow_list_new">
+        
         <li><a href="#"><span class="circle-icon-20 bkg_dark_100 rotate_45"><span class="rotate_45_minus d-block"><i class="ri-check-line"></i></span></span> Goal: Empty</a></li>
         </ul>
-        
-        
         </div>
       
 
