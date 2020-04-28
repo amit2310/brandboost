@@ -4747,4 +4747,89 @@ class WorkflowModel extends Model {
 
     }
 
+    /**
+     * This method used to get split campaign info
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function getSplitInfo($id, $moduleName){
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_split';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_split';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_split';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_split';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->first();
+
+        return $oData;
+
+    }
+
+    /**
+     * Used to update split info
+     * @param $aData
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function updateSplitData($aData, $id, $moduleName){
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_split';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_split';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_split';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_split';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->update($aData);
+
+        if ($oData) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

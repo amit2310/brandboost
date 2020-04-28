@@ -39,9 +39,12 @@
                         :event="oEvent"
                         :unitInfo="unitInfo"
                         :metaData="metaData"
+                        :moduleName="moduleName"
+                        :moduleUnitId="moduleUnitId"
                         :key="oEvent.id"
                         @setAddActionProps="setAddActionProps"
                         @deleteEventNode="deleteEventNode"
+                        @editEventNode="editEventNode"
                         @createBlankAction="createBlankAction"
                         @createBlankDecision="createBlankDecision"
                         @createBlankDelay="createBlankDelay"
@@ -94,7 +97,7 @@
     import CanvasNode from "./components/CanvasNode";
     export default {
         components: {CanvasNode},
-        props: ['events', 'unitInfo', 'metaData'],
+        props: ['events', 'unitInfo', 'metaData', 'moduleName', 'moduleUnitId'],
         data(){
             return {
                 viewType: 'list',
@@ -106,6 +109,9 @@
             },
             deleteEventNode: function(eventData){
                 this.$emit("deleteWorkflowNode", eventData);
+            },
+            editEventNode: function(nodeType, eventData){
+                this.$emit("editWorkflowNode", nodeType, eventData);
             },
             createBlankAction: function(eventData){
                 this.$emit("addBlankAction", eventData);
@@ -138,7 +144,3 @@
         }
     }
 </script>
-
-
-
-
