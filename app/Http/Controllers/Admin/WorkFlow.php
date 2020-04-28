@@ -3231,4 +3231,75 @@ class WorkFlow extends Controller {
 
     }
 
+    /**
+     * Used to update workflow delay node trigger params
+     * @param Request $request
+     * @return array
+     */
+    public function updateEventDelay(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventId = $request->id;
+        $delayProperties = $request->delayData;
+        $oEvent = $mWorkflow->getNodeInfo($eventId, $moduleName);
+        if(!empty($oEvent)){
+            $triggerParam = json_decode($oEvent->data);
+            $triggerParam->delay_properties = $delayProperties;
+            $triggerParam->title = 'Wait for '.$delayProperties['delay_value'].' '. ucfirst($delayProperties['delay_unit']);
+            $bUpdated = $mWorkflow->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+        }
+        $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+        return ['status' => 'success', 'oEvents' => $oEvents];
+    }
+
+
+    public function updateSplitData(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $splitId = $request->id;
+        $splitProperties = $request->splitData;
+        $bUpdated = $mWorkflow->updateSplitData($splitProperties, $splitId, $moduleName);
+        //Update event trigger param too
+        $eventId = $splitProperties['event_id'];
+        $oEvent = $mWorkflow->getNodeInfo($eventId, $moduleName);
+        if(!empty($oEvent)){
+            $triggerParam = json_decode($oEvent->data);
+            $triggerParam->title = $splitProperties['test_name'];
+            $bUpdated = $mWorkflow->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+        }
+        $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+        return ['status' => 'success', 'oEvents' => $oEvents];
+    }
+
+    /**
+     * Used to get split campaign info
+     * @param Request $request
+     * @return array
+     */
+    public function getSplitInfo(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $splitId = $request->id;
+        $oData = $mWorkflow->getSplitInfo($splitId, $moduleName);
+        return ['status' => 'success', 'splitData' => $oData];
+    }
+
 }
