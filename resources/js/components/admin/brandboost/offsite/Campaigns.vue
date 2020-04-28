@@ -5,7 +5,7 @@
          **********************-->
         <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
         <loading :isLoading="loading"></loading>
-        <div class="content-area" v-show="pageRendered==true">
+        <div class="content-area" v-show="pageRendered==true" style="padding-top: 0px!important;">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
                 <!--<div class="row">
                     <div class="col-md-12">
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="float-right">
                                     <!--<input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem">-->
-                                    <a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>
+                                    <a class="search_tables_open_close_OffC" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                     </div>
                                 </li>
                                 <!--<li><input class="table_search" type="text" placeholder="Search" v-model="searchBy" @input="searchItem"></li>-->
-                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
+                                <li><a class="search_tables_open_close_OffC" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
                                 <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
@@ -101,10 +101,10 @@
                         </div>
                     </div>
 
-                    <div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                    <div class="card p20 datasearcharea_OffC reviewRequestSearch br6 shadow3">
                         <div class="form-group m-0 position-relative">
                             <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
-                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                            <a class="search_tables_open_close_OffC searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                         </div>
                     </div>
 
@@ -122,10 +122,7 @@
                                     <a v-if="campaign.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
                                     <a v-if="campaign.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="showContacts(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Contacts</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
-                                    <a class="dropdown-item" v-if="campaign.campaign_type=='manual'" :href="`#/reviews/onsite/request/list/${campaign.id}`"><i class="dripicons-user text-muted mr-2"></i> Review Requests</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Statistics</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                 </div>
@@ -196,7 +193,7 @@
                                     <td><span class="fsize10 fw500">Rating</span></td>
                                     <td><span class="fsize10 fw500">Updated <img src="assets/images/arrow-down-line-14.svg"> </span></td>
                                     <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                                    <!--<td>&nbsp;</td>-->
+                                    <td>&nbsp;</td>
                                 </tr>
 
                                 <tr v-for="campaign in campaigns" :key="campaign.id">
@@ -248,8 +245,8 @@
                                             <span v-if="campaign.status == 2" class="float-right"><span class="status_icon bkg_reviews_300" title="Pending"></span></span>
                                             <span v-if="campaign.status == 3" class="float-right"><span class="status_icon bkg_reviews_300" title="Archive"></span></span>
                                     </td>
-                                    <!--<td>
-                                        <div style="padding-left: 5px;">
+                                    <td>
+                                        <div>
                                             <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
                                                 <span><img src="assets/images/more-2-fill.svg"></span>
                                             </button>
@@ -259,14 +256,11 @@
                                                 <a v-if="campaign.status == '1'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '2')"><i class="dripicons-user text-muted mr-2"></i> Pause</a>
                                                 <a v-if="campaign.status != '3'" class="dropdown-item" href="javascript:void(0);" @click="changeStatus(campaign.id, '3')"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="showContacts(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Contacts</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="showCampaignPage(campaign.id,company_name,campaign.brand_title.replace(' ','-'))"><i class="dripicons-user text-muted mr-2"></i> Campaign Page</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Reviews</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" @click="showQuestions(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Questions</a>
-                                                <a class="dropdown-item" v-if="campaign.campaign_type=='manual'" :href="`#/reviews/onsite/request/list/${campaign.id}`"><i class="dripicons-user text-muted mr-2"></i> Review Request</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="showReviews(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Statistics</a>
                                                 <a class="dropdown-item" href="javascript:void(0);" @click="deleteItem(campaign.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
                                             </div>
                                         </div>
-                                    </td>-->
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -536,11 +530,10 @@
                 this.loadPaginatedData();
             },
             setupBroadcast: function(id){
-                //window.location.href='#/reviews/onsite/setup/'+id;
-                window.location.href='#/reviews/campaign/'+id;
+                window.location.href='#/reviews/offsite/setup/'+id+'/1';
             },
             showContacts: function(id){
-                window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
+                window.location.href='#/reviews/offsite/setup/'+id+'/3';
             },
             showCampaignPage: function(id,companyName,campaignName){
                 window.location.href='#/for/'+companyName+'/'+campaignName+'-'+id;
@@ -562,7 +555,7 @@
                         this.campaigns = response.data.aBrandbosts;
                         this.loading = false;
                         this.pageRendered = true;
-                        //console.log(this.campaigns)
+                        console.log(this.campaigns)
                     });
             },
             showPaginationData: function(p){
@@ -708,7 +701,20 @@
     $(document).ready(function(){
         $(document).on("click", "#displayAddCampaignForm", function(){
             $("#CREATEFORM").modal('show');
-        })
+        });
+
+        $(document).on("click", ".search_tables_open_close_OffC", function(){
+            $(".datasearcharea_OffC").animate({
+                width: "toggle"
+            });
+            $('#InputToFocus').focus();
+        });
 
     });
 </script>
+<style>
+    .datasearcharea_OffC{position:relative;width: 100%;z-index: 1;top: 13px; display: none}
+    .datasearcharea_OffC a.searchcloseicon{ position: absolute; right: 25px;top: 14px;}
+
+    .datasearcharea_OffC .form-control:focus{box-shadow: none!important}
+</style>
