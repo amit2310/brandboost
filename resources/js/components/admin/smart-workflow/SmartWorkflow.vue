@@ -135,8 +135,11 @@
                     :events="events"
                     :unitInfo="unitInfo"
                     :metaData="metaData"
+                    :moduleName="moduleName"
+                    :moduleUnitId="moduleUnitId"
                     @setActionProps="setActionProps"
                     @deleteWorkflowNode="deleteWorkflowNode"
+                    @editWorkflowNode="editWorkflowNode"
                     @addBlankAction="addBlankAction"
                     @addBlankDecision="addBlankDecision"
                     @addDelay="addDelay"
@@ -546,7 +549,7 @@
                 <!--Delay Modal-->
                 <div class="box addDelayBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDelaybox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDelaybox" id="slideAddDelaybox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="44" src="assets/images/time_blue_44.svg"/>
@@ -599,7 +602,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <p class="m0 fsize11 blue_400 fw500 float-left">NO</p>
+                                        <p class="m0 fsize11 fw500 float-left" :class="delayProperties.delay_paused? 'blue_400':'light_800'">{{delayProperties.delay_paused? 'YES':'NO'}}</p>
                                         <label class="custom-form-switch float-right">
                                             <input class="field" type="checkbox" id="resume2" v-model="delayProperties.delay_paused" >
                                             <span class="toggle blue"></span>
@@ -651,7 +654,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <p class="m0 fsize11 blue_400 fw500 float-left">{{delayProperties.delay_custom_zone ? 'YES': 'NO'}}</p>
+                                        <p class="m0 fsize11 fw500 float-left" :class="delayProperties.delay_custom_zone? 'blue_400':'light_800'">{{delayProperties.delay_custom_zone ? 'YES': 'NO'}}</p>
                                         <label class="custom-form-switch float-right">
                                             <input class="field" type="checkbox" id="timezone" v-model="delayProperties.delay_custom_zone" >
                                             <span class="toggle blue"></span>
@@ -679,7 +682,16 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddDelaybox" @click="addDelay">Add Delay</button>
+                                        <button
+                                            v-if="delayEditMode == true"
+                                            class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20"
+                                            @click="updateDelay"
+                                        >Update Delay</button>
+                                        <button
+                                            v-else
+                                            class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddDelaybox"
+                                            @click="addDelay"
+                                        >Add Delay</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddDelaybox">Close</button>
 
                                     </div>
@@ -693,7 +705,7 @@
                 <!--Split Modal-->
                 <div class="box addSplitBoxContent" style="width: 424px; display:none; border-color:#67B7E4!important">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddSplitbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddSplitbox" id="slideAddSplitbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="44" src="assets/images/split_icon_44.svg"/>
@@ -835,7 +847,15 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_email_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddSplitbox" @click="addSplitTest">Save Split Test</button>
+                                        <button v-if="splitEditMode == true"
+                                            class="btn btn-md bkg_email_400 light_000 pr20 min_w_160 fsize13 fw500 mr20"
+                                            @click="updateSplitTest">Update Split Test
+                                        </button>
+                                        <button
+                                            v-else
+                                            class="btn btn-md bkg_email_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddSplitbox"
+                                            @click="addSplitTest">Save Split Test
+                                        </button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddSplitbox">Close</button>
 
                                     </div>
@@ -903,7 +923,11 @@
                 },
                 isDragStarted: false,
                 draggableEvent: '',
-                draggedEvent: ''
+                draggedEvent: '',
+                delayEditMode: false,
+                delayEditId: '',
+                splitEditMode: false,
+                splitEditId: ''
             }
         },
         mounted() {
@@ -991,9 +1015,14 @@
             },
             setActionProps: function(event){
                 this.clearActionProps();
+                this.clearAllForms();
                 if(event){
                     this.selectedEvent = event;
                 }
+            },
+            clearAllForms: function(){
+              this.clearDelayProperties();
+              this.clearSplitProperties();
             },
             deleteWorkflowNode: function(event){
                 this.clearActionProps();
@@ -1009,6 +1038,44 @@
                         this.events = response.data.oEvents;
                     }
                 });
+            },
+            editWorkflowNode: function(nodeType, event){
+                this.loading = true;
+                if(nodeType == 'delay'){
+                    this.loadEditDelay(event);
+                }else if(nodeType == 'split'){
+                    this.loadSplitProperties(event);
+                }
+
+            },
+            loadEditDelay: function(event){
+                this.delayEditMode = true;
+                this.delayEditId = event.id;
+                let triggerParams = JSON.parse(event.data);
+                this.delayProperties = triggerParams['delay_properties'];
+                document.querySelector("#slideAddDelaybox").click();
+                this.loading = false;
+            },
+            loadSplitProperties: function(event){
+                this.splitEditMode = true;
+                let triggerParams = JSON.parse(event.data);
+                let splitId = triggerParams['split_properties']['split_id'];
+                if(splitId>0){
+                    this.splitEditId = splitId;
+                    let formData = {
+                        id: splitId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                    };
+                    axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getSplitInfo', formData).then(response => {
+                        if(response.data.status == 'success'){
+                            this.splitProperties = response.data.splitData;
+                            document.querySelector("#slideAddSplitbox").click();
+                            this.loading = false;
+                        }
+                    });
+                }
+                this.loading = false;
             },
             moveWorkflowNode: function(event){
                 this.loading = true;
@@ -1083,6 +1150,22 @@
                     }
                 });
             },
+            updateDelay: function(){
+                this.loading = true;
+                let formData = {
+                    id: this.delayEditId,
+                    delayData: this.delayProperties,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateEventDelay', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.successMsg='Delay properties updated successfully!';
+                    }
+                });
+            },
             addSplitTest: function(){
                 this.loading = true;
                 let formData = {
@@ -1099,6 +1182,22 @@
                         this.loading = false;
                         this.events = response.data.oEvents;
                         this.metaData.selectedClass = response.data.newEventId;
+                    }
+                });
+            },
+            updateSplitTest: function(){
+                this.loading = true;
+                let formData = {
+                    id: this.splitEditId,
+                    splitData: this.splitProperties,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateSplitData', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.successMsg='Split properties updated successfully!';
                     }
                 });
             },
@@ -1131,6 +1230,8 @@
                 return this.capitalizeFirstLetter(JSON.parse(event.data)['title']);
             },
             clearDelayProperties: function(){
+                this.delayEditMode = false;
+                this.delayEditId = '';
                 this.delayProperties = {
                     delay_type: 'after',
                     delay_unit: 'minute',
@@ -1142,6 +1243,20 @@
                     delay_custom_zone: false,
                     delay_time_zone: 'est'
                 };
+            },
+            clearSplitProperties: function(){
+                this.splitProperties= {
+                    test_name: '',
+                    total_path: 2,
+                    even_traffic: true,
+                    path_a: 75,
+                    path_b: 25,
+                    path_c: 0,
+                    path_d: 0,
+                    conditional_split: false,
+                    total_sent_to: 500,
+                    sent_to: 'a'
+                }
             },
             onLinearDrag: function(ev, selectedEventData){
                 this.isDragStarted = true;
