@@ -3,7 +3,8 @@
         <!--******************
           Top Heading area
         **********************-->
-        <div id="wf_top_bar" class="top-bar-top-section bbot shadow4">
+        <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview Email</button>
+        <div v-show="configureWorkflow == true" id="wf_top_bar" class="top-bar-top-section bbot shadow4">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4 wf_nodes_top_icon">
@@ -118,7 +119,7 @@
                 <!--******************
                  PAGE LEFT SIDEBAR END
                 **********************-->
-                <template v-show="configureWorkflow">
+                <div v-show="configureWorkflow == true">
                     <div id="wf_top_btn_area" class="">
                         <div class="row mb20">
                             <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left slideAddNodebox"><img src="assets/images/plus_white_10.svg"></button>
@@ -164,12 +165,15 @@
                         @addDelay="addDelay"
                     ></canvas-view>
 
-                </template>
+                </div>
 
                 <email-templates
                     v-if="showEmailTemplates"
                     :templates="emailTemplates"
                     :user="user"
+                    :event_id=actionEditId
+                    :moduleName="moduleName"
+                    :moduleUnitId="moduleUnitId"
                     @hideEmailTemplate="closeEmailTemplates"
                     @updateEmailCampaignId="setEmailCampaignId"
                 ></email-templates>
@@ -177,6 +181,9 @@
                     v-if="showSMSTemplates"
                     :templates="smsTemplates"
                     :user="user"
+                    :event_id=actionEditId
+                    :moduleName="moduleName"
+                    :moduleUnitId="moduleUnitId"
                     @hideSMSTemplate="closeSMSTemplates"
                     @updateSMSCampaignId="setSMSCampaignId"
                 ></sms-templates>
@@ -902,6 +909,60 @@
                     </div>
                 </div>
 
+                <!--Email Preview Modal-->
+                <div class="modal fade show" id="EditOverviewPreview">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
+                        <div class="modal-content review" style="width: 1200px;">
+                            <div class="modal-body p0 mt0 br5" style="width: 1200px;">
+                                <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="4"></system-messages>-->
+                                <loading :isLoading="loading"></loading>
+                                <div class="row">
+                                    <div class="col-md-4 pr0">
+                                        <div class="email_editor_left">
+                                            <div class="p10 bbot"><p class="m0 txt_dark fw500">Email Configuration</p></div>
+                                            <div class="p20">
+                                                <div class="form-group">
+                                                    <label class="">Greetings</label>
+                                                    <input v-model="greetings" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
+                                                </div>
+
+                                                <div class="form-group mb0">
+                                                    <label class="">Content</label>
+                                                    <a class="fsize14 open_editor" href="#"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
+                                                    <textarea v-model="introduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="introduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
+
+										But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="p20 pt0" v-if="sendTestBox==false">
+                                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="saveEditChanges">Save</button>
+                                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="openEmailTemplates">Change Template</button>
+                                                <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="javascript:void(0);" @click="sendTestBox=true">Send test email</a>
+                                            </div>
+                                            <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
+                                                <input type="text" class="mr20" placeholder="Email Address" v-model="user.email" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                                <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestEmail">Send</button>
+                                                <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 pl3">
+                                        <div class="email_editor_right preview" style="max-height:800px;overflow:auto;border-left:5px solid;">
+                                            <div class="p10 bbot position-relative"><p class="m0 txt_dark fw500">Preview</p>
+                                            </div>
+                                            <div class="p30" id="wf_preview_edit_template_content">
+                                                <div class="email_preview_sec br5 pb20" style="min-height: 500px;" v-html="content">
+                                                    Content goes here
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
 
@@ -911,6 +972,8 @@
 </template>
 
 <script>
+    import jq from "jquery";
+
     var shiftInterval;
     import ListView from '@/components/admin/smart-workflow/ListView';
     import CanvasView from '@/components/admin/smart-workflow/CanvasView';
@@ -972,7 +1035,11 @@
                 showEmailTemplates: false,
                 showSMSTemplates: false,
                 emailTemplates: '',
-                smsTemplates: ''
+                smsTemplates: '',
+                user: '',
+                greetings: '',
+                introduction: '',
+                content: '',
             }
         },
         mounted() {
@@ -988,6 +1055,23 @@
         created(){
             this.getWorkflowData();
         },
+        watch: {
+            greetings: function(){
+                jq("#wf_edit_template_greeting_EDITOR").text(this.greetings);
+                jq("#wf_edit_sms_template_greeting_Preview").text(this.greetings);
+            },
+            introduction: function(){
+                jq("#wf_edit_template_introduction_EDITOR").text(this.introduction);
+                jq("#wf_edit_sms_template_introduction_Preview").text(this.introduction);
+            },
+            smsGreetings: function(){
+                jq("#wf_edit_sms_template_greeting_Preview").text(this.smsGreetings);
+            },
+            smsIntroduction: function(){
+                jq("#wf_edit_sms_template_introduction_Preview").text(this.smsIntroduction);
+            },
+
+        },
         methods: {
             getWorkflowData: function(){
                 this.loading = true;
@@ -996,6 +1080,7 @@
                         this.title = response.data.title;
                         this.events = response.data.oEvents;
                         this.unitInfo = response.data.moduleUnitData;
+                        this.user = response.data.userInfo;
                         this.loading = false;
                         this.emailTemplates = response.data.oEmailTemplates;
                         this.smsTemplates = response.data.oSMSTemplates;
@@ -1107,7 +1192,7 @@
                     document.querySelector("#slideAddActionbox").click();
                 }else if(actionName == 'email'){
                     //Email Node
-                    this.loadEmail();
+                    this.loadEmail(event);
 
                 }else if(actionName == 'sms'){
                     //SMS Node
@@ -1116,8 +1201,41 @@
 
                 this.loading = false;
             },
-            loadEmail: function(){
+            loadEmail: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowEmail', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.selectedEmailNodeData = response.data.emailData;
+                        if(response.data.emailData == ''){
+                            this.openEmailTemplates(event);
+                        }else{
+                            this.loadEmailPreview(response.data.emailData.id);
+                        }
 
+                    }
+                });
+            },
+            loadEmailPreview: function(campaignId){
+                this.loading = true;
+                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    campaignId: campaignId,
+                    moduleUnitId: this.moduleUnitId,
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.content = response.data.content;
+                        this.introduction = response.data.introduction;
+                        this.greetings = response.data.greeting;
+                    });
+                document.querySelector('#displayOverviewPreviewForm').click();
             },
             loadEditDelay: function(event){
                 this.delayEditMode = true;
@@ -1386,6 +1504,11 @@
                 })
 
             },
+            openEmailTemplates: function(event){
+                this.showEmailTemplates = true;
+                this.showSMSTemplates = false;
+                this.configureWorkflow = false;
+            },
             closeEmailTemplates: function(){
                 this.showEmailTemplates = false;
                 this.showSMSTemplates = false;
@@ -1411,6 +1534,21 @@
     function triggerSplitSlider(){
         triggerSlider();
     }
+    $(document).ready(function(){
+        $(document).on("click", "#displayOverviewPreviewForm", function(){
+            $("#EditOverviewPreview").modal('show');
+        })
+        $(document).on("click", "#hideOverviewPreviewForm", function(){
+            $("#EditOverviewPreview").modal('hide');
+        })
+        $(document).on("click", "#displaySMSPreviewForm", function(){
+            $("#EditSMSPreview").modal('show');
+        })
+        $(document).on("click", "#hideSMSPreviewForm", function(){
+            $("#EditSMSPreview").modal('hide');
+        })
+
+    });
 </script>
 <style>
     .slider.slider-horizontal{ width:100%; margin:15px 0 20px}

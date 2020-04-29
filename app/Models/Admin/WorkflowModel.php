@@ -1434,6 +1434,7 @@ class WorkflowModel extends Model {
 
                     if ($brandboostType == 'onsite') {
                         if (strtolower($resultData->template_type) == 'email') {
+                            //echo "I am here 1. Template slug is ".$resultData->template_slug;
                             $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
                         } else if (strtolower($resultData->template_type) == 'sms') {
                             $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
@@ -1442,6 +1443,7 @@ class WorkflowModel extends Model {
 
                     if ($brandboostType == 'offsite') {
                         if (strtolower($resultData->template_type) == 'email') {
+                            //echo "I am here 2. Template slug is ".$resultData->template_slug;
                             $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
                         } else if (strtolower($resultData->template_type) == 'sms') {
                             $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();

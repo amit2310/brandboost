@@ -34,24 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 d-flex">
-                <div class="card p-1 pb0 animate_top col">
-                    <div class="sms_template_outer">
-                        <div class="sms_box">
-                            Hello [First Name],<br><br>
-                            It was a pleasure doing business with you. Thank you for [being a loyal customer, giving us a try, etc.].<br><br>
-                            As you may know, many people like you rely on online reviews to make sure they get the best service possible. With that said, we would love if you could leave us a testimonial on our Google page.<br><br>
-                            You can click this link to leave your feedback and help other people like you get the help they need in [primary customer pain point].<br><br>
-                            Thank you for taking time out of your day. We greatly appreciate it!<br><br>
-                            Best,<br>
-                            [Your Name]
-                        </div>
-                    </div>
-                    <div class="email_temp_txt p25 text-center">
-                        <p class="htxt_regular_12 dark_600 mb-0">eBay</p>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
 
@@ -120,15 +103,13 @@
 <script>
     import jq from 'jquery';
     export default {
-        props: ['templates', 'user'],
+        props: ['templates', 'user', 'event_id', 'moduleName', 'moduleUnitId'],
         data() {
             return {
                 refreshMessage: 2,
                 successMsg: '',
                 errorMsg: '',
                 loading: true,
-                moduleName: '',
-                moduleUnitID: '',
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
                 greetings: '',
@@ -159,7 +140,7 @@
                 this.loading = true;
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
-                    moduleName: 'brandboost',
+                    moduleName: this.moduleName,
                     greeting: this.greetings,
                     introduction: this.introduction,
                     campaignId: this.selected_campaignId,
@@ -176,8 +157,8 @@
                 this.loading = true;
                 axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
                     _token: this.csrf_token(),
-                    moduleName: 'brandboost',
-                    moduleUnitID: this.$route.params.id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
                     campaignId: this.selected_campaignId,
                     email: this.user.email
                 })
@@ -196,9 +177,9 @@
                 this.loading = true;
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
-                    moduleName: 'brandboost',
+                    moduleName: this.moduleName,
                     campaignId: this.selected_campaignId,
-                    moduleUnitId: this.$route.params.id,
+                    moduleUnitId: this.moduleUnitId
                 })
                     .then(response => {
                         this.loading = false;
@@ -211,19 +192,24 @@
             addTemplateToCampaign: function(templateId){
                 this.loading = true;
                 //Save Template into the database
-                axios.post('/admin/brandboost/addCampaignToOnsite', {
-                    brandboost_id: this.$route.params.id,
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
                     template_id: templateId,
                     template_type: 'email',
+                    event_id: this.event_id,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
-                        this.selected_campaignId = response.data.campaignId;
-                        this.loadPreview();
-                        this.$emit("updateEmailCampaignId", this.selected_campaignId, response.data.templateName);
-                    });
+                        if(response.data.status =='success'){
 
+                            this.selected_campaignId = response.data.campaignId;
+                            this.loadPreview();
+                            this.$emit("updateEmailCampaignId", this.selected_campaignId, response.data.templateName);
+                        }
+                        this.loading = false;
+
+                    });
             },
             loadEmailReviewTemplates: function(){
                 this.loading = false;
