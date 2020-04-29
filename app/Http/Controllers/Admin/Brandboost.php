@@ -4056,6 +4056,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $userID = $oUser->id;
         $campaignName = $request->campaignName;
         $campaignType = $request->campaignType;
+        $reviewType = $request->reviewType;
         $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
         $campaignColor = $request->campaignColor;
 
@@ -4064,7 +4065,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $hashcode = $hashcode . date('Ymdhis');
 
         $aData = array(
-            'review_type' => 'onsite',
+            'review_type' => $reviewType,
             'campaign_type' => $campaignType,
             'campaign_color' => $campaignColor,
             'user_id' => $userID,
