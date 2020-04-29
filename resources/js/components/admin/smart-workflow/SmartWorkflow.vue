@@ -78,6 +78,24 @@
                                     <a id="jsMoveNode" href="javascript:void(0);" @click="metaData.selectedClass=evt.id" draggable="true" @dragstart="onLinearDrag($event, evt)">
                                         <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
                                     </a>
+                                    <template v-if="nodeType(evt)=='split'">
+                                        <hr class="mt10">
+
+                                        <ul class="workflow_list_new">
+                                            <li><a href="#"><span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">a</span> </a></li>
+                                            <li><a href="#"><span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span> Action: Subscribe on List</a></li>
+                                        </ul>
+
+                                        <hr>
+                                        <ul class="workflow_list_new">
+                                            <li><a href="#"><span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">b</span> </a></li>
+                                            <li><a href="#"><span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span> Action: Subscribe on List</a></li>
+                                        </ul>
+
+                                        <hr>
+
+
+                                    </template>
                                 </li>
                                 <div
                                     class="col-12 text-center droppable_grid droppable_grid_linear"
@@ -100,50 +118,68 @@
                 <!--******************
                  PAGE LEFT SIDEBAR END
                 **********************-->
-                <div id="wf_top_btn_area" class="">
-                    <div class="row mb20">
-                    <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left slideAddNodebox"><img src="assets/images/plus_white_10.svg"></button>
-                        <div class="workflow_switch_div float-left" v-if="viewType=='canvas'">
-                            <a class="workflow_switch"
-                               href="javascript:void(0);"
-                               @mousedown="shiftLeft"
-                               @mouseup="stopShift"
-                               @click="moveLeft"><i class="ri-arrow-left-line"></i></a>
-                            <a class="workflow_switch"
-                               href="javascript:void(0);"
-                               @mousedown="shiftRight"
-                               @mouseup="stopShift"
-                               @click="moveRight"
-                            ><i class="ri-arrow-right-line"></i></a>
+                <template v-show="configureWorkflow">
+                    <div id="wf_top_btn_area" class="">
+                        <div class="row mb20">
+                            <div class="col"><button class="circle-icon-32 bkg_reviews_400 mr15 shadow4 float-left slideAddNodebox"><img src="assets/images/plus_white_10.svg"></button>
+                                <div class="workflow_switch_div float-left" v-if="viewType=='canvas'">
+                                    <a class="workflow_switch"
+                                       href="javascript:void(0);"
+                                       @mousedown="shiftLeft"
+                                       @mouseup="stopShift"
+                                       @click="moveLeft"><i class="ri-arrow-left-line"></i></a>
+                                    <a class="workflow_switch"
+                                       href="javascript:void(0);"
+                                       @mousedown="shiftRight"
+                                       @mouseup="stopShift"
+                                       @click="moveRight"
+                                    ><i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="workflow_switch_div float-right">
+                                    <a class="workflow_switch" :class="{'active': viewType == 'list'}" href="javascript:void(0);" @click="viewType='list'"><i class="ri-list-check-2"></i> List view</a>
+                                    <a class="workflow_switch" :class="{'active': viewType == 'canvas'}" href="javascript:void(0);" @click="viewType='canvas'"><i class="ri-drag-move-line"></i> Canvas</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="workflow_switch_div float-right">
-                            <a class="workflow_switch" :class="{'active': viewType == 'list'}" href="javascript:void(0);" @click="viewType='list'"><i class="ri-list-check-2"></i> List view</a>
-                            <a class="workflow_switch" :class="{'active': viewType == 'canvas'}" href="javascript:void(0);" @click="viewType='canvas'"><i class="ri-drag-move-line"></i> Canvas</a>
-                        </div>
-                    </div>
-                </div>
-                </div>
 
-                <!--List View-->
-                <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></list-view>
+                    <!--List View-->
+                    <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></list-view>
 
-                <!--Canvas View-->
-                <canvas-view
-                    v-show="viewType=='canvas'"
-                    :events="events"
-                    :unitInfo="unitInfo"
-                    :metaData="metaData"
-                    :moduleName="moduleName"
-                    :moduleUnitId="moduleUnitId"
-                    @setActionProps="setActionProps"
-                    @deleteWorkflowNode="deleteWorkflowNode"
-                    @editWorkflowNode="editWorkflowNode"
-                    @addBlankAction="addBlankAction"
-                    @addBlankDecision="addBlankDecision"
-                    @addDelay="addDelay"
-                ></canvas-view>
+                    <!--Canvas View-->
+                    <canvas-view
+                        v-show="viewType=='canvas'"
+                        :events="events"
+                        :unitInfo="unitInfo"
+                        :metaData="metaData"
+                        :moduleName="moduleName"
+                        :moduleUnitId="moduleUnitId"
+                        @setActionProps="setActionProps"
+                        @deleteWorkflowNode="deleteWorkflowNode"
+                        @editWorkflowNode="editWorkflowNode"
+                        @addBlankAction="addBlankAction"
+                        @addBlankDecision="addBlankDecision"
+                        @addDelay="addDelay"
+                    ></canvas-view>
+
+                </template>
+
+                <email-templates
+                    v-if="showEmailTemplates"
+                    :templates="emailTemplates"
+                    :user="user"
+                    @hideEmailTemplate="closeEmailTemplates"
+                    @updateEmailCampaignId="setEmailCampaignId"
+                ></email-templates>
+                <sms-templates
+                    v-if="showSMSTemplates"
+                    :templates="smsTemplates"
+                    :user="user"
+                    @hideSMSTemplate="closeSMSTemplates"
+                    @updateSMSCampaignId="setSMSCampaignId"
+                ></sms-templates>
 
                 <!--Add Node Modal-->
                 <div class="box addNodeBoxContent" style="width: 424px; display:none;">
@@ -343,7 +379,7 @@
                 <!--Action Modal-->
                 <div class="box addActionBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddActionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddActionbox" id="slideAddActionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
@@ -878,8 +914,10 @@
     var shiftInterval;
     import ListView from '@/components/admin/smart-workflow/ListView';
     import CanvasView from '@/components/admin/smart-workflow/CanvasView';
+    import EmailTemplates from "@/components/admin/smart-workflow/components/EmailTemplates";
+    import SmsTemplates from "@/components/admin/smart-workflow/components/SmsTemplates";
     export default {
-        components: {ListView, CanvasView},
+        components: {ListView, CanvasView, EmailTemplates, SmsTemplates},
         props: ['moduleName', 'moduleUnitId'],
         data(){
             return {
@@ -927,7 +965,14 @@
                 delayEditMode: false,
                 delayEditId: '',
                 splitEditMode: false,
-                splitEditId: ''
+                splitEditId: '',
+                actionEditMode: false,
+                actionEditId: '',
+                configureWorkflow: true,
+                showEmailTemplates: false,
+                showSMSTemplates: false,
+                emailTemplates: '',
+                smsTemplates: ''
             }
         },
         mounted() {
@@ -952,6 +997,8 @@
                         this.events = response.data.oEvents;
                         this.unitInfo = response.data.moduleUnitData;
                         this.loading = false;
+                        this.emailTemplates = response.data.oEmailTemplates;
+                        this.smsTemplates = response.data.oSMSTemplates;
                         this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
@@ -1045,7 +1092,31 @@
                     this.loadEditDelay(event);
                 }else if(nodeType == 'split'){
                     this.loadSplitProperties(event);
+                }else if(nodeType == 'action'){
+                    this.loadActionData(event);
                 }
+
+            },
+            loadActionData: function(event){
+                this.actionEditMode = true;
+                this.actionEditId = event.id;
+                let triggerParams = JSON.parse(event.data);
+                let actionName = triggerParams['name'];
+                if(actionName == ''){
+                    //Blank Action Node, Lets this setup
+                    document.querySelector("#slideAddActionbox").click();
+                }else if(actionName == 'email'){
+                    //Email Node
+                    this.loadEmail();
+
+                }else if(actionName == 'sms'){
+                    //SMS Node
+
+                }
+
+                this.loading = false;
+            },
+            loadEmail: function(){
 
             },
             loadEditDelay: function(event){
@@ -1105,11 +1176,23 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                let url='';
+                if(this.actionEditMode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowBlankAction';
+                    formData.id = this.actionEditId;
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.events = response.data.oEvents;
                         this.metaData.selectedClass = response.data.newEventId;
+                        if (this.actionEditMode == true){
+                            this.actionEditMode = false;
+                            this.actionEditId = '';
+                        }
+
                     }
                 });
             },
@@ -1291,6 +1374,9 @@
                 }else if(nodetype =='delay'){
                     this.clearDelayProperties();
                     this.addDelay();
+                }else if(nodetype =='split'){
+                    this.clearSplitProperties();
+                    this.addSplitTest();
                 }else if(nodetype =='jsMoveNode'){
                     this.moveWorkflowNode();
                 }
@@ -1299,7 +1385,26 @@
                     elem.classList.remove('droppable_highlight');
                 })
 
-            }
+            },
+            closeEmailTemplates: function(){
+                this.showEmailTemplates = false;
+                this.showSMSTemplates = false;
+                this.configureWorkflow = true;
+            },
+            closeSMSTemplates: function(){
+                this.showSMSTemplates = false;
+                this.showEmailTemplates = false;
+                this.configureWorkflow = true;
+            },
+            setEmailCampaignId: function(id, templateName){
+                /*this.emailCampaignId = id;
+                this.emailTemplate.template_name = templateName;*/
+            },
+            setSMSCampaignId: function(id, templateName, oCampaign){
+                /*this.smsCampaignId = id;
+                this.smsTemplate.template_name = templateName;
+                this.smsData = oCampaign;    */
+            },
         },
 
     }
@@ -1336,7 +1441,3 @@
         margin-bottom: 8px;
     }
 </style>
-
-
-
-
