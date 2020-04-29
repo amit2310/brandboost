@@ -299,13 +299,18 @@
                 <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>
             </div>-->
 
+        </div>
+        <!--******************
+          Content Area End
+         **********************-->
 
-            <!-- Add Campaign Popup -->
-            <div class="modal fade show" id="CREATEFORM">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content review">
-                        <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
-                        <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
+
+        <!-- Add Campaign Popup -->
+        <div class="modal fade show" id="CREATEFORM">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content review">
+                    <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
+                    <form method="post" @submit.prevent="processForm" @keydown="form.errors.clear($event.target.name)">
                         <div class="row">
                             <div class="col-12">
                                 <h3 class="htxt_medium_24 dark_800 mb-3">Review Campaign</h3>
@@ -344,8 +349,28 @@
 
                             </div>
 
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="campaign_name_sec_blue  border br4 p15 pl20 pr20 fsize14 dark_200" :class="{'active': form.campaignType =='manual'}" @click="form.campaignType='manual'" style="cursor: pointer;">
+                                                <img src="assets/images/message-3-fill.svg"/> &nbsp; Manual
+                                                <a class="float-right" href="#"><img src="assets/images/question-fill.svg"/></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="campaign_name_sec_blue border br4 p15 pl20 pr20 fsize14 dark_200" :class="{'active': form.campaignType =='automated'}" @click="form.campaignType='automated'" style="cursor: pointer;">
+                                                <img src="assets/images/flashlight-fill-blue.svg"/> &nbsp;   Automated Campaign
+                                                <a class="float-right" href="#"><img src="assets/images/question-fill.svg"/></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="col">
+
+                            <!--<div class="col">
                                 <div class="form-group m-0">
                                     <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
                                     <div class="card border text-center shadow-none m-0" :class="{'reviews': form.campaignType =='manual'}" @click="form.campaignType='manual'" style="cursor: pointer;">
@@ -361,6 +386,27 @@
                                     <div class="card border text-center shadow-none m-0" :class="{'reviews': form.campaignType =='automated'}" @click="form.campaignType='automated'" style="cursor: pointer;">
                                         <img class="mb-3" src="assets/images/review_icon2.svg"/>
                                         <p class="htxt_medium_14 dark_600 mb-3">Automated Campaign</p>
+                                        <p class="htxt_regular_12 dark_300 m-0 lh_17">Automaticaly send email or sms<br> every time a new purchase or<br> contact is added</p>
+                                    </div>
+                                </div>
+                            </div>-->
+
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="fname" class="fsize11 fw500 dark_600">Reviews Type</label>
+                                    <div class="card border text-center shadow-none m-0" :class="{'reviews': form.reviewType =='onsite'}" @click="form.reviewType='onsite'" style="cursor: pointer;">
+                                        <img class="mb-3" src="assets/images/onsite_review_icon44.svg"/>
+                                        <p class="htxt_medium_14 dark_600 mb-3">On Site Reviews</p>
+                                        <p class="htxt_regular_12 dark_300 m-0 lh_17">Send review requests emails <br>& sms instantly to all or part <br>of your customers</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="fname" class="fsize11 fw500 dark_600">&nbsp;</label>
+                                    <div class="card border text-center shadow-none m-0" :class="{'reviews': form.reviewType =='offsite'}" @click="form.reviewType='offsite'" style="cursor: pointer;">
+                                        <img class="mb-3" src="assets/images/offsite_review_icon44.svg"/>
+                                        <p class="htxt_medium_14 dark_600 mb-3">Off Site Reviews</p>
                                         <p class="htxt_regular_12 dark_300 m-0 lh_17">Automaticaly send email or sms<br> every time a new purchase or<br> contact is added</p>
                                     </div>
                                 </div>
@@ -388,17 +434,12 @@
 
 
                         </div>
-                        </form>
+                    </form>
 
 
-                    </div>
                 </div>
             </div>
-
         </div>
-        <!--******************
-          Content Area End
-         **********************-->
     </div>
 </template>
 <script>
@@ -431,6 +472,7 @@
                     OnsitecampaignDescription: '',
                     campaign_id: '',
                     campaignType: 'manual',
+                    reviewType: 'onsite',
                     campaignColor: '',
                 }),
                 formLabel: 'Create',
