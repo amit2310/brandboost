@@ -4056,7 +4056,7 @@ public function widgetStatisticDetailsStatsGraph(){
         $userID = $oUser->id;
         $campaignName = $request->campaignName;
         $campaignType = $request->campaignType;
-        $reviewType = $request->reviewType;
+        $reviewType = !empty($request->reviewType) ? $request->reviewType : 'onsite';
         $OnsitecampaignDescription = $request->OnsitecampaignDescription ? $request->OnsitecampaignDescription : '';
         $campaignColor = $request->campaignColor;
 
