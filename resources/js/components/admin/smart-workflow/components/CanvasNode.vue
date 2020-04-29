@@ -76,7 +76,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="workflow_card ">
+                        <div class="workflow_card top_line_20">
                             <img class="mb-2" src="assets/images/plus_circle_36.svg"/><br>
                             <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
                         </div>

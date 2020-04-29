@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\WorkflowModel;
 use App\Models\Admin\TagsModel;
 use App\Models\Admin\ListsModel;
+use App\Models\Admin\TemplatesModel;
 use Cookie;
 use Session;
 use DB;
@@ -2974,6 +2975,7 @@ class WorkFlow extends Controller {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $mWorkflow = new WorkflowModel();
+        $mTemplates = new TemplatesModel();
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitId = strip_tags($request->moduleUnitId);
         $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitId);
@@ -2990,12 +2992,86 @@ class WorkFlow extends Controller {
         }else if($moduleName == 'nps' || $moduleName == 'referral'){
             $title = $oUnitData->title;
         }
+        $emailTemplateId = '';
+        $smsTemplateId = '';
+        $oEmailTemplates = $mTemplates->getCommonTemplates('', '', '', 'email', '', $moduleName, true);
+        $oSMSTemplates = $mTemplates->getCommonTemplates('', '', '', 'sms', '', $moduleName, true);
+        $selectedEmailTemplate = [];
+        $selectedSMSTemplate = [];
+        if(!empty($oEmailTemplates)){
+            foreach($oEmailTemplates as $oTemplate){
+                if($oTemplate->id == $emailTemplateId){
+                    $selectedEmailTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    if($moduleName == 'brandboost'){
+                        if($oUnitData->review_type == 'onsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }else if($oUnitData->review_type == 'offsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
+                    }else if($moduleName == 'nps'){
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.email.templates', array('oNPS' => $oUnitData, 'template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }else if($moduleName == 'referral'){
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }
+
+                }
+            }
+        }
+
+        if(!empty($oSMSTemplates)){
+            foreach($oSMSTemplates as $oTemplate){
+                if($oTemplate->id == $smsTemplateId){
+                    $selectedSMSTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    if($moduleName == 'brandboost'){
+                        if($oUnitData->review_type == 'onsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }else if($oUnitData->review_type == 'offsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
+                    }else if($moduleName == 'nps'){
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.sms.templates', array('oNPS' => $oUnitData, 'template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }else if($moduleName == 'referral'){
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }
+
+                }
+            }
+        }
+
         return [
             'title' => $title,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
             'moduleUnitId' => $moduleUnitId,
-            'moduleUnitData' => $oUnitData
+            'moduleUnitData' => $oUnitData,
+            'oEmailTemplatesAllData' => $oEmailTemplates,
+            'oSMSTemplatesAllData' => $oSMSTemplates,
+            'oEmailTemplates' => $oEmailTemplates->items(),
+            'oSMSTemplates' => $oSMSTemplates->items(),
         ];
     }
 
@@ -3107,6 +3183,42 @@ class WorkFlow extends Controller {
             $orderedEvents = sortWorkflowEvents($events);
             $oEvents = $orderedEvents['oEvents'];
             return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$newNodeEventID];
+        }else{
+            return ['status' => 'error'];
+        }
+
+
+    }
+
+    /**
+     * Used to update blank node
+     * @param Request $request
+     * @return array|string[]
+     */
+    public function updateWorkflowBlankAction(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $nodeType = strip_tags($request->nodeType);
+        $name = strip_tags($request->name);
+        $title = strip_tags($request->title);
+        $eventId = $request->id;
+        $triggerParam =[
+            'node_type' => $nodeType,
+            'name' => $name,
+            'title' => $title,
+        ];
+        $bUpdated = $mWorkflow->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+
+        if($bUpdated){
+            $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+            //Reassemble events Order
+            $orderedEvents = sortWorkflowEvents($events);
+            $oEvents = $orderedEvents['oEvents'];
+            return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$eventId];
         }else{
             return ['status' => 'error'];
         }

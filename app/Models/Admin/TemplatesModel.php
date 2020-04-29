@@ -19,9 +19,12 @@ class TemplatesModel extends Model
      * @param type $bHideStaticTemplate
      * @return type
      */
-    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false)
+    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false, $moduleName='', $paginated=true, $perPage=10)
     {
-        $oData = DB::table('tbl_common_templates')
+        if($moduleName == 'broadcast' || $moduleName == 'automation'){
+            $bHideStaticTemplate = true;
+        }
+        $query = DB::table('tbl_common_templates')
             ->leftJoin('tbl_common_templates_categories', 'tbl_common_templates.category_id', '=', 'tbl_common_templates_categories.id')
             ->select('tbl_common_templates.*', 'tbl_common_templates_categories.category_name', 'tbl_common_templates_categories.status AS category_status', 'tbl_common_templates_categories.module_name')
             ->when(!empty($userID), function ($query) use ($userID) {
@@ -40,10 +43,22 @@ class TemplatesModel extends Model
             ->when(($bHideStaticTemplate == true), function ($query) {
                 return $query->where('tbl_common_templates_categories.status', '!=', 2);
             })
-            ->where('tbl_common_templates.status', 1)
-            ->orderBy('tbl_common_templates.id', 'desc')
-            ->paginate(10);
-            //->get();
+            ->where('tbl_common_templates.status', 1);
+        if(!empty($moduleName)){
+            if($moduleName == 'brandboost'){
+                $query->whereIn('tbl_common_templates.category_id', [8,9]);
+            }else if($moduleName == 'referral'){
+                $query->where('tbl_common_templates.category_id', 11);
+            }else if($moduleName == 'nps'){
+                $query->where('tbl_common_templates.category_id', 10);
+            }
+        }
+            $query->orderBy('tbl_common_templates.id', 'desc');
+        if($paginated == true){
+            $oData = $query->paginate($perPage);
+        }else{
+            $oData = $query->get();
+        }
         return $oData;
     }
 
