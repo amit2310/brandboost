@@ -28,15 +28,15 @@
  SIDEBAR
  **********************-->
   <?php include("sidebar.php"); ?>
- 
+
 
   <div class="page-content">
  <!--******************
   TOPBAR
  **********************-->
   <?php include("topbar.php"); ?>
-  
-  
+
+
  <!--******************
   Top Heading area
  **********************-->
@@ -55,22 +55,22 @@
    </div>
     <div class="clearfix"></div>
 </div>
-	 
-	  
-	  
-	  
+
+
+
+
  <!--******************
   Content Area
  **********************-->
    <div class="content-area">
     <div class="container-fluid">
-    
+
     <div class="row">
     	<div class="col-md-12">
     		<div class="card card_shadow min-h-280 pt-5 pb-5">
-    		
-    		
-    		
+
+
+
      		<div class="row mb65">
      		<div class="col-md-12 text-center">
      			<img class="mt40" style="max-width: 250px; " src="assets/images/review_Illustration.svg">
@@ -81,28 +81,28 @@
      		</div>
      		</div>
     	</div>
-    	
-    	
+
+
     	<div class="col-md-12 text-center mt-3">
     		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT CAMPAIGN</a>    	</div>
     </div>
       </div>
       </div>
-      
+
 <!--******************
   Content Area End
  **********************-->
   </div>
   </div>
-  
-  
- 
- 
-  
+
+
+
+
+
  <!--******************
   CREATEFORM  Popup
  **********************-->
- 
+
  <!-- The Modal -->
   <div class="modal fade" id="CREATEFORM">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -114,7 +114,7 @@
       			<p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
       			<hr/>
       		</div>
-      		
+
       		<div class="col-12">
       			<div class="form-group">
                 <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN NAME</label>
@@ -127,7 +127,7 @@
 						<span class="inner_color_dot_selected bkg_light_800"></span>					  </button>
 					  <div style="width:200px!important; top:18px; left:22px;"  class="dropdown-menu campaign_color_dropdown dropdown-menu-right p10 pt15 pb5" aria-labelledby="dropdownMenuButton2" >
 						<p class="dark_200 fsize14 fw400 mb-3">Campaign color</p>
-                        
+
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_400"></span></a>
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_300"></span></a>
                         <a class="campaign_color_dot" href="#"><span class="inner_color_dot bkg_blue_200"></span></a>
@@ -146,8 +146,8 @@
                 </div>
               </div>
       		</div>
-            
-            
+
+
             <div class="col-12">
       			<div class="form-group">
                 <label for="fname" class="fsize11 fw500 dark_600">CAMPAIGN TYPE</label>
@@ -165,11 +165,11 @@
                 </div>
               </div>
       		</div>
-            
-            
-            
-            
-      		
+
+
+
+
+
       		<div class="col">
       			<div class="form-group m-0">
                 <label for="fname" class="fsize11 fw500 dark_600">REVIEWs TYPE</label>
@@ -190,22 +190,22 @@
                 </div>
               </div>
       		</div>
-      		
+
       		<div class="col-12">
       			<hr/>
       		</div>
-      		
+
       		<div class="col-12">
             <button class="btn btn-lg bkg_blue_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase">CONTINUE</button>
             <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="#">Close</a>            </div>
-            
-            
+
+
       	</div>
       </div>
     </div>
   </div>
- 
- 
+
+
  <!--******************
   jQuery
  **********************-->
