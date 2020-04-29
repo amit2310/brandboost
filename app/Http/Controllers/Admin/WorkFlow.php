@@ -3072,6 +3072,7 @@ class WorkFlow extends Controller {
             'oSMSTemplatesAllData' => $oSMSTemplates,
             'oEmailTemplates' => $oEmailTemplates->items(),
             'oSMSTemplates' => $oSMSTemplates->items(),
+            'userInfo' => ['fullname'=> $aUser->firstname. ' '. $aUser->lastname, 'email' => $aUser->email, 'avatar'=> $aUser->avatar, 'phone' => $aUser->mobile],
         ];
     }
 
@@ -3412,6 +3413,144 @@ class WorkFlow extends Controller {
         $splitId = $request->id;
         $oData = $mWorkflow->getSplitInfo($splitId, $moduleName);
         return ['status' => 'success', 'splitData' => $oData];
+    }
+
+    /**
+     * Used to get Email node related info
+     * @param Request $request
+     */
+    public function loadWorkflowEmail(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventData = $request->eventData;
+        $oEventData = json_decode($eventData['data']);
+        $eventID = $eventData['id'];
+        if(!empty($oEventData)){
+            $nodeType = $oEventData->node_type;
+            $actionName = $oEventData->name;
+            if($nodeType =='action' && $actionName == 'email'){
+                //Get endCampaign info
+                $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                $campaign = '';
+                $templateType = '';
+                $templateInfo = '';
+
+                if($aCampaigns->count()>0){
+                    //Have campaign
+                    foreach($aCampaigns as $endCampaign){
+                        if(strtolower($endCampaign->campaign_type) == 'email'){
+                            $campaign = $endCampaign;
+                            $templateId = $endCampaign->template_source;
+                            $templateInfo = $mWorkflow->getCommonTemplateInfo($templateId);
+                            $categoryStatus = !empty($templateInfo) ? $templateInfo->category_status : '';
+                            $templateType = $categoryStatus == 2 ? 'static' : 'dynamic';
+                        }
+                    }
+                    return ['status'=>'success', 'templateType'=>$templateType, 'emailData' => $campaign, 'templateInfo'=>$templateInfo];
+                }else{
+                    // No campaign created yet
+                    return ['status'=>'success', 'templateType'=>'', 'emailData' => '', 'templateInfo'=>''];
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Used to add end campaign to a email/sms node
+     * @param Request $request
+     * @return array
+     * @throws \Throwable
+     */
+    public function addEndCampaignToEvent(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventId = strip_tags($request->event_id);
+        $templateId = strip_tags($request->template_id);
+        $templateType = strip_tags($request->template_type);
+        $source = strip_tags($request->source);
+        $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitId);
+
+        $isDraft = ($source == 'draft') ? true : false;
+        $campaignId = '';
+        if($eventId>0){
+            $aCampaigns = $mWorkflow->getEventCampaign($eventId, $moduleName);
+            if($aCampaigns->count()>0){
+                foreach($aCampaigns as $aCampaign){
+                    if(strtolower($aCampaign->campaign_type) == $templateType){
+                        $campaignId = $aCampaign->id;
+                        break;
+                    }
+                }
+            }
+            if ($campaignId > 0) {
+                //Update existing campaign
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateId);
+                $categoryStatus = $oTemplate->category_status;
+                $templateName = $oTemplate->template_name;
+                $templateSID = $templateId;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    if($moduleName == 'brandboost'){
+                        if($oUnitData->review_type == 'onsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }else if($oUnitData->review_type == 'offsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
+                    }else if($moduleName == 'nps'){
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.sms.templates', array('oNPS' => $oUnitData, 'template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }else if($moduleName == 'referral'){
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }
+
+                }
+                $aUpdateData = array(
+                    'name' => $oTemplate->template_name,
+                    'introduction' => $oTemplate->introduction,
+                    'greeting' => $oTemplate->greeting,
+                    'html' => $oTemplate->template_content,
+                    'stripo_html' => $oTemplate->stripo_html,
+                    'stripo_css' => $oTemplate->stripo_css,
+                    'stripo_compiled_html' => $oTemplate->stripo_compiled_html,
+                    'template_source' => $templateSID,
+                    'campaign_type' => $oTemplate->template_type
+                );
+                $bUpdated = $mWorkflow->updateWorkflowCampaign($aUpdateData, $campaignId, $moduleName);
+                if ($bUpdated) {
+                    $aCampaingInfo = $mWorkflow->getWorkflowCampaign($campaignId, $moduleName);
+                    $response = array('status' => 'success', 'campaignId' => $campaignId, 'templateName' => $templateName, 'campaignInfo' =>$aCampaingInfo);
+                }
+            } else {
+                //echo "1 $eventId 2 $templateId 3 $moduleUnitId 4 $moduleName 5 $isDraft";
+                //die;
+                $bAdded = $mWorkflow->addEndCampaign($eventId, $templateId, $moduleUnitId, $moduleName, $isDraft);
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateId);
+                $templateName = $oTemplate->template_name;
+
+                if ($bAdded) {
+                    $aCampaingInfo = $mWorkflow->getWorkflowCampaign($bAdded['id'], $moduleName);
+                    $response = array('status' => 'success', 'campaignId' => $bAdded['id'], 'templateName' => $templateName, 'campaignInfo' =>$aCampaingInfo);
+                }
+            }
+
+        }
+        return $response;
     }
 
 }
