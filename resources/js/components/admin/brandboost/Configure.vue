@@ -239,7 +239,7 @@
                                 </div>
                             </div>
 
-                            <div class="card p35 br6 mb10">
+                            <!--<div class="card p35 br6 mb10">
                                 <div class="row">
                                     <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
                                     <div class="col">
@@ -249,6 +249,192 @@
                                     <div class="col text-right">
                                         <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add Source</button>
                                     </div>
+                                </div>
+                            </div>-->
+                            <div class="card p35 br6 mb10">
+                                <div class="row">
+                                    <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
+                                    <div class="col">
+                                        <h3 class="htxt_medium_16 dark_700 mb-2">Source</h3>
+                                        <p class="htxt_regular_14 dark_400 m-0 ls4">Select review sources (review sites)</p>
+                                    </div>
+                                    <div class="col text-right">
+                                        <!--<button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit Settings</button>-->
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Cancel</button>
+                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20">Save</button>
+                                    </div>
+                                </div>
+
+                                <div class="btop mt30 pt20">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="nav nav-pills source_tab" role="tablist">
+                                                <li class="mr15"><a class="active" data-toggle="pill" href="#MostPopular">Most Popular</a></li>
+                                                <li class="mr15"><a class="" data-toggle="pill" href="#Automotive">Automotive</a></li>
+                                                <li class="mr15"><a class="" data-toggle="pill" href="#Ecommerce">E-commerce</a></li>
+                                                <li class="mr15"><a class="" data-toggle="pill" href="#Financial">Financial</a></li>
+                                                <li class="mr15"><a class="" data-toggle="pill" href="#Healthcare">Healthcare</a></li>
+                                                <li class="mr15"><a class="" data-toggle="pill" href="#HomeServices">Home Services</a></li>
+                                                <li class="mr15"><a class="" data-toggle="pill" href="#Hotels">Hotels</a></li>
+
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="tab-content mt20">
+                                                <!--======Tab 1 MostPopular====-->
+                                                <div id="MostPopular" class="tab-pane active">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pl5 pr5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pl5 pr5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!--======Tab 2  Automotive=====-->
+                                                <div id="Automotive" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 source_box pl5 pr5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner">
+                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--======Tab 3  Ecommerce=====-->
+                                                <div id="Ecommerce" class="tab-pane fade">
+                                                    tab 3
+                                                </div>
+
+                                                <!--======Tab 4  Financial=====-->
+                                                <div id="Financial" class="tab-pane fade">
+                                                    tab 4
+                                                </div>
+
+                                                <!--======Tab 5  Healthcare=====-->
+                                                <div id="Healthcare" class="tab-pane fade">
+                                                    tab 5
+                                                </div>
+
+                                                <!--======Tab 6  HomeServices=====-->
+                                                <div id="HomeServices" class="tab-pane fade">
+                                                    tab 6
+                                                </div>
+
+                                                <!--======Tab 7  Hotels=====-->
+                                                <div id="Hotels" class="tab-pane fade">
+                                                    tab 7
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+
                                 </div>
                             </div>
 
