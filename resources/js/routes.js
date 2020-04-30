@@ -40,6 +40,7 @@ import OnsiteReviewRequest from './components/admin/brandboost/onsite/ReviewRequ
 import OffsiteReviewRequest from './components/admin/brandboost/offsite/ReviewRequest.vue';
 import OnsiteReviewCampaigns from './components/admin/brandboost/onsite/ReviewCampaigns.vue';
 import Campaigns from './components/admin/brandboost/Campaigns';
+import configureCampaign from './components/admin/brandboost/Configure';
 
 /*Import Onsite Setup components*/
 import onsiteStep1 from './components/admin/brandboost/onsite/setup/Setup';
@@ -383,6 +384,8 @@ const routes = [
 
     /* Tab Option In Review Section */
     { path: '/campaigns', component: Campaigns, props: {pageColor: 'onsite_sec'}, meta: { title: 'Review campaigns - Brand Boost'} },
+    { path: '/campaigns/setup/:id', component: configureCampaign, props : {title : 'Configure Campaign'} },
+
     { path: '/brandboost/onsite/campaigns', component: OnsiteCampaignsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite campaigns - Brand Boost'} },
     { path: '/brandboost/onsite/reviews', component: OnsiteReviewsTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite reviews - Brand Boost'} },
     { path: '/brandboost/onsite/contacts', component: OnsiteSubscribersTab, props: {pageColor: 'onsite_sec'}, meta: { title: 'Onsite contacts - Brand Boost'} },
