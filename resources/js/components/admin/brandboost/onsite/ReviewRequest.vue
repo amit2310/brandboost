@@ -34,13 +34,6 @@
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'draft'}" @click="applySort('draft')">Draft</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'submited'}" @click="applySort('submited')">Submited</a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': sortBy == 'archive'}" @click="applySort('archive')">Archive</a></li>
-                                <!--<li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" data-toggle="dropdown" aria-expanded="false"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
-                                <div class="dropdown-menu p10 mt-1">
-                                       &lt;!&ndash;  <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a> &ndash;&gt;
-                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
-                                    </div>
-                                </li>-->
-
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -69,7 +62,6 @@
                     </div>
 
                 </div>
-
 
                 <div class="row" v-if="viewType == 'List View'">
                     <div class="col-md-12">
