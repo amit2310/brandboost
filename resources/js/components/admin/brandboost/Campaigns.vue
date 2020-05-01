@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-                        <h3 class="htxt_medium_24 dark_700"> Campaigns </h3>
+                        <h3 class="htxt_medium_24 dark_700"> Review Campaigns </h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <!--<a :href="'admin/brandboost/export-onsite-campaigns?sortBy='+sortBy+'&search='+searchBy" >
