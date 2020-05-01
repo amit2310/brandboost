@@ -3419,7 +3419,7 @@ class WorkFlow extends Controller {
      * Used to get Email node related info
      * @param Request $request
      */
-    public function loadWorkflowEmail(Request $request){
+    public function loadWorkflowActionField(Request $request){
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $bSuccess = false;
@@ -3454,6 +3454,34 @@ class WorkFlow extends Controller {
                 }else{
                     // No campaign created yet
                     return ['status'=>'success', 'templateType'=>'', 'emailData' => '', 'templateInfo'=>''];
+                }
+            }
+            else if($nodeType =='action' && $actionName == 'sms'){
+                //Get endCampaign info
+                $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+                $campaign = '';
+                $templateType = '';
+                $templateInfo = '';
+
+                if($aCampaigns->count()>0){
+                    //Have campaign
+                    foreach($aCampaigns as $endCampaign){
+                        if(strtolower($endCampaign->campaign_type) == 'sms'){
+                            $campaign = $endCampaign;
+                            $templateId = $endCampaign->template_source;
+                            $templateInfo = $mWorkflow->getCommonTemplateInfo($templateId);
+                            $categoryStatus = !empty($templateInfo) ? $templateInfo->category_status : '';
+                            $templateType = $categoryStatus == 2 ? 'static' : 'dynamic';
+                        }
+                    }
+                    return ['status'=>'success', 'templateType'=>$templateType, 'smsData' => $campaign, 'templateInfo'=>$templateInfo];
+                }else{
+                    // No campaign created yet
+                    return ['status'=>'success',
+                        'templateType'=>'',
+                        'emailData' => '',
+                        'smsData' => '',
+                        'templateInfo'=>''];
                 }
             }
         }

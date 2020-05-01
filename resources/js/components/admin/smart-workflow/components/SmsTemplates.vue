@@ -124,7 +124,7 @@
 <script>
     import jq from 'jquery';
     export default {
-        props: ['templates', 'user'],
+        props: ['templates', 'user', 'event_id', 'moduleName', 'moduleUnitId'],
         data() {
             return {
                 refreshMessage: 3,
@@ -164,7 +164,7 @@
                 this.loading = true;
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
-                    moduleName: 'brandboost',
+                    moduleName: this.moduleName,
                     greeting: this.greetings,
                     introduction: this.introduction,
                     campaignId: this.selected_campaignId,
@@ -182,8 +182,8 @@
                 this.loading = true;
                 axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
                     _token: this.csrf_token(),
-                    moduleName: 'brandboost',
-                    moduleUnitID: this.$route.params.id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
                     campaignId: this.selected_campaignId,
                     number: this.user.phone
                 })
@@ -202,9 +202,9 @@
                 this.loading = true;
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
-                    moduleName: 'brandboost',
+                    moduleName: this.moduleName,
                     campaignId: this.selected_campaignId,
-                    moduleUnitId: this.$route.params.id,
+                    moduleUnitId: this.moduleUnitId
                 })
                     .then(response => {
                         this.loading = false;
@@ -217,10 +217,12 @@
             addTemplateToCampaign: function(templateId){
                 this.loading = true;
                 //Save Template into the database
-                axios.post('/admin/brandboost/addCampaignToOnsite', {
-                    brandboost_id: this.$route.params.id,
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
                     template_id: templateId,
                     template_type: 'sms',
+                    event_id: this.event_id,
                     _token: this.csrf_token()
                 })
                     .then(response => {

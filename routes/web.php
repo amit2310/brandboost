@@ -975,7 +975,7 @@ Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/moveWorkflowNode', 'Admin
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateEventDelay', 'Admin\WorkFlow@updateEventDelay');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getSplitInfo', 'Admin\WorkFlow@getSplitInfo');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateSplitData', 'Admin\WorkFlow@updateSplitData');
-Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowEmail', 'Admin\WorkFlow@loadWorkflowEmail');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', 'Admin\WorkFlow@loadWorkflowActionField');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', 'Admin\WorkFlow@addEndCampaignToEvent');
 
 

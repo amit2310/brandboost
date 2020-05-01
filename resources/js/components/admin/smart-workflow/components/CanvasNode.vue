@@ -7,7 +7,7 @@
         <!--Connector-->
 
         <!--Empty Node-->
-        <div v-if="nodeType != 'split'" class="col-md-12 mb0" @click="editNode">
+        <div v-if="nodeType != 'split'" class="col-md-12 mb0">
             <div class="workflow_box" >
                 <div class="row">
                     <div class="col-md-12">
@@ -21,7 +21,7 @@
                                 <img v-if="nodeType=='exit'" width="18" src="assets/images/flag-2-fill.svg">
                             </div>
                             <div class="edit_delete">
-                                <a href="javascript:void(0);"><i class="icon-gear fsize12 dark_100"></i></a>
+                                <a href="javascript:void(0);" @click="editNode"><i class="icon-gear fsize12 dark_100"></i></a>
                                 <a href="javascript:void(0);" @click="deleteEvent"><i class="icon-bin2 fsize10 dark_100"></i></a>
                             </div>
                             <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">{{nodeType.toUpperCase()}}</p>
@@ -47,14 +47,15 @@
 
         <!--Empty Split Node-->
         <template v-else>
-            <div class="col-md-12" @click="editNode">
+            <div class="col-md-12">
                 <div class="workflow_switch_div_small canvas mb0 mt0 d-inline-block" style="width:auto;">
                     <a class="workflow_switch" href="javascript:void(0);"> <i><img src="assets/images/play_split.svg"/></i> SPLIT </a> &nbsp;
                     <a class="workflow_switch active" href="javascript:void(0);">
                         <template v-if="splitNodeInfo.total_path==2">{{splitNodeInfo.path_a+'/'+splitNodeInfo.path_b}}</template>
                         <template v-else-if="splitNodeInfo.total_path==3">{{splitNodeInfo.path_a+'/'+splitNodeInfo.path_b+'/'+splitNodeInfo.path_c}}</template>
                         <template v-else-if="splitNodeInfo.total_path==4">{{splitNodeInfo.path_a+'/'+splitNodeInfo.path_b+'/'+splitNodeInfo.path_c+'/'+splitNodeInfo.path_d}}</template>
-                    </a>&nbsp;
+                    </a>
+                    <a href="javascript:void(0);" @click="editNode"><i class="icon-gear fsize12 dark_100"></i></a>&nbsp;
                     <a class="workflow_switch" href="javascript:void(0);" @click="deleteEvent"> <i class="icon-bin2 fsize10 dark_100"></i></a>
                 </div>
             </div>

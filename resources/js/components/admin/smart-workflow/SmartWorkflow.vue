@@ -4,6 +4,9 @@
           Top Heading area
         **********************-->
         <button id="displayOverviewPreviewForm" type="button" style="display:none;">Display Edit & Preview Email</button>
+        <button id="hideOverviewPreviewForm" type="button" style="display:none;">Hide</button>
+        <button id="displaySMSPreviewForm" type="button" style="display:none;">Display Edit & Preview SMS</button>
+        <button id="hideSMSPreviewForm" type="button" style="display:none;">Hide</button>
         <div v-show="configureWorkflow == true" id="wf_top_bar" class="top-bar-top-section bbot shadow4">
             <div class="container-fluid">
                 <div class="row">
@@ -963,6 +966,63 @@
                     </div>
                 </div>
 
+                <!--SMS Preview Modal-->
+                <div class="modal fade show" id="EditSMSPreview">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
+                        <div class="modal-content review" style="width: 1200px;">
+                            <div class="modal-body p0 mt0 br5" style="width: 1200px;">
+                                <loading :isLoading="loading"></loading>
+                                <div class="row">
+                                    <div class="col-md-4 pr0">
+                                        <div class="email_editor_left">
+                                            <div class="p10 bbot"><p class="m0 txt_dark fw500">SMS Configuration</p></div>
+                                            <div class="p20">
+                                                <div class="form-group">
+                                                    <label class="">Greetings</label>
+                                                    <input v-model="smsGreetings" class="form-control h52" required="" placeholder="Hi, We’d love your feeed..." type="text">
+                                                </div>
+
+                                                <div class="form-group mb0">
+                                                    <label class="">Content</label>
+                                                    <a class="fsize14 open_editor" href="#"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
+                                                    <textarea v-model="smsIntroduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="smsIntroduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
+
+										But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="p20 pt0" v-if="sendTestBox==false">
+                                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="saveSMSEditChanges">Save</button>
+                                                <button class="btn btn-lg bkg_reviews_400 light_000 pr20 min_w_160 fsize12 fw500 text-uppercase" @click="openSMSTemplates">Change Template</button>
+                                                <a class="dark_200 fsize12 fw500 ml20 text-uppercase" href="javascript:void(0);" @click="sendTestBox=true">Send test SMS</a>
+                                            </div>
+                                            <div class="p20 pt0" id="wfTestCtr" v-if="sendTestBox">
+                                                <input type="text" class="mr20" placeholder="Phone Number" v-model="user.phone" style="border-radius:5px;box-shadow: 0 2px 1px 0 rgba(0, 57, 163, 0.03);background-color: #ffffff;border: solid 1px #e3e9f3;height: 40px;color: #011540!important;font-size: 14px!important;font-weight:400!important;" />
+                                                <button type="button" class="btn dark_btn h40 bkg_bl_gr" @click.prevent="sendTestSMS">Send</button>
+                                                <a href="javascript:void(0);" class="btn btn-link fsize14" @click="sendTestBox=false">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 pl3">
+                                        <div class="email_editor_right preview" style="max-height:800px;overflow:auto;border-left:5px solid;">
+                                            <div class="p10 bbot position-relative"><p class="m0 txt_dark fw500">Preview</p>
+                                            </div>
+                                            <div class="sms_preview">
+                                                <div class="phone_sms">
+                                                    <div class="inner">
+                                                        <p v-html="smsContent"></p>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <p><small>{{ timestampToDateFormat(Math.floor(Date.now() / 1000)) }}</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
 
@@ -1040,6 +1100,14 @@
                 greetings: '',
                 introduction: '',
                 content: '',
+                smsGreetings: '',
+                smsIntroduction: '',
+                smsContent: '',
+                sendTestBox: false,
+                selected_SMSCampaignId: '',
+                selected_emailCampaignId: '',
+                selectedEmailNodeData: '',
+                selectedSMSNodeData: '',
             }
         },
         mounted() {
@@ -1148,6 +1216,7 @@
             setActionProps: function(event){
                 this.clearActionProps();
                 this.clearAllForms();
+                this.clearAllEditMode();
                 if(event){
                     this.selectedEvent = event;
                 }
@@ -1173,6 +1242,7 @@
             },
             editWorkflowNode: function(nodeType, event){
                 this.loading = true;
+                this.clearAllEditMode();
                 if(nodeType == 'delay'){
                     this.loadEditDelay(event);
                 }else if(nodeType == 'split'){
@@ -1181,6 +1251,14 @@
                     this.loadActionData(event);
                 }
 
+            },
+            clearAllEditMode: function(){
+                this.actionEditMode = false;
+                this.actionEditId = '';
+                this.delayEditMode = false;
+                this.delayEditId = '';
+                this.splitEditMode = false;
+                this.splitEditId = '';
             },
             loadActionData: function(event){
                 this.actionEditMode = true;
@@ -1193,13 +1271,32 @@
                 }else if(actionName == 'email'){
                     //Email Node
                     this.loadEmail(event);
-
                 }else if(actionName == 'sms'){
                     //SMS Node
-
+                    this.loadSMS(event);
                 }
 
                 this.loading = false;
+            },
+            loadSMS: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.selectedSMSNodeData = response.data.smsData;
+                        if(response.data.smsData == ''){
+                            this.openSMSTemplates(event);
+                        }else{
+                            this.loadSMSPreview(response.data.smsData.id);
+                        }
+
+                    }
+                });
             },
             loadEmail: function(event){
                 this.loading = true;
@@ -1208,7 +1305,7 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowEmail', formData).then(response => {
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.selectedEmailNodeData = response.data.emailData;
@@ -1222,6 +1319,7 @@
                 });
             },
             loadEmailPreview: function(campaignId){
+                this.selected_emailCampaignId = campaignId;
                 this.loading = true;
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
@@ -1236,6 +1334,23 @@
                         this.greetings = response.data.greeting;
                     });
                 document.querySelector('#displayOverviewPreviewForm').click();
+            },
+            loadSMSPreview: function(campaignId){
+                this.loading = true;
+                this.selected_SMSCampaignId = campaignId;
+                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    campaignId: campaignId,
+                    moduleUnitId: this.moduleUnitId,
+                })
+                    .then(response => {
+                        this.loading = false;
+                        this.smsContent = response.data.content.replace(/\r\n|\r|\n/g, "<br />").replace('wf_edit_sms_template_greeting', 'wf_edit_sms_template_greeting_Preview').replace('wf_edit_sms_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_Preview');
+                        this.smsIntroduction = response.data.introduction;
+                        this.smsGreetings = response.data.greeting;
+                    });
+                document.querySelector('#displaySMSPreviewForm').click();
             },
             loadEditDelay: function(event){
                 this.delayEditMode = true;
@@ -1508,11 +1623,18 @@
                 this.showEmailTemplates = true;
                 this.showSMSTemplates = false;
                 this.configureWorkflow = false;
+                document.querySelector("#hideOverviewPreviewForm").click();
             },
             closeEmailTemplates: function(){
                 this.showEmailTemplates = false;
                 this.showSMSTemplates = false;
                 this.configureWorkflow = true;
+            },
+            openSMSTemplates: function(event){
+                this.showSMSTemplates = true;
+                this.showEmailTemplates = false;
+                this.configureWorkflow = false;
+                document.querySelector('#hideSMSPreviewForm').click();
             },
             closeSMSTemplates: function(){
                 this.showSMSTemplates = false;
@@ -1527,6 +1649,74 @@
                 /*this.smsCampaignId = id;
                 this.smsTemplate.template_name = templateName;
                 this.smsData = oCampaign;    */
+            },
+            saveSMSEditChanges: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    greeting: this.smsGreetings,
+                    introduction: this.smsIntroduction,
+                    campaignId: this.selected_SMSCampaignId,
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Saved changes successfully!";
+                        }
+                    });
+            },
+            saveEditChanges: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    greeting: this.greetings,
+                    introduction: this.introduction,
+                    campaignId: this.selected_emailCampaignId,
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Saved changes successfully!";
+                        }
+                    });
+            },
+            sendTestEmail: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    campaignId: this.selected_emailCampaignId,
+                    email: this.user.email
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Test email sent successfully!";
+                        }
+                    });
+            },
+            sendTestSMS: function(){
+                this.loading = true;
+                axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
+                    _token: this.csrf_token(),
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    campaignId: this.selected_SMSCampaignId,
+                    number: this.user.phone
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.refreshMessage = Math.random();
+                            this.successMsg = "Test email sent successfully!";
+                        }
+                    });
             },
         },
 
