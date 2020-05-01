@@ -113,8 +113,8 @@
                 <div class="row" v-if="viewType == 'Grid View'">
                     <div class="col-md-3 d-flex" v-for="campaign in campaigns" :key="campaign.id">
                         <div class="card p0 pt30 text-center animate_top col">
-                            <span v-if="campaign.status == '1'" class="status_icon bkg_green_400"></span>
-                            <span v-else class="status_icon bkg_light_800"></span>
+                            <span v-if="campaign.status == '1'" class="status_icon  bkg_green_400"></span>
+                            <span v-else class="status_icon  bkg_light_800"></span>
                             <div class="dot_dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item" href="javascript:void(0);" @click="prepareItemUpdate(campaign.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
