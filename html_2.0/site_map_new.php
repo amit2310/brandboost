@@ -163,6 +163,9 @@
                 <li><a target="_blank" href="offsite_campaign_setup2.php">Offsite Campaigns Setup 2 </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
                 <li><a target="_blank" href="offsite_campaign_setup3.php">Offsite Campaigns Setup 3 </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
      			
+                 <li><strong>Review Collection</strong></li>
+     			<li><a target="_blank" href="review_collection1.php">Reviews Collection 1 </a> &nbsp; &nbsp; <small >Last Updated on 2nd May 2020</small></li>
+                <li><a target="_blank" href="review_collection2.php">Reviews Collection 2 </a> &nbsp; &nbsp; <small >Last Updated on 2nd May 2020</small></li>
      			
      		</ul>
      		</div>

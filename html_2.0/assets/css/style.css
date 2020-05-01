@@ -2055,7 +2055,10 @@ PAGE WITH SIDEBAR CSS
 .review_forms .dropdown-toggle {
   background: url(../images/select_bkg.svg) 97% 21px no-repeat #fff;
 }
-
+.review_collection{ position:relative;  width:100%; }
+.review_collection:before{ position:absolute; background:#6F7CFF; height:440px; width:100%; top:0; left:0; content:'';}
+.review_collection .review_header {padding: 30px 50px 0;margin-bottom: 0px;position:relative;}
+.review_collection_sec{ max-width:544px; margin:40px auto 20px;}
 .campaign_name_sec.active.border {
   border: 2px solid #73abff !important;
 }
