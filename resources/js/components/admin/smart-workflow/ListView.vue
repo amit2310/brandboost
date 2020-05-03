@@ -1,24 +1,45 @@
 <template>
     <div class="row">
+        <!--Fixed Trigger Node-->
         <div class="col-12">
+            <!--Fixed Trigger Node-->
             <div class="card p35  mb10">
                 <div class="row">
                     <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 br12 bkg_blue_400 light_000 d-block fsize16 fw500 rotate45"><i class="ri-price-tag-3-fill"></i></span></div>
                     <div class="col-9">
-                        <h3 class="htxt_medium_16 dark_700 mb-2">Triger: Tag</h3>
+                        <h3 class="htxt_medium_16 dark_700 mb-2" v-if="unitInfo.workflow_entry_trigger">Trigger: {{capitalizeFirstLetter(unitInfo.workflow_entry_trigger)}}</h3>
+                        <h3 class="htxt_medium_16 dark_700 mb-2" v-else>Trigger: Empty</h3>
                         <ul class="review_camapaign_list">
                             <li><span>Tag</span><strong><i class="ri-add-circle-fill green_400"></i> New Customer</strong></li>
                             <li><span>Contacts</span><strong>1,356</strong></li>
                         </ul>
                     </div>
                     <div class="col text-right">
-                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit</button>
+                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none slideTriggerbox">Edit</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12">
+        <!--Nodes-->
+        <list-node
+            v-for="oEvent in events"
+            :event="oEvent"
+            :unitInfo="unitInfo"
+            :metaData="metaData"
+            :moduleName="moduleName"
+            :moduleUnitId="moduleUnitId"
+            :key="oEvent.id"
+            @setAddActionProps="setAddActionProps"
+            @deleteEventNode="deleteEventNode"
+            @editEventNode="editEventNode"
+            @createBlankAction="createBlankAction"
+            @createBlankDecision="createBlankDecision"
+            @createBlankDelay="createBlankDelay"
+        ></list-node>
+        <!--Nodes-->
+
+        <!--<div class="col-12">
             <div class="card p35  mb10">
                 <div class="row">
                     <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 br12 bkg_email_300 light_000 d-block fsize16 fw500"><i class="ri-mail-open-fill"></i></span></div>
@@ -77,7 +98,8 @@
         <div class="col-12">
             <div class="card p35  mb10">
                 <div class="row">
-                    <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 last br12 bkg_sms_400 light_000 d-block fsize16 fw500"><i class="ri-message-3-line"></i></span></div>
+                    <div style="max-width: 64px" class="col mt-1">
+                    <span class="circle-icon-36 last br12 bkg_sms_400 light_000 d-block fsize16 fw500"><i class="ri-message-3-line"></i></span></div>
                     <div class="col-9">
                         <h3 class="htxt_medium_16 dark_700 mb-2">SMS: Greeting</h3>
                         <ul class="review_camapaign_list">
@@ -103,19 +125,78 @@
                     </div>
                 </div>
             </div>
+        </div>-->
+        <!--Fixed Goal Node-->
+        <div class="col-12">
+            <div class="card p35  mb10">
+                <div class="row">
+                    <div style="max-width: 64px" class="col mt-1">
+                        <span class="circle-icon-36 br12 bkg_sms_400 light_000 d-block fsize16 fw500 rotate45"><i class="ri-checkbox-circle-fill light_000 fsize18"></i></span>
+                    </div>
+                    <div class="col-9">
+                        <h3 class="htxt_medium_16 dark_700 mb-2" v-if="unitInfo.workflow_goal">Goal: {{capitalizeFirstLetter(unitInfo.workflow_goal)}}</h3>
+                        <h3 class="htxt_medium_16 dark_700 mb-2" v-else>Goal: Empty</h3>
+                        <ul class="review_camapaign_list">
+                            <li><span>Tag</span><strong><i class="ri-add-circle-fill green_400"></i> New Customer</strong></li>
+                            <li><span>Contacts</span><strong>1,356</strong></li>
+                        </ul>
+                    </div>
+                    <div class="col text-right">
+                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none slideGoalbox">Edit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
+    import ListNode from "./components/ListNode";
     export default {
-        props: ['events', 'unitInfo', 'metaData'],
+        components: {ListNode},
+        props: ['events', 'unitInfo', 'metaData', 'moduleName', 'moduleUnitId'],
         data(){
             return {
-                viewType: 'list'
+                viewType: 'list',
             }
         },
         methods: {
+            setAddActionProps: function(eventData){
+                this.$emit("setActionProps", eventData);
+            },
+            deleteEventNode: function(eventData){
+                this.$emit("deleteWorkflowNode", eventData);
+            },
+            editEventNode: function(nodeType, eventData){
+                this.$emit("editWorkflowNode", nodeType, eventData);
+            },
+            createBlankAction: function(eventData){
+                this.$emit("addBlankAction", eventData);
+            },
+            createBlankDecision: function(eventData){
+                this.$emit("addBlankDecision", eventData);
+            },
+            createBlankDelay: function(eventData){
+                this.$emit("addDelay", eventData);
+            },
+            addCoherentAction: function(){
+                this.metaData.selectedClass = '';
+                this.$emit("setActionProps");
+            },
+            onDrop: function(ev){
+                var nodetype = ev.dataTransfer.getData("nodetype");
+                if(nodetype =='action'){
+                    this.createBlankAction();
+                }else if(nodetype =='decision'){
+                    this.createBlankDecision();
+                }else if(nodetype =='delay'){
+                    this.createBlankDelay();
+                }
+                let elems = document.querySelectorAll(".droppable_grid");
+                elems.forEach(function(elem){
+                    elem.classList.remove('droppable_highlight');
+                })
 
+            }
         }
     }
 </script>

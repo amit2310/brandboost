@@ -150,7 +150,20 @@
                     </div>
 
                     <!--List View-->
-                    <list-view v-show="viewType=='list'" :events="events" :unitInfo="unitInfo" :metaData="metaData" @setActionProps="setActionProps"></list-view>
+                    <list-view
+                        v-show="viewType=='list'"
+                        :events="events"
+                        :unitInfo="unitInfo"
+                        :metaData="metaData"
+                        :moduleName="moduleName"
+                        :moduleUnitId="moduleUnitId"
+                        @setActionProps="setActionProps"
+                        @deleteWorkflowNode="deleteWorkflowNode"
+                        @editWorkflowNode="editWorkflowNode"
+                        @addBlankAction="addBlankAction"
+                        @addBlankDecision="addBlankDecision"
+                        @addDelay="addDelay"
+                    ></list-view>
 
                     <!--Canvas View-->
                     <canvas-view
