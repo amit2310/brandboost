@@ -3088,6 +3088,19 @@ WORKFLOW CSS
   top: auto;
   opacity: 0.4;
 }
+.reviews_workflows .circle-icon-36.dot_none:after {
+  position: absolute;
+  content: "";
+  width: 3px;
+  height: 220px;
+  background: url(../images/workflow_dot.png) center center repeat-y;
+  z-index: 1;
+  left: 17px;
+  bottom: 0;
+  top: auto;
+  opacity: 0.4;
+  display:none;!important
+}
 
 @media (max-height: 800px) {
   .workflow_list_box {
