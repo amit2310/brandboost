@@ -23,6 +23,14 @@
   padding: 10px;
   border: 1px solid #aaaaaa;
 }
+
+
+
+.droppable_highlight{border:none !important; height: 57px !important; background: none !important; border-style: none !important;}
+.droppable_highlight:before{ height:36px!important; border-radius:100px!important; width:36px!important;position:absolute; content:''; left:50%; top:12px; background: #73ABFF;opacity: 0.1; margin-left:-18px; }
+.droppable_highlight  .workflowadds{ background:#73ABFF!important}
+
+
 </style>
 </head>
 <body id="ReviewSection">
@@ -203,7 +211,9 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
           </div>
         </div>
         <!--=====ADD nodes single circle plus icon=============-->
-        <div class="col-12 text-center"> <a class="workflowadds slidebox" href="#"><i class="ri-add-fill"></i></a> </div>
+        <div class="col-12 text-center derppable_grid droppable_highlight">
+         <a class="workflowadds slidebox" href="#"><i class="ri-add-fill"></i></a> 
+         </div>
         <!--=====DELAY Card=============-->
         <div class="col-md-12">
           <div class="workflow_card ">
