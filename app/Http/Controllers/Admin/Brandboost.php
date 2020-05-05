@@ -497,14 +497,50 @@ class Brandboost extends Controller
         $mWorkflow = new WorkflowModel();
         $mReviews = new ReviewsModel();
         $mTemplates = new TemplatesModel();
-
-        if (empty($brandboostID)) {
-            redirect("admin/brandboost/onsite");
-            exit;
-        }
+        $mOffsite = new OffsiteModel();
 
         $bbProductsData = $mBrandboost->getProductData($brandboostID);
         $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+
+        $review_type = !empty($getBrandboost[0]->review_type) ? $getBrandboost[0]->review_type : 'onsite';
+
+        if (empty($brandboostID)) {
+            if($review_type == 'offsite') {
+                redirect("admin/brandboost/offsite");
+            } else {
+                redirect("admin/brandboost/onsite");
+            }
+            exit;
+        }
+
+        if($review_type == 'offsite') {
+            $offstepdata = $mOffsite->getOffsite();
+            if(!empty($offstepdata)){
+                foreach($offstepdata as $data){
+                    $aSource = @unserialize($data->site_categories);
+                    $data->site_categories_array = $aSource;
+                }
+            }
+
+            $offsite_ids = $getBrandboost[0]->offsite_ids;
+            $offsite_ids = unserialize($offsite_ids);
+            $offsite_ids = @implode(",", $offsite_ids);
+            $setTab = Session::get("setTab");
+            $offsiteIds = explode(',', $offsite_ids);
+
+            if (!empty($offsiteIds)) {
+                foreach ($offsiteIds as $value) {
+                    if (!empty($value) && $value > 0) {
+                        $getData = getOffsite($value);
+                        if (!empty($getData)) {
+                            $setTab = 'Source';
+                        }
+                    }
+                }
+            } else {
+                $setTab = 'Source';
+            }
+        }
 
         $getBrandboostFR = $mFeedback->getFeedbackResponse($brandboostID);
         $moduleName = 'brandboost';
@@ -649,7 +685,9 @@ class Brandboost extends Controller
             'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ],
             'oEmailTemplates' => $oEmailTemplates->items(),
             'oSMSTemplates' => $oSMSTemplates->items(),
-            'endCampaign' => $endCampaign
+            'endCampaign' => $endCampaign,
+            'offSiteData' => ($review_type == 'offsite' ? $offstepdata : ''),
+            'setTab' => ($review_type == 'offsite' ? $setTab : '')
         );
         return $aData;
         //return view('admin.brandboost.onsite_setup', $aData);
