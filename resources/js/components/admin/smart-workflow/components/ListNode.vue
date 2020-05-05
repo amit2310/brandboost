@@ -1,41 +1,92 @@
 <template>
     <div class="row" style="margin-left:0px;margin-right:0px;width:100%;">
-
         <div class="col-12" v-if="nodeType != 'split'">
-            <div class="card p35  mb10">
+            <div class="card p35 br6 mb10" :class="metaData.selectedClass == event.id ? 'blue_border2' : 'light_border2'" @click="metaData.selectedClass=event.id">
                 <div class="row">
-                    <div style="max-width: 64px" class="col mt-1">
-                        <span v-if="nodeName.toLowerCase() == 'email'" class="circle-icon-36 br12 bkg_email_300 light_000 d-block fsize16 fw500">
+                    <div style="max-width:64px" class="col">
+                        <span v-if="nodeName.toLowerCase() == 'email'" class="circle-icon-36 dot_none br12 bkg_email_300 light_000 d-block fsize16 fw500">
                             <i class="ri-mail-open-fill"></i>
                         </span>
-                        <span v-if="nodeName.toLowerCase() == 'sms'" class="circle-icon-36 last br12 bkg_sms_400 light_000 d-block fsize16 fw500">
+                        <span v-else-if="nodeName.toLowerCase() == 'sms'" class="circle-icon-36 dot_none br12 bkg_sms_400 light_000 d-block fsize16 fw500">
                             <i class="ri-message-3-line"></i>
                         </span>
-                        <span v-if="nodeName.toLowerCase() == 'delay'" class="circle-icon-36 last br12 bkg_reviews_300 light_000 d-block fsize16 fw500">
+                        <span v-else-if="nodeName.toLowerCase() == 'delay'" class="circle-icon-36 dot_none br12 bkg_reviews_300 light_000 d-block fsize16 fw500">
                             <i class="ri-time-fill"></i>
                         </span>
-                        <span v-if="nodeType.toLowerCase() == 'decision'" class="circle-icon-36 last br12 bkg_yellow_500 light_000 d-block fsize16 fw500">
+                        <span v-else-if="nodeType.toLowerCase() == 'decision'" class="circle-icon-36 dot_none br12 bkg_yellow_500 light_000 d-block fsize16 fw500">
                             <i class="ri-mail-open-fill"></i>
                         </span>
+                        <span v-else class="circle-icon-36 dot_none br12 bkg_blue_300 light_000 d-block fsize16 fw500">
+                            <i class="ri-flashlight-fill"></i>
+                        </span>
                     </div>
-                    <div class="col-9">
-                        <h3 class="htxt_medium_16 dark_700 mb-2">{{capitalizeFirstLetter(nodeType)}}: {{capitalizeFirstLetter(nodeTitle)}}</h3>
-                        <ul class="review_camapaign_list">
-                            <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong>
-                                <strong>Max Iver  &nbsp; &nbsp;   iver.mdx@brandboost.com</strong><br>
-                                <strong>Hello <strong class="reviews_400">[Fist name]</strong>, It was a pleasure doing business with you...</strong>
-                                <a href="javascript:void(0);">Preview Template “Review Request Email”</a><br>
-                                <a href="javascript:void(0);">Send test email</a>
-                            </strong></li>
-                        </ul>
+                    <div class="col">
+                        <p class=" fsize11 dark_100 mb-1 fw500" v-if="nodeName.toLowerCase() != 'email' && nodeName.toLowerCase() != 'sms'">{{nodeType.toUpperCase()}}</p>
+                        <template v-if="nodeType.toLowerCase() == 'delay'">
+                            <p class=" fsize16 dark_700 mb-1 fw500 ls_4" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
+                            <p class=" fsize16 dark_200 m-0 fw500" v-else>Empty Delay</p>
+                            <p class="m-0 fsize14 dark_600">Time  &nbsp; <img src="assets/images/time-fill-blue.svg"/> &nbsp;  {{delayTime}}</p>
+                        </template>
+                        <template v-if="nodeType.toLowerCase() == 'decision'">
+                            <p class=" fsize16 dark_700 mb-1 fw500 ls_4" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
+                            <p class=" fsize16 dark_200 m-0 fw500" v-else>Empty Decision</p>
+                            <p class="m-0 fsize14 dark_600" v-if="nodeName">Decision  &nbsp; <img src="assets/images/account-circle-fill_blue.svg"/> &nbsp;  1,356</p>
+                        </template>
+                        <template v-if="nodeType.toLowerCase() == 'action'">
+                            <ul class="review_camapaign_list" v-if="nodeName && (nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms')">
+                                <li v-if="nodeName.toLowerCase() == 'email'">
+                                    <span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span>
+                                    <strong v-if="campaignInfo">
+                                        <strong>{{setStringLimit(campaignInfo.greeting+' '+campaignInfo.introduction, 55)}}</strong><br>
+                                        <a href="javascript:void(0);">Preview Template “{{templateInfo.template_name}}”</a><br>
+                                        <a href="javascript:void(0);">Send test email</a>
+                                    </strong>
+                                    <strong v-else>
+                                        Empty Email
+                                    </strong>
+                                </li>
+                                <li v-if="nodeName.toLowerCase() == 'sms'">
+                                <span class="smsbox">
+                                    <div class="row mb-1">
+                                        <div class="col"><p class="m-0 fsize8 light_700"><img width="10" src="assets/images/message_icon_green.svg"> &nbsp; MESSAGES</p></div>
+                                        <div class="col text-right"><p class="m-0 fsize8 light_700">now</p></div>
+                                    </div>
+                                    <p class="fsize9 fw500 dark_900 mb-1">{{campaignInfo.greeting}}</p>
+                                    <p class="fsize9 fw300 dark_900 m-0" v-html="setStringLimit(campaignInfo.introduction + ' '+ getDecodeContent(campaignInfo.stripo_compiled_html), 150)"></p>
+                                </span>
+                                    <strong v-if="campaignInfo">
+                                        <strong>{{setStringLimit(campaignInfo.greeting+' '+campaignInfo.introduction, 55)}}</strong><br>
+                                        <a href="javascript:void(0);">Preview SMS Template “{{templateInfo.template_name}}”</a><br>
+                                        <a href="javascript:void(0);">Send test SMS</a>
+                                    </strong>
+                                    <strong v-else>
+                                        Empty SMS
+                                    </strong>
+                                </li>
+                            </ul>
+                            <p class=" fsize16 dark_700 mb-1 fw500 ls_4" v-else-if="nodeNameDescription">{{nodeNameDescription}}</p>
+                            <p class=" fsize16 dark_200 m-0 fw500" v-else>Empty Action</p>
+                            <p class="m-0 fsize14 dark_600" v-if="nodeName">Contacts  &nbsp; <img src="assets/images/account-circle-fill_blue.svg"/> &nbsp;  1,356</p>
+                        </template>
+                        <template v-if="nodeType.toLowerCase() == 'split'">
+                            <p class=" fsize16 dark_700 mb-1 fw500 ls_4" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
+                            <p class=" fsize16 dark_200 m-0 fw500" v-else>Empty Split</p>
+                        </template>
+
                     </div>
                     <div class="col text-right">
-                        <button @click="editNode" class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit</button>
                         <button @click="deleteEvent" class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Delete</button>
+                        <button @click="editNode" class="btn border br35 blue_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="nodeName">
+                            Edit
+                        </button>
+                        <button @click="editNode" class="btn border br35 blue_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else>
+                            <img src="assets/images/plus_add_16.svg"/>  {{buttonCaption}}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -44,16 +95,20 @@
         data(){
             return {
                 column_index: 0,
-                splitNodeInfo: ''
+                splitNodeInfo: '',
+                templateInfo: '',
+                campaignInfo: ''
             }
         },
         mounted() {
             if(this.nodeType == 'split'){
                 this.getSplitNodeInfo(this.event);
+            }else if(this.nodeName.toLowerCase()=='email' || this.nodeName.toLowerCase()=='sms'){
+                this.getNodeInfo(this.event);
             }
         },
         computed :{
-            nodeClass : function(){
+            nodeClass: function(){
                 let className = JSON.parse(this.event.data)['node_type'];
                 if(className == 'action'){
                     return 'bkg_blue_300';
@@ -70,16 +125,45 @@
                 }
                 return '';
             },
-            nodeType : function(){
+            nodeNameDescription: function(){
+                if(this.nodeName.toLowerCase() == 'field'){
+                    return 'People field';
+                }else if(this.nodeName.toLowerCase() == 'tag'){
+                    return 'People tag';
+                }else if(this.nodeName.toLowerCase() == 'list'){
+                    return 'People list';
+                }else if(this.nodeName.toLowerCase() == 'contact'){
+                    return 'People contact';
+                }else if(this.nodeName.toLowerCase() == 'status'){
+                    return 'People status';
+                }
+            },
+            buttonCaption: function(){
+                if(this.nodeType.toLowerCase() == 'action'){
+                    return 'Add Action';
+                }else if(this.nodeType.toLowerCase() == 'delay'){
+                    return 'Add Delay';
+                }else if(this.nodeName.toLowerCase() == 'decision'){
+                    return 'Add Decision';
+                }else if(this.nodeName.toLowerCase() == 'split'){
+                    return 'Add Split';
+                }else{
+                    return '';
+                }
+            },
+            nodeType: function(){
                 return JSON.parse(this.event.data)['node_type'];
             },
-            nodeName : function(){
+            nodeName: function(){
                 return this.capitalizeFirstLetter(JSON.parse(this.event.data)['name']);
             },
-            nodeTitle : function(){
+            nodeTitle: function(){
                 return this.capitalizeFirstLetter(JSON.parse(this.event.data)['title']);
             },
-
+            delayTime: function(){
+                let delayProps = JSON.parse(this.event.data)['delay_properties'];
+                return 'At '+ delayProps['delay_hour']+':'+delayProps['delay_minute']+ ' '+ delayProps['delay_ampm'].toUpperCase();
+            }
         },
         methods: {
             prepareToAddAction: function(){
@@ -125,6 +209,27 @@
                     });
                 }
 
+            },
+            getNodeInfo: function(){
+                let formData = {
+                    id: this.event.id,
+                    name:this.nodeName.toLowerCase(),
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getEndCampaign', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.templateInfo = response.data.templateInfo;
+                        this.campaignInfo = response.data.campaignInfo;
+                    }
+                });
+
+            },
+            getDecodeContent: function(content){
+                if(content){
+                    return atob(content);
+                }
+                return content;
             },
         }
     };

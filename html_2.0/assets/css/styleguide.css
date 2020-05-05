@@ -457,7 +457,9 @@ BORDER CLASSES
 .border_dashed{border: 1px dashed #D5DFEF!important}
 .brig_nonr{ border-right:none!important}
 
-
+.dark_border2{border: 2px solid #97A4BD!important;}
+.light_border2{border: 2px solid #ffffff!important;}
+.blue_border2{border: 2px solid #4489F2!important;}
 /******************************
 BORDER RADIUS CLASSES
 ******************************/

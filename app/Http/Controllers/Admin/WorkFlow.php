@@ -3581,4 +3581,38 @@ class WorkFlow extends Controller {
         return $response;
     }
 
+    public function getEndCampaign(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventId = strip_tags($request->id);
+        $nodeName = strip_tags($request->name);
+        $templateType = $nodeName;
+        if($eventId>0){
+            $oTemplate = '';
+            $aCampaign= '';
+            $campaignId = '';
+            $aCampaigns = $mWorkflow->getEventCampaign($eventId, $moduleName);
+            if($aCampaigns->count()>0){
+                foreach($aCampaigns as $aCampaign){
+                    if(strtolower($aCampaign->campaign_type) == $templateType){
+                        $campaignId = $aCampaign->id;
+                        $templateSource = $aCampaign->template_source;
+                        break;
+                    }
+                }
+            }
+            if ($campaignId > 0) {
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
+            }
+            return ['status'=>'success', 'campaignInfo'=>$aCampaign, 'templateInfo'=>$oTemplate];
+        }else{
+            return ['status'=>'error', 'campaignInfo'=>'', 'templateInfo'=>''];
+        }
+
+    }
+
 }
