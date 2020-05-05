@@ -21,12 +21,35 @@
                     <div class="col-9">
                         <h3 class="htxt_medium_16 dark_700 mb-2">{{capitalizeFirstLetter(nodeType)}}: {{capitalizeFirstLetter(nodeTitle)}}</h3>
                         <ul class="review_camapaign_list">
-                            <li><span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span><strong>
-                                <strong>Max Iver  &nbsp; &nbsp;   iver.mdx@brandboost.com</strong><br>
-                                <strong>Hello <strong class="reviews_400">[Fist name]</strong>, It was a pleasure doing business with you...</strong>
-                                <a href="javascript:void(0);">Preview Template “Review Request Email”</a><br>
-                                <a href="javascript:void(0);">Send test email</a>
-                            </strong></li>
+                            <li v-if="nodeName.toLowerCase() == 'email'">
+                                <span><figure><img src="assets/images/Create_Ema_preview.png"></figure></span>
+                                <strong v-if="campaignInfo">
+                                    <strong>{{setStringLimit(campaignInfo.greeting+' '+campaignInfo.introduction, 55)}}</strong><br>
+                                    <a href="javascript:void(0);">Preview Template “{{templateInfo.template_name}}”</a><br>
+                                    <a href="javascript:void(0);">Send test email</a>
+                                </strong>
+                                <strong v-else>
+                                    Empty Email
+                                </strong>
+                            </li>
+                            <li v-if="nodeName.toLowerCase() == 'sms'">
+                                <span class="smsbox">
+                                    <div class="row mb-1">
+                                        <div class="col"><p class="m-0 fsize8 light_700"><img width="10" src="assets/images/message_icon_green.svg"> &nbsp; MESSAGES</p></div>
+                                        <div class="col text-right"><p class="m-0 fsize8 light_700">now</p></div>
+                                    </div>
+                                    <p class="fsize9 fw500 dark_900 mb-1">{{campaignInfo.greeting}}</p>
+                                    <p class="fsize9 fw300 dark_900 m-0" v-html="setStringLimit(campaignInfo.introduction + ' '+ getDecodeContent(campaignInfo.stripo_compiled_html), 150)"></p>
+                                </span>
+                                <strong v-if="campaignInfo">
+                                    <strong>{{setStringLimit(campaignInfo.greeting+' '+campaignInfo.introduction, 55)}}</strong><br>
+                                    <a href="javascript:void(0);">Preview SMS Template “{{templateInfo.template_name}}”</a><br>
+                                    <a href="javascript:void(0);">Send test SMS</a>
+                                </strong>
+                                <strong v-else>
+                                    Empty SMS
+                                </strong>
+                            </li>
                         </ul>
                     </div>
                     <div class="col text-right">
@@ -44,12 +67,16 @@
         data(){
             return {
                 column_index: 0,
-                splitNodeInfo: ''
+                splitNodeInfo: '',
+                templateInfo: '',
+                campaignInfo: ''
             }
         },
         mounted() {
             if(this.nodeType == 'split'){
                 this.getSplitNodeInfo(this.event);
+            }else if(this.nodeName.toLowerCase()=='email' || this.nodeName.toLowerCase()=='sms'){
+                this.getNodeInfo(this.event);
             }
         },
         computed :{
@@ -125,6 +152,24 @@
                     });
                 }
 
+            },
+            getNodeInfo: function(){
+                let formData = {
+                    id: this.event.id,
+                    name:this.nodeName.toLowerCase(),
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getEndCampaign', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.templateInfo = response.data.templateInfo;
+                        this.campaignInfo = response.data.campaignInfo;
+                    }
+                });
+
+            },
+            getDecodeContent: function(content){
+                return atob(content);
             },
         }
     };
