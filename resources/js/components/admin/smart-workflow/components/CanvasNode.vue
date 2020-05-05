@@ -25,12 +25,34 @@
                                 <a href="javascript:void(0);" @click="deleteEvent"><i class="icon-bin2 fsize10 dark_100"></i></a>
                             </div>
                             <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">{{nodeType.toUpperCase()}}</p>
-                            <p class="dark_200 fsize13 fw500 mb15 ls4">{{nodeName ? nodeName : 'Empty Action'}} </p>
+                            <template v-if="nodeType.toLowerCase() == 'delay'">
+                                <p class="dark_600 fsize13 fw500 mb15" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
+                                <p class="dark_200 fsize13 fw500 mb15 ls4" v-else>Empty Delay </p>
+                            </template>
+                            <template v-if="nodeType.toLowerCase() == 'decision'">
+                                <p class="dark_600 fsize13 fw500 mb15" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
+                                <p class="dark_200 fsize13 fw500 mb15 ls4" v-else>Empty Decision</p>
+                            </template>
+                            <template v-if="nodeType.toLowerCase() == 'action'">
+                                <p class="dark_600 fsize13 fw500 mb15" v-if="nodeName && (nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms')">{{nodeName}}</p>
+                                <p class="dark_600 fsize13 fw500 mb15" v-else-if="nodeNameDescription">{{nodeNameDescription}}</p>
+                                <p class="dark_200 fsize13 fw500 mb15 ls4" v-else>Empty Action</p>
+                            </template>
+                            <template v-if="nodeType.toLowerCase() == 'split'">
+                                <p class="dark_600 fsize13 fw500 mb15" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
+                                <p class="dark_200 fsize13 fw500 mb15 ls4" v-else>Empty Split</p>
+                            </template>
                             <div class="p0 pt12 btop">
                                 <ul class="workflow_list">
                                     <li style="border:none;">
-                                        <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-if="nodeTitle">
-                                            <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'ADD Action'}}
+                                        <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-if="nodeType.toLowerCase() == 'delay'">
+                                            <span class="d-inline-block"><i class="ri-time-fill blue_300 fsize15"></i></span>  {{delayTime}}
+                                        </a>
+                                        <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else-if="nodeType.toLowerCase() == 'decision'">
+                                            <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'ADD DECISION'}}
+                                        </a>
+                                        <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else-if="nodeTitle">
+                                            <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'ADD ACTION'}}
                                         </a>
                                         <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else>
                                             <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> ADD ACTION
@@ -149,6 +171,23 @@
             nodeTitle : function(){
                 return this.capitalizeFirstLetter(JSON.parse(this.event.data)['title']);
             },
+            nodeNameDescription: function(){
+                if(this.nodeName.toLowerCase() == 'field'){
+                    return 'People field';
+                }else if(this.nodeName.toLowerCase() == 'tag'){
+                    return 'People tag';
+                }else if(this.nodeName.toLowerCase() == 'list'){
+                    return 'People list';
+                }else if(this.nodeName.toLowerCase() == 'contact'){
+                    return 'People contact';
+                }else if(this.nodeName.toLowerCase() == 'status'){
+                    return 'People status';
+                }
+            },
+            delayTime: function(){
+                let delayProps = JSON.parse(this.event.data)['delay_properties'];
+                return 'At '+ delayProps['delay_hour']+':'+delayProps['delay_minute']+ ' '+ delayProps['delay_ampm'].toUpperCase();
+            }
 
         },
         methods: {
