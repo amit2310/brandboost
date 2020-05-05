@@ -12,13 +12,13 @@
                                     <div class="workflow_card slideTriggerbox" :class="{'workflowSelectedBorder': metaData.selectedClass == 'trigger'}" @click="metaData.selectedClass='trigger'">
                                         <div class="wf_icons br12 bkg_dark_100 rotate_45 border"><img class="rotate_45_minus small" src="assets/images/play_white_small.svg"></div>
                                         <p class="dark_200 fsize11 fw500 mb-1 text-uppercase ls_4">TRIGGER </p>
-                                        <p class="dark_200 fsize13 fw500 mb15 ls4" v-if="unitInfo.workflow_entry_trigger">{{capitalizeFirstLetter(unitInfo.workflow_entry_trigger)}} </p>
+                                        <p class="dark_600 fsize13 fw500 mb15" v-if="unitInfo.workflow_entry_trigger">{{triggerName}}</p>
                                         <p class="dark_200 fsize13 fw500 mb15 ls4" v-else>Entry Trigger </p>
                                         <div class="p0 pt12 btop">
                                             <ul class="workflow_list">
                                                 <li style="border:none;">
-                                                    <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-if="unitInfo.workflow_entry_trigger">
-                                                        <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> Some Data
+                                                    <a class="dark_200 fsize12" href="javascript:void(0);" v-if="unitInfo.workflow_entry_trigger">
+                                                        <span class="d-inline-block"><i class="ri-file-list-2-fill blue_300 fsize15"></i></span> Lead Form Home
                                                     </a>
                                                     <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else>
                                                         <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> ADD TRIGGER
@@ -101,6 +101,21 @@
         data(){
             return {
                 viewType: 'list',
+            }
+        },
+        computed: {
+            triggerName : function(){
+                if(this.unitInfo.workflow_entry_trigger.toLowerCase() == 'contact'){
+                    return 'Added Contact';
+                }else if(this.unitInfo.workflow_entry_trigger.toLowerCase() == 'tags'){
+                    return 'Applied Tag';
+                }else if(this.unitInfo.workflow_entry_trigger.toLowerCase() == 'lists'){
+                    return 'Added to List';
+                }else if(this.unitInfo.workflow_entry_trigger.toLowerCase() == 'segment'){
+                    return 'Added to Segment';
+                }else if(this.unitInfo.workflow_entry_trigger.toLowerCase() == 'form'){
+                    return 'Submitted a form';
+                }
             }
         },
         methods: {

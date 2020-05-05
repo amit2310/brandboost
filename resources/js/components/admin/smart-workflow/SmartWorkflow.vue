@@ -328,7 +328,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click.prevent="updateTrigger">Update Trigger</button>
-                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideTriggerbox">Close</button>
 
                                     </div>
 
