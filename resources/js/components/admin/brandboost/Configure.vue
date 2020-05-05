@@ -904,6 +904,8 @@
                 user: {},
                 breadcrumb: '',
                 feedbackResponse: '',
+                offSiteData: '',
+                setTab: '',
                 fromNumber: '',
                 displayCustomLinkExpiry: false,
                 displaySenderForm: false,
@@ -1138,6 +1140,8 @@
                         this.moduleName = response.data.moduleName;
                         this.campaign = response.data.brandboostData;
                         this.feedbackResponse = response.data.feedbackResponse;
+                        this.offSiteData = response.data.offSiteData;
+                        this.setTab = response.data.setTab;
                         //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
                         this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
                         this.user = response.data.aUserInfo;

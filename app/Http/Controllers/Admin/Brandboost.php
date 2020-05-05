@@ -644,14 +644,21 @@ class Brandboost extends Controller
         $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
 
         $fromNumber = '';
-
-        $aBreadcrumb = array(
-            'Home' => '#/',
-            'Reviews' => '#/reviews/dashboard',
-            'Onsite' => '#/reviews/onsite',
-            'Setup' => '',
-        );
-
+        if($review_type == 'offsite') {
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Reviews' => '#/reviews/dashboard',
+                'Offsite' => '#/reviews/offsite',
+                'Setup' => '',
+            );
+        } else {
+            $aBreadcrumb = array(
+                'Home' => '#/',
+                'Reviews' => '#/reviews/dashboard',
+                'Onsite' => '#/reviews/onsite',
+                'Setup' => '',
+            );
+        }
 
         $aData = array(
             'title' => 'Onsite Brand Boost Campaign',
