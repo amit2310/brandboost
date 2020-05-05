@@ -147,7 +147,7 @@
     	<div class="col-12">
         <div class="card p35 br6 mb10 light_border2">
     			<div class="row">
-    				<div style="max-width:64px" class="col"><img width="36" src="assets/images/trigger_start_grey.png"/></div>
+    				<div style="max-width:64px; padding:0;" class="col"><img width="56" src="assets/images/trigger_start_grey_36.svg"/></div>
     				<div class="col">
     					<p class=" fsize11 dark_100 mb-1 fw500 ">TRIGGER</p>
     					<p class=" fsize16 dark_200 m-0 fw500">Entry Trigger</p>
@@ -161,7 +161,7 @@
         <div class="col-12">
         <div class="card p35 br6 mb10 dark_border2">
     			<div class="row">
-    				<div style="max-width:64px" class="col"><img width="36" src="assets/images/trigger_start_grey.png"/></div>
+    				<div style="max-width:64px; padding:0;" class="col"><img width="56" src="assets/images/trigger_start_grey_36.svg"/></div>
     				<div class="col">
     					<p class=" fsize11 dark_100 mb-1 fw500 ">TRIGGER</p>
     					<p class=" fsize16 dark_200 m-0 fw500">Entry Trigger</p>
@@ -175,7 +175,7 @@
         <div class="col-12">
         <div class="card p35 br6 mb10 light_border2">
     			<div class="row">
-    				<div style="max-width:64px" class="col"><!--<span class="circle-icon-36 br12 bkg_dark_100 light_000 d-block fsize16 fw500"><i class="ri-play-fill"></i></span>--> <img width="36" src="assets/images/trigger_start_grey.png"/> </div>
+    				<div style="max-width:64px; padding:0;" class="col"><!--<span class="circle-icon-36 br12 bkg_dark_100 light_000 d-block fsize16 fw500"><i class="ri-play-fill"></i></span>--> <img width="56" src="assets/images/trigger_start_grey_36.svg"/> </div>
     				<div class="col">
     					<p class=" fsize11 dark_100 mb-1 fw500 ">TRIGGER</p>
     					<p class=" fsize16 dark_700 mb-1 fw500 ls_4">Submitted a form</p>
@@ -187,14 +187,6 @@
     			</div>
     		</div>
         </div>
-        
-        
-        
-        
-        
-        
-        
-        
     </div>
     
     
@@ -243,14 +235,6 @@
     			</div>
     		</div>
         </div>
-        
-        
-        
-        
-        
-        
-        
-        
     </div>
     
     
@@ -299,20 +283,7 @@
     			</div>
     		</div>
         </div>
-        
-        
-        
-        
-        
-        
-        
-        
     </div>
-    
-    
-    
-    
-    
       </div>
      </div>
       
