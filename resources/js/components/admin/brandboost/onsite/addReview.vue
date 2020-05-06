@@ -26,7 +26,6 @@
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <div class="row">
                     <div class="col-md-8">
@@ -238,8 +237,6 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
         data(){
             return {
                 refreshMessage: 1,
-                successMsg : '',
-
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

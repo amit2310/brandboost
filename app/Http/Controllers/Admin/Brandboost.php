@@ -4341,11 +4341,13 @@ public function widgetStatisticDetailsStatsGraph(){
         $userID = $aUser->id;
         $user_role = $aUser->user_role;
         if ($user_role == 1) {
-            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite', '', '', $items_per_page, false);
+            $aBrandboostList = BrandboostModel::getBrandboost('', 'onsite', '', '', '', $items_per_page, false);
         } else {
-            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite', '', '', $items_per_page, false);
+            $aBrandboostList = BrandboostModel::getBrandboostByUserId($userID, 'onsite', '', '', '', $items_per_page, false);
         }
+
         $subscribersData = SubscriberModel::getGlobalSubscribers($userID, false);
+
         $aBreadcrumb = array(
             'Home' => '#/',
             'Reviews' => '#/reviews/dashboard',
