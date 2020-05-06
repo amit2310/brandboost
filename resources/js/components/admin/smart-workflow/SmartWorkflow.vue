@@ -80,7 +80,7 @@
                                         @dragover="$event.preventDefault()">
                                     </div>
                                     <a id="jsMoveNode" href="javascript:void(0);" @click="metaData.selectedClass=evt.id" draggable="true" @dragstart="onLinearDrag($event, evt)">
-                                        <span class="circle-icon-20" :class="nodeClass(evt)"><i class="ri-folder-fill"></i></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
+                                        <span class="circle-icon-20" :class="nodeClass(evt)" v-html="nodeIcon(evt)"></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
                                     </a>
                                     <template v-if="nodeType(evt)=='split'">
                                         <hr class="mt10">
@@ -1530,6 +1530,23 @@
                     }
                 });
             },
+            nodeIcon : function(event){
+                let className = JSON.parse(event.data)['node_type'];
+                if(className == 'action'){
+                    return '<i class="ri-folder-fill"></i>';
+                }else if(className == 'decision'){
+                    return '<i class="ri-folder-fill"></i>';
+                }else if(className == 'delay'){
+                    return '<i class="ri-time-fill"></i>';
+                }else if(className == 'split'){
+                    return '<span class="rotate_45_minus d-block"><i><img class="align-top mt-1" width="12" src="assets/images/split-white.svg"/></i></span>';
+                }else if(className == 'goal'){
+                    return '<i class="ri-folder-fill"></i>';
+                }else if(className == 'exit'){
+                    return '<i class="ri-folder-fill"></i>';
+                }
+                return '';
+            },
             nodeClass : function(event){
                 let className = JSON.parse(event.data)['node_type'];
                 if(className == 'action'){
@@ -1537,9 +1554,9 @@
                 }else if(className == 'decision'){
                     return 'bkg_yellow_400';
                 }else if(className == 'delay'){
-                    return 'bkg_reviews_300';
+                    return 'bkg_blue_300 br35';
                 }else if(className == 'split'){
-                    return 'bkg_email_300';
+                    return 'bkg_email_300 rotate_45';
                 }else if(className == 'goal'){
                     return 'bkg_sms_400';
                 }else if(className == 'exit'){
@@ -1767,18 +1784,16 @@
     .workflowSelectedBorder {
         border:2px solid #97A4BD;
     }
-    .droppable_highlight{
-        border:1px solid #FF0000 !important;
-        height: 57px !important;
-        background: #eed8d8 !important;
-        border-style: dashed !important;
-    }
+    ..workflow_box .droppable_highlight{border:none !important; height: 57px !important; background: none !important; border-style: none !important;}
+    .workflow_box .droppable_highlight:before{ height:36px!important; border-radius:100px!important; width:36px!important;position:absolute; content:''; left:50%; top:12px; background: #73ABFF;opacity: 0.1; margin-left:-18px; }
+    .workflow_box .droppable_highlight .workflowadds{ background:#73ABFF!important}
     .workflow_list_new .droppable_highlight{
-        border:1px solid #FF0000 !important;
+        border:1px solid #4489F2 !important;
         height: 3px !important;
-        background: #eed8d8 !important;
+        background: #4489F2 !important;
         border-style: dashed !important;
         margin-top:-11px;
         margin-bottom: 8px;
     }
+
 </style>
