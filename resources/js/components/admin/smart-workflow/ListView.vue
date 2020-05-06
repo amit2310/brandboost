@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card p35 br6 mb10" :class="metaData.selectedClass == 'trigger'? 'dark_border2' : 'light_border2'" @click="metaData.selectedClass='trigger'">
                 <div class="row">
-                    <div style="max-width:64px" class="col"><img width="36" src="assets/images/trigger_start_grey.png"/></div>
+                    <div style="max-width:64px;padding:0;" class="col"><img width="56" src="assets/images/trigger_start_grey_36.svg"/></div>
                     <div class="col">
                         <p class=" fsize11 dark_100 mb-1 fw500 ">TRIGGER</p>
                         <p class=" fsize16 dark_200 m-0 fw500" v-if="!unitInfo.workflow_entry_trigger">Entry Trigger</p>

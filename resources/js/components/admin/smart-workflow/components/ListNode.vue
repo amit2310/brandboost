@@ -143,9 +143,9 @@
                     return 'Add Action';
                 }else if(this.nodeType.toLowerCase() == 'delay'){
                     return 'Add Delay';
-                }else if(this.nodeName.toLowerCase() == 'decision'){
+                }else if(this.nodeType.toLowerCase() == 'decision'){
                     return 'Add Decision';
-                }else if(this.nodeName.toLowerCase() == 'split'){
+                }else if(this.nodeType.toLowerCase() == 'split'){
                     return 'Add Split';
                 }else{
                     return '';
