@@ -22,7 +22,7 @@
         </div>
 
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
             <workflow-subscribers
                 :show-archived="true"
@@ -140,7 +140,7 @@
         data() {
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -206,7 +206,7 @@
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
                                 this.loading = false;
-                                this.successMsg = 'Segment contacts have been synced successfully!';
+                                this.displayMessage('success', 'Segment contacts have been synced successfully!');
                             }
 
                         })

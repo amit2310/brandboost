@@ -218,8 +218,8 @@
         data(){
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: false,
                 themeTitle: '',
                 colors: [{class:'white', name:'white'},
@@ -284,7 +284,7 @@
                             document.querySelector('input[name="company_header_logo"]').value = this.brandData.company_header_logo;
                             this.saveChanges();
                         }
-                        this.successMsg = 'Theme applied successfully!!';
+                        this.displayMessage('success', 'Theme applied successfully!!');
                         this.loading = false;
 
                     });
@@ -403,7 +403,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.successMsg = 'Configuration saved successfully!!';
+                        this.displayMessage('success', 'Configuration saved successfully!!');
                         this.loading = false;
 
                     });
@@ -418,7 +418,7 @@
                     .then(response => {
                         let themeReponseData = response.data.themeCollection;
                         this.brandThemeData = themeReponseData;
-                        this.successMsg = 'Configuration saved successfully!!';
+                        this.displayMessage('success', 'Configuration saved successfully!!');
                         this.loading = false;
 
                     });

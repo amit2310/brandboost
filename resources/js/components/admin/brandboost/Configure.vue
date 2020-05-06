@@ -887,8 +887,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 showHelp: true,
                 configureCampaign: true,
@@ -1315,8 +1315,8 @@
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.senderForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('sender');
                             this.validateStepCompletion();
@@ -1329,8 +1329,8 @@
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.senderSMSForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('smsSender');
                             this.validateStepCompletion();
@@ -1343,8 +1343,8 @@
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.subjectForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('subject');
                             this.validateStepCompletion();
@@ -1356,8 +1356,8 @@
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.trackingForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('tracking');
                             this.validateStepCompletion();
@@ -1369,8 +1369,8 @@
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.trackingForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('smsTracking');
                             this.validateStepCompletion();
@@ -1382,7 +1382,7 @@
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.channelForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
+
                             this.loading = false;
                         }
                     });
@@ -1392,8 +1392,8 @@
                 axios.post('/admin/brandboost/changeStatus', {brandboost_id:this.$route.params.id, status: '1', _token: this.csrf_token()})
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg="Campaign saved successfully!";
+
+                            this.displayMessage('success', 'Campaign saved successfully!');
                             this.loading = false;
                             window.location.href = '/admin#/reviews/campaign/'+this.$route.params.id;
                         }
@@ -1443,8 +1443,8 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Saved changes successfully!";
+
+                            this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
@@ -1460,8 +1460,8 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Saved changes successfully!";
+
+                            this.displayMessage('success', 'Saved changes successfully!');
                             this.setSMSCampaignId(this.smsCampaignId, this.smsTemplate.template_name, response.data.campaignInfo);
                         }
                     });
@@ -1478,8 +1478,8 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Test email sent successfully!";
+
+                            this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },
@@ -1495,8 +1495,8 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Test email sent successfully!";
+
+                            this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },

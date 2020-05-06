@@ -429,8 +429,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 showHelp: true,
                 configureCampaign: true,
@@ -791,8 +791,8 @@
                 axios.post('/admin/brandboost/updateReviewRequest', this.senderForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('sender');
                             this.validateStepCompletion();
@@ -805,8 +805,8 @@
                 axios.post('/admin/brandboost/updateReviewRequest', this.subjectForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('subject');
                             this.validateStepCompletion();
@@ -818,8 +818,8 @@
                 axios.post('/admin/brandboost/updateReviewRequest', this.trackingForm)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('tracking');
                             this.validateStepCompletion();
@@ -849,8 +849,8 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Saved changes successfully!";
+
+                            this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
@@ -889,8 +889,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Test email sent successfully!";
+                            this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },
@@ -902,12 +901,11 @@
                 })
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Review request added to the queue for sending';
+                            this.displayMessage('success', 'Review request added to the queue for sending');
                             this.loading = false;
                         }
                         if(response.data.status == 'error'){
-                            this.refreshMessage = Math.random();
+
                             this.errorMsg = response.data.msg;
                             this.loading = false;
                         }

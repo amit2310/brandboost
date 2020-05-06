@@ -620,8 +620,8 @@
         name: "SettingSubscription",
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 seletedTab: 1,

@@ -66,8 +66,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 allSubscribers: '',
                 favoriteChat: '',
@@ -148,7 +148,7 @@
                     _token: this.csrf_token(),
                 })
                     .then(response => {
-                        this.successMsg = 'Source has been updated successfully';
+                        this.displayMessage('success', 'Source has been updated successfully');
                         this.loading = false;
                     });
             },
@@ -175,8 +175,8 @@
                     linkExpiryData: this.campaign.link_expire_custom,
                     requestType: type
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.loading = false;
                 });
             },
@@ -191,9 +191,9 @@
                     .then(response => {
                         this.loading = false;
                         if (response.data.status == 'success') {
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            this.displayMessage('success', 'Campaign saved as a draft successfully');
                         } else {
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             }

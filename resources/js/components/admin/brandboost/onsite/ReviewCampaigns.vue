@@ -24,7 +24,7 @@
         <!--******************
           Content Area
          **********************-->
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div class="content-area" v-show="pageRendered==true">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
@@ -505,7 +505,7 @@
             return {
                 pageRendered: false,
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -716,7 +716,7 @@
                     if (response.data.status == 'success') {
                         this.isProcessing = false;
                         if(response.data.brandboostID>0){
-                            this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
+                            this.displayMessage('success', 'Campaign added successfully! Redirecting to the setup page...');
                             document.querySelector('#hidePopupForm').click();
                             window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID;
                             return false;
@@ -724,7 +724,7 @@
 
                         //this.form = {};
                         //document.querySelector('.js-review-campaign-slidebox').click();
-                        this.successMsg = 'Action completed successfully.';
+                        this.displayMessage('success', 'Action completed successfully.');
 
                         $(".cross_icon").trigger('click');
                             elem.loadPaginatedData();

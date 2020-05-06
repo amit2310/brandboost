@@ -243,7 +243,7 @@
         data(){
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 feedbackId: this.$route.params.id,
                 moduleName: '',

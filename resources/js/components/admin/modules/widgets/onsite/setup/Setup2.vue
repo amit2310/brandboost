@@ -606,8 +606,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 settingTab:1,
                 moduleName: '',
@@ -720,7 +720,7 @@
                     // console.log(response.data.status);
                     this.getWidgetDetails();
                     if(response.data.status =='success'){
-                        this.successMsg="Setting has beeb saved successfully.";
+                        this.displayMessage('success', 'Setting has beeb saved successfully.');
                     }
                     this.loading =false;
                 });
@@ -755,8 +755,8 @@
                         this.campaign.widget_border_color =themeData.widget_border_color
                         this.campaign.widget_position =themeData.widget_position
                         axios.post('/admin/brandboost/addBrandBoostWidgetDesign', this.campaign).then(response => {
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Updated the changes successfully!!';
+
+                            this.displayMessage('success', 'Test email sent successfully!');
                             this.getWidgetDetails();
                             this.loading = false;
                         });
@@ -833,8 +833,8 @@
                 this.loading = true;
                 // custom_colors_rating2 rating_custom_color2
                 axios.post('/admin/brandboost/addBrandBoostWidgetDesign', this.campaign).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.getWidgetDetails();
                     this.loading = false;
                 });
@@ -861,8 +861,8 @@
                     fieldVal: fieldValue,
                     widgetID: this.campaignId,
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.getWidgetDetails();
                     this.loading = false;
                 });
@@ -880,8 +880,8 @@
                     fieldVal: fieldValue,
                     widgetID: this.campaignId,
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.getWidgetDetails();
                     this.loading = false;
                 });
@@ -898,9 +898,9 @@
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             },

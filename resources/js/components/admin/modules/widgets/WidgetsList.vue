@@ -22,7 +22,7 @@
         <!--******************
           Content Area
          **********************-->
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
         <loading :isLoading="loading"></loading>
             <div class="content-area" v-show="pageRendered==true" >
                 <div class="container-fluid" v-if="widgets.length > 0 || searchBy.length > 0">
@@ -344,8 +344,8 @@
                     campaignName: '',
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
@@ -511,7 +511,7 @@
                             this.loading = false;
                             this.form.wid ='';
                             document.querySelector('.js-onsite-widget-slidebox2').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
 
                             this.navigateToOnsiteWidgetSetup(response.data.widgetID);
 

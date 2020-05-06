@@ -185,8 +185,8 @@
         data() {
             return {
                 refreshMessage: '',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 seletedTab: 1,
@@ -300,8 +300,8 @@
                     fieldname: fieldName,
                     fieldval: fieldValue,
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.loadData();
                     this.loading = false;
                 });
@@ -314,8 +314,8 @@
                     _token: this.csrf_token(),
                     notification_slug: notification_slug,
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.loadData();
                     this.loading = false;
                 });

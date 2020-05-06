@@ -23,7 +23,7 @@
              **********************-->
             <div class="content-area">
                 <div v-if="oPrograms" class="container-fluid">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                     <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
                         <div class="row">
@@ -202,8 +202,8 @@
                     chat_id: ''
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
@@ -274,7 +274,7 @@
                             this.loading = false;
                             this.form.chat_id ='';
                             document.querySelector('.js-chat-widget-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
 
                             var elem = this;
                             setTimeout(function () {

@@ -144,8 +144,8 @@
                 showModal: false,
                 feedbackTitle: '',
                 feedbackDesc: '',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

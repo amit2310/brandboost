@@ -22,7 +22,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div v-if="!otagData" class="row">{{otagData.length}}
                     <div class="col-md-12">
@@ -152,8 +152,8 @@
         components: {Pagination},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 current_page: 1,
                 otagData: '',

@@ -39,8 +39,8 @@
         name: "Settings",
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 seletedTab: 1,

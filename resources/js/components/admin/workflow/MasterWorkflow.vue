@@ -33,7 +33,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area" :class="dynamo" style="padding-left: 310px;">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
 
             <div class="workflowContainer">
@@ -431,8 +431,8 @@
         data(){
           return {
               showModal: false,
-              successMsg: '',
-              errorMsg: '',
+
+
               loading: true,
               moduleName: '',
               moduleUnitID: '',

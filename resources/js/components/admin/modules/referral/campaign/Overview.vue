@@ -27,7 +27,7 @@
         <div class="content-area">
 
             <div v-if="programs.length > 0" class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
@@ -277,8 +277,8 @@
                 },
                 formLabel: 'Create',
                 bActiveSubsription: '',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
@@ -357,7 +357,7 @@
                             this.form.ref_id ='';
 
                             document.querySelector('.js-referral-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();

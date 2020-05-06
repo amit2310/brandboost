@@ -23,7 +23,7 @@
              **********************-->
             <div class="content-area">
                 <div v-if="widgets" class="container-fluid">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                     <loading :isLoading="loading"></loading>
                     <div class="table_head_action">
                         <div class="row">
@@ -223,8 +223,8 @@
                     description: ''
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
@@ -293,7 +293,7 @@
                             this.loading = false;
                             this.form.wid ='';
                             document.querySelector('.js-referral-widget-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
 
                             var elem = this;
                             setTimeout(function () {

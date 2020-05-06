@@ -15,7 +15,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
 
             <div class="container-fluid">
@@ -113,8 +113,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

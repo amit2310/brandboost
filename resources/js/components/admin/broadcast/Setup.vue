@@ -19,7 +19,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
 
             <div class="container-fluid">
@@ -180,8 +180,8 @@
     export default {
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -234,7 +234,7 @@
                     campaign_id: this.campaign.id,
                     broadcast_id: this.campaign.broadcast_id
                 }).then(response => {
-                    this.successMsg = 'Updated the changes successfully!!'
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.loading = false;
                 });
 
@@ -250,9 +250,9 @@
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             }

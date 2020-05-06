@@ -390,6 +390,9 @@ export default {
         },
         getColors(){
             return ['bkg_blue_400', 'bkg_blue_300', 'bkg_blue_200', 'bkg_blue_100', 'bkg_green_400', 'bkg_green_200', 'bkg_yellow_400', 'bkg_red_300', 'bkg_red_500', 'bkg_brand_300', 'bkg_blue_400', 'bkg_light_800' ];
+        },
+        displayMessage(type, message){
+            parseNotificationMessage(type, message);
         }
 
     }

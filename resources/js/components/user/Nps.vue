@@ -136,8 +136,8 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 oFeedbacks: ''

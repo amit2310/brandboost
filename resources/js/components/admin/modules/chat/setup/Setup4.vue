@@ -19,7 +19,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
 
             <div class="container-fluid">
@@ -125,8 +125,8 @@
         components: {ListScore},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -180,14 +180,14 @@
                         this.loading = false;
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
-                                this.successMsg = 'Campaign saved as a draft successfully';
+                                this.displayMessage('success', 'Campaign saved as a draft successfully');
                             }
                             if(status == 'active'){
-                                this.successMsg = 'Campaign is active now';
+                                this.displayMessage('success', 'Campaign is active now');
                             }
 
                         }else{
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             }

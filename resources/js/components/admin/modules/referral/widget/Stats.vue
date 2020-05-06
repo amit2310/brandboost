@@ -26,7 +26,7 @@
         <div class="content-area">
 
             <div v-if="events.length > 0" class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
@@ -213,8 +213,8 @@
                 formLabel: 'Create',
                 bActiveSubsription: '',
                 programId: this.$route.params.id,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: 'referral',

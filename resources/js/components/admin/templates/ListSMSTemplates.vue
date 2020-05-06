@@ -21,7 +21,7 @@
 
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
 
             <div class="container-fluid" v-if="!hasData">
@@ -256,8 +256,8 @@
                     templateId: ''
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 hasData : false,
@@ -336,7 +336,7 @@
                             //this.form = {};
                             this.form.templateId ='';
                             document.querySelector('.js-sms-templates-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();
@@ -414,7 +414,7 @@
                         .then(response => {
                             if(response.data.status == 'success'){
                                 this.loading = false;
-                                this.successMsg = 'Template cloned and saved into your templates!';
+                                this.displayMessage('success', 'Template cloned and saved into your templates!');
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);
                             }
