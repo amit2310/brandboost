@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="table_head_action bbot pb30">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                     <loading :isLoading="loading"></loading>
                     <div class="row">
                         <div class="col-md-6">
@@ -550,7 +550,7 @@
         data(){
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -663,14 +663,14 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             if(response.data.brandboostID>0){
-                                this.successMsg = "Campaign added successfully! Redirecting to the setup page...";
+                                this.displayMessage('success', 'Campaign added successfully! Redirecting to the setup page...');
                                 window.location.href='#/reviews/onsite/setup/'+response.data.brandboostID+'/1';
                                 return false;
                             }
 
                             //this.form = {};
                             document.querySelector('.js-review-campaign-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();

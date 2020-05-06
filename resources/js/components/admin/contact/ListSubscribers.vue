@@ -29,7 +29,7 @@
         </div>
 
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
             <workflow-subscribers
                 :show-archived="true"
@@ -201,7 +201,7 @@
         data() {
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -293,7 +293,7 @@
                             //this.form = {};
                             this.form.id ='';
                             document.querySelector('.js-contact-subscriber-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();

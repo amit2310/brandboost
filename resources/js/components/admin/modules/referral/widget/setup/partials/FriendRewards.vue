@@ -395,8 +395,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -483,7 +483,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.successMsg = 'Reward setup saved successfully!';
+                            this.displayMessage('success', 'Reward setup saved successfully!');
                         }
                     });
             },
@@ -508,7 +508,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.successMsg = 'Reward coupons saved successfully!';
+                            this.displayMessage('success', 'Reward coupons saved successfully!');
                         }
                     });
             },

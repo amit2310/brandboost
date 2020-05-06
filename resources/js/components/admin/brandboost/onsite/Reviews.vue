@@ -23,7 +23,7 @@
         <!--&&&&&&&&&&&& PAGE HEADER END&&&&&&&&&&-->
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div class="content-area" v-show="pageRendered==true">
             <div class="container-fluid">
@@ -718,7 +718,7 @@
                 pageRendered: false,
                 successMsg : '',
                 successMsgPopup : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -852,7 +852,7 @@
                         if (response.data.status == 'success') {
                             //this.form = {};
                             //document.querySelector('.js-review-feedback-slidebox').click();
-                            this.successMsgPopup = response.data.message;//'Action completed successfully.';
+                            this.displayMessage('success', response.data.message);
                             window.location.href = window.location.href;
                         }
                         else if (response.data.status == 'error') {
@@ -884,7 +884,7 @@
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
 
-                                this.successMsg = 'Action completed successfully.';
+                                this.displayMessage('success', 'Action completed successfully.');
                                 this.showPaginationData(this.current_page);
                             }
 
@@ -905,7 +905,7 @@
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
 
-                                this.successMsgPopup = 'Action completed successfully.';
+                                this.displayMessage('success', 'Action completed successfully.');
                             }
 
                         });
@@ -968,7 +968,7 @@
                     })
                         .then(response => {
                             if(response.data.status == 'success'){
-                                this.successMsgPopup = 'Action completed successfully.';
+                                this.displayMessage('success', 'Action completed successfully.');
                             }
                         });
                 }

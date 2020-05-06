@@ -300,8 +300,8 @@
                     time: '',
                 }],
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -446,8 +446,8 @@
                     fieldVal: fieldValue,
                     chatID: this.campaignId,
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.loading = false;
                 });
 
@@ -463,14 +463,14 @@
                         this.loading = false;
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
-                                this.successMsg = 'Chat Widget saved as a draft successfully';
+                                this.displayMessage('success', 'Chat Widget saved as a draft successfully');
                             }
                             if(status == 'active'){
-                                this.successMsg = 'Chat Widget is active now';
+                                this.displayMessage('success', 'Chat Widget is active now');
                             }
 
                         }else{
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             }

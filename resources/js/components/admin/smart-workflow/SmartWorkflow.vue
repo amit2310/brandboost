@@ -47,7 +47,7 @@
         <!--******************
          Content Area
         **********************-->
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div class="content-area pt20">
             <div class="container-fluid" v-show="pageRendered == true">
@@ -1060,7 +1060,7 @@
                 loading: false,
                 pageRendered: false,
                 successMsg : '',
-                errorMsg: '',
+
                 viewType: 'canvas',
                 title: '',
                 events: {},
@@ -1191,6 +1191,7 @@
                 }).then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
+                            this.displayMessage('success', 'Data has been saved successfully!');
                             this.getWorkflowData();
                         }
                     });
@@ -1491,7 +1492,7 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.events = response.data.oEvents;
-                        this.successMsg='Delay properties updated successfully!';
+                        this.displayMessage('success', 'Delay properties updated successfully!');
                     }
                 });
             },
@@ -1526,7 +1527,7 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.events = response.data.oEvents;
-                        this.successMsg='Split properties updated successfully!';
+                        this.displayMessage('success', 'Split properties updated successfully!');
                     }
                 });
             },
@@ -1692,8 +1693,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Saved changes successfully!";
+                            this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
@@ -1709,8 +1709,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Saved changes successfully!";
+                            this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
@@ -1724,10 +1723,9 @@
                     email: this.user.email
                 })
                     .then(response => {
-                        if(response.data.status == 'success'){
+                        if(response.data.status == 'success'){this.displayMessage('success', 'Saved changes successfully!');
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Test email sent successfully!";
+                            this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },
@@ -1743,8 +1741,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Test email sent successfully!";
+                            this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },

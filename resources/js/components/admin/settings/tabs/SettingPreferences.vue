@@ -20,7 +20,7 @@
         <div class="content-area">
             <div class="container-fluid">
                 <div class="table_head_action">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                     <loading :isLoading="loading"></loading>
                     <div class="row">
                         <div class="col-md-12">
@@ -361,8 +361,8 @@
         name: "SettingPreferences",
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 seletedTab: 1,

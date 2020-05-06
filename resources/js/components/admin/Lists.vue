@@ -23,7 +23,7 @@
          **********************-->
         <div class="content-area">
             <div v-if="lists" class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
@@ -213,8 +213,8 @@
                     list_id: ''
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
@@ -277,7 +277,7 @@
                             //this.form = {};
                             this.form.list_id ='';
                             document.querySelector('.js-list-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();
@@ -366,7 +366,7 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             this.loading = false;
-                            this.successMsg = 'New List Added successfully';
+                            this.displayMessage('success', 'New List Added successfully');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         }

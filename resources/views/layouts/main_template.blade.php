@@ -191,6 +191,8 @@
             </router-view>
         </div>
 
+        @include('layouts.main_partials._main_notifications')
+
 
     </div>
 

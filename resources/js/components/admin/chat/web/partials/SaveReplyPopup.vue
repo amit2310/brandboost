@@ -48,8 +48,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: false,
                 replyTitle: '',
                 replyDesc: ''
@@ -67,7 +67,7 @@
                         .then(response => {
                             if (response.data.status == 'success') {
                                 this.$emit('updateShortcuts');
-                                this.successMsg = 'Reply shortcut saved successfully!';
+                                this.displayMessage('success', 'Reply shortcut saved successfully!');
                                 this.loading = false;
                                 this.resetForm();
                             }
@@ -82,8 +82,7 @@
                 this.conversatation = '';
             },
             clearAlerts: function(){
-                this.successMsg = '';
-                this.errorMsg = '';
+
             }
 
         }

@@ -70,8 +70,8 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

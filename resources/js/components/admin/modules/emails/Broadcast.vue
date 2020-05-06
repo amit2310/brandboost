@@ -17,7 +17,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
             <div class="container-fluid" v-if="campaigns==''">
                 <div class="row">
@@ -260,7 +260,7 @@
         data() {
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -339,7 +339,7 @@
                             //this.form = {};
                             this.form.automation_id ='';
                             document.querySelector('.js-email-campaign-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();

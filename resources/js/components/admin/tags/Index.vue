@@ -23,7 +23,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div v-if="!oTags" class="row">
                         <div class="col-md-12">
@@ -197,8 +197,8 @@
                     tagReviewName: '',
                     tagReviewDescription: ''
                 },
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 current_page: 1,
                 oTags: '',
@@ -244,7 +244,7 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             this.loading = false;
-                            this.successMsg = 'New Tag Added successfully';
+                            this.displayMessage('success', 'New Tag Added successfully');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         }

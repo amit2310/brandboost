@@ -414,8 +414,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: false,
                 chatData: '',
                 notesData: '',

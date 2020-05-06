@@ -251,8 +251,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -315,8 +315,8 @@
                 })
                     .then(response => {
                         this.preview = response.data.preview;
-                        this.refreshMessage = Math.random();
-                        this.successMsg = 'Updated the changes successfully!!';
+
+                        this.displayMessage('success', 'Test email sent successfully!');
                         this.loading = false;
 
                     });
@@ -420,8 +420,8 @@
                     requestType: type
 
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+
+                    this.displayMessage('success', 'Test email sent successfully!');
                     this.loading = false;
                     this.getNpsWidgetSetup();
                 });
@@ -438,14 +438,14 @@
                         this.loading = false;
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
-                                this.successMsg = 'Campaign saved as a draft successfully';
+                                this.displayMessage('success', 'Campaign saved as a draft successfully');
                             }
                             if(status == 'active'){
-                                this.successMsg = 'Campaign is active now';
+                                this.displayMessage('success', 'Campaign is active now');
                             }
 
                         }else{
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             }

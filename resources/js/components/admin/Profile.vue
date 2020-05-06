@@ -304,8 +304,8 @@
                     list_id: ''
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 userDetail: '',

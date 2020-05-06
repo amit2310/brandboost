@@ -88,8 +88,8 @@
         data(){
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 editableUserName: false,
                 editableEmail: false,
                 editablePhone: false,
@@ -99,8 +99,6 @@
             updateProfile: function(fieldName){
                 let fieldValue;
                 let isValidated = false;
-                this.errorMsg = '';
-                this.successMsg = '';
                 if(fieldName == 'support_name' ){
                     fieldValue = this.participantInfo.name;
                     if(fieldValue.trim() == ''){
@@ -139,7 +137,7 @@
                         em_id: this.participantInfo.chatUserid,
                         _token:this.csrf_token()})
                         .then(response => {
-                            this.successMsg = 'Changes updated successful';
+                            this.displayMessage('success', 'Changes updated successful');
                             this.$socket.emit('change_support_name', {room: this.currentTokenId, supportname: this.participantInfo.name});
                             this.$emit('loadWebChat', this.currentTokenId, this.participantInfo.chatUserid);
                         });

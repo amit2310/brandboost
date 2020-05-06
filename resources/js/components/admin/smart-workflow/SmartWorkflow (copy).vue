@@ -43,7 +43,7 @@
         <!--******************
          Content Area
         **********************-->
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div class="content-area pt20">
             <div class="container-fluid" v-show="pageRendered == true">
@@ -300,7 +300,7 @@
                 loading: false,
                 pageRendered: false,
                 successMsg : '',
-                errorMsg: '',
+
                 viewType: 'list',
                 title: '',
                 events: {},

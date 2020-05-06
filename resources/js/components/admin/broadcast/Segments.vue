@@ -20,7 +20,7 @@
          Content Area
         **********************-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
             <div class="container-fluid">
                 <div class="row" v-if="!segments">
@@ -228,8 +228,8 @@
                     segment_id: ''
                 },
                 formLabel: 'Create',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
@@ -289,7 +289,7 @@
                             //this.form = {};
                             this.form.segment_id ='';
                             document.querySelector('.js-segment-slidebox').click();
-                            this.successMsg = 'Action completed successfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();
@@ -329,7 +329,7 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             this.loading = false;
-                            this.successMsg = 'Segment Added successfully';
+                            this.displayMessage('success', 'Segment Added successfully');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         }
@@ -395,7 +395,7 @@
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
                                 this.loading = false;
-                                this.successMsg = 'Segment contacts have been synced successfully!';
+                                this.displayMessage('success', 'Segment contacts have been synced successfully!');
                             }
 
                         })

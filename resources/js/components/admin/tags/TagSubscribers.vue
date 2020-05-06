@@ -21,7 +21,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
             <loading :isLoading="loading"></loading>
             <workflow-subscribers
                 :show-archived="true"
@@ -43,7 +43,7 @@
         data() {
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

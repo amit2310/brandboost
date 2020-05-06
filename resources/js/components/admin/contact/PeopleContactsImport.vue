@@ -110,7 +110,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                                     <!--<loading :isLoading="loading"></loading>-->
                                     <div class="form-group">
                                         <label for="firstname">First name</label>
@@ -201,7 +201,7 @@
         data() {
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -252,7 +252,7 @@
                             //this.form = {};
                             this.form.id ='';
                             //document.querySelector('.js-contact-slidebox').click();
-                            this.successMsg = 'Action completed succloading: true,essfully.';
+                            this.displayMessage('success', 'Action completed successfully.');
                             var elem = this;
                             setTimeout(function () {
                                 elem.loadPaginatedData();

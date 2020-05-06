@@ -141,8 +141,8 @@
         data() {
             return {
                 refreshMessage: '',
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 seletedTab: 1,

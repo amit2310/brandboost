@@ -130,8 +130,8 @@
         data(){
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: false,
             }
         },
@@ -156,7 +156,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.successMsg = 'Configuration saved successfully!!';
+                        this.displayMessage('success', 'Configuration saved successfully!!');
                         this.loading = false;
 
                     });

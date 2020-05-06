@@ -118,8 +118,8 @@
         props: ['moduleName', 'moduleUnitId'],
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 displayContacts: false,
                 displayLists: false,

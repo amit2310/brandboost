@@ -124,8 +124,8 @@
         data() {
             return {
                 refreshMessage: 2,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -167,8 +167,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Saved changes successfully!";
+                            this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
@@ -184,8 +183,7 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-                            this.refreshMessage = Math.random();
-                            this.successMsg = "Test email sent successfully!";
+                            this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },

@@ -74,8 +74,8 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 lists: '',
                 selected_lists: '',

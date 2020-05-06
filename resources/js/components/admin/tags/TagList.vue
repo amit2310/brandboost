@@ -26,7 +26,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div v-if="!oTags" class="row">
                         <div class="col-md-12">
@@ -202,8 +202,6 @@
                     txtTagName: '',
                     description: ''
                 },
-                successMsg: '',
-                errorMsg: '',
                 loading: true,
                 current_page: 1,
                 oTagGroupDetails: '',
@@ -213,7 +211,6 @@
         },
         mounted() {
             this.loadPaginatedData();
-
             console.log('Component mounted.');
         },
         methods: {
@@ -243,16 +240,16 @@
                     .then(response => {
                         if (response.data.status == 'success') {
                             this.loading = false;
-                            this.successMsg = 'Tag Added successfully.';
+                            this.displayMessage('success', 'Tag Added successfully.');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         } else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate_entry') {
                                 this.loading = false;
-                                this.successMsg = 'Tag name already exists.';
+                                this.displayMessage('error', 'Tag name already exists.');
                             } else {
                                 this.loading = false;
-                                this.successMsg = 'Something went wrong.';
+                                this.displayMessage('error', 'Something went wrong.');
                             }
                         }
                     })

@@ -315,8 +315,8 @@
         data() {
             return {
                 refreshMessage: 1,
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -411,8 +411,7 @@
                     //linkExpiryData :{delay_value: this.checkLinkExpiry.delay_value,delay_unit: this.checkLinkExpiry.delay_unit},
                     requestType: type
                 }).then(response => {
-                    this.refreshMessage = Math.random();
-                    this.successMsg = 'Updated the changes successfully!!';
+                    this.displayMessage('success', 'Updated the changes successfully!!');
                     this.loading = false;
                 });
             },
@@ -427,9 +426,9 @@
                     .then(response => {
                         this.loading = false;
                         if(response.data.status == 'success'){
-                            this.successMsg = 'Campaign saved as a draft successfully';
+                            this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{
-                            this.errorMsg = 'Something went wrong';
+                            this.displayMessage('error', 'Something went wrong');
                         }
                     });
             }

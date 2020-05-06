@@ -26,7 +26,7 @@
         <div class="content-area">
 
             <div v-if="feedbacks.length > 0" class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
@@ -145,8 +145,8 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 breadcrumb: '',
                 moduleName: 'nps',

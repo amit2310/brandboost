@@ -239,7 +239,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
             return {
                 refreshMessage: 1,
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -386,7 +386,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                         .then(response => {
                             this.loading = false;
                             if(response.data.status == 'success'){
-                                this.successMsg = 'Review has been added successfully!!';
+                                this.displayMessage('success', 'Review has been added successfully!!');
                                 let reviewData = response.data.reviewData;
                                 this.reviewId = reviewData.id;
                                 this.displayStatus = reviewData.status == '1' ? 'Published' : 'Draft';

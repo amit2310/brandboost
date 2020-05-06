@@ -23,7 +23,7 @@
          **********************-->
         <div class="content-area">
             <div class="container-fluid" v-if="allData.total>0 || true  ">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
                     <div class="row">
@@ -213,7 +213,7 @@
         data(){
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

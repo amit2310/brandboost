@@ -20,7 +20,7 @@
               Content Area
              **********************-->
         <div class="content-area">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="table_head_action">
 <!--                    <div class="row">-->
@@ -245,8 +245,8 @@
                 form: {
                     campaignName: '',
                 },
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 showHeader:true,
                 current_page: 1,
@@ -284,7 +284,7 @@
                     // console.log(response.data.status);
                     this.getWidgetDetails();
                     if(response.data.status =='success'){
-                        this.successMsg="Setting has beeb saved successfully.";
+                        this.displayMessage('success', 'Setting has beeb saved successfully.');
                     }
                     this.loading =false;
                 });

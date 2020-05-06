@@ -355,9 +355,9 @@
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                successMsg: '',
+
                 refreshMessage: '',
-                errorMsg: '',
+
                 loading: true,
                 allData: {},
                 requests : '',
@@ -397,8 +397,7 @@
                 axios.post('/admin/brandboost/addOnsiteRequest', this.requestFrom)
                     .then(response => {
                         if(response.data.status =='success'){
-                            this.refreshMessage = Math.random();
-                            this.successMsg = 'Review request created successfully!!';
+                            this.displayMessage('success', 'Review request created successfully!!');
                             this.loading = false;
                             document.querySelector('#hideOverviewPreviewForm').click();
                             window.location.href='#/reviews/onsite/request/prepare/'+response.data.requestId;

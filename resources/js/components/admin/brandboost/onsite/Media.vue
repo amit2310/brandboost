@@ -28,7 +28,7 @@
             <div class="container-fluid" v-if="reviews.length > 0">
 
                 <div class="table_head_action bbot pb30">
-                    <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                     <loading :isLoading="loading"></loading>
                     <div class="row">
                         <div class="col-md-6">
@@ -241,7 +241,7 @@
         data(){
             return {
                 successMsg : '',
-                errorMsg: '',
+
                 loading: true,
                 count : 0,
                 reviews: '',

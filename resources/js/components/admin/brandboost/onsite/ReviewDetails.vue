@@ -37,7 +37,7 @@
                   PAGE LEFT SIDEBAR END
                  **********************-->
 
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <div class="row">
                     <div class="col-md-12">
@@ -462,8 +462,8 @@
         components: {UserAvatar, OnsiteReviewsSummary},
         data() {
             return {
-                successMsg: '',
-                errorMsg: '',
+
+
                 loading: true,
                 reviewId: this.$route.params.id,
                 review: '',
@@ -509,7 +509,7 @@
                     .then(response => {
                         if(response.data.status =='success'){
                             this.comment_content = '';
-                            this.successMsg = response.data.message;
+                            this.displayMessage('success', response.data.message);
                             this.loadReviewData();
                             this.loading = false;
                         }
@@ -527,7 +527,7 @@
                     .then(response => {
                         if(response.data.status =='success'){
                             this.notes = '';
-                            this.successMsg = response.data.message;
+                            this.displayMessage('success', response.data.message);
                             this.loadReviewData();
                             this.loading = false;
                         }
@@ -548,7 +548,7 @@
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
 
-                                this.successMsg = 'Action completed successfully.';
+                                this.displayMessage('success', 'Action completed successfully.');
                                 setTimeout(function () {
                                     location.reload(true);
                                 }, 5000);

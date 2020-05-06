@@ -245,3 +245,28 @@ function triggerSlider(){
         }
     });
 }
+
+function parseNotificationMessage(type, message){
+    var selector = '';
+    if(type == 'success'){
+        selector = '.Successfullysaved2';
+    }else if(type == 'error'){
+        selector = '.Successfullysaved4';
+    }
+    if(selector != ''){
+        var notice = new PNotify({
+            text: $(selector).html().replace('__message__', message),
+            width: '400px',
+            hide: true,
+            buttons: {
+                closer: false,
+                sticker: false
+            },
+            insert_brs: false
+        });
+        notice.get().find('a[name=cancel]').on('click', function() {
+            notice.remove();
+        })
+    }
+
+}
