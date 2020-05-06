@@ -114,8 +114,6 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-
-
                 loading: true,
                 lists: '',
                 selected_lists: '',

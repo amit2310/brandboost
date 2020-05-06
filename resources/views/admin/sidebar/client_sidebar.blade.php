@@ -249,7 +249,7 @@
             <!--************
              Email Marketing
            *************-->
-            <div id="our welc.omearketing" class="main-icon-menu-pane email">
+            <div id="EmailMarketing" class="main-icon-menu-pane email">
                 <div class="title-box">
                     <h6 class="menu-title">Email Marketing</h6>
                 </div>

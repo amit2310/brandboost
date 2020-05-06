@@ -180,8 +180,6 @@
     export default {
         data() {
             return {
-
-
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',

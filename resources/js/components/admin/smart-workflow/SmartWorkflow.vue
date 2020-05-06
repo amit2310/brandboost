@@ -296,7 +296,7 @@
                                         <div class="form-group">
                                             <label for="triggerControl" class="fsize11 fw500 dark_600 ls4">SELECT TRIGGER</label>
 
-                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl" v-model="unitInfo.workflow_entry_trigger">
+                                            <select class="form-control h50 form-control-custom dark_800" id="triggerControl" @change="searchBy=''" v-model="unitInfo.workflow_entry_trigger">
                                                 <option value="">Choose a trigger...</option>
                                                 <option value="contact">Added Contact</option>
                                                 <option value="tags">Applied Tag</option>
@@ -306,7 +306,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" v-if="unitInfo.workflow_entry_trigger=='form'">
                                             <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT FORM</label>
 
                                             <select class="form-control h50 form-control-custom dark_800" id="formControl">
@@ -316,6 +316,133 @@
                                                 <option>Choose a trigger...</option>
                                             </select>
                                         </div>
+
+                                        <div class="form-group" v-if="unitInfo.workflow_entry_trigger=='contact'">
+                                            <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT CONTACT</label>
+
+                                            <div class="form-group m-0 review_forms">
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Select Contacts
+                                                    </button>
+                                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                        <div class="p10">
+                                                            <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                        </div>
+                                                        <a class="dropdown-item" href="javascript:void(0);" v-for="contact in filteredContacts">
+                                                            <label class="custmo_checkbox pull-left">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="checkRows[]"
+                                                                    class="addToCampaign"
+                                                                    @click="addToContact($event, contact.subscriber_id)"
+                                                                    :value="contact.subscriber_id"
+                                                                    :checked="selected_contacts.indexOf(contact.subscriber_id)>-1"
+                                                                >
+                                                                <span class="custmo_checkmark blue"></span>
+                                                            </label>&nbsp; {{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }} <{{contact.email}}>
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" v-if="unitInfo.workflow_entry_trigger=='tags'">
+                                            <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT TAG</label>
+
+                                            <div class="form-group m-0 review_forms">
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Select Tags
+                                                    </button>
+                                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                        <div class="p10">
+                                                            <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                        </div>
+                                                        <a class="dropdown-item" href="javascript:void(0);" v-for="tag in filteredTags">
+                                                            <label class="custmo_checkbox pull-left">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="checkRows[]"
+                                                                    class="addToCampaign"
+                                                                    @click="addToTags($event,tag.tagid)"
+                                                                    :value="tag.tagid"
+                                                                    :checked="selected_tags.includes(tag.tagid)">
+                                                                <span class="custmo_checkmark blue"></span>
+                                                            </label>&nbsp;  {{ tag.tag_name }} ({{tag.subscribersData.total}})
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" v-if="unitInfo.workflow_entry_trigger=='lists'">
+                                            <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT LIST</label>
+
+                                            <div class="form-group m-0 review_forms">
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Select Lists
+                                                    </button>
+                                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                        <div class="p10">
+                                                            <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                        </div>
+                                                        <a class="dropdown-item" href="javascript:void(0);" v-for="list in filteredLists">
+                                                            <label class="custmo_checkbox pull-left">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="checkRows[]"
+                                                                    class="addToCampaign"
+                                                                    @click="addToList($event, list.id)"
+                                                                    :value="list.id"
+                                                                    :checked="selected_lists.includes(list.id)">
+                                                                <span class="custmo_checkmark blue"></span>
+                                                            </label>&nbsp;  {{ list.list_name }} ({{list.subscribers.length}})
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" v-if="unitInfo.workflow_entry_trigger=='segment'">
+                                            <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT SEGMENT</label>
+
+                                            <div class="form-group m-0 review_forms">
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Select Segments
+                                                    </button>
+                                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                        <div class="p10">
+                                                            <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                        </div>
+                                                        <a class="dropdown-item" href="javascript:void(0);" v-for="segment in filteredSegments">
+                                                            <label class="custmo_checkbox pull-left">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="checkRows[]"
+                                                                    class="addToCampaign"
+                                                                    @click="addToSegments($event,segment.id)"
+                                                                    :value="segment.id"
+                                                                    :checked="selected_segments.includes(segment.id)">
+                                                                <span class="custmo_checkmark blue"></span>
+                                                            </label>&nbsp;  {{ segment.segment_name }} ({{segment.subscribersData.length}})
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
 
@@ -475,7 +602,7 @@
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('segment')" style="cursor:pointer;">
                                             <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-price-tag-3-fill light_000 fsize18"></i></span>
-                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">List</p>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Webhook</p>
                                             <p class="fw400 fsize12 dark_300 m0">Subscribe to a list</p>
                                         </div>
                                     </div>
@@ -1060,7 +1187,6 @@
                 loading: false,
                 pageRendered: false,
                 successMsg : '',
-
                 viewType: 'canvas',
                 title: '',
                 events: {},
@@ -1121,6 +1247,17 @@
                 selected_emailCampaignId: '',
                 selectedEmailNodeData: '',
                 selectedSMSNodeData: '',
+                lists: '',
+                selected_lists: '',
+                tags: '',
+                selected_tags: '',
+                segments: '',
+                selected_segments: '',
+                contacts: '',
+                selected_contacts: '',
+                current_page: 1,
+                items_per_page: 100,
+                searchBy: '',
             }
         },
         mounted() {
@@ -1135,6 +1272,37 @@
         },
         created(){
             this.getWorkflowData();
+            this.getAudienceData();
+        },
+        computed: {
+            filteredTags() {
+                if (this.tags) {
+                    return this.tags.filter(tag => {
+                        return tag.tag_name.toLowerCase().includes(this.searchBy.toLowerCase())
+                    });
+                }
+            },
+            filteredLists() {
+                if (this.lists) {
+                    return this.lists.filter(list => {
+                        return list.list_name.toLowerCase().includes(this.searchBy.toLowerCase())
+                    });
+                }
+            },
+            filteredSegments() {
+                if (this.segments) {
+                    return this.segments.filter(segment => {
+                        return segment.segment_name.toLowerCase().includes(this.searchBy.toLowerCase())
+                    });
+                }
+            },
+            filteredContacts() {
+                if (this.contacts) {
+                    return this.contacts.filter(contact => {
+                        return contact.firstname.toLowerCase().includes(this.searchBy.toLowerCase()) || contact.lastname.toLowerCase().includes(this.searchBy.toLowerCase())
+                    });
+                }
+            },
         },
         watch: {
             greetings: function(){
@@ -1150,6 +1318,9 @@
             },
             smsIntroduction: function(){
                 jq("#wf_edit_sms_template_introduction_Preview").text(this.smsIntroduction);
+            },
+            searchBy : function(){
+                this.getAudienceData();
             },
 
         },
@@ -1167,6 +1338,25 @@
                         this.smsTemplates = response.data.oSMSTemplates;
                         this.pageRendered = true;
                         //console.log(this.campaigns)
+                    });
+            },
+            getAudienceData: function(){
+                axios.post('/admin/workflow/loadWorkflowAudience?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy, {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    actionType: 'import',
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.contacts = response.data.subscribersData;
+                        this.selected_contacts = response.data.aSelectedContacts;
+                        this.lists = response.data.oLists;
+                        this.selected_lists = response.data.aSelectedListIDs;
+                        this.tags = response.data.aTags;
+                        this.selected_tags = response.data.aSelectedTags;
+                        this.segments = response.data.oSegments;
+                        this.selected_segments = response.data.aSelectedSegments;
+                        this.loading = false;
                     });
             },
             updateTrigger: function(){
@@ -1745,8 +1935,68 @@
                         }
                     });
             },
-        },
+            addToTags: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                axios.post('/admin/workflow/addTagToWorkflowCampaign', {
+                    tagId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.syncWorkflowAudience();
+                    });
+            },
+            addToList: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                axios.post('/admin/workflow/addListToWorkflowCampaign', {
+                    selectedLists: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.syncWorkflowAudience();
+                    });
+            },
+            addToSegments: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                axios.post('/admin/workflow/addSegmentToWorkflowCampaign', {
+                    segmentId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.syncWorkflowAudience();
+                    });
+            },
+            addToContact: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                axios.post('/admin/workflow/addContactToWorkflowCampaign', {
+                    contactId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    actionValue: actionName,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        this.syncWorkflowAudience();
+                    });
+            },
+            syncWorkflowAudience : function(){
+                axios.post('/admin/workflow/syncWorkflowAudience', {
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    _token: this.csrf_token()
+                }).then(response => {
 
+                });
+            },
+        },
     }
     function triggerSplitSlider(){
         triggerSlider();
@@ -1781,7 +2031,7 @@
     .workflowSelectedBorder {
         border:2px solid #97A4BD;
     }
-    ..workflow_box .droppable_highlight{border:none !important; height: 57px !important; background: none !important; border-style: none !important;}
+    .workflow_box .droppable_highlight{border:none !important; height: 57px !important; background: none !important; border-style: none !important;}
     .workflow_box .droppable_highlight:before{ height:36px!important; border-radius:100px!important; width:36px!important;position:absolute; content:''; left:50%; top:12px; background: #73ABFF;opacity: 0.1; margin-left:-18px; }
     .workflow_box .droppable_highlight .workflowadds{ background:#73ABFF!important}
     .workflow_list_new .droppable_highlight{
