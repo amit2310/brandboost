@@ -123,8 +123,6 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-
-
                 loading: true,
                 tags: '',
                 selected_tags: '',
