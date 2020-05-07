@@ -31,10 +31,12 @@
           <div class="col-md-12 mb15">
             <hr>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-6">
             <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20">Create Contact</button>
-            <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
-            
+            <!--<button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>-->
+        </div>
+         <div class="col-md-6 text-right">
+            <a class="dark_200 fw500 d-inline-block mt10" href="#">Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
         </div>
        
       </div>
