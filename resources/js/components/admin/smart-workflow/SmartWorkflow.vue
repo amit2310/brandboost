@@ -556,7 +556,7 @@
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('field')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-layout-left-line light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Field</p>
                                             <p class="fw400 fsize12 dark_300 m0">Edit contact field</p>
                                         </div>
@@ -575,7 +575,7 @@
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('list')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-folder-fill light_000 fsize18"></i></span>
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-list-unordered light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">List</p>
                                             <p class="fw400 fsize12 dark_300 m0">Subscribe to a list</p>
                                         </div>
@@ -593,15 +593,15 @@
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('status')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-checkbox-multiple-line light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Status</p>
                                             <p class="fw400 fsize12 dark_300 m0">Apply, edit status</p>
                                         </div>
                                     </div>
 
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('segment')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-price-tag-3-fill light_000 fsize18"></i></span>
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('webhook')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-link light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Webhook</p>
                                             <p class="fw400 fsize12 dark_300 m0">Subscribe to a list</p>
                                         </div>
@@ -611,7 +611,7 @@
                                 <div class="row">
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('email')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-flashlight-fill light_000 fsize18"></i></span>
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-mail-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">Email</p>
                                             <p class="fw400 fsize12 dark_300 m0">Send Email</p>
                                         </div>
@@ -619,7 +619,7 @@
 
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('sms')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-price-tag-3-fill light_000 fsize18"></i></span>
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-message-2-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-3 mb-1">SMS</p>
                                             <p class="fw400 fsize12 dark_300 m0">Send SMS</p>
                                         </div>
@@ -631,22 +631,54 @@
 
                 </div>
 
-                <!--Action Field-->
-                <div class="box addActionFieldBoxContent" style="width: 424px; display:none;">
+                <!--Action Items-->
+                <div class="box editActionItemBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddActionFieldbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideEditActionItembox" id="slideEditActionItembox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Field</h3>
-                                        <p class="fsize14 dark_200 mb0 mt-1">What field you want to edit/update?</p>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit {{capitalizeFirstLetter(editActionItem)}}</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">What {{editActionItem}} you want to edit/update?</p>
                                         <hr class="mt25 mb30">
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="actionName" class="fsize11 fw500 dark_600 ls4">Description</label>
+                                            <label for="actionName" class="fsize11 fw500 dark_600 ls4">ACTION NAME</label>
                                             <input type="text" class="form-control h50" v-model="actionTitle" id="actionName" placeholder="Enter new action name" />
                                         </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group" v-if="editActionItem =='tag'">
+                                        <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT TAG</label>
+
+                                        <div class="form-group m-0 review_forms">
+                                            <div class="dropdown">
+                                                <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Select Tags
+                                                </button>
+                                                <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                    <div class="p10">
+                                                        <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                    </div>
+                                                    <a class="dropdown-item" href="javascript:void(0);" v-for="tag in filteredTags">
+                                                        <label class="custmo_checkbox pull-left">
+                                                            <input
+                                                                type="checkbox"
+                                                                name="checkRows[]"
+                                                                class="addToCampaign"
+                                                                @click="updateActionTags($event,tag.tagid)"
+                                                                :value="tag.tagid"
+                                                                :checked="selected_action_tags.includes(tag.tagid)">
+                                                            <span class="custmo_checkmark blue"></span>
+                                                        </label>&nbsp;  {{ tag.tag_name }} ({{tag.subscribersData.total}})
+                                                    </a>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="row bottom-position">
@@ -654,8 +686,8 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddDelaybox" @click="addDelay">Update Field</button>
-                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddDelaybox">Close</button>
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideEditActionItembox" @click="updateActionItem">Update {{capitalizeFirstLetter(editActionItem)}}</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideEditActionItembox">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -1258,6 +1290,10 @@
                 current_page: 1,
                 items_per_page: 100,
                 searchBy: '',
+                editActionItem: '',
+                selected_action_tags: '',
+                editActionEvent: ''
+
             }
         },
         mounted() {
@@ -1478,9 +1514,36 @@
                 }else if(actionName == 'sms'){
                     //SMS Node
                     this.loadSMS(event);
+                }else if(actionName == 'tag'){
+                    //Tag Node
+                    this.loadTag(event);
+                }else{
+                    //Other Nodes
                 }
 
                 this.loading = false;
+            },
+            loadTag: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        let event = response.data.eventData;
+                        let params = JSON.parse(event.data);
+                        let tagParams = params['tag_properties'];
+                        this.editActionItem = 'tag';
+                        this.selected_action_tags = tagParams ? tagParams['tag_ids'] : [];
+                        this.editActionEvent = event;
+                        this.actionTitle = params['title'];
+                        document.querySelector('#slideEditActionItembox').click();
+                    }
+                });
+
             },
             loadSMS: function(event){
                 this.loading = true;
@@ -1724,7 +1787,25 @@
             nodeIcon : function(event){
                 let className = JSON.parse(event.data)['node_type'];
                 if(className == 'action'){
-                    return '<i class="ri-folder-fill"></i>';
+                    let name = JSON.parse(event.data)['name'];
+                    if(name == 'email'){
+                        return '<i class="ri-mail-fill"></i>';
+                    }else if(name == 'sms'){
+                        return '<i class="ri-message-2-fill"></i>';
+                    }else if(name == 'field'){
+                        return '<i class="ri-layout-left-line"></i>';
+                    }else if(name == 'webhook'){
+                        return '<i class="ri-link"></i>';
+                    }else if(name == 'status'){
+                        return '<i class="ri-checkbox-multiple-line"></i>';
+                    }else if(name == 'tag'){
+                        return '<i class="ri-price-tag-3-fill"></i>';
+                    }else if(name == 'list'){
+                        return '<i class="ri-list-unordered"></i>';
+                    }else{
+                        return '<i class="ri-folder-fill"></i>';
+                    }
+
                 }else if(className == 'decision'){
                     return '<i class="ri-folder-fill"></i>';
                 }else if(className == 'delay'){
@@ -1996,6 +2077,45 @@
 
                 });
             },
+            updateActionTags: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                let event = this.editActionEvent;
+                let params = JSON.parse(event.data);
+                let tagParams = params['tag_properties'];
+                let tagIds = tagParams['tag_ids'];
+                if(actionName == 'addRecord'){
+                    if(tagIds.indexOf(id) === -1){
+                        tagIds.push(id);
+                    }
+                }else if(actionName == 'deleteRecord'){
+                    if(tagIds.indexOf(id) > -1){
+                        tagIds.splice(tagIds.indexOf(id), 1);
+                    }
+                }
+                params['title'] = this.actionTitle;
+                params['tag_properties']['tag_ids'] = tagIds;
+                this.updateTriggerData(event, params);
+
+                this.selected_action_tags = tagIds;
+            },
+            updateTriggerData: function(event, params){
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateTriggerData', {
+                    id: event.id,
+                    moduleName: this.moduleName,
+                    moduleUnitID: this.moduleUnitId,
+                    params: params,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.getWorkflowData();
+                            this.displayMessage('success', 'Changes updated successfully');
+                        }
+                    });
+            },
+            updateActionItem: function(){
+                this.displayMessage('success', 'Changes updated successfully');
+            }
         },
     }
     function triggerSplitSlider(){

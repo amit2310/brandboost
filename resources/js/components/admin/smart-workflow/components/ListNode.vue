@@ -136,6 +136,8 @@
                     return 'People contact';
                 }else if(this.nodeName.toLowerCase() == 'status'){
                     return 'People status';
+                }else if(this.nodeName.toLowerCase() == 'webhook'){
+                    return 'Webhook';
                 }
             },
             buttonCaption: function(){

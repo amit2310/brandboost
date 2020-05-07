@@ -231,6 +231,12 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on("click", ".slideEditActionItembox", function(){
+        $(".editActionItemBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
     $(document).on('dragend', function(){
         let elems = document.querySelectorAll(".droppable_grid");
         elems.forEach(function(elem){

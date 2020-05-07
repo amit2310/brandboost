@@ -3432,7 +3432,10 @@ class WorkFlow extends Controller {
         if(!empty($oEventData)){
             $nodeType = $oEventData->node_type;
             $actionName = $oEventData->name;
-            if($nodeType =='action' && $actionName == 'email'){
+            if($nodeType =='action' && $actionName == 'tag') {
+                $nodeInfo = $mWorkflow->getNodeInfo($eventID, $moduleName);
+                return ['status'=>'success', 'eventData'=>$nodeInfo];
+            }else if($nodeType =='action' && $actionName == 'email'){
                 //Get endCampaign info
                 $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
                 $campaign = '';
@@ -3581,6 +3584,11 @@ class WorkFlow extends Controller {
         return $response;
     }
 
+    /**
+     * Used to get email/sms end campaign details
+     * @param Request $request
+     * @return array|string[]
+     */
     public function getEndCampaign(Request $request){
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -3611,6 +3619,28 @@ class WorkFlow extends Controller {
             return ['status'=>'success', 'campaignInfo'=>$aCampaign, 'templateInfo'=>$oTemplate];
         }else{
             return ['status'=>'error', 'campaignInfo'=>'', 'templateInfo'=>''];
+        }
+
+    }
+
+    /**
+     * Used to update trigger related data
+     * @param Request $request
+     * @return string[]
+     */
+    public function updateTriggerData(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventId = $request->id;
+        $triggerParams = json_decode($request->params);
+        $bUpdated = $mWorkflow->updateWorkflowEvent(['data'=> $triggerParams], $eventId, $moduleName);
+        if($bUpdated){
+            return ['status'=>'success'];
+        }else{
+            return ['status'=>'error'];
         }
 
     }

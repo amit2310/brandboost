@@ -22,7 +22,7 @@
         </div>
         <!--Content Area-->
         <div class="content-area">
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
             <loading :isLoading="loading"></loading>
 
             <div class="container-fluid">

@@ -285,17 +285,3 @@
         </div>
     </div>
 </div>
-<style>
-    .brighttheme-notice{background: #fff!important; border: 1px solid rgba(51, 61, 84, 0.03)!important;border-radius: 4px!important; padding: 0px!important; box-shadow: 0px 10px 40px rgba(0, 39, 115, 0.02), 0px 2px 2px rgba(0, 39, 115, 0.04), 0px 0px 2px rgba(0, 39, 115, 0.04)!important; }
-    .flag_notifications{padding: 13px 25px!important; border-radius: 4px!important; }
-    .flag_notifications.h48{ height:48px;}
-    .flag_notifications.h80{ height:80px; padding: 18px 25px!important;}
-    .flag_notifications.p0{ padding:0!important}
-    .flag_notifications a.fn_close{position: absolute; right: 15px; top: 15px; font-size: 13px; z-index:99}
-    .flag_notifications a.fn_close i{color: #B4C0D4; font-size: 15px;}
-    .hide {display: none !important;}
-    .v_line_48{ position:absolute; width:1px; height:48px; top:-13px; left:20px; background:#EFF3FC}
-    .v_line_60{ position:absolute; width:1px; height:60px; top:-21px; left:0px; background:#EFF3FC}
-    .v_line_80{ position:absolute; width:1px; height:80px; top:-18px; left:20px; background:#EFF3FC}
-    .meaasge_links a{ line-height:35px;}
-</style>

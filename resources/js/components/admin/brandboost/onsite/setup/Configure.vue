@@ -21,7 +21,7 @@
         <!--Content Area-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
                 <loading :isLoading="loading"></loading>
                 <!--******************
                 PAGE LEFT SIDEBAR

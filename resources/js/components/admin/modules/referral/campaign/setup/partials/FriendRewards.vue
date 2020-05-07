@@ -1,6 +1,6 @@
 <template>
     <div>
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div class="row mb30">
             <div class="col-md-4 text-center">
