@@ -238,18 +238,6 @@
                                 </div>
                             </div>
 
-                            <!--<div class="card p35 br6 mb10">
-                                <div class="row">
-                                    <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
-                                    <div class="col">
-                                        <h3 class="htxt_medium_16 dark_700 mb-2">Source</h3>
-                                        <p class="htxt_regular_14 dark_400 m-0 ls4">Select review sources (review sites)</p>
-                                    </div>
-                                    <div class="col text-right">
-                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add Source</button>
-                                    </div>
-                                </div>
-                            </div>-->
                             <div class="card p35 br6 mb10">
                                 <div class="row">
                                     <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
@@ -257,14 +245,18 @@
                                         <h3 class="htxt_medium_16 dark_700 mb-2">Source</h3>
                                         <p class="htxt_regular_14 dark_400 m-0 ls4">Select review sources (review sites)</p>
                                     </div>
-                                    <div class="col text-right">
-                                        <!--<button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit Settings</button>-->
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Cancel</button>
-                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20">Save</button>
+                                    <div class="col text-right" v-if="displaySourceForm==false">
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSourceForm" @click="openForm('source')"> Edit</button>
+                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('source')">Add Source</button>
+
+                                    </div>
+                                    <div class="col text-right" v-if="displaySourceForm==true">
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('source')">Cancel</button>
+                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSourceInfo">Save</button>
                                     </div>
                                 </div>
 
-                                <div class="btop mt30 pt20">
+                                <div class="btop mt30 pt20" v-if="displaySourceForm==true">
                                     <div class="row">
                                         <div class="col-12">
                                             <ul class="nav nav-pills source_tab" role="tablist">
@@ -905,6 +897,7 @@
                 fromNumber: '',
                 displayCustomLinkExpiry: false,
                 displaySenderForm: false,
+                displaySourceForm: false,
                 displaySubjectForm: false,
                 displayContentForm: false,
                 displayTrackingForm: false,
@@ -1257,6 +1250,9 @@
                 }else if(form == 'content'){
                     className = this.displayContentForm == true ? 'active' : '';
                     activeClassName = this.completedContentForm ? 'done' : '';
+                }else if(form == 'source'){
+                    className = this.displaySourceForm == true ? 'active' : '';
+                    activeClassName = this.completedSourceForm ? 'done' : '';
                 }else if(form == 'tracking'){
                     className = this.displayTrackingForm == true ? 'active' : '';
                     activeClassName = this.completedTrackingForm ? 'done' : '';
@@ -1282,6 +1278,8 @@
                 }else if(form == 'content'){
                     this.displayContentForm = true;
                     this.openEmailTemplates();
+                }else if(form == 'source'){
+                    this.displaySourceForm = true;
                 }else if(form == 'tracking'){
                     this.displayTrackingForm = true;
                 }else if(form == 'smsSender'){
@@ -1301,6 +1299,7 @@
                 this.displaySenderForm = false;
                 this.displaySubjectForm = false;
                 this.displayContentForm = false;
+                this.displaySourceForm = false;
                 this.displayTrackingForm = false;
 
                 this.displaySMSSenderForm = false;
