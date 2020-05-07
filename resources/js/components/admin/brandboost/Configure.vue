@@ -168,9 +168,6 @@
                                     </div>
                                 </div>
 
-
-
-
                             </div>
 
                             <div class="card p35 br6 mb10" :class="{'disabled': disableSubjectForm == true}">
@@ -238,7 +235,7 @@
                                 </div>
                             </div>
 
-                            <div class="card p35 br6 mb10">
+                            <div v-if="campaign.review_type=='offsite'" class="card p35 br6 mb10">
                                 <div class="row">
                                     <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
                                     <div class="col">

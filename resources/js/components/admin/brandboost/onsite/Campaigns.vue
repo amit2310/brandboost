@@ -138,7 +138,7 @@
                                 <img src="assets/images/star_fill_white_25.svg">
                             </a>
 
-                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="setupBroadcast(campaign.id)">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
+                            <h3 class="htxt_bold_16 dark_700 mb-2 mt-4" @click="setupBroadcast(campaign.id)" style="cursor: pointer;">{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</h3>
                             <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 0" @click="setupBroadcast(campaign.id)">INACTIVE</p>
                             <p class="fsize10 fw500 green_400 text-uppercase mb20" v-if="campaign.status == 1" @click="setupBroadcast(campaign.id)">RUNNING</p>
                             <p class="fsize10 fw500 light_800 text-uppercase mb20" v-if="campaign.status == 2" @click="setupBroadcast(campaign.id)">PENDING</p>
@@ -213,7 +213,7 @@
                                                 <img src="assets/images/pricetag3-fill.svg" width="14">
                                             </span>
                                         </span>
-                                        <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
+                                        <a href="javascript:void(0);" @click="setupBroadcast(campaign.id)" style="cursor: pointer;">
                                             <span>{{ setStringLimit(capitalizeFirstLetter(campaign.brand_title), 25) }}</span>
                                         </a>
                                         <!--<a href="javascript:void(0);" @click="setupBroadcast(campaign.id)">
@@ -575,7 +575,8 @@
             },
             setupBroadcast: function(id){
                 //window.location.href='#/reviews/onsite/setup/'+id;
-                window.location.href='#/reviews/campaign/'+id;
+                //window.location.href='#/reviews/campaign/'+id;
+                window.location.href='#/campaigns/setup/'+id;
             },
             showContacts: function(id){
                 window.location.href='#/brandboost/stats/onsite/'+id+'?t=contact';
