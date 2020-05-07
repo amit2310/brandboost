@@ -373,7 +373,7 @@
                                                 </div>
 
                                                 <!--======Tab 5  Healthcare=====-->
-                                                <div id="Healthcare" class="tab-pane fade">
+                                                <div v-if="cateWiseDataArr.Healthcare!=null" id="Healthcare" class="tab-pane fade">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
                                                         <div v-for="(cateWiseData, index) in cateWiseDataArr.Healthcare" class="col-2 source_box pr5 pl5">
                                                             <div class="br4 border p25 shadow5 source_box_inner text-center">
@@ -392,7 +392,7 @@
                                                 </div>
 
                                                 <!--======Tab 6  HomeServices=====-->
-                                                <div id="HomeServices" class="tab-pane fade">
+                                                <div v-if="cateWiseDataArr.HomeServices!=null" id="HomeServices" class="tab-pane fade">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
                                                         <div v-for="(cateWiseData, index) in cateWiseDataArr.HomeServices" class="col-2 source_box pr5 pl5">
                                                             <div class="br4 border p25 shadow5 source_box_inner text-center">
@@ -411,7 +411,7 @@
                                                 </div>
 
                                                 <!--======Tab 7  Hotels=====-->
-                                                <div id="Hotels" class="tab-pane fade">
+                                                <div v-if="cateWiseDataArr.Hotels!=null" id="Hotels" class="tab-pane fade">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
                                                         <div v-for="(cateWiseData, index) in cateWiseDataArr.Hotels" class="col-2 source_box pr5 pl5">
                                                             <div class="br4 border p25 shadow5 source_box_inner text-center">
