@@ -172,7 +172,7 @@
                     <div class="wf_icons br12 bkg_dark_100 rotate_45 border"><img class="rotate_45_minus small" src="assets/images/play_white_small.svg"></div>
                         <p class="dark_200 fsize11 fw500 mb-1 text-uppercase ls_4">GOAL </p>
 						<p class="dark_200 fsize13 fw500 mb15 ls4">Conversion Goal </p>
-						<div class="p0 pt12 btop">
+						<div class="p0 pt12 btop ">
 							<ul class="workflow_list">
                                 <li style="border:none;"><a class="blue_300 fw500 fsize11" href="#"><span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> ADD GOAL</a></li>
 							</ul>

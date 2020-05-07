@@ -132,13 +132,29 @@
     
     
     
+
+    
     <div class="table_head_action pb0 mb25">
-    <div class="row">
-    	<div class="col">
-    		<h3 class="htxt_medium_14 dark_600">Latest templates</h3>
-    	</div>
-    </div>
-    </div>
+				<div class="row">
+					<div class="col-md-9">
+						<ul class="table_filter">
+							<li><a class="active" href="#">Featured</a></li>
+							<li><a href="#">Announcement</a></li>
+							<li><a href="#">Newsletter</a></li>
+							<li><a href="#">Deals & offers</a></li>
+                            <li><a href="#">Feedback</a></li>
+                            <li><a href="#">Events</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<ul class="table_filter text-right">
+                            <li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/list_grey.svg"></i></a></li>
+                        </ul>
+					</div>
+				</div>
+		</div>
     
     
     <div class="row">
@@ -431,10 +447,6 @@
     	<div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
     	<div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
     </div>
-    
-    
-    
-    
       </div>
       </div>
       

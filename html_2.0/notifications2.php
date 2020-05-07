@@ -63,6 +63,31 @@
    <div class="content-area">
     <div class="container-fluid">
     
+    
+    <div class="table_head_action">
+				<div class="row">
+					<div class="col-md-6">
+						<ul class="table_filter">
+							<li><a class="active" href="#">All</a></li>
+							<li><a href="#">Active</a></li>
+							<li><a href="#">Draft</a></li>
+							<li><a href="#">Archive</a></li>
+							
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<ul class="table_filter text-right">
+                            <li><a class="search_tables_open_close" href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/list_grey.svg"></i></a></li>
+                        </ul>
+					</div>
+				</div>
+		</div>
+        
+        
+        
     <div class="row">
     	<div class="col-md-12">
         
