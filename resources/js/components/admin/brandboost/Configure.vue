@@ -21,7 +21,6 @@
         <!--Content Area-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <!--******************
                 PAGE LEFT SIDEBAR
@@ -239,18 +238,6 @@
                                 </div>
                             </div>
 
-                            <!--<div class="card p35 br6 mb10">
-                                <div class="row">
-                                    <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
-                                    <div class="col">
-                                        <h3 class="htxt_medium_16 dark_700 mb-2">Source</h3>
-                                        <p class="htxt_regular_14 dark_400 m-0 ls4">Select review sources (review sites)</p>
-                                    </div>
-                                    <div class="col text-right">
-                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Add Source</button>
-                                    </div>
-                                </div>
-                            </div>-->
                             <div class="card p35 br6 mb10">
                                 <div class="row">
                                     <div style="max-width: 64px" class="col mt-1"><span class="circle-icon-36 bkg_light_200 light_000 d-block dark_100 fsize16 fw500">3</span></div>
@@ -258,183 +245,193 @@
                                         <h3 class="htxt_medium_16 dark_700 mb-2">Source</h3>
                                         <p class="htxt_regular_14 dark_400 m-0 ls4">Select review sources (review sites)</p>
                                     </div>
-                                    <div class="col text-right">
-                                        <!--<button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none">Edit Settings</button>-->
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Cancel</button>
-                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20">Save</button>
+                                    <div class="col text-right" v-if="displaySourceForm==false">
+                                        <!--<button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSourceForm" @click="openForm('source')"> Edit</button>
+                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('source')">Add Source</button>-->
+                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('source')">Add Source</button>
+
+                                    </div>
+                                    <div class="col text-right" v-if="displaySourceForm==true">
+                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('source')">Cancel</button>
+                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSourceInfo(campaignId,'2')">Save</button>
                                     </div>
                                 </div>
 
-                                <div class="btop mt30 pt20">
+                                <div class="btop mt30 pt20" v-if="displaySourceForm==true">
                                     <div class="row">
                                         <div class="col-12">
                                             <ul class="nav nav-pills source_tab" role="tablist">
-                                                <li class="mr15"><a class="active" data-toggle="pill" href="#MostPopular">Most Popular</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Automotive">Automotive</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Ecommerce">E-commerce</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Financial">Financial</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Healthcare">Healthcare</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#HomeServices">Home Services</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Hotels">Hotels</a></li>
-
+                                                <li v-if="cateWiseDataArr.MostPopular!=null" class="mr15"><a class="active" data-toggle="pill" href="#MostPopular">Most Popular</a></li>
+                                                <li v-if="cateWiseDataArr.Automotive!=null" class="mr15"><a class="" data-toggle="pill" href="#Automotive">Automotive</a></li>
+                                                <li v-if="cateWiseDataArr.Ecommerce!=null" class="mr15"><a class="" data-toggle="pill" href="#Ecommerce">E-commerce</a></li>
+                                                <li v-if="cateWiseDataArr.Financial!=null" class="mr15"><a class="" data-toggle="pill" href="#Financial">Financial</a></li>
+                                                <li v-if="cateWiseDataArr.Healthcare!=null" class="mr15"><a class="" data-toggle="pill" href="#Healthcare">Healthcare</a></li>
+                                                <li v-if="cateWiseDataArr.HomeServices!=null" class="mr15"><a class="" data-toggle="pill" href="#HomeServices">Home Services</a></li>
+                                                <li v-if="cateWiseDataArr.Hotels!=null" class="mr15"><a class="" data-toggle="pill" href="#Hotels">Hotels</a></li>
                                             </ul>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="tab-content mt20">
+
                                                 <!--======Tab 1 MostPopular====-->
-                                                <div id="MostPopular" class="tab-pane active">
+                                                <div v-if="cateWiseDataArr.MostPopular!=null" id="MostPopular" class="tab-pane active">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pl5 pr5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.MostPopular" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>-->
+                                                                <!--<div class="thumb">
+                                                                    <a href="javascript:void(0);">
+                                                                        <span v-if="inArray('OtherSources', unserialize(cateWiseData.site_categories))">
+                                                                            <i style="font-style:inherit">M</i>
+                                                                        </span>
+                                                                        <span v-else>
+                                                                            <img :src="`{ '/uploads/' + cateWiseData.image }`">
+                                                                        </span>
+                                                                    </a>
+                                                                </div>-->
+
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pl5 pr5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
+
                                                 <!--======Tab 2  Automotive=====-->
-                                                <div id="Automotive" class="tab-pane fade">
+                                                <div v-if="cateWiseDataArr.Automotive!=null" id="Automotive" class="tab-pane fade">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Automotive" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
 
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pl5 pr5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <!--======Tab 3  Ecommerce=====-->
-                                                <div id="Ecommerce" class="tab-pane fade">
-                                                    tab 3
+                                                <div v-if="cateWiseDataArr.Ecommerce!=null" id="Ecommerce" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Ecommerce" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!--======Tab 4  Financial=====-->
-                                                <div id="Financial" class="tab-pane fade">
-                                                    tab 4
+                                                <div v-if="cateWiseDataArr.Financial!=null" id="Financial" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Financial" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div v-else  class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                            <p class="fsize14 fw500 dark_600 m-0">No Record Found.</p>
+                                                        </div>
+                                                    </div>-->
                                                 </div>
 
                                                 <!--======Tab 5  Healthcare=====-->
-                                                <div id="Healthcare" class="tab-pane fade">
-                                                    tab 5
+                                                <div v-if="cateWiseDataArr.Healthcare!=null" id="Healthcare" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Healthcare" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!--======Tab 6  HomeServices=====-->
-                                                <div id="HomeServices" class="tab-pane fade">
-                                                    tab 6
+                                                <div v-if="cateWiseDataArr.HomeServices!=null" id="HomeServices" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.HomeServices" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!--======Tab 7  Hotels=====-->
-                                                <div id="Hotels" class="tab-pane fade">
-                                                    tab 7
+                                                <div v-if="cateWiseDataArr.Hotels!=null" id="Hotels" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Hotels" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="sourceForm.id" required class="form-control h48"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-
-
-
-
-
-
-
 
                                             </div>
                                         </div>
-
-
                                     </div>
-
-
-
                                 </div>
                             </div>
 
@@ -766,7 +763,6 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="4"></system-messages>-->
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">
@@ -819,7 +815,6 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="5"></system-messages>-->
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">
@@ -905,10 +900,12 @@
                 breadcrumb: '',
                 feedbackResponse: '',
                 offSiteData: '',
+                cateWiseDataArr: '',
                 setTab: '',
                 fromNumber: '',
                 displayCustomLinkExpiry: false,
                 displaySenderForm: false,
+                displaySourceForm: false,
                 displaySubjectForm: false,
                 displayContentForm: false,
                 displayTrackingForm: false,
@@ -944,6 +941,11 @@
                     brandboostId: this.$route.params.id,
                     subject: '',
                     preheader: ''
+                },
+                sourceForm: {
+                    _token: this.csrf_token(),
+                    requestType: 'source',
+                    brandboostId: this.$route.params.id
                 },
                 trackingForm: {
                     _token: this.csrf_token(),
@@ -1026,6 +1028,9 @@
                 this.validateStepCompletion();
             },
             completedSubjectForm: function(){
+                this.validateStepCompletion();
+            },
+            completedSourceForm: function(){
                 this.validateStepCompletion();
             },
             completedContentForm: function(){
@@ -1133,7 +1138,7 @@
                 this.disableSMSTrackingForm = false;
             },
             loadCampaignSettings: function(){
-                axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+                axios.get('/admin/brandboost/campaignSetup/' + this.campaignId)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -1141,6 +1146,7 @@
                         this.campaign = response.data.brandboostData;
                         this.feedbackResponse = response.data.feedbackResponse;
                         this.offSiteData = response.data.offSiteData;
+                        this.cateWiseDataArr = response.data.cateWiseDataArr;
                         this.setTab = response.data.setTab;
                         //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
                         this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
@@ -1152,6 +1158,8 @@
                         this.senderForm.from_name = this.feedbackResponse.from_name;
                         this.senderForm.from_email = this.feedbackResponse.from_email;
                         this.senderForm.brandboostId = this.campaignId;
+
+                        this.sourceForm.brandboostId = this.campaignId;
 
                         this.senderSMSForm.from_name = this.feedbackResponse.from_name;
                         this.senderSMSForm.sms_sender = this.feedbackResponse.sms_sender;
@@ -1194,6 +1202,7 @@
                 //Sender form
                 this.completedSenderForm = false;
                 this.completedSubjectForm = false;
+                this.completedSourceForm = false;
                 this.completedTrackingForm = false;
 
                 this.completedSMSSenderForm = false;
@@ -1217,6 +1226,10 @@
                     }
                     if(this.subjectForm.subject && this.subjectForm.preheader){
                         this.completedSubjectForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.sourceForm.brandboostId>0){
+                        this.completedSourceForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
                     if(this.emailCampaignId>0){
@@ -1260,6 +1273,9 @@
                 }else if(form == 'content'){
                     className = this.displayContentForm == true ? 'active' : '';
                     activeClassName = this.completedContentForm ? 'done' : '';
+                }else if(form == 'source'){
+                    className = this.displaySourceForm == true ? 'active' : '';
+                    activeClassName = this.completedSourceForm ? 'done' : '';
                 }else if(form == 'tracking'){
                     className = this.displayTrackingForm == true ? 'active' : '';
                     activeClassName = this.completedTrackingForm ? 'done' : '';
@@ -1285,6 +1301,8 @@
                 }else if(form == 'content'){
                     this.displayContentForm = true;
                     this.openEmailTemplates();
+                }else if(form == 'source'){
+                    this.displaySourceForm = true;
                 }else if(form == 'tracking'){
                     this.displayTrackingForm = true;
                 }else if(form == 'smsSender'){
@@ -1304,6 +1322,7 @@
                 this.displaySenderForm = false;
                 this.displaySubjectForm = false;
                 this.displayContentForm = false;
+                this.displaySourceForm = false;
                 this.displayTrackingForm = false;
 
                 this.displaySMSSenderForm = false;
@@ -1319,6 +1338,23 @@
                             this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('sender');
+                            this.validateStepCompletion();
+                        }
+                    });
+
+            },
+            saveSourceInfo: function(campaignId,status){
+                this.loading = true;
+                axios.post('/admin/brandboost/publishOnsiteStatusBB', {
+                    brandboostID:campaignId,
+                    status:status,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status =='success'){
+                            this.displayMessage('success', 'Source added successfully!!');
+                            this.loading = false;
+                            this.closeForm('source');
                             this.validateStepCompletion();
                         }
                     });
