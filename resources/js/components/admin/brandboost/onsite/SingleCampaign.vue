@@ -242,7 +242,7 @@
                 <div class="modal-content review">
                     <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
                     <div class="row">
-                        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
                         <loading :isLoading="loading"></loading>
                         <div class="col-12">
                             <h3 class="htxt_medium_24 dark_800 mb-3">Review Request</h3>

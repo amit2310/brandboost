@@ -1,7 +1,7 @@
 <template>
 
     <div id="Configurations" class="tab-pane active">
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div class="p20 bbot pt10 pb10">
             <p class="text-uppercase m-0 fw400 dark_200">Template <a class="float-right" href="javascript:void(0);"><i class="icon-arrow-down12 fsize15"></i></a></p>

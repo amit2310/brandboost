@@ -23,7 +23,7 @@
         </div>
         <div class="clearfix">&nbsp;</div>
 
-            <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
             <loading :isLoading="loading"></loading>
         <div class="row">
             <div class="col-md-6">

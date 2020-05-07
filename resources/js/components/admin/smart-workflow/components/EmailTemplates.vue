@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>-->
+        <!---->
         <loading :isLoading="loading"></loading>
         <div class="table_head_action pb0 mb25">
             <div class="row">
@@ -48,7 +48,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">

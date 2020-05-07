@@ -1,6 +1,6 @@
 <template>
     <div class="box" style="width: 424px;">
-        <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
+
         <loading :isLoading="loading"></loading>
         <div style="width: 424px;overflow: hidden; height: 100%;">
             <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon saveReplyBox"><i
