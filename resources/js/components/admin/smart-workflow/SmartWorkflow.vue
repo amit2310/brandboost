@@ -679,6 +679,37 @@
 
                                         </div>
                                     </div>
+
+                                        <div class="form-group" v-if="editActionItem =='list'">
+                                        <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT LIST</label>
+
+                                        <div class="form-group m-0 review_forms">
+                                            <div class="dropdown">
+                                                <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Select Lists
+                                                </button>
+                                                <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                    <div class="p10">
+                                                        <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                    </div>
+                                                    <a class="dropdown-item" href="javascript:void(0);" v-for="list in filteredLists">
+                                                        <label class="custmo_checkbox pull-left">
+                                                            <input
+                                                                type="checkbox"
+                                                                name="checkRows[]"
+                                                                class="addToCampaign"
+                                                                @click="updateActionLists($event,list.id)"
+                                                                :value="list.id"
+                                                                :checked="selected_action_lists.includes(list.id)">
+                                                            <span class="custmo_checkmark blue"></span>
+                                                        </label>&nbsp;  {{ list.list_name }} ({{list.subscribers.length}})
+                                                    </a>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="row bottom-position">
@@ -686,7 +717,7 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideEditActionItembox" @click="updateActionItem">Update {{capitalizeFirstLetter(editActionItem)}}</button>
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click="updateActionItem">Update {{capitalizeFirstLetter(editActionItem)}}</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideEditActionItembox">Close</button>
                                     </div>
                                 </div>
@@ -1290,10 +1321,10 @@
                 current_page: 1,
                 items_per_page: 100,
                 searchBy: '',
+                editActionEvent: '',
                 editActionItem: '',
                 selected_action_tags: '',
-                editActionEvent: ''
-
+                selected_action_lists: ''
             }
         },
         mounted() {
@@ -1517,11 +1548,36 @@
                 }else if(actionName == 'tag'){
                     //Tag Node
                     this.loadTag(event);
+                }else if(actionName == 'list'){
+                    //List Node
+                    this.loadList(event);
                 }else{
                     //Other Nodes
                 }
 
                 this.loading = false;
+            },
+            loadList: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        let event = response.data.eventData;
+                        let params = JSON.parse(event.data);
+                        let listParams = params['list_properties'];
+                        this.editActionItem = 'list';
+                        this.selected_action_lists = listParams ? listParams['list_ids'] : [];
+                        this.editActionEvent = event;
+                        this.actionTitle = params['title'];
+                        document.querySelector('#slideEditActionItembox').click();
+                    }
+                });
+
             },
             loadTag: function(event){
                 this.loading = true;
@@ -2082,7 +2138,7 @@
                 let event = this.editActionEvent;
                 let params = JSON.parse(event.data);
                 let tagParams = params['tag_properties'];
-                let tagIds = tagParams['tag_ids'];
+                let tagIds = tagParams ? tagParams['tag_ids'] : [];
                 if(actionName == 'addRecord'){
                     if(tagIds.indexOf(id) === -1){
                         tagIds.push(id);
@@ -2093,10 +2149,27 @@
                     }
                 }
                 params['title'] = this.actionTitle;
-                params['tag_properties']['tag_ids'] = tagIds;
-                this.updateTriggerData(event, params);
-
+                params['tag_properties'] = {tag_ids:tagIds};
                 this.selected_action_tags = tagIds;
+            },
+            updateActionLists: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                let event = this.editActionEvent;
+                let params = JSON.parse(event.data);
+                let listParams = params['list_properties'];
+                let listIds = listParams ? listParams['list_ids'] : [];
+                if(actionName == 'addRecord'){
+                    if(listIds.indexOf(id) === -1){
+                        listIds.push(id);
+                    }
+                }else if(actionName == 'deleteRecord'){
+                    if(listIds.indexOf(id) > -1){
+                        listIds.splice(listIds.indexOf(id), 1);
+                    }
+                }
+                params['title'] = this.actionTitle;
+                params['list_properties'] = {list_ids:listIds};
+                this.selected_action_lists = listIds;
             },
             updateTriggerData: function(event, params){
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateTriggerData', {
@@ -2114,7 +2187,20 @@
                     });
             },
             updateActionItem: function(){
-                this.displayMessage('success', 'Changes updated successfully');
+                let event = this.editActionEvent;
+                let params = JSON.parse(event.data);
+                if(this.editActionItem =='tag'){
+                    let tagParams = params['tag_properties'];
+                    params['title'] = this.actionTitle;
+                    params['tag_properties'] = {tag_ids:this.selected_action_tags};
+                    this.updateTriggerData(event, params);
+                }else if(this.editActionItem =='list'){
+                    let tagParams = params['list_properties'];
+                    params['title'] = this.actionTitle;
+                    params['list_properties'] = {list_ids:this.selected_action_lists};
+                    this.updateTriggerData(event, params);
+                }
+
             }
         },
     }

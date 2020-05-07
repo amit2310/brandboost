@@ -3432,7 +3432,7 @@ class WorkFlow extends Controller {
         if(!empty($oEventData)){
             $nodeType = $oEventData->node_type;
             $actionName = $oEventData->name;
-            if($nodeType =='action' && $actionName == 'tag') {
+            if($nodeType =='action' && in_array($actionName, ['tag', 'list'])) {
                 $nodeInfo = $mWorkflow->getNodeInfo($eventID, $moduleName);
                 return ['status'=>'success', 'eventData'=>$nodeInfo];
             }else if($nodeType =='action' && $actionName == 'email'){
@@ -3635,7 +3635,7 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitId = strip_tags($request->moduleUnitId);
         $eventId = $request->id;
-        $triggerParams = json_decode($request->params);
+        $triggerParams = $request->params;
         $bUpdated = $mWorkflow->updateWorkflowEvent(['data'=> $triggerParams], $eventId, $moduleName);
         if($bUpdated){
             return ['status'=>'success'];
