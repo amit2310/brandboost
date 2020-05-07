@@ -1084,26 +1084,30 @@ small {
   transition: 0.3s;
   min-height: 56px;
 }
+.top-breadcrumb li{ margin:0 5px 0 0}
+.top-breadcrumb li.back{ margin:-4px 20px 0 0!important}
 .top-breadcrumb li a {
   font-size: 12px;
   line-height: 120%;
-  color: #97a4bd;
+  color: #97A4BD;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+.top-breadcrumb li a.light {color: #97A4BD;}
+.top-breadcrumb li a.active {color: #6F7CFF;}
+.top-breadcrumb li a.dark {color: #56627F;}
 .top-breadcrumb li img {
   float: left;
-  margin: 1px 0 0 0 !important;
 }
 .top-breadcrumb li i {
   float: left;
-  margin: 3px 0 0 0 !important;
-  font-size: 18px;
+  margin: 2px 6px 0 2px !important;
+  font-size: 14px;
 }
-#ReviewSection .top-breadcrumb li a {
+/*#ReviewSection .top-breadcrumb li a {
   color: #6672e8;
-}
+}*/
 
 .top-bar-top-section {
   padding: 20px 100px 0px 34px;
@@ -1796,6 +1800,7 @@ PAGE WITH SIDEBAR CSS
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #7b89a6;
+  margin-top:1px;
 }
 
 .sidebar_pagination {

@@ -66,12 +66,12 @@
 	<!--******************
 	 PAGE LEFT SIDEBAR
 	**********************-->
+    <a class="close_sidebar" href="#">&nbsp; <img src="assets/images/menu-2-line.svg"></a>
 	<div class="page_sidebar bkg_light_000 fixed">
  	<div style="width: 279px;">
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
 	 			<div class="col"><p>ReviewS</p></div>
-	 			<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"></a></p></div>
 	 		</div>
 	 	</div>
        
@@ -94,8 +94,10 @@
       <div class="p20 pt0 pb0 bkg_light_050">
         	<ul class="list_with_icons3">
         	<li class="d-flex">
+            <a href="#">
         	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/start-fill-white.svg"></span>IBM</span>
         	<strong>4.5 <i class="ri-star-fill green_400"></i></strong>
+            </a>
         	</li>
         	<li class="d-flex">
         	<span><span class="circle_icon_24 bkg_green_200"><img src="assets/images/start-fill-white.svg"></span>General Electric</span>
