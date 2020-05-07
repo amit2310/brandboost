@@ -120,8 +120,11 @@
     </ul>
     <!--end topbar-nav-->
     <ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">
-      <!--<li class="mr-3"><a class="button-menu-mobile-new" href="#"><i class="ri-menu-2-line float-left" style="margin-top: 1px; font-size: 13px!important;"></i></a></li>-->
-      <li><a class="button-menu-mobile-new" href="#"><i class="ri-arrow-left-s-line"></i>&nbsp; DASHBOARD</a></li>
+      <li class="back"><a class="button-menu-mobile-new" href="#"><img src="assets/images/back_blue_circle_28.svg"/></a></li>
+      <li><a class="light" href="#"><i class="ri-home-2-line"></i></a></li>
+      <li><a class="light" href="#"><i class="ri-arrow-right-s-line"></i>PEOPLE</a></li>
+      <li><a class="active" href="#"><i class="ri-arrow-right-s-line"></i>LIST</a></li>
+      <li><a class="dark" href="#"><i class="ri-arrow-right-s-line"></i>PEOPLE List 2</a></li>
     </ul>
     <div class="clearfix"></div>
     </div>

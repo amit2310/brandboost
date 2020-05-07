@@ -19,8 +19,8 @@
 <style>
 	.sitemap ul{margin: 0; padding: 0;}
 	.sitemap ul li{margin: 0; padding: 0; list-style: none; float: left; width: 100%; line-height: 29px;}
-	.sitemap ul li small{ font-size: 9px; font-style: italic; letter-spacing: 0.5px;}
-	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left 10px no-repeat; float: left; width: 250px;}
+	.sitemap ul li small{ font-size: 9px; font-style: italic; letter-spacing: 0.5px; float: right;text-align: right;}
+	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left 10px no-repeat; float: left; width: 210px;}
 	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
 	.sitemap ul li strong{color: #4f8af4; }
 	</style>
@@ -49,7 +49,7 @@
    <div class="row">
    	<div class="col-md-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">Site Map Admin 2.0 New Updated Pages</h3>
+   	<h3 class="htxt_medium_24 dark_700">Admin 2.0 New Pages</h3>
    	</div>
    	<!--<div class="col-md-6 text-right">
    		<button class="circle-icon-40 mr15"><img src="assets/images/filter.svg"/></button>
@@ -69,7 +69,7 @@
     <div class="container-fluid">
      <div class="row">
      	<div class="col-md-6">
-     		<div class="card min-h-280">
+     		<div class="card min-h-280 p20">
      		<h3 class="htxt_bold_16 reviews_400">Reviews</h3>
      		<hr>
      		<ul>
@@ -169,7 +169,7 @@
      			
      		</ul>
      		</div>
-     		<div class="card min-h-280">
+     		<div class="card min-h-280 p20">
      		<h3 class="htxt_bold_16 reviews_400">People Lists</h3>
      		<hr>
      		<ul>
@@ -180,7 +180,7 @@
      		</ul>
      		</div>
      		
-     		<div class="card min-h-280">
+     		<div class="card min-h-280 p20">
      		<h3 class="htxt_bold_16 reviews_400">People Segments</h3>
      		<hr>
      		<ul>
@@ -191,7 +191,7 @@
      		</ul>
      		</div>
      		
-     		<div class="card min-h-280">
+     		<div class="card min-h-280 p20">
      		<h3 class="htxt_bold_16 reviews_400">People Tags</h3>
      		<hr>
      		<ul>
