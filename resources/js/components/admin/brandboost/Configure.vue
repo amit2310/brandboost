@@ -246,13 +246,14 @@
                                         <p class="htxt_regular_14 dark_400 m-0 ls4">Select review sources (review sites)</p>
                                     </div>
                                     <div class="col text-right" v-if="displaySourceForm==false">
-                                        <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSourceForm" @click="openForm('source')"> Edit</button>
-                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('source')">Add Source</button>
+                                        <!--<button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="completedSourceForm" @click="openForm('source')"> Edit</button>
+                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else @click="openForm('source')">Add Source</button>-->
+                                        <button class="btn border br35 reviews_400 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="openForm('source')">Add Source</button>
 
                                     </div>
                                     <div class="col text-right" v-if="displaySourceForm==true">
                                         <button class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none" @click="closeForm('source')">Cancel</button>
-                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSourceInfo">Save</button>
+                                        <button class="btn br35 light_000 fsize13 fw500 p10 pl30 pr30 shadow-none bkg_green_400 ml20" @click="saveSourceInfo(campaignId,'2')">Save</button>
                                     </div>
                                 </div>
 
@@ -297,6 +298,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -316,6 +318,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -335,6 +338,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -354,6 +358,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -378,6 +383,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -397,6 +403,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="cateWiseData.status" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -416,6 +423,7 @@
                                                                 </div>
 
                                                                 <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                                <input type="hidden" v-model="sourceForm.id" required class="form-control h48"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -934,6 +942,11 @@
                     subject: '',
                     preheader: ''
                 },
+                sourceForm: {
+                    _token: this.csrf_token(),
+                    requestType: 'source',
+                    brandboostId: this.$route.params.id
+                },
                 trackingForm: {
                     _token: this.csrf_token(),
                     requestType: 'tracking',
@@ -1015,6 +1028,9 @@
                 this.validateStepCompletion();
             },
             completedSubjectForm: function(){
+                this.validateStepCompletion();
+            },
+            completedSourceForm: function(){
                 this.validateStepCompletion();
             },
             completedContentForm: function(){
@@ -1143,6 +1159,8 @@
                         this.senderForm.from_email = this.feedbackResponse.from_email;
                         this.senderForm.brandboostId = this.campaignId;
 
+                        this.sourceForm.brandboostId = this.campaignId;
+
                         this.senderSMSForm.from_name = this.feedbackResponse.from_name;
                         this.senderSMSForm.sms_sender = this.feedbackResponse.sms_sender;
                         this.senderSMSForm.brandboostId = this.campaignId;
@@ -1184,6 +1202,7 @@
                 //Sender form
                 this.completedSenderForm = false;
                 this.completedSubjectForm = false;
+                this.completedSourceForm = false;
                 this.completedTrackingForm = false;
 
                 this.completedSMSSenderForm = false;
@@ -1207,6 +1226,10 @@
                     }
                     if(this.subjectForm.subject && this.subjectForm.preheader){
                         this.completedSubjectForm = true;
+                        completedPercentage = completedPercentage + offset;
+                    }
+                    if(this.sourceForm.brandboostId>0){
+                        this.completedSourceForm = true;
                         completedPercentage = completedPercentage + offset;
                     }
                     if(this.emailCampaignId>0){
@@ -1315,6 +1338,23 @@
                             this.displayMessage('success', 'Updated the changes successfully!!');
                             this.loading = false;
                             this.closeForm('sender');
+                            this.validateStepCompletion();
+                        }
+                    });
+
+            },
+            saveSourceInfo: function(campaignId,status){
+                this.loading = true;
+                axios.post('/admin/brandboost/publishOnsiteStatusBB', {
+                    brandboostID:campaignId,
+                    status:status,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status =='success'){
+                            this.displayMessage('success', 'Source added successfully!!');
+                            this.loading = false;
+                            this.closeForm('source');
                             this.validateStepCompletion();
                         }
                     });
