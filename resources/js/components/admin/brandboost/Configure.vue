@@ -21,7 +21,6 @@
         <!--Content Area-->
         <div class="content-area">
             <div class="container-fluid">
-                <system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="refreshMessage"></system-messages>
                 <loading :isLoading="loading"></loading>
                 <!--******************
                 PAGE LEFT SIDEBAR
@@ -269,172 +268,170 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <ul class="nav nav-pills source_tab" role="tablist">
-                                                <li class="mr15"><a class="active" data-toggle="pill" href="#MostPopular">Most Popular</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Automotive">Automotive</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Ecommerce">E-commerce</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Financial">Financial</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Healthcare">Healthcare</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#HomeServices">Home Services</a></li>
-                                                <li class="mr15"><a class="" data-toggle="pill" href="#Hotels">Hotels</a></li>
-
+                                                <li v-if="cateWiseDataArr.MostPopular!=null" class="mr15"><a class="active" data-toggle="pill" href="#MostPopular">Most Popular</a></li>
+                                                <li v-if="cateWiseDataArr.Automotive!=null" class="mr15"><a class="" data-toggle="pill" href="#Automotive">Automotive</a></li>
+                                                <li v-if="cateWiseDataArr.Ecommerce!=null" class="mr15"><a class="" data-toggle="pill" href="#Ecommerce">E-commerce</a></li>
+                                                <li v-if="cateWiseDataArr.Financial!=null" class="mr15"><a class="" data-toggle="pill" href="#Financial">Financial</a></li>
+                                                <li v-if="cateWiseDataArr.Healthcare!=null" class="mr15"><a class="" data-toggle="pill" href="#Healthcare">Healthcare</a></li>
+                                                <li v-if="cateWiseDataArr.HomeServices!=null" class="mr15"><a class="" data-toggle="pill" href="#HomeServices">Home Services</a></li>
+                                                <li v-if="cateWiseDataArr.Hotels!=null" class="mr15"><a class="" data-toggle="pill" href="#Hotels">Hotels</a></li>
                                             </ul>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="tab-content mt20">
+
                                                 <!--======Tab 1 MostPopular====-->
-                                                <div id="MostPopular" class="tab-pane active">
+                                                <div v-if="cateWiseDataArr.MostPopular!=null" id="MostPopular" class="tab-pane active">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pl5 pr5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.MostPopular" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>-->
+                                                                <!--<div class="thumb">
+                                                                    <a href="javascript:void(0);">
+                                                                        <span v-if="inArray('OtherSources', unserialize(cateWiseData.site_categories))">
+                                                                            <i style="font-style:inherit">M</i>
+                                                                        </span>
+                                                                        <span v-else>
+                                                                            <img :src="`{ '/uploads/' + cateWiseData.image }`">
+                                                                        </span>
+                                                                    </a>
+                                                                </div>-->
+
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pl5 pr5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
+
                                                 <!--======Tab 2  Automotive=====-->
-                                                <div id="Automotive" class="tab-pane fade">
+                                                <div v-if="cateWiseDataArr.Automotive!=null" id="Automotive" class="tab-pane fade">
                                                     <div class="row" style="margin-right: -5px; margin-left: -5px;">
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Automotive" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
 
-                                                        <div class="col-2 source_box pr5 pl5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 source_box pl5 pr5">
-                                                            <div class="br4 border p25 shadow5 source_box_inner">
-                                                                <img class="mb10" src="assets/images/google_blue_40.svg"/>
-                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <!--======Tab 3  Ecommerce=====-->
-                                                <div id="Ecommerce" class="tab-pane fade">
-                                                    tab 3
+                                                <div v-if="cateWiseDataArr.Ecommerce!=null" id="Ecommerce" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Ecommerce" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!--======Tab 4  Financial=====-->
-                                                <div id="Financial" class="tab-pane fade">
-                                                    tab 4
+                                                <div v-if="cateWiseDataArr.Financial!=null" id="Financial" class="tab-pane fade">
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Financial" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div v-else  class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                            <p class="fsize14 fw500 dark_600 m-0">No Record Found.</p>
+                                                        </div>
+                                                    </div>-->
                                                 </div>
 
                                                 <!--======Tab 5  Healthcare=====-->
                                                 <div id="Healthcare" class="tab-pane fade">
-                                                    tab 5
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Healthcare" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!--======Tab 6  HomeServices=====-->
                                                 <div id="HomeServices" class="tab-pane fade">
-                                                    tab 6
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.HomeServices" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!--======Tab 7  Hotels=====-->
                                                 <div id="Hotels" class="tab-pane fade">
-                                                    tab 7
+                                                    <div class="row" style="margin-right: -5px; margin-left: -5px;">
+                                                        <div v-for="(cateWiseData, index) in cateWiseDataArr.Hotels" class="col-2 source_box pr5 pl5">
+                                                            <div class="br4 border p25 shadow5 source_box_inner text-center">
+                                                                <!--<img class="mb10" src="assets/images/google_blue_40.svg"/>
+                                                                <p class="fsize14 fw500 dark_600 m-0">Google</p>-->
+                                                                <div>
+                                                                    <a href="javascript:void(0);">
+                                                                        <img v-if="cateWiseData.image!=''" :src="`/uploads/${ cateWiseData.image }`" style="width: 43px; height: 43px; padding: 7px;" alt="" :title="`${capitalizeFirstLetter(cateWiseData.name)}`" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <p class="fsize14 fw500 dark_600 m-0">{{ capitalizeFirstLetter(cateWiseData.name) }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-
-
-
-
-
-
-
 
                                             </div>
                                         </div>
-
-
                                     </div>
-
-
-
                                 </div>
                             </div>
 
@@ -766,7 +763,6 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="4"></system-messages>-->
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">
@@ -819,7 +815,6 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="5"></system-messages>-->
                         <loading :isLoading="loading"></loading>
                         <div class="row">
                             <div class="col-md-4 pr0">
@@ -905,6 +900,7 @@
                 breadcrumb: '',
                 feedbackResponse: '',
                 offSiteData: '',
+                cateWiseDataArr: '',
                 setTab: '',
                 fromNumber: '',
                 displayCustomLinkExpiry: false,
@@ -1133,7 +1129,7 @@
                 this.disableSMSTrackingForm = false;
             },
             loadCampaignSettings: function(){
-                axios.get('/admin/brandboost/onsite_setup/' + this.campaignId)
+                axios.get('/admin/brandboost/campaignSetup/' + this.campaignId)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -1141,6 +1137,7 @@
                         this.campaign = response.data.brandboostData;
                         this.feedbackResponse = response.data.feedbackResponse;
                         this.offSiteData = response.data.offSiteData;
+                        this.cateWiseDataArr = response.data.cateWiseDataArr;
                         this.setTab = response.data.setTab;
                         //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
                         this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);

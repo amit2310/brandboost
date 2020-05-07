@@ -480,12 +480,13 @@ class Brandboost extends Controller
             exit;
         }
     }
+
     /**
-     * Used to get onsite configuration related values
+     * Used to get both onsite/offsite campaign configuration related values
      * @param type $request
      * @return type
      */
-    public function onsiteSetup(Request $request)
+    public function campaignSetup(Request $request)
     {
         $brandboostID = $request->id;
         $selectedCategory = $request->input("cate");
@@ -505,20 +506,32 @@ class Brandboost extends Controller
         $review_type = !empty($getBrandboost[0]->review_type) ? $getBrandboost[0]->review_type : 'onsite';
 
         if (empty($brandboostID)) {
-            if($review_type == 'offsite') {
-                redirect("admin/brandboost/offsite");
-            } else {
-                redirect("admin/brandboost/onsite");
-            }
+            redirect("admin/brandboost/".$review_type);
             exit;
         }
 
+        $cateWiseDataArr = [];
         if($review_type == 'offsite') {
+            $cateList = array(
+                'MostPopular'=>'Most Popular',
+                'Automotive'=>'Automotive',
+                'Ecommerce'=>'E-commerce',
+                'Financial'=>'Financial',
+                'Healthcare'=>'Healthcare',
+                'HomeServices'=>'Home services',
+                'Hotels'=>'Hotels',
+                'OtherSources'=>'OtherSources'
+            );
+
             $offstepdata = $mOffsite->getOffsite();
-            if(!empty($offstepdata)){
-                foreach($offstepdata as $data){
-                    $aSource = @unserialize($data->site_categories);
-                    $data->site_categories_array = $aSource;
+
+            if(!empty($offstepdata)) {
+                foreach ($offstepdata as $data) {
+                    foreach ($cateList as $key => $cate) {
+                        if (in_array($cate, unserialize($data->site_categories))) {
+                            $cateWiseDataArr[$key][] = $data;
+                        }
+                    }
                 }
             }
 
@@ -553,14 +566,14 @@ class Brandboost extends Controller
         $revCount = getCampaignReviewCount($brandboostID);
         $revRA = getCampaignReviewRA($brandboostID);
 
-        /*$emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite'); //Not in use probably
-        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');//Not in use probably*/
+        /*$emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, $review_type); //Not in use probably
+        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, $review_type);//Not in use probably*/
 
         $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
 
         $oEventsType = array('send-invite', 'followup');
         $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
-        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
+        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, $review_type);
 
         $oTemplates = $mTemplates->getCommonTemplates();
         $oCategories = $mTemplates->getCommonTemplateCategories();
@@ -694,7 +707,188 @@ class Brandboost extends Controller
             'oSMSTemplates' => $oSMSTemplates->items(),
             'endCampaign' => $endCampaign,
             'offSiteData' => ($review_type == 'offsite' ? $offstepdata : ''),
+            'cateWiseDataArr' => ($review_type == 'offsite' ? $cateWiseDataArr : ''),
             'setTab' => ($review_type == 'offsite' ? $setTab : '')
+        );
+        return $aData;
+        //return view('admin.brandboost.onsite_setup', $aData);
+        //echo json_encode($aData);
+        //exit;
+    }
+
+
+    /**
+     * Used to get onsite configuration related values
+     * @param type $request
+     * @return type
+     */
+    public function onsiteSetup(Request $request)
+    {
+        $brandboostID = $request->id;
+        $selectedCategory = $request->input("cate");
+        $oUser = getLoggedUser();
+        $userID = $oUser->id;
+        $mBrandboost = new BrandboostModel();
+        $mUsers = new UsersModel();
+        $mFeedback = new FeedbackModel();
+        $mWorkflow = new WorkflowModel();
+        $mReviews = new ReviewsModel();
+        $mTemplates = new TemplatesModel();
+
+        $bbProductsData = $mBrandboost->getProductData($brandboostID);
+        $getBrandboost = $mBrandboost->getBrandboost($brandboostID);
+
+        $review_type = !empty($getBrandboost[0]->review_type) ? $getBrandboost[0]->review_type : 'onsite';
+
+        if (empty($brandboostID)) {
+            if($review_type == 'offsite') {
+                redirect("admin/brandboost/offsite");
+            } else {
+                redirect("admin/brandboost/onsite");
+            }
+            exit;
+        }
+
+        $getBrandboostFR = $mFeedback->getFeedbackResponse($brandboostID);
+        $moduleName = 'brandboost';
+        $moduleUnitID = '';
+        $oCampaignSubscribers = $mWorkflow->getWorkflowCampaignSubscribers($moduleName, $brandboostID);
+
+        $bActiveSubsription = $mUsers->isActiveSubscription();
+        $eventsdata = $mBrandboost->getBrandboostEvents($brandboostID);
+        $aReviews = $mReviews->getCampaignAllReviews($brandboostID);
+        $revCount = getCampaignReviewCount($brandboostID);
+        $revRA = getCampaignReviewRA($brandboostID);
+
+        /*$emailTemplate = $mBrandboost->getAllCampaignTemplatesByUserID($userID, 'onsite'); //Not in use probably
+        $smsTemplate = $mBrandboost->getAllSMSCampaignTemplatesByUserID($userID, 'onsite');//Not in use probably*/
+
+        $oEvents = $mWorkflow->getWorkflowEvents($brandboostID, $moduleName);
+
+        $oEventsType = array('send-invite', 'followup');
+        $oCampaignTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oDefaultTemplates = $mWorkflow->getWorkflowDefaultTemplates($moduleName, 'onsite');
+
+        $oTemplates = $mTemplates->getCommonTemplates();
+        $oCategories = $mTemplates->getCommonTemplateCategories();
+        /*if ($this->use_default_accounts == true) {
+            $aTwilioData = $this->defaultTwilioDetails;
+            $fromNumber = $aData['from_entity'];
+        } else {
+            $aTwilioAc = $mInviter->getTwilioAccount($userID);
+            if (!empty($aTwilioAc)) {
+                $fromNumber = $aTwilioAc->contact_no;
+            }
+        }*/
+        $endCampaign = '';
+        $eventID = $oEvents->count()>0 ? $oEvents[0]->id : '';
+        if($eventID>0){
+            $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
+            if(!empty($aCampaigns)){
+                $endCampaign = $aCampaigns->count()>0 ? $aCampaigns : '';
+            }
+        }
+
+        $campaignType = isset($getBrandboost[0]) ? $getBrandboost[0]->campaign_type : '';
+        //Get Email/SMS preview meta data
+        $emailCampaignId = '';
+        $emailTemplateId = '';
+        $smsCampaignId = '';
+        $smsTemplateId = '';
+        if($campaignType == 'manual'){
+            if(!empty($endCampaign)){
+                foreach($endCampaign as $oCampaign){
+                    if(strtolower($oCampaign->campaign_type) == 'email'){
+                        $emailCampaignId = $oCampaign->id;
+                        $emailTemplateId = $oCampaign->template_source;
+                        $emailData = $oCampaign;
+                    }else if(strtolower($oCampaign->campaign_type) == 'sms'){
+                        $smsCampaignId = $oCampaign->id;
+                        $smsTemplateId = $oCampaign->template_source;
+                        $smsData = $oCampaign;
+                    }
+                }
+            }
+        }
+
+        $oEmailTemplates = $mTemplates->getCommonTemplates('', 8, '', 'email');
+        $oSMSTemplates = $mTemplates->getCommonTemplates('', 8, '', 'sms');
+        $selectedEmailTemplate = [];
+        $selectedSMSTemplate = [];
+        if(!empty($oEmailTemplates)){
+            foreach($oEmailTemplates as $oTemplate){
+                if($oTemplate->id == $emailTemplateId){
+                    $selectedEmailTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                    $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                    $oTemplate->stripo_compiled_html = $compiledContent;
+                }
+            }
+        }
+
+        if(!empty($oSMSTemplates)){
+            foreach($oSMSTemplates as $oTemplate){
+                if($oTemplate->id == $smsTemplateId){
+                    $selectedSMSTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                    $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                    $oTemplate->stripo_compiled_html = $compiledContent;
+                }
+            }
+        }
+
+        $oTwilio = getTwilioAccountCustom($userID);
+        $twilioNumber = (!empty($oTwilio)) ? $oTwilio->contact_no : '';
+
+        $fromNumber = '';
+        $aBreadcrumb = array(
+            'Home' => '#/',
+            'Reviews' => '#/reviews/dashboard',
+            'Onsite' => '#/reviews/onsite',
+            'Setup' => '',
+        );
+
+        $aData = array(
+            'title' => 'Onsite Brand Boost Campaign',
+            'breadcrumb' => $aBreadcrumb,
+            'getOnsite' => $getBrandboost,
+            'bActiveSubsription' => $bActiveSubsription,
+            'feedbackResponse' => $getBrandboostFR,
+            'brandboostData' =>  $getBrandboost[0],
+            'campaignTitle' => $getBrandboost[0]->brand_title,
+            'eventsData' => $eventsdata,
+            'oEvents' => $oEvents,
+            'moduleName' => $moduleName,
+            'moduleUnitID' => $brandboostID,
+            'oEventsType' => $oEventsType,
+            'oTemplates' => $oTemplates,
+            'oCategories' => $oCategories,
+            'oCampaignTags' => $oCampaignTags,
+            'oDefaultTemplates' => $oDefaultTemplates,
+            'subscribersData' => $oCampaignSubscribers, // $allSubscribers,
+            'brandboostID' => $brandboostID,
+            'bbProductsData' => $bbProductsData,
+            'aReviews' => $aReviews,
+            'revCount' => $revCount,
+            'revRA' => $revRA,
+            'emailTemplate' => $selectedEmailTemplate,
+            'smsTemplate' => $selectedSMSTemplate,
+            'emailData' =>$emailData,
+            'smsData' =>$smsData,
+            'selectedCategory' => $selectedCategory,
+            'fromNumber' => $fromNumber,
+            'aUserInfo' => ['fullname'=> $oUser->firstname. ' '. $oUser->lastname, 'email' => $oUser->email, 'avatar'=> $oUser->avatar, 'phone' => $oUser->mobile, 'twilioNumber'=>$twilioNumber ],
+            'oEmailTemplates' => $oEmailTemplates->items(),
+            'oSMSTemplates' => $oSMSTemplates->items(),
+            'endCampaign' => $endCampaign
         );
         return $aData;
         //return view('admin.brandboost.onsite_setup', $aData);
