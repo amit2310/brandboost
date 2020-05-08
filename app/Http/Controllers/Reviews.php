@@ -619,8 +619,8 @@ class Reviews extends Controller {
         if (!empty($request)) {
             $action = $request->get('action');
             $rRating = $request->get('r'); // Review Rating
-            $campaignID = $request->get('bbid'); //Campaign ID
-            $subscriberID = $request->get('subid'); //Subscriber ID
+            $campaignID = '320';//$request->get('bbid'); //Campaign ID
+            $subscriberID = '95';//$request->get('subid'); //Subscriber ID
             $inviterID = $request->get('invid'); // Inviter ID
             $mBrandboost  = new BrandboostModel();
             $mUser = new UsersModel();
@@ -633,6 +633,7 @@ class Reviews extends Controller {
             $productsData = $mBrandboost->getProductDataByType($campaignID, 'product');
             $servicesData = $mBrandboost->getProductDataByType($campaignID, 'service');
             $uniqueID = uniqid() . date('Ymdhis');
+
             $aViewData = array(
                 'subscriberID' => $subscriberID,
                 'inviterID' => $inviterID,
@@ -642,8 +643,8 @@ class Reviews extends Controller {
                 'brandboostData' => $aBrandboost,
                 'productsData' => $productsData,
                 'servicesData' => $servicesData,
-                'uSubscribers' => $uSubscribers[0],
-                'brandboostdetail' => $aBB[0],
+                'uSubscribers' => (!empty($uSubscribers[0]) ? $uSubscribers[0] : ''),
+                'brandboostdetail' => (!empty($aBB[0]) ? $aBB[0] : ''),
                 'rRating' => $rRating,
                 'action' => $action
             );
@@ -671,30 +672,31 @@ class Reviews extends Controller {
                 $aBrandboost = $mInviter->getBBInfo($campaignID);
                 $clientID = $aBrandboost->user_id;
                 //Send Thank you email
-                $aReviewRes = array(
+                /*$aReviewRes = array(
                     'client_id' => $clientID,
                     'brandboost_id' => $campaignID,
-                    'email' =>(!empty($reviewDetails)) ? $reviewDetails[0]->email : '',
+                    'email' =>(!empty($reviewDetails[0]) ? $reviewDetails[0]->email : ''),
                     'siteReviewDetails' => $siteReviewDetails,
                     'reviewDetails' => $reviewDetails
+                );*/
+                $aReviewRes = array(
+                    'client_id' => $clientID,
+                    'brandboost_id' => $campaignID
                 );
 
                 //pre($aReviewRes);
-
+//exit;
                 $this->sendReviewThankyouEmail($aReviewRes);
-                $response = array('status' => 'success');
+                $response = array('status' => 'success', 'msg'=>'Successfully Submitted.');
             } else {
-                $response = array('status' => 'error');
+                $response = array('status' => 'error', 'msg'=>'Something Went Wrong..');
             }
-            echo json_encode($response);
-            exit;
         } catch (\Exception $e) {
             echo $e->getMessage();
-            $response = array('status' => 'error');
-            echo json_encode($response);
-            exit;
+            $response = array('status' => 'error', 'msg'=>'here = '.$e->getMessage());
         }
-
+        echo json_encode($response);
+        exit;
     }
 
     public function sendReviewThankyouEmail($aData) {
@@ -702,7 +704,7 @@ class Reviews extends Controller {
         if (!empty($aData)) {
             $aResponse = $mFeedback->getFeedbackResponse($aData['brandboost_id']);
             //pre($aData);
-            $ratingValue = $aData['siteReviewDetails'][0]->ratings;
+            $ratingValue = !empty($aData['siteReviewDetails']) ? $aData['siteReviewDetails'][0]->ratings : '';
             if (!empty($aResponse)) {
                 $fromEmail = $aResponse->from_email;
                 $fromName = $aResponse->from_name;
@@ -822,6 +824,7 @@ class Reviews extends Controller {
                     'email' => $email,
                     'phone' => $mobile
                 );
+
                 $aRegistrationData['clientID'] = $clientID;
                 $userID = $mSubscriber->registerUserAlongWithSubscriber($aRegistrationData);
 
@@ -844,6 +847,7 @@ class Reviews extends Controller {
                     'ratings' => $ratingVal,
                     'created' => date("Y-m-d H:i:s")
                 );
+
                 //Save Site Reviews
                 $bSaved = $mReviews->saveReview($aReviewData);
             } else if ($type == 'product' || $type == 'service') {
@@ -1001,7 +1005,7 @@ class Reviews extends Controller {
             }
 
             // Take them to the next step page in the flow
-            $response = array('status' => 'success', 'redirect_url' => base_url('/store/explore/' . $aBrandboost->hashcode));
+            $response = array('status' => 'success', 'redirect_url' => base_url('/store/explore/' . $aBrandboost->hashcode), 'msg' => 'Successfully Submitted.');
         } else {
             $response = array('status' => 'error', 'msg' => 'Unauthorized Access!');
         }
