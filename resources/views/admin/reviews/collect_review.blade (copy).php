@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -93,10 +92,9 @@
 		$userData = getUserDetail($userId);
 		$companyName = $userData->company_name;
 		$companySlug = strtolower(str_replace(' ', '-', $companyName));
-
 	@endphp
-	<body>
 
+	<body>
 		<header>
 			<div class="KickShop">Brand<span>Boost</span></div>
 			<a href="#" class="faq">FAQ</a>
@@ -119,7 +117,7 @@
 
 
 		<section class="thanku_purchase">
-			<h2>Thanks for your purchase!</h2>
+			<h2>Thanks for your purchase!!!</h2>
 			<p>{{ $uSubscribers->firstname.' '.$uSubscribers->lastname }}! Thanks for purchasing from Brandboost.
 				<span>Can a Spare a minute of your time to tell us</span>
 			<span>What you thought?</span></p>
@@ -151,7 +149,7 @@
 										<div class="rating_txt">Rating</div>
 										<div class="star_bx starRate">
 											@for($inc = 1; $inc <= 5; $inc++)
-												<i data-value='{{ $inc }}' containerclass="siteRatingValue" class="fa fa-star fav_gry {{ $inc <= $reviewRating?'selected':'' }}"></i>
+												<i data-value='{{ $inc }}' containerclass="siteRatingValue" class="fa fa-star fav_gry {!! $inc <= $reviewRating ? 'selected' : '' !!}"></i>
 											@endfor
 											<div class="rat_num">{{ $reviewRating }}/5</div>
 										</div>
@@ -167,7 +165,6 @@
 										<div class="clearfix"></div>
 										<div class="tell_you"><textarea name="description" class="form-control addnote" id="site-description" placeholder="Tell you what you thought of their service..." required></textarea></div>
 									</div>
-
 
 									<h2>upload photo or video</h2>
 
@@ -233,7 +230,6 @@
 
 					@if(count($productsData) > 0)
 					<form method="post" name="frmProductReviewSubmit" id="frmProductReviewSubmit" container_name="productreview" action="#"  enctype="multipart/form-data">
-						@csrf
 						<div class="panel panel-default">
 							<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapseTwo" href="#collapseTwo"><div class="panel-heading">
 								<h4>
@@ -246,123 +242,7 @@
 							</div></a>
 							<div id="collapseTwo" class="panel-collapse collapse">
 								<div class="panel-body">
-
 									@foreach($productsData as $key=>$productData)
-										<div class="mb20">
-											<div class="product_two_bx">
-												<div class="auto_message">{{ $productData->product_name }}</div>
-												<img src="{{ base_url() }}assets/images/review/down_arro.png" alt="" class="down_arro">
-											</div>
-											<div class="ful_divider" style="margin-top:30px;"></div>
-											<div class="clearfix"></div>
-											<div class="mt20"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $productData->product_image }}" class="" style="width:100%;"></div>
-											<div class="clearfix"></div>
-											<h2>RATE product</h2>
-											<div class="clearfix"></div>
-											<div class="rating_box">
-												<div class="rating_txt">Rating</div>
-												<div class="star_bx starRate">
-													@for($inc = 1; $inc <= 5; $inc++)
-														<i data-value='{{ $inc }}' containerclass="productRatingValue_{{ $productData->id }}" class="fa fa-star fav_gry {{ $inc <= $reviewRating?'selected':'' }}"></i>
-													@endfor
-													<div class="rat_num">{{ $reviewRating }}/5</div>
-												</div>
-											</div>
-											<div class="clearfix"></div>
-
-											<h2>REVIEW product</h2>
-											<div class="clearfix"></div>
-											<div class="much_bx">
-												<div class="review_headline">Review Headline</div>
-												<div class="very_much"><input name="title[{{ $productData->id }}]" class="form-control" placeholder="I like it very much!" type="text" required></div>
-												<div class="divider"></div>
-												<div class="clearfix"></div>
-												<div class="tell_you"><textarea name="description[{{ $productData->id }}]" class="form-control addnote" placeholder="Tell you what you thought of their service..." required></textarea></div>
-											</div>
-
-											<h2>upload photo or video</h2>
-
-											<div class="right_max">
-												<a href="#">5 media max.</a>
-												<a href="#">Video & Images Rules</a>
-											</div>
-											<div class="clearfix"></div>
-											<div class="dropzone" id="myDropzone{{ $productData->id }}">
-												<span class="drop_rate_review_{{ $productData->id }}">
-													<img src="{{ base_url() }}assets/images/review/drag_icon.png">
-													<div class="Drag-Drop-Your-Fil">Drag & Drop Your Files</div>
-													<div class="GIF-JPG-PNG-ASF">GIF, JPG, PNG, ASF, FLV, M4V, MOV, MP4</div>
-												</span>
-											</div>
-											<div style="display: none;" id="uploadedProductFiles_{{ $productData->id }}"></div>
-											<div class="hidden">
-												<h2>Contact Info</h2>
-												<div class="clearfix"></div>
-												<div class="much_bx name_bx">
-													<div class="review_headline full_n_bx">Full name</div>
-													<div class="very_much"><input name="fullname[{{ $productData->id }}]" class="form-control autoFillFN" value="{{ $uSubscribers->firstname.' '.$uSubscribers->lastname }}" type="text"></div>
-													<div class="divider"></div>
-													<div class="clearfix"></div>
-													<div class="review_headline full_n_bx">Email</div>
-													<div class="very_much"><input name="emailid[{{ $productData->id }}]" class="form-control autoFillEmail" value="{{ $uSubscribers->email }}" type="text"></div>
-													<input type="hidden" value="{{ $reviewRating }}" id="productRatingValue_{{ $productData->id }}" name="ratingValue[{{ $productData->id }}]">
-													<input type="hidden" value="{{ $productData->id }}" name="productId[{{ $productData->id }}]">
-												</div>
-												<div class="clearfix"></div>
-
-												<div class="chck_box">
-													<label class="container">Don't show my name
-														<input name="display_name[{{ $productData->id }}]" value="1" type="checkbox">
-														<span class="checkmark"></span>
-													</label>
-												</div>
-											</div>
-											<div class="clearfix"></div>
-											<div class="ful_divider"></div>
-										</div>
-									@endforeach
-
-									<div class="bottom_btn_sec">
-										@if($action !='preview')
-											<input type="submit" class="sav_con buttonCampaignReview" value="Next & Continue">
-										@endif
-										<a style="cursor: pointer;" class="skip skip2">Skip</a>
-
-										<div class="right_chck_box">
-											<label class="container">Agree to our <a href="#">Terms & Conditions</a>
-												<input type="checkbox" checked="checked" name="termAndCondition" class="tacCampaignReview" required>
-												<span class="checkmark"></span>
-											</label>
-										</div>
-									</div>
-									<input type="hidden" name="campaign_id" value="{{ $brandboostID }}" />
-									<input type="hidden" name="subID" value="{{ $subscriberID }}" />
-									<input type="hidden" name="inviterID" value="{{ $inviterID }}" />
-									<input type="hidden" name="reviewUniqueID" value="{{ $uniqueID }}">
-									<input type="hidden" value="product" id="reviewType" name="reviewType">
-								</div>
-							</div>
-						</div>
-					</form>
-					@endif
-
-					@if(count($servicesData) > 0)
-					<form method="post" name="frmServiceReviewSubmit" id="frmServiceReviewSubmit" container_name="servicereview" action="#"  enctype="multipart/form-data">
-						@csrf
-						<div class="panel panel-default">
-							<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapseFive" href="#collapseFive"><div class="panel-heading">
-								<h4>
-									<img src="{{ base_url() }}assets/images/service_icon_dark.png" alt="" class="star_cls_active">
-									<img src="{{ base_url() }}assets/images/service_icon_blue.png" alt="" class="star_cls icon_image">
-									Your Used Services
-									<span>Rate your used Services and tell us what you thought of them</span>
-									<i class="checked"><img class="icon_show" src="{{ base_url() }}assets/images/review/check-icon.png"></i>
-								</h4>
-							</div></a>
-							<div id="collapseFive" class="panel-collapse collapse">
-								<div class="panel-body">
-
-									@foreach($servicesData as $key=>$productData)
 									<div class="mb20">
 										<div class="product_two_bx">
 											<div class="auto_message">{{ $productData->product_name }}</div>
@@ -378,7 +258,7 @@
 											<div class="rating_txt">Rating</div>
 											<div class="star_bx starRate">
 												@for($inc = 1; $inc <= 5; $inc++)
-													<i data-value='{{ $inc }}' containerclass="serviceRatingValue_{{ $productData->id }}" class="fa fa-star fav_gry {{ $inc <= $reviewRating?'selected':'' }}"></i>
+													<i data-value='{{ $inc }}' containerclass="productRatingValue_{{ $productData->id }}" class="fa fa-star fav_gry {{ $inc <= $reviewRating ? 'selected' : '' }}"></i>
 												@endfor
 												<div class="rat_num">{{ $reviewRating }}/5</div>
 											</div>
@@ -420,7 +300,7 @@
 												<div class="clearfix"></div>
 												<div class="review_headline full_n_bx">Email</div>
 												<div class="very_much"><input name="emailid[{{ $productData->id }}]" class="form-control autoFillEmail" value="{{ $uSubscribers->email }}" type="text"></div>
-												<input type="hidden" value="{{ $reviewRating }}" id="serviceRatingValue_{{ $productData->id }}" name="ratingValue[{{ $productData->id }}]">
+												<input type="hidden" value="{{ $reviewRating }}" id="productRatingValue_{{ $productData->id }}" name="ratingValue[{{ $productData->id }}]">
 												<input type="hidden" value="{{ $productData->id }}" name="productId[{{ $productData->id }}]">
 											</div>
 											<div class="clearfix"></div>
@@ -435,14 +315,14 @@
 										<div class="clearfix"></div>
 										<div class="ful_divider"></div>
 									</div>
-									@endif
+									@endforeach
 
 									<div class="bottom_btn_sec">
 										@if($action !='preview')
 											<input type="submit" class="sav_con buttonCampaignReview" value="Next & Continue">
 										@endif
 
-										<a style="cursor: pointer;" class="skip skip4">Skip</a>
+										<a style="cursor: pointer;" class="skip skip2">Skip</a>
 
 										<div class="right_chck_box">
 											<label class="container">Agree to our <a href="#">Terms & Conditions</a>
@@ -455,29 +335,141 @@
 									<input type="hidden" name="subID" value="{{ $subscriberID }}" />
 									<input type="hidden" name="inviterID" value="{{ $inviterID }}" />
 									<input type="hidden" name="reviewUniqueID" value="{{ $uniqueID }}">
-									<input type="hidden" value="service" id="reviewType" name="reviewType">
+									<input type="hidden" value="product" id="reviewType" name="reviewType">
 								</div>
 							</div>
 						</div>
 					</form>
 					@endif
 
+					@if(count($servicesData) > 0)
+						<form method="post" name="frmServiceReviewSubmit" id="frmServiceReviewSubmit" container_name="servicereview" action="#"  enctype="multipart/form-data">
+							<div class="panel panel-default">
+								<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapseFive" href="#collapseFive"><div class="panel-heading">
+									<h4>
+										<img src="{{ base_url() }}assets/images/service_icon_dark.png" alt="" class="star_cls_active">
+										<img src="{{ base_url() }}assets/images/service_icon_blue.png" alt="" class="star_cls icon_image">
+										Your Used Services
+										<span>Rate your used Services and tell us what you thought of them</span>
+										<i class="checked"><img class="icon_show" src="{{ base_url() }}assets/images/review/check-icon.png"></i>
+									</h4>
+								</div></a>
+								<div id="collapseFive" class="panel-collapse collapse">
+									<div class="panel-body">
+										@foreach($servicesData as $key=>$productData)
+											<div class="mb20">
+												<div class="product_two_bx">
+													<div class="auto_message">{{ $productData->product_name }}</div>
+													<img src="{{ base_url() }}assets/images/review/down_arro.png" alt="" class="down_arro">
+												</div>
+												<div class="ful_divider" style="margin-top:30px;"></div>
+												<div class="clearfix"></div>
+												<div class="mt20"><img src="https://s3-us-west-2.amazonaws.com/brandboost.io/{{ $productData->product_image }}" class="" style="width:100%;"></div>
+												<div class="clearfix"></div>
+												<h2>RATE product</h2>
+												<div class="clearfix"></div>
+												<div class="rating_box">
+													<div class="rating_txt">Rating</div>
+													<div class="star_bx starRate">
+														@for($inc = 1; $inc <= 5; $inc++)
+															<i data-value='{{ $inc }}' containerclass="serviceRatingValue_{{ $productData->id }}" class="fa fa-star fav_gry {{ $inc <= $reviewRating ? 'selected' : '' }}"></i>
+														@endfor
+														<div class="rat_num">{{ $reviewRating }}/5</div>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+
+												<h2>REVIEW product</h2>
+												<div class="clearfix"></div>
+												<div class="much_bx">
+													<div class="review_headline">Review Headline</div>
+													<div class="very_much"><input name="title[{{ $productData->id }}]" class="form-control" placeholder="I like it very much!" type="text" required></div>
+													<div class="divider"></div>
+													<div class="clearfix"></div>
+													<div class="tell_you"><textarea name="description[{{ $productData->id }}]" class="form-control addnote" placeholder="Tell you what you thought of their service..." required></textarea></div>
+												</div>
+
+												<h2>upload photo or video</h2>
+
+												<div class="right_max">
+													<a href="#">5 media max.</a>
+													<a href="#">Video & Images Rules</a>
+												</div>
+												<div class="clearfix"></div>
+												<div class="dropzone" id="myDropzone{{ $productData->id }}">
+													<span class="drop_rate_review_{{ $productData->id }}">
+														<img src="{{ base_url() }}assets/images/review/drag_icon.png">
+														<div class="Drag-Drop-Your-Fil">Drag & Drop Your Files</div>
+														<div class="GIF-JPG-PNG-ASF">GIF, JPG, PNG, ASF, FLV, M4V, MOV, MP4</div>
+													</span>
+												</div>
+												<div style="display: none;" id="uploadedProductFiles_{{ $productData->id }}"></div>
+												<div class="hidden">
+													<h2>Contact Info</h2>
+													<div class="clearfix"></div>
+													<div class="much_bx name_bx">
+														<div class="review_headline full_n_bx">Full name</div>
+														<div class="very_much"><input name="fullname[{{ $productData->id }}]" class="form-control autoFillFN" value="{{ $uSubscribers->firstname.' '.$uSubscribers->lastname }}" type="text"></div>
+														<div class="divider"></div>
+														<div class="clearfix"></div>
+														<div class="review_headline full_n_bx">Email</div>
+														<div class="very_much"><input name="emailid[{{ $productData->id }}]" class="form-control autoFillEmail" value="{{ $uSubscribers->email }}" type="text"></div>
+														<input type="hidden" value="{{ $reviewRating }}" id="serviceRatingValue_{{ $productData->id }}" name="ratingValue[{{ $productData->id }}]">
+														<input type="hidden" value="{{ $productData->id }}" name="productId[{{ $productData->id }}]">
+													</div>
+													<div class="clearfix"></div>
+
+													<div class="chck_box">
+														<label class="container">Don't show my name
+															<input name="display_name[{{ $productData->id }}]" value="1" type="checkbox">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+												<div class="ful_divider"></div>
+											</div>
+										@endforeach
+
+										<div class="bottom_btn_sec">
+											@if($action !='preview')
+												<input type="submit" class="sav_con buttonCampaignReview" value="Next & Continue">
+											@endif
+											<a style="cursor: pointer;" class="skip skip4">Skip</a>
+
+											<div class="right_chck_box">
+												<label class="container">Agree to our <a href="#">Terms & Conditions</a>
+													<input type="checkbox" checked="checked" name="termAndCondition" class="tacCampaignReview" required>
+													<span class="checkmark"></span>
+												</label>
+											</div>
+										</div>
+										<input type="hidden" name="campaign_id" value="{{ $brandboostID }}" />
+										<input type="hidden" name="subID" value="{{ $subscriberID }}" />
+										<input type="hidden" name="inviterID" value="{{ $inviterID }}" />
+										<input type="hidden" name="reviewUniqueID" value="{{ $uniqueID }}">
+										<input type="hidden" value="service" id="reviewType" name="reviewType">
+									</div>
+								</div>
+							</div>
+						</form>
+					@endif
 
 					<form method="post" name="frmRecommendationSubmit" id="frmRecommendationSubmit" action="#" container_name="recommendationreview"  enctype="multipart/form-data">
-						@csrf
 						<div class="panel panel-default">
-							<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapseThree" href="#collapseThree"><div class="panel-heading">
-								<h4>
-									<img src="{{ base_url() }}assets/images/review/icon_03_active.png" alt="" class="star_cls_active">
-									<img src="{{ base_url() }}assets/images/review/icon_03.png" alt="" class="star_cls icon_image">
-									Your Recommendation
-									<span>Review your service experience with Brandboost</span>
-									<i class="checked"><img class="icon_show" src="{{ base_url() }}assets/images/review/check-icon.png"></i>
-								</h4>
-							</div></a>
+							<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapseThree" href="#collapseThree">
+								<div class="panel-heading">
+									<h4>
+										<img src="{{ base_url() }}assets/images/review/icon_03_active.png" alt="" class="star_cls_active">
+										<img src="{{ base_url() }}assets/images/review/icon_03.png" alt="" class="star_cls icon_image">
+										Your Recommendation
+										<span>Review your service experience with Brandboost</span>
+										<i class="checked"><img class="icon_show" src="{{ base_url() }}assets/images/review/check-icon.png"></i>
+									</h4>
+								</div>
+							</a>
 							<div id="collapseThree" class="panel-collapse collapse">
 								<div class="panel-body">
-
 									<h2 class="margin_top5">How Likely are you recommend Brandboost to a friend?</h2>
 									<div class="clearfix"></div>
 									<div class="rating_box">
@@ -494,9 +486,7 @@
 									</div>
 									<div class="not_likely">Not Likely At All</div>
 									<div class="not_likely extremely_likely">Extremely Likely</div>
-
 									<div class="clearfix"></div>
-
 									<div class="ful_divider"></div>
 									<div class="bottom_btn_sec">
 										@if($action !='preview')
@@ -511,7 +501,6 @@
 											</label>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -524,24 +513,24 @@
 					</form>
 
 					<form method="post" name="frmRecommendationUrlSubmit" id="frmRecommendationUrlSubmit" action="#" container_name="recommendationreviewurl"  enctype="multipart/form-data">
-						@csrf
 						<div class="panel panel-default">
-							<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapsefour" href="#collapsefour"><div class="panel-heading">
-								<h4>
-									<img src="{{ base_url() }}assets/images/review/icon_04_active.png" alt="" class="star_cls_active">
-									<img src="{{ base_url() }}assets/images/review/icon_04.png" alt="" class="star_cls icon_image">
-									Share with friends
-									<span>Review your service experience with Brandboost</span>
-									<i class="checked"><img class="icon_show" src="{{ base_url() }}assets/images/review/check-icon.png"></i>
-								</h4>
-							</div></a>
+							<a data-toggle="collapse" data-parent="#accordion" class="toggleDiv collapsefour" href="#collapsefour">
+								<div class="panel-heading">
+									<h4>
+										<img src="{{ base_url() }}assets/images/review/icon_04_active.png" alt="" class="star_cls_active">
+										<img src="{{ base_url() }}assets/images/review/icon_04.png" alt="" class="star_cls icon_image">
+										Share with friends
+										<span>Review your service experience with Brandboost</span>
+										<i class="checked"><img class="icon_show" src="{{ base_url() }}assets/images/review/check-icon.png"></i>
+									</h4>
+								</div>
+							</a>
 							<div id="collapsefour" class="panel-collapse collapse">
 								<div class="panel-body">
-
 									<h2 class="margin_top5">Share Product with friends</h2>
 									<div class="clearfix"></div>
 									<div class="rating_box2">
-										<input name="recommendurl" id="recommendurl" class="form-control" value="{{ base_url().'for/' . $companySlug . '/' . strtolower(str_replace(" ", "-", $brandboostData->brand_title)) . '-' . $brandboostData->id }}" type="text" required="">
+										<input name="recommendurl" id="recommendurl" class="form-control" value="{{ base_url() }}for/{{ $companySlug }}/{{ strtolower(str_replace('', '-', $brandboostData->brand_title)) }}-{{ $brandboostData->id }}" type="text" required="">
 										<a style="cursor: pointer;" onclick="copyLink()" class="pull-right">Copy Link</a>
 									</div>
 									<div class="social_icons"><a class="" href="#"><img src="{{ base_url() }}assets/images/review/fb.png"></a> <a class="" href="#"><img src="{{ base_url() }}assets/images/review/twitter.png"></a> <a class="" href="#"><img src="{{ base_url() }}assets/images/review/google.png"></a> <a class="" href="#"><img src="{{ base_url() }}assets/images/review/email.png"></a></div>
@@ -555,6 +544,7 @@
 										@if($action !='preview')
 											<input type="submit" class="sav_con buttonShareReview" id="recommendurlbtn" value="Submit">
 										@endif
+
 										<div class="right_chck_box">
 											<label class="container">Agree to our <a style="cursor: pointer;" >Terms & Conditions</a>
 												<input type="checkbox" checked="checked" class="tacShareReview" name="termAndCondition">
@@ -562,7 +552,6 @@
 											</label>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -588,7 +577,6 @@
 
 
 		<script type="text/javascript">
-
 			$(document).ready(function() {
 				$(document).on('change', '.subNameAdd', function() {
 					var name = $(this).val();
@@ -702,7 +690,7 @@
 				});
 
 				Dropzone.options.myDropzone = {
-					 url: '{{ base_url("webchat/dropzone/upload_s3_attachment_review/".$_GET['clid']."/reviews") }}',
+					url: '{{ base_url("webchat/dropzone/upload_s3_attachment_review/".$_GET['clid']."/reviews") }}',
 					uploadMultiple: false,
 					maxFiles: 10,
 					maxFilesize: 600,
@@ -717,7 +705,7 @@
 						var res = xmlString.split("||");
 						var dropImage = res[0];
 						$.ajax({
-			                url: '{{ base_url('admin/brandboost/DeleteObjectFromS3') }}',
+			                url: "{{ base_url('admin/brandboost/DeleteObjectFromS3') }}",
 			                type: "POST",
 			                data: {dropImage: dropImage},
 			                dataType: "json",
@@ -729,14 +717,10 @@
 			            setTimeout(function() {
 			            	return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
 			            }, 1000);
-
-
 					},
 					success: function (response) {
-
 						$('#uploadedSiteFiles').append(response.xhr.responseText);
 					}
-
 				}
 
 				@foreach($productsData as $key=>$productData)
@@ -756,7 +740,7 @@
 							var res = xmlString.split("||");
 							var dropImage = res[0];
 							$.ajax({
-								url: '{{ base_url('admin/brandboost/DeleteObjectFromS3') }}',
+								url: "{{ base_url('admin/brandboost/DeleteObjectFromS3') }}",
 								type: "POST",
 								data: {dropImage: dropImage},
 								dataType: "json",
@@ -768,11 +752,8 @@
 							setTimeout(function() {
 								return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
 							}, 1000);
-
-
 						},
 						success: function (response) {
-
 							$('#uploadedProductFiles_{{ $productData->id }}').append(response.xhr.responseText);
 						}
 					}
@@ -795,9 +776,9 @@
 							var res = xmlString.split("||");
 							var dropImage = res[0];
 							$.ajax({
-								url: '{{ base_url('admin/brandboost/DeleteObjectFromS3') }}',
+								url: "{{ base_url('admin/brandboost/DeleteObjectFromS3') }}",
 								type: "POST",
-								data: {dropImage: dropImage},
+								data: {dropImage: dropImage, _token: '{{csrf_token()}}'},
 								dataType: "json",
 								success: function (data) {
 
@@ -807,11 +788,8 @@
 							setTimeout(function() {
 								return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
 							}, 1000);
-
-
 						},
 						success: function (response) {
-
 							$('#uploadedProductFiles_{{ $productData->id }}').append(response.xhr.responseText);
 						}
 					}
@@ -836,29 +814,22 @@
 							if (response.status == 'success') {
 								$('.overlaynew').hide();
 								if (containerName == 'sitereview') {
-
 									$('#collapseOne').removeClass("in");
 									$('#collapseTwo').addClass("in");
 									$('#collapseThree').removeClass("in");
 									$('#collapsefour').removeClass("in");
-
 								} else if (containerName == 'productreview') {
-
 									$('#collapseOne').removeClass("in");
 									$('#collapseTwo').removeClass("in");
 									$('#collapseFive').addClass("in");
 									$('#collapsefour').removeClass("in");
-
 								} else if (containerName == 'servicereview') {
-
 									$('#collapseOne').removeClass("in");
 									$('#collapseTwo').removeClass("in");
 									$('#collapseFive').removeClass("in");
 									$('#collapseThree').addClass("in");
 									$('#collapsefour').removeClass("in");
-
 								} else if (containerName == 'recommendationreview') {
-
 									$('#collapseOne').removeClass("in");
 									$('#collapseTwo').removeClass("in");
 									$('#collapseThree').removeClass("in");
@@ -878,7 +849,6 @@
 										$(this).find('.star_cls').addClass('icon_image');
 									}
 								});
-
 							} else {
 								$('.overlaynew').hide();
 								alertMessage(response.msg);
@@ -921,7 +891,6 @@
 					});
 					return false;
 				});
-
 			});
 
 			$(document).on('click', '.skip1', function() {
@@ -956,7 +925,6 @@
 				$('#collapseThree').removeClass("in");
 				$('#collapsefour').removeClass("in");
 
-
 				$(this).parent().parent().parent().prev().find('.icon_show').toggleClass('icon_image_check');
 				$(this).parent().parent().parent().prev().find('.star_cls_active').toggleClass('icon_image_active');
 				$(this).parent().parent().parent().prev().find('.star_cls').toggleClass('icon_image');
@@ -974,7 +942,6 @@
 						$(this).find('.star_cls').addClass('icon_image');
 					}
 				});
-
 			});
 
 			$(document).on('click', '.skip3', function() {
@@ -1000,7 +967,6 @@
 						$(this).find('.star_cls').addClass('icon_image');
 					}
 				});
-
 			});
 
 			$(document).on('click', '.skip4', function() {
@@ -1038,7 +1004,6 @@
 				var copyText = document.getElementById("recommendurl");
 				copyText.select();
 				document.execCommand("copy");
-				//alert("Copied the text: " + copyText.value);
 			}
 		</script>
 	</body>
