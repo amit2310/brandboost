@@ -3432,9 +3432,13 @@ class WorkFlow extends Controller {
         if(!empty($oEventData)){
             $nodeType = $oEventData->node_type;
             $actionName = $oEventData->name;
-            if($nodeType =='action' && in_array($actionName, ['tag', 'list'])) {
+            if($nodeType =='action' && in_array($actionName, ['tag', 'list', 'field', 'webhook', 'status', 'segment'])) {
                 $nodeInfo = $mWorkflow->getNodeInfo($eventID, $moduleName);
-                return ['status'=>'success', 'eventData'=>$nodeInfo];
+                $aFieldAlias = '';
+                if($actionName == 'field'){
+                    $aFieldAlias = $mWorkflow->getContactCustomFieldAlias($userID);
+                }
+                return ['status'=>'success', 'eventData'=>$nodeInfo, 'fieldAlias'=>$aFieldAlias];
             }else if($nodeType =='action' && $actionName == 'email'){
                 //Get endCampaign info
                 $aCampaigns = $mWorkflow->getEventCampaign($eventID, $moduleName);
@@ -3643,6 +3647,25 @@ class WorkFlow extends Controller {
             return ['status'=>'error'];
         }
 
+    }
+
+    /**
+     * Used to update custom field alias
+     * @param Request $request
+     * @return array|string[]
+     */
+    public function updateCustomFields(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $aliasData = $request->customFieldData;
+        $mWorkflow = new WorkflowModel();
+        $bUpdated = $mWorkflow->updateCustomFieldData($aliasData, $userID);
+        if($bUpdated){
+            $aFieldAlias = $mWorkflow->getContactCustomFieldAlias($userID);
+            return ['status'=>'success', 'fieldAlias'=>$aFieldAlias];
+        }else{
+            return ['status'=>'error'];
+        }
     }
 
 }
