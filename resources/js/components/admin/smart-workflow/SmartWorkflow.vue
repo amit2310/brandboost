@@ -111,11 +111,6 @@
                             </ul>
                         </div>
 
-
-
-
-
-
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -582,10 +577,10 @@
                                     </div>
 
                                     <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('contact')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-user-6-fill light_000 fsize18"></i></span>
-                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Contact</p>
-                                            <p class="fw400 fsize12 dark_300 m0">Create, delete contact</p>
+                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddActionbox" @click="addBlankAction('segment')" style="cursor:pointer;">
+                                            <span class="circle-icon-44 bkg_blue_300 m-auto br12 "><i class="ri-pie-chart-fill light_000 fsize18"></i></span>
+                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Segment</p>
+                                            <p class="fw400 fsize12 dark_300 m0">Add, delete segment</p>
                                         </div>
                                     </div>
                                 </div>
@@ -629,6 +624,40 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!--Edit Field Alias-->
+                <div class="box editAliasBoxContent" style="width: 424px; display:none;">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideEditAliasbox" id="slideEditAliasbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Edit Custom Field Alias</h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">What custom field you want to rename?</p>
+                                        <hr class="mt25 mb30">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group" v-for="fieldId in [1,2,3,4,5]" :value="fieldId">
+                                            <label class="fsize11 fw500 dark_600 ls4">Custom Field {{fieldId}}</label>
+                                            <input type="text" class="form-control h50" v-model="fieldAlias['custom_field_'+fieldId]" placeholder="Alias this field" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row bottom-position">
+                                <div class="col-md-12 mb15">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 ml20 mr20" @click="updateFieldAlias">Update {{capitalizeFirstLetter(editActionItem)}}</button>
+                                    <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideEditAliasbox">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!--Action Items-->
@@ -710,6 +739,93 @@
 
                                         </div>
                                     </div>
+
+                                        <div class="form-group" v-if="editActionItem =='field'">
+                                            <label for="fieldControl" class="fsize11 fw500 dark_600 ls4">SELECT FIELD &nbsp;<a href="javascript:void(0);" class=" fsize12 slideEditActionItembox slideEditAliasbox"><i>(Rename Fields)</i></a> </label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="fieldControl" v-model="selected_action_field_name">
+                                                <option value="">Choose a field...</option>
+                                                <option v-for="fieldId in [1,2,3,4,5]" :value="fieldId">
+                                                    {{fieldAlias['custom_field_'+fieldId] ? capitalizeFirstLetter(fieldAlias['custom_field_'+fieldId]) : 'Custom Field '+fieldId}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" v-if="editActionItem =='field'">
+                                            <label for="fieldValue" class="fsize11 fw500 dark_600 ls4">FIELD VALUE</label>
+                                            <input type="text" class="form-control h50" v-model="selected_action_field_value" id="fieldValue" placeholder="Enter selected field value" />
+                                        </div>
+
+                                        <div class="form-group" v-if="editActionItem =='webhook'">
+                                            <label class="fsize11 fw500 dark_600 ls4">WEBHOOK URL</label>
+                                            <input type="text" class="form-control h50" v-model="selected_action_webhook_url" placeholder="Enter webhook url" />
+                                        </div>
+                                        <div class="form-group" v-if="editActionItem =='webhook'">
+                                            <label for="webhookMethod" class="fsize11 fw500 dark_600 ls4">METHOD</label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="webhookMethod" v-model="selected_action_webhook_method">
+                                                <option value="">Choose a method...</option>
+                                                <option value="get">GET</option>
+                                                <option value="post">POST</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" v-if="editActionItem =='webhook'">
+                                            <label for="webhookMethod" class="fsize11 fw500 dark_600 ls4">WEBHOOK DATA <a class="fsize12" href="javascript:void(0)" @click="addWebhookParam"><i>(Add one or more parameters)</i></a></label>
+                                            <div class="row mt15" v-for="(param, index) in selected_action_webhook_data">
+                                                <div class="col-6">
+                                                    <div class="form-group mb-0">
+                                                        <label class="dark_600 fsize11 fw500 ls4">PARAMETER</label>
+                                                        <input type="text" class="form-control h48" v-model="param.field" placeholder="Param Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group mb-0">
+                                                        <label class="dark_600 fsize11 fw500 ls4">VALUE</label>
+                                                        <input type="text" class="form-control h48" v-model="param.value" placeholder="Param Value"> <a href="javascript:void(0);" @click="removeWebhookParam(index)" class="pull-right" style="display:block;margin-top:-35px;margin-right:-25px;"><i class="fsize15 ri-close-circle-line"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" v-if="editActionItem =='status'">
+                                            <label for="userstatus" class="fsize11 fw500 dark_600 ls4">STATUS</label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="userstatus" v-model="selected_action_status">
+                                                <option value="">Select user status...</option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                                <option value="draft">Draft</option>
+                                                <option value="archive">Archive</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" v-if="editActionItem =='segment'">
+                                            <label for="formControl" class="fsize11 fw500 dark_600 ls4">SELECT SEGMENT</label>
+
+                                            <div class="form-group m-0 review_forms">
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle bkg_light_000 border br4 w-100 p-3 text-left fw400 fsize14 shadow_none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Select Segments
+                                                    </button>
+                                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="height:300px;overflow:auto;">
+                                                        <div class="p10">
+                                                            <input type="text" v-model="searchBy" placeholder="Search" class="form-control"/>
+                                                        </div>
+                                                        <a class="dropdown-item" href="javascript:void(0);" v-for="segment in filteredSegments">
+                                                            <label class="custmo_checkbox pull-left">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="checkRows[]"
+                                                                    class="addToCampaign"
+                                                                    @click="updateActionSegments($event,segment.id)"
+                                                                    :value="segment.id"
+                                                                    :checked="selected_action_segments.includes(segment.id)">
+                                                                <span class="custmo_checkmark blue"></span>
+                                                            </label>&nbsp;  {{ segment.segment_name }} ({{segment.subscribersData.length}})
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="row bottom-position">
@@ -717,15 +833,13 @@
                                         <hr>
                                     </div>
                                     <div class="col-md-12">
-                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click="updateActionItem">Update {{capitalizeFirstLetter(editActionItem)}}</button>
+                                        <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 ml20 mr20" @click="updateActionItem">Update {{capitalizeFirstLetter(editActionItem)}}</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideEditActionItembox">Close</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
 
                 <!--Decision Modal -->
                 <div class="box addDecisionBoxContent" style="width: 424px; display:none;">
@@ -1226,10 +1340,7 @@
                     </div>
                 </div>
 
-
-
-
-                </div>
+            </div>
     </div>
     </div>
 </template>
@@ -1324,7 +1435,15 @@
                 editActionEvent: '',
                 editActionItem: '',
                 selected_action_tags: '',
-                selected_action_lists: ''
+                selected_action_lists: '',
+                selected_action_field_name: '',
+                selected_action_field_value: '',
+                fieldAlias: '',
+                selected_action_webhook_url: '',
+                selected_action_webhook_data: [],
+                selected_action_webhook_method: '',
+                selected_action_status: '',
+                selected_action_segments: ''
             }
         },
         mounted() {
@@ -1551,11 +1670,114 @@
                 }else if(actionName == 'list'){
                     //List Node
                     this.loadList(event);
+                }else if(actionName == 'field'){
+                    //Field Node
+                    this.loadField(event);
+                }else if(actionName == 'webhook'){
+                    //Webhook Node
+                    this.loadWebhook(event);
+                }else if(actionName == 'status'){
+                    //Status Node
+                    this.loadStatus(event);
+                }else if(actionName == 'segment'){
+                    //Status Node
+                    this.loadSegment(event);
                 }else{
                     //Other Nodes
                 }
-
                 this.loading = false;
+            },
+            loadSegment: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        let event = response.data.eventData;
+                        let params = JSON.parse(event.data);
+                        let segmentParams = params['segment_properties'];
+                        this.editActionItem = 'segment';
+                        this.selected_action_segments = segmentParams ? segmentParams['segment_ids'] : [];
+                        this.editActionEvent = event;
+                        this.actionTitle = params['title'];
+                        document.querySelector('#slideEditActionItembox').click();
+                    }
+                });
+
+            },
+            loadStatus: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        let event = response.data.eventData;
+                        let params = JSON.parse(event.data);
+                        let statusParams = params['status_properties'];
+                        this.editActionItem = 'status';
+                        this.selected_action_status = statusParams ? statusParams['status'] : '';
+                        this.editActionEvent = event;
+                        this.actionTitle = params['title'];
+                        document.querySelector('#slideEditActionItembox').click();
+                    }
+                });
+
+            },
+            loadWebhook: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        let event = response.data.eventData;
+                        let params = JSON.parse(event.data);
+                        let webhookParams = params['webhook_properties'];
+                        this.editActionItem = 'webhook';
+                        this.selected_action_webhook_url = webhookParams ? webhookParams['url'] : '';
+                        this.selected_action_webhook_data = webhookParams ? webhookParams['webhook_data'] : [];
+                        this.selected_action_webhook_method = webhookParams ? webhookParams['method'] : '';
+                        this.editActionEvent = event;
+                        this.actionTitle = params['title'];
+                        document.querySelector('#slideEditActionItembox').click();
+                    }
+                });
+
+            },
+            loadField: function(event){
+                this.loading = true;
+                let formData = {
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                    eventData: event,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.fieldAlias = response.data.fieldAlias;
+                        let event = response.data.eventData;
+                        let params = JSON.parse(event.data);
+                        let filedParams = params['field_properties'];
+                        this.editActionItem = 'field';
+                        this.selected_action_field_name = filedParams ? filedParams['field_name'] : '';
+                        this.selected_action_field_value = filedParams ? filedParams['field_value'] : '';
+                        this.editActionEvent = event;
+                        this.actionTitle = params['title'];
+                        document.querySelector('#slideEditActionItembox').click();
+                    }
+                });
+
             },
             loadList: function(event){
                 this.loading = true;
@@ -2152,6 +2374,25 @@
                 params['tag_properties'] = {tag_ids:tagIds};
                 this.selected_action_tags = tagIds;
             },
+            updateActionSegments: function(e, id){
+                let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
+                let event = this.editActionEvent;
+                let params = JSON.parse(event.data);
+                let segmentParams = params['segment_properties'];
+                let segmentIds = segmentParams ? segmentParams['segment_ids'] : [];
+                if(actionName == 'addRecord'){
+                    if(segmentIds.indexOf(id) === -1){
+                        segmentIds.push(id);
+                    }
+                }else if(actionName == 'deleteRecord'){
+                    if(segmentIds.indexOf(id) > -1){
+                        segmentIds.splice(segmentIds.indexOf(id), 1);
+                    }
+                }
+                params['title'] = this.actionTitle;
+                params['segment_properties'] = {segment_ids:segmentIds};
+                this.selected_action_segments = segmentIds;
+            },
             updateActionLists: function(e, id){
                 let actionName = e.target.checked ? 'addRecord' : 'deleteRecord';
                 let event = this.editActionEvent;
@@ -2199,8 +2440,48 @@
                     params['title'] = this.actionTitle;
                     params['list_properties'] = {list_ids:this.selected_action_lists};
                     this.updateTriggerData(event, params);
+                }else if(this.editActionItem =='field'){
+                    let tagParams = params['field_properties'];
+                    params['title'] = this.actionTitle;
+                    params['field_properties'] = {field_name:this.selected_action_field_name, field_value:this.selected_action_field_value};
+                    this.updateTriggerData(event, params);
+                }else if(this.editActionItem =='webhook'){
+                    let tagParams = params['webhook_properties'];
+                    params['title'] = this.actionTitle;
+                    params['webhook_properties'] = {url:this.selected_action_webhook_url, webhook_data: this.selected_action_webhook_data, method:this.selected_action_webhook_method};
+                    this.updateTriggerData(event, params);
+                }else if(this.editActionItem =='status'){
+                    let tagParams = params['status_properties'];
+                    params['title'] = this.actionTitle;
+                    params['status_properties'] = {status:this.selected_action_status};
+                    this.updateTriggerData(event, params);
+                }else if(this.editActionItem =='segment'){
+                    let tagParams = params['segment_properties'];
+                    params['title'] = this.actionTitle;
+                    params['segment_properties'] = {segment_ids:this.selected_action_segments};
+                    this.updateTriggerData(event, params);
                 }
 
+            },
+            updateFieldAlias: function(){
+                this.loading = true;
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateCustomFields', {
+                    customFieldData: this.fieldAlias,
+                    _token: this.csrf_token()
+                })
+                    .then(response => {
+                        if(response.data.status == 'success'){
+                            this.loading = false;
+                            this.fieldAlias = response.data.fieldAlias;
+                            this.displayMessage('success', 'Changes updated successfully');
+                        }
+                    });
+            },
+            addWebhookParam: function(){
+                this.selected_action_webhook_data.push({field:'', value:''})
+            },
+            removeWebhookParam: function(i){
+                this.selected_action_webhook_data.splice(i, 1);
             }
         },
     }

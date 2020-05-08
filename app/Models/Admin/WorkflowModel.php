@@ -4834,4 +4834,37 @@ class WorkflowModel extends Model {
 
     }
 
+    /**
+     * Used to get Contact custom field alias
+     * @param $userId
+     * @return mixed
+     */
+    public function getContactCustomFieldAlias($userId){
+        $aData = DB::table('tbl_subscribers_custom_fields_alias')
+            ->where('user_id', $userId)
+            ->first();
+        if(empty($aData)){
+            DB::table('tbl_subscribers_custom_fields_alias')->insert(['user_id'=>$userId]);
+            $aData = DB::table('tbl_subscribers_custom_fields_alias')
+                ->where('user_id', $userId)
+                ->first();
+        }
+        return $aData;
+    }
+
+    /**
+     * Used to update client's custom fields alias
+     * @param $aData
+     * @param $userId
+     * @return bool
+     */
+    public function updateCustomFieldData($aData, $userId){
+        $oData = DB::table('tbl_subscribers_custom_fields_alias')->where('user_id', $userId)->update($aData);
+        if ($oData > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

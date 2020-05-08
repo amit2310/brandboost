@@ -127,15 +127,17 @@
             },
             nodeNameDescription: function(){
                 if(this.nodeName.toLowerCase() == 'field'){
-                    return 'People field';
+                    return 'People Field';
                 }else if(this.nodeName.toLowerCase() == 'tag'){
-                    return 'People tag';
+                    return 'People Tag';
                 }else if(this.nodeName.toLowerCase() == 'list'){
-                    return 'People list';
+                    return 'People List';
+                }else if(this.nodeName.toLowerCase() == 'segment'){
+                    return 'People Segment';
                 }else if(this.nodeName.toLowerCase() == 'contact'){
-                    return 'People contact';
+                    return 'People Contact';
                 }else if(this.nodeName.toLowerCase() == 'status'){
-                    return 'People status';
+                    return 'People Status';
                 }else if(this.nodeName.toLowerCase() == 'webhook'){
                     return 'Webhook';
                 }

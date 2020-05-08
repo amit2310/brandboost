@@ -302,16 +302,25 @@ export default {
         makeBreadcrumb(elements){
             if(elements!= ''){
                 let breadcrumbString = '';
-                breadcrumbString = '<ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">';
+                breadcrumbString = '<ul class="list-unstyled topbar-nav top-breadcrumb float-left mt8 mb-0">' +
+                    '<li class="back"><a class="button-menu-mobile-new" href="javascript:void(0);"><img src="assets/images/back_blue_circle_28.svg"/></a></li>' +
+                    '<li><a class="light" href="#/contacts/dashboard"><i class="ri-home-2-line"></i></a></li>';
+                let totalLen = Object.keys(elements).length;
+                let i=0;
                 for(name in elements){
+                    i++;
                     let url = elements[name];
                     breadcrumbString += '<li>';
                     if(url != ''){
-                        breadcrumbString += '<a class="button-menu-mobile-new" href="'+url+'" style="color:#6672E8;">';
-                        breadcrumbString += '<i class="ri-arrow-left-s-line"></i>';
+                        if(i==(totalLen-1)){
+                            breadcrumbString += '<a class="active" href="'+url+'">';
+                        }else{
+                            breadcrumbString += '<a class="light" href="'+url+'">';
+                        }
+                        breadcrumbString += '<i class="ri-arrow-right-s-line"></i>';
                     }
                     if(url == ''){
-                        breadcrumbString += '<li><a href="javascript:void(0);" style="cursor:default;color:#97A4BD;"> <i class="ri-arrow-left-s-line"></i> &nbsp;'+ name+' </a></li>';
+                        breadcrumbString += '<li><a class="dark" href="javascript:void(0);"> <i class="ri-arrow-right-s-line"></i> &nbsp;'+ name+' </a></li>';
                     }else{
                         breadcrumbString += ' &nbsp;' + name;
                     }

@@ -237,6 +237,12 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on("click", ".slideEditAliasbox", function(){
+        $(".editAliasBoxContent").animate({
+            width: "toggle"
+        });
+    });
+
     $(document).on('dragend', function(){
         let elems = document.querySelectorAll(".droppable_grid");
         elems.forEach(function(elem){
