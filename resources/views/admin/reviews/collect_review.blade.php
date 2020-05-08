@@ -17,6 +17,73 @@
     <link href="{{ base_url() }}html_2.0/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="{{ base_url() }}html_2.0/assets/css/styleguide.css" rel="stylesheet" type="text/css">
 
+    <!-- Global stylesheets -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ base_url() }}assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="{{ base_url() }}assets/css/theme1.css" rel="stylesheet" type="text/css">
+    <link href="{{ base_url() }}assets/css/review_request.css" rel="stylesheet" type="text/css">
+    <link href="{{ base_url() }}assets/css/review_request_collect.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+    <!--******************
+     jQuery
+    **********************-->
+    <script src="{{ base_url() }}assets/js/jquery.min.js"></script>
+    <script src="{{ base_url() }}assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}assets/js/plugins/loaders/blockui.min.js"></script>
+    <script src="{{ base_url() }}assets/dropzone-master/dist/dropzone.js"></script>
+    <!-- /core JS files -->
+    <style type="text/css">
+        .selected{
+            text-shadow: 0 1px 0 0 rgba(255, 160, 79, 0.15)!important;
+            color: #ffcd5e!important;
+            font-size: 18px;
+            margin-right: 3px;
+        }
+        .fav_gry{
+            margin-right: 3px;
+        }
+        .icon_image_check {
+            display: none;
+        }
+        .icon_image_active {
+            display: none;
+        }
+        .icon_image {
+            display: none;
+        }
+        .dropzone {
+            border-radius: 5px;
+            box-shadow: 0 1px 1px 0 rgba(30, 30, 64, 0.05), 0 2px 3px 0 rgba(30, 30, 64, 0.03);
+            border: solid 1px #f3f4f7;
+            background-color: #fff;
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .bg-teal-400 {
+            background-color: #26A69A;
+            border-color: #26A69A;
+            color: #fff;
+        }
+        .btn i {
+            font-size: 12px!important;
+        }
+        .fav_gry {
+            color: #d9d9e9;
+            font-size: 18px;
+        }
+        .fav_yello {
+            text-shadow: 0 1px 0 0 rgba(255, 160, 79, 0.15);
+            color: #ffcd5e;font-size: 18px; margin-right: 3px;
+        }
+    </style>
+    <!-- /theme JS files -->
+
 </head>
 @php
     $userId = $brandboostData->user_id;
@@ -72,15 +139,25 @@
                             <label class="dark_600 fsize11 fw500 ls4">RATE OUR SERVICE</label>
                             <div class="min_h_50 border br4">
                                 <div class="row m-0">
-                                    <div class="min_h_50 brig col-10">
-                                        <div class="p10 pt12">
+                                    {{--<div class="min_h_50 brig col-10">
+                                        <div class="p10 pt12 starRate">
                                             @for($inc = 1; $inc <= $reviewRating; $inc++)
                                             <img src="{{ base_url() }}assets/images/star-brand.svg"/>
+                                            @endfor
+                                            @for($inc = 1; $inc <= (5-$reviewRating); $inc++)
+                                                <img src="{{ base_url() }}assets/images/star_fill_white_25.svg"/>
+                                            @endfor
+                                        </div>
+                                    </div>--}}
+                                    <div class="min_h_50 brig col-10">
+                                        <div class="p10 pt12 starRate">
+                                            @for($inc = 1; $inc <= 5; $inc++)
+                                                <i data-value='{{ $inc }}' containerclass="siteRatingValue" class="fa fa-star fav_gry {!! $inc <= $reviewRating ? 'selected' : '' !!}"></i>
                                             @endfor
                                         </div>
                                     </div>
                                     <div class="min_h_50 col-2">
-                                        <p class="fsize14 dark_200 m-0 text-center pt15">{{ $reviewRating }}/5</p>
+                                        <div class="fsize14 dark_200 m-0 text-center pt15 rat_num">{{ $reviewRating }}/5</div>
                                     </div>
                                 </div>
                             </div>
@@ -183,11 +260,7 @@
     </div>
 </div>
 
-<!--******************
- jQuery
-**********************-->
-<script src="{{ base_url() }}assets/js/jquery.min.js"></script>
-<script src="{{ base_url() }}assets/js/bootstrap.bundle.min.js"></script>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -288,7 +361,8 @@
         $('.starRate i').on('click', function () {
             var valContainer = $(this).attr('containerclass');
             var onStar = parseInt($(this).data('value'), 10);
-            $(this).parent().find('div.rat_num').html(onStar+'/5');
+            //$(this).parent().find('div.rat_num').html(onStar+'/5');
+            $('.rat_num').html(onStar+'/5');
             var stars = $(this).parent().children('i');
             for (i = 0; i < stars.length; i++) {
                 $(stars[i]).removeClass('selected');
