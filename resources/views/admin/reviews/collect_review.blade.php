@@ -19,10 +19,6 @@
 
     <!-- Global stylesheets -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="{{ base_url() }}assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="{{ base_url() }}assets/css/theme1.css" rel="stylesheet" type="text/css">
-    <link href="{{ base_url() }}assets/css/review_request.css" rel="stylesheet" type="text/css">
-    <link href="{{ base_url() }}assets/css/review_request_collect.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
     <!--******************
@@ -98,7 +94,7 @@
     <div class="review_header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-6"> <a href="#" class="fsize16 fw400 light_000">Company Logo</a> </div>
+                <div class="col-6"> <a href="javascript:void(0);" class="fsize16 fw400 light_000">Brand<span>Boost</span></a> </div>
                 <div class="col-6 text-right"> <a href="#" class="fsize16 fw400 light_000">FAQ</a> </div>
             </div>
         </div>
@@ -121,11 +117,16 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center"> <img class="mb20" src="{{ base_url() }}assets/images/star_circle_64.svg"/>
-                <h2 class="htxt_medium_24 ls4 light_000 mb20">Thanks for your purchase!</h2>
-                <p style="opacity:0.9;" class="fsize16 fw400 light_000">{{ $uSubscribers->firstname.' '.$uSubscribers->lastname }}! Thanks for purchasing from Brandboost. Can you spare a<br>
+                @if(count($servicesData) > 0)
+                    <h2 class="htxt_medium_24 ls4 light_000 mb20">Are you happy with our service?</h2>
+                @else
+                    <h2 class="htxt_medium_24 ls4 light_000 mb20">Thanks for your purchase!</h2>
+                @endif
+                <p style="opacity:0.9;" class="fsize16 fw400 light_000">{{ ucfirst($uSubscribers->firstname).' '.ucfirst($uSubscribers->lastname) }}! Thanks for purchasing from Brandboost. Can you spare a<br>
                     minute of you time to tell us what you thought?</p>
             </div>
         </div>
+
         <form method="post" name="frmSiteReviewSubmit" id="frmSiteReviewSubmit" container_name="sitereview" action="#"  enctype="multipart/form-data">
             <div class="row">
             <div class="col-12">
@@ -211,6 +212,59 @@
             <input type="hidden" value="{{ $reviewRating }}" class="siteRatingValue" id="siteRatingValue" name="ratingValue">
             <input type="hidden" value="site" id="reviewType" name="reviewType">
         </form>
+
+        @if(count($servicesData) > 0)
+            <form method="post" name="frmServiceReviewSubmit" id="frmServiceReviewSubmit" container_name="servicereview" action="#"  enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card br8 mt30 review_collection_sec p0">
+                            <div class="bbot p30 pl50 pr50">
+                                <h3 class="fsize16 fw500 dark_700">How do you like our product?</h3>
+                                <p class="fsize14 dark_200 m-0">Review your experience with our product Brandboost</p>
+                            </div>
+                            @foreach($servicesData as $key=>$productData)
+                            <div class="bbot p30 pl50 pr50">
+                                <div class="form-group">
+                                    <label class="dark_600 fsize11 fw500 ls4">RATE OUR SERVICE</label>
+                                    <div class="min_h_50 border br4">
+                                        <div class="row m-0">
+                                            <div class="min_h_50 brig col-10">
+                                                <div class="p10 pt12 starRate">
+                                                    @for($inc = 1; $inc <= 5; $inc++)
+                                                        <i data-value='{{ $inc }}' containerclass="serviceRatingValue_{{ $productData->id }}" class="fa fa-star fav_gry {{ $inc <= $reviewRating ? 'selected' : '' }}"></i>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <div class="min_h_50 col-2">
+                                                <div class="fsize14 dark_200 m-0 text-center pt15 rat_num">{{ $reviewRating }}/5</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            <div class="p30 pl50 pr50">
+                                <div class="row">
+                                    <div class="col-5">
+                                        @if($action !='preview')
+                                            <button type="submit" class="btn btn-md bkg_blue_400 light_000 br35 fsize13 fw500 pl30 pr30 buttonCampaignReview">Submit Review</button>
+                                        @endif
+                                    </div>
+                                    <div class="col-7">
+                                        <p class="dark_400 fsize13 m-0">By continuing you agree to <a class="fw500 dark_400" href="#">Terms of Service</a> and <a class="fw500 dark_400" href="#">Privacy Policy</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="campaign_id" value="{{ $brandboostID }}" />
+                <input type="hidden" name="subID" value="{{ $subscriberID }}" />
+                <input type="hidden" name="inviterID" value="{{ $inviterID }}" />
+                <input type="hidden" name="reviewUniqueID" value="{{ $uniqueID }}">
+                <input type="hidden" value="product" id="reviewType" name="reviewType">
+            </form>
+        @endif
 
         <form method="post" name="frmRecommendationUrlSubmit" id="frmRecommendationUrlSubmit" action="#" container_name="recommendationreviewurl"  enctype="multipart/form-data">
         <div class="row">
