@@ -94,7 +94,7 @@
     <div class="review_header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-6"> <a href="#" class="fsize16 fw400 light_000">Company Logo</a> </div>
+                <div class="col-6"> <a href="javascript:void(0);" class="fsize16 fw400 light_000">Brand<span>Boost</span></a> </div>
                 <div class="col-6 text-right"> <a href="#" class="fsize16 fw400 light_000">FAQ</a> </div>
             </div>
         </div>
