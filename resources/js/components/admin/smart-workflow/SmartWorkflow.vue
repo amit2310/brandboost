@@ -180,21 +180,27 @@
 
                 <email-templates
                     v-if="showEmailTemplates"
+                    :categories="templateCategories"
                     :templates="emailTemplates"
+                    :templatesAllData="allDataTemplates"
                     :user="user"
                     :event_id=actionEditId
                     :moduleName="moduleName"
                     :moduleUnitId="moduleUnitId"
+                    @loadCategoriedTemplates="loadCategoriedTemplates"
                     @hideEmailTemplate="closeEmailTemplates"
                     @updateEmailCampaignId="setEmailCampaignId"
                 ></email-templates>
                 <sms-templates
                     v-if="showSMSTemplates"
+                    :categories="templateCategories"
                     :templates="smsTemplates"
+                    :templatesAllData="allDataTemplates"
                     :user="user"
                     :event_id=actionEditId
                     :moduleName="moduleName"
                     :moduleUnitId="moduleUnitId"
+                    @loadCategoriedTemplates="loadCategoriedTemplates"
                     @hideSMSTemplate="closeSMSTemplates"
                     @updateSMSCampaignId="setSMSCampaignId"
                 ></sms-templates>
@@ -1405,10 +1411,12 @@
                 actionEditMode: false,
                 actionEditId: '',
                 configureWorkflow: true,
+                templateCategories: '',
                 showEmailTemplates: false,
                 showSMSTemplates: false,
                 emailTemplates: '',
                 smsTemplates: '',
+                allDataTemplates: '',
                 user: '',
                 greetings: '',
                 introduction: '',
@@ -1522,6 +1530,7 @@
                         this.loading = false;
                         this.emailTemplates = response.data.oEmailTemplates;
                         this.smsTemplates = response.data.oSMSTemplates;
+                        this.templateCategories = response.data.oCategories;
                         this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
@@ -2482,6 +2491,28 @@
             },
             removeWebhookParam: function(i){
                 this.selected_action_webhook_data.splice(i, 1);
+            },
+            loadCategoriedTemplates: function(data){
+                if(data.actionName == 'static'){
+                    this.getWorkflowData();
+                    return;
+                }
+                this.loading = true;
+                axios.post('/admin/templates/getCategorizedTemplates?page=' + data.currentPage, {
+                    'action':data.actionName,
+                    'campaign_type':data.campaign_type,
+                    'method': 'manage'
+                    })
+                    .then(response => {
+                        if(data.campaign_type == 'email'){
+                            this.emailTemplates = response.data.oTemplates;
+                        }
+                        if(data.campaign_type == 'sms'){
+                            this.smsTemplates = response.data.oTemplates;
+                        }
+                        this.allDataTemplates = response.data.allData;
+                        this.loading = false;
+                    });
             }
         },
     }
