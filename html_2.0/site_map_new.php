@@ -24,7 +24,6 @@
 	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
 	.sitemap ul li strong{color: #4f8af4; }
 	</style>
-
 </head>
 <body id="PeopleSection">
 
@@ -166,7 +165,6 @@
                  <li><strong>Review Collection</strong></li>
      			<li><a target="_blank" href="review_collection1.php">Reviews Collection 1 </a> &nbsp; &nbsp; <small >Last Updated on 2nd May 2020</small></li>
                 <li><a target="_blank" href="review_collection2.php">Reviews Collection 2 </a> &nbsp; &nbsp; <small >Last Updated on 2nd May 2020</small></li>
-     			
      		</ul>
      		</div>
      		<div class="card min-h-280 p20">
@@ -201,27 +199,23 @@
      			<li><a target="_blank" href="people_tag4.php">People Tags 4</a></li>
      		</ul>
      		</div>
-     		
-     	
-     		
+            
+            <div class="card min-h-280 p20">
+     		<h3 class="htxt_bold_16 reviews_400">People Contact</h3>
+     		<hr>
+     		<ul>
+     			<li><a target="_blank" href="people_contact_new_a.php">People Contact New 1</a></li>
+     			<li><a target="_blank" href="people_contact_new_b.php">People Contact New 2</a></li>
+     			<li><a target="_blank" href="people_contact_new_c.php">People Contact New 3</a></li>
+     			
+     		</ul>
+     		</div>
+            
+            
      	</div>
      	
-     	<div class="col-md-6">
-     		
-     		
-     		
-     		
-     		
-     		
-     	</div>
+     	<div class="col-md-6">     	</div>
      </div>
-     
-     
-   
-     
-     
-     
-     
       </div>
       </div>
       
@@ -247,6 +241,5 @@
 <script src="assets/js/waves.min.js"></script>
 <script src="assets/js/jquery.slimscroll.min.js"></script>
 <script src="assets/js/app.js"></script>
-
 </body>
 </html>
