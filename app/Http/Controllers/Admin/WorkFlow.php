@@ -2994,6 +2994,7 @@ class WorkFlow extends Controller {
         }
         $emailTemplateId = '';
         $smsTemplateId = '';
+        $oCategories = $mTemplates->getCommonTemplateCategories();
         $oEmailTemplates = $mTemplates->getCommonTemplates('', '', '', 'email', '', $moduleName, true);
         $oSMSTemplates = $mTemplates->getCommonTemplates('', '', '', 'sms', '', $moduleName, true);
         $selectedEmailTemplate = [];
@@ -3072,6 +3073,7 @@ class WorkFlow extends Controller {
             'oSMSTemplatesAllData' => $oSMSTemplates,
             'oEmailTemplates' => $oEmailTemplates->items(),
             'oSMSTemplates' => $oSMSTemplates->items(),
+            'oCategories' => $oCategories,
             'userInfo' => ['fullname'=> $aUser->firstname. ' '. $aUser->lastname, 'email' => $aUser->email, 'avatar'=> $aUser->avatar, 'phone' => $aUser->mobile],
         ];
     }

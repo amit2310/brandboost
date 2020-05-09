@@ -431,8 +431,6 @@
         data(){
           return {
               showModal: false,
-
-
               loading: true,
               moduleName: '',
               moduleUnitID: '',

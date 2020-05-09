@@ -1,13 +1,36 @@
 <template>
     <div>
+
         <!---->
         <loading :isLoading="loading"></loading>
         <div class="table_head_action pb0 mb25">
-            <div class="row">
-                <div class="col">
-                    <h3 class="htxt_medium_14 dark_600">Latest templates</h3>
+            <div class="row mb25">
+                <div class="col-md-6 col-6">
+                    <h3 class="htxt_medium_24 dark_700">Select email template</h3>
+                </div>
+                <div class="col-md-6 col-6 text-right">
+                    <button class="btn btn-md bkg_light_800 light_000" @click="backToConfiguration">Save Campaign <span><img src="assets/images/arrow-right-circle-fill-white.svg"></span></button>
                     <button id="displayPreviewForm" type="button" style="display:none;">Display Edit & Preview</button>
+                    <button id="emailTemplatePreview" type="button" style="display:none;">Display Template Preview</button>
+                    <button class="hideEmailTemplatePreview" type="button" style="display:none;">Hide Template Preview</button>
                     <button id="hidePreviewForm" type="button" style="display:none;">Hide</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <ul class="table_filter">
+                        <li><a href="javascript:void(0);" :class="{'active' : activeClass == 'all'}" @click="loadCategoriedTemplates('all')">All</a></li>
+                        <li><a href="javascript:void(0);" :class="{'active' : activeClass == 'my'}" @click="loadCategoriedTemplates('my')">My Templates</a></li>
+                        <li><a :class="{'active' : activeClass == 'static'}" href="javascript:void(0);" @click="loadCategoriedTemplates('static')">{{moduleStaticTemplateCaption}}</a></li>
+                        <li v-for="category in categories" v-if="category.status!=2" @click="loadCategoriedTemplates(category.id)"><a href="javascript:void(0);" :class="{'active' : activeClass == category.id}">{{category.category_name}}</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul class="table_filter text-right">
+                        <li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+                        <li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+                        <li><a href="#"><i><img src="assets/images/list_grey.svg"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -22,11 +45,13 @@
             </div>
 
 
-            <div class="col-md-3 d-flex" v-for="template in templates" @click="addTemplateToCampaign(template.id)" style="cursor:pointer;">
+            <!--<div class="col-md-3 d-flex" v-for="template in templates" @click="addTemplateToCampaign(template.id)" style="cursor:pointer;">-->
+            <div class="col-md-3 d-flex" v-for="template in templates" @click="displayTemplatePreview(template)" style="cursor:pointer;">
                 <div class="card p-1 pb0 animate_top col">
                     <div class="sms_template_outer">
                         <div class="sms_box">
-                            <img :src="template.thumbnail" style="transform: scale(2.5);margin-top:35%;">
+                            <img v-if="template.thumbnail" :src="template.thumbnail" style="transform: scale(2.5);margin-top:35%;">
+                            <img v-else src="/assets/images/blankpreview.png" style="height:215px;margin-top:-9%;">
                         </div>
                     </div>
                     <div class="email_temp_txt p25 text-center">
@@ -37,6 +62,13 @@
 
 
         </div>
+
+        <pagination
+            v-show="templatesAllData.total>10"
+            :pagination="templatesAllData"
+            @paginate="showPaginationTemplates"
+            :offset="4">
+        </pagination>
 
         <div class="row mt40">
             <div class="col-md-12"><hr class="mb25"></div>
@@ -98,17 +130,47 @@
             </div>
         </div>
 
+        <div class="modal fade show" id="emailTemplatePreviewPopup" style="width: 80%;">
+            <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
+                <div class="modal-content review" style="width: 1200px;">
+                    <div class="modal-body p0 mt0 br5" style="width: 1000px;">
+                        <div class="p40">
+                            <div class="row" v-html="previewTemplate"></div>
+                            <div class="row bottom-position">
+                                <div class="col-md-12 mb15">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="module_name" id="active_module_name" value="people">
+                                    <input type="hidden" name="module_account_id" id="module_account_id" :value="user.id">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 hideEmailTemplatePreview"
+                                        @click="addTemplateToCampaign(selectedTemplate)">Use Template
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 wfEmailPreviewTemplate">Clone Template
+                                    </button>
+                                    <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20 hideEmailTemplatePreview">Close</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 <script>
+    import Pagination from '@/components/helpers/Pagination';
     import jq from 'jquery';
     export default {
-        props: ['templates', 'user', 'event_id', 'moduleName', 'moduleUnitId'],
+        props: ['categories','templates', 'templatesAllData', 'user', 'event_id', 'moduleName', 'moduleUnitId'],
+        components: {Pagination},
         data() {
             return {
                 refreshMessage: 2,
-
-
                 loading: true,
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
@@ -116,11 +178,20 @@
                 introduction: '',
                 content: '',
                 selected_campaignId: '',
-                sendTestBox: false
+                sendTestBox: false,
+                current_page: 1,
+                activeClass: '',
+                selectedTemplate: '',
+                previewTemplate: ''
             }
         },
         created() {
             this.loadEmailReviewTemplates();
+            if(this.moduleName == 'brandboost' || this.moduleName =='nps' || this.moduleName =='referral'){
+                this.activeClass = 'static';
+            }else{
+                this.activeClass = 'all';
+            }
         },
         watch: {
             'greetings': function(){
@@ -130,6 +201,17 @@
                 jq("#wf_edit_template_introduction_EDITOR").text(this.introduction);
           },
 
+        },
+        computed: {
+            moduleStaticTemplateCaption: function(){
+                if(this.moduleName == 'brandboost'){
+                    return 'Reviews';
+                }else if(this.moduleName == 'nps'){
+                    return 'NPS';
+                }else if(this.moduleName == 'referral'){
+                    return 'Referral';
+                }
+            }
         },
         methods: {
             backToConfiguration: function(){
@@ -213,7 +295,20 @@
             },
             loadEmailReviewTemplates: function(){
                 this.loading = false;
-            }
+            },
+            showPaginationTemplates: function(p){
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            loadCategoriedTemplates: function(action){
+                this.activeClass = action;
+                this.$emit("loadCategoriedTemplates", {actionName: action, campaign_type: 'email', currentPage: this.current_page});
+            },
+            displayTemplatePreview: function (data) {
+                this.selectedTemplate = data.id;
+                this.previewTemplate = this.getDecodeContent(data.stripo_compiled_html);
+                document.querySelector("#emailTemplatePreview").click();
+            },
         }
     }
     $(document).ready(function(){
@@ -222,6 +317,12 @@
         })
         $(document).on("click", "#hidePreviewForm", function(){
             $("#EditPreview").modal('hide');
+        })
+        $(document).on("click", "#emailTemplatePreview", function(){
+            $("#emailTemplatePreviewPopup").modal('show');
+        })
+        $(document).on("click", ".hideEmailTemplatePreview", function(){
+            $("#emailTemplatePreviewPopup").modal('hide');
         })
     });
 </script>
