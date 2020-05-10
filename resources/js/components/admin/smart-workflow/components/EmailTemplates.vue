@@ -37,7 +37,7 @@
 
         <div class="row">
 
-            <div class="col-md-3 d-flex">
+            <div class="col-md-3 d-flex js-email-templates-slidebox" style="cursor: pointer;">
                 <div class="card p0 pt30 text-center animate_top col">
                     <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
                     <p class="htxt_regular_16 dark_100 mb15">Create<br>blank template</p>
@@ -150,12 +150,76 @@
                                     </button>
                                     <button
                                         type="submit"
-                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 wfEmailPreviewTemplate">Clone Template
+                                        class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600 wfEmailPreviewTemplate"
+                                        @click="cloneTemplate(selectedTemplate, 'email')"
+                                    >Clone Template
                                     </button>
                                     <a href="javascript:void(0);" class="blue_300 fsize16 fw600 ml20 hideEmailTemplatePreview">Close</a></div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Add Template Popup-->
+        <div class="box js-email-templates-slidebox-popup" style="width: 424px;">
+            <div style="width: 424px;overflow: hidden; height: 100%;">
+                <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon js-email-templates-slidebox"><i class=""><img src="/assets/images/cross.svg"/></i></a>
+                    <form method="post" @submit.prevent="processForm">
+                        <div class="p40">
+                            <div class="row">
+                                <div class="col-md-12"> <img src="/assets/images/email_temp_icons.svg"/>
+                                    <h3 class="htxt_medium_24 dark_800 mt20">Add Email Template </h3>
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+
+                                    <div class="form-group">
+                                        <label for="fname">Template name</label>
+                                        <input
+                                            type="text"
+                                            class="form-control h56"
+                                            id="fname"
+                                            placeholder="Enter name"
+                                            name="templateName"
+                                            v-model="form.templateName">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="desc">Categories</label>
+                                        <select class="form-control h56" name="templateCategory" v-model="form.templateCategory">
+                                            <option>--Select--</option>
+                                            <template v-for="category in categories">
+                                                <option v-if="category.status=1"  :value="category.id"> {{category.category_name}}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="desc">Description</label>
+                                        <textarea
+                                            class="form-control min_h_185 p20 pt10"
+                                            id="desc"
+                                            placeholder="Template description"
+                                            name="templateDescription"
+                                            v-model="form.templateDescription">
+                                        </textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row bottom-position">
+                                <div class="col-md-12 mb15">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-lg bkg_email_400 light_000 pr20 min_w_160 fsize16 fw600">Create</button>
+                                    <a class="dark_300 fsize16 fw400 ml20 js-email-templates-slidebox" href="javascript:void(0);">Close</a> </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -182,7 +246,14 @@
                 current_page: 1,
                 activeClass: '',
                 selectedTemplate: '',
-                previewTemplate: ''
+                previewTemplate: '',
+                form: {
+                    templateName: '',
+                    templateCategory: '',
+                    templateType: 'email',
+                    templateDescription: '',
+                    templateId: ''
+                },
             }
         },
         created() {
@@ -308,6 +379,62 @@
                 this.selectedTemplate = data.id;
                 this.previewTemplate = this.getDecodeContent(data.stripo_compiled_html);
                 document.querySelector("#emailTemplatePreview").click();
+            },
+            cloneTemplate: function(templateId,templateType) {
+                if(confirm('Are you sure you want to clone this template?')){
+                    this.loading = true;
+                    //Do axios
+                    axios.post('/admin/templates/cloneTemplate', {
+                        templateId:templateId,
+                        templateType:templateType,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                this.loading = false;
+                                this.displayMessage('success', 'Template cloned and saved into your templates!');
+                                this.loadCategoriedTemplates('my');
+                                document.querySelector(".hideEmailTemplatePreview").click();
+                            }
+
+                        });
+                }
+            },
+            processForm : function(){
+                this.loading = true;
+                let formActionSrc = '';
+                this.form.module_name = this.moduleName;
+                if(this.form.templateId>0){
+                    formActionSrc = '/admin/templates/editUserTemplate';
+                }else{
+                    formActionSrc = '/admin/templates/addUserTemplate';
+                }
+                axios.post('/admin/templates/addUserTemplate' , this.form)
+                    .then(response => {
+                        if (response.data.status == 'success') {
+                            this.loading = false;
+                            this.form.templateId ='';
+                            document.querySelector('.js-email-templates-slidebox').click();
+                            this.displayMessage('success', 'Template added successfully.');
+                            this.loadCategoriedTemplates('my');
+                            document.querySelector(".hideEmailTemplatePreview").click();
+                        }
+                        else if (response.data.status == 'error') {
+                            if (response.data.type == 'duplicate') {
+                                this.displayMessage('error', 'Error: Template already exists.');
+                            }
+                            else {
+                                this.displayMessage('error', 'Error: Something went wrong.');
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        console.log(error);
+                        this.displayMessage('error', 'Error: All form fields are required');
+                    });
             },
         }
     }
