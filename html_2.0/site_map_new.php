@@ -156,6 +156,14 @@
                 <li><a target="_blank" href="flow_builder6a.php">Workflows Builder 6a </a> &nbsp; &nbsp; <small >Last Updated on 23rd April 2020</small></li>
                 <li><a target="_blank" href="flow_builder6b.php">Workflows Builder 6b </a> &nbsp; &nbsp; <small >Last Updated on 23rd April 2020</small></li>
                 
+                <li><a target="_blank" href="flow_builder7.php">Workflows Builder 7 </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
+                <li><a target="_blank" href="flow_builder7a.php">Workflows Builder 7a </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
+                <li><a target="_blank" href="flow_builder7b.php">Workflows Builder 7b </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
+                <li><a target="_blank" href="flow_builder7c.php">Workflows Builder 7c </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
+                <li><a target="_blank" href="flow_builder7d.php">Workflows Builder 7d </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
+               
+                
+                
      			 <li><strong>Offsite Campaigns</strong></li>
      			<li><a target="_blank" href="offsite_campaign_list.php">Offsite Campaigns List </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
                 <li><a target="_blank" href="offsite_campaign_setup1.php">Offsite Campaigns Setup 1 </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>
