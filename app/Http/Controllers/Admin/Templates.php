@@ -484,6 +484,7 @@ class Templates extends Controller
         $selected_template = strip_tags($request->selected_template);
         $campaignType = strip_tags($request->campaign_type);
         $method = strip_tags($request->method);
+        $searchBy = strip_tags($request->searchBy);
 
         if (empty($campaignType)) {
             $campaignType = 'email';
@@ -493,18 +494,18 @@ class Templates extends Controller
         $source = '';
 
         if ($actionName == 'my') {
-            $oCategorizedTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType);
+            $oCategorizedTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType, true, '', true,10, $searchBy );
             $source = 'my';
         } else if ($actionName == 'draft') {
             $oCategorizedTemplates = $mTemplates->getCommonDraftTemplates($userID, '', $campaignType);
             $source = 'draft';
         } else if ($actionName == 'all') {
             //echo "Campaign Type is". $campaignType;
-            $oCategorizedTemplates = $mTemplates->getCommonTemplates('', '', '', $campaignType, $bHideStaticTemplate = true);
+            $oCategorizedTemplates = $mTemplates->getCommonTemplates('', '', '', $campaignType, $bHideStaticTemplate = true, '', true, 10, $searchBy);
         } else {
             //Or pick actionName = 'category'
             $categoryID = ($categoryID) ? $categoryID : $actionName; //Now we are passing category id instead of the "category"
-            $oCategorizedTemplates = $mTemplates->getCommonTemplates('', $categoryID, '', $campaignType);
+            $oCategorizedTemplates = $mTemplates->getCommonTemplates('', $categoryID, '', $campaignType, false, '', true, 10, $searchBy);
         }
 
         $oUserTemplates = $mTemplates->getCommonTemplates($userID, '', '', $campaignType);

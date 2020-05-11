@@ -2498,7 +2498,7 @@
                     return;
                 }
                 this.loading = true;
-                axios.post('/admin/templates/getCategorizedTemplates?page=' + data.currentPage, {
+                axios.post('/admin/templates/getCategorizedTemplates?page=' + data.currentPage+'&searchBy='+data.searchBy, {
                     'action':data.actionName,
                     'campaign_type':data.campaign_type,
                     'method': 'manage'

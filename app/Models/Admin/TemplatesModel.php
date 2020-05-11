@@ -19,7 +19,7 @@ class TemplatesModel extends Model
      * @param type $bHideStaticTemplate
      * @return type
      */
-    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false, $moduleName='', $paginated=true, $perPage=10)
+    public static function getCommonTemplates($userID = 0, $categoryID = '', $id = '', $templateType = '', $bHideStaticTemplate = false, $moduleName='', $paginated=true, $perPage=10, $searchBy='')
     {
         if($moduleName == 'broadcast' || $moduleName == 'automation'){
             $bHideStaticTemplate = true;
@@ -52,6 +52,9 @@ class TemplatesModel extends Model
             }else if($moduleName == 'nps'){
                 $query->where('tbl_common_templates.category_id', 10);
             }
+        }
+        if(!empty($searchBy)){
+            $query->where('tbl_common_templates.template_name', 'LIKE', "%$searchBy%");
         }
             $query->orderBy('tbl_common_templates.id', 'desc');
         if($paginated == true){
