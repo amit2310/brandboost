@@ -22,15 +22,23 @@
                         <li><a href="javascript:void(0);" :class="{'active' : activeClass == 'all'}" @click="loadCategoriedTemplates('all')">All</a></li>
                         <li><a href="javascript:void(0);" :class="{'active' : activeClass == 'my'}" @click="loadCategoriedTemplates('my')">My Templates</a></li>
                         <li><a :class="{'active' : activeClass == 'static'}" href="javascript:void(0);" @click="loadCategoriedTemplates('static')">{{moduleStaticTemplateCaption}}</a></li>
-                        <li v-for="category in categories" v-if="category.status!=2" @click="loadCategoriedTemplates(category.id)"><a href="javascript:void(0);" :class="{'active' : activeClass == category.id}">{{category.category_name}}</a></li>
+                        <li v-for="category in categories" v-if="category.status=='1'" @click="loadCategoriedTemplates(category.id)"><a href="javascript:void(0);" :class="{'active' : activeClass == category.id}">{{category.category_name}}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2">
                     <ul class="table_filter text-right">
-                        <li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
-                        <li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
-                        <li><a href="#"><i><img src="assets/images/list_grey.svg"></i></a></li>
+                        <li><a href="javascript:void(0)" class="search_tables_open_close"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+                        <li><a href="javascript:void(0)"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+                        <li><a href="javascript:void(0)"><i><img src="assets/images/list_grey.svg"></i></a></li>
                     </ul>
+                </div>
+            </div>
+            <div class="card p20 datasearcharea br6 shadow3" style="display: none;">
+                <div class="form-group m-0 position-relative">
+                    <input v-model="searchBy" id="InputToFocus" type="text" placeholder="Search template" class="form-control h48 fsize14 dark_200 fw400 br5">
+                    <a href="javascript:void(0);" class="search_tables_open_close searchcloseicon">
+                        <img src="assets/images/close-icon-13.svg">
+                    </a>
                 </div>
             </div>
         </div>
@@ -46,15 +54,31 @@
 
 
             <!--<div class="col-md-3 d-flex" v-for="template in templates" @click="addTemplateToCampaign(template.id)" style="cursor:pointer;">-->
-            <div class="col-md-3 d-flex" v-for="template in templates" @click="displayTemplatePreview(template)" style="cursor:pointer;">
+            <div class="col-md-3 d-flex" v-for="template in templates">
                 <div class="card p-1 pb0 animate_top col">
-                    <div class="sms_template_outer">
+                    <div class="dot_dropdown" v-if="template.user_id==user.id">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="javascript:void(0);" @click="cloneTemplate(template.id, 'email')"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
+                            <a class="dropdown-item wfEmailMyTemplates" href="javascript:void(0);" @click="displayTemplatePreview(template)"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0);" @click="deleteTemplate(template.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
+                    </div>
+                    <div class="dot_dropdown" v-else>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item wfEmailMyTemplates" href="javascript:void(0);" @click="displayTemplatePreview(template)"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                        </div>
+                    </div>
+                    <div class="sms_template_outer" @click="displayTemplatePreview(template)" style="cursor:pointer;">
                         <div class="sms_box">
                             <img v-if="template.thumbnail" :src="template.thumbnail" style="transform: scale(2.5);margin-top:35%;">
                             <img v-else src="/assets/images/blankpreview.png" style="height:215px;margin-top:-9%;">
                         </div>
                     </div>
-                    <div class="email_temp_txt p25 text-center">
+                    <div class="email_temp_txt p25 text-center" @click="displayTemplatePreview(template)" style="cursor:pointer;">
                         <p class="htxt_regular_12 dark_600 mb-0">{{template.template_name}}</p>
                     </div>
                 </div>
@@ -94,7 +118,7 @@
 
                                         <div class="form-group mb0">
                                             <label class="">Content</label>
-                                            <a class="fsize14 open_editor" href="#"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
+                                            <a class="fsize14 open_editor" href="javascript:void(0)"><i class=""><img src="/assets/images/open_editor.png"/> </i> &nbsp; Open editor</a>
                                             <textarea v-model="introduction" style="min-height: 238px; resize: none;" class="form-control p20 fsize12" v-html="introduction">I have hinted that I would often jerk poor Queequeg from between the whale and the ship—where he would occasionally fall, from the incessant rolling and swaying of both.
 
 										But this was not the only jamming jeopardy he was exposed to. Unappalled by the massacre made upon them...</textarea>
@@ -191,7 +215,7 @@
                                         <select class="form-control h56" name="templateCategory" v-model="form.templateCategory">
                                             <option>--Select--</option>
                                             <template v-for="category in categories">
-                                                <option v-if="category.status=1"  :value="category.id"> {{category.category_name}}</option>
+                                                <option v-if="category.status==1"  :value="category.id"> {{category.category_name}}</option>
                                             </template>
                                         </select>
                                     </div>
@@ -254,6 +278,7 @@
                     templateDescription: '',
                     templateId: ''
                 },
+                searchBy: ''
             }
         },
         created() {
@@ -270,7 +295,11 @@
              },
             'introduction': function(){
                 jq("#wf_edit_template_introduction_EDITOR").text(this.introduction);
-          },
+            },
+            'searchBy': function(){
+                this.loadCategoriedTemplates(this.activeClass);
+            }
+
 
         },
         computed: {
@@ -373,7 +402,7 @@
             },
             loadCategoriedTemplates: function(action){
                 this.activeClass = action;
-                this.$emit("loadCategoriedTemplates", {actionName: action, campaign_type: 'email', currentPage: this.current_page});
+                this.$emit("loadCategoriedTemplates", {actionName: action, campaign_type: 'email', currentPage: this.current_page, searchBy:this.searchBy});
             },
             displayTemplatePreview: function (data) {
                 this.selectedTemplate = data.id;
@@ -435,6 +464,23 @@
                         console.log(error);
                         this.displayMessage('error', 'Error: All form fields are required');
                     });
+            },
+            deleteTemplate: function(templateId) {
+                if(confirm('Are you sure you want to delete this template?')){
+                    //Do axios
+                    axios.post('/admin/templates/deleteTemplate', {
+                        templateId:templateId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                this.loadCategoriedTemplates('my');
+                            }
+
+                        });
+                }
             },
         }
     }
