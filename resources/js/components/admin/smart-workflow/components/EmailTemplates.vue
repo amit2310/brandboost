@@ -3,7 +3,13 @@
 
         <!---->
         <loading :isLoading="loading"></loading>
-        <div class="table_head_action pb0 mb25">
+        <div v-show="editGrapesEditor">
+            <div class="row">
+                <iframe id="loadstripotemplate" scrolling="no" :src="grapesEditorSrc" width="100%" height="1500"
+                        style="overflow:hidden; border:none!important;"></iframe>
+            </div>
+        </div>
+        <div class="table_head_action pb0 mb25" v-show="editGrapesEditor==false">
             <div class="row mb25">
                 <div class="col-md-6 col-6">
                     <h3 class="htxt_medium_24 dark_700">Select email template</h3>
@@ -100,6 +106,7 @@
             <div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right" @click="backToConfiguration">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
         </div>
 
+        <!--Edit Preview Popup-->
         <div class="modal fade show" id="EditPreview">
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
@@ -154,6 +161,7 @@
             </div>
         </div>
 
+        <!--Static Template Preview Popup-->
         <div class="modal fade show" id="emailTemplatePreviewPopup" style="width: 80%;">
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
@@ -278,7 +286,9 @@
                     templateDescription: '',
                     templateId: ''
                 },
-                searchBy: ''
+                searchBy: '',
+                editGrapesEditor: false,
+                grapesEditorSrc: ''
             }
         },
         created() {
@@ -330,7 +340,6 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
@@ -347,7 +356,6 @@
                     .then(response => {
                         if(response.data.status == 'success'){
                             this.loading = false;
-
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
@@ -386,7 +394,14 @@
                         if(response.data.status =='success'){
 
                             this.selected_campaignId = response.data.campaignId;
-                            this.loadPreview();
+                            let templateType = response.data.templateType;
+                            if(templateType == 'dynamic'){
+                                this.editGrapesEditor = true;
+                                this.grapesEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.selected_campaignId + '/' + this.moduleUnitId;
+                                //Open grapesJs editor
+                            }else{
+                                this.loadPreview();
+                            }
                             this.$emit("updateEmailCampaignId", this.selected_campaignId, response.data.templateName);
                         }
                         this.loading = false;

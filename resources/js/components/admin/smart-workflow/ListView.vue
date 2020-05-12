@@ -43,7 +43,7 @@
 
         <!--Fixed Goal Node-->
         <div class="col-12">
-            <div class="card p35  mb10">
+            <div class="card p35  mb10" :class="metaData.selectedClass == 'goal' ? 'dark_border2' : 'light_border2'" @click="metaData.selectedClass='goal'">
                 <div class="row">
                     <div style="max-width: 64px" class="col mt-1">
                         <span class="circle-icon-36 br12 bkg_sms_400 light_000 d-block fsize16 fw500 rotate45"><i class="ri-checkbox-circle-fill light_000 fsize18"></i></span>

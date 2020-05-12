@@ -73,13 +73,13 @@
                         <div class="p30 workflow_list_box">
                             <ul class="workflow_list_new">
                                 <li><a href="javascript:void(0);" class="slideTriggerbox" @click="metaData.selectedClass='trigger'"><span class="circle-icon-20 bkg_dark_100 rotate_45 "><span class="rotate_45_minus d-block"><i class="ri-play-fill"></i></span></span> Entry Trigger: {{(unitInfo.workflow_entry_trigger) ? capitalizeFirstLetter(unitInfo.workflow_entry_trigger): 'Empty'}}</a></li>
-                                <li v-for="evt in events">
+                                <li v-for="evt in events" @click="editNode(evt)">
                                     <div
                                         class="col-12 text-center droppable_grid droppable_grid_linear"
                                         @drop="onDrop($event, evt)"
                                         @dragover="$event.preventDefault()">
                                     </div>
-                                    <a id="jsMoveNode" href="javascript:void(0);" @click="metaData.selectedClass=evt.id" draggable="true" @dragstart="onLinearDrag($event, evt)">
+                                    <a id="jsMoveNode" href="javascript:void(0);" draggable="true" @dragstart="onLinearDrag($event, evt)">
                                         <span class="circle-icon-20" :class="nodeClass(evt)" v-html="nodeIcon(evt)"></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
                                     </a>
                                     <template v-if="nodeType(evt)=='split'">
@@ -510,7 +510,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 mr20" @click.prevent="updateGoal">Update Goal</button>
-                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideGoalbox">Close</button>
 
                                     </div>
 
@@ -518,12 +518,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
 
                 </div>
 
@@ -840,15 +834,21 @@
                                     </div>
                                     <div class="col-md-12">
                                         <button class="btn btn-md bkg_blue_400 light_000 pr20 min_w_160 fsize13 fw500 ml20 mr20" @click="updateActionItem">Update {{capitalizeFirstLetter(editActionItem)}}</button>
-                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideEditActionItembox">Close</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideEditActionItembox" id="slideEditActionItembox">Close</button>
+                                        <a
+                                            class="dark_200 fw500 d-inline-block mt10 mr20 pull-right"
+                                            href="javascript:void(0);"
+                                            @click="deleteWorkflowEvent(editActionEvent, 'slideEditActionItembox')"
+                                        >Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
                 <!--Decision Modal -->
-                <div class="box addDecisionBoxContent" style="width: 424px; display:none;">
+                <div class="box addDecisionBoxContent2" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
@@ -912,10 +912,100 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                <!--Delay Modal-->
+                <!--Decision Modal New-->
+                <div class="box addDecisionBoxContent" style="width: 424px; border-color:#64B2CB!important; display:none; ">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="40" src="assets/images/decision_arrow_45.png"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Decision </h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Send people down a path based on selected criteria.</p>
+                                        <hr class="mt20 mb20">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="decisionTitle" class="fsize11 fw500 dark_600 ls4">DECISION NODE NAME</label>
+                                            <input class="form-control h50" v-model="decisionTitle" type="text" placeholder="Enter decision node name" id="decisionTitle" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="decisionType" class="fsize11 fw500 dark_600 ls4">DECISION BASED ON</label>
+                                            <div class="min_h_48 border br4 p15">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="custmo_checkbox pull-left m0">
+                                                            <input type="checkbox" v-model="decisionProperties.decision_type" value="attribute" :checked="decisionProperties.decision_type=='attribute'" id="decisionType">
+                                                            <span class="custmo_checkmark br100 decision"></span>
+                                                            &nbsp; Attribute
+                                                        </label>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="v_line_48" style="left:-7px; top:-16px;"></span>
+                                                        <label class="custmo_checkbox pull-left m0">
+                                                            <input type="checkbox" v-model="decisionProperties.decision_type" value="segment" :checked="decisionProperties.decision_type=='segment'">
+                                                            <span class="custmo_checkmark br100 decision"></span>
+                                                            &nbsp; Segment
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <hr class="mt20" />
+
+                                        <div class="form-group">
+                                            <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATH 1</label>
+                                            <select class="form-control h50 form-control-custom dark_800">
+                                                <option>Select segment </option>
+                                                <option>Submitted a form</option>
+                                                <option>Choose a trigger...</option>
+                                                <option>Choose a trigger...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATH 2</label>
+                                            <select class="form-control h50 form-control-custom dark_800">
+                                                <option>Select segment </option>
+                                                <option>Submitted a form</option>
+                                                <option>Choose a trigger...</option>
+                                                <option>Choose a trigger...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <a class="decision_300 fsize12 fw500 ls4 lh_20" href="#"><img src="assets/images/add-circle-fill-decision.svg"/>&nbsp; ADD SEGMENT</a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-md bkg_decision_300 light_000 pr20 min_w_160 fsize13 fw500 mr20">SAVE DECISION</button>
+                                        <!--<button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>-->
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <a class="dark_200 fw500 d-inline-block mt10" href="#">Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <!--Delay Modal-->
                 <div class="box addDelayBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDelaybox" id="slideAddDelaybox"><i class=""><img src="assets/images/cross.svg"/></i></a>
@@ -1062,6 +1152,12 @@
                                             @click="addDelay"
                                         >Add Delay</button>
                                         <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddDelaybox">Close</button>
+                                        <a
+                                            v-if="delayEditMode == true"
+                                            class="dark_200 fw500 d-inline-block mt10 pull-right"
+                                            href="javascript:void(0);"
+                                            @click="deleteWorkflowEvent(delayEditEvent, 'slideAddDelaybox')"
+                                        >Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
 
                                     </div>
 
@@ -1225,7 +1321,13 @@
                                             class="btn btn-md bkg_email_400 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddSplitbox"
                                             @click="addSplitTest">Save Split Test
                                         </button>
-                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddSplitbox">Close</button>
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddSplitbox" id="slideAddSplitbox">Close</button>
+                                        <a
+                                            v-if="splitEditMode == true"
+                                            class="dark_200 fw500 d-inline-block mt10 pull-right"
+                                            href="javascript:void(0);"
+                                            @click="deleteWorkflowEvent(splitEditEvent, 'slideAddSplitbox')"
+                                        >Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
 
                                     </div>
 
@@ -1377,6 +1479,10 @@
                 selectedEvent: '',
                 actionTitle: '',
                 decisionTitle: '',
+                decisionProperties: {
+                    decision_type: 'attribute',
+                    total_path: '2'
+                },
                 delayProperties: {
                     delay_type: 'after',
                     delay_unit: 'minute',
@@ -1406,8 +1512,10 @@
                 draggedEvent: '',
                 delayEditMode: false,
                 delayEditId: '',
+                delayEditEvent: '',
                 splitEditMode: false,
                 splitEditId: '',
+                splitEditEvent: '',
                 actionEditMode: false,
                 actionEditId: '',
                 configureWorkflow: true,
@@ -1636,6 +1744,7 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.events = response.data.oEvents;
+                        this.displayMessage('success', 'Node deleted succcessfully!');
                     }
                 });
             },
@@ -1656,8 +1765,10 @@
                 this.actionEditId = '';
                 this.delayEditMode = false;
                 this.delayEditId = '';
+                this.delayEditEvent = '';
                 this.splitEditMode = false;
                 this.splitEditId = '';
+                this.splitEditEvent = '';
             },
             loadActionData: function(event){
                 this.actionEditMode = true;
@@ -1909,6 +2020,7 @@
             loadEditDelay: function(event){
                 this.delayEditMode = true;
                 this.delayEditId = event.id;
+                this.delayEditEvent = event;
                 let triggerParams = JSON.parse(event.data);
                 this.delayProperties = triggerParams['delay_properties'];
                 document.querySelector("#slideAddDelaybox").click();
@@ -1916,6 +2028,7 @@
             },
             loadSplitProperties: function(event){
                 this.splitEditMode = true;
+                this.splitEditEvent = event;
                 let triggerParams = JSON.parse(event.data);
                 let splitId = triggerParams['split_properties']['split_id'];
                 if(splitId>0){
@@ -2136,6 +2249,7 @@
             },
             clearDelayProperties: function(){
                 this.delayEditMode = false;
+                this.delayEditEvent = '';
                 this.delayEditId = '';
                 this.delayProperties = {
                     delay_type: 'after',
@@ -2513,7 +2627,21 @@
                         this.allDataTemplates = response.data.allData;
                         this.loading = false;
                     });
-            }
+            },
+            deleteWorkflowEvent: function(event, popupId){
+                if(confirm('Are you sure you want to delete this node?')){
+                    this.deleteWorkflowNode(event);
+                    document.querySelector("#"+popupId).click();
+                }
+            },
+            editNode: function(event){
+                this.metaData.selectedClass=event.id;
+                let nodeType = JSON.parse(event.data)['node_type'];
+                if(nodeType == 'goal'){
+                    this.metaData.selectedClass='goal';
+                }
+                this.editWorkflowNode(nodeType, event);
+            },
         },
     }
     function triggerSplitSlider(){

@@ -3534,7 +3534,9 @@ class WorkFlow extends Controller {
                 $categoryStatus = $oTemplate->category_status;
                 $templateName = $oTemplate->template_name;
                 $templateSID = $templateId;
+                $ttype ='';
                 if($categoryStatus == 2){
+                    $ttype = 'static';
                     //Static Templates
                     if($moduleName == 'brandboost'){
                         if($oUnitData->review_type == 'onsite'){
@@ -3556,6 +3558,8 @@ class WorkFlow extends Controller {
                         $oTemplate->stripo_compiled_html = $compiledContent;
                     }
 
+                }else{
+                    $ttype = 'dynamic';
                 }
                 $aUpdateData = array(
                     'name' => $oTemplate->template_name,
@@ -3571,7 +3575,7 @@ class WorkFlow extends Controller {
                 $bUpdated = $mWorkflow->updateWorkflowCampaign($aUpdateData, $campaignId, $moduleName);
                 if ($bUpdated) {
                     $aCampaingInfo = $mWorkflow->getWorkflowCampaign($campaignId, $moduleName);
-                    $response = array('status' => 'success', 'campaignId' => $campaignId, 'templateName' => $templateName, 'campaignInfo' =>$aCampaingInfo);
+                    $response = array('status' => 'success', 'campaignId' => $campaignId, 'templateName' => $templateName, 'templateType' => $ttype, 'campaignInfo' =>$aCampaingInfo);
                 }
             } else {
                 //echo "1 $eventId 2 $templateId 3 $moduleUnitId 4 $moduleName 5 $isDraft";
@@ -3579,10 +3583,11 @@ class WorkFlow extends Controller {
                 $bAdded = $mWorkflow->addEndCampaign($eventId, $templateId, $moduleUnitId, $moduleName, $isDraft);
                 $oTemplate = $mWorkflow->getCommonTemplateInfo($templateId);
                 $templateName = $oTemplate->template_name;
+                $ttype = ($oTemplate->category_status == 2) ? 'static' : 'dynamic';
 
                 if ($bAdded) {
                     $aCampaingInfo = $mWorkflow->getWorkflowCampaign($bAdded['id'], $moduleName);
-                    $response = array('status' => 'success', 'campaignId' => $bAdded['id'], 'templateName' => $templateName, 'campaignInfo' =>$aCampaingInfo);
+                    $response = array('status' => 'success', 'campaignId' => $bAdded['id'], 'templateName' => $templateName, 'templateType' => $ttype, 'campaignInfo' =>$aCampaingInfo);
                 }
             }
 

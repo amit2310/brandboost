@@ -1,7 +1,7 @@
 <template>
     <div class="row" style="margin-left:0px;margin-right:0px;width:100%;">
         <div class="col-12" v-if="nodeType != 'split'">
-            <div class="card p35 br6 mb10" :class="metaData.selectedClass == event.id ? 'blue_border2' : 'light_border2'" @click="metaData.selectedClass=event.id">
+            <div class="card p35 br6 mb10" :class="metaData.selectedClass == event.id ? 'blue_border2' : 'light_border2'">
                 <div class="row">
                     <div style="max-width:64px" class="col">
                         <span v-if="nodeName.toLowerCase() == 'email'" class="circle-icon-36 dot_none br12 bkg_email_300 light_000 d-block fsize16 fw500">
@@ -75,7 +75,7 @@
 
                     </div>
                     <div class="col text-right">
-                        <button @click="deleteEvent" class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Delete</button>
+                        <button v-if="nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms'" @click="deleteEvent" class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Delete</button>
                         <button @click="editNode" class="btn border br35 blue_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="nodeName">
                             Edit
                         </button>
@@ -195,6 +195,7 @@
 
             },
             editNode: function(){
+                this.metaData.selectedClass=this.event.id;
                 this.$emit('editEventNode', this.nodeType, this.event);
             },
             getSplitNodeInfo: function(event){
