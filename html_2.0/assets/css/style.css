@@ -3021,7 +3021,18 @@ WORKFLOW CSS
   z-index: 0;
 }
 
+#div1 {
+  width: 350px;
+  height: 70px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
 
+
+
+.droppable_highlight{border:none !important; height: 57px !important; background: none !important; border-style: none !important;}
+.droppable_highlight:before{ height:36px!important; border-radius:100px!important; width:36px!important;position:absolute; content:''; left:50%; top:12px; background: #73ABFF;opacity: 0.1; margin-left:-18px; }
+.droppable_highlight  .workflowadds{ background:#73ABFF!important}
 
 .wf_play_btn {
   border: 2px solid #fff;
