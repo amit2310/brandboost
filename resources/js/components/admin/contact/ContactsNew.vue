@@ -263,7 +263,7 @@
 
     export default {
         props: ['pageColor'],
-        components: {'workflow-subscribers': WorkflowSubscribers, UserAvatar, ContactTags, Pagination},
+        components: {'workflow-subscribers': WorkflowSubscribers, UserAvatar, 'contact-tags': ContactTags, Pagination},
         data() {
             return {
                 successMsg : '',

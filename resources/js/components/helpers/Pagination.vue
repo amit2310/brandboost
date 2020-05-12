@@ -1,6 +1,6 @@
 <template>
     <!--<div class="custom_pagination" v-if="pagination.total > pagination.per_page">-->
-    <div class="custom_pagination">
+    <div class="custom_pagination" v-if="pagination.total > 10">
         <div class="row">
             <div class="col-md-6">
                 <span class="mr-4">Items per page:

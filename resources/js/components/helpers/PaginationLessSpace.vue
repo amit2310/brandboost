@@ -1,6 +1,6 @@
 <template>
     <!--<div v-if="pagination.total > pagination.per_page">-->
-    <div>
+    <div v-if="pagination.total > 10">
         <!--<div v-if="lessSpace" class="sidebar_pagination">-->
         <div class="sidebar_pagination">
             <div class="col-md-4 white_bkg shadow3 left">
