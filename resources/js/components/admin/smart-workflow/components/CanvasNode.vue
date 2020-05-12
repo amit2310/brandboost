@@ -11,7 +11,7 @@
             <div class="workflow_box" >
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="workflow_card" :class="{'workflowSelectedBorder': metaData.selectedClass == event.id}" @click="metaData.selectedClass=event.id">
+                        <div class="workflow_card" :class="{'workflowSelectedBorder': metaData.selectedClass == event.id}" @click="editNode">
                             <div class="wf_icons br12" :class="nodeClass">
                                 <img v-if="nodeType=='action'" width="18" src="assets/images/flashlight-fill-white.svg">
                                 <img v-if="nodeType=='decision'" width="18" src="assets/images/mail-open-fill-white.svg">
@@ -20,8 +20,7 @@
                                 <img v-if="nodeType=='goal'" width="18" src="assets/images/checkbox-circle-fill-white.svg">
                                 <img v-if="nodeType=='exit'" width="18" src="assets/images/flag-2-fill.svg">
                             </div>
-                            <div class="edit_delete">
-                                <a href="javascript:void(0);" @click="editNode"><i class="icon-gear fsize12 dark_100"></i></a>
+                            <div class="edit_delete" v-if="nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms'">
                                 <a href="javascript:void(0);" @click="deleteEvent"><i class="icon-bin2 fsize10 dark_100"></i></a>
                             </div>
                             <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">{{nodeType.toUpperCase()}}</p>
@@ -220,6 +219,7 @@
 
             },
             editNode: function(){
+                this.metaData.selectedClass=this.event.id;
                 this.$emit('editEventNode', this.nodeType, this.event);
             },
             getSplitNodeInfo: function(event){
