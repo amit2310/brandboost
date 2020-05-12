@@ -1,39 +1,30 @@
 <template>
     <div class="container-fluid">
-
-        <div class="table_head_action" v-if="showHeader !== false">
+        <div class="table_head_action" v-if="(showHeader !== false || (activeUsers.length > 0 || searchBy.length>0))">
+            <h3 class="htxt_medium_16 dark_400" style="display: none;">{{ allData.total }} Contact Lists</h3>
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Contact Lists</h3>
+                    <ul class="table_filter">
+                        <li><a class="active" href="#">ALL</a></li>
+                        <li><a href="#">ACTIVE</a></li>
+                        <li><a href="#">DRAFT</a></li>
+                        <li><a href="#">ARCHIVE</a></li>
+                        <li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+                    </ul>
                 </div>
                 <div class="col-md-6">
-                    <div class="table_action">
-                        <div class="float-right">
-                            <button type="button" class="dropdown-toggle table_action_dropdown"
-                                    data-toggle="dropdown">
-                                <span><img src="/assets/images/date_created.svg"/></span>&nbsp; Date Created
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
-                            </div>
-                        </div>
-                        <div class="float-right ml10 mr10">
-                            <button type="button" class="dropdown-toggle table_action_dropdown"
-                                    data-toggle="dropdown">
-                                <span><img src="/assets/images/list_view.svg"/></span>&nbsp; List View
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
-                            </div>
-                        </div>
-                        <div class="float-right">
-                            <input class="table_search" type="text" placeholder="Search"/>
-                        </div>
-                    </div>
+                    <ul class="table_filter text-right">
+                        <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
+                        <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
+                        <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                <div class="form-group m-0 position-relative">
+                    <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                    <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                 </div>
             </div>
         </div>
@@ -88,10 +79,29 @@
                             </td>
                             <td><span class="">{{ timeAgo(contact.created) }} </span></td>
                             <td>
-                                <span class="float-right">
+                                <div class="float-right">
+                                    <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+                                        <span><img src="assets/images/more-vertical.svg"/></span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);"
+                                           v-if="contact.status != 2"
+                                           @click="moveToArchive(contact.id)"
+                                        >Move to Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1">Inactive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else>Active</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">View Details</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)">Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)">Delete</a>
+                                        <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)">Sync</a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="float-right">
                                     <span v-if="contact.status == '1'" class="status_icon bkg_blue_300"></span>
                                     <span v-else class="status_icon bkg_grey"></span>
                                 </span>
+                                </div>
                             </td>
                         </tr>
                         <!--<tr v-for="contact in activeUsers" v-if="activeUsers">
@@ -174,6 +184,10 @@
         data() {
             return {
                 current_page: 1,
+                viewType: 'List View',
+                sortBy: 'Date Created',
+                searchBy: '',
+                deletedItems: [],
             }
         },
         computed: {

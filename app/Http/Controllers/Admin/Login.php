@@ -51,7 +51,7 @@ class Login extends Controller {
         $response = array();
         $loginid = (!empty($request->email)) ? $request->email : '';
         $password = (!empty($request->password)) ? $request->password : '';
-        $remember = (!empty($request->remember)) ? $request->remember : '';
+        $remember = (!empty($request->remember)) ? $request->remember : '1';
         $urlFragment = (!empty($request->urlFragment)) ? $request->urlFragment : '';
 
         if (!empty($loginid)) {

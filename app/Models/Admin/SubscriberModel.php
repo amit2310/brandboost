@@ -31,19 +31,28 @@ class SubscriberModel extends Model {
         }
 
         if(!empty($sortBy)){
-            if($sortBy == 'Active'){
+            if($sortBy == 'All'){
+                $query->orderBy('tbl_subscribers.created', 'desc');
+            }else if($sortBy == 'Active'){
                 $query->where('tbl_subscribers.status', '1');
-            }else  if($sortBy == 'Draft'){
+            }else  if($sortBy == 'Inactive'){
                 $query->where('tbl_subscribers.status', '0');
             }else  if($sortBy == 'Pending'){
                 $query->where('tbl_subscribers.status', '2');
             }else  if($sortBy == 'Archive'){
                 $query->where('tbl_subscribers.status', '2');
+            }else  if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_subscribers.created', 'desc');
             }
-
         }
+
         if($paginated == true){
             $oData = $query->paginate($items_per_page);
+            /*if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }*/
         }else{
             $oData = $query->get();
         }

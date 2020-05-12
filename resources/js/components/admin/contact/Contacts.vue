@@ -121,7 +121,7 @@
     </div>
 </template>
 <script>
-    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribersNew.vue';
+    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
     export default {
         props: ['pageColor'],
         data() {

@@ -344,14 +344,17 @@ class Contacts extends Controller
         }
     }
 
-    public function mycontacts() {
+    public function mycontacts(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $moduleName = 'people';
         $moduleUnitID = $userID;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
 
         if (!empty($userID)) {
-            $subscribersData = SubscriberModel::getGlobalSubscribers($userID);
+            $subscribersData = SubscriberModel::getGlobalSubscribers($userID, true, $searchBy, $sortBy, $items_per_page);
             /*pre($subscribersData);
             die;*/
             $archiveContacts = SubscriberModel::getArchiveGlobalSubscribers($userID);
@@ -375,7 +378,6 @@ class Contacts extends Controller
             'Contacts' => ''
         );
 
-
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a class="sidebar-control hidden-xs slace">/</a></li>
@@ -388,8 +390,8 @@ class Contacts extends Controller
             'pagename' => $breadcrumb,
             'breadcrumb' => $aBreadcrumb,
             'archiveContacts' => $archiveContacts,
-            'subscribersData' => $subscribersData->items(),
             'allData' => $subscribersData,
+            'subscribersData' => $subscribersData->items(),
             'activeCount' => $iActiveCount,
             'archiveCount' => $iArchiveCount,
             'moduleName' => $moduleName,
