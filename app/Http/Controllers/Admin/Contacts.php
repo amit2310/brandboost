@@ -640,13 +640,15 @@ class Contacts extends Controller
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
+        $mSubscriber = new SubscriberModel();
+
         if (!empty($request)) {
 
 
             $sContacts = $request->multipal_record_id;
 
             foreach ($sContacts as $iContactID) {
-                $result = $this->mSubscriber->deleteGlobalSubscriber($userID, $iContactID);
+                $result = $mSubscriber->deleteGlobalSubscriber($userID, $iContactID);
             }
 
             if ($result) {

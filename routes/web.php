@@ -198,6 +198,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/brandboost/subscribers/{id}', 'Admin\Brandboost@subscribers');
     Route::post('admin/contacts/update_status', 'Admin\Contacts@update_status');
     Route::post('admin/contacts/delete_contact', 'Admin\Contacts@delete_contact');
+    Route::post('admin/contacts/deleteBulkContacts', 'Admin\Contacts@deleteBulkContacts');
     Route::post('admin/brandboost/deleteWidgets', 'Admin\Brandboost@deleteWidgets');
     Route::get('admin/brandboost/export-review-request', 'Admin\Brandboost@exportReviewRequests');
     Route::get('admin/brandboost/export-onsite-campaigns', 'Admin\Brandboost@exportOnsiteCampaigns');

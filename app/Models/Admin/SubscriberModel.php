@@ -1599,9 +1599,14 @@ FROM
     }
 
     public function deleteGlobalSubscriber($userID, $id) {
+        /*echo $userID."=============".$id; exit;
         $this->db->where("id", $id);
         $this->db->where("owner_id", $userID);
-        $result = $this->db->delete('tbl_subscribers');
+        $result = $this->db->delete('tbl_subscribers');*/
+        $result = DB::table('tbl_subscribers')
+            ->where('id', '=', $id)
+            ->where('owner_id', '=', $userID)
+            ->delete();
         if ($result) {
             return true;
         } else {

@@ -69,7 +69,7 @@
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
                                 <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
-                                <!--<li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>-->
+                                <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
                                 <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
                             </ul>
@@ -89,12 +89,12 @@
                                 <tbody>
                                 <tr class="headings">
                                     <td width="20">
-                                <span>
-                                    <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox">
-                                        <span class="custmo_checkmark blue"></span>
-                                    </label>
-                                </span>
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
                                     <td><span class="fsize10 fw500">name </span></td>
                                     <td><span class="fsize10 fw500">Email</span></td>
@@ -105,12 +105,12 @@
                                 </tr>
                                 <tr v-for="contact in subscribers" v-if="subscribers">
                                     <td width="20">
-                                <span>
-                                    <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox">
-                                        <span class="custmo_checkmark blue"></span>
-                                    </label>
-                                </span>
+                                        <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox" :checked="deletedItems.indexOf(contact.id)>-1" @change="addtoDeleteCollection(contact.id, $event.target)">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
                                     </td>
                                     <td>
                                         <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
@@ -306,6 +306,18 @@
                 this.loadPaginatedData();
             }
         },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.subscribers.forEach(camp => {
+                    let idx = this.deletedItems.indexOf(camp.id);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
+            }
+        },
         methods: {
             loadProfile: function(id){
                 window.location.href='/admin#/contacts/profile/'+id;
@@ -315,6 +327,50 @@
 
                 this.sortBy = sortVal;
                 this.deletedItems = [];
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/contacts/deleteBulkContacts', {_token:this.csrf_token(), multipal_record_id:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.subscribers.length>0){
+                            this.subscribers.forEach(camp => {
+                                let idxx = this.deletedItems.indexOf(camp.id);
+                                if(idxx == -1){
+                                    this.deletedItems.push(camp.id);
+                                }
+                            });
+                        }
+                    }else{
+                        this.subscribers.forEach(camp => {
+                            let idxx = this.deletedItems.indexOf(camp.id);
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
