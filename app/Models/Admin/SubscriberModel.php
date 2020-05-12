@@ -31,19 +31,28 @@ class SubscriberModel extends Model {
         }
 
         if(!empty($sortBy)){
-            if($sortBy == 'Active'){
+            if($sortBy == 'All'){
+                $query->orderBy('tbl_subscribers.created', 'desc');
+            }else if($sortBy == 'Active'){
                 $query->where('tbl_subscribers.status', '1');
-            }else  if($sortBy == 'Draft'){
+            }else  if($sortBy == 'Inactive'){
                 $query->where('tbl_subscribers.status', '0');
             }else  if($sortBy == 'Pending'){
                 $query->where('tbl_subscribers.status', '2');
             }else  if($sortBy == 'Archive'){
                 $query->where('tbl_subscribers.status', '2');
+            }else  if($sortBy == 'Date Created'){
+                $query->orderBy('tbl_subscribers.created', 'desc');
             }
-
         }
+
         if($paginated == true){
             $oData = $query->paginate($items_per_page);
+            /*if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }*/
         }else{
             $oData = $query->get();
         }
@@ -1590,9 +1599,14 @@ FROM
     }
 
     public function deleteGlobalSubscriber($userID, $id) {
+        /*echo $userID."=============".$id; exit;
         $this->db->where("id", $id);
         $this->db->where("owner_id", $userID);
-        $result = $this->db->delete('tbl_subscribers');
+        $result = $this->db->delete('tbl_subscribers');*/
+        $result = DB::table('tbl_subscribers')
+            ->where('id', '=', $id)
+            ->where('owner_id', '=', $userID)
+            ->delete();
         if ($result) {
             return true;
         } else {

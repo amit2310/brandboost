@@ -616,11 +616,11 @@ class Subscribers extends Controller
         $lastName = $request->lastname;
         $email = $request->email;
         $phone = $request->phone;
-        $gender = $request->gender;
-        $countryCode = $request->country_code;
-        $cityName = $request->cityName;
-        $stateName = $request->stateName;
-        $zipCode = $request->zipCode;
+        $gender = (!empty($request->gender) ? $request->gender : '');
+        $countryCode = (!empty($request->country_code) ? $request->country_code : '');
+        $cityName = (!empty($request->cityName) ? $request->cityName : '');
+        $stateName = (!empty($request->stateName) ? $request->stateName : '');
+        $zipCode = (!empty($request->zipCode) ? $request->zipCode : '');
         $socialProfile = (!empty($request->socialProfile) ? $request->socialProfile : '');
         $facebookProfile = (!empty($request->facebook_profile) ? $request->facebook_profile : '');
         $twitterProfile = (!empty($request->twitter_profile) ? $request->twitter_profile : '');
