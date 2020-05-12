@@ -848,7 +848,7 @@
                     </div>
 
                 <!--Decision Modal -->
-                <div class="box addDecisionBoxContent" style="width: 424px; display:none;">
+                <div class="box addDecisionBoxContent2" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
@@ -912,10 +912,100 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                <!--Delay Modal-->
+                <!--Decision Modal New-->
+                <div class="box addDecisionBoxContent" style="width: 424px; border-color:#64B2CB!important; display:none; ">
+                    <div style="width: 424px;overflow: hidden; height: 100%;">
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                            <div class="p40">
+                                <div class="row">
+                                    <div class="col-md-12"> <img width="40" src="assets/images/decision_arrow_45.png"/>
+                                        <h3 class="htxt_medium_24 dark_800 mt20">Decision </h3>
+                                        <p class="fsize14 dark_200 mb0 mt-1">Send people down a path based on selected criteria.</p>
+                                        <hr class="mt20 mb20">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="decisionTitle" class="fsize11 fw500 dark_600 ls4">DECISION NODE NAME</label>
+                                            <input class="form-control h50" v-model="decisionTitle" type="text" placeholder="Enter decision node name" id="decisionTitle" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="decisionType" class="fsize11 fw500 dark_600 ls4">DECISION BASED ON</label>
+                                            <div class="min_h_48 border br4 p15">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="custmo_checkbox pull-left m0">
+                                                            <input type="checkbox" v-model="decisionProperties.decision_type" value="attribute" :checked="decisionProperties.decision_type=='attribute'" id="decisionType">
+                                                            <span class="custmo_checkmark br100 decision"></span>
+                                                            &nbsp; Attribute
+                                                        </label>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="v_line_48" style="left:-7px; top:-16px;"></span>
+                                                        <label class="custmo_checkbox pull-left m0">
+                                                            <input type="checkbox" v-model="decisionProperties.decision_type" value="segment" :checked="decisionProperties.decision_type=='segment'">
+                                                            <span class="custmo_checkmark br100 decision"></span>
+                                                            &nbsp; Segment
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <hr class="mt20" />
+
+                                        <div class="form-group">
+                                            <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATH 1</label>
+                                            <select class="form-control h50 form-control-custom dark_800">
+                                                <option>Select segment </option>
+                                                <option>Submitted a form</option>
+                                                <option>Choose a trigger...</option>
+                                                <option>Choose a trigger...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATH 2</label>
+                                            <select class="form-control h50 form-control-custom dark_800">
+                                                <option>Select segment </option>
+                                                <option>Submitted a form</option>
+                                                <option>Choose a trigger...</option>
+                                                <option>Choose a trigger...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <a class="decision_300 fsize12 fw500 ls4 lh_20" href="#"><img src="assets/images/add-circle-fill-decision.svg"/>&nbsp; ADD SEGMENT</a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row bottom-position">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-md bkg_decision_300 light_000 pr20 min_w_160 fsize13 fw500 mr20">SAVE DECISION</button>
+                                        <!--<button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>-->
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <a class="dark_200 fw500 d-inline-block mt10" href="#">Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <!--Delay Modal-->
                 <div class="box addDelayBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDelaybox" id="slideAddDelaybox"><i class=""><img src="assets/images/cross.svg"/></i></a>
@@ -1389,6 +1479,10 @@
                 selectedEvent: '',
                 actionTitle: '',
                 decisionTitle: '',
+                decisionProperties: {
+                    decision_type: 'attribute',
+                    total_path: '2'
+                },
                 delayProperties: {
                     delay_type: 'after',
                     delay_unit: 'minute',

@@ -11,10 +11,10 @@
             <div class="workflow_box" >
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="workflow_card" :class="{'workflowSelectedBorder': metaData.selectedClass == event.id}" @click="editNode">
+                        <div class="workflow_card" :class="nodeSelectedClass" @click="editNode">
                             <div class="wf_icons br12" :class="nodeClass">
                                 <img v-if="nodeType=='action'" width="18" src="assets/images/flashlight-fill-white.svg">
-                                <img v-if="nodeType=='decision'" width="18" src="assets/images/mail-open-fill-white.svg">
+                                <img v-if="nodeType=='decision'" class="rotate_45_minus" width="18" src="assets/images/arrow_right_line.svg">
                                 <img v-if="nodeType=='delay'" width="18" src="assets/images/time-fill-14.svg">
                                 <img v-if="nodeType=='split'" width="18" src="assets/images/split-white.svg">
                                 <img v-if="nodeType=='goal'" width="18" src="assets/images/checkbox-circle-fill-white.svg">
@@ -48,7 +48,7 @@
                                             <span class="d-inline-block"><i class="ri-time-fill blue_300 fsize15"></i></span>  {{delayTime}}
                                         </a>
                                         <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else-if="nodeType.toLowerCase() == 'decision'">
-                                            <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'ADD DECISION'}}
+                                            <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'SET UP DECISION'}}
                                         </a>
                                         <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else-if="nodeTitle">
                                             <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'ADD ACTION'}}
@@ -144,12 +144,31 @@
             }
         },
         computed :{
+            nodeSelectedClass : function(){
+                if(this.metaData.selectedClass == this.event.id){
+                    let className = JSON.parse(this.event.data)['node_type'];
+                    if(className == 'action'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'decision'){
+                        return 'decision_border2';
+                    }else if(className == 'delay'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'split'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'goal'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'exit'){
+                        return 'workflowSelectedBorder';
+                    }
+                    return '';
+                }
+            },
             nodeClass : function(){
                 let className = JSON.parse(this.event.data)['node_type'];
                 if(className == 'action'){
                     return 'bkg_blue_300';
                 }else if(className == 'decision'){
-                    return 'bkg_yellow_400';
+                    return 'bkg_decision_300 rotate_45';
                 }else if(className == 'delay'){
                     return 'bkg_reviews_300';
                 }else if(className == 'split'){
