@@ -16,6 +16,7 @@
                             <li><img id="delay" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon2.svg"/></li>
                             <li><img id="goal" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon3.svg"/></li>
                             <li><img id="decision" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon4.svg"/></li>
+                            <li><div class="wf_icons br12 bkg_decision_300 rotate_45 border"><img class="rotate_45_minus" id="decision" draggable="true" @dragstart="onDrag($event)" width="28" src="assets/images/arrow_right_line.svg"/></div></li>
                             <li><img id="split" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon5.svg"/></li>
                             <li><img id="exit" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon6.svg"/></li>
                         </ul>
