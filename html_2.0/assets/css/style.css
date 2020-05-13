@@ -2406,7 +2406,7 @@ border: 2px solid #FFFFFF!important; width:40px; height:40px;}
 }
 .workflow_list li a {
   margin: 0;
-  padding: 0 12px;
+  padding: 0 5px;
   display: inline-block;
   color: #7b89a6;
   font-size: 12px;
@@ -2420,7 +2420,7 @@ border: 2px solid #FFFFFF!important; width:40px; height:40px;}
 }
 .workflow_list li a img {
   float: left !important;
-  margin: -2px 8px 0 0 !important;
+  margin: -2px 4px 0 0 !important;
 }
 .wf_nodes{ margin:0; padding:0; }
 .wf_nodes li{ margin:0 5px 0 0; padding:0; list-style:none; display:inline-block }

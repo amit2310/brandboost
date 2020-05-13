@@ -187,6 +187,59 @@
            </div>
     	</div>
         
+        
+        <div class="col-md-12">
+           <div class="workflow_box">
+           	<div class="row mt40">
+           		<div class="col-md-4">
+					<div class="workflow_card ">
+                <div class="wf_icons br12 bkg_decision_300 rotate_45 border"><img class="rotate_45_minus" src="assets/images/arrow_right_line.svg" width="18"></div>
+                <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">DECISION </p>
+                <p class="dark_200 fsize13 fw500 mb15 ls4">Empty Decision </p>
+                <div class="p0 pt12 btop">
+                  <ul class="workflow_list">
+                    <li style="border:none;"><a class=" decision_300 fw500 fsize11" href="#"><span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> SET UP DECISION</a></li>
+                  </ul>
+                </div>
+              </div>
+                   </div>
+                   
+                   <div class="col-md-4">
+					<div class="workflow_card decision_border2">
+                <div class="wf_icons br12 bkg_decision_300 rotate_45 border"><img class="rotate_45_minus" src="assets/images/arrow_right_line.svg" width="18"></div>
+                <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">DECISION </p>
+                <p class="dark_200 fsize13 fw500 mb15 ls4">Empty Decision </p>
+                <div class="p0 pt12 btop">
+                  <ul class="workflow_list">
+                    <li style="border:none;"><a class=" decision_300 fw500 fsize11" href="#"><span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> SET UP DECISION</a></li>
+                  </ul>
+                </div>
+              </div>
+                   </div>
+                   
+                   <div class="col-md-4">
+					
+                    
+                    <div class="workflow_card ">
+                <div class="wf_icons br12 bkg_decision_300 rotate_45 border"><img class="rotate_45_minus" src="assets/images/arrow_right_line.svg" width="18"></div>
+                <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">DECISION </p>
+                <p class="dark_600 fsize13 fw500 mb15 ls4">Anniversary Gift </p>
+                <div class="p0 pt12 btop">
+                  <ul class="workflow_list">
+                    <li style="border:none;"><a class="dark_200 fsize12" href="#"><span class="d-inline-block"><i class="ri-pie-chart-2-fill decision_300  fsize15"></i></span> Segments Split</a></li>
+                  </ul>
+                </div>
+              </div>
+              
+              
+                   </div>
+           	</div>
+           </div>
+    	</div>
+        
+        
+        
+        
         <div class="col-md-12 mb0">
            <div class="workflow_box mt-5">
            	<div class="row">
@@ -273,8 +326,6 @@
            	</div>
            </div>
     	</div>
-        
-       
     </div>
       </div>
      </div>

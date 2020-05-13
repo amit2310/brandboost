@@ -67,43 +67,26 @@
     
     
     
+    <div class="table_head_action">
+				<div class="row">
+					<div class="col-md-6">
+						<ul class="table_filter">
+							<li><a class="htxt_medium_16 dark_400" href="#">Campaigns</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<ul class="table_filter text-right">
+                            <li><a class="search_tables_open_close" href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/list_grey.svg"></i></a></li>
+                        </ul>
+					</div>
+				</div>
+		</div>
     
     
     
-    <div class="table_head_action pb10">
-    <div class="row">
-    	<div class="col-md-6">
-    		<h3 class="htxt_medium_16 dark_400">Campaigns</h3>
-    	</div>
-    	<div class="col-md-6">
-    	<div class="table_action">
-			<div class="float-right">
-			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/date_created.svg"></span>&nbsp; Date Created
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Link 1</a>
-			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
-		  </div>
-			<div class="float-right ml10 mr10">
-			<button type="button" class="dropdown-toggle table_action_dropdown" data-toggle="dropdown">
-			  <span><img src="assets/images/list_view.svg"></span>&nbsp; List View
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Link 1</a>
-			  <a class="dropdown-item" href="#">Link 2</a>
-			  <a class="dropdown-item" href="#">Link 3</a>
-			</div>
-		  </div>
-		  <div class="float-right">
-			<input class="table_search" type="text" placeholder="Serch">
-		  </div>
-    	</div>
-    	</div>
-    </div>
-    </div>
     
     
     
