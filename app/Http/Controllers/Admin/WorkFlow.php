@@ -3178,6 +3178,11 @@ class WorkFlow extends Controller {
                 $splitData = $request->splitData;
                 $mWorkflow->addWorkflowSplitTest($splitData, $newNodeEventID, $moduleName);
             }
+            //Add Decision data in case decision node
+            if($nodeType == 'decision'){
+                $decisionData = $request->decisionData;
+                $mWorkflow->addWorkflowDecision($decisionData, $newNodeEventID, $moduleName);
+            }
         }
 
         if($bSuccess){
@@ -3374,7 +3379,41 @@ class WorkFlow extends Controller {
         return ['status' => 'success', 'oEvents' => $oEvents];
     }
 
+    /**
+     * Update decision node data
+     * @param Request $request
+     * @return array
+     */
+    public function updateDecisionData(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $decisionId = $request->id;
+        $decisionProperties = $request->decisionData;
+        $bUpdated = $mWorkflow->updateDecisionData($decisionProperties, $decisionId, $moduleName);
+        //Update event trigger param too
+        $eventId = $decisionProperties['event_id'];
+        $oEvent = $mWorkflow->getNodeInfo($eventId, $moduleName);
+        if(!empty($oEvent)){
+            $triggerParam = json_decode($oEvent->data);
+            $triggerParam->title = $decisionProperties['decision_name'];
+            $bUpdated = $mWorkflow->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+        }
+        $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+        return ['status' => 'success', 'oEvents' => $oEvents];
+    }
 
+    /**
+     * Update split node data
+     * @param Request $request
+     * @return array
+     */
     public function updateSplitData(Request $request){
         $aUser = getLoggedUser();
         $userID = $aUser->id;
@@ -3415,6 +3454,23 @@ class WorkFlow extends Controller {
         $splitId = $request->id;
         $oData = $mWorkflow->getSplitInfo($splitId, $moduleName);
         return ['status' => 'success', 'splitData' => $oData];
+    }
+
+    /**
+     * Used to get decision node info
+     * @param Request $request
+     * @return array
+     */
+    public function getDecisionInfo(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $decisionId = $request->id;
+        $oData = $mWorkflow->getDecisionInfo($decisionId, $moduleName);
+        return ['status' => 'success', 'decisionData' => $oData];
     }
 
     /**
