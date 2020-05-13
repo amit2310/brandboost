@@ -430,7 +430,8 @@
             $('#' + valContainer).val(ratingValue);
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        //document.addEventListener("DOMContentLoaded", function() {
+
             Dropzone.options.myDropzone = {
                 url: '{{ base_url("webchat/dropzone/upload_s3_attachment_review/".$_GET['clid']."/reviews") }}',
                 uploadMultiple: false,
@@ -438,7 +439,7 @@
                 maxFilesize: 600,
                 acceptedFiles: 'image/*,video/mp4',
                 addRemoveLinks: true,
-                removedfile: function (file) {
+                removedfile: function (file) { alert(file)
                     var _ref;
                     var xmlString = file.xhr.responseText;
                     var totalStr = $('#uploadedSiteFiles').html();
@@ -464,8 +465,9 @@
                     $('#uploadedSiteFiles').append(response.xhr.responseText);
                 }
             }
-        });
+        //});
 
+        @if($productsData)
         @foreach($productsData as $key=>$productData)
             Dropzone.options.myDropzone{{ $productData->id }} = {
             url: '{{ base_url("webchat/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews") }}/{{ $productData->id }}',
@@ -501,8 +503,10 @@
             }
         }
         @endforeach
+        @endif
 
-            @foreach($servicesData as $key=>$productData)
+        @if($servicesData)
+        @foreach($servicesData as $key=>$productData)
             Dropzone.options.myDropzone{{ $productData->id }} = {
             url: '{{ base_url("webchat/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews") }}/{{ $productData->id }}',
             uploadMultiple: false,
@@ -537,6 +541,7 @@
             }
         }
         @endforeach
+        @endif
 
         setTimeout(function(){ $('.dz-default').hide(); }, 10);
 
