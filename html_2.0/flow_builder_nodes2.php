@@ -143,7 +143,58 @@
     </div>
     
     
+    
     <div class="row">
+    	<div class="col-12">
+        <div class="card p35 br6 mb10 light_border2">
+    			<div class="row">
+    				<div style="max-width:64px; padding:0;" class="col"><img width="56" src="assets/images/decision_arrow_56.svg"/></div>
+    				<div class="col">
+    					<p class=" fsize11 dark_100 mb-1 fw500 ">DECISION</p>
+    					<p class=" fsize16 dark_200 m-0 fw500">Empty Decision</p>
+    				</div>
+    				<div class="col text-right">
+    					<button class="btn border br35 decision_300 fsize13 fw500 p10 pl30 pr30 shadow-none"><img src="assets/images/plus_add_16.svg"/>  SET UP DECISION</button>
+    				</div>
+    			</div>
+    		</div>
+        </div>
+        <div class="col-12">
+        <div class="card p35 br6 mb10 decision_border2">
+    			<div class="row">
+    				<div style="max-width:64px; padding:0;" class="col"><img width="56" src="assets/images/decision_arrow_56.svg"/></div>
+    				<div class="col">
+    					<p class=" fsize11 dark_100 mb-1 fw500 ">DECISION</p>
+    					<p class=" fsize16 dark_200 m-0 fw500">Empty Decision</p>
+    				</div>
+    				<div class="col text-right">
+    					<button class="btn border br35 decision_300 fsize13 fw500 p10 pl30 pr30 shadow-none"><img src="assets/images/plus_add_16.svg"/>  ADD TRIGGER</button>
+    				</div>
+    			</div>
+    		</div>
+        </div>
+        <div class="col-12">
+        <div class="card p35 br6 mb10 light_border2">
+    			<div class="row">
+    				<div style="max-width:64px; padding:0;" class="col"><!--<span class="circle-icon-36 br12 bkg_dark_100 light_000 d-block fsize16 fw500"><i class="ri-play-fill"></i></span>--> <img width="56" src="assets/images/decision_arrow_56.svg"/> </div>
+    				<div class="col">
+    					<p class=" fsize11 dark_100 mb-1 fw500 ">DECISION</p>
+    					<p class=" fsize16 dark_700 mb-1 fw500 ls_4">Anniversary gift split by order count</p>
+                        <p class="m-0 fsize14 dark_600">Segment split  &nbsp; <img src="assets/images/decision_pie_13.svg"/> &nbsp;  Free Customers  &nbsp; <img src="assets/images/decision_pie_13.svg"/> &nbsp;  Have not logged in recently</p>
+    				</div>
+    				<div class="col-3 text-right">
+    					<button class="btn border br35 decision_300 fsize13 fw500 p10 pl30 pr30 shadow-none">EDIT</button>
+    				</div>
+    			</div>
+    		</div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    <div class="row mt-5">
     	<div class="col-12">
         <div class="card p35 br6 mb10 light_border2">
     			<div class="row">
