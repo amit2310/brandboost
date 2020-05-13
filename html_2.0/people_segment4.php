@@ -81,11 +81,12 @@
 	<!--******************
 	 PAGE LEFT SIDEBAR
 	**********************-->
+    <a class="close_sidebar" href="#">&nbsp; <img src="assets/images/menu-2-line.svg"></a>
 	<div class="page_sidebar bkg_light_000 absl">
+    <div style="width: 279px;">
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
 	 			<div class="col"><p>PEOPLE</p></div>
-	 			<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"/></a></p></div>
 	 		</div>
 	 	</div>
        
@@ -145,7 +146,7 @@
         	
         </ul>
        
-        <div class="clearfix"></div>
+       
         </div>
        
         
@@ -153,7 +154,8 @@
        
 
     
-    <div class="clearfix"></div>   
+   <div class="clearfix"></div> 
+    </div> 
 </div>
    <!--******************
 	 PAGE LEFT SIDEBAR END
@@ -162,20 +164,28 @@
    
      <div class="table_head_action">
     <div class="row">
-    	<div class="col-md-6">
-    		<ul class="table_filter">
-    			<li><a class="active" href="#">ALL</a></li>
-    			<li><a href="#">ACTIVE</a></li>
-    			<li><a href="#">DRAFT</a></li>
-    			<li><a href="#">ARCHIVE</a></li>
-    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"/></i> &nbsp; FILTER</a></li>
+    	<div class="col-md-8">
+    		<ul class="table_filter new">
+    			<li class="mr15 "><!--<a class="dark_200" href="#">Match All</a>-->
+                <select class="match_segment_select dark_200">
+                <option>Match All</option>
+                <option>Email</option>
+                <option>User ID</option>
+                </select>
+                </li>
+    			<li><a class="blef pl15" href="#"><img src="assets/images/at_blue_13.svg"/> &nbsp; <span class="dark_600">Email</span> is max@makers.co</a></li>
+    			<li><a href="#"><img src="assets/images/hash_16_blue.svg"/> &nbsp; <span class="dark_600">User ID</span>  starts with 12</a></li>
+    			<li><a href="#"><img src="assets/images/plus_green_15.svg"/></a> &nbsp; <a href="#"><img src="assets/images/minus_red_15.svg"/></a></li>
+    			
     		</ul>
     	</div>
-    	<div class="col-md-6">
+        
+    	<div class="col-md-4 pl-0">
     		<ul class="table_filter text-right">
-    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"/></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"/></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"/></i></a></li>
+                <li><a href="#" class="save_segment_btn fsize14 dark_600 fw500 pl15 pr15"><img class="float-left" style="margin-top:2px;" src="assets/images/pi-line-blue.svg"/> &nbsp; Save Segment</a></li>
+    			            <li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+                            <li><a href="#"><i><img src="assets/images/list_grey.svg"></i></a></li>
     		</ul>
     	</div>
     </div>
