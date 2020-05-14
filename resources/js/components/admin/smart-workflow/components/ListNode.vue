@@ -1,7 +1,7 @@
 <template>
     <div class="row" style="margin-left:0px;margin-right:0px;width:100%;">
         <div class="col-12" v-if="nodeType != 'split'">
-            <div class="card p35 br6 mb10" :class="metaData.selectedClass == event.id ? 'blue_border2' : 'light_border2'">
+            <div class="card p35 br6 mb10" :class="nodeSelectedClass">
                 <div class="row">
                     <div style="max-width:64px" class="col">
                         <span v-if="nodeName.toLowerCase() == 'email'" class="circle-icon-36 dot_none br12 bkg_email_300 light_000 d-block fsize16 fw500">
@@ -13,8 +13,8 @@
                         <span v-else-if="nodeName.toLowerCase() == 'delay'" class="circle-icon-36 dot_none br12 bkg_reviews_300 light_000 d-block fsize16 fw500">
                             <i class="ri-time-fill"></i>
                         </span>
-                        <span v-else-if="nodeType.toLowerCase() == 'decision'" class="circle-icon-36 dot_none br12 bkg_yellow_500 light_000 d-block fsize16 fw500">
-                            <i class="ri-mail-open-fill"></i>
+                        <span v-else-if="nodeType.toLowerCase() == 'decision'" class="rotate_45 bkg_decision_300 circle-icon-36 dot_none br12 light_000 d-block fsize16 fw500">
+                            <img class="rotate_45_minus" width="18" src="assets/images/arrow_right_line.svg">
                         </span>
                         <span v-else class="circle-icon-36 dot_none br12 bkg_blue_300 light_000 d-block fsize16 fw500">
                             <i class="ri-flashlight-fill"></i>
@@ -30,7 +30,7 @@
                         <template v-if="nodeType.toLowerCase() == 'decision'">
                             <p class=" fsize16 dark_700 mb-1 fw500 ls_4" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>
                             <p class=" fsize16 dark_200 m-0 fw500" v-else>Empty Decision</p>
-                            <p class="m-0 fsize14 dark_600" v-if="nodeName">Decision  &nbsp; <img src="assets/images/account-circle-fill_blue.svg"/> &nbsp;  1,356</p>
+                            <p class="m-0 fsize14 dark_600" v-if="nodeTitle" v-html="decisionTitle">Decision  &nbsp; <img src="assets/images/account-circle-fill_blue.svg"/> &nbsp;  1,356</p>
                         </template>
                         <template v-if="nodeType.toLowerCase() == 'action'">
                             <ul class="review_camapaign_list" v-if="nodeName && (nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms')">
@@ -76,7 +76,10 @@
                     </div>
                     <div class="col text-right">
                         <button v-if="nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms'" @click="deleteEvent" class="btn border br35 dark_200 fsize13 fw500 p10 pl30 pr30 shadow-none">Delete</button>
-                        <button @click="editNode" class="btn border br35 blue_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="nodeName">
+                        <button @click="editNode" class="btn border br35 decision_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-if="nodeType.toLowerCase() == 'decision'">
+                            {{decisionTitle ? 'Edit' : 'SET UP DECISION'}}
+                        </button>
+                        <button @click="editNode" class="btn border br35 blue_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else-if="nodeName">
                             Edit
                         </button>
                         <button @click="editNode" class="btn border br35 blue_300 fsize13 fw500 p10 pl30 pr30 shadow-none" v-else>
@@ -108,6 +111,36 @@
             }
         },
         computed :{
+            decisionTitle: function(){
+                let decisionProps = JSON.parse(this.event.data)['decision_properties'];
+                if(decisionProps['type'] == 'segment'){
+                    return 'Segments Split ';
+                }
+                else if(decisionProps['type'] == 'attribute'){
+                    return 'Attributes Split ';
+                }else {
+                    return false;
+                }
+            },
+            nodeSelectedClass : function(){
+                if(this.metaData.selectedClass == this.event.id){
+                    let className = JSON.parse(this.event.data)['node_type'];
+                    if(className == 'action'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'decision'){
+                        return 'decision_border2';
+                    }else if(className == 'delay'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'split'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'goal'){
+                        return 'workflowSelectedBorder';
+                    }else if(className == 'exit'){
+                        return 'workflowSelectedBorder';
+                    }
+                    return '';
+                }
+            },
             nodeClass: function(){
                 let className = JSON.parse(this.event.data)['node_type'];
                 if(className == 'action'){

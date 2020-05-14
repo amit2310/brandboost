@@ -15,8 +15,7 @@
                             <li><img id="action" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon1.svg"/></li>
                             <li><img id="delay" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon2.svg"/></li>
                             <li><img id="goal" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon3.svg"/></li>
-                            <li><img id="decision" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon4.svg"/></li>
-                            <li><div class="wf_icons br12 bkg_decision_300 rotate_45 border"><img class="rotate_45_minus" id="decision" draggable="true" @dragstart="onDrag($event)" width="28" src="assets/images/arrow_right_line.svg"/></div></li>
+                            <li><img id="decision" draggable="true" @dragstart="onDrag($event)" src="assets/images/decision_28_circle.svg"/></li>
                             <li><img id="split" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon5.svg"/></li>
                             <li><img id="exit" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon6.svg"/></li>
                         </ul>
@@ -81,8 +80,26 @@
                                         @dragover="$event.preventDefault()">
                                     </div>
                                     <a id="jsMoveNode" href="javascript:void(0);" draggable="true" @dragstart="onLinearDrag($event, evt)">
-                                        <span class="circle-icon-20" :class="nodeClass(evt)" v-html="nodeIcon(evt)"></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?nodeTitle(evt): nodeName(evt)}}
+                                        <span class="circle-icon-20" :class="nodeClass(evt)" v-html="nodeIcon(evt)"></span>  {{capitalizeFirstLetter(nodeType(evt))}}: {{nodeTitle(evt)?setStringLimit(nodeTitle(evt), 13): setStringLimit(nodeName(evt), 13)}}
                                     </a>
+                                    <template v-if="nodeType(evt)=='decision'">
+                                        <hr class="mt10">
+
+                                        <ul class="workflow_list_new">
+                                            <li><a href="#"><span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">a</span> </a></li>
+                                            <li><a href="#"><span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span> Action: Subscribe on List</a></li>
+                                        </ul>
+
+                                        <hr>
+                                        <ul class="workflow_list_new">
+                                            <li><a href="#"><span class="circle-icon-20 bkg_light_000 br35 dark_100 shadow3">b</span> </a></li>
+                                            <li><a href="#"><span class="circle-icon-20 bkg_blue_300"><i class="ri-folder-fill"></i></span> Action: Subscribe on List</a></li>
+                                        </ul>
+
+                                        <hr>
+
+
+                                    </template>
                                     <template v-if="nodeType(evt)=='split'">
                                         <hr class="mt10">
 
@@ -1451,7 +1468,7 @@
                 actionTitle: '',
                 decisionProperties: {
                     decision_name: '',
-                    decision_type: 'attribute'
+                    decision_type: ''
                 },
                 delayProperties: {
                     delay_type: 'after',
@@ -1705,6 +1722,7 @@
             clearAllForms: function(){
               this.clearDelayProperties();
               this.clearSplitProperties();
+              this.clearDecisionProperties();
             },
             deleteWorkflowNode: function(event){
                 this.clearActionProps();
@@ -2229,7 +2247,7 @@
                     }
 
                 }else if(className == 'decision'){
-                    return '<i class="ri-folder-fill"></i>';
+                    return '<span class="rotate_45 d-block"><i><img class="align-top mt-1 rotate_45_minus" width="12" src="assets/images/arrow_right_line.svg"/></i></span>';
                 }else if(className == 'delay'){
                     return '<i class="ri-time-fill"></i>';
                 }else if(className == 'split'){
@@ -2246,7 +2264,7 @@
                 if(className == 'action'){
                     return 'bkg_blue_300';
                 }else if(className == 'decision'){
-                    return 'bkg_yellow_400';
+                    return 'bkg_decision_300';
                 }else if(className == 'delay'){
                     return 'bkg_blue_300 br35';
                 }else if(className == 'split'){
@@ -2297,6 +2315,12 @@
                     conditional_split: false,
                     total_sent_to: 500,
                     sent_to: 'a'
+                }
+            },
+            clearDecisionProperties: function(){
+                this.decisionProperties = {
+                    decision_name: '',
+                    decision_type: ''
                 }
             },
             onLinearDrag: function(ev, selectedEventData){

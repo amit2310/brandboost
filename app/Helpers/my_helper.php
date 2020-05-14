@@ -4126,4 +4126,9 @@ if (!function_exists('getLastNode')) {
     }
 }
 
+/**
+ * Decision Related workflow helper functions
+ */
+
+
 ?>

@@ -48,8 +48,12 @@
                                         <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-if="nodeType.toLowerCase() == 'delay'">
                                             <span class="d-inline-block"><i class="ri-time-fill blue_300 fsize15"></i></span>  {{delayTime}}
                                         </a>
-                                        <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else-if="nodeType.toLowerCase() == 'decision'">
-                                            <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'SET UP DECISION'}}
+                                        <a
+                                            :class="decisionClass"
+                                            href="javascript:void(0);"
+                                            v-else-if="nodeType.toLowerCase() == 'decision'"
+                                            v-html="decisionTitle"
+                                        >
                                         </a>
                                         <a class="blue_300 fw500 fsize11" href="javascript:void(0);" v-else-if="nodeTitle">
                                             <span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> {{nodeTitle ? nodeTitle : 'ADD ACTION'}}
@@ -256,6 +260,28 @@
             delayTime: function(){
                 let delayProps = JSON.parse(this.event.data)['delay_properties'];
                 return 'At '+ delayProps['delay_hour']+':'+delayProps['delay_minute']+ ' '+ delayProps['delay_ampm'].toUpperCase();
+            },
+            decisionTitle: function(){
+                let decisionProps = JSON.parse(this.event.data)['decision_properties'];
+                if(decisionProps['type'] == 'segment'){
+                    return '<span class="d-inline-block"><i class="ri-pie-chart-2-fill decision_300  fsize15"></i></span> Segments Split';
+                }
+                else if(decisionProps['type'] == 'attribute'){
+                    return '<span class="d-inline-block"><i class="ri-pie-chart-2-fill decision_300  fsize15"></i></span> Attributes Split';
+                }else{
+                    return '<span class="d-inline-block"><img src="assets/images/plus_blue_7.svg"></span> SET UP DECISION';
+                }
+            },
+            decisionClass: function(){
+                let decisionProps = JSON.parse(this.event.data)['decision_properties'];
+                if(decisionProps['type'] == 'segment'){
+                    return 'dark_200 fsize12';
+                }
+                else if(decisionProps['type'] == 'attribute'){
+                    return 'dark_200 fsize12';
+                }else{
+                    return 'decision_300 fw500 fsize11';
+                }
             }
 
         },

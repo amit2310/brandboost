@@ -4783,12 +4783,13 @@ class WorkflowModel extends Model {
         }
         $aData['event_id'] = $eventId;
         $aData['created'] = date("Y-m-d H:i:s");
+        unset($aData['id']);
         $insert_id = DB::table($tableName)->insertGetId($aData);
         if($insert_id>0){
             $oEvent = $this->getNodeInfo($eventId, $moduleName);
             if(!empty($oEvent)){
                 $triggerParam = json_decode($oEvent->data);
-                $triggerParam->decision_properties = ['decision_id'=>$insert_id];
+                $triggerParam->decision_properties = ['decision_id'=>$insert_id, 'type'=>$aData['decision_type']];
                 $bUpdated = $this->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
             }
         }
@@ -4998,5 +4999,617 @@ class WorkflowModel extends Model {
             return false;
         }
     }
+
+    /**Decision related functions**/
+
+
+    /**
+     * Get decision path related all events
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public static function getWorkflowDecisionEvents($id, $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('path_id', $id)
+            ->orderBy('previous_event_id', 'asc')
+            ->get();
+
+        return $oData;
+    }
+
+    /**
+     * Used to get a decision node info from the workflow tree
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function getDecisionNodeInfo($id, $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->first();
+        return $oData;
+    }
+
+    /**
+     * Used to get Next Decision Node info in the workflow tree sequence
+     * @param type $previousEventID
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function getNextDecisionNodeInfo($previousEventID, $moduleName) {
+        if (empty($previousEventID) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('previous_event_id', $previousEventID)
+            ->first();
+        return $oData;
+    }
+
+    /**
+     * Used to delete a decision node from the workflow tree
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function deleteDecisionNode($id, $moduleName, $pathId='') {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->where('path_id', $pathId)
+            ->delete();
+        if ($oData) {
+            $bCampaignDeleted = $this->deleteWorflowDecisionCampaign($id, $moduleName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Used to delete end campaign belonging to a workflow decision node
+     * @param type $eventID
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function deleteWorflowDecisionCampaign($eventID, $moduleName) {
+        if ($eventID > 0) {
+            if (empty($eventID) || empty($moduleName)) {
+                return false;
+            }
+            switch ($moduleName) {
+                case "brandboost":
+                    $tableName = 'tbl_brandboost_decision_campaigns';
+                    break;
+                case "automation":
+                case "broadcast":
+                    $tableName = 'tbl_automations_decision_campaigns';
+                    break;
+                case "referral":
+                    $tableName = 'tbl_referral_decision_campaigns';
+                    break;
+                case "nps":
+                    $tableName = 'tbl_nps_decision_campaigns';
+                    break;
+                default :
+                    $tableName = '';
+            }
+
+            if (empty($tableName)) {
+                return false;
+            }
+
+            $oData = DB::table($tableName)
+                ->where('event_id', $eventID)
+                ->delete();
+
+            if ($oData) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Used to update a workflow tree decision node
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function updateDecisionNode($aData, $id, $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->update($aData);
+
+        if ($oData) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Used to get decision end campaigns
+     * @param type $eventID
+     * @param type $moduleName
+     * @return boolean
+     */
+    public static function getDecisionEventCampaign($eventID, $moduleName) {
+        if (empty($eventID) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_campaigns';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_campaigns';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_campaigns';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_campaigns';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('event_id', $eventID)
+            ->orderBy('id', 'asc')
+            ->get();
+        return $oData;
+    }
+
+    /**
+     * Used to create a new decision node in the workflow tree
+     * @param type $id
+     * @param type $type
+     * @param type $previousEventID
+     * @param type $triggerParams
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function createWorkflowDecisionEvent($id, $type, $previousEventID = '', $triggerParams = '', $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        if (empty($triggerParams)) {
+            $triggerParams = array('delay_type' => "after", 'delay_value' => 10, 'delay_unit' => "minute");
+        }
+
+        $aEventData = array(
+            'path_id' => $id,
+            'event_type' => $type,
+            'data' => json_encode($triggerParams),
+            'created' => date("Y-m-d H:i:s"),
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        if ($previousEventID > 0) {
+            $aEventData['previous_event_id'] = $previousEventID;
+        }
+        //echo "table name is ". $tableName;
+
+        $insert_id = DB::table($tableName)->insertGetId($aEventData);
+
+        if ($insert_id)
+            return $insert_id;
+        else
+            return false;
+    }
+
+    /**
+     * This function used to update workflow decision event
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function updateWorkflowDecisionEvent($aData, $id, $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_events';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_events';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_events';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_events';
+                break;
+            default :
+                $tableName = '';
+
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->update($aData);
+
+        if ($oData > -1) {
+            return $id;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Used to update workflow decision end campaign
+     * @param type $aData
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function updateWorkflowDecisionCampaign($aData, $id, $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_campaigns';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_campaigns';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_campaigns';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_campaigns';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->update($aData);
+
+        if ($oData > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Used to get workflow decision end email/sms campaign details
+     * @param type $id
+     * @param type $moduleName
+     * @return boolean
+     */
+    public function getWorkflowDecisionCampaign($id, $moduleName) {
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision_campaigns';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision_campaigns';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_decision_campaigns';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_decision_campaigns';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->first();
+        return $oData;
+    }
+
+    /**
+     * Used to add decision end campaign for email/sms
+     * @param $eventID
+     * @param $templateID
+     * @param $accountID
+     * @param $moduleName
+     * @param bool $isDraft
+     * @return array|bool
+     * @throws \Throwable
+     */
+    public function addDecisionEndCampaign($eventID, $templateID, $accountID, $moduleName, $isDraft = false) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        if (empty($eventID) || empty($templateID) || empty($accountID) || empty($moduleName)) {
+            return false;
+        }
+
+        $oAccountData = $this->getModuleUnitInfo($moduleName, $accountID);
+
+        $oTemplate = $this->getCommonTemplateInfo($templateID);
+
+        $templateSourceID = ($isDraft == true) ? $oTemplate->template_source : $templateID;
+
+
+        if (!empty($oTemplate)) {
+            $resultData = $oTemplate;
+            $defaultGreeting = $resultData->greeting;
+            $defaultIntroduction = (!empty($oAccountData->description)) ? $oAccountData->description : $resultData->introduction;
+            $categoryStatus = $oTemplate->category_status;
+
+
+            if ($categoryStatus == 2) {
+                if ($moduleName == 'nps') {
+                    if (strtolower($resultData->template_type) == 'email') {
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.email.templates', array('oNPS' => $oAccountData, 'template_slug' => $resultData->template_slug))->render();
+                        //$compiledTemplatePriviewCode = $this->parseModuleStatictemplate($moduleName, $sEmailPreview, 'email', $oAccountData);
+                    } else if (strtolower($resultData->template_type) == 'sms') {
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.sms.templates', array('oNPS' => $oAccountData, 'template_slug' => $resultData->template_slug))->render();
+                        //$compiledTemplatePriviewCode = $this->parseModuleStatictemplate($moduleName, $sSMSPreview, 'sms', $oAccountData);
+                    }
+                } else if ($moduleName == 'referral') {
+                    if (strtolower($resultData->template_type) == 'email') {
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.email.templates', array('template_slug' => $resultData->template_slug))->render();
+                    } else if (strtolower($resultData->template_type) == 'sms') {
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.sms.templates', array('template_slug' => $resultData->template_slug))->render();
+                    }
+                } else if ($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost') {
+                    $brandboostType = $oAccountData->review_type;
+
+                    //Get from Name and Email info
+
+                    if ($brandboostType == 'onsite') {
+                        if (strtolower($resultData->template_type) == 'email') {
+                            //echo "I am here 1. Template slug is ".$resultData->template_slug;
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
+                        } else if (strtolower($resultData->template_type) == 'sms') {
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
+                        }
+                    }
+
+                    if ($brandboostType == 'offsite') {
+                        if (strtolower($resultData->template_type) == 'email') {
+                            //echo "I am here 2. Template slug is ".$resultData->template_slug;
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.email.templates', array('template_slug' => $resultData->template_slug))->render();
+                        } else if (strtolower($resultData->template_type) == 'sms') {
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $resultData->template_slug))->render();
+                        }
+                    }
+                }
+            }
+
+            //Get From Email, Name info
+            $oFrom = $this->getWorkflowFromNameEmailInfo($moduleName, $accountID);
+
+            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $resultData->stripo_compiled_html;
+            $aCampaignData = array(
+                'event_id' => $eventID,
+                'content_type' => (strtolower($resultData->template_type) == 'sms' ) ? 'Plain' : 'Regular',
+                'campaign_type' => ucfirst($resultData->template_type),
+                'name' => $resultData->template_name,
+                'subject' => $resultData->template_subject,
+                'greeting' => $defaultGreeting,
+                'introduction' => $defaultIntroduction,
+                'html' => !empty($compiledContent) ? $compiledContent : '',
+                'stripo_html' => $resultData->stripo_html,
+                'stripo_css' => $resultData->stripo_css,
+                'stripo_compiled_html' => $compiledContent,
+                'template_source' => $templateSourceID,
+                'status' => 1,
+                'from_email' => (!empty($oFrom)) ? $oFrom->from_email : $aUser->email,
+                'from_name' => (!empty($oFrom)) ? $oFrom->from_name :  $aUser->firstname . ' ' . $aUser->lastname,
+                'reply_to' => (!empty($oFrom)) ? $oFrom->from_name : $aUser->email,
+                'created' => date("Y-m-d H:i:s")
+            );
+
+            switch ($moduleName) {
+                case "brandboost":
+                    $tableName = 'tbl_brandboost_decision_campaigns';
+                    break;
+                case "automation":
+                case "broadcast":
+                    $tableName = 'tbl_automations_decision_campaigns';
+                    break;
+                case "referral":
+                    $tableName = 'tbl_referral_decision_campaigns';
+                    break;
+                case "nps":
+                    $tableName = 'tbl_nps_decision_campaigns';
+                    break;
+                default :
+                    $tableName = '';
+            }
+        }
+
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $insert_id = DB::table($tableName)->insertGetId($aCampaignData);
+        if ($insert_id)
+            return array('id' => $insert_id, 'subject' => $resultData->template_subject, 'content' => base64_decode($resultData->template_content));
+        else
+            return false;
+    }
+
+
 
 }
