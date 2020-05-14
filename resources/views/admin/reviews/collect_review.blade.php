@@ -174,8 +174,8 @@
                                 <div class="img_vid_upload_review border dropzone" id="myDropzone">
                                     <input class="d-none" type="file" name="" value="" id="upload">
                                 </div>
-                                <div id="uploadedSiteFiles" style="display: none;"></div>
                             </label>
+                            <div id="uploadedSiteFiles" style="display: none;"></div>
                         </div>
                         <div class="form-group">
                             <label class="dark_600 fsize11 fw500 ls4">CONTACT INFO</label>
@@ -439,7 +439,7 @@
                 maxFilesize: 600,
                 acceptedFiles: 'image/*,video/mp4',
                 addRemoveLinks: true,
-                removedfile: function (file) { alert(file)
+                removedfile: function (file) {
                     var _ref;
                     var xmlString = file.xhr.responseText;
                     var totalStr = $('#uploadedSiteFiles').html();
@@ -449,6 +449,7 @@
                     var dropImage = res[0];
                     $.ajax({
                         url: "{{ base_url('admin/brandboost/DeleteObjectFromS3') }}",
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                         type: "POST",
                         data: {dropImage: dropImage},
                         dataType: "json",
