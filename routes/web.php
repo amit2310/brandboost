@@ -985,6 +985,18 @@ Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateCustomFields', 'Adm
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getDecisionInfo', 'Admin\WorkFlow@getDecisionInfo');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionData', 'Admin\WorkFlow@updateDecisionData');
 
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowDecisionData', 'Admin\WorkFlow@getWorkflowDecisionData');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowDecisionBlankAction', 'Admin\WorkFlow@createWorkflowDecisionBlankAction');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowDecisionBlankAction', 'Admin\WorkFlow@updateWorkflowDecisionBlankAction');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowDecisionEvent', 'Admin\WorkFlow@deleteWorkflowDecisionEvent');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/moveWorkflowDecisionNode', 'Admin\WorkFlow@moveWorkflowDecisionNode');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionEventDelay', 'Admin\WorkFlow@updateDecisionEventDelay');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField', 'Admin\WorkFlow@loadWorkflowDecisionActionField');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addDecisionEndCampaignToEvent', 'Admin\WorkFlow@addDecisionEndCampaignToEvent');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getDecisionEndCampaign', 'Admin\WorkFlow@getDecisionEndCampaign');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionTriggerData', 'Admin\WorkFlow@updateDecisionTriggerData');
+
+
 
 
 

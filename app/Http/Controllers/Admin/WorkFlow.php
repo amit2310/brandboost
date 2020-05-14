@@ -3400,6 +3400,7 @@ class WorkFlow extends Controller {
         if(!empty($oEvent)){
             $triggerParam = json_decode($oEvent->data);
             $triggerParam->title = $decisionProperties['decision_name'];
+            $triggerParam->decision_properties->type = $decisionProperties['decision_type'];
             $bUpdated = $mWorkflow->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
         }
         $events = $mWorkflow->getWorkflowEvents($moduleUnitId, $moduleName);
@@ -3729,6 +3730,1009 @@ class WorkFlow extends Controller {
         }else{
             return ['status'=>'error'];
         }
+    }
+
+    /** Decision related methods */
+
+    /**
+     * Used to get desicion related workflow data
+     * @param Request $request
+     * @return array
+     * @throws \Throwable
+     */
+    public function getWorkflowDecisionData(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
+        $mTemplates = new TemplatesModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitId);
+        $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+
+        $title = '';
+        if($moduleName == 'brandboost'){
+            $title = $oUnitData->brand_title;
+        }else if($moduleName == 'automation' || $moduleName == 'broadcast'){
+            $title = $oUnitData->title;
+        }else if($moduleName == 'nps' || $moduleName == 'referral'){
+            $title = $oUnitData->title;
+        }
+        $emailTemplateId = '';
+        $smsTemplateId = '';
+        $oCategories = $mTemplates->getCommonTemplateCategories();
+        $oEmailTemplates = $mTemplates->getCommonTemplates('', '', '', 'email', '', $moduleName, true);
+        $oSMSTemplates = $mTemplates->getCommonTemplates('', '', '', 'sms', '', $moduleName, true);
+        $selectedEmailTemplate = [];
+        $selectedSMSTemplate = [];
+        if(!empty($oEmailTemplates)){
+            foreach($oEmailTemplates as $oTemplate){
+                if($oTemplate->id == $emailTemplateId){
+                    $selectedEmailTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    if($moduleName == 'brandboost'){
+                        if($oUnitData->review_type == 'onsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }else if($oUnitData->review_type == 'offsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
+                    }else if($moduleName == 'nps'){
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.email.templates', array('oNPS' => $oUnitData, 'template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }else if($moduleName == 'referral'){
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.email.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }
+
+                }
+            }
+        }
+
+        if(!empty($oSMSTemplates)){
+            foreach($oSMSTemplates as $oTemplate){
+                if($oTemplate->id == $smsTemplateId){
+                    $selectedSMSTemplate = $oTemplate;
+                }
+                $categoryStatus = $oTemplate->category_status;
+                if($categoryStatus == 2){
+                    //Static Templates
+                    if($moduleName == 'brandboost'){
+                        if($oUnitData->review_type == 'onsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }else if($oUnitData->review_type == 'offsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
+                    }else if($moduleName == 'nps'){
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.sms.templates', array('oNPS' => $oUnitData, 'template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }else if($moduleName == 'referral'){
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }
+
+                }
+            }
+        }
+
+        return [
+            'title' => $title,
+            'oEvents' => $oEvents,
+            'moduleName' => $moduleName,
+            'moduleUnitId' => $moduleUnitId,
+            'moduleUnitData' => $oUnitData,
+            'oEmailTemplatesAllData' => $oEmailTemplates,
+            'oSMSTemplatesAllData' => $oSMSTemplates,
+            'oEmailTemplates' => $oEmailTemplates->items(),
+            'oSMSTemplates' => $oSMSTemplates->items(),
+            'oCategories' => $oCategories,
+            'userInfo' => ['id'=>$aUser->id, 'fullname'=> $aUser->firstname. ' '. $aUser->lastname, 'email' => $aUser->email, 'avatar'=> $aUser->avatar, 'phone' => $aUser->mobile],
+        ];
+    }
+
+    /**
+     * Used to delete workflow decision node
+     * @param Request $request
+     */
+    public function deleteWorkflowDecisionEvent(Request $request) {
+
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $eventID = strip_tags($request->event_id);
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+        $previousID = '';
+        if ($eventID > 0) {
+            //Get Current Node
+            $oCurrentNode = $mWorkflow->getDecisionNodeInfo($eventID, $moduleName);
+            if (!empty($oCurrentNode)) {
+                $previousID = $oCurrentNode->previous_event_id;
+            }
+
+
+            //Get Previous Node
+            $oPreviousNode = $mWorkflow->getDecisionNodeInfo($previousID, $moduleName);
+
+            //Get Next Node
+            $oNextNode = $mWorkflow->getNextDecisionNodeInfo($eventID, $moduleName);
+
+            //Delete Node Now
+            $bDeleted = $mWorkflow->deleteDecisionNode($eventID, $moduleName, $pathId);
+
+            if ($bDeleted) {
+                //Connect adjacent nodes
+                $aData = array();
+                if (!empty($oNextNode)) {
+
+                    $aData = array(
+                        'previous_event_id' => isset($oPreviousNode->id) ? $oPreviousNode->id : NULL
+                    );
+
+                    if ($oCurrentNode->event_type != 'followup') {
+                        $aData['event_type'] = $oCurrentNode->event_type;
+                    }
+
+
+
+                    if (empty($oPreviousNode)) {
+                        //We deleted main event so now assign next node as a main event
+                        $aData['event_type'] = $oCurrentNode->event_type;
+                    }
+
+                    $nextNodeTriggerData = json_decode($oNextNode->data);
+                    $currentNodeTriggerData = json_decode($oCurrentNode->data);
+                    //As per the new smart workflow, this variable is not more flexible, so we can't fix variables here
+                    /*if ($nextNodeTriggerData->delay_value == 0 && $nextNodeTriggerData->delay_unit == 'minute') {
+                        if (!empty($currentNodeTriggerData)) {
+                            $eventDataArr = array("delay_type" => "after", "delay_value" => $currentNodeTriggerData->delay_value, "delay_unit" => $currentNodeTriggerData->delay_unit, "event_type" => 'followup');
+                            $aData['data'] = json_encode($eventDataArr);
+                        }
+                    }*/
+                    $bUpdated = $mWorkflow->updateDecisionNode($aData, $oNextNode->id, $moduleName);
+                }
+                //Fetch events
+                $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+                //Reassemble events Order
+                $orderedEvents = sortWorkflowEvents($events);
+                $oEvents = $orderedEvents['oEvents'];
+                $response['status'] = 'success';
+                $response['oEvents'] = $oEvents;
+            } else {
+                $response['status'] = 'error';
+            }
+        } else {
+            $response['status'] = 'error';
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Used to get decision action node related info
+     * @param Request $request
+     */
+    public function loadWorkflowDecisionActionField(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventData = $request->eventData;
+        $oEventData = json_decode($eventData['data']);
+        $eventID = $eventData['id'];
+        if(!empty($oEventData)){
+            $nodeType = $oEventData->node_type;
+            $actionName = $oEventData->name;
+            if($nodeType =='action' && in_array($actionName, ['tag', 'list', 'field', 'webhook', 'status', 'segment'])) {
+                $nodeInfo = $mWorkflow->getDecisionNodeInfo($eventID, $moduleName);
+                $aFieldAlias = '';
+                if($actionName == 'field'){
+                    $aFieldAlias = $mWorkflow->getContactCustomFieldAlias($userID);
+                }
+                return ['status'=>'success', 'eventData'=>$nodeInfo, 'fieldAlias'=>$aFieldAlias];
+            }else if($nodeType =='action' && $actionName == 'email'){
+                //Get endCampaign info
+                $aCampaigns = $mWorkflow->getDecisionEventCampaign($eventID, $moduleName);
+                $campaign = '';
+                $templateType = '';
+                $templateInfo = '';
+
+                if($aCampaigns->count()>0){
+                    //Have campaign
+                    foreach($aCampaigns as $endCampaign){
+                        if(strtolower($endCampaign->campaign_type) == 'email'){
+                            $campaign = $endCampaign;
+                            $templateId = $endCampaign->template_source;
+                            $templateInfo = $mWorkflow->getCommonTemplateInfo($templateId);
+                            $categoryStatus = !empty($templateInfo) ? $templateInfo->category_status : '';
+                            $templateType = $categoryStatus == 2 ? 'static' : 'dynamic';
+                        }
+                    }
+                    return ['status'=>'success', 'templateType'=>$templateType, 'emailData' => $campaign, 'templateInfo'=>$templateInfo];
+                }else{
+                    // No campaign created yet
+                    return ['status'=>'success', 'templateType'=>'', 'emailData' => '', 'templateInfo'=>''];
+                }
+            }
+            else if($nodeType =='action' && $actionName == 'sms'){
+                //Get endCampaign info
+                $aCampaigns = $mWorkflow->getDecisionEventCampaign($eventID, $moduleName);
+                $campaign = '';
+                $templateType = '';
+                $templateInfo = '';
+
+                if($aCampaigns->count()>0){
+                    //Have campaign
+                    foreach($aCampaigns as $endCampaign){
+                        if(strtolower($endCampaign->campaign_type) == 'sms'){
+                            $campaign = $endCampaign;
+                            $templateId = $endCampaign->template_source;
+                            $templateInfo = $mWorkflow->getCommonTemplateInfo($templateId);
+                            $categoryStatus = !empty($templateInfo) ? $templateInfo->category_status : '';
+                            $templateType = $categoryStatus == 2 ? 'static' : 'dynamic';
+                        }
+                    }
+                    return ['status'=>'success', 'templateType'=>$templateType, 'smsData' => $campaign, 'templateInfo'=>$templateInfo];
+                }else{
+                    // No campaign created yet
+                    return ['status'=>'success',
+                        'templateType'=>'',
+                        'emailData' => '',
+                        'smsData' => '',
+                        'templateInfo'=>''];
+                }
+            }
+        }
+
+    }
+
+    /**
+     * This function used to move existing workflow decision node move back and forth
+     * @param Request $request
+     * @return array|string[]
+     */
+    public function moveWorkflowDecisionNode(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $sourceNode = $request->sourceNode;
+        $sourceEventId = $sourceNode['id'];
+        $destinationNode = $request->destinationNode;
+        $destinEventId = $destinationNode['id'];
+        $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oLastNode = getLastNode($orderedEvents['oEvents']);
+        if(!empty($sourceNode) || !empty($destinationNode)){
+            //Step-1: If both node are same, then do nothing
+            if($sourceEventId == $destinEventId){
+                return [];
+            }
+            //Step-2: De-attach source node from the tree
+            $bSourceDeattached = false;
+            if ($sourceEventId > 0) {
+                $sourcePreviousID = $sourceNode['previous_event_id'];
+
+                //Get Previous Node
+                $sourcePreviousNode = $mWorkflow->getDecisionNodeInfo($sourcePreviousID, $moduleName);
+
+                //Get Next Node
+                $sourceNextNode = $mWorkflow->getNextDecisionNodeInfo($sourceEventId, $moduleName);
+
+                //Connect adjacent nodes
+                $aData = array();
+                if (!empty($sourceNextNode)) {
+                    //Not a last node
+                    $aData = array(
+                        'previous_event_id' => isset($sourcePreviousNode->id) ? $sourcePreviousNode->id : NULL
+                    );
+
+                    if ($sourceNode['event_type'] != 'followup') {
+                        $aData['event_type'] = $sourceNode['event_type'];
+                    }
+
+                    if (empty($sourcePreviousNode)) {
+                        //We are de-attaching main event so now assign next node as a main event
+                        $aData['event_type'] = $sourceNode['event_type'];
+                    }
+                    $bUpdated = $mWorkflow->updateDecisionNode($aData, $sourceNextNode->id, $moduleName);
+                    $bSourceDeattached = true;
+                }else{
+                    //Last node, not need to do anything
+                    $bSourceDeattached = true;
+                }
+
+            }
+
+
+            //Step-3: Attach source node into the destination
+            if($bSourceDeattached == true){
+                if(empty($destinationNode)){
+                    //Trying to drop at the end of the tree
+                    //Get Last node
+                    //Last Node = $oLastNode;
+                    $destinEventId = $oLastNode->id;
+                    $aData = array(
+                        'previous_event_id' => $destinEventId,
+                        'event_type' => 'followup'
+                    );
+                    $bUpdated = $mWorkflow->updateDecisionNode($aData, $sourceEventId, $moduleName);
+                }else{
+                    $destinPreviousID = $destinationNode['previous_event_id'];
+                    $destinEventId = $destinationNode['id'];
+
+                    //Updated dropped node(source node)
+                    $droppedEventId = $sourceEventId;
+                    if(empty($destinPreviousID)){
+                        //Dropped node will be the first node
+                        $aData = array(
+                            'previous_event_id' => NULL
+                        );
+                        if ($destinationNode['event_type'] != 'followup') {
+                            $aData['event_type'] = $destinationNode['event_type'];
+                        }
+                    }else{
+                        $aData = array(
+                            'previous_event_id' => $destinPreviousID
+                        );
+                    }
+                    $bUpdated = $mWorkflow->updateDecisionNode($aData, $droppedEventId, $moduleName);
+
+                    //Update destination node
+                    $aData = array(
+                        'previous_event_id' => $sourceEventId
+                    );
+                    if(empty($destinPreviousID)){
+                        $aData['event_type'] = 'followup';
+                    }
+                    $bUpdated = $mWorkflow->updateDecisionNode($aData, $destinEventId, $moduleName);
+                }
+
+                $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+                //Reassemble events Order
+                $orderedEvents = sortWorkflowEvents($events);
+                $oEvents = $orderedEvents['oEvents'];
+                return ['status' => 'success', 'oEvents' => $oEvents];
+
+            }
+        }
+        return ['status' => 'error'];
+
+    }
+
+    /**
+     * Used to update blank decision node
+     * @param Request $request
+     * @return array|string[]
+     */
+    public function updateWorkflowDecisionBlankAction(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $nodeType = strip_tags($request->nodeType);
+        $name = strip_tags($request->name);
+        $title = strip_tags($request->title);
+        $eventId = $request->id;
+        $triggerParam =[
+            'node_type' => $nodeType,
+            'name' => $name,
+            'title' => $title,
+        ];
+        $bUpdated = $mWorkflow->updateDecisionNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+
+        if($bUpdated){
+            $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+            //Reassemble events Order
+            $orderedEvents = sortWorkflowEvents($events);
+            $oEvents = $orderedEvents['oEvents'];
+            return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$eventId];
+        }else{
+            return ['status' => 'error'];
+        }
+
+
+    }
+
+    /**
+     * Used to create blank decision node at any position in the workflow tree
+     * @param Request $request
+     * @return string[]
+     */
+    public function createWorkflowDecisionBlankAction(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $nodeType = strip_tags($request->nodeType);
+        $name = strip_tags($request->name);
+        $title = strip_tags($request->title);
+        if($nodeType == 'delay'){
+            $delayProperties = $request->delayData;
+        }
+        $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+        //Prepare meta data for the event
+        $triggerParam =[
+            'node_type' => $nodeType,
+            'name' => $name,
+            'title' => $title,
+        ];
+        if($nodeType == 'delay'){
+            $triggerParam['delay_properties'] = $delayProperties;
+        }
+
+        $oCurrentNode = $request->eventData;
+        $eventID = '';
+        $previousID = '';
+        if(!empty($oCurrentNode)){
+            $eventID = $oCurrentNode['id'];
+            $previousID = $oCurrentNode['previous_event_id'];
+        }
+
+        if($events->isNotEmpty() && empty($eventID)){
+            //Last Node
+            $oLastNode = getLastNode($oEvents);
+            $eventType = 'followup';
+            $newNodeEventID = $mWorkflow->createWorkflowDecisionEvent($pathId, $eventType, $previousID=$oLastNode->id, $triggerParam, $moduleName);
+            $bSuccess = true;
+        }else if(empty($previousID) || empty($eventID)){
+            //Blank Node will be the first node
+            //Insert Node and update insert id into the next node e.i current node
+            $eventType = 'main';
+            $newNodeEventID = $mWorkflow->createWorkflowDecisionEvent($pathId, $eventType, $previousID, $triggerParam, $moduleName);
+            if($newNodeEventID>0){
+                //Update Next Node previous_event_id
+                $bUpdateId = $mWorkflow->updateWorkflowDecisionEvent(['event_type'=>'followup', 'previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $eventID, $moduleName);
+                $bSuccess = true;
+            }
+        }else{
+            $eventType = 'followup';
+            //Blank Node will be the middle or last node
+            //Insert Node and update insert id into the next node's previous_event_id
+            $newNodeEventID = $mWorkflow->createWorkflowDecisionEvent($pathId, $eventType, $previousID, $triggerParam, $moduleName);
+            if($newNodeEventID>0){
+                //Update Next Node previous_event_id
+                //Get next node info
+                if($eventID>0){
+                    $oNextNode = $mWorkflow->getNextDecisionNodeInfo($previousID, $moduleName);
+                    if(isset($oNextNode->id)){
+                        $bUpdateId = $mWorkflow->updateWorkflowDecisionEvent(['previous_event_id'=>$newNodeEventID, 'updated' => date("Y-m-d H:i:s")], $oNextNode->id, $moduleName);
+                        $bSuccess = true;
+                    }
+                }
+            }
+        }
+        if($newNodeEventID>0){
+            //Add Split data in case split node
+            if($nodeType == 'split'){
+                $splitData = $request->splitData;
+                $mWorkflow->addWorkflowSplitTest($splitData, $newNodeEventID, $moduleName);
+            }
+            //Add Decision data in case decision node
+            if($nodeType == 'decision'){
+                $decisionData = $request->decisionData;
+                $mWorkflow->addWorkflowDecision($decisionData, $newNodeEventID, $moduleName);
+            }
+        }
+
+        if($bSuccess){
+            $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+            //Reassemble events Order
+            $orderedEvents = sortWorkflowEvents($events);
+            $oEvents = $orderedEvents['oEvents'];
+            return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$newNodeEventID];
+        }else{
+            return ['status' => 'error'];
+        }
+
+
+    }
+
+    /**
+     * Used to update workflow decision delay node trigger params
+     * @param Request $request
+     * @return array
+     */
+    public function updateDecisionEventDelay(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $eventId = $request->id;
+        $delayProperties = $request->delayData;
+        $oEvent = $mWorkflow->getDecisionNodeInfo($eventId, $moduleName);
+        if(!empty($oEvent)){
+            $triggerParam = json_decode($oEvent->data);
+            $triggerParam->delay_properties = $delayProperties;
+            $triggerParam->title = 'Wait for '.$delayProperties['delay_value'].' '. ucfirst($delayProperties['delay_unit']);
+            $bUpdated = $mWorkflow->updateDecisionNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+        }
+        $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+        //Reassemble events Order
+        $orderedEvents = sortWorkflowEvents($events);
+        $oEvents = $orderedEvents['oEvents'];
+        return ['status' => 'success', 'oEvents' => $oEvents];
+    }
+
+    /**
+     * Used to update decision trigger related data
+     * @param Request $request
+     * @return string[]
+     */
+    public function updateDecisionTriggerData(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $eventId = $request->id;
+        $triggerParams = $request->params;
+        $bUpdated = $mWorkflow->updateWorkflowDecisionEvent(['data'=> $triggerParams], $eventId, $moduleName);
+        if($bUpdated){
+            return ['status'=>'success'];
+        }else{
+            return ['status'=>'error'];
+        }
+
+    }
+
+    /**
+     * Used to add decision end campaign to a email/sms node
+     * @param Request $request
+     * @return array
+     * @throws \Throwable
+     */
+    public function addDecisionEndCampaignToEvent(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $eventId = strip_tags($request->event_id);
+        $templateId = strip_tags($request->template_id);
+        $templateType = strip_tags($request->template_type);
+        $source = strip_tags($request->source);
+        $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitId);
+
+        $isDraft = ($source == 'draft') ? true : false;
+        $campaignId = '';
+        if($eventId>0){
+            $aCampaigns = $mWorkflow->getDecisionEventCampaign($eventId, $moduleName);
+            if($aCampaigns->count()>0){
+                foreach($aCampaigns as $aCampaign){
+                    if(strtolower($aCampaign->campaign_type) == $templateType){
+                        $campaignId = $aCampaign->id;
+                        break;
+                    }
+                }
+            }
+            if ($campaignId > 0) {
+                //Update existing campaign
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateId);
+                $categoryStatus = $oTemplate->category_status;
+                $templateName = $oTemplate->template_name;
+                $templateSID = $templateId;
+                $ttype ='';
+                if($categoryStatus == 2){
+                    $ttype = 'static';
+                    //Static Templates
+                    if($moduleName == 'brandboost'){
+                        if($oUnitData->review_type == 'onsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.onsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }else if($oUnitData->review_type == 'offsite'){
+                            $compiledTemplatePriviewCode = view('admin.brandboost.brand-templates.offsite.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                            $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                            $oTemplate->stripo_compiled_html = $compiledContent;
+                        }
+                    }else if($moduleName == 'nps'){
+                        $compiledTemplatePriviewCode = view('admin.modules.nps.nps-templates.sms.templates', array('oNPS' => $oUnitData, 'template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }else if($moduleName == 'referral'){
+                        $compiledTemplatePriviewCode = view('admin.modules.referral.referral-templates.sms.templates', array('template_slug' => $oTemplate->template_slug))->render();
+                        $compiledContent = !(empty($compiledTemplatePriviewCode)) ? base64_encode($compiledTemplatePriviewCode) : $oTemplate->stripo_compiled_html;
+                        $oTemplate->stripo_compiled_html = $compiledContent;
+                    }
+
+                }else{
+                    $ttype = 'dynamic';
+                }
+                $aUpdateData = array(
+                    'name' => $oTemplate->template_name,
+                    'introduction' => $oTemplate->introduction,
+                    'greeting' => $oTemplate->greeting,
+                    'html' => $oTemplate->template_content,
+                    'stripo_html' => $oTemplate->stripo_html,
+                    'stripo_css' => $oTemplate->stripo_css,
+                    'stripo_compiled_html' => $oTemplate->stripo_compiled_html,
+                    'template_source' => $templateSID,
+                    'campaign_type' => $oTemplate->template_type
+                );
+                $bUpdated = $mWorkflow->updateWorkflowDecisionCampaign($aUpdateData, $campaignId, $moduleName);
+                if ($bUpdated) {
+                    $aCampaingInfo = $mWorkflow->getWorkflowDecisionCampaign($campaignId, $moduleName);
+                    $response = array('status' => 'success', 'campaignId' => $campaignId, 'templateName' => $templateName, 'templateType' => $ttype, 'campaignInfo' =>$aCampaingInfo);
+                }
+            } else {
+                //echo "1 $eventId 2 $templateId 3 $moduleUnitId 4 $moduleName 5 $isDraft";
+                //die;
+                $bAdded = $mWorkflow->addDecisionEndCampaign($eventId, $templateId, $moduleUnitId, $moduleName, $isDraft);
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateId);
+                $templateName = $oTemplate->template_name;
+                $ttype = ($oTemplate->category_status == 2) ? 'static' : 'dynamic';
+
+                if ($bAdded) {
+                    $aCampaingInfo = $mWorkflow->getWorkflowDecisionCampaign($bAdded['id'], $moduleName);
+                    $response = array('status' => 'success', 'campaignId' => $bAdded['id'], 'templateName' => $templateName, 'templateType' => $ttype, 'campaignInfo' =>$aCampaingInfo);
+                }
+            }
+
+        }
+        return $response;
+    }
+
+    /**
+     * Updates workflow decision campaigns
+     * @param Request $request
+     */
+    public function updateWorkflowDecisionCampaign(Request $request) {
+        $bUpdated = true;
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $subject = strip_tags($request->subject);
+        $preheader = strip_tags($request->preheader);
+        $content = db_in($request->content);
+        $stripoHtml = $request->stripo_html;
+        $stripoCss = $request->stripo_css;
+        $stripoCompiledHtml = $request->stripo_compiled_html;
+        $campaignID = strip_tags($request->campaignId);
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitID = strip_tags($request->moduleUnitID);
+        $pathId = strip_tags($request->pathId);
+
+        $greeting = db_in($request->greeting);
+        $introduction = db_in($request->introduction);
+        $template_source = strip_tags($request->template_source);
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $aData = array();
+
+        if (!empty($subject)) {
+            $aData['subject'] = $subject;
+        }
+
+        if (!empty($preheader)) {
+            $aData['preheader'] = $preheader;
+        }
+
+        if (!empty($content)) {
+            $aData['html'] = base64_encode($content);
+        }
+
+        if (!empty($stripoHtml)) {
+            $aData['stripo_html'] = base64_encode($stripoHtml);
+        }
+
+        if (!empty($stripoCss)) {
+            $aData['stripo_css'] = base64_encode($stripoCss);
+        }
+
+        if (!empty($stripoCompiledHtml)) {
+            $aData['stripo_compiled_html'] = base64_encode($stripoCompiledHtml);
+            /* $html = new html2text($stripoCompiledHtml);
+              $plainText = $html->getText();
+              echo "Plain text is ". strip_tags($stripoCompiledHtml);
+              $aData['html'] = base64_encode($html->getText()); */
+            $plainText = strip_tags($stripoCompiledHtml);
+            $aData['html'] = base64_encode($plainText);
+        }
+
+
+
+        if (!empty($greeting)) {
+            $aData['greeting'] = $greeting;
+        }
+
+        if (!empty($introduction)) {
+            $aData['introduction'] = $introduction;
+        }
+
+        if (!empty($template_source)) {
+            $aData['template_source'] = $template_source;
+        }
+
+        if(!empty($aData)){
+            $bUpdated = $mWorkflow->updateWorkflowDecisionCampaign($aData, $campaignID, $moduleName);
+        }
+
+        if ($moduleName == 'broadcast') {
+            //Update in the default variation too
+            $oVariations = $mWorkflow->getWorkflowSplitVariations($moduleName, $moduleUnitID);
+            if ($oVariations->isNotEmpty()) {
+                $campaignID = $oVariations[0]->id;
+                if(!empty($aData)){
+                    $bUpdated = $mWorkflow->updateWorkflowSplitCampaign($aData, $campaignID, $moduleName);
+                }
+            }
+        }
+
+        if ($bUpdated) {
+            $aCampaingInfo = $mWorkflow->getWorkflowDecisionCampaign($campaignID, $moduleName);
+            $response['status'] = 'success';
+            $response['campaignInfo'] = $aCampaingInfo;
+        } else {
+            $response['status'] = 'Error';
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Used to send Test Emails from the workflow decision campaign
+     */
+    public function sendTestEmailworkflowDecisionCampaign(Request $request) {
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $campaignID = strip_tags($request->campaignId);
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitID = strip_tags($request->moduleUnitID);
+        $emailAddress = strip_tags($request->email);
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $oResponse = $mWorkflow->getWorkflowDecisionCampaign($campaignID, $moduleName);
+        $defaultGreeting = '';
+        $defaultIntroduction = '';
+        if (!empty($oResponse)) {
+            $templateSource = $oResponse->template_source;
+            if ($templateSource > 0) {
+                //$oDefaultTemplate = $mWorkflow->getWorkflowDefaultTemplates($moduleName, '', $templateSource);
+                $oDefaultTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
+                $defaultGreeting = $oDefaultTemplate->greeting;
+                $defaultIntroduction = $oDefaultTemplate->introduction;
+            }
+
+            $greeting = (!empty($oResponse->greeting)) ? $oResponse->greeting : $defaultGreeting;
+            $introduction = (!empty($oResponse->introduction)) ? $oResponse->introduction : $defaultIntroduction;
+
+            $cont = base64_decode($oResponse->stripo_compiled_html);
+            $content = str_replace('\n', "<br>", $cont);
+
+//            $content = str_replace(array('{GREETING}', '{INTRODUCTION}'), array($greeting, $introduction), $content);
+//            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
+
+
+            $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+
+            $content = str_replace(array('{{GREETING}}', '{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}', 'wf_edit_template_introduction', 'wf_edit_sms_template_introduction'), array($greeting, $greeting, $introduction, $introduction, 'wf_edit_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_EDITOR'), $content);
+            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
+
+
+            if ($moduleName == 'nps') {
+                $content = $mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
+            }
+
+            if ($moduleName == 'referral') {
+                //Parse templates
+
+                $content = $this->referralEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
+            }
+
+            if ($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost') {
+                //Parse few more template tags if have any
+                $content = $this->brandboostEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
+            }
+
+            $subject = $oResponse->subject;
+
+            $preheader = $oResponse->preheader;
+            $sPreheaderText = '';
+            if (!empty($preheader)) {
+                $sPreheaderText = '<span class="c3896 c5535" style="box-sizing: border-box;display:none;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">' . $preheader . '</span>';
+            }
+
+            //Get Sendgrid Info for client
+            $aSendgridData = getSendgridAccount($userID);
+            if (!empty($aSendgridData)) {
+                $userName = $aSendgridData->sg_username;
+                $password = $aSendgridData->sg_password;
+
+                $aEmailData = array(
+                    'username' => $userName,
+                    'password' => $password,
+                    'from_email' => $aUser->email,
+                    'from_name' => $aUser->firstname . ' ' . $aUser->lastname,
+                    'email' => $emailAddress,
+                    'message' => $sPreheaderText . $content,
+                    'subject' => $subject
+                );
+                $result = sendClientEmail($aEmailData);
+                if (empty($result['errors'])) {
+                    //Update credits
+                    $aUsage = array(
+                        'client_id' => $userID,
+                        'usage_type' => 'email',
+                        'direction' => 'outbound',
+                        'segment' => 1,
+                        'content' => $content,
+                        'spend_to' => $emailAddress,
+                        'spend_from' => '',
+                        'module_name' => $moduleName,
+                        'module_unit_id' => ''
+                    );
+                    //$this->mInviter->updateUsage($aUsage);
+                    updateCreditUsage($aUsage);
+                    $response = array('status' => 'success', 'msg' => 'Email sent successfully');
+                }
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
+     * Display decision campaign preview
+     */
+    public function previewWorkflowDecisionCampaign(Request $request) {
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $campaignID = strip_tags($request->campaignId);
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitID = strip_tags($request->moduleUnitId);
+        $pathId = strip_tags($request->pathId);
+        $outputType = strip_tags($request->returnMethod);
+        $previewType = strip_tags($request->previewType);
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $previewPrefix = ($previewType == 'onlyPreview') ? 'PREVIEW' : 'EDITOR';
+
+        $oResponse = $mWorkflow->getWorkflowDecisionCampaign($campaignID, $moduleName);
+
+        if (!empty($oResponse)) {
+            $templateSource = $oResponse->template_source;
+            if ($templateSource > 0) {
+                $oDefaultTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
+                $defaultGreeting = $oDefaultTemplate->greeting;
+                $defaultIntroduction = $oDefaultTemplate->introduction;
+            }
+            $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+            //pre($oUnitData);
+            $cont = base64_decode($oResponse->stripo_compiled_html);
+            $content = str_replace('\n', "<br>", $cont);
+
+            $greeting = (!empty($oResponse->greeting)) ? $oResponse->greeting : $defaultGreeting;
+            $introduction = (!empty($oResponse->introduction)) ? $oResponse->introduction : $defaultIntroduction;
+
+            $content = str_replace(array('{{GREETING}}', '{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}', 'wf_edit_template_introduction', 'wf_edit_sms_template_introduction', 'wf_edit_template_greeting'), array($greeting, $greeting, $introduction, $introduction, 'wf_edit_template_introduction_' . $previewPrefix, 'wf_edit_sms_template_introduction_' . $previewPrefix, 'wf_edit_template_greeting_' . $previewPrefix), $content);
+            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
+
+
+            if ($moduleName == 'nps') {
+                $content = $mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
+            }
+
+            if ($moduleName == 'referral') {
+                //Parse templates
+
+                $content = $this->referralEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
+            }
+
+            if ($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost') {
+                //Parse few more template tags if have any
+                $content = $this->brandboostEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
+            }
+            $response['status'] = 'success';
+            $response['content'] = stripslashes(str_replace('<?php echo base_url();?>', '/',$content));
+            $response['template_source'] = $oResponse->template_source;
+            $response['subject'] = $oResponse->subject;
+            $response['greeting'] = str_replace(array('\n', '<br>'), array('', ''), $greeting);
+            $response['introduction'] = str_replace(array('\n', '<br>'), array('', ''), $introduction);
+        } else {
+            $response['status'] = 'error';
+        }
+
+        if ($outputType == 'return') {
+            $response['content'] = str_replace(array("wf_edit_sms_template_greeting", "wf_edit_sms_template_introduction"), array("wf_edit_sms_template_greeting_PREVIEW", "wf_edit_sms_template_introduction_PREVIEW"), stripslashes($content));
+            return $response;
+        } else {
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+    /**
+     * Used to get email/sms decision end campaign details
+     * @param Request $request
+     * @return array|string[]
+     */
+    public function getDecisionEndCampaign(Request $request){
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+        $bSuccess = false;
+        $mWorkflow = new WorkflowModel();
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitId = strip_tags($request->moduleUnitId);
+        $eventId = strip_tags($request->id);
+        $nodeName = strip_tags($request->name);
+        $templateType = $nodeName;
+        if($eventId>0){
+            $oTemplate = '';
+            $aCampaign= '';
+            $campaignId = '';
+            $aCampaigns = $mWorkflow->getDecisionEventCampaign($eventId, $moduleName);
+            if($aCampaigns->count()>0){
+                foreach($aCampaigns as $aCampaign){
+                    if(strtolower($aCampaign->campaign_type) == $templateType){
+                        $campaignId = $aCampaign->id;
+                        $templateSource = $aCampaign->template_source;
+                        break;
+                    }
+                }
+            }
+            if ($campaignId > 0) {
+                $oTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
+            }
+            return ['status'=>'success', 'campaignInfo'=>$aCampaign, 'templateInfo'=>$oTemplate];
+        }else{
+            return ['status'=>'error', 'campaignInfo'=>'', 'templateInfo'=>''];
+        }
+
     }
 
 }
