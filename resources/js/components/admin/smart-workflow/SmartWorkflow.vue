@@ -16,6 +16,7 @@
                             <li><img id="delay" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon2.svg"/></li>
                             <li><img id="goal" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon3.svg"/></li>
                             <li><img id="decision" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon4.svg"/></li>
+                            <li><div class="wf_icons br12 bkg_decision_300 rotate_45 border"><img class="rotate_45_minus" id="decision" draggable="true" @dragstart="onDrag($event)" width="28" src="assets/images/arrow_right_line.svg"/></div></li>
                             <li><img id="split" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon5.svg"/></li>
                             <li><img id="exit" draggable="true" @dragstart="onDrag($event)" src="assets/images/wf_drag_icon6.svg"/></li>
                         </ul>
@@ -620,6 +621,22 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb15">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border slideAddActionbox">Close</button>
+                                        <a
+                                            class="dark_200 fw500 d-inline-block mt10 pull-right"
+                                            href="javascript:void(0);"
+                                            @click="deleteWorkflowEvent(actionEditEvent, 'slideAddActionbox')"
+                                        >Delete &nbsp; <i class="ri-delete-bin-6-line"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -847,77 +864,10 @@
                         </div>
                     </div>
 
-                <!--Decision Modal -->
-                <div class="box addDecisionBoxContent2" style="width: 424px; display:none;">
-                    <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
-                            <div class="p40">
-                                <div class="row">
-                                    <div class="col-md-12"> <img width="44" src="assets/images/node_decision.svg"/>
-                                        <h3 class="htxt_medium_24 dark_800 mt20">Add Decision</h3>
-                                        <p class="fsize14 dark_200 mb0 mt-1">What kind of step would you like to add?</p>
-                                        <hr class="mt25 mb30">
-                                    </div>
-
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="decisionName" class="fsize11 fw500 dark_600 ls4">DECISION NAME</label>
-                                            <input type="text" class="form-control h50" v-model="decisionTitle" id="decisionName" placeholder="Enter new decision name" />
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-
-
-                                <div class="row">
-                                    <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('decision 1')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
-                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 1</p>
-                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 1</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('Decision 2')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
-                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 2</p>
-                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 2</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('decision 3')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
-                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 3</p>
-                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 3</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6 pr5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddDecisionbox" @click="addBlankDecision('decision 4')" style="cursor:pointer;">
-                                            <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
-                                            <p class="fw500 fsize14 dark_600 mt-3 mb-1">Decision 4</p>
-                                            <p class="fw400 fsize12 dark_300 m0">Add Decision 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!--Decision Modal New-->
                 <div class="box addDecisionBoxContent" style="width: 424px; border-color:#64B2CB!important; display:none; ">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDecisionbox" id="slideAddDecisionbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="40" src="assets/images/decision_arrow_45.png"/>
@@ -930,7 +880,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="decisionTitle" class="fsize11 fw500 dark_600 ls4">DECISION NODE NAME</label>
-                                            <input class="form-control h50" v-model="decisionTitle" type="text" placeholder="Enter decision node name" id="decisionTitle" />
+                                            <input class="form-control h50" v-model="decisionProperties.decision_name" type="text" placeholder="Enter decision node name" id="decisionTitle" />
                                         </div>
 
                                         <div class="form-group">
@@ -939,7 +889,13 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="custmo_checkbox pull-left m0">
-                                                            <input type="checkbox" v-model="decisionProperties.decision_type" value="attribute" :checked="decisionProperties.decision_type=='attribute'" id="decisionType">
+                                                            <input
+                                                                type="radio"
+                                                                v-model="decisionProperties.decision_type"
+                                                                name="decisionType"
+                                                                value="attribute"
+                                                                :checked="decisionProperties.decision_type=='attribute'"
+                                                                id="decisionType">
                                                             <span class="custmo_checkmark br100 decision"></span>
                                                             &nbsp; Attribute
                                                         </label>
@@ -947,7 +903,12 @@
                                                     <div class="col">
                                                         <span class="v_line_48" style="left:-7px; top:-16px;"></span>
                                                         <label class="custmo_checkbox pull-left m0">
-                                                            <input type="checkbox" v-model="decisionProperties.decision_type" value="segment" :checked="decisionProperties.decision_type=='segment'">
+                                                            <input
+                                                                type="radio"
+                                                                v-model="decisionProperties.decision_type"
+                                                                name="decisionType"
+                                                                value="segment"
+                                                                :checked="decisionProperties.decision_type=='segment'">
                                                             <span class="custmo_checkmark br100 decision"></span>
                                                             &nbsp; Segment
                                                         </label>
@@ -955,9 +916,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
                                         <hr class="mt20" />
 
                                         <div class="form-group">
@@ -991,12 +949,25 @@
                                     <div class="col-md-12 mb15">
                                         <hr>
                                     </div>
-                                    <div class="col-md-6">
-                                        <button class="btn btn-md bkg_decision_300 light_000 pr20 min_w_160 fsize13 fw500 mr20">SAVE DECISION</button>
-                                        <!--<button class="btn btn-md bkg_light_000 dark_200 pr20 fsize13 fw500 border">Close</button>-->
+                                    <div class="col-md-6" v-if="decisionEditMode == true">
+                                        <button
+                                            class="btn btn-md bkg_decision_300 light_000 pr20 min_w_160 fsize13 fw500 mr20"
+                                            @click="updateDecision"
+                                        >UPDATE DECISION</button>
+                                    </div>
+                                    <div class="col-md-6" v-else>
+                                        <button
+                                            class="btn btn-md bkg_decision_300 light_000 pr20 min_w_160 fsize13 fw500 mr20 slideAddDecisionbox"
+                                            @click="addBlankDecision"
+                                        >SAVE DECISION</button>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <a class="dark_200 fw500 d-inline-block mt10" href="#">Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
+                                        <a
+                                            v-if="decisionEditMode == true"
+                                            class="dark_200 fw500 d-inline-block mt10"
+                                            href="javascript:void(0);"
+                                            @click="deleteWorkflowEvent(decisionEditEvent, 'slideAddDecisionbox')"
+                                        >Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
                                     </div>
 
                                 </div>
@@ -1005,7 +976,7 @@
                     </div>
                 </div>
 
-                    <!--Delay Modal-->
+                <!--Delay Modal-->
                 <div class="box addDelayBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
                         <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideAddDelaybox" id="slideAddDelaybox"><i class=""><img src="assets/images/cross.svg"/></i></a>
@@ -1478,10 +1449,9 @@
                 },
                 selectedEvent: '',
                 actionTitle: '',
-                decisionTitle: '',
                 decisionProperties: {
-                    decision_type: 'attribute',
-                    total_path: '2'
+                    decision_name: '',
+                    decision_type: 'attribute'
                 },
                 delayProperties: {
                     delay_type: 'after',
@@ -1516,8 +1486,12 @@
                 splitEditMode: false,
                 splitEditId: '',
                 splitEditEvent: '',
+                decisionEditMode: false,
+                decisionEditId: '',
+                decisionEditEvent: '',
                 actionEditMode: false,
                 actionEditId: '',
+                actionEditEvent: '',
                 configureWorkflow: true,
                 templateCategories: '',
                 showEmailTemplates: false,
@@ -1757,22 +1731,30 @@
                     this.loadSplitProperties(event);
                 }else if(nodeType == 'action'){
                     this.loadActionData(event);
+                }else if(nodeType == 'decision'){
+                    this.loadDecisionProperties(event);
                 }
 
             },
             clearAllEditMode: function(){
                 this.actionEditMode = false;
                 this.actionEditId = '';
+                this.actionEditEvent = '';
                 this.delayEditMode = false;
                 this.delayEditId = '';
                 this.delayEditEvent = '';
                 this.splitEditMode = false;
                 this.splitEditId = '';
                 this.splitEditEvent = '';
+                this.decisionEditMode = false;
+                this.decisionEditId = '';
+                this.decisionEditEvent = '';
+
             },
             loadActionData: function(event){
                 this.actionEditMode = true;
                 this.actionEditId = event.id;
+                this.actionEditEvent = event;
                 let triggerParams = JSON.parse(event.data);
                 let actionName = triggerParams['name'];
                 if(actionName == ''){
@@ -2048,6 +2030,28 @@
                 }
                 this.loading = false;
             },
+            loadDecisionProperties: function(event){
+                this.decisionEditMode = true;
+                this.decisionEditEvent = event;
+                let triggerParams = JSON.parse(event.data);
+                let decisionId = triggerParams['decision_properties']['decision_id'];
+                if(decisionId>0){
+                    this.decisionEditId = decisionId;
+                    let formData = {
+                        id: decisionId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                    };
+                    axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getDecisionInfo', formData).then(response => {
+                        if(response.data.status == 'success'){
+                            this.decisionProperties = response.data.decisionData;
+                            document.querySelector("#slideAddDecisionbox").click();
+                            this.loading = false;
+                        }
+                    });
+                }
+                this.loading = false;
+            },
             moveWorkflowNode: function(event){
                 this.loading = true;
                 let formData = {
@@ -2091,17 +2095,19 @@
                         if (this.actionEditMode == true){
                             this.actionEditMode = false;
                             this.actionEditId = '';
+                            this.actionEditEvent = '';
                         }
 
                     }
                 });
             },
-            addBlankDecision: function(decision){
+            addBlankDecision: function(){
                 this.loading = true;
                 let formData = {
                     nodeType: 'decision',
-                    name: decision,
-                    title: this.decisionTitle,
+                    name: 'decision',
+                    title: this.decisionProperties.decision_name,
+                    decisionData: this.decisionProperties,
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
@@ -2111,6 +2117,22 @@
                         this.loading = false;
                         this.events = response.data.oEvents;
                         this.metaData.selectedClass = response.data.newEventId;
+                    }
+                });
+            },
+            updateDecision: function(){
+                this.loading = true;
+                let formData = {
+                    id: this.decisionEditId,
+                    decisionData: this.decisionProperties,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionData', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.events = response.data.oEvents;
+                        this.displayMessage('success', 'Decision updated successfully!');
                     }
                 });
             },

@@ -4,6 +4,7 @@
         <div class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
             <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="prepareToAddAction"><i class="ri-add-fill"></i></a>
         </div>
+
         <!--Connector-->
 
         <!--Empty Node-->
@@ -66,8 +67,54 @@
         </div>
         <!--Empty Node-->
 
+        <!--Empty Decision Node-->
+        <template v-if="nodeType == 'decision'">
+            <!--=====Split Image top=============-->
+            <div class="col-md-12 text-center">
+                <img src="assets/images/wfline.png">
+            </div>
+            <!--=====ADD nodes 2 circle icon ========-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-6 text-center"> <div class="workflow_switch_div_small canvas mb20 mt20 text-center d-inline-block" style="width:auto;"> <a class="workflow_switch dark_400 fw400 fsize13" href="#"><i class="ri-pie-chart-2-fill dark_100 fsize11"></i> Free Customers </a> <!--<a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>--> </div> </div>
+                    <div class="col-6 text-center"> <div class="workflow_switch_div_small canvas mb20 mt20 text-center d-inline-block" style="width:auto;"> <a class="workflow_switch dark_400 fw400 fsize13" href="#"><i class="ri-pie-chart-2-fill dark_100 fsize11"></i> Have not logged in ... </a> <!--<a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>--> </div> </div>
+                </div>
+            </div>
+            <!--=====Splited two cards ========-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="workflow_card top_line_20">
+                            <img class="mb-2" src="assets/images/plus_circle_36.svg"/><br>
+                            <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="workflow_card top_line_20">
+
+                            <img class="mb-2" src="assets/images/plus_circle_36.svg"/><br>
+
+                            <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--=====ADD nodes 2 circle plus icon ========-->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-4 mb-2" href="#"><i class="ri-add-fill"></i></a> </div>
+                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-4 mb-2" href="#"><i class="ri-add-fill"></i></a> </div>
+                </div>
+            </div>
+            <!--=====Split Image bot=============-->
+            <div class="col-md-12"><img src="assets/images/wfline_reverse.png"></div>
+
+        </template>
         <!--Empty Split Node-->
-        <template v-else>
+
+        <!--Empty Split Node-->
+        <template v-if="nodeType == 'split'">
             <div class="col-md-12">
                 <div class="workflow_switch_div_small canvas mb0 mt0 d-inline-block" style="width:auto;">
                     <a class="workflow_switch" href="javascript:void(0);"> <i><img src="assets/images/play_split.svg"/></i> SPLIT </a> &nbsp;

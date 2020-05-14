@@ -161,8 +161,11 @@
                 <li><a target="_blank" href="flow_builder7b.php">Workflows Builder 7b </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
                 <li><a target="_blank" href="flow_builder7c.php">Workflows Builder 7c </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
                 <li><a target="_blank" href="flow_builder7d.php">Workflows Builder 7d </a> &nbsp; &nbsp; <small >Last Updated on 12th May 2020</small></li>
+                <li><a target="_blank" href="flow_builder7e.php">Workflows Builder 7e </a> &nbsp; &nbsp; <small >Last Updated on 15th May 2020</small></li>
                
-                
+                <li><strong>Flow builder Nodes</strong></li>
+     			<li><a target="_blank" href="flow_builder_nodes.php">Flow builder Nodes grid </a> &nbsp; &nbsp; <small >Last Updated on 2nd May 2020</small></li>
+                <li><a target="_blank" href="flow_builder_nodes2.php">Flow builder Nodes list </a> &nbsp; &nbsp; <small >Last Updated on 2nd May 2020</small></li>
                 
      			 <li><strong>Offsite Campaigns</strong></li>
      			<li><a target="_blank" href="offsite_campaign_list.php">Offsite Campaigns List </a> &nbsp; &nbsp; <small >Last Updated on 24th April 2020</small></li>

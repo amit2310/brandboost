@@ -982,6 +982,8 @@ Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', '
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getEndCampaign', 'Admin\WorkFlow@getEndCampaign');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateTriggerData', 'Admin\WorkFlow@updateTriggerData');
 Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateCustomFields', 'Admin\WorkFlow@updateCustomFields');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getDecisionInfo', 'Admin\WorkFlow@getDecisionInfo');
+Route::post('f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionData', 'Admin\WorkFlow@updateDecisionData');
 
 
 

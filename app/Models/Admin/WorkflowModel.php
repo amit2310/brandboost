@@ -4750,6 +4750,138 @@ class WorkflowModel extends Model {
     }
 
     /**
+     * This function is used to add decision in all modules
+     * @param $aData
+     * @param $eventId
+     * @param $moduleName
+     * @return bool
+     */
+    public function addWorkflowDecision($aData, $eventId, $moduleName){
+        if (empty($eventId) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_decision';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_decision';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+        $aData['event_id'] = $eventId;
+        $aData['created'] = date("Y-m-d H:i:s");
+        $insert_id = DB::table($tableName)->insertGetId($aData);
+        if($insert_id>0){
+            $oEvent = $this->getNodeInfo($eventId, $moduleName);
+            if(!empty($oEvent)){
+                $triggerParam = json_decode($oEvent->data);
+                $triggerParam->decision_properties = ['decision_id'=>$insert_id];
+                $bUpdated = $this->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
+            }
+        }
+        return $insert_id;
+
+    }
+
+    /**
+     * Used  to get decision node basic info
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function getDecisionInfo($id, $moduleName){
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_decision';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_decision';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->first();
+
+        return $oData;
+
+    }
+
+    /**
+     * Update decision node data
+     * @param $aData
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function updateDecisionData($aData, $id, $moduleName){
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $tableName = 'tbl_brandboost_decision';
+                break;
+            case "automation":
+            case "broadcast":
+                $tableName = 'tbl_automations_decision';
+                break;
+            case "referral":
+                $tableName = 'tbl_referral_automations_decision';
+                break;
+            case "nps":
+                $tableName = 'tbl_nps_automations_decision';
+                break;
+            default :
+                $tableName = '';
+        }
+
+        if (empty($tableName)) {
+            return false;
+        }
+
+        $oData = DB::table($tableName)
+            ->where('id', $id)
+            ->update($aData);
+
+        if ($oData) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * This method used to get split campaign info
      * @param $id
      * @param $moduleName
