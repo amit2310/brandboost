@@ -21,7 +21,7 @@
 	.sitemap ul li{margin: 0; padding: 0; list-style: none; float: left; width: 100%; line-height: 29px;}
 	.sitemap ul li small{ font-size: 9px; font-style: italic; letter-spacing: 0.5px; float: right;text-align: right;}
 	.sitemap ul li a{margin: 0; padding: 0 0 0 20px; list-style: none; line-height: 35px; font-size: 14px; background: url(assets/images/chevron-left.svg) left 10px no-repeat; float: left; width: 210px;}
-	.sitemap ul li a:hover{font-weight: 500; color: #50A98F}
+	.sitemap ul li a:hover{font-weight: 400; color: #50A98F}
 	.sitemap ul li strong{color: #4f8af4; }
 	</style>
 </head>
