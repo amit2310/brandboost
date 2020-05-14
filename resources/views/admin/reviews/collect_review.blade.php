@@ -174,8 +174,8 @@
                                 <div class="img_vid_upload_review border dropzone" id="myDropzone">
                                     <input class="d-none" type="file" name="" value="" id="upload">
                                 </div>
-                                <div id="uploadedSiteFiles" style="display: none;"></div>
                             </label>
+                            <div id="uploadedSiteFiles" style="display: none;"></div>
                         </div>
                         <div class="form-group">
                             <label class="dark_600 fsize11 fw500 ls4">CONTACT INFO</label>
@@ -430,7 +430,8 @@
             $('#' + valContainer).val(ratingValue);
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        //document.addEventListener("DOMContentLoaded", function() {
+
             Dropzone.options.myDropzone = {
                 url: '{{ base_url("webchat/dropzone/upload_s3_attachment_review/".$_GET['clid']."/reviews") }}',
                 uploadMultiple: false,
@@ -448,6 +449,7 @@
                     var dropImage = res[0];
                     $.ajax({
                         url: "{{ base_url('admin/brandboost/DeleteObjectFromS3') }}",
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                         type: "POST",
                         data: {dropImage: dropImage},
                         dataType: "json",
@@ -464,8 +466,9 @@
                     $('#uploadedSiteFiles').append(response.xhr.responseText);
                 }
             }
-        });
+        //});
 
+        @if($productsData)
         @foreach($productsData as $key=>$productData)
             Dropzone.options.myDropzone{{ $productData->id }} = {
             url: '{{ base_url("webchat/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews") }}/{{ $productData->id }}',
@@ -501,8 +504,10 @@
             }
         }
         @endforeach
+        @endif
 
-            @foreach($servicesData as $key=>$productData)
+        @if($servicesData)
+        @foreach($servicesData as $key=>$productData)
             Dropzone.options.myDropzone{{ $productData->id }} = {
             url: '{{ base_url("webchat/dropzone/upload_s3_attachment_product_review/".$_GET['clid']."/reviews") }}/{{ $productData->id }}',
             uploadMultiple: false,
@@ -537,6 +542,7 @@
             }
         }
         @endforeach
+        @endif
 
         setTimeout(function(){ $('.dz-default').hide(); }, 10);
 
