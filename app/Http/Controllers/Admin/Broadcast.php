@@ -3130,6 +3130,7 @@ class Broadcast extends Controller {
         );
 
         $oSegments = $mBroadcast->getSegments($userID, '', true, $searchBy, $sortBy, $items_per_page);
+
         if($oSegments->items()) {
             foreach ($oSegments->items() as $key => $oSegment) {
                 $oSubscribers = [];

@@ -862,8 +862,29 @@ class BroadcastModel extends Model {
                     return $query->where('tbl_segments.id', $id);
                 })
             ->orderBy('tbl_segments.id', 'asc');
-                //->paginate(10);
-                //->get();
+            //->paginate(10);
+            //->get();
+        if(!empty($searchBy)){
+            $oData->where('tbl_segments.user_id', $userID);
+            $oData->where('tbl_segments.segment_name', 'LIKE', "%$searchBy%");
+            $oData->orWhere('tbl_segments.source_module_name', 'LIKE', "%$searchBy%");
+        }
+
+        if(!empty($sortBy)){
+            if($sortBy == 'All'){
+                $oData->orderBy('tbl_segments.created', 'desc');
+            }else if($sortBy == 'Active'){
+                $oData->where('tbl_segments.status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $oData->where('tbl_segments.status', '0');
+            }else  if($sortBy == 'Pending'){
+                $oData->where('tbl_segments.status', '2');
+            }else  if($sortBy == 'Archive'){
+                $oData->where('tbl_segments.status', '2');
+            }else  if($sortBy == 'Date Created'){
+                $oData->orderBy('tbl_segments.created', 'desc');
+            }
+        }
 
         if($paginated == true){
             //$aData = $oData->paginate($items_per_page);

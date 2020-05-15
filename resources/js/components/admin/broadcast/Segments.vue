@@ -23,71 +23,39 @@
 
             <loading :isLoading="loading"></loading>
             <div class="container-fluid">
-                <div class="row" v-if="!segments">
-                    <div class="col-md-12">
-                        <div class="card card_shadow min-h-280">
+                <div class="table_head_action">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a></li>
 
-                            <div class="row mb65">
-                                <div class="col-md-12 text-left">
-                                    <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
-                                        Import segment
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="row mb65">
-                                <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 225px; " src="assets/images/segment_bkg.png">
-                                    <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
-                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import segment!</h3>
-                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
-                                </div>
-                            </div>
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
+                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"/></i></a></li>
+                                <li><a href="#"><i><img src="assets/images/cards_16_grey.svg"/></i></a></li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="col-md-12 text-center mt-2">
-                        <a href="javascropt:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                    <div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                        </div>
                     </div>
                 </div>
-
-                <div v-else>
-                    <div class="table_head_action">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Contact lists</h3>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="table_action">
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_action_dropdown"
-                                                data-toggle="dropdown">
-                                            <span><img src="/assets/images/date_created.svg"/></span>&nbsp; Date Created
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
-                                        </div>
-                                    </div>
-                                    <div class="float-right ml10 mr10">
-                                        <button type="button" class="dropdown-toggle table_action_dropdown"
-                                                data-toggle="dropdown">
-                                            <span><img src="/assets/images/list_view.svg"/></span>&nbsp; List View
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
-                                        </div>
-                                    </div>
-                                    <div class="float-right">
-                                        <input class="table_search" type="text" placeholder="Search"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div v-if="(segments.length > 0 || searchBy.length > 0)">
                     <div class="row">
                         <div v-for="segment in segments" class="col-md-3 d-flex">
                             <div class="card p0 pt40 text-center animate_top col">
@@ -185,6 +153,34 @@
                         :offset="4">
                     </pagination>
                 </div>
+
+                <div class="row" v-else>
+                    <div class="col-md-12">
+                        <div class="card card_shadow min-h-280">
+
+                            <div class="row mb65">
+                                <div class="col-md-12 text-left">
+                                    <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
+                                        Import segment
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row mb65">
+                                <div class="col-md-12 text-center">
+                                    <img class="mt40" style="max-width: 225px; " src="assets/images/segment_bkg.png">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import segment!</h3>
+                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-2">
+                        <a href="javascropt:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                    </div>
+                </div>
             </div>
         </div>
         <!--******************
@@ -277,7 +273,11 @@
                 current_page: 1,
                 items_per_page: 10,
                 allData: '',
-                segments: ''
+                segments: '',
+                viewType: 'List View',
+                sortBy: 'Date Created',
+                searchBy: '',
+                deletedItems: []
             }
         },
         mounted() {
@@ -295,6 +295,12 @@
             }
         },
         methods: {
+            applySort: function(sortVal){
+                this.loading = true;
+
+                this.sortBy = sortVal;
+                this.deletedItems = [];
+            },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
                     this.form={};
@@ -356,7 +362,7 @@
                     });
             },
             loadPaginatedData: function () {
-                axios.get('/admin/broadcast/mysegments?page=' + this.current_page + '&items_per_page='+this.items_per_page)
+                axios.get('/admin/broadcast/mysegments?page=' + this.current_page + '&items_per_page='+this.items_per_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
