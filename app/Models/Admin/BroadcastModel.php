@@ -851,7 +851,7 @@ class BroadcastModel extends Model {
      * @param type $id
      * @return type
      */
-    public function getSegments($userID, $id = '') {
+    public function getSegments($userID, $id = '', $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10') {
         $oData = DB::table('tbl_segments')
                 ->leftJoin('tbl_automations_emails', 'tbl_segments.source_campaign_id', '=', 'tbl_automations_emails.id')
                 ->select('tbl_segments.*', 'tbl_automations_emails.title as campaign_title')
@@ -861,11 +861,21 @@ class BroadcastModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('tbl_segments.id', $id);
                 })
-            ->orderBy('tbl_segments.id', 'asc')
-                ->paginate(10);
+            ->orderBy('tbl_segments.id', 'asc');
+                //->paginate(10);
                 //->get();
 
-        return $oData;
+        if($paginated == true){
+            //$aData = $oData->paginate($items_per_page);
+            if ($items_per_page == 'All') {
+                $aData = $oData->get();
+            } else {
+                $aData = $oData->paginate($items_per_page);
+            }
+        }else{
+            $aData = $oData->get();
+        }
+        return $aData;
     }
 
     /**

@@ -362,7 +362,7 @@ class Contacts extends Controller
         }
         $iActiveCount = $iArchiveCount = 0;
 
-        if(!empty($subscribersData)){
+        if(!empty($subscribersData->items())){
             foreach($subscribersData->items() as $oSubscriber){
                 if ($oSubscriber->status == 2) {
                     $iArchiveCount++;
@@ -391,7 +391,7 @@ class Contacts extends Controller
             'breadcrumb' => $aBreadcrumb,
             'archiveContacts' => $archiveContacts,
             'allData' => $subscribersData,
-            'subscribersData' => $subscribersData->items(),
+            'subscribersData' => (!empty($subscribersData->items()) ? $subscribersData->items() : $subscribersData),
             'activeCount' => $iActiveCount,
             'archiveCount' => $iArchiveCount,
             'moduleName' => $moduleName,

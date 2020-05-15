@@ -181,6 +181,7 @@
                     <pagination
                         :pagination="allData"
                         @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
                         :offset="4">
                     </pagination>
                 </div>
@@ -268,20 +269,30 @@
                     segment_id: ''
                 },
                 formLabel: 'Create',
-
-
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                segments: '',
                 current_page: 1,
-                allData: ''
+                items_per_page: 10,
+                allData: '',
+                segments: ''
             }
         },
         mounted() {
             this.loadPaginatedData();
+        },
+        watch: {
+            'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
+            }
         },
         methods: {
             displayForm : function(lbl){
@@ -345,7 +356,7 @@
                     });
             },
             loadPaginatedData: function () {
-                axios.get('/admin/broadcast/mysegments?page=' + this.current_page)
+                axios.get('/admin/broadcast/mysegments?page=' + this.current_page + '&items_per_page='+this.items_per_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -359,9 +370,6 @@
             },
             showSegmentSubscribers: function(segmentId){
                 window.location.href='#/contacts/segments/subscribers/'+segmentId;
-            },
-            showPaginationData: function (current_page) {
-                this.navigatePagination(current_page);
             },
             submitAddSegment: function () {
                 this.loading = true;
@@ -379,6 +387,16 @@
                         //error.response.data
                         alert('All form fields are required');
                     });
+            },
+            showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
             },
             navigatePagination: function (p) {
                 this.loading = true;
@@ -448,6 +466,8 @@
             }
         }
     };
+
+
     $(document).ready(function () {
         $(document).on('click', '.js-segment-slidebox', function () {
             $(".box").animate({
