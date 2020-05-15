@@ -92,7 +92,43 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div v-for="segment in segments" class="col-md-3 text-center">
+                        <div v-for="segment in segments" class="col-md-3 d-flex">
+                            <div class="card p0 pt40 text-center animate_top col">
+                                <div class="dot_dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                                </div>
+                                <a v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" href="javascript:void(0);" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
+                                <a v-else href="javascript:void(0);" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
+                                <div v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                    <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
+                                    <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
+                                        {{capitalizeFirstLetter(segment.source_module_name)}}
+                                    </p>
+                                    <p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>
+                                </div>
+                                <div v-else>
+                                    <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
+                                    <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
+                                        {{capitalizeFirstLetter(segment.source_module_name)}}
+                                    </p>
+                                    <p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>
+                                </div>
+                                <div class="p20 btop">
+                                    <ul class="workflow_list">
+                                        <li v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                            <a href="javascript:void(0);"><span><img src="assets/images/account-circle-fill-grey.svg" title="Subscribers"></span> {{segment.segmentSubscribers.data.length}}</a>
+                                        </li>
+                                        <li v-else>
+                                            <a href="javascript:void(0);"><span><img src="assets/images/account-circle-fill-grey.svg" title="Subscribers"></span> {{segment.segmentSubscribers.data.length}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div v-for="segment in segments" class="col-md-3 text-center">
                             <div class="card p30 h235 animate_top">
                                 <div class="dot_dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
@@ -132,11 +168,13 @@
                                     </p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 text-center js-segment-slidebox" style="cursor: pointer;">
-                            <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
-                                <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Segment</p>
+                        </div>-->
+                        <div class="col-md-3 d-flex js-segment-slidebox" style="cursor: pointer;">
+                            <div class="card p0 pt40 text-center animate_top col">
+
+                                <a href="#" class="circle-icon-64 bkg_light_200 m0auto mt-4"><img src="assets/images/plus03.svg"> </a>
+                                <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4 mt-4">CREATE new <br> SEGMENT</p>
+
                             </div>
                         </div>
                     </div>
