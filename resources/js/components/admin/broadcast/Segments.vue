@@ -43,8 +43,9 @@
                         <div class="col-md-6">
                             <ul class="table_filter text-right">
                                 <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
-                                <li><a href="#"><i><img src="assets/images/sort_16_grey.svg"/></i></a></li>
-                                <li><a href="#"><i><img src="assets/images/cards_16_grey.svg"/></i></a></li>
+                                <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -56,7 +57,101 @@
                     </div>
                 </div>
                 <div v-if="(segments.length > 0 || searchBy.length > 0)">
-                    <div class="row">
+
+                    <div class="row" v-if="viewType == 'List View'">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                    <tr class="headings">
+                                        <td width="20">
+                                            <span>
+                                                <label class="custmo_checkbox pull-left">
+                                                    <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                                    <span class="custmo_checkmark blue"></span>
+                                                </label>
+                                            </span>
+                                        </td>
+                                        <td><span class="fsize10 fw500">SEGMENTS </span></td>
+                                        <td><span class="fsize10 fw500">CONTACTS</span></td>
+                                        <td><span class="fsize10 fw500">FILTERS</span></td>
+                                        <td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"/> </span></td>
+                                        <td><span class="fsize10 fw500">STATUS</span></td>
+                                        <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"/></span></td>
+                                    </tr>
+
+
+
+                                    <tr v-for="segment in segments">
+                                        <td width="20">
+                                            <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox" :checked="deletedItems.indexOf(segment.id)>-1" @change="addtoDeleteCollection(segment.id, $event.target)">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <span class="table-img mr15">
+                                                <span class="circle_icon_24 bkg_blue_200"><img src="assets/images/pie_chart_fill_12.svg"/></span>
+                                            </span> {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}
+                                        </td>
+                                        <td>
+                                            <span v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                                {{segment.segmentSubscribers.data.length}}
+                                            </span>
+                                            <span v-else>{{segment.segmentSubscribers.data.length}}</span>
+                                        </td>
+                                        <td>
+                                            <span>6</span>
+                                            <span class="ml-3">
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                            </span>
+                                        </td>
+                                        <td>{{ displayDateFormat('M d, Y',segment.created) }}</td>
+                                        <td>
+                                            <span v-if="segment.status == '1'"><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</span>
+                                            <span v-else-if="segment.status == '2'"><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Archive</span>
+                                            <span v-else-if="segment.status == '3'"><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Draft</span>
+                                            <span v-else><span class="mr-3"><span class="status_icon bkg_grey_light"></span></span>Inactive</span>
+                                        </td>
+                                        <td>
+                                            <div class="float-right">
+                                                <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+                                                    <span><img src="assets/images/more-2-fill.svg"/></span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a v-if="segment.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="moveArchive(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareSegmentUpdate(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" @click="syncContacts(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Sync</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteSegment(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <pagination
+                                    :pagination="allData"
+                                    @paginate="showPaginationData"
+                                    @paginate_per_page="showPaginationItemsPerPage"
+                                    :offset="4">
+                                </pagination>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-center mt-3">
+                            <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                        </div>
+                    </div>
+
+                    <div class="row" v-if="viewType == 'Grid View'">
                         <div v-for="segment in segments" class="col-md-3 d-flex">
                             <div class="card p0 pt40 text-center animate_top col">
                                 <div class="dot_dropdown">
@@ -146,12 +241,13 @@
                             </div>
                         </div>
                     </div>
-                    <pagination
+                    <pagination v-if="viewType == 'Grid View'"
                         :pagination="allData"
                         @paginate="showPaginationData"
                         @paginate_per_page="showPaginationItemsPerPage"
                         :offset="4">
                     </pagination>
+
                 </div>
 
                 <div class="row" v-else>
@@ -250,6 +346,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -294,12 +391,69 @@
                 this.loadPaginatedData();
             }
         },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.segments.forEach(camp => {
+                    let idx = this.deletedItems.indexOf(camp.id);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
+            }
+        },
         methods: {
             applySort: function(sortVal){
                 this.loading = true;
 
                 this.sortBy = sortVal;
                 this.deletedItems = [];
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/broadcast/deleteMultipalSegment', {_token:this.csrf_token(), multiSegmentid:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.segments.length>0){
+                            this.segments.forEach(camp => {
+                                let idxx = this.deletedItems.indexOf(camp.id);
+                                if(idxx == -1){
+                                    this.deletedItems.push(camp.id);
+                                }
+                            });
+                        }
+                    }else{
+                        this.segments.forEach(camp => {
+                            let idxx = this.deletedItems.indexOf(camp.id);
+
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+
             },
             displayForm : function(lbl){
                 if(lbl == 'Create'){

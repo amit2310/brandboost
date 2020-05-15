@@ -861,7 +861,7 @@ class BroadcastModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('tbl_segments.id', $id);
                 })
-            ->orderBy('tbl_segments.id', 'asc');
+            ->orderBy('tbl_segments.id', 'DESC');
             //->paginate(10);
             //->get();
         if(!empty($searchBy)){
