@@ -26,34 +26,31 @@
                 <div class="row" v-if="!segments">
                     <div class="col-md-12">
                         <div class="card card_shadow min-h-280">
+
                             <div class="row mb65">
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-12 text-left">
                                     <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img
-                                            src="/assets/images/download-fill.svg"/></span>
+                                        <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
                                         Import segment
                                     </a>
                                 </div>
-                                <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img
-                                            src="/assets/images/question-line.svg"/></span>
-                                        Learn how to use segments
-                                    </a>
-                                </div>
                             </div>
+
                             <div class="row mb65">
                                 <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 225px; " src="/assets/images/segment_bkg.png">
+                                    <img class="mt40" style="max-width: 225px; " src="assets/images/segment_bkg.png">
                                     <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
-                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import
-                                        segment!</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import segment!</h3>
                                     <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 text-center mt-2">
+                        <a href="javascropt:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                    </div>
                 </div>
+
                 <div v-else>
                     <div class="table_head_action">
                         <div class="row">
@@ -96,9 +93,13 @@
                             <div class="card p0 pt40 text-center animate_top col">
                                 <div class="dot_dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
-                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a v-if="segment.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="moveArchive(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareSegmentUpdate(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="syncContacts(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Sync</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="deleteSegment(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                    </div>
                                 </div>
                                 <a v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" href="javascript:void(0);" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
                                 <a v-else href="javascript:void(0);" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
@@ -107,15 +108,14 @@
                                     <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
                                         {{capitalizeFirstLetter(segment.source_module_name)}}
                                     </p>
-                                    <p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>
                                 </div>
                                 <div v-else>
                                     <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
                                     <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
                                         {{capitalizeFirstLetter(segment.source_module_name)}}
                                     </p>
-                                    <p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>
                                 </div>
+                                <!--<p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>-->
                                 <div class="p20 btop">
                                     <ul class="workflow_list">
                                         <li v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
@@ -189,6 +189,8 @@
         <!--******************
           Content Area End
          **********************-->
+
+        <!-- Smart Slide Popup -->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-segment-slidebox"><i
@@ -244,7 +246,7 @@
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">
                                         {{ formLabel }}
                                     </button>
-                                    <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a></div>
+                                    <a class="blue_300 fsize16 fw600 ml20 js-segment-slidebox" href="javascript:void(0);">Close</a></div>
                             </div>
                         </div>
                     </form>
