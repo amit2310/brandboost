@@ -47,12 +47,12 @@ class SubscriberModel extends Model {
         }
 
         if($paginated == true){
-            $oData = $query->paginate($items_per_page);
-            /*if ($items_per_page == 'All') {
+            //$oData = $query->paginate($items_per_page);
+            if ($items_per_page == 'All') {
                 $oData = $query->get();
             } else {
                 $oData = $query->paginate($items_per_page);
-            }*/
+            }
         }else{
             $oData = $query->get();
         }

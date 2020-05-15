@@ -3112,9 +3112,12 @@ class Broadcast extends Controller {
         exit;
     }
 
-    public function mysegments() {
+    public function mysegments(Request $request) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
 
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
@@ -3126,60 +3129,60 @@ class Broadcast extends Controller {
             'Segments' => '#/contacts/segments'
         );
 
+        $oSegments = $mBroadcast->getSegments($userID, '', true, $searchBy, $sortBy, $items_per_page);
 
-        $oSegments = $mBroadcast->getSegments($userID);
-        foreach ($oSegments->items() as $key => $oSegment) {
-            $oSubscribers = [];
-            $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
-            $aCampaignIDs = @unserialize($oSegment->source_campaign_id);
-            $moduleName = $oSegment->source_module_name;
-            $modName = '';
-            $campaignCollection = [];
-            if (!empty($aCampaignIDs)) {
-                //$campaignCollection = array();
-                foreach ($aCampaignIDs as $campaignId) {
-                    $modName = $moduleName;
-                    if (in_array($moduleName, array('brandboost-onsite', 'brandboost-offsite'))) {
-                        $modName = 'brandboost';
-                    }
-
-                    if (in_array($moduleName, array('nps-feedback'))) {
-                        $modName = 'nps';
-                    }
-                    $oCampaign = $mWorkflow->getModuleUnitInfo($modName, $campaignId);
-
-                    if (!empty($oCampaign)) {
-                        //$campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
-                        if ($moduleName == 'brandboost') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/details/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
-                        } else if ($moduleName == 'brandboost-onsite') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/onsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
-                        } else if ($moduleName == 'brandboost-offsite') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/offsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
-                        } else if ($moduleName == 'broadcast') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin#/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
-                        } else if ($moduleName == 'automation') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/emails/setupAutomation/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
-                        } else if ($moduleName == 'nps') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
-                        } else if ($moduleName == 'nps-feedback') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
-                        } else if ($moduleName == 'referral') {
-                            $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/referral/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+        if($oSegments->items()) {
+            foreach ($oSegments->items() as $key => $oSegment) {
+                $oSubscribers = [];
+                $oSubscribers = $mBroadcast->getSegmentSubscribers($oSegment->id, $userID);
+                $aCampaignIDs = @unserialize($oSegment->source_campaign_id);
+                $moduleName = $oSegment->source_module_name;
+                $modName = '';
+                $campaignCollection = [];
+                if (!empty($aCampaignIDs)) {
+                    //$campaignCollection = array();
+                    foreach ($aCampaignIDs as $campaignId) {
+                        $modName = $moduleName;
+                        if (in_array($moduleName, array('brandboost-onsite', 'brandboost-offsite'))) {
+                            $modName = 'brandboost';
                         }
+
+                        if (in_array($moduleName, array('nps-feedback'))) {
+                            $modName = 'nps';
+                        }
+                        $oCampaign = $mWorkflow->getModuleUnitInfo($modName, $campaignId);
+
+                        if (!empty($oCampaign)) {
+                            //$campaignCollection[] = "<a target='_blank' href='" . base_url("admin/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            if ($moduleName == 'brandboost') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/details/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                            } else if ($moduleName == 'brandboost-onsite') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/onsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                            } else if ($moduleName == 'brandboost-offsite') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/brandboost/offsite_setup/{$oCampaign->id}") . "'>{$oCampaign->brand_title}</a>";
+                            } else if ($moduleName == 'broadcast') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin#/broadcast/edit/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            } else if ($moduleName == 'automation') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/emails/setupAutomation/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            } else if ($moduleName == 'nps') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            } else if ($moduleName == 'nps-feedback') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/nps/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            } else if ($moduleName == 'referral') {
+                                $campaignCollection[] = "<a target='_blank' href='" . base_url("admin/modules/referral/setup/{$oCampaign->id}") . "'>{$oCampaign->title}</a>";
+                            }
+                        }
+
+
                     }
-
-
-
                 }
+
+                $oSegment->segmentSubscribers = $oSubscribers;
+                $oSegment->moduleName = $modName;
+                $oSegment->campaignCollection = $campaignCollection;
+                //$oSegments[$key]->data = $oSegment;
             }
-
-            $oSegment->segmentSubscribers = $oSubscribers;
-            $oSegment->moduleName = $modName;
-            $oSegment->campaignCollection = $campaignCollection;
-            //$oSegments[$key]->data = $oSegment;
         }
-
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -3191,7 +3194,7 @@ class Broadcast extends Controller {
         $aData = array(
             'title' => 'My Segments',
             'allData' => $oSegments,
-            'oSegments' => $oSegments->items(),
+            'oSegments' => (!empty($oSegments->items()) ? $oSegments->items() : $oSegments),
             'pagename' => $breadcrumb,
             'breadcrumb' => $aBreadcrumb,
             'moduleName' => '',

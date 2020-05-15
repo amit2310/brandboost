@@ -74,12 +74,12 @@
                             <tbody>
                             <tr class="headings">
                                 <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
+                                    <span>
+                                        <label class="custmo_checkbox pull-left">
+                                            <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                            <span class="custmo_checkmark blue"></span>
+                                        </label>
+                                    </span>
                                 </td>
                                 <td><span class="fsize10 fw500">name </span></td>
                                 <td><span class="fsize10 fw500">Email</span></td>
@@ -90,12 +90,12 @@
                             </tr>
                             <tr v-for="contact in subscribers" v-if="subscribers">
                                 <td width="20">
-                                        <span>
-                                            <label class="custmo_checkbox pull-left">
-                                                <input type="checkbox" :checked="deletedItems.indexOf(contact.id)>-1" @change="addtoDeleteCollection(contact.id, $event.target)">
-                                                <span class="custmo_checkmark blue"></span>
-                                            </label>
-                                        </span>
+                                    <span>
+                                        <label class="custmo_checkbox pull-left">
+                                            <input type="checkbox" :checked="deletedItems.indexOf(contact.id)>-1" @change="addtoDeleteCollection(contact.id, $event.target)">
+                                            <span class="custmo_checkmark blue"></span>
+                                        </label>
+                                    </span>
                                 </td>
                                 <td>
                                     <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">

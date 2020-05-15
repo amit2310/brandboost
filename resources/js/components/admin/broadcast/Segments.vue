@@ -23,76 +23,175 @@
 
             <loading :isLoading="loading"></loading>
             <div class="container-fluid">
-                <div class="row" v-if="!segments">
-                    <div class="col-md-12">
-                        <div class="card card_shadow min-h-280">
-                            <div class="row mb65">
-                                <div class="col-md-6 text-left">
-                                    <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img
-                                            src="/assets/images/download-fill.svg"/></span>
-                                        Import segment
-                                    </a>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <a class="lh_32 htxt_regular_14 dark_200" href="javascript:void(0);">
-                                        <span class="circle-icon-32 float-right ml10 bkg_light_200"><img
-                                            src="/assets/images/question-line.svg"/></span>
-                                        Learn how to use segments
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row mb65">
-                                <div class="col-md-12 text-center">
-                                    <img class="mt40" style="max-width: 225px; " src="/assets/images/segment_bkg.png">
-                                    <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
-                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import
-                                        segment!</h3>
-                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
-                                </div>
-                            </div>
+                <div class="table_head_action">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="table_filter">
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">ALL</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a></li>
+
+                                <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                                    <div class="dropdown-menu p10 mt-1">
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
+                                        <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="table_filter text-right">
+                                <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
+                                <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
+                                <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card p20 datasearcharea reviewRequestSearch br6 shadow3">
+                        <div class="form-group m-0 position-relative">
+                            <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search contacts" class="form-control h48 fsize14 dark_200 fw400 br5"/>
+                            <a class="search_tables_open_close searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                         </div>
                     </div>
                 </div>
-                <div v-else>
-                    <div class="table_head_action">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3 class="htxt_medium_16 dark_400">{{ allData.total }} Contact lists</h3>
+                <div v-if="(segments.length > 0 || searchBy.length > 0)">
+
+                    <div class="row" v-if="viewType == 'List View'">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                    <tr class="headings">
+                                        <td width="20">
+                                            <span>
+                                                <label class="custmo_checkbox pull-left">
+                                                    <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                                    <span class="custmo_checkmark blue"></span>
+                                                </label>
+                                            </span>
+                                        </td>
+                                        <td><span class="fsize10 fw500">SEGMENTS </span></td>
+                                        <td><span class="fsize10 fw500">CONTACTS</span></td>
+                                        <td><span class="fsize10 fw500">FILTERS</span></td>
+                                        <td><span class="fsize10 fw500">UPDATE <img src="assets/images/arrow-down-line-14.svg"/> </span></td>
+                                        <td><span class="fsize10 fw500">STATUS</span></td>
+                                        <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"/></span></td>
+                                    </tr>
+
+
+
+                                    <tr v-for="segment in segments">
+                                        <td width="20">
+                                            <span>
+                                            <label class="custmo_checkbox pull-left">
+                                                <input type="checkbox" :checked="deletedItems.indexOf(segment.id)>-1" @change="addtoDeleteCollection(segment.id, $event.target)">
+                                                <span class="custmo_checkmark blue"></span>
+                                            </label>
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <span class="table-img mr15">
+                                                <span class="circle_icon_24 bkg_blue_200"><img src="assets/images/pie_chart_fill_12.svg"/></span>
+                                            </span> {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}
+                                        </td>
+                                        <td>
+                                            <span v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                                {{segment.segmentSubscribers.data.length}}
+                                            </span>
+                                            <span v-else>{{segment.segmentSubscribers.data.length}}</span>
+                                        </td>
+                                        <td>
+                                            <span>6</span>
+                                            <span class="ml-3">
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                                <a href="#"><img src="assets/images/settings-2-line.svg"/></a>
+                                            </span>
+                                        </td>
+                                        <td>{{ displayDateFormat('M d, Y',segment.created) }}</td>
+                                        <td>
+                                            <span v-if="segment.status == '1'"><span class="mr-3"><span class="status_icon bkg_green_300"></span></span>Active</span>
+                                            <span v-else-if="segment.status == '2'"><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Archive</span>
+                                            <span v-else-if="segment.status == '3'"><span class="mr-3"><span class="status_icon bkg_blue_300"></span></span>Draft</span>
+                                            <span v-else><span class="mr-3"><span class="status_icon bkg_grey_light"></span></span>Inactive</span>
+                                        </td>
+                                        <td>
+                                            <div class="float-right">
+                                                <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+                                                    <span><img src="assets/images/more-2-fill.svg"/></span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a v-if="segment.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="moveArchive(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareSegmentUpdate(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" @click="syncContacts(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Sync</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteSegment(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <pagination
+                                    :pagination="allData"
+                                    @paginate="showPaginationData"
+                                    @paginate_per_page="showPaginationItemsPerPage"
+                                    :offset="4">
+                                </pagination>
+
                             </div>
-                            <div class="col-md-6">
-                                <div class="table_action">
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_action_dropdown"
-                                                data-toggle="dropdown">
-                                            <span><img src="/assets/images/date_created.svg"/></span>&nbsp; Date Created
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
-                                        </div>
+                        </div>
+
+                        <div class="col-md-12 text-center mt-3">
+                            <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                        </div>
+                    </div>
+
+                    <div class="row" v-if="viewType == 'Grid View'">
+                        <div v-for="segment in segments" class="col-md-3 d-flex">
+                            <div class="card p0 pt40 text-center animate_top col">
+                                <div class="dot_dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a v-if="segment.status != '2'" class="dropdown-item" href="javascript:void(0);" @click="moveArchive(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Move To Archive</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="prepareSegmentUpdate(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="syncContacts(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Sync</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="javascript:void(0);" @click="deleteSegment(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     </div>
-                                    <div class="float-right ml10 mr10">
-                                        <button type="button" class="dropdown-toggle table_action_dropdown"
-                                                data-toggle="dropdown">
-                                            <span><img src="/assets/images/list_view.svg"/></span>&nbsp; List View
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 1</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 2</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Link 3</a>
-                                        </div>
-                                    </div>
-                                    <div class="float-right">
-                                        <input class="table_search" type="text" placeholder="Search"/>
-                                    </div>
+                                </div>
+                                <a v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" href="javascript:void(0);" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
+                                <a v-else href="javascript:void(0);" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
+                                <div v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                    <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
+                                    <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
+                                        {{capitalizeFirstLetter(segment.source_module_name)}}
+                                    </p>
+                                </div>
+                                <div v-else>
+                                    <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
+                                    <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
+                                        {{capitalizeFirstLetter(segment.source_module_name)}}
+                                    </p>
+                                </div>
+                                <!--<p v-if="segment.campaignCollection" v-for="campaign in segment.campaignCollection" v-html="campaign">{{ campaign }}</p>-->
+                                <div class="p20 btop">
+                                    <ul class="workflow_list">
+                                        <li v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                            <a href="javascript:void(0);"><span><img src="assets/images/account-circle-fill-grey.svg" title="Subscribers"></span> {{segment.segmentSubscribers.data.length}}</a>
+                                        </li>
+                                        <li v-else>
+                                            <a href="javascript:void(0);"><span><img src="assets/images/account-circle-fill-grey.svg" title="Subscribers"></span> {{segment.segmentSubscribers.data.length}}</a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div v-for="segment in segments" class="col-md-3 text-center">
+                        <!--<div v-for="segment in segments" class="col-md-3 text-center">
                             <div class="card p30 h235 animate_top">
                                 <div class="dot_dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
@@ -132,25 +231,59 @@
                                     </p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 text-center js-segment-slidebox" style="cursor: pointer;">
-                            <div class="card p30 bkg_light_200 shadow_none h235 animate_top">
-                                <img class="mt20 mb30" src="assets/images/plus_icon_circle_64.svg">
-                                <p class="htxt_regular_16 dark_100 mb15">Create<br>Segment</p>
+                        </div>-->
+                        <div class="col-md-3 d-flex js-segment-slidebox" style="cursor: pointer;">
+                            <div class="card p0 pt40 text-center animate_top col">
+
+                                <a href="#" class="circle-icon-64 bkg_light_200 m0auto mt-4"><img src="assets/images/plus03.svg"> </a>
+                                <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4 mt-4">CREATE new <br> SEGMENT</p>
+
                             </div>
                         </div>
                     </div>
-                    <pagination
+                    <pagination v-if="viewType == 'Grid View'"
                         :pagination="allData"
                         @paginate="showPaginationData"
+                        @paginate_per_page="showPaginationItemsPerPage"
                         :offset="4">
                     </pagination>
+
+                </div>
+
+                <div class="row" v-else>
+                    <div class="col-md-12">
+                        <div class="card card_shadow min-h-280">
+
+                            <div class="row mb65">
+                                <div class="col-md-12 text-left">
+                                    <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
+                                        <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
+                                        Import segment
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row mb65">
+                                <div class="col-md-12 text-center">
+                                    <img class="mt40" style="max-width: 225px; " src="assets/images/segment_bkg.png">
+                                    <h3 class="htxt_bold_18 dark_700 mt30">No segments yet. Create a new one!</h3>
+                                    <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import segment!</h3>
+                                    <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-slidebox">Add segment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-2">
+                        <a href="javascropt:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                    </div>
                 </div>
             </div>
         </div>
         <!--******************
           Content Area End
          **********************-->
+
+        <!-- Smart Slide Popup -->
         <div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-segment-slidebox"><i
@@ -206,13 +339,14 @@
                                     <button class="btn btn-lg bkg_blue_300 light_000 pr20 min_w_160 fsize16 fw600">
                                         {{ formLabel }}
                                     </button>
-                                    <a class="blue_300 fsize16 fw600 ml20" href="javascript:void(0);">Close</a></div>
+                                    <a class="blue_300 fsize16 fw600 ml20 js-segment-slidebox" href="javascript:void(0);">Close</a></div>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -228,22 +362,99 @@
                     segment_id: ''
                 },
                 formLabel: 'Create',
-
-
                 loading: true,
                 breadcrumb: '',
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
-                segments: '',
                 current_page: 1,
-                allData: ''
+                items_per_page: 10,
+                allData: '',
+                segments: '',
+                viewType: 'List View',
+                sortBy: 'Date Created',
+                searchBy: '',
+                deletedItems: []
             }
         },
         mounted() {
             this.loadPaginatedData();
         },
+        watch: {
+            'sortBy' : function(){
+                this.loadPaginatedData();
+            },
+            'searchBy' : function(){
+                this.loadPaginatedData();
+            },
+            'items_per_page' : function(){
+                this.loadPaginatedData();
+            }
+        },
+        computed:{
+            'allChecked' : function () {
+                let notFound = '';
+                this.segments.forEach(camp => {
+                    let idx = this.deletedItems.indexOf(camp.id);
+                    if(idx == -1){
+                        notFound = true;
+                    }
+                });
+                return notFound === true ? false : true;
+            }
+        },
         methods: {
+            applySort: function(sortVal){
+                this.loading = true;
+
+                this.sortBy = sortVal;
+                this.deletedItems = [];
+            },
+            deleteSelectedItems: function(){
+                if(this.deletedItems.length>0){
+                    if(confirm('Are you sure you want to delete selected item(s)?')){
+                        this.loading = true;
+                        axios.post('/admin/broadcast/deleteMultipalSegment', {_token:this.csrf_token(), multiSegmentid:this.deletedItems})
+                            .then(response => {
+                                this.loading = false;
+                                this.loadPaginatedData();
+                            });
+                    }
+                }
+            },
+            addtoDeleteCollection: function(itemId, elem){
+                if(itemId == 'all'){
+                    if(elem.checked){
+                        if(this.segments.length>0){
+                            this.segments.forEach(camp => {
+                                let idxx = this.deletedItems.indexOf(camp.id);
+                                if(idxx == -1){
+                                    this.deletedItems.push(camp.id);
+                                }
+                            });
+                        }
+                    }else{
+                        this.segments.forEach(camp => {
+                            let idxx = this.deletedItems.indexOf(camp.id);
+
+                            if(idxx > -1){
+                                this.deletedItems.splice(idxx, 1);
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                if(elem.checked){
+                    this.deletedItems.push(itemId);
+                }else{
+                    let idx = this.deletedItems.indexOf(itemId);
+                    if (idx > -1) {
+                        this.deletedItems.splice(idx, 1);
+                    }
+                }
+
+            },
             displayForm : function(lbl){
                 if(lbl == 'Create'){
                     this.form={};
@@ -305,7 +516,7 @@
                     });
             },
             loadPaginatedData: function () {
-                axios.get('/admin/broadcast/mysegments?page=' + this.current_page)
+                axios.get('/admin/broadcast/mysegments?page=' + this.current_page + '&items_per_page='+this.items_per_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -319,9 +530,6 @@
             },
             showSegmentSubscribers: function(segmentId){
                 window.location.href='#/contacts/segments/subscribers/'+segmentId;
-            },
-            showPaginationData: function (current_page) {
-                this.navigatePagination(current_page);
             },
             submitAddSegment: function () {
                 this.loading = true;
@@ -339,6 +547,16 @@
                         //error.response.data
                         alert('All form fields are required');
                     });
+            },
+            showPaginationData: function(p){
+                this.loading=true;
+                this.current_page = p;
+                this.loadPaginatedData();
+            },
+            showPaginationItemsPerPage: function(p){
+                this.loading=true;
+                this.items_per_page = p;
+                this.loadPaginatedData();
             },
             navigatePagination: function (p) {
                 this.loading = true;
@@ -408,6 +626,8 @@
             }
         }
     };
+
+
     $(document).ready(function () {
         $(document).on('click', '.js-segment-slidebox', function () {
             $(".box").animate({

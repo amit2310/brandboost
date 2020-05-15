@@ -851,7 +851,7 @@ class BroadcastModel extends Model {
      * @param type $id
      * @return type
      */
-    public function getSegments($userID, $id = '') {
+    public function getSegments($userID, $id = '', $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10') {
         $oData = DB::table('tbl_segments')
                 ->leftJoin('tbl_automations_emails', 'tbl_segments.source_campaign_id', '=', 'tbl_automations_emails.id')
                 ->select('tbl_segments.*', 'tbl_automations_emails.title as campaign_title')
@@ -861,11 +861,42 @@ class BroadcastModel extends Model {
                 ->when(!empty($id), function ($query) use ($id) {
                     return $query->where('tbl_segments.id', $id);
                 })
-            ->orderBy('tbl_segments.id', 'asc')
-                ->paginate(10);
-                //->get();
+            ->orderBy('tbl_segments.id', 'DESC');
+            //->paginate(10);
+            //->get();
+        if(!empty($searchBy)){
+            $oData->where('tbl_segments.user_id', $userID);
+            $oData->where('tbl_segments.segment_name', 'LIKE', "%$searchBy%");
+            $oData->orWhere('tbl_segments.source_module_name', 'LIKE', "%$searchBy%");
+        }
 
-        return $oData;
+        if(!empty($sortBy)){
+            if($sortBy == 'All'){
+                $oData->orderBy('tbl_segments.created', 'desc');
+            }else if($sortBy == 'Active'){
+                $oData->where('tbl_segments.status', '1');
+            }else  if($sortBy == 'Inactive'){
+                $oData->where('tbl_segments.status', '0');
+            }else  if($sortBy == 'Pending'){
+                $oData->where('tbl_segments.status', '2');
+            }else  if($sortBy == 'Archive'){
+                $oData->where('tbl_segments.status', '2');
+            }else  if($sortBy == 'Date Created'){
+                $oData->orderBy('tbl_segments.created', 'desc');
+            }
+        }
+
+        if($paginated == true){
+            //$aData = $oData->paginate($items_per_page);
+            if ($items_per_page == 'All') {
+                $aData = $oData->get();
+            } else {
+                $aData = $oData->paginate($items_per_page);
+            }
+        }else{
+            $aData = $oData->get();
+        }
+        return $aData;
     }
 
     /**
