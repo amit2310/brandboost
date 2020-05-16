@@ -3752,7 +3752,7 @@ class WorkFlow extends Controller {
         $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
         //Reassemble events Order
         $orderedEvents = sortWorkflowEvents($events);
-        $oEvents = $orderedEvents['oEvents'];
+        $oEvents = sizeof($orderedEvents['oEvents'])>0 ? $orderedEvents['oEvents'] : '';
 
         $title = '';
         if($moduleName == 'brandboost'){
@@ -3834,6 +3834,7 @@ class WorkFlow extends Controller {
         }
 
         return [
+            'status' => 'success',
             'title' => $title,
             'oEvents' => $oEvents,
             'moduleName' => $moduleName,
@@ -3914,12 +3915,15 @@ class WorkFlow extends Controller {
                     $bUpdated = $mWorkflow->updateDecisionNode($aData, $oNextNode->id, $moduleName);
                 }
                 //Fetch events
-                $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
-                //Reassemble events Order
-                $orderedEvents = sortWorkflowEvents($events);
-                $oEvents = $orderedEvents['oEvents'];
+                if($pathId>0){
+                    $events = $mWorkflow->getWorkflowDecisionEvents($pathId, $moduleName);
+                    //Reassemble events Order
+                    $orderedEvents = sortWorkflowEvents($events);
+                    $oEvents = $orderedEvents['oEvents'];
+                    $response['oEvents'] = $oEvents;
+                }
                 $response['status'] = 'success';
-                $response['oEvents'] = $oEvents;
+
             } else {
                 $response['status'] = 'error';
             }
