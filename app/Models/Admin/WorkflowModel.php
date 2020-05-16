@@ -4763,16 +4763,20 @@ class WorkflowModel extends Model {
         switch ($moduleName) {
             case "brandboost":
                 $tableName = 'tbl_brandboost_decision';
+                $pathTableName = 'tbl_brandboost_decision_path';
                 break;
             case "automation":
             case "broadcast":
                 $tableName = 'tbl_automations_decision';
+                $pathTableName = 'tbl_automations_decision_path';
                 break;
             case "referral":
                 $tableName = 'tbl_referral_automations_decision';
+                $pathTableName = 'tbl_referral_ecision_path';
                 break;
             case "nps":
                 $tableName = 'tbl_nps_automations_decision';
+                $pathTableName = 'tbl_nps_decision_path';
                 break;
             default :
                 $tableName = '';
@@ -4786,10 +4790,13 @@ class WorkflowModel extends Model {
         unset($aData['id']);
         $insert_id = DB::table($tableName)->insertGetId($aData);
         if($insert_id>0){
+            //Add default two paths
+            $pathA_id = DB::table($pathTableName)->insertGetId(['decision_id'=>$insert_id,'status'=>1, 'created'=>date("Y-m-d H:i:s")]);
+            $pathB_id = DB::table($pathTableName)->insertGetId(['decision_id'=>$insert_id,'status'=>1, 'created'=>date("Y-m-d H:i:s")]);
             $oEvent = $this->getNodeInfo($eventId, $moduleName);
             if(!empty($oEvent)){
                 $triggerParam = json_decode($oEvent->data);
-                $triggerParam->decision_properties = ['decision_id'=>$insert_id, 'type'=>$aData['decision_type']];
+                $triggerParam->decision_properties = ['decision_id'=>$insert_id, 'type'=>$aData['decision_type'],'total_path'=>2,'pathA'=>$pathA_id, 'pathB'=>$pathB_id];
                 $bUpdated = $this->updateNode(['data' => json_encode($triggerParam)], $eventId, $moduleName);
             }
         }
@@ -5155,10 +5162,12 @@ class WorkflowModel extends Model {
             return false;
         }
 
-        $oData = DB::table($tableName)
-            ->where('id', $id)
-            ->where('path_id', $pathId)
-            ->delete();
+        $query = DB::table($tableName)
+            ->where('id', $id);
+        if(!empty($pathId)){
+            $query->where('path_id', $pathId);
+        }
+        $oData = $query->delete();
         if ($oData) {
             $bCampaignDeleted = $this->deleteWorflowDecisionCampaign($id, $moduleName);
             return true;

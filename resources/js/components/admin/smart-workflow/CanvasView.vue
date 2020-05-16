@@ -48,6 +48,7 @@
                         @createBlankAction="createBlankAction"
                         @createBlankDecision="createBlankDecision"
                         @createBlankDelay="createBlankDelay"
+                        @addCoherentAction="addCoherentAction"
                     ></canvas-node>
                     <!--Nodes-->
 
@@ -119,27 +120,27 @@
             }
         },
         methods: {
-            setAddActionProps: function(eventData){
-                this.$emit("setActionProps", eventData);
+            setAddActionProps: function(eventData, nodeCat){
+                this.$emit("setActionProps", eventData, nodeCat);
             },
-            deleteEventNode: function(eventData){
-                this.$emit("deleteWorkflowNode", eventData);
+            deleteEventNode: function(eventData, nodeCat){
+                this.$emit("deleteWorkflowNode", eventData, nodeCat);
             },
-            editEventNode: function(nodeType, eventData){
-                this.$emit("editWorkflowNode", nodeType, eventData);
+            editEventNode: function(nodeType, eventData, nodeCat){
+                this.$emit("editWorkflowNode", nodeType, eventData, nodeCat);
             },
-            createBlankAction: function(eventData){
-                this.$emit("addBlankAction", eventData);
+            createBlankAction: function(eventData, nodeCat){
+                this.$emit("addBlankAction", eventData, nodeCat);
             },
             createBlankDecision: function(eventData){
                 this.$emit("addBlankDecision", eventData);
             },
-            createBlankDelay: function(eventData){
-                this.$emit("addDelay", eventData);
+            createBlankDelay: function(eventData, nodeCat){
+                this.$emit("addDelay", eventData, nodeCat);
             },
-            addCoherentAction: function(){
+            addCoherentAction: function(nodeCat, pathId){
                 this.metaData.selectedClass = '';
-                this.$emit("setActionProps");
+                this.$emit("setActionProps", '', nodeCat, pathId);
             },
             onDrop: function(ev){
                 var nodetype = ev.dataTransfer.getData("nodetype");
