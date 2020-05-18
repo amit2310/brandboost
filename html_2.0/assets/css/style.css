@@ -3029,6 +3029,15 @@ WORKFLOW CSS
 }
 
 
+.vline::before {
+	position: absolute!important;
+	width: 2px!important;
+	height: 100%!important;
+	content: '';
+	background: #d6dfee!important;
+	left: 50%!important;
+	margin-left: -1px!important;
+}
 
 .droppable_highlight{border:none !important; height: 57px !important; background: none !important; border-style: none !important;}
 .droppable_highlight:before{ height:36px!important; border-radius:100px!important; width:36px!important;position:absolute; content:''; left:50%; top:12px; background: #73ABFF;opacity: 0.1; margin-left:-18px; }
