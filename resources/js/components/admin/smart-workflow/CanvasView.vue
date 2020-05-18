@@ -36,6 +36,7 @@
                     <!--Nodes-->
                     <canvas-node
                         v-for="oEvent in events"
+                        v-if="oEvent.id>0"
                         :event="oEvent"
                         :unitInfo="unitInfo"
                         :metaData="metaData"
@@ -124,6 +125,7 @@
                 this.$emit("setActionProps", eventData, nodeCat);
             },
             deleteEventNode: function(eventData, nodeCat){
+                alert('++'+nodeCat);
                 this.$emit("deleteWorkflowNode", eventData, nodeCat);
             },
             editEventNode: function(nodeType, eventData, nodeCat){

@@ -1740,7 +1740,7 @@
               this.clearSplitProperties();
               this.clearDecisionProperties();
             },
-            deleteWorkflowNode: function(event, nodeCat){
+            deleteWorkflowNode: function(event){
                 this.clearActionProps();
                 this.loading = true;
                 let formData = {
@@ -1749,7 +1749,7 @@
                     event_id: event.id
                 };
                 let url='';
-                if(nodeCat == 'decision'){
+                if(this.isDecisionNode == true){
                     url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowDecisionEvent';
                 }else{
                     url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent';
@@ -1757,7 +1757,7 @@
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
-                        if(nodeCat == 'decision' || nodeCat == 'split'){
+                        if(this.isDecisionNode == true || this.isSplitNode == true){
                             this.events= '';
                             this.getWorkflowData();
                         }else{
@@ -2206,8 +2206,8 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         if(this.isDecisionNode == true || this.isSplitNode == true){
-                            this.events= '';
                             this.getWorkflowData();
+
                         }else{
                             this.events = response.data.oEvents;
                             this.metaData.selectedClass = response.data.newEventId;

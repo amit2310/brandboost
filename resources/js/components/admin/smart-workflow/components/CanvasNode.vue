@@ -87,7 +87,7 @@
             <!--=====Splited two cards ========-->
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 vline">
                         <!--Nodes-->
                         <canvas-decision-node
                             v-for="oEvent in decisionEventsPathA"
@@ -114,7 +114,7 @@
                         </div>
                         <!--Connector-->
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 vline">
                         <!--Nodes-->
                         <canvas-decision-node
                             v-for="oEvent in decisionEventsPathB"
