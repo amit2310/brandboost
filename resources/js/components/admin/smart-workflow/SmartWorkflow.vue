@@ -2206,6 +2206,7 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         if(this.isDecisionNode == true || this.isSplitNode == true){
+                            this.events= '';
                             this.getWorkflowData();
 
                         }else{

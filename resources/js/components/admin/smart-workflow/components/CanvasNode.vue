@@ -89,6 +89,8 @@
                 <div class="row">
                     <div class="col-md-6 vline">
                         <!--Nodes-->
+                        <div class="row h-100 align-items-center">
+                            <div class="col-md-12">
                         <canvas-decision-node
                             v-for="oEvent in decisionEventsPathA"
                             :event="oEvent"
@@ -103,6 +105,8 @@
                             @createBlankActionDecision="createBlankActionDecision"
                             @createBlankDelayDecision="createBlankDelayDecision"
                         ></canvas-decision-node>
+                            </div>
+                        </div>
 
                         <!--Connector-->
                         <div v-if="decisionEventsPathA" class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
@@ -116,6 +120,8 @@
                     </div>
                     <div class="col-md-6 vline">
                         <!--Nodes-->
+                        <div class="row h-100 align-items-center">
+                            <div class="col-md-12">
                         <canvas-decision-node
                             v-for="oEvent in decisionEventsPathB"
                             :event="oEvent"
@@ -130,6 +136,8 @@
                             @createBlankActionDecision="createBlankActionDecision"
                             @createBlankDelayDecision="createBlankDelayDecision"
                         ></canvas-decision-node>
+                            </div>
+                        </div>
 
                         <!--Connector-->
                         <div v-if="decisionEventsPathB" class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
