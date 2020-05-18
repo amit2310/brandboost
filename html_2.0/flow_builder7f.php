@@ -345,4 +345,17 @@ $$$$$$$$$$$$$$$$$$$$$$$-->
 		} );
 		
 		
-		// wf  top nav
+		// wf  top navigation fixed on scroll 
+		$( window ).scroll( function () {
+			var sc = $( window ).scrollTop();
+			if ( sc > 100 ) {
+				$( "#wf_top_btn_area" ).addClass( "wf_button_fixed" );
+			} else {
+				$( "#wf_top_btn_area" ).removeClass( "wf_button_fixed" );
+			}
+		} );
+		
+		
+</script>
+</body>
+</html>
