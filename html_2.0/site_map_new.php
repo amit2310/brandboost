@@ -218,6 +218,8 @@
      			<li><a target="_blank" href="people_contact_new_a.php">People Contact New 1</a></li>
      			<li><a target="_blank" href="people_contact_new_b.php">People Contact New 2</a></li>
      			<li><a target="_blank" href="people_contact_new_c.php">People Contact New 3</a></li>
+                <li><a target="_blank" href="people_contact_new_d.php">People Contact New 4</a></li>
+     			<li><a target="_blank" href="people_contact_new_e.php">People Contact New 5</a></li>
      			
      		</ul>
      		</div>
