@@ -2986,11 +2986,11 @@ class WorkFlow extends Controller {
 
         $title = '';
         if($moduleName == 'brandboost'){
-            $title = $oUnitData->brand_title;
+            $title = isset($oUnitData->brand_title) ? $oUnitData->brand_title : '';
         }else if($moduleName == 'automation' || $moduleName == 'broadcast'){
-            $title = $oUnitData->title;
+            $title = isset($oUnitData->title) ? $oUnitData->title : '';
         }else if($moduleName == 'nps' || $moduleName == 'referral'){
-            $title = $oUnitData->title;
+            $title = isset($oUnitData->title) ? $oUnitData->title : '';
         }
         $emailTemplateId = '';
         $smsTemplateId = '';
