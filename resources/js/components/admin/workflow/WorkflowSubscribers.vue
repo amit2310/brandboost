@@ -41,12 +41,31 @@
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <tbody>
-                        <tr>
-                            <td colspan="1"><span class="fsize12 fw300">Visitor name </span></td>
-                            <td colspan="3"><span class="fsize12 fw300">Preview data</span></td>
-                            <td colspan="3"><span class="fsize12 fw300">List fields</span></td>
+                        <tr class="headings">
+                            <td width="20">
+				  	<span>
+						<label class="custmo_checkbox pull-left">
+							<input type="checkbox">
+							<span class="custmo_checkmark blue"></span>
+						</label>
+					</span>
+                            </td>
+                            <td><span class="fsize10 fw500">name </span></td>
+                            <td><span class="fsize10 fw500">Email</span></td>
+                            <td><span class="fsize10 fw500">Phone</span></td>
+                            <td><span class="fsize10 fw500">Tags  </span></td>
+                            <td><span class="fsize10 fw500">Update <img src="assets/images/arrow-down-line-14.svg"/></span></td>
+                            <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"/></span></td>
                         </tr>
                         <tr v-for="contact in activeUsers" v-if="activeUsers">
+                            <td width="20">
+						<span>
+							<label class="custmo_checkbox pull-left">
+								<input type="checkbox">
+								<span class="custmo_checkmark blue"></span>
+							</label>
+						</span>
+                            </td>
                             <td>
                                 <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
                                     <user-avatar
@@ -59,28 +78,14 @@
                                     ></user-avatar>
                                 </a>
                                 <span class="htxt_medium_14 dark_900" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
-                             </td>
-                            <td class="text-right">{{ contact.email }}</td>
+                            </td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ (contact.phone != '' || contact.phone != null) ? phoneNoFormat(contact.phone) : '' }}</td>
+                            <!--<td><button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button> </td>-->
                             <td>
                                 <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
                             </td>
-                            <!--<td><span class="badge badge-dark">+4</span></td>-->
-                            <td>Customer</td>
-                            <td><span class="dot_6 bkg_blue_300">&nbsp;</span></td>
-                            <td class="text-right">
-                                <span class="icons">
-                                    <img src="/assets/images/message-2-line.svg"/>
-                                </span>
-                                <span class="icons">
-                                    <a :href="`mailto:${contact.email}`"><img src="/assets/images/mail-open-line-16.svg"/></a>
-                                </span>
-                                <span class="icons">
-                                    <img src="assets/images/message-3-line-16.svg"/>
-                                </span>
-                                <span class="icons">
-                                    <img src="assets/images/star-line.svg"/>
-                                </span>
-                            </td>
+                            <td><span class=""> {{ timeAgo(contact.created) }}   </span></td>
                             <td>
                                 <div class="float-right">
                                     <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
@@ -98,6 +103,12 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)">Delete</a>
                                         <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)">Sync</a>
                                     </div>
+                                </div>
+                                <div>
+                                    <span class="float-right">
+                                    <span v-if="contact.status == '1'" class="status_icon bkg_blue_300"></span>
+                                    <span v-else class="status_icon bkg_grey"></span>
+                                </span>
                                 </div>
                             </td>
                         </tr>
@@ -143,7 +154,7 @@
         },
         watch: {
             subscribersData: [{
-                handler: 'setOptimizer'
+                //handler: 'setOptimizer'
             }]
         },
         methods: {
