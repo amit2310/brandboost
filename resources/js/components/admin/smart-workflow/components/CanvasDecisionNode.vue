@@ -1,6 +1,7 @@
 <template>
     <div class="row" style="margin-left:0px;margin-right:0px;">
         <!--Connector-->
+
         <div class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
             <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="prepareToAddAction"><i class="ri-add-fill"></i></a>
         </div>
