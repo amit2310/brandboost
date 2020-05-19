@@ -1550,7 +1550,11 @@
                 selected_action_webhook_data: [],
                 selected_action_webhook_method: '',
                 selected_action_status: '',
-                selected_action_segments: ''
+                selected_action_segments: '',
+                isDecisionNode: false,
+                isSplitNode: false,
+                decisionPathId: '',
+                splitPathId: ''
             }
         },
         mounted() {
@@ -1711,12 +1715,24 @@
                 let leftOffset = document.querySelector("#canvasDragger").style.left.replace('%', '').replace('px','');
                 document.querySelector("#canvasDragger").style.left = (Number(leftOffset)+1) + '%';
             },
-            setActionProps: function(event){
+            setActionProps: function(event, nodeCat, pathId){
                 this.clearActionProps();
                 this.clearAllForms();
                 this.clearAllEditMode();
                 if(event){
                     this.selectedEvent = event;
+                }
+                if(nodeCat == 'decision'){
+                    this.isDecisionNode = true;
+                    this.decisionPathId = pathId;
+                }else if(nodeCat == 'split'){
+                    this.isSplitNode = true;
+                    this.splitPathId = pathId;
+                }else{
+                    this.isDecisionNode = false;
+                    this.isSplitNode = false;
+                    this.decisionPathId = '';
+                    this.splitPathId = '';
                 }
             },
             clearAllForms: function(){
@@ -1732,16 +1748,36 @@
                     moduleUnitId: this.moduleUnitId,
                     event_id: event.id
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent', formData).then(response => {
+                let url='';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowDecisionEvent';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
-                        this.events = response.data.oEvents;
+                        if(this.isDecisionNode == true || this.isSplitNode == true){
+                            this.events= '';
+                            this.getWorkflowData();
+                        }else{
+                            this.events = response.data.oEvents;
+                        }
+
                         this.displayMessage('success', 'Node deleted succcessfully!');
                     }
                 });
             },
-            editWorkflowNode: function(nodeType, event){
+            editWorkflowNode: function(nodeType, event, nodeCat){
                 this.loading = true;
+                if(nodeCat == 'decision'){
+                    this.isDecisionNode = true;
+                }else if(nodeCat == 'split'){
+                    this.isSplitNode = true;
+                }else{
+                    this.isDecisionNode = false;
+                    this.isSplitNode = false;
+                }
                 this.clearAllEditMode();
                 if(nodeType == 'delay'){
                     this.loadEditDelay(event);
@@ -1814,7 +1850,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         let event = response.data.eventData;
@@ -1836,7 +1878,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         let event = response.data.eventData;
@@ -1858,7 +1906,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         let event = response.data.eventData;
@@ -1882,7 +1936,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.fieldAlias = response.data.fieldAlias;
@@ -1906,7 +1966,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         let event = response.data.eventData;
@@ -1928,7 +1994,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         let event = response.data.eventData;
@@ -1950,7 +2022,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.selectedSMSNodeData = response.data.smsData;
@@ -1970,7 +2048,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: event,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowDecisionActionField';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/loadWorkflowActionField';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.selectedEmailNodeData = response.data.emailData;
@@ -2088,7 +2172,7 @@
             clearActionProps: function(){
                 this.selectedEvent = '';
             },
-            addBlankAction: function(action){
+            addBlankAction: function(action, nodeCat){
                 this.loading = true;
                 let formData = {
                     nodeType: 'action',
@@ -2099,17 +2183,36 @@
                     eventData: this.selectedEvent
                 };
                 let url='';
-                if(this.actionEditMode == true){
-                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowBlankAction';
-                    formData.id = this.actionEditId;
+                if(this.isDecisionNode == true || nodeCat == 'decision'){
+                    if(this.actionEditMode == true){
+                        url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowDecisionBlankAction';
+                        formData.id = this.actionEditId;
+                        formData.pathId = this.decisionPathId;
+                    }else{
+                        url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowDecisionBlankAction';
+                        formData.pathId = this.decisionPathId;
+                    }
+
                 }else{
-                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction';
+                    if(this.actionEditMode == true){
+                        url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowBlankAction';
+                        formData.id = this.actionEditId;
+                    }else{
+                        url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction';
+                    }
                 }
+
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
-                        this.events = response.data.oEvents;
-                        this.metaData.selectedClass = response.data.newEventId;
+                        if(this.isDecisionNode == true || this.isSplitNode == true){
+                            this.events= '';
+                            this.getWorkflowData();
+
+                        }else{
+                            this.events = response.data.oEvents;
+                            this.metaData.selectedClass = response.data.newEventId;
+                        }
                         if (this.actionEditMode == true){
                             this.actionEditMode = false;
                             this.actionEditId = '';
@@ -2154,7 +2257,7 @@
                     }
                 });
             },
-            addDelay: function(){
+            addDelay: function(event, nodeCat){
                 this.loading = true;
                 let formData = {
                     nodeType: 'delay',
@@ -2165,7 +2268,13 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent,
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                let url = '';
+                if(nodeCat == 'decision'){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowDecisionBlankAction';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.loading = false;
                         this.events = response.data.oEvents;

@@ -80,35 +80,75 @@
             <!--=====ADD nodes 2 circle icon ========-->
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-6 text-center"> <div class="workflow_switch_div_small canvas mb20 mt20 text-center d-inline-block" style="width:auto;"> <a class="workflow_switch dark_400 fw400 fsize13" href="#"><i class="ri-pie-chart-2-fill dark_100 fsize11"></i> Free Customers </a> <!--<a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>--> </div> </div>
-                    <div class="col-6 text-center"> <div class="workflow_switch_div_small canvas mb20 mt20 text-center d-inline-block" style="width:auto;"> <a class="workflow_switch dark_400 fw400 fsize13" href="#"><i class="ri-pie-chart-2-fill dark_100 fsize11"></i> Have not logged in ... </a> <!--<a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>--> </div> </div>
+                    <div class="col-6 text-center"> <div class="workflow_switch_div_small canvas mb20 mt20 text-center d-inline-block" :style="decisionEventsPathA ? 'width:auto;margin-bottom:0px!important;': 'width:auto;'"> <a class="workflow_switch dark_400 fw400 fsize13" href="#"><i class="ri-pie-chart-2-fill dark_100 fsize11"></i> Free Customers </a> <!--<a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>--> </div> </div>
+                    <div class="col-6 text-center"> <div class="workflow_switch_div_small canvas mb20 mt20 text-center d-inline-block" :style="decisionEventsPathB ? 'width:auto;margin-bottom:0px!important;': 'width:auto;'"> <a class="workflow_switch dark_400 fw400 fsize13" href="#"><i class="ri-pie-chart-2-fill dark_100 fsize11"></i> Have not logged in ... </a> <!--<a class="" href="#"> <i class="icon-bin2 fsize10 dark_100"></i></a>--> </div> </div>
                 </div>
             </div>
             <!--=====Splited two cards ========-->
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="workflow_card top_line_20">
-                            <img class="mb-2" src="assets/images/plus_circle_36.svg"/><br>
+                    <div class="col-md-6 vline">
+                        <!--Nodes-->
+                        <div class="row h-100 align-items-center">
+                            <div class="col-md-12">
+                        <canvas-decision-node
+                            v-for="oEvent in decisionEventsPathA"
+                            :event="oEvent"
+                            :unitInfo="unitInfo"
+                            :metaData="metaData"
+                            :moduleName="moduleName"
+                            :moduleUnitId="moduleUnitId"
+                            :key="oEvent.id"
+                            @setAddActionPropsDecision="setAddActionPropsDecision"
+                            @deleteEventNodeDecision="deleteEventNodeDecision"
+                            @editEventNodeDecision="editEventNodeDecision"
+                            @createBlankActionDecision="createBlankActionDecision"
+                            @createBlankDelayDecision="createBlankDelayDecision"
+                        ></canvas-decision-node>
+                            </div>
+                        </div>
+
+                        <!--Connector-->
+                        <div v-if="decisionEventsPathA" class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
+                            <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="addCoherentActionDecision(decisionPathA)"><i class="ri-add-fill"></i></a>
+                        </div>
+                        <div v-else class="workflow_card top_line_20 slideAddNodebox" @click="addCoherentActionDecision(decisionPathA)" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;">
+                            <img class="mb-2" src="assets/images/plus_circle_36.svg"><br>
                             <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
                         </div>
+                        <!--Connector-->
                     </div>
-                    <div class="col-md-6">
-                        <div class="workflow_card top_line_20">
-
-                            <img class="mb-2" src="assets/images/plus_circle_36.svg"/><br>
-
-                            <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
-
+                    <div class="col-md-6 vline">
+                        <!--Nodes-->
+                        <div class="row h-100 align-items-center">
+                            <div class="col-md-12">
+                        <canvas-decision-node
+                            v-for="oEvent in decisionEventsPathB"
+                            :event="oEvent"
+                            :unitInfo="unitInfo"
+                            :metaData="metaData"
+                            :moduleName="moduleName"
+                            :moduleUnitId="moduleUnitId"
+                            :key="oEvent.id"
+                            @setAddActionPropsDecision="setAddActionPropsDecision"
+                            @deleteEventNodeDecision="deleteEventNodeDecision"
+                            @editEventNodeDecision="editEventNodeDecision"
+                            @createBlankActionDecision="createBlankActionDecision"
+                            @createBlankDelayDecision="createBlankDelayDecision"
+                        ></canvas-decision-node>
+                            </div>
                         </div>
+
+                        <!--Connector-->
+                        <div v-if="decisionEventsPathB" class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
+                            <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="addCoherentActionDecision(decisionPathB)"><i class="ri-add-fill"></i></a>
+                        </div>
+                        <div v-else class="workflow_card top_line_20 slideAddNodebox" @click="addCoherentActionDecision(decisionPathB)" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;">
+                            <img class="mb-2" src="assets/images/plus_circle_36.svg"><br>
+                            <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
+                        </div>
+                        <!--Connector-->
                     </div>
-                </div>
-            </div>
-            <!--=====ADD nodes 2 circle plus icon ========-->
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-4 mb-2" href="#"><i class="ri-add-fill"></i></a> </div>
-                    <div class="col-6 text-center"> <a class="workflowadds slidebox mt-4 mb-2" href="#"><i class="ri-add-fill"></i></a> </div>
                 </div>
             </div>
             <!--=====Split Image bot=============-->
@@ -181,17 +221,27 @@
     </div>
 </template>
 <script>
+    import CanvasDecisionNode from "./CanvasDecisionNode";
     export default {
         props: ['event', 'unitInfo', 'metaData', 'moduleName', 'moduleUnitId'],
+        components: {CanvasDecisionNode},
         data(){
           return {
               column_index: 0,
-              splitNodeInfo: ''
+              splitNodeInfo: '',
+              decisionNodeInfo: '',
+              decisionEventsPathA: '',
+              decisionEventsPathB: '',
+              decisionPathA: '',
+              decisionPathB: ''
           }
         },
         mounted() {
             if(this.nodeType == 'split'){
                 this.getSplitNodeInfo(this.event);
+            }
+            if(this.nodeType == 'decision'){
+                this.getDecisionNodeInfo(this.event);
             }
         },
         computed :{
@@ -314,6 +364,23 @@
                 this.metaData.selectedClass=this.event.id;
                 this.$emit('editEventNode', this.nodeType, this.event);
             },
+            getDecisionPathEvents: function(id, pathName){
+                let formData = {
+                    pathId: id,
+                    moduleName: this.moduleName,
+                    moduleUnitId: this.moduleUnitId,
+                };
+                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowDecisionData', formData).then(response => {
+                    if(response.data.status == 'success'){
+                        if(pathName == 'A'){
+                            this.decisionEventsPathA = response.data.oEvents;
+                        }
+                        if(pathName == 'B'){
+                            this.decisionEventsPathB = response.data.oEvents;
+                        }
+                    }
+                });
+            },
             getSplitNodeInfo: function(event){
                 let triggerParams = JSON.parse(event.data);
                 let splitId = triggerParams['split_properties']['split_id'];
@@ -331,6 +398,51 @@
                 }
 
             },
+            getDecisionNodeInfo: function(event){
+                let triggerParams = JSON.parse(event.data);
+                let decisionId = triggerParams['decision_properties']['decision_id'];
+                let pathA = triggerParams['decision_properties']['pathA'];
+                let pathB = triggerParams['decision_properties']['pathB'];
+                if(pathA>0){
+                    this.decisionPathA = pathA;
+                    this.getDecisionPathEvents(pathA, 'A');
+                }
+                if(pathB>0){
+                    this.decisionPathB = pathB;
+                    this.getDecisionPathEvents(pathB, 'B');
+                }
+                if(decisionId>0){
+                    let formData = {
+                        id: decisionId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                    };
+                    axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getDecisionInfo', formData).then(response => {
+                        if(response.data.status == 'success'){
+                            this.decisionNodeInfo = response.data.decisionData;
+                        }
+                    });
+                }
+
+            },
+            setAddActionPropsDecision: function(event){
+                this.$emit('setAddActionProps', event, 'decision');
+            },
+            deleteEventNodeDecision: function(event){
+                this.$emit('deleteEventNode', event, 'decision');
+            },
+            editEventNodeDecision: function(nodeType, event){
+                this.$emit("editEventNode", nodeType, event, 'decision');
+            },
+            createBlankActionDecision: function(event){
+                this.$emit("createBlankAction", event, 'decision');
+            },
+            createBlankDelayDecision: function(event){
+                this.$emit("createBlankDelay", 'decision');
+            },
+            addCoherentActionDecision: function(pathId){
+                this.$emit('addCoherentAction', 'decision', pathId);
+            }
         }
     };
 </script>

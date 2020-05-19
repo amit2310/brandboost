@@ -15,9 +15,6 @@
 <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="assets/css/styleguide.css" rel="stylesheet" type="text/css">
-
-
-
 </head>
 <body id="PeopleSection">
 
@@ -68,18 +65,20 @@
     <div class="row">
     	<div class="col-md-6">
     		<ul class="table_filter">
-    			<li><a class="active" href="#">ALL</a></li>
-    			<li><a href="#">ACTIVE</a></li>
-    			<li><a href="#">DRAFT</a></li>
-    			<li><a href="#">ARCHIVE</a></li>
-    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+    			<li><a class="active" href="#">All</a></li>
+    			<li><a href="#">Active</a></li>
+    			<li><a href="#">Draft</a></li>
+    			<li><a href="#">Archive</a></li>
+    			
+    			
     		</ul>
     	</div>
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
-    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
     		</ul>
     	</div>
     </div>
@@ -102,10 +101,8 @@
 				  	<span>
 						<label class="custmo_checkbox pull-left">
 							<input type="checkbox">
-							<span class="custmo_checkmark blue"></span>
-						</label>
-					</span>
-				    </td>
+							<span class="custmo_checkmark blue"></span>						</label>
+					</span>				    </td>
 					<td><span class="fsize10 fw500">name </span></td>
 					<td><span class="fsize10 fw500">Email</span></td>
 					<td><span class="fsize10 fw500">Phone</span></td>
@@ -120,10 +117,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/04.png"></span></span> Courtney Black</td>
 					<td>bill.sanders@example.com</td>
 					<td>(252) 555-0126</td>
@@ -137,10 +132,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/02.png"></span></span> Savannah Webb</td>
 					<td>max.terry@example.com</td>
 					<td>-</td>
@@ -154,10 +147,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Kristin Fisher</td>
 					<td>deanna.curtis@example.com</td>
 					<td>(252) 555-0126</td>
@@ -165,22 +156,8 @@
 					<td><span class="">8 days ago </span></td>
 					<td><span class="float-right"><span class="status_icon bkg_yellow_400"></span></span></td>
 				  </tr>
-				  
-				 
-				  
-				  
-				  
-				 
-				  
-				  
-				  
-				  
-				  
 				</tbody>
 			    </table>
-			    
-			   
-			    
     		</div>
     		
     		<div class="table-responsive btop2_blue mb-4">
@@ -199,10 +176,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/04.png"></span></span> Courtney Black</td>
 					<td>bill.sanders@example.com</td>
 					<td>(252) 555-0126</td>
@@ -216,10 +191,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/02.png"></span></span> Savannah Webb</td>
 					<td>max.terry@example.com</td>
 					<td>-</td>
@@ -233,10 +206,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Kristin Fisher</td>
 					<td>deanna.curtis@example.com</td>
 					<td>(252) 555-0126</td>
@@ -244,22 +215,8 @@
 					<td><span class="">8 days ago </span></td>
 					<td><span class="float-right"><span class="status_icon bkg_blue_300"></span></span></td>
 				  </tr>
-				  
-				 
-				  
-				  
-				  
-				 
-				  
-				  
-				  
-				  
-				  
 				</tbody>
 			    </table>
-			    
-			   
-			    
     		</div>
     		
     		<div class="table-responsive btop2_review mb-4">
@@ -277,10 +234,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/04.png"></span></span> Courtney Black</td>
 					<td>bill.sanders@example.com</td>
 					<td>(252) 555-0126</td>
@@ -294,10 +249,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/02.png"></span></span> Savannah Webb</td>
 					<td>max.terry@example.com</td>
 					<td>-</td>
@@ -311,10 +264,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Kristin Fisher</td>
 					<td>deanna.curtis@example.com</td>
 					<td>(252) 555-0126</td>
@@ -322,8 +273,6 @@
 					<td><span class="">8 days ago </span></td>
 					<td><span class="float-right"><span class="status_icon bkg_reviews_400"></span></span></td>
 				  </tr>
-				  
-				  
 				</tbody>
 			    </table>
     		</div>
@@ -342,10 +291,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/04.png"></span></span> Courtney Black</td>
 					<td>bill.sanders@example.com</td>
 					<td>(252) 555-0126</td>
@@ -359,10 +306,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/02.png"></span></span> Savannah Webb</td>
 					<td>max.terry@example.com</td>
 					<td>-</td>
@@ -376,10 +321,8 @@
 						<span>
 							<label class="custmo_checkbox pull-left">
 								<input type="checkbox">
-								<span class="custmo_checkmark blue"></span>
-							</label>
-						</span>
-					</td>
+								<span class="custmo_checkmark blue"></span>							</label>
+						</span>					</td>
 					<td><span class="table-img mr15"><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/avatar/06.png"></span></span> Kristin Fisher</td>
 					<td>deanna.curtis@example.com</td>
 					<td>(252) 555-0126</td>
@@ -387,24 +330,15 @@
 					<td><span class="">8 days ago </span></td>
 					<td><span class="float-right"><span class="status_icon bkg_dark_100"></span></span></td>
 				  </tr>
-				  
-				  
 				</tbody>
 			    </table>
     		</div>
-    		
-    		
-    		
     	</div>
     	
     	<div class="col-md-12 text-center mt-3">
-    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
-    	</div>
+    		<a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>    	</div>
     </div>
-     
-   
       </div>
-      
       </div>
       
 <!--******************
@@ -465,8 +399,5 @@ var color_picker = $('.colorpickerplus-dropdown .colorpickerplus-container');
 			}
         });
 </script>
-
-
-
 </body>
 </html>

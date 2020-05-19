@@ -68,18 +68,20 @@
     <div class="row">
     	<div class="col-md-6">
     		<ul class="table_filter">
-    			<li><a class="active" href="#">ALL</a></li>
-    			<li><a href="#">ACTIVE</a></li>
-    			<li><a href="#">DRAFT</a></li>
-    			<li><a href="#">ARCHIVE</a></li>
-    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+    			<li><a class="active" href="#">All</a></li>
+    			<li><a href="#">Active</a></li>
+    			<li><a href="#">Draft</a></li>
+    			<li><a href="#">Archive</a></li>
+    			
+    			
     		</ul>
     	</div>
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
-    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
     		</ul>
     	</div>
     </div>
@@ -95,7 +97,7 @@
 			    			<span class="mr-4">137 CONTACTS</span>
 			    		</div>
 			    		<div class="col-md-6 text-right">
-			    			<select><option>SORT</option><option>SORT</option><option>15</option><option>20</option></select>
+			    			<select style="width:55px;"><option>SORT</option><option>SORT</option><option>15</option><option>20</option></select>
 			    		</div>
 			    	</div>
 			    </div>

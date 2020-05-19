@@ -258,8 +258,8 @@ text-align: center;color: #7B89A6;font-weight: 300;padding: 3.5px 9px; margin-ri
 .custom_pagination.others{ background:none!important; border:none!important; font-size:13px; font-weight:400; letter-spacing:0;}
 .custom_pagination.others select{ background: url(../images/select_bkg.svg) 100% 8px no-repeat;}
 
-.custom_pagination.grey{ background: #ebf0fa; border-radius: 76px; height: 32px; padding: 8px 20px;}
-.custom_pagination.grey select{ background: url(../images/select_bkg.svg) 100% 5px no-repeat #ebf0fa; }
+.custom_pagination.grey{ background: #ebf0fa; border-radius: 76px; height: 32px; padding: 5px 20px;}
+.custom_pagination.grey select{ background: url(../images/select_bkg.svg) 100% 8px no-repeat #ebf0fa; }
 
 
 

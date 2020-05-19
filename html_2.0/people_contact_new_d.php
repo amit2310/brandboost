@@ -64,22 +64,26 @@
     <div class="container-fluid">
     
     
+    
+    
     <div class="table_head_action">
     <div class="row">
     	<div class="col-md-6">
     		<ul class="table_filter">
-    			<li><a class="active" href="#">ALL</a></li>
-    			<li><a href="#">ACTIVE</a></li>
-    			<li><a href="#">DRAFT</a></li>
-    			<li><a href="#">ARCHIVE</a></li>
-    			<li><a href="#"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a></li>
+    			<li><a class="active" href="#">All</a></li>
+    			<li><a href="#">Active</a></li>
+    			<li><a href="#">Draft</a></li>
+    			<li><a href="#">Archive</a></li>
+    			
+    			
     		</ul>
     	</div>
     	<div class="col-md-6">
     		<ul class="table_filter text-right">
-    			<li><a href="#"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/sort_16_grey.svg"></i></a></li>
-    			<li><a href="#"><i><img src="assets/images/cards_16_grey.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/filter_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/search_line_18.svg" width="16"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/sort_line_18.svg"></i></a></li>
+    			<li><a href="#"><i><img src="assets/images/cards_line_18.svg"></i></a></li>
     		</ul>
     	</div>
     </div>
@@ -95,7 +99,7 @@
 			    			<span class="mr-4">137 CONTACTS</span>
 			    		</div>
 			    		<div class="col-md-6 text-right">
-			    			<select style="width: 45px;"><option>SORT</option><option>SORT</option><option>15</option><option>20</option></select>
+			    			<select style="width: 55px;"><option>SORT</option><option>SORT</option><option>15</option><option>20</option></select>
 			    		</div>
 			    	</div>
 			    </div>
@@ -109,8 +113,8 @@
     	<div class="col-md-3">
     	<div class="headings mb20">
     	 <div class="row">
-    	 	<div class="col"><button class="btn btn-sm-24 fsize11 fw500 blue_300 pl15 pr15 bkg_blue_000 shadow-none">LEADS &nbsp; 4</button></div>
-    	 	<div class="col"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
+    	 	<div class="col-8"><button class="btn btn-sm-24 fsize11 fw500 blue_300 pl15 pr15 bkg_blue_000 shadow-none">LEADS &nbsp; 4</button></div>
+    	 	<div class="col-4"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
     	 </div>
     	 </div>
     	
@@ -190,8 +194,8 @@
     	<div class="col-md-3">
     	<div class="headings mb20">
     	 <div class="row">
-    	 	<div class="col"><button class="btn btn-sm-24 fsize11 fw500 reviews_300 pl15 pr15 bkg_reviews_000 shadow-none">DEALS &nbsp; 4</button></div>
-    	 	<div class="col"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
+    	 	<div class="col-8"><button class="btn btn-sm-24 fsize11 fw500 reviews_300 pl15 pr15 bkg_reviews_000 shadow-none">DEALS &nbsp; 4</button></div>
+    	 	<div class="col-4"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
     	 </div>
     	 </div>
     	
@@ -308,8 +312,8 @@
     	<div class="col-md-3">
 			<div class="headings mb20">
 			 <div class="row">
-				<div class="col"><button class="btn btn-sm-24 fsize11 fw500 dark_200 pl15 pr15 bkg_light_400 shadow-none">CUSTOMERS &nbsp; 4</button></div>
-				<div class="col"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
+				<div class="col-8"><button class="btn btn-sm-24 fsize11 fw500 dark_200 pl15 pr15 bkg_light_400 shadow-none">CUSTOMERS &nbsp; 4</button></div>
+				<div class="col-4"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
 			 </div>
 			 </div>
     	
@@ -392,8 +396,8 @@
     	<div class="col-md-3">
     	<div class="headings mb20">
     	 <div class="row">
-    	 	<div class="col"><button class="btn btn-sm-24 fsize11 fw500 green_400 pl15 pr15 bkg_green_000 shadow-none">DONE &nbsp; 4</button></div>
-    	 	<div class="col"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
+    	 	<div class="col-8"><button class="btn btn-sm-24 fsize11 fw500 green_400 pl15 pr15 bkg_green_000 shadow-none">DONE &nbsp; 4</button></div>
+    	 	<div class="col-4"><span class="circle_icon_24 bkg_light_400 float-right mr-3"><img src="assets/images/add_grey_12.svg"></span></div>
     	 </div>
     	 </div>
     	
