@@ -23,7 +23,7 @@
         <div class="content-area">
             <div class="container-fluid">
 
-                <loading :isLoading="loading"></loading>
+
                 <div v-if="!otagData" class="row">{{otagData.length}}
                     <div class="col-md-12">
                         <div class="card card_shadow min-h-280">
@@ -172,7 +172,7 @@
             loadPaginatedData: function () {
                 axios.get('/admin/tags/tagsfeedback?page=' + this.current_page)
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         //console.log(response.data);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
@@ -184,7 +184,7 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

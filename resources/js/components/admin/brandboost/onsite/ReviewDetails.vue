@@ -38,7 +38,7 @@
                  **********************-->
 
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card p0">
@@ -495,12 +495,12 @@
                         this.reviewStats = response.data.reviewStats;
                         this.commentData = response.data.reviewCommentsData;
                         this.notesData = response.data.reviewNotesData;
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log((this.review.mediaArr));
                     });
             },
             addComment: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/comments/add_comment',  {
                     comment_content: this.comment_content,
                     reviweId: this.review.id,
@@ -511,13 +511,13 @@
                             this.comment_content = '';
                             this.displayMessage('success', response.data.message);
                             this.loadReviewData();
-                            this.loading = false;
+                            this.showLoading(false);
                         }
 
                     });
             },
             addNotes: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/reviews/saveReviewNotes',  {
                     notes: this.notes,
                     reviewid: this.review.id,
@@ -529,7 +529,7 @@
                             this.notes = '';
                             this.displayMessage('success', response.data.message);
                             this.loadReviewData();
-                            this.loading = false;
+                            this.showLoading(false);
                         }
 
                     });

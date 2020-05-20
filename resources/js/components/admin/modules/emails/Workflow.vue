@@ -18,7 +18,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <div class="container-fluid" v-if="campaigns==''">
                 <div class="row">
                     <div class="col-md-12">
@@ -329,7 +329,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.automation_id>0){
@@ -346,7 +346,7 @@
                                 window.location.href = response.data.actionUrl;
                                 return false;
                             } else {
-                                this.loading = false;
+                                this.showLoading(false);
                                 //this.form = {};
                                 this.form.automation_id = '';
                                 document.querySelector('.js-email-workflow-slidebox').click();
@@ -370,7 +370,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -384,11 +384,11 @@
                         this.moduleName = response.data.moduleName;
                         this.campaigns = response.data.oAutomations;
                         this.allData = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -430,7 +430,7 @@
                 }
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             }

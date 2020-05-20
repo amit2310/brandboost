@@ -20,7 +20,7 @@
              **********************-->
             <div class="content-area">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="table_head_action">
                         <div class="row">
                             <div class="col-md-6">
@@ -158,7 +158,7 @@
                     if(response.data.status =='success'){
                         this.displayMessage('success', 'Setting has beeb saved successfully.');
                     }
-                    this.loading =false;
+                    this.showLoading(false);
                 });
             },
             getWidgetDetails: function () {
@@ -172,7 +172,7 @@
                     .then(response => {
                         // console.log(response.data);
                         this.widget = response.data;
-                        this.loading =false;
+                        this.showLoading(false);
                         this.widget_type=response.data.widgetData.widget_type
                     });
             },

@@ -228,17 +228,17 @@
                         this.requests = response.data.oFilteredRequests;
                         this.count = response.data.totalCount;
                         this.allData = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(this.requests)
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <loading :isLoading="loading"></loading>
+
         <div class="row">
             <div class="col-12">
                 <img class="float-left mr-3 mt-1" src="assets/images/segment_blue_44.svg"/>
@@ -162,7 +162,7 @@
                         this.selected_segments = response.data.aSelectedSegments;
                         this.allData = response.data.allDataSegments;
                         this.userData = response.data.userData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             displayStep: function (step) {
@@ -176,12 +176,12 @@
                 window.location.href = path;
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePaginationPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },

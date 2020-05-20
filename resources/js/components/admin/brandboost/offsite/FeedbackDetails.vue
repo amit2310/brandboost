@@ -275,7 +275,7 @@
                         this.selectedTab = response.data.selectedTab;
                         this.commentData = response.data.oCommentsData;
                         this.notesData = response.data.oNotes;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             }
         }

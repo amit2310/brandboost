@@ -48,7 +48,7 @@
          Content Area
         **********************-->
 
-        <loading :isLoading="loading"></loading>
+
         <div class="content-area pt20">
             <div class="container-fluid" v-show="pageRendered == true">
                 <!--******************
@@ -1331,7 +1331,7 @@
                         <div class="modal-content review" style="width: 1200px;">
                             <div class="modal-body p0 mt0 br5" style="width: 1200px;">
                                 <!--<system-messages :successMsg="successMsg" :errorMsg="errorMsg" :key="4"></system-messages>-->
-                                <loading :isLoading="loading"></loading>
+
                                 <div class="row">
                                     <div class="col-md-4 pr0">
                                         <div class="email_editor_left">
@@ -1384,7 +1384,7 @@
                     <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                         <div class="modal-content review" style="width: 1200px;">
                             <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                                <loading :isLoading="loading"></loading>
+
                                 <div class="row">
                                     <div class="col-md-4 pr0">
                                         <div class="email_editor_left">
@@ -1623,14 +1623,14 @@
         },
         methods: {
             getWorkflowData: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', { moduleName: this.moduleName, moduleUnitId: this.moduleUnitId})
                     .then(response => {
                         this.title = response.data.title;
                         this.events = response.data.oEvents;
                         this.unitInfo = response.data.moduleUnitData;
                         this.user = response.data.userInfo;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.emailTemplates = response.data.oEmailTemplates;
                         this.smsTemplates = response.data.oSMSTemplates;
                         this.templateCategories = response.data.oCategories;
@@ -1654,7 +1654,7 @@
                         this.selected_tags = response.data.aSelectedTags;
                         this.segments = response.data.oSegments;
                         this.selected_segments = response.data.aSelectedSegments;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             updateTrigger: function(){
@@ -1670,7 +1670,7 @@
                 this.updateUnitData(formData);
             },
             updateUnitData: function(data){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateWorkflowUnitInfo',
                     {
                         moduleName: this.moduleName,
@@ -1678,7 +1678,7 @@
                         formData: data
                 }).then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Data has been saved successfully!');
                             this.getWorkflowData();
                         }
@@ -1742,7 +1742,7 @@
             },
             deleteWorkflowNode: function(event){
                 this.clearActionProps();
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -1756,7 +1756,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         if(this.isDecisionNode == true || this.isSplitNode == true){
                             this.getWorkflowData();
                         }else{
@@ -1768,7 +1768,7 @@
                 });
             },
             editWorkflowNode: function(nodeType, event, nodeCat){
-                this.loading = true;
+                this.showLoading(true);
                 if(nodeCat == 'decision'){
                     this.isDecisionNode = true;
                 }else if(nodeCat == 'split'){
@@ -1840,10 +1840,10 @@
                 }else{
                     //Other Nodes
                 }
-                this.loading = false;
+                this.showLoading(false);
             },
             loadSegment: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -1857,7 +1857,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         let event = response.data.eventData;
                         let params = JSON.parse(event.data);
                         let segmentParams = params['segment_properties'];
@@ -1871,7 +1871,7 @@
 
             },
             loadStatus: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -1885,7 +1885,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         let event = response.data.eventData;
                         let params = JSON.parse(event.data);
                         let statusParams = params['status_properties'];
@@ -1899,7 +1899,7 @@
 
             },
             loadWebhook: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -1913,7 +1913,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         let event = response.data.eventData;
                         let params = JSON.parse(event.data);
                         let webhookParams = params['webhook_properties'];
@@ -1929,7 +1929,7 @@
 
             },
             loadField: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -1943,7 +1943,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.fieldAlias = response.data.fieldAlias;
                         let event = response.data.eventData;
                         let params = JSON.parse(event.data);
@@ -1959,7 +1959,7 @@
 
             },
             loadList: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -1973,7 +1973,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         let event = response.data.eventData;
                         let params = JSON.parse(event.data);
                         let listParams = params['list_properties'];
@@ -1987,7 +1987,7 @@
 
             },
             loadTag: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -2001,7 +2001,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         let event = response.data.eventData;
                         let params = JSON.parse(event.data);
                         let tagParams = params['tag_properties'];
@@ -2015,7 +2015,7 @@
 
             },
             loadSMS: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -2029,7 +2029,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.selectedSMSNodeData = response.data.smsData;
                         if(response.data.smsData == ''){
                             this.openSMSTemplates(event);
@@ -2041,7 +2041,7 @@
                 });
             },
             loadEmail: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -2055,7 +2055,7 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.selectedEmailNodeData = response.data.emailData;
                         if(response.data.emailData == ''){
                             this.openEmailTemplates(event);
@@ -2068,7 +2068,7 @@
             },
             loadEmailPreview: function(campaignId){
                 this.selected_emailCampaignId = campaignId;
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -2076,7 +2076,7 @@
                     moduleUnitId: this.moduleUnitId,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.content = response.data.content;
                         this.introduction = response.data.introduction;
                         this.greetings = response.data.greeting;
@@ -2084,7 +2084,7 @@
                 document.querySelector('#displayOverviewPreviewForm').click();
             },
             loadSMSPreview: function(campaignId){
-                this.loading = true;
+                this.showLoading(true);
                 this.selected_SMSCampaignId = campaignId;
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
@@ -2093,7 +2093,7 @@
                     moduleUnitId: this.moduleUnitId,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.smsContent = response.data.content.replace(/\r\n|\r|\n/g, "<br />").replace('wf_edit_sms_template_greeting', 'wf_edit_sms_template_greeting_Preview').replace('wf_edit_sms_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_Preview');
                         this.smsIntroduction = response.data.introduction;
                         this.smsGreetings = response.data.greeting;
@@ -2107,7 +2107,7 @@
                 let triggerParams = JSON.parse(event.data);
                 this.delayProperties = triggerParams['delay_properties'];
                 document.querySelector("#slideAddDelaybox").click();
-                this.loading = false;
+                this.showLoading(false);
             },
             loadSplitProperties: function(event){
                 this.splitEditMode = true;
@@ -2125,11 +2125,11 @@
                         if(response.data.status == 'success'){
                             this.splitProperties = response.data.splitData;
                             document.querySelector("#slideAddSplitbox").click();
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
                 }
-                this.loading = false;
+                this.showLoading(false);
             },
             loadDecisionProperties: function(event){
                 this.decisionEditMode = true;
@@ -2147,14 +2147,14 @@
                         if(response.data.status == 'success'){
                             this.decisionProperties = response.data.decisionData;
                             document.querySelector("#slideAddDecisionbox").click();
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
                 }
-                this.loading = false;
+                this.showLoading(false);
             },
             moveWorkflowNode: function(event){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
@@ -2163,7 +2163,7 @@
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/moveWorkflowNode', formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                     }
                 });
@@ -2172,7 +2172,7 @@
                 this.selectedEvent = '';
             },
             addBlankAction: function(action, nodeCat){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     nodeType: 'action',
                     name: action,
@@ -2203,7 +2203,7 @@
 
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         if(this.isDecisionNode == true || this.isSplitNode == true){
                             this.getWorkflowData();
                         }else{
@@ -2220,7 +2220,7 @@
                 });
             },
             addBlankDecision: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     nodeType: 'decision',
                     name: 'decision',
@@ -2232,14 +2232,14 @@
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                         this.metaData.selectedClass = response.data.newEventId;
                     }
                 });
             },
             updateDecision: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     id: this.decisionEditId,
                     decisionData: this.decisionProperties,
@@ -2248,14 +2248,14 @@
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionData', formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                         this.displayMessage('success', 'Decision updated successfully!');
                     }
                 });
             },
             addDelay: function(event, nodeCat){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     nodeType: 'delay',
                     name: 'delay',
@@ -2273,14 +2273,14 @@
                 }
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                         this.metaData.selectedClass = response.data.newEventId;
                     }
                 });
             },
             updateDelay: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     id: this.delayEditId,
                     delayData: this.delayProperties,
@@ -2289,14 +2289,14 @@
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateEventDelay', formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                         this.displayMessage('success', 'Delay properties updated successfully!');
                     }
                 });
             },
             addSplitTest: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     nodeType: 'split',
                     name: 'split Test',
@@ -2308,14 +2308,14 @@
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                         this.metaData.selectedClass = response.data.newEventId;
                     }
                 });
             },
             updateSplitTest: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formData = {
                     id: this.splitEditId,
                     splitData: this.splitProperties,
@@ -2324,7 +2324,7 @@
                 };
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateSplitData', formData).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.events = response.data.oEvents;
                         this.displayMessage('success', 'Split properties updated successfully!');
                     }
@@ -2506,7 +2506,7 @@
                 this.smsData = oCampaign;    */
             },
             saveSMSEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -2516,13 +2516,13 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
             saveEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -2532,13 +2532,13 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
             sendTestEmail: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -2548,13 +2548,13 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){this.displayMessage('success', 'Saved changes successfully!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },
             sendTestSMS: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -2564,7 +2564,7 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
@@ -2745,14 +2745,14 @@
 
             },
             updateFieldAlias: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateCustomFields', {
                     customFieldData: this.fieldAlias,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.fieldAlias = response.data.fieldAlias;
                             this.displayMessage('success', 'Changes updated successfully');
                         }
@@ -2769,7 +2769,7 @@
                     this.getWorkflowData();
                     return;
                 }
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/templates/getCategorizedTemplates?page=' + data.currentPage+'&searchBy='+data.searchBy, {
                     'action':data.actionName,
                     'campaign_type':data.campaign_type,
@@ -2783,7 +2783,7 @@
                             this.smsTemplates = response.data.oTemplates;
                         }
                         this.allDataTemplates = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             deleteWorkflowEvent: function(event, popupId){

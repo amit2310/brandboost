@@ -23,7 +23,7 @@
           Content Area
          **********************-->
 
-        <loading :isLoading="loading"></loading>
+
             <div class="content-area" v-show="pageRendered==true" >
                 <div class="container-fluid" v-if="widgets.length > 0 || searchBy.length > 0">
                     <div class="table_head_action">
@@ -398,10 +398,10 @@
                     let actionName = (this.sortBy == 'archive') ? 'delete' : 'archive';
                     let msg = (this.sortBy == 'archive') ? 'permanently delete' : 'archive';
                     if(confirm('Are you sure you want to '+msg+' selected item(s)?')){
-                        this.loading = true;
+                        this.showLoading(true);
                         axios.post('/admin/brandboost/deleteWidgets', {_token:this.csrf_token(), multipal_id:this.deletedItems, action: actionName})
                             .then(response => {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.deletedItems = [];
                                 this.loadPaginatedData();
                             });
@@ -496,7 +496,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.wid>0){
@@ -508,7 +508,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.form.wid ='';
                             document.querySelector('.js-onsite-widget-slidebox2').click();
                             this.displayMessage('success', 'Action completed successfully.');
@@ -519,14 +519,14 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
                     });
             },
             loadPaginatedData: function () {
-                this.loading = true;
+                this.showLoading(true);
                 //getData
                 axios.get('/admin/brandboost/widgets?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
@@ -536,7 +536,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.allData = response.data.allData;
                         this.widgets = response.data.oWidgetsList;
                         this.oStats = response.data.oStats;
@@ -549,12 +549,12 @@
                 this.navigatePagination(current_page);
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

@@ -41,7 +41,7 @@
                 </div>
                 <div class="table_head_action bbot pb30">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_16 dark_400">{{ oReviews.length }}&nbsp;Reviews</h3>
@@ -607,17 +607,17 @@
                         this.oReviews = response.data.aReviews;
                         this.reviewTags = response.data.reviewTags;
                         this.reviewTags = response.data.reviewTags;
-                        this.loading = false;
+                        this.showLoading(false);
                         //console.log(this.campaigns)
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -650,7 +650,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.campaign_id>0){
@@ -685,11 +685,11 @@
                                 alert('Error: Something went wrong.');
                             }
                         }else{
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     })
                     .catch(errors => {
-                        this.loading = false;
+                        this.showLoading(false);
                     })
             },
             changeStatus: function(campaign_id, status) {

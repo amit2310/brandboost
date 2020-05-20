@@ -22,7 +22,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
 
@@ -129,7 +129,7 @@
         <modal-popup v-if="showModal" @close="showModal = false" width="sm">
             <h3 slot="header">Schedule Time</h3>
             <div slot="body" class="pt0 pb0">
-                <loading :isLoading="loading"></loading>
+
                 <div v-show="isUpdatedSchedule" class="alert alert-success">Schedule updated successfully<i
                     class="close" @click="isUpdatedSchedule=false">x</i></div>
                 <div class="media_left p10">
@@ -205,7 +205,7 @@
                     this.scheduleTime = LuxonDateTime.fromFormat(scheduleData.delivery_time,'hh:mm a').toISO();
                     this.user = response.data.userData;
                     this.totalSubscribers = response.data.subscribers;
-                    this.loading = false;
+                    this.showLoading(false);
                 });
         },
         methods: {
@@ -216,7 +216,7 @@
 
                 //alert(selectedDate + ' And Time is ' + selectedTime);
                 //Update settings now
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcastSettings', {
                     _token: this.csrf_token(),
                     delivery_date: selectedDate,
@@ -226,7 +226,7 @@
                     broadcast_id: this.campaign.broadcast_id
                 }).then(response => {
                     this.isUpdatedSchedule = true;
-                    this.loading = false;
+                    this.showLoading(false);
                 });
             },
             displayStep: function (step) {
@@ -244,7 +244,7 @@
                 }
             },
             updatesettings: function (fieldName) {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcastSettings', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
@@ -254,13 +254,13 @@
                     broadcast_id: this.campaign.broadcast_id
                 }).then(response => {
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
 
             saveDraft: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -268,7 +268,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if (response.data.status == 'success') {
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         } else {
@@ -294,7 +294,7 @@
             },
             launchCampaign: function () {
                 if (confirm('Are you sure? This will make your campaign active')) {
-                    this.loading = true;
+                    this.showLoading(true);
                     axios.post('/admin/broadcast/updateBroadcast', {
                         broadcastId: this.campaignId,
                         status: 'active',
@@ -302,7 +302,7 @@
                         _token: this.csrf_token()
                     })
                         .then(response => {
-                            this.loading = false;
+                            this.showLoading(false);
                             if (response.data.status == 'success') {
                                 this.displayMessage('success', 'Campaign has been launched successfully');
                             } else {

@@ -29,7 +29,7 @@
 
                 <div class="table_head_action bbot pb30">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_16 dark_400">{{ allData.total }}&nbsp;Media</h3>
@@ -285,17 +285,17 @@
                         this.makeBreadcrumb(this.breadcrumb);
                         this.allData = response.data.allData;
                         this.reviews = response.data.aReviews;
-                        this.loading = false;
+                        this.showLoading(false);
                         //console.log(this.reviews)
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

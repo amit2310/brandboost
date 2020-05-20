@@ -334,7 +334,7 @@
                 axios.get('/admin/profile/')
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.aUInfo = response.data.userDetail;
@@ -352,11 +352,11 @@
                     });
             },
             savePassword: function(){
-                this.loading=true;
+                this.showLoading(true);
                 this.changePasswordForm._token=this.csrf_token();
                 axios.post('/admin/profile/changePassword', this.changePasswordForm).then(response => {
                     if(response.data.status == 'success'){
-                        this.loading = false;
+                        this.showLoading(false);
                         this.resetPasswordForm();
                         this.displayMessage('success', 'Password changed successfully.');
                     }

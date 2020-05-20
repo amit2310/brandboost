@@ -4,7 +4,7 @@
           Content Area
          **********************-->
 
-        <loading :isLoading="loading"></loading>
+
         <div class="content-area" v-show="pageRendered==true" style="padding-top: 0px!important;">
             <div class="container-fluid" v-if="campaigns.length > 0 || searchBy.length>0">
                 <!--<div class="row">
@@ -381,7 +381,7 @@
                 }
             },
             applySort: function(sortVal){
-                this.loading = true;
+                this.showLoading(true);
 
                 this.sortBy = sortVal;
                 this.deletedItems = [];
@@ -389,10 +389,10 @@
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
                     if(confirm('Are you sure you want to delete selected item(s)?')){
-                        this.loading = true;
+                        this.showLoading(true);
                         axios.post('/admin/brandboost/delete_multipal_brandboost', {_token:this.csrf_token(), multi_brandboost_id:this.deletedItems})
                             .then(response => {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.loadPaginatedData();
                             });
                     }
@@ -458,23 +458,23 @@
                         this.company_name = response.data.company_name;
                         this.allData = response.data.allData;
                         this.campaigns = response.data.aBrandbosts;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.pageRendered = true;
                         console.log(this.campaigns)
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -512,7 +512,7 @@
             },
             processForm : function(){
                 this.isProcessing = true;
-                this.loading = false;
+                this.showLoading(false);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.campaign_id>0){
@@ -549,7 +549,7 @@
                             alert('Error: Something went wrong.');
                         }
                         setTimeout(function () {
-                            this.loading = false;
+                            this.showLoading(false);
                             $(".cross_icon").trigger('click');
                             elem.loadPaginatedData();
                         }, 500,elem);

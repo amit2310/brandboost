@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <loading :isLoading="loading"></loading>
+
         <div class="row mb30">
             <div class="col-md-4 text-center">
                 <label for="temp1" class="m0 w-100">
@@ -458,7 +458,7 @@
                     this.campaign = response.data.oReferral;
                     this.settings = response.data.oSettings;
                     this.advocateCouponsCollection = response.data.oAdvCouponCodes;
-                    this.loading = false;
+                    this.showLoading(false);
                     this.initializeDefaults();
                     //loadJQScript(this.user.id);
 
@@ -507,11 +507,11 @@
                 this.saveRewardSettings(form);
             },
             saveRewardSettings: function(formData){
-              this.loading = true;
+              this.showLoading(true);
                 axios.post('/admin/modules/referral/saveRewards', formData)
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Reward setup saved successfully!');
                         }
                     });
@@ -532,11 +532,11 @@
                 this.saveRewardCoupons(form);
             },
             saveRewardCoupons: function(formData){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/referral/saveCoupons', formData)
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Reward coupons saved successfully!');
                         }
                     });

@@ -24,7 +24,7 @@
             <div class="content-area">
                 <div v-if="widgets" class="container-fluid">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="table_head_action">
                         <div class="row">
                             <div class="col-md-6">
@@ -279,7 +279,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.wid>0){
@@ -291,7 +291,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.form.wid ='';
                             document.querySelector('.js-referral-widget-slidebox').click();
                             this.displayMessage('success', 'Action completed successfully.');
@@ -305,7 +305,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -321,7 +321,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.allData = response.data.allData;
                         this.widgets = response.data.oWidgetsList;
                         this.bActiveSubsription = response.data.bActiveSubsription;
@@ -332,7 +332,7 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

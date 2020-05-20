@@ -19,7 +19,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -137,12 +137,12 @@
                     this.campaign = response.data.campaign;
                     this.preview = response.data.preview;
                     this.referralApps = response.data.referralApps;
-                    this.loading = false;
+                    this.showLoading(false);
                 });
         },
         methods: {
             autoSaveReferralWidget: function(e){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/referral/auto-save-referral-widget',{
                     // params:{
                     referral_widget_id: this.campaignId,
@@ -155,7 +155,7 @@
 
                         this.displayMessage('success', 'Test email sent successfully!');
                         this.preview = response.data.preview;
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
@@ -171,14 +171,14 @@
             },
 
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/referral/updatReferralWidgetStatus', {
                     widgetID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == '0'){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully.');

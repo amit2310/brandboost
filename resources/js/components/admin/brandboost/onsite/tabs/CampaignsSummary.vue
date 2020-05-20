@@ -413,7 +413,7 @@
                         this.company_name = response.data.company_name;
                         this.allData = response.data.allData;
                         this.campaigns = response.data.aBrandbosts;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
@@ -423,7 +423,7 @@
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
@@ -443,7 +443,7 @@
                 document.querySelector('#displayAddCampaignForm').click();
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.campaign_id>0){
@@ -478,11 +478,11 @@
                                 alert('Error: Something went wrong.');
                             }
                         }else{
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     })
                     .catch(errors => {
-                        this.loading = false;
+                        this.showLoading(false);
                     })
             }
         }

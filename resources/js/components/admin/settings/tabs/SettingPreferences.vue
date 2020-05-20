@@ -21,7 +21,7 @@
             <div class="container-fluid">
                 <div class="table_head_action">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="table_filter">
@@ -388,7 +388,7 @@
         methods: {
             loadData: function () {
                 //getData
-                this.loading = true;
+                this.showLoading(true);
                 axios.get('/admin/settings',{
                           params: {
                             current_tab:'preferences'
@@ -396,7 +396,7 @@
                     })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.settingsData = response.data.settingsData;
@@ -414,7 +414,7 @@
                     });
             },
             saveGeneralPreferences: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/settings/saveGeneralPreferences',{
                     language:this.oUser.language,
                     currency:this.oUser.currency,
@@ -429,19 +429,19 @@
                 })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                     });
             },
             saveFieldsSettings: function () {
-                this.loading = false;
+                this.showLoading(false);
                 axios.post('/admin/settings/saveFieldsSettings',{
                     reviewer_alias:this.oUser.reviewer_alias,
                     seller_alias:this.oUser.seller_alias,
                     review_alias:this.oUser.review_alias,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                     });
             },
@@ -547,7 +547,6 @@
 
     }
 </script>
-
 <style scoped>
 
 </style>

@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -326,7 +326,7 @@
                     this.message_sec =this.campaign.messages;
                     this.preview = response.data.setupPreview;
                     this.user = response.data.userData;
-                    this.loading = false;
+                    this.showLoading(false);
 
                 });
         },
@@ -416,14 +416,14 @@
 
             },
             updateConfigurations: function(){
-                this.loading = true;
+                this.showLoading(true);
                 //Grab color related values
                 // this.campaign.from_email = this.campaign.from_email;
                 // this.campaign.from_name = this.campaign.from_name;
                 this.campaign.messages =this.message_sec;
                 axios.post('/admin/modules/chat/updateChatWidgetInfo', this.campaign)
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                     });
 
             },
@@ -439,7 +439,7 @@
             },
 
             updateSingleField: function (fieldName, fieldValue) {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('admin/modules/chat/updateSingleField', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
@@ -448,19 +448,19 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/chat/changeStatus', {
                     chatID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
                                 this.displayMessage('success', 'Chat Widget saved as a draft successfully');

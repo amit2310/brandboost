@@ -243,7 +243,7 @@
                     <a class="cross_icon" data-dismiss="modal"><i class=""><img src="assets/images/cross.svg"></i></a>
                     <div class="row">
 
-                        <loading :isLoading="loading"></loading>
+
                         <div class="col-12">
                             <h3 class="htxt_medium_24 dark_800 mb-3">Review Request</h3>
                             <p class="htxt_regular_14 dark_200 m-0">Select a type of campaign you would like to create and give it a title.</p>
@@ -393,12 +393,12 @@
                 document.querySelector("#sendNewRequest").click();
             },
             addRequest: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/addOnsiteRequest', this.requestFrom)
                     .then(response => {
                         if(response.data.status =='success'){
                             this.displayMessage('success', 'Review request created successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             document.querySelector('#hideOverviewPreviewForm').click();
                             window.location.href='#/reviews/onsite/request/prepare/'+response.data.requestId;
                         }

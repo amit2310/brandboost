@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -89,7 +89,7 @@
         },
         mounted() {
 
-              this.loading = false;
+              this.showLoading(false);
         },
         methods: {
             displayStep: function(step){
@@ -103,14 +103,14 @@
                 window.location.href = path;
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/nps/changeStatus', {
                     npsId: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');

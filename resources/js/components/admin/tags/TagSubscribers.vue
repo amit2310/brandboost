@@ -22,7 +22,7 @@
         </div>
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <workflow-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
@@ -77,11 +77,11 @@
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             }

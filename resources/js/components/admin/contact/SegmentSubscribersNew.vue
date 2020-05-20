@@ -33,7 +33,7 @@
 
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <segment-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
@@ -184,7 +184,7 @@
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         /*let elem = this;
                         setTimeout(function(){
                             elem.successMsg = 'This is a success message';
@@ -205,13 +205,13 @@
                 this.loadData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadData();
             },
             syncContacts: function(segmentID) {
                 if(confirm('Are you sure you want to perform this action?')){
-                    this.loading = true;
+                    this.showLoading(true);
                     //Do axios
                     axios.post('/admin/segments/syncSegment', {
                         segmentID:segmentID,
@@ -222,13 +222,13 @@
                         .then(response => {
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.displayMessage('success', 'Segment contacts have been synced successfully!');
                             }
 
                         })
                         .catch(error => {
-                            this.loading = false;
+                            this.showLoading(false);
                             //error.response.data
                             alert('Something went wrong.');
                         });

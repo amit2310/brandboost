@@ -185,7 +185,7 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oBroadcast;
                     this.user = response.data.userData;
-                    this.loading = false;
+                    this.showLoading(false);
                 });*/
         }
 

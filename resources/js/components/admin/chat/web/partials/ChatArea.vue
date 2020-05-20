@@ -518,7 +518,7 @@
                 let el = this;
                 this.smileyMap = this.getSmilyCollection();
                 this.$socket.emit('subscribe', this.currentTokenId);
-                this.loading = true;
+                this.showLoading(true);
                 this.chatData= '';
                 this.emailData = [];
                 //this.getMessageList();
@@ -541,7 +541,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.refreshThreadInfo();
                         this.$socket.emit('reassign_post_data', {room:this.currentTokenId, assign_to:userid, assign_from:response.data.preTeamId,assign_to_name:fullname ,user_id:this.loggedUserInfo.id});
                     });
@@ -553,7 +553,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.activeThread = response.data.room;
                     });
             },
@@ -594,7 +594,7 @@
                         if (response.data.status == 'ok') {
                             this.chatData = response.data.res;
                         }
-                        this.loading = false;
+                        this.showLoading(false);
                         let el = this;
                         setTimeout(function () {
                             el.scrollToEndChat();
@@ -610,7 +610,7 @@
                 })
                     .then(response => {
                         this.smsData = response.data;
-                        this.loading = false;
+                        this.showLoading(false);
                         let el = this;
                         setTimeout(function () {
                             el.scrollToEndSms();
@@ -624,7 +624,7 @@
                 })
                     .then(response => {
                         this.emailData = response.data;
-                        this.loading = false;
+                        this.showLoading(false);
                         let el = this;
                         setTimeout(function () {
                             el.scrollToEndEmail();
@@ -639,7 +639,7 @@
                 })
                     .then(response => {
                         this.notesData = response.data;
-                        this.loading = false;
+                        this.showLoading(false);
                         let el = this;
                         setTimeout(function () {
                             el.scrollToEndNotes();
@@ -735,7 +735,7 @@
                     });
             },
             sendSms: function () {
-                this.loading = true;
+                this.showLoading(true);
                 let msg = this.enteredMessage;
                 this.enteredMessage = null;
                 axios.post('/admin/smschat/sendMsg', {
@@ -751,12 +751,12 @@
                         if (response.data.status == 'ok') {
                             this.enteredMessage = null;
                             this.getSmsList();
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
             },
             sendMms: function () {
-                this.loading = true;
+                this.showLoading(true);
                 let msg = this.enteredMessage;
                 this.enteredMessage = null;
                 axios.post('/admin/smschat/sendMMS', {
@@ -772,12 +772,12 @@
                         if (response.data.status == 'ok') {
                             this.enteredMessage = null;
                             this.getSmsList();
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
             },
             sendEmail: function () {
-                this.loading = true;
+                this.showLoading(true);
                 let msg = this.enteredMessage;
                 this.enteredMessage = null;
                 axios.post('/admin/webchat/sendEmail', {
@@ -786,7 +786,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         let newObj = {
                             avatar: this.loggedAvatar,
                             msg:msg
@@ -892,12 +892,12 @@
                 document.querySelector("#uploadWebchatMedia").click();
             },
             uploadImage: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let res = this.$refs.chatImg.files[0];
                 this.saveFile(res);
             },
             uploadMedia: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let res = this.$refs.chatMedia.files[0];
                 this.saveFile(res);
             },
@@ -932,11 +932,11 @@
                                 this.sendMms();
                             }
 
-                            this.loading = false;
+                            this.showLoading(false);
                             let el = this;
                             setTimeout(function(){ el.scrollToEndChat()}, 5000);
                         }else{
-                            this.loading = true;
+                            this.showLoading(true);
                         }
                     });
             }

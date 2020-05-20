@@ -27,7 +27,7 @@
         <div class="content-area">
             <div class="container-fluid">
 
-                <loading :isLoading="loading"></loading>
+
                 <div v-if="!oTagGroups" class="row">
                         <div class="col-md-12">
                             <div class="card card_shadow min-h-280">
@@ -224,7 +224,7 @@
             loadPaginatedData: function () {
                 axios.get('/admin/tags/groups?page=' + this.current_page)
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         //console.log(response.data);
@@ -236,31 +236,31 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             submitAddTagGroup: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/tags/addgroup', this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Tag Group Added successfully.');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         } else if (response.data.status == 'error') {
                             if (response.data.type == 'duplicate_entry') {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.displayMessage('error', 'Group name already exists.');
                             } else {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.displayMessage('error', 'Something went wrong.');
                             }
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         //error.response.data
                         alert('All form fields are required');
                     });

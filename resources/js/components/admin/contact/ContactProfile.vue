@@ -18,7 +18,7 @@
     </div>
     <div class="content-area">
         <div class="container-fluid">
-            <loading :isLoading="loading"></loading>
+
             <template v-if="personalData">
             <div v-if="('id' in personalData)">
                 <div class="row">
@@ -268,7 +268,7 @@
         },
         methods : {
             loadProfile: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.get('/admin/contacts/profile/'+this.profileID)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
@@ -280,7 +280,7 @@
                         this.activityData = response.data.userActivities;
                         this.reviewsData = response.data.aReviews;
                         this.notificationSettings = response.data.notificationSettings;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             submitNotes : function () {
