@@ -678,6 +678,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/broadcast/segmentcontacts/{segment_id}', 'Admin\Broadcast@segmentcontacts');
     Route::post('admin/broadcast/deleteMultipalSegment', 'Admin\Broadcast@deleteMultipalSegment');
     Route::post('admin/broadcast/deleteMultipalSegmentUser', 'Admin\Broadcast@deleteMultipalSegmentUser');
+    Route::post('admin/broadcast/addFiltersToSegment', 'Admin\Broadcast@addFiltersToSegment');
     Route::post('admin/broadcast/deleteSegment', 'Admin\Broadcast@deleteSegment');
     Route::post('admin/broadcast/archive_multipal_segment', 'Admin\Broadcast@archive_multipal_segment');
     Route::post('admin/broadcast/createSegment', 'Admin\Broadcast@createSegment');

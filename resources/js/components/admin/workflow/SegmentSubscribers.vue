@@ -16,12 +16,13 @@
                             </li>
                             <!--<li><a class="blef pl15" href="javascript:void(0);"><img src="assets/images/at_blue_13.svg"/> &nbsp; <span class="dark_600">{{fieldSelected}}</span> is max@makers.co</a></li>-->
                             <!--<li><a href="javascript:void(0);"><img src="assets/images/hash_16_blue.svg"/> &nbsp; <span class="dark_600">User ID</span>  starts with 12</a></li>-->
-                            <li v-if="filterItemsArr" v-for="filterItems in filterItemsArr">
+                            <li v-if="filterItemsArr" v-for="(filterItems, index) in filterItemsArr">
                                 <a href="javascript:void(0);" style="text-transform: none;"><span class="dark_600">{{ filterItems[0] }}</span></a>
                             </li>
                             <li>
                                 <a class="search_tables_open_close_AF" href="javascript:void(0);" @click="AddFilters"><img src="assets/images/plus_green_15.svg"/></a> &nbsp;
-                                <a href="javascript:void(0);" @click="RemoveFilters"><img src="assets/images/minus_red_15.svg"/></a>
+                                <a href="javascript:void(0);" @click="RemoveFilters(filterItemsArr, (filterItemsArr.length - 1))"><img src="assets/images/minus_red_15.svg"/></a>
+                                <button v-if="filterItemsArr.length > 0" class="btn btn-md bkg_blue_200 light_000 save_filter" @click="addFiltersToSegment">Save Filters</button>
                             </li>
                         </ul>
                     </div>
@@ -75,7 +76,7 @@
                         &nbsp;&nbsp;
                         <input id="filterValue" v-model="filterValue" type="text" class="h48 fsize14 dark_200 fw400 br5" style="height: 48px;"/>
                         &nbsp;&nbsp;
-                        <button class="btn btn-md bkg_blue_200 light_000 save_filter" @click="saveFilters">Save Filter</button>
+                        <button class="btn btn-md bkg_blue_200 light_000 save_filter" @click="applyFilters">Apply Filter</button>
                         <a class="search_tables_open_close_AF searchcloseicon" href="javascript:void(0);" @click="filterValue=''"><img src="assets/images/close-icon-13.svg"/></a>
                     </div>
                 </div>
@@ -378,6 +379,8 @@
             },
             onFieldChange(event) {
                 this.fieldSelected = event.target.value;
+                this.operatorSelected = 'equal';
+                this.filterValue = '';
             },
             onOperatorChange(event) {
                 this.operatorSelected = event.target.value;
@@ -385,19 +388,22 @@
             AddFilters: function() {
                 this.filterItems = [];
             },
-            saveFilters: function() {
+            applyFilters: function() {
                 this.filterItems = [];
 
-                let fieldSymbol = '#', fieldStatement;
+                let fieldSymbol = '#', operatorVal, fieldStatement;
                 if(this.fieldSelected == 'Email') {
                     fieldSymbol = '@';
                 }
-                if(this.operatorSelected == 'Equal') {
-                    this.operatorSelected = 'is';
-                } else if(this.operatorSelected == 'NotEqual') {
-                    this.operatorSelected = 'is not';
+
+                operatorVal = this.operatorSelected;
+                if(this.operatorSelected == 'equal') {
+                    operatorVal = 'is';
+                } else if(this.operatorSelected == 'notequal') {
+                    operatorVal = 'is not';
                 }
-                fieldStatement = fieldSymbol + ' ' + this.fieldSelected + ' ' + this.operatorSelected  + ' ' + this.filterValue;
+
+                fieldStatement = fieldSymbol + ' ' + this.fieldSelected + ' ' + operatorVal  + ' ' + this.filterValue;
                 this.filterItems.push(fieldStatement);
                 /*this.filterItems.push(fieldSymbol, this.fieldSelected, this.operatorSelected, this.filterValue);
                 this.filterItems.push(this.matchSelected);
@@ -406,10 +412,30 @@
                 this.filterItems.push(this.filterValue);*/
                 this.filterItemsArr.push(this.filterItems);
                 //console.log(this.filterItemsArr);
+
+                this.loadPaginatedData();
             },
-            RemoveFilters: function() {
-                //this.filterItems.pop();
-                this.filterItems.splice(-1,this.filterItemsArr.length-1);
+            RemoveFilters: function(arr, index) {
+                var i = 0;
+                while (i < arr.length) {
+                    if(i === index) {
+                        arr.splice(i, 1);
+                    } else {
+                        ++i;
+                    }
+                }
+            },
+            addFiltersToSegment: function(){
+                if(this.filterItemsArr.length>0){
+                    if(confirm('Are you sure you want to a save filter item(s)?')){
+                        this.showLoading(true);
+                        axios.post('/admin/broadcast/addFiltersToSegment', {_token:this.csrf_token(), segment_id: this.profileID, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
+                            .then(response => {
+                                this.showLoading(false);
+                                this.displayMessage('success', 'Action completed successfully.');
+                            });
+                    }
+                }
             },
             loadProfile: function(id){
                 window.location.href='/admin#/contacts/profile/'+id;

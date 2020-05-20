@@ -3348,6 +3348,53 @@ class Broadcast extends Controller {
     }
 
     /**
+     * Used to add filters in segment
+     */
+    public function addFiltersToSegment(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+
+        $response = array();
+
+        $segmentID = $request->segment_id;
+        $matchSelected = ($request->matchSelected == 'MatchOne' ? 'one' : 'all');
+        $multipleFIlterItems = $request->multipleFIlterItems;
+       // pre($multipleFIlterItems);
+
+        //$str = '{"match_param":"one","filters":[{"field_name":"email","operator":"equal","field_value":"andrew@gmail.com"},{"field_name":"id","operator":"greater than","field_value":"100"}]}';
+        $filter_data = '{"match_param":"'.$matchSelected.'","filters":[';
+        if(!empty($multipleFIlterItems)) {
+            foreach ($multipleFIlterItems as $filterItem) {
+                //pre($filterItem);
+                $itemArr = @explode(" ",$filterItem[0]);
+                //pre($itemArr);
+                $filter_data .= '{"field_name":"'.strtolower($itemArr[1]).'","operator":"'.strtolower($itemArr[2]).'","field_value":"'.strtolower($itemArr[3]).'"},';
+            }
+        }
+        $filter_data = rtrim($filter_data,",");
+        $filter_data .= ']}';
+        //echo $filter_data;
+
+        $aData = array(
+            'filter_data' => $filter_data
+        );
+
+        $result = $mBroadcast->updateSegment($aData, $segmentID, $userID);
+
+        if ($result) {
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
      * Used to delete segments in bulk
      */
     public function deleteMultipalSegment(Request $request) {
