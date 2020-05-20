@@ -34,7 +34,7 @@
         <div class="content-area">
 
             <loading :isLoading="loading"></loading>
-            <workflow-subscribers
+            <segment-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
                 :all-data="allData"
@@ -45,7 +45,7 @@
                 @navPage ="navigatePagination"
                 @syncContacts="syncContacts"
                 :key="subscribers"
-            ></workflow-subscribers>
+            ></segment-subscribers>
         </div>
 
 
@@ -145,7 +145,7 @@
 </template>
 <script>
     import SegmentsTab from '@/components/admin/contact/SegmentsSummary';
-    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
+    import SegmentSubscribers from '@/components/admin/workflow/SegmentSubscribers';
 
     export default {
         data() {
@@ -165,7 +165,7 @@
                 profileID : this.$route.params.id,
             }
         },
-        components: {'workflow-subscribers': WorkflowSubscribers, SegmentsTab},
+        components: {'segment-subscribers': SegmentSubscribers, SegmentsTab},
         mounted() {
             this.profileID = this.$route.params.id;
             this.loadData();
