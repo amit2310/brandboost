@@ -138,16 +138,33 @@
 
                         <div class="dot_dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
-                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a> <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a> <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="javascript:void(0);"v-if="contact.status != 2" @click="moveToArchive(contact.id)"><i class="dripicons-user text-muted mr-2"></i> Move to Archive</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1"><i class="dripicons-wallet text-muted mr-2"></i> Inactive</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else><i class="dripicons-gear text-muted mr-2"></i> Active</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> View Details</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> Edit</a>
+                                <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)"><i class="dripicons-lock text-muted mr-2"></i> Sync</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i> Logout</a></div>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                            </div>
                         </div>
-                        <a href="#" class="circle-icon-56 bkg_brand_000 m0auto"><span class="fsize14 fw500 text-uppercase light_000">am</span></a>
-                        <h3 class="htxt_medium_14 dark_600 mb-1 mt-4">Calvin Simmmons</h3>
-                        <p class="fsize14 fw400 dark_400 mb-1 ls_4">stanley.baker@example.com</p>
-                        <p class="fsize14 fw400 dark_400 mb30 ls_4">3 month ago</p>
+                        <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
+                            <user-avatar
+                                :avatar="contact.avatar"
+                                :firstname="contact.firstname"
+                                :lastname="contact.lastname"
+                                :width="32"
+                                :height="32"
+                                :fontsize="12"
+                            ></user-avatar>
+                        </a>
+                        <h3 class="htxt_medium_14 dark_600 mb-1 mt-4" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</h3>
+                        <p class="fsize14 fw400 dark_400 mb-1 ls_4">{{ contact.email }}</p>
+                        <p class="fsize14 fw400 dark_400 mb30 ls_4">{{ timeAgo(contact.created) }}</p>
                         <div class="p20 btop">
-                            <button class="tags_btn blue">tags</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>
+                            <!--<button class="tags_btn blue">tags</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
+                            <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
                         </div>
                     </div>
                 </div>

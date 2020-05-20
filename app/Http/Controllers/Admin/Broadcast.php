@@ -3298,7 +3298,7 @@ class Broadcast extends Controller {
      * Used to get contacts associated with the segments
      * @param type $segmentID
      */
-    public function segmentcontacts($segmentID) {
+    public function segmentcontacts(Request $request, $segmentID) {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
         $aBreadcrumb = array(
@@ -3307,14 +3307,17 @@ class Broadcast extends Controller {
             'Segments' => '#/contacts/segments',
             'Subscribers' => ''
         );
+        $sortBy = $request->get('sortBy');
+        $searchBy = $request->get('search');
+        $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
+
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
         //Get Segment Info
         $oSegment = $mBroadcast->getSegmentInfo($segmentID);
 
-
-        $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID);
+        $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID, true, $searchBy, $sortBy, $items_per_page);
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
