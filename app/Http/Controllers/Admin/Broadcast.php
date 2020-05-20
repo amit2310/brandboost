@@ -3506,9 +3506,9 @@ class Broadcast extends Controller {
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
 
-
         $segmentName = $request->segmentName;
         $description = $request->segmentDescription;
+
         //check for already
         $bDuplicate = $mBroadcast->isDuplicateSegment($segmentName, $userID);
         if ($bDuplicate == true) {

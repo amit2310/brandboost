@@ -6,6 +6,13 @@
      **********************-->
         <div class="top-bar-top-section bbot">
             <div class="container-fluid">
+                <!--******************
+                 PAGE LEFT SIDEBAR
+                **********************-->
+                <SegmentsTab @chooseSegment="selectSegment"></SegmentsTab>
+                <!--******************
+                  PAGE LEFT SIDEBAR END
+                 **********************-->
                 <div class="row">
                     <div class="col-md-6 col-6">
                         <span class="float-left mr20"><img src="/assets/images/BACK.svg"/></span>
@@ -43,7 +50,7 @@
 
 
         <!--Smart Popup-->
-        <div class="box" style="width: 424px;">
+        <!--<div class="box" style="width: 424px;">
             <div style="width: 424px;overflow: hidden; height: 100%;">
                 <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon slidebox"><i
                     class=""><img src="/assets/images/cross.svg"/></i></a>
@@ -72,10 +79,10 @@
                                         <input type="email" class="form-control h56" id="email"
                                                placeholder="Enter email address" name="email">
                                     </div>
-                                    <!--<div class="form-group">
+                                    &lt;!&ndash;<div class="form-group">
                                       <label for="pwd">Phone number</label>
                                       <input type="text" class="form-control h56" id="pwd" placeholder="Enter phone number" name="pswd">
-                                    </div>-->
+                                    </div>&ndash;&gt;
                                     <div class="form-group">
                                         <label for="phone">Phone number</label>
                                         <div class="phonenumber">
@@ -130,20 +137,20 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
     </div>
 
 </template>
 <script>
+    import SegmentsTab from '@/components/admin/contact/SegmentsSummary';
     import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribers.vue';
 
     export default {
         data() {
             return {
                 successMsg : '',
-
                 loading: true,
                 moduleName: '',
                 moduleUnitID: '',
@@ -156,16 +163,15 @@
                 current_page: 1,
                 breadcrumb: '',
                 profileID : this.$route.params.id,
-
-
             }
         },
-        components: {'workflow-subscribers': WorkflowSubscribers},
+        components: {'workflow-subscribers': WorkflowSubscribers, SegmentsTab},
         mounted() {
-            this.loadPaginatedData();
+            this.profileID = this.$route.params.id;
+            this.loadData();
         },
         methods: {
-            loadPaginatedData : function(){
+            loadData : function(){
                 axios.get('/admin/broadcast/segmentcontacts/'+this.profileID +'?page='+this.current_page)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
@@ -189,11 +195,19 @@
 
                     });
             },
-
+            selectSegment: function(data){
+                this.profileID = data.id;
+                //this.requestFrom.campaign_id = data.id;
+                window.location.href = '#/contacts/segments/subscribers/'+this.profileID;
+                this.$forceUpdate();
+                this.componentKey += 1;
+                //location.reload();
+                this.loadData();
+            },
             navigatePagination: function(p){
                 this.loading=true;
                 this.current_page = p;
-                this.loadPaginatedData();
+                this.loadData();
             },
             syncContacts: function(segmentID) {
                 if(confirm('Are you sure you want to perform this action?')){
