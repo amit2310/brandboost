@@ -1,9 +1,10 @@
 <template>
+
     <workflow-subscribers></workflow-subscribers>
 
 </template>
 <script>
-    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribersNew.vue';
+    import WorkflowSubscribers from '@/components/admin/workflow/WorkflowSubscribersNew';
 
     export default {
         props: ['pageColor'],

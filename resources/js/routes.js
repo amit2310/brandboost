@@ -76,7 +76,7 @@ import OffsiteCampaigns from './components/admin/brandboost/offsite/ListOffsiteC
 import OffsiteNegativeFeedback from './components/admin/brandboost/offsite/Feedbacks';
 import OffsiteFeedbackDetails from './components/admin/brandboost/offsite/FeedbackDetails';
 import Segments from './components/admin/broadcast/Segments';
-import SegmentSubscribers from './components/admin/contact/SegmentSubscribers';
+import SegmentSubscribers from './components/admin/contact/SegmentSubscribersNew';
 import ListSubscribers from './components/admin/contact/ListSubscribers';
 /*Email Module*/
 import EmailDashboard from './components/admin/modules/emails/Dashboard';

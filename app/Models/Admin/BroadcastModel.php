@@ -917,16 +917,31 @@ class BroadcastModel extends Model {
      * @param type $userID
      * @return type
      */
-    public static function getSegmentSubscribers($segmentID, $userID) {
-        $oData = DB::table('tbl_segments_users')
+    public static function getSegmentSubscribers($segmentID, $userID, $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10') {
+        $query = DB::table('tbl_segments_users')
                 ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
                 ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_segments_users.*', 'tbl_subscribers.id as globalSubscriberId', 'tbl_subscribers.user_id as subUserId', 'tbl_subscribers.firstname', 'tbl_subscribers.lastname', 'tbl_subscribers.email', 'tbl_subscribers.phone', 'tbl_subscribers.status', 'tbl_users.avatar')
                 ->where('tbl_segments_users.segment_id', $segmentID)
                 ->where('tbl_segments_users.user_id', $userID)
-                ->orderBy('tbl_subscribers.id', 'desc')
-                ->paginate(10);
-                //->get();
+                ->orderBy('tbl_subscribers.id', 'desc');
+        if(!empty($searchBy)){
+            $query->where('tbl_subscribers.owner_id', $userID);
+            $query->where('tbl_subscribers.firstname', 'LIKE', "%$searchBy%");
+            $query->orWhere('tbl_subscribers.lastname', 'LIKE', "%$searchBy%");
+            $query->orWhere('tbl_subscribers.email', 'LIKE', "%$searchBy%");
+        }
+
+        if($paginated == true){
+            //$oData = $query->paginate($items_per_page);
+            if ($items_per_page == 'All') {
+                $oData = $query->get();
+            } else {
+                $oData = $query->paginate($items_per_page);
+            }
+        }else{
+            $oData = $query->get();
+        }
 
         return $oData;
     }

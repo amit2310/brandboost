@@ -648,6 +648,7 @@ class Contacts extends Controller
             $sContacts = $request->multipal_record_id;
 
             foreach ($sContacts as $iContactID) {
+                echo $iContactID;
                 $result = $mSubscriber->deleteGlobalSubscriber($userID, $iContactID);
             }
 
