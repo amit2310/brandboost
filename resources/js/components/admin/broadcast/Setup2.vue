@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <div class="container-fluid">
 
 
@@ -305,7 +305,7 @@
                         this.allData = response.data.allData;
                         this.totalTemplates = this.allData.total;
                         this.stripoEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.campaign.id + '/' + this.campaign.broadcast_id;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.chooseTemplateSection = true;
                         if(this.campaign.template_source>0){
                             this.displayEditTemplateSection();
@@ -317,7 +317,7 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -326,7 +326,7 @@
                 this.previewTemplate = atob(data.stripo_compiled_html);
             },
             saveSelectedTemplate: function () {
-                this.loading = true;
+                this.showLoading(true);
                 let templateId = this.selectedTemplate;
                 //Save Template into the database
                 axios.post('/admin/broadcast/addCampaignToBroadcast', {
@@ -349,7 +349,7 @@
             },
             loadCategoriedTemplates: function (actionName, ix) {
                 this.activeIndex = ix;
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = 1;
                 axios.post('/admin/templates/getCategorizedTemplates?page=' + this.current_page, {
                     action: actionName,
@@ -360,9 +360,9 @@
                     .then(response => {
 
                         this.templates = response.data.oTemplates;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.allData = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             displayTemplateList: function () {
@@ -379,7 +379,7 @@
                 this.editTemplateSection = false;
             },
             displayEditTemplateSection: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let elem = this;
                 elem.chooseTemplateSection = false;
                 elem.listTemplateSection = false;
@@ -396,7 +396,7 @@
                 window.location.href = path;
             },
             saveTemplateContinue: function(step){
-                this.loading = true;
+                this.showLoading(true);
                 document.querySelector('#loadstripotemplate').contentWindow.document.querySelector('.fa-save').click();
                 let elem= this;
                 setTimeout(function(){
@@ -416,7 +416,7 @@
                 }
             },
             updatesettings: function (fieldName) {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcastSettingUnit', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
@@ -426,12 +426,12 @@
                     broadcast_id: this.campaign.broadcast_id
                 }).then(response => {
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -439,7 +439,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

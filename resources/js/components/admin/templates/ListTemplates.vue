@@ -22,7 +22,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid" v-if="!hasData">
                 <div class="row">
@@ -302,7 +302,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.templateId>0){
@@ -314,7 +314,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
 
                             //window.location.href='#/templates/edit/'+this.form.templateId;
 
@@ -339,7 +339,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -355,14 +355,14 @@
                         this.method = response.data.method;
                         this.userid = response.data.userID;
                         this.allData = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             showPaginationData: function (current_page) {
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -386,7 +386,7 @@
             },
             cloneTemplate: function(templateId,templateType) {
                 if(confirm('Are you sure you want to clone this template?')){
-                    this.loading = true;
+                    this.showLoading(true);
                     //Do axios
                     axios.post('/admin/templates/cloneTemplate', {
                         templateId:templateId,
@@ -397,7 +397,7 @@
                     })
                         .then(response => {
                             if(response.data.status == 'success'){
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.displayMessage('success', 'Template cloned and saved into your templates!');
                                 syncContactSelectionSources();
                                 this.showPaginationData(this.current_page);

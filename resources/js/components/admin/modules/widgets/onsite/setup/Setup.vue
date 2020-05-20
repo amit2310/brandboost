@@ -25,7 +25,7 @@
             <div class="container-fluid">
                 <div class="table_head_action">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="email_config_list">
@@ -509,7 +509,7 @@
                     if(response.data.status =='success'){
                         this.displayMessage('success', 'Setting has beeb saved successfully.');
                     }
-                    this.loading =false;
+                    this.showLoading(false);
                 });
             },
             displayStep: function(step){
@@ -542,7 +542,7 @@
                         this.widgetID = response.data.widgetID;
                         this.widgetThemeData = response.data.widgetThemeData;
                         this.selectedTab = response.data.selectedTab;
-                        this.loading = false;
+                        this.showLoading(false);
                         //loadJQScript(this.user.id);
 
                });
@@ -558,7 +558,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
@@ -574,12 +574,12 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/updateOnsiteWidgetStatus', {
                     widgetID: this.campaignId,
                     status: '3',
@@ -587,7 +587,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

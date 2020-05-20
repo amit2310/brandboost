@@ -111,7 +111,7 @@
 
                                 <div class="col-md-12">
 
-                                    <!--<loading :isLoading="loading"></loading>-->
+                                    <!---->
                                     <div class="form-group">
                                         <label for="firstname">First name</label>
                                         <input type="text" class="form-control h56" v-model="form.firstname"
@@ -236,7 +236,7 @@
                 document.querySelector('.js-contact-slidebox').click();
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.id>0){
@@ -248,7 +248,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.id ='';
                             //document.querySelector('.js-contact-slidebox').click();
@@ -262,7 +262,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         //alert('All form fields are required');

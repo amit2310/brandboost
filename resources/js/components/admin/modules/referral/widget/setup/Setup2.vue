@@ -16,7 +16,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -153,7 +153,7 @@
                     this.campaign = response.data.campaign;
                     this.preview = response.data.preview;
                     this.referralApps = response.data.referralApps;
-                    this.loading = false;
+                    this.showLoading(false);
                 });
         },
         methods: {

@@ -27,7 +27,7 @@
         </div>
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <workflow-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
@@ -181,7 +181,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.id>0){
@@ -193,7 +193,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.id ='';
                             document.querySelector('.js-contact-slidebox').click();
@@ -206,7 +206,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         //alert('All form fields are required');
@@ -224,7 +224,7 @@
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             addNewContact : function(e){
@@ -241,7 +241,7 @@
                     });
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             }

@@ -2,7 +2,7 @@
 
     <div id="Design" class="tab-pane fade">
 
-        <loading :isLoading="loading"></loading>
+
         <div class="p20 bbot pt10 pb10">
             <p class="text-uppercase m-0 fw400 dark_200">Page appearance <a class="float-right" href="javascript:void(0);"><i class="icon-arrow-down12 fsize15"></i></a></p>
         </div>
@@ -285,7 +285,7 @@
                             this.saveChanges();
                         }
                         this.displayMessage('success', 'Theme applied successfully!!');
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
@@ -392,7 +392,7 @@
                 this.saveConfiguration();
             },
             saveConfiguration: function(){
-                this.loading = true;
+                this.showLoading(true);
                 let companylogo = document.querySelector('input[name="company_logo"]');
                 this.brandData.company_logo = (companylogo.value) ? companylogo.value : this.brandData.company_logo;
                 let headerAvatar = document.querySelector('input[name="company_header_logo"]');
@@ -404,12 +404,12 @@
                 })
                     .then(response => {
                         this.displayMessage('success', 'Configuration saved successfully!!');
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
             createTheme: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/createBrandPageTheme', {
                     themeTitle: this.themeTitle,
                     themeData: this.brandData,
@@ -419,7 +419,7 @@
                         let themeReponseData = response.data.themeCollection;
                         this.brandThemeData = themeReponseData;
                         this.displayMessage('success', 'Configuration saved successfully!!');
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             }

@@ -367,7 +367,7 @@
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
 
-                        <loading :isLoading="loading"></loading>
+
                         <div class="row">
                             <div class="col-md-4 pr0">
                                 <div class="email_editor_left">
@@ -600,7 +600,7 @@
                         this.user = response.data.aUserInfo;
                         this.emailTemplates = this.request.html_content;
                         this.smsTemplates = this.request.sms_content;
-                        this.loading = false;
+                        this.showLoading(false);
                         //Set SenderForm fields
                         this.senderForm.from_name = this.request.email_from_name;
                         this.senderForm.from_email = this.request.email;
@@ -787,13 +787,13 @@
                 this.displaySMSTrackingForm = false;
             },
             saveSenderInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/updateReviewRequest', this.senderForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('sender');
                             this.validateStepCompletion();
                         }
@@ -801,26 +801,26 @@
 
             },
             saveSubjectInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/updateReviewRequest', this.subjectForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('subject');
                             this.validateStepCompletion();
                         }
                     });
             },
             saveTrackingInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/updateReviewRequest', this.trackingForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('tracking');
                             this.validateStepCompletion();
                         }
@@ -838,7 +838,7 @@
                 this.configureCampaign = true;
             },
             saveEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/updateReviewRequest', {
                     _token: this.csrf_token(),
                     requestType: 'content',
@@ -848,7 +848,7 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
 
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
@@ -866,13 +866,13 @@
                 }
             },
             loadEmailPreview: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/previewRequest', {
                     _token: this.csrf_token(),
                     request_id: this.$route.params.id
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.content = response.data.content;
                         this.introduction = response.data.introduction;
                         this.greetings = response.data.greeting;
@@ -880,7 +880,7 @@
                 document.querySelector('#displayOverviewPreviewForm').click();
             },
             sendTestEmail: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/sendRequestTestMail', {
                     _token: this.csrf_token(),
                     request_id: this.$route.params.id,
@@ -888,13 +888,13 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },
             sendReviewRequest: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/sendManualReviewRequest', {
                     _token: this.csrf_token(),
                     request_id: this.$route.params.id
@@ -902,12 +902,12 @@
                     .then(response => {
                         if(response.data.status =='success'){
                             this.displayMessage('success', 'Review request added to the queue for sending');
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                         if(response.data.status == 'error'){
 
                             this.errorMsg = response.data.msg;
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
 

@@ -515,7 +515,7 @@
                         this.excludeButtons = this.contactSelectionData.sExcludButtons;
                         this.subscribers = this.contactSelectionData.oCampaignSubscribers;
                         this.allData = this.contactSelectionData.oCampaignSubscribersAll;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.refreshalllists();
                     });
             },
@@ -540,7 +540,7 @@
                 });
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

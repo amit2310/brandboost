@@ -1,6 +1,6 @@
 <template>
     <div>
-        <loading :isLoading="loading"></loading>
+
         <div class="row">
             <div class="col-md-6 d-flex">
                 <div class="card col animate_top p0">
@@ -146,7 +146,7 @@
                         this.excludeButtons = this.contactSelectionData.sExcludButtons;
                         this.subscribers = this.contactSelectionData.oCampaignSubscribers;
                         this.allData = this.contactSelectionData.oCampaignSubscribersAll;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.refreshalllists();
 
                     });
@@ -172,7 +172,7 @@
                 });
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

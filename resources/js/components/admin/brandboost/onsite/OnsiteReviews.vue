@@ -189,11 +189,11 @@
                         this.reviews = response.data.reviews;
                         this.allData = response.data.allData;
                         this.user = response.data.aUserInfo;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

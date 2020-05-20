@@ -1,6 +1,6 @@
 <template>
     <div>
-        <loading :isLoading="loading"></loading>
+
         <div style="display: block;">
             <div class="row">
                 <div class="col-12">
@@ -163,16 +163,16 @@
                         this.selected_contacts = response.data.aSelectedContacts;
                         this.allData = response.data.allDataContacts;
                         this.userData = response.data.userData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePaginationPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },

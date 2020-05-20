@@ -21,7 +21,7 @@
              **********************-->
         <div class="content-area">
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="table_head_action">
 <!--                    <div class="row">-->
 <!--                        <div class="col-md-6">-->
@@ -286,17 +286,17 @@
                     if(response.data.status =='success'){
                         this.displayMessage('success', 'Setting has beeb saved successfully.');
                     }
-                    this.loading =false;
+                    this.showLoading(false);
                 });
             },
             showPaginationData: function(current_page){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = current_page;
                 this.getWidgetDetails();
 
             },
             setReq: function(req){
-                this.loading=true;
+                this.showLoading(true);
                 this.req = req;
                 this.getWidgetDetails();
 
@@ -315,7 +315,7 @@
                         this.widget = response.data.oWidget;
                         this.allData = response.data.oStats;
                         console.log(this.allData);
-                        this.loading =false;
+                        this.showLoading(false);
 
                     });
             },

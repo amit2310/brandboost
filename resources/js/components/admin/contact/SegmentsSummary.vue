@@ -246,7 +246,7 @@
                         this.company_name = response.data.company_name;
                         this.allData = response.data.allData;
                         this.segments = response.data.oSegments;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.pageRendered = true;
                         //console.log(this.segments)
                     });
@@ -256,7 +256,7 @@
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
@@ -272,7 +272,7 @@
                 document.querySelector('.js-segment-slidebox-tab').click();
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.segment_id>0){
@@ -284,7 +284,7 @@
                 this.form.post(formActionSrc, this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.segment_id ='';
                             document.querySelector('.js-segment-slidebox-tab').click();
@@ -303,11 +303,11 @@
                                 alert('Error: Something went wrong.');
                             }
                         }else{
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');

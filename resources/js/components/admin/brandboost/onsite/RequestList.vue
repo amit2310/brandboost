@@ -25,7 +25,7 @@
         <div class="content-area">
             <div class="container-fluid" v-if="requests.length>0 || searchBy || sortBy">
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -185,23 +185,23 @@
         },
         methods: {
             loadPaginatedData: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/getManualRequests?items_per_page='+this.items_per_page+'&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy, {campaign_id:this.$route.params.id, _token: this.csrf_token()})
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.requests = response.data.requests;
                         this.allData = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPerPageData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },

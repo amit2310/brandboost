@@ -110,7 +110,7 @@
                         this.user = response.data.loginUserData;
                         this.twilioNumber = response.data.twilioNumber;
                         this.teamMembers = response.data.teamMembers;
-                        this.loading = false;
+                        this.showLoading(false);
                         //loadJQScript(this.user.id);
                     });
             },
@@ -140,7 +140,7 @@
                 this.brandData = param1;
             },
             setSource: function (source) {
-                this.loading = true;
+                this.showLoading(true);
                 this.campaign.source_type = source;
                 axios.post('/admin/modules/referral/updateSource', {
                     source_type: source,
@@ -149,7 +149,7 @@
                 })
                     .then(response => {
                         this.displayMessage('success', 'Source has been updated successfully');
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             displayStep: function (step) {
@@ -162,7 +162,7 @@
                 window.location.href = path;
             },
             updateSettings: function (fieldName, fieldValue, type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if (type == 'expiry') {
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName == 'txtInteger' || fieldName == 'exp_duration' ? true : false;
@@ -177,11 +177,11 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
             },
             saveDraft: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -189,7 +189,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if (response.data.status == 'success') {
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         } else {

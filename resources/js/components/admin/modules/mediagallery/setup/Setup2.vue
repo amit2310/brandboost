@@ -16,7 +16,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -140,7 +140,7 @@
             getMediaWidgetSetup : function(){
                 axios.get('/admin/mediagallery/setup/' + this.campaignId) .then(response => {
                         this.campaign = response.data.galleryData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             displayStep: function(step){

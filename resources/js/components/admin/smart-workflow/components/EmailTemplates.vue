@@ -2,7 +2,7 @@
     <div>
 
         <!---->
-        <loading :isLoading="loading"></loading>
+
         <div v-show="editGrapesEditor">
             <div class="row">
                 <iframe id="loadstripotemplate" scrolling="no" :src="grapesEditorSrc" width="100%" height="1500"
@@ -112,7 +112,7 @@
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
 
-                        <loading :isLoading="loading"></loading>
+
                         <div class="row">
                             <div class="col-md-4 pr0">
                                 <div class="email_editor_left">
@@ -329,7 +329,7 @@
                 this.$emit("hideEmailTemplate")
             },
             saveEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -339,13 +339,13 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
             sendTestEmail: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -355,7 +355,7 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
@@ -364,7 +364,7 @@
                 return atob(content);
             },
             loadPreview: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
@@ -372,7 +372,7 @@
                     moduleUnitId: this.moduleUnitId
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.content = response.data.content.replace('<?php echo base_url();?>', '/');
                         this.introduction = response.data.introduction;
                         this.greetings = response.data.greeting;
@@ -380,7 +380,7 @@
                 document.querySelector('#displayPreviewForm').click();
             },
             addTemplateToCampaign: function(templateId){
-                this.loading = true;
+                this.showLoading(true);
                 //Save Template into the database
                 axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', {
                     moduleName: this.moduleName,
@@ -404,12 +404,12 @@
                             }
                             this.$emit("updateEmailCampaignId", this.selected_campaignId, response.data.templateName);
                         }
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
             loadEmailReviewTemplates: function(){
-                this.loading = false;
+                this.showLoading(false);
             },
             showPaginationTemplates: function(p){
                 this.current_page = p;
@@ -426,7 +426,7 @@
             },
             cloneTemplate: function(templateId,templateType) {
                 if(confirm('Are you sure you want to clone this template?')){
-                    this.loading = true;
+                    this.showLoading(true);
                     //Do axios
                     axios.post('/admin/templates/cloneTemplate', {
                         templateId:templateId,
@@ -437,7 +437,7 @@
                     })
                         .then(response => {
                             if(response.data.status == 'success'){
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.displayMessage('success', 'Template cloned and saved into your templates!');
                                 this.loadCategoriedTemplates('my');
                                 document.querySelector(".hideEmailTemplatePreview").click();
@@ -447,7 +447,7 @@
                 }
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.templateId>0){
@@ -458,7 +458,7 @@
                 axios.post('/admin/templates/addUserTemplate' , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.form.templateId ='';
                             document.querySelector('.js-email-templates-slidebox').click();
                             this.displayMessage('success', 'Template added successfully.');
@@ -475,7 +475,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         this.displayMessage('error', 'Error: All form fields are required');
                     });

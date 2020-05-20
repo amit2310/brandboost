@@ -137,7 +137,7 @@
                         this.feedbacks = response.data.result;
                         this.count = response.data.totalResults;
                         this.feedbackTags = response.data.feedbackTags;
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(this.feedbacks)
                     });
             },

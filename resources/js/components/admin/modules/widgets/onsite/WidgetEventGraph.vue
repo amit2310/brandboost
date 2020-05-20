@@ -111,7 +111,7 @@
                         this.widget = response.data.oWidget;
                         this.allData = response.data.oStats;
                         console.log(this.allData);
-                        this.loading =false;
+                        this.showLoading(false);
 
                     });
             },

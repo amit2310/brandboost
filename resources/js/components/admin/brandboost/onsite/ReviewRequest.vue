@@ -24,7 +24,7 @@
         <div class="content-area">
             <div class="container-fluid" v-if="allData.total>0 || true  ">
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -266,10 +266,10 @@
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
                     if(confirm('Are you sure you want to delete selected item(s)?')){
-                        this.loading = true;
+                        this.showLoading(true);
                         axios.post('/admin/brandboost/deleteReviewRequest', {_token:this.csrf_token(), multipal_id:this.deletedItems})
                             .then(response => {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.loadPaginatedData();
                             });
                     }
@@ -306,7 +306,7 @@
                 }
             },
             loadPaginatedData : function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.get('/admin/brandboost/review_request/onsite?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
@@ -314,24 +314,24 @@
                         this.moduleName = response.data.moduleName;
                         this.requests = response.data.oRequest;
                         this.allData = response.data.allData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             searchItem: function(){
                 this.loadPaginatedData();
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

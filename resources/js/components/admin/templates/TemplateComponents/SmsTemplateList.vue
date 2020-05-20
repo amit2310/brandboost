@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-9"><loading :isLoading="loading"></loading></div>
+            <div class="col-md-9"></div>
         </div>
         <div v-show="listSmsTemplateSection">
             <div class="row">
@@ -188,7 +188,7 @@
                     });
             },
             loadPaginatedData: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/templates/getCategorizedTemplates?page=' + this.current_page, {'action':this.actionName, 'campaign_type':'sms', 'method': 'manage'})
                     .then(response => {
                         this.templates = response.data.oTemplates;
@@ -202,14 +202,14 @@
                         }
 
                         //this.stripoEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.campaign.id + '/' + this.campaign.broadcast_id;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             showPaginationData: function (current_page) {
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -223,7 +223,7 @@
                 this.previewTemplate = atob(data.stripo_compiled_html);
             },
             saveWfSelectedTemplate: function (mode) {
-                this.loading = true;
+                this.showLoading(true);
                 this.$emit('addWorkflowNode', this.selectedTemplate, mode);
             }
         }

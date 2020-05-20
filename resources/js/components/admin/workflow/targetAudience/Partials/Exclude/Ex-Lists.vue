@@ -1,6 +1,6 @@
 <template>
     <div class="p40">
-        <loading :isLoading="loading"></loading>
+
         <div class="p10">
             <button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="backtoOption"><span class="ml0 mr10"><img src="/assets/images/arrow-left-line.svg"></span>Back</button>
             <h3 style="float: right;">Exclude from Lists <span>{{selected_lists.length}}</span></h3>
@@ -104,7 +104,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.userData = response.data.userData;
-                        this.loading = false;
+                        this.showLoading(false);
 
 
 
@@ -121,7 +121,7 @@
                 window.location.href = path;
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

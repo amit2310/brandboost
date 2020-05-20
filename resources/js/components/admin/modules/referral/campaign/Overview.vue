@@ -28,7 +28,7 @@
 
             <div v-if="programs.length > 0" class="container-fluid">
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -339,7 +339,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.ref_id > 0){
@@ -352,7 +352,7 @@
                     .then(response =>  {
                         console.log(response.data);
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.ref_id ='';
 
@@ -375,7 +375,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -391,7 +391,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.programs = response.data.oPrograms;
                         this.allData = response.data.allData;
                     });
@@ -400,7 +400,7 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

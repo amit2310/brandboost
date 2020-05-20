@@ -24,7 +24,7 @@
         <div class="clearfix">&nbsp;</div>
 
 
-            <loading :isLoading="loading"></loading>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-flat review_ratings">
@@ -225,7 +225,7 @@
 
             loadData: function () {
                 //getData
-                this.loading = true;
+                this.showLoading(true);
                 console.log(this.current_page);
                 axios.get('/admin/settings?page='+this.current_page,{
                         params: {
@@ -234,7 +234,7 @@
                     })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.settingsData = response.data.settingsData;
@@ -294,7 +294,7 @@
                 this.updateSingleField('notify_phone',this.notificationData.notify_phone);
             },
             updateSingleField: function (fieldName, fieldValue) {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('admin/settings/updateNotificationSettings', {
                     _token: this.csrf_token(),
                     fieldname: fieldName,
@@ -303,13 +303,13 @@
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.loadData();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             updateNotificationPermisson: function (notification_slug) {
                 console.log(notification_slug);
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('admin/settings/updateNotificationPermisson', {
                     _token: this.csrf_token(),
                     notification_slug: notification_slug,
@@ -317,7 +317,7 @@
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.loadData();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },

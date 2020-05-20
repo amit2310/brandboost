@@ -1,7 +1,7 @@
 <template>
     <div class="box" style="width: 424px;">
 
-        <loading :isLoading="loading"></loading>
+
         <div style="width: 424px;overflow: hidden; height: 100%;">
             <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon saveReplyBox"><i
                 class=""><img src="assets/images/cross.svg"/></i></a>
@@ -58,7 +58,7 @@
         methods: {
             saveReplyTemplate: function () {
                 if (this.replyTitle && this.replyDesc) {
-                    this.loading = true;
+                    this.showLoading(true);
                     axios.post('/admin/chatshortcut/addShortCut', {
                         shortname: this.replyTitle,
                         conversatation: this.replyDesc,
@@ -68,7 +68,7 @@
                             if (response.data.status == 'success') {
                                 this.$emit('updateShortcuts');
                                 this.displayMessage('success', 'Reply shortcut saved successfully!');
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.resetForm();
                             }
                         });

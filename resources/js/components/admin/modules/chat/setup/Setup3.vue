@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -89,7 +89,7 @@
         },
         mounted() {
             this.getChatWidgetSetup();
-            this.loading = false;
+            this.showLoading(false);
         },
         methods: {
             getChatWidgetSetup : function(){
@@ -101,7 +101,7 @@
                         this.campaign = response.data.oChat;
                         this.preview = response.data.setupPreview;
                         this.user = response.data.userData;
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
@@ -116,14 +116,14 @@
                 window.location.href = path;
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/chat/changeStatus', {
                     chatID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');

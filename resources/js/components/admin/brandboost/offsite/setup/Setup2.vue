@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -474,7 +474,7 @@
                     this.offsites_links = response.data.offsites_links;
                     this.feedbackResponse = response.data.feedbackResponse !=null ? response.data.feedbackResponse : this.feedbackResponse;
                     this.user = response.data.aUserInfo;
-                    this.loading = false;
+                    this.showLoading(false);
                     //loadJQScript(this.user.id);
 
                 });
@@ -569,7 +569,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
@@ -585,19 +585,19 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Updated the changes successfully!!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/publishOnsiteStatusBB', {
                     brandboostID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 2){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');
