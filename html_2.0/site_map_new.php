@@ -182,10 +182,10 @@
      		<h3 class="htxt_bold_16 reviews_400">People Lists</h3>
      		<hr>
      		<ul>
-     			<li><a target="_blank" href="people_list1.php">People List 1</a></li>
-     			<li><a target="_blank" href="people_list2.php">People List 2</a></li>
-     			<li><a target="_blank" href="people_list3.php">People List 3</a></li>
-     			<li><a target="_blank" href="people_list_single.php">People List Single </a></li>
+     			<li><a target="_blank" href="people_list_new_a.php">People List 1</a></li>
+     			<li><a target="_blank" href="people_list_new_b.php">People List 2</a></li>
+     			<li><a target="_blank" href="people_list_new_c.php">People List 3</a></li>
+     			<li><a target="_blank" href="people_list_new_d.php">People List 4</a></li>
      		</ul>
      		</div>
      		
