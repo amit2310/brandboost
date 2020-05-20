@@ -140,7 +140,7 @@
         components: {Pagination},
         data(){
             return {
-                loading: true,
+
                 listSmsTemplateSection: true,
                 editTemplateSection: false,
                 hasData : true,

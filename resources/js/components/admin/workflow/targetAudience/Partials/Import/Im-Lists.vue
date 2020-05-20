@@ -78,7 +78,7 @@
             return {
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 lists: '',

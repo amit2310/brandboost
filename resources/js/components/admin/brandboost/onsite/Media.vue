@@ -242,7 +242,7 @@
             return {
                 successMsg : '',
 
-                loading: true,
+
                 count : 0,
                 reviews: '',
                 allData: {},

@@ -116,7 +116,7 @@
             return {
 
 
-                loading: true,
+
                 lists: '',
                 selected_lists: '',
                 allData: '',

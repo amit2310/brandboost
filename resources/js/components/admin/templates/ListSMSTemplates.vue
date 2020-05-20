@@ -258,7 +258,7 @@
                 formLabel: 'Create',
 
 
-                loading: true,
+
                 breadcrumb: '',
                 hasData : false,
                 templates: {},

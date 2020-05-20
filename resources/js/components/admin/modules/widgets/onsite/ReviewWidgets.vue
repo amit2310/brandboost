@@ -131,7 +131,7 @@
                 },
 
 
-                loading: true,
+
                 widget_type: '',
                 widget:{
                     widgetData:{widget_type:''}

@@ -68,7 +68,7 @@
                 refreshMessage: 1,
 
 
-                loading: true,
+
                 allSubscribers: '',
                 favoriteChat: '',
                 assignedChat: '',

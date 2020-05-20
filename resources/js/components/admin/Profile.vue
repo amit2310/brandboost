@@ -309,7 +309,7 @@
                     newPassword: '',
                     rePassword: ''
                 },
-                loading: true,
+
                 breadcrumb: '',
                 userDetail: '',
                 onsiteList: '',

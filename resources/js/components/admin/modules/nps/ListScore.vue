@@ -146,7 +146,7 @@
                 feedbackDesc: '',
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

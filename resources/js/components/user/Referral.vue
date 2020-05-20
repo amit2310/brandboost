@@ -133,7 +133,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 referralData: ''
             }

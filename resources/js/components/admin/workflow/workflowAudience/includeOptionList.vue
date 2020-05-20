@@ -121,7 +121,7 @@
             return {
 
 
-                loading: true,
+
                 displayContacts: false,
                 displayLists: false,
                 displaySegments: false,

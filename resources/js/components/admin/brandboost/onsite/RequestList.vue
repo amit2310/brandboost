@@ -160,7 +160,7 @@
                 refreshMessage: 1,
 
 
-                loading: true,
+
                 allData: '',
                 requests: '',
                 current_page: 1,

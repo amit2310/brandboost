@@ -267,7 +267,7 @@
         data() {
             return {
                 refreshMessage: 2,
-                loading: true,
+
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
                 greetings: '',

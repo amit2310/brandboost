@@ -202,7 +202,7 @@
                     txtTagName: '',
                     description: ''
                 },
-                loading: true,
+
                 current_page: 1,
                 oTagGroupDetails: '',
                 oTags: '',

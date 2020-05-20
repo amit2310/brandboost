@@ -380,7 +380,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 myReview: ''
             }

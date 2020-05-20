@@ -206,7 +206,7 @@
                 },
 
 
-                loading: true,
+
                 current_page: 1,
                 oTagGroups: '',
                 allData: ''

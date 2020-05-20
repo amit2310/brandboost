@@ -93,7 +93,7 @@
             return {
 
 
-                loading: true,
+
                 contacts: '',
                 selected_contacts: '',
                 allData: '',

@@ -199,7 +199,7 @@
                 },
 
 
-                loading: true,
+
                 current_page: 1,
                 oTags: '',
                 oGroupIDs : '',
