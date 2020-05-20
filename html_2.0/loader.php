@@ -27,7 +27,7 @@
 
 
 <body id="PeopleSection" class="pagewithleftsidebar">
- 
+  
 
 
 
@@ -41,9 +41,7 @@
  
   <div class="page-content">
 
-  <div class="content_loader">
- <img src="assets/images/ShorttermUntidyHamadryas-small.gif"/>
- </div>
+
 
   
   
@@ -192,7 +190,7 @@
     </div>
     
     
-     <div class="row">
+     <div class="row d-none">
     	<div class="col-md-12">
     		<div class="table-responsive">
     			<table class="table table-borderless mb-0">
@@ -500,5 +498,11 @@
 
 </script>
 
+
+<div class="content_loader">
+ <img src="assets/images/ShorttermUntidyHamadryas-small.gif"/>
+ </div>
+ 
+ 
 </body>
 </html>
