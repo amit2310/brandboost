@@ -24,7 +24,7 @@
 
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
 
-        <loading :isLoading="loading"></loading>
+
         <div class="content-area" v-show="pageRendered==true">
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -777,7 +777,7 @@
                 window.location.href='#/brandboost/questions/'+id;
             },
             loadPaginatedData : function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.get('/admin/brandboost/reviews?items_per_page='+this.items_per_page+ '&page='+this.current_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
@@ -788,28 +788,28 @@
                         this.oReviews = response.data.aReviews;
                         this.reviewTags = response.data.reviewTags;
                         this.reviewTags = response.data.reviewTags;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.pageRendered = true;
                         //console.log(this.campaigns)
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -842,7 +842,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 formActionSrc = '/admin/comments/add_comment';
                 this.form.module_name = this.moduleName;
@@ -863,11 +863,11 @@
                                 alert('Error: Something went wrong.');
                             }
                         }else{
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     })
                     .catch(errors => {
-                        this.loading = false;
+                        this.showLoading(false);
                     })
             },
             changeStatus: function(review_id, status) {

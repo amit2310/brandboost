@@ -23,7 +23,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -308,7 +308,7 @@
                     this.offSiteData = response.data.offSiteData;
                     this.offsiteIds = response.data.offsiteIds;
                     this.user = response.data.aUserInfo;
-                    this.loading = false;
+                    this.showLoading(false);
 
 
                 });
@@ -318,7 +318,7 @@
         computed: {},
         methods: {
             updateSelectedSource: function (sourceId, elem) {
-                this.loading = true;
+                this.showLoading(true);
                 var ids = this.offsiteIds.split(",");
                 if (elem.target.checked == true) {
                     ids.push(sourceId);
@@ -335,7 +335,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             sourceProperties: function (sName) {
@@ -400,7 +400,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue, type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if (type == 'expiry') {
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName == 'txtInteger' || fieldName == 'exp_duration' ? true : false;
@@ -416,19 +416,19 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/publishOnsiteStatusBB', {
                     brandboostID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 2){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');

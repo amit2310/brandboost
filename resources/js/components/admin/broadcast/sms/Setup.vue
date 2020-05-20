@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -167,7 +167,7 @@
                     this.campaign = response.data.oBroadcast;
                     this.twilioData = response.data.twillioData;
                     this.user = response.data.userData;
-                    this.loading = false;
+                    this.showLoading(false);
                 });
         },
         methods: {
@@ -192,7 +192,7 @@
                 }
             },
             updatesettings: function (fieldName) {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcastSettingUnit', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
@@ -202,12 +202,12 @@
                     broadcast_id: this.campaign.broadcast_id
                 }).then(response => {
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -215,7 +215,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

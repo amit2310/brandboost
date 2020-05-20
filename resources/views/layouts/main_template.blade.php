@@ -199,6 +199,10 @@
 
 </div>
 
+<div class="content_loader" id="loadingContentIcon" style="display: none;">
+    <img src="assets/images/ShorttermUntidyHamadryas-small.gif"/>
+</div>
+
 <!--******************
  jQuery
 **********************-->

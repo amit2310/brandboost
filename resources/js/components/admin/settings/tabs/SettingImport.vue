@@ -23,7 +23,7 @@
         </div>
         <div class="clearfix">&nbsp;</div>
 
-        <loading :isLoading="loading"></loading>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-flat review_ratings">
@@ -195,7 +195,7 @@
 
             loadData: function () {
                 //getData
-                this.loading = true;
+                this.showLoading(true);
                 console.log(this.current_page);
                 axios.get('/admin/settings?page='+this.current_page,{
                         params: {
@@ -204,7 +204,7 @@
                     })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.settingsData = response.data.settingsData;

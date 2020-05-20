@@ -149,7 +149,7 @@
                 axios.get('/user/referral')
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.referralData = response.data.referralData;

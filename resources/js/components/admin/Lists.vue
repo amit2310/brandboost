@@ -24,7 +24,7 @@
         <div class="content-area">
             <div v-if="lists" class="container-fluid">
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -261,7 +261,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.list_id>0){
@@ -273,7 +273,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.list_id ='';
                             document.querySelector('.js-list-slidebox').click();
@@ -294,7 +294,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -310,7 +310,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.lists = response.data.oLists;
                         this.allData = response.data.allData;
                     });
@@ -319,7 +319,7 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -361,18 +361,18 @@
                 }
             },
             submitAddList: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/lists/addList', this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'New List Added successfully');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         //error.response.data
                         alert('All form fields are required');
                     });

@@ -26,7 +26,7 @@
         <!--&&&&&&&&&&&& TABBED CONTENT &&&&&&&&&&-->
         <div class="content-area">
             <div class="container-fluid">
-                <loading :isLoading="loading"></loading>
+
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card p25">
@@ -342,12 +342,12 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                         this.allData = response.data.aBrandboostList;
                         this.campaigns = response.data.aBrandboostList;
                         this.subscribers = response.data.subscribers;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             saveReview: function(reviewStatus){
                 if(confirm("Are you sure you want to add manual review?")){
-                    this.loading = true;
+                    this.showLoading(true);
                     let manualForm = {
                         campaign_id: this.selectedCampaign,
                         reviewType: this.reviewType,
@@ -381,7 +381,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
                     }
                     axios.post('/reviews/addManualReview', manualForm)
                         .then(response => {
-                            this.loading = false;
+                            this.showLoading(false);
                             if(response.data.status == 'success'){
                                 this.displayMessage('success', 'Review has been added successfully!!');
                                 let reviewData = response.data.reviewData;

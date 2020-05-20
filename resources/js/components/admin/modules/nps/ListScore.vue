@@ -173,11 +173,11 @@
                         this.feedbacks = response.data.oFeedbacks;
                         this.allData = response.data.oFeedbackAllData;
                         this.user = response.data.userData;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

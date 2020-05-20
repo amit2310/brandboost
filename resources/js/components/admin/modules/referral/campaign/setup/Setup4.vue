@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -274,7 +274,7 @@
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.oReferral;
                     this.settings = response.data.oAccountSettings;
-                    this.loading = false;
+                    this.showLoading(false);
                     //Setting up the form fields
                     this.form.referral_title = this.campaign.title;
                     this.form.referralStatus = this.campaign.status;
@@ -305,15 +305,15 @@
                 window.location.href = path;
             },
             updateSettings: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/referral/saveSettings', this.form).then(response => {
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -321,7 +321,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

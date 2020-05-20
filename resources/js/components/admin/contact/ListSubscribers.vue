@@ -30,7 +30,7 @@
 
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <workflow-subscribers
                 :show-archived="true"
                 :subscribers-data="subscribers"
@@ -276,7 +276,7 @@
                 this.$emit('prepareUpdate', {contactId});
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 this.form.list_id = this.$route.params.id;
@@ -289,7 +289,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.id ='';
                             document.querySelector('.js-contact-subscriber-slidebox').click();
@@ -303,7 +303,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -323,7 +323,7 @@
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         /*let elem = this;
                         setTimeout(function(){
                             elem.successMsg = 'This is a success message';
@@ -334,7 +334,7 @@
             },
 
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             }

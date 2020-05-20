@@ -396,7 +396,7 @@
                 axios.get('/user/review')
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.myReview = response.data.myReview;

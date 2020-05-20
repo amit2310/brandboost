@@ -282,3 +282,11 @@ function parseNotificationMessage(type, message){
     }
 
 }
+
+function showHideLoader(bFlag){
+    if(bFlag == true){
+        $("#loadingContentIcon").show();
+    }else{
+        $("#loadingContentIcon").hide();
+    }
+}

@@ -44,7 +44,7 @@
          Content Area
         **********************-->
 
-        <loading :isLoading="loading"></loading>
+
         <div class="content-area pt20">
             <div class="container-fluid" v-show="pageRendered == true">
                 <!--******************
@@ -307,12 +307,12 @@
             }
         },
         created(){
-            this.loading = true;
+            this.showLoading(true);
             axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getWorkflowData', { moduleName: this.moduleName, moduleUnitId: this.moduleUnitId})
                 .then(response => {
                     this.title = response.data.title;
                     this.events = response.data.oEvents;
-                    this.loading = false;
+                    this.showLoading(false);
                     this.pageRendered = true;
                     //console.log(this.campaigns)
                 });

@@ -47,7 +47,7 @@
 
                 <div class="table_head_action bbot pb30">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="htxt_medium_16 dark_400">{{ allData.total }}&nbsp;Campaigns</h3>
@@ -241,8 +241,6 @@
         data(){
             return {
                 successMsg : '',
-
-                loading: true,
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
@@ -266,9 +264,12 @@
                 this.loadPaginatedData();
             }
         },
-        mounted() {
-            this.$parent.pageColor = this.pageColor;
+        created() {
             this.loadPaginatedData();
+        },
+        mounted() {
+            this.showLoading(true);
+            this.$parent.pageColor = this.pageColor;
         },
         methods: {
             setupBroadcast: function(id){
@@ -289,22 +290,22 @@
                         this.company_name = response.data.company_name;
                         this.allData = response.data.allData;
                         this.campaigns = response.data.aBrandbosts;
-                        this.loading = false;
+                        this.showLoading(false);
                         //console.log(this.campaigns)
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -339,7 +340,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.campaign_id>0){
@@ -356,7 +357,7 @@
                                 window.location.href='#/reviews/offsite/setup/'+response.data.brandboostID+'/1';
                                 return false;
                             }
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.campaign_id ='';
                             document.querySelector('.js-offsite-review-campaign-slidebox').click();
@@ -377,7 +378,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');

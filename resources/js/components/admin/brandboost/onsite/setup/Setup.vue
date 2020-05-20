@@ -19,7 +19,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <div class="container-fluid">
                 <div class="table_head_action">
                     <div class="row">
@@ -341,7 +341,7 @@
                     //this.fromNumber = this.mobileNoFormat(response.data.fromNumber);
                     this.fromNumber = this.mobileNoFormat(this.feedbackResponse.sms_sender);
                     this.user = response.data.aUserInfo;
-                    this.loading = false;
+                    this.showLoading(false);
                     //loadJQScript(this.user.id);
                 });
         },
@@ -398,7 +398,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
                 }
@@ -412,11 +412,11 @@
                     requestType: type
                 }).then(response => {
                     this.displayMessage('success', 'Updated the changes successfully!!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -424,7 +424,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

@@ -23,7 +23,7 @@
         </div>
         <div class="clearfix">&nbsp;</div>
 
-        <loading :isLoading="loading"></loading>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="panel panel-flat review_ratings">
@@ -455,13 +455,13 @@
                 this.loadData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadData();
             },
             loadData: function () {
                 //getData
-                this.loading = true;
+                this.showLoading(true);
                 console.log(this.current_page);
                 axios.get('/admin/settings?page='+this.current_page,{
                         params: {
@@ -470,7 +470,7 @@
                     })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.settingsData = response.data.settingsData;
@@ -493,7 +493,7 @@
             },
 
             saveUserOtherInfo:function(){
-                this.loading = true;
+                this.showLoading(true);
 
                     axios.post('/admin/settings/saveBillingInfo', {
                         company_name:this.oUser.company_name,
@@ -511,13 +511,13 @@
                     })
                         .then(response => {
                             // $bvModal.hide('confirm_topup_level_upgrade')
-                            this.loading = false;
+                            this.showLoading(false);
                             this.loadData();
                         });
 
             },
             confirmLevelUpgrade: function (){
-                this.loading = true;
+                this.showLoading(true);
                 if(this.buyCredits.acceptTerms) {
                     axios.post('/payment/upgradeMembership', {
                         plan_id: this.buyCredits.planID,
@@ -525,7 +525,7 @@
                         .then(response => {
                             // $bvModal.hide('confirm_topup_level_upgrade')
                             this.buyCredits.acceptTerms =false;
-                            this.loading = false;
+                            this.showLoading(false);
                             this.loadData();
                             $('#confirm_level_upgrade').modal('hide');
                         });
@@ -534,7 +534,7 @@
                 }
             },
             frmSaveCCDetails:function(){
-                this.loading = true;
+                this.showLoading(true);
                 console.log(this.ccCardDetail.ccNum.length);
                 var cslngth = (this.ccCardDetail.ccNum.length)?this.ccCardDetail.ccNum.length:0
                 if(this.ccCardDetail.ccNum  =='' || cslngth !=16){
@@ -560,7 +560,7 @@
                     cvv: this.ccCardDetail.cvv,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                         // this.ccCardDetail.ccNum
                         console.log(response.data);
@@ -568,7 +568,7 @@
                     });
             },
             saveGeneralPreferences: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/settings/saveGeneralPreferences',{
                     language:this.oUser.language,
                     currency:this.oUser.currency,
@@ -583,19 +583,19 @@
                 })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                     });
             },
             saveFieldsSettings: function () {
-                this.loading = false;
+                this.showLoading(false);
                 axios.post('/admin/settings/saveFieldsSettings',{
                     reviewer_alias:this.oUser.reviewer_alias,
                     seller_alias:this.oUser.seller_alias,
                     review_alias:this.oUser.review_alias,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                     });
             },

@@ -25,7 +25,7 @@
             <div class="container-fluid">
                 <div class="table_head_action">
 
-                    <loading :isLoading="loading"></loading>
+
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="email_config_list">
@@ -701,7 +701,7 @@
                         this.widgetThemeData = response.data.widgetThemeData;
                         this.selectedTab = response.data.selectedTab;
 
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
@@ -722,7 +722,7 @@
                     if(response.data.status =='success'){
                         this.displayMessage('success', 'Setting has beeb saved successfully.');
                     }
-                    this.loading =false;
+                    this.showLoading(false);
                 });
             },
             setWidgetTheme:function(){
@@ -758,10 +758,10 @@
 
                             this.displayMessage('success', 'Test email sent successfully!');
                             this.getWidgetDetails();
-                            this.loading = false;
+                            this.showLoading(false);
                         });
                     }
-                    this.loading = false;
+                    this.showLoading(false);
                 });
             },
             displayStep: function(step){
@@ -796,7 +796,7 @@
                         this.selectedTab = response.data.selectedTab;
                         this.widget_preview = response.data.widget_preview;
 
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             },
@@ -830,13 +830,13 @@
                 let elem5 = document.querySelector('input[name="custom_colors_rating2"]');
                 let colors_rating2 = (elem5 != null) ? elem5.value : null;
                 this.campaign.custom_colors_rating2 = colors_rating2 ? colors_rating2 : this.campaign.rating_custom_color2;
-                this.loading = true;
+                this.showLoading(true);
                 // custom_colors_rating2 rating_custom_color2
                 axios.post('/admin/brandboost/addBrandBoostWidgetDesign', this.campaign).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.getWidgetDetails();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
             },
             applyDefaultInfo: function (e) {
@@ -850,7 +850,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
@@ -864,12 +864,12 @@
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.getWidgetDetails();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             updateSingleField: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
@@ -883,12 +883,12 @@
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.getWidgetDetails();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/updateOnsiteWidgetStatus', {
                     widgetID: this.campaignId,
                     status: '3',
@@ -896,7 +896,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

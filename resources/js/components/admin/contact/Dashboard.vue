@@ -1,6 +1,6 @@
 <template>
     <div>
-        <loading :isLoading="loading"></loading>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="card min-h-280">
@@ -66,7 +66,7 @@
             this.makeBreadcrumb(this.breadcrumb);
         },
         mounted() {
-            this.loading = false;
+            this.showLoading(false);
         }
     };
 </script>

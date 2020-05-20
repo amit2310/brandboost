@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -406,7 +406,7 @@
                     this.campaign = response.data.oChat;
                     this.preview = response.data.setupPreview;
                     this.user = response.data.userData;
-                    this.loading = false;
+                    this.showLoading(false);
 
                 });
         },
@@ -455,7 +455,7 @@
 
             },
             updateConfigurations: function(){
-                this.loading = true;
+                this.showLoading(true);
                 //Grab color related values
                 let elem1 = document.querySelector('input[name="web_text_color"]');
                 let elem2 = document.querySelector('input[name="web_int_text_color"]');
@@ -479,7 +479,7 @@
 
                 axios.post('/admin/modules/nps/updateNPSCustomize', this.campaign)
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                     });
 
             },
@@ -504,7 +504,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
@@ -520,19 +520,19 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/modules/nps/changeStatus', {
                     npsId: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 'draft'){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');

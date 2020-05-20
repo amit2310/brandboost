@@ -21,7 +21,7 @@
         <!--Content Area-->
         <div class="content-area">
             <div class="container-fluid">
-                <loading :isLoading="loading"></loading>
+
                 <!--******************
                 PAGE LEFT SIDEBAR
                **********************-->
@@ -760,7 +760,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <loading :isLoading="loading"></loading>
+
                         <div class="row">
                             <div class="col-md-4 pr0">
                                 <div class="email_editor_left">
@@ -812,7 +812,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" style="width: 1200px;">
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
-                        <loading :isLoading="loading"></loading>
+
                         <div class="row">
                             <div class="col-md-4 pr0">
                                 <div class="email_editor_left">
@@ -1150,7 +1150,7 @@
                         this.user = response.data.aUserInfo;
                         this.emailTemplates = response.data.oEmailTemplates;
                         this.smsTemplates = response.data.oSMSTemplates;
-                        this.loading = false;
+                        this.showLoading(false);
                         //Set SenderForm fields
                         this.senderForm.from_name = this.feedbackResponse.from_name;
                         this.senderForm.from_email = this.feedbackResponse.from_email;
@@ -1327,13 +1327,13 @@
                 this.displaySMSTrackingForm = false;
             },
             saveSenderInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.senderForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('sender');
                             this.validateStepCompletion();
                         }
@@ -1341,7 +1341,7 @@
 
             },
             saveSourceInfo: function(campaignId,status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/publishOnsiteStatusBB', {
                     brandboostID:campaignId,
                     status:status,
@@ -1350,7 +1350,7 @@
                     .then(response => {
                         if(response.data.status =='success'){
                             this.displayMessage('success', 'Source added successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('source');
                             this.validateStepCompletion();
                         }
@@ -1358,13 +1358,13 @@
 
             },
             saveSMSSenderInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.senderSMSForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('smsSender');
                             this.validateStepCompletion();
                         }
@@ -1372,68 +1372,68 @@
 
             },
             saveSubjectInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.subjectForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('subject');
                             this.validateStepCompletion();
                         }
                     });
             },
             saveTrackingInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.trackingForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('tracking');
                             this.validateStepCompletion();
                         }
                     });
             },
             saveSMSTrackingInfo: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.trackingForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Updated the changes successfully!!');
-                            this.loading = false;
+                            this.showLoading(false);
                             this.closeForm('smsTracking');
                             this.validateStepCompletion();
                         }
                     });
             },
             saveChannelStatus: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/saveOnsiteConfiguration', this.channelForm)
                     .then(response => {
                         if(response.data.status =='success'){
 
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
             },
             saveCampaign: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/changeStatus', {brandboost_id:this.$route.params.id, status: '1', _token: this.csrf_token()})
                     .then(response => {
                         if(response.data.status =='success'){
 
                             this.displayMessage('success', 'Campaign saved successfully!');
-                            this.loading = false;
+                            this.showLoading(false);
                             window.location.href = '/admin#/reviews/campaign/'+this.$route.params.id;
                         }
                     });
             },
             loadEmailPreview: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -1441,7 +1441,7 @@
                     moduleUnitId: this.$route.params.id,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.content = response.data.content;
                         this.introduction = response.data.introduction;
                         this.greetings = response.data.greeting;
@@ -1449,7 +1449,7 @@
                 document.querySelector('#displayOverviewPreviewForm').click();
             },
             loadSMSPreview: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -1457,7 +1457,7 @@
                     moduleUnitId: this.$route.params.id,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.smsContent = response.data.content.replace(/\r\n|\r|\n/g, "<br />").replace('wf_edit_sms_template_greeting', 'wf_edit_sms_template_greeting_Preview').replace('wf_edit_sms_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_Preview');
                         this.smsIntroduction = response.data.introduction;
                         this.smsGreetings = response.data.greeting;
@@ -1465,7 +1465,7 @@
                 document.querySelector('#displaySMSPreviewForm').click();
             },
             saveEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -1475,14 +1475,14 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
 
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
             saveSMSEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -1492,7 +1492,7 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
 
                             this.displayMessage('success', 'Saved changes successfully!');
                             this.setSMSCampaignId(this.smsCampaignId, this.smsTemplate.template_name, response.data.campaignInfo);
@@ -1500,7 +1500,7 @@
                     });
             },
             sendTestEmail: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -1510,14 +1510,14 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
 
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
             },
             sendTestSMS: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -1527,7 +1527,7 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
 
                             this.displayMessage('success', 'Test email sent successfully!');
                         }

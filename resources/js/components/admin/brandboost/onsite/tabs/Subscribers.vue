@@ -244,10 +244,10 @@
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
                     if(confirm('Are you sure you want to delete selected item(s)?')){
-                        this.loading = true;
+                        this.showLoading(true);
                         axios.post('/admin/reviews/deleteMultipalReview', {_token:this.csrf_token(), multiReviewid:this.deletedItems})
                             .then(response => {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.loadPaginatedData();
                             });
                     }
@@ -302,7 +302,7 @@
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },

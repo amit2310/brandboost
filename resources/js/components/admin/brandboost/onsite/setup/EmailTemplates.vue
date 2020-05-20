@@ -1,7 +1,7 @@
 <template>
     <div>
         <!---->
-        <loading :isLoading="loading"></loading>
+
         <div class="table_head_action pb0 mb25">
             <div class="row">
                 <div class="col">
@@ -66,7 +66,7 @@
                 <div class="modal-content review" style="width: 1200px;">
                     <div class="modal-body p0 mt0 br5" style="width: 1200px;">
 
-                        <loading :isLoading="loading"></loading>
+
                         <div class="row">
                             <div class="col-md-4 pr0">
                                 <div class="email_editor_left">
@@ -156,7 +156,7 @@
                 this.$emit("hideEmailTemplate")
             },
             saveEditChanges: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/updateWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -166,13 +166,13 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Saved changes successfully!');
                         }
                     });
             },
             sendTestEmail: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -182,7 +182,7 @@
                 })
                     .then(response => {
                         if(response.data.status == 'success'){
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Test email sent successfully!');
                         }
                     });
@@ -191,7 +191,7 @@
                 return atob(content);
             },
             loadPreview: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/workflow/previewWorkflowCampaign', {
                     _token: this.csrf_token(),
                     moduleName: 'brandboost',
@@ -199,7 +199,7 @@
                     moduleUnitId: this.$route.params.id,
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.content = response.data.content.replace('<?php echo base_url();?>', '/');
                         this.introduction = response.data.introduction;
                         this.greetings = response.data.greeting;
@@ -207,7 +207,7 @@
                 document.querySelector('#displayPreviewForm').click();
             },
             addTemplateToCampaign: function(templateId){
-                this.loading = true;
+                this.showLoading(true);
                 //Save Template into the database
                 axios.post('/admin/brandboost/addCampaignToOnsite', {
                     brandboost_id: this.$route.params.id,
@@ -216,7 +216,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.selected_campaignId = response.data.campaignId;
                         this.loadPreview();
                         this.$emit("updateEmailCampaignId", this.selected_campaignId, response.data.templateName);
@@ -224,7 +224,7 @@
 
             },
             loadEmailReviewTemplates: function(){
-                this.loading = false;
+                this.showLoading(false);
             }
         }
     }

@@ -154,7 +154,7 @@
                 axios.get('/user/nps')
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.oFeedbacks = response.data.oFeedbacks;

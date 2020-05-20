@@ -403,6 +403,9 @@ export default {
         displayMessage(type, message){
             parseNotificationMessage(type, message);
         },
+        showLoading(bFlag){
+            showHideLoader(bFlag);
+        },
         inArray(needle, haystack) {
             var length = haystack.length;
             for(var i = 0; i < length; i++) {

@@ -19,7 +19,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -88,7 +88,7 @@
         },
         mounted() {
 
-              this.loading = false;
+              this.showLoading(false);
         },
         methods: {
             displayStep: function(step){
@@ -102,7 +102,7 @@
                 window.location.href = path;
             },
             saveDraft: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/updateBroadcast', {
                     broadcastId: this.campaignId,
                     status: 'draft',
@@ -110,7 +110,7 @@
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             this.displayMessage('success', 'Campaign saved as a draft successfully');
                         }else{

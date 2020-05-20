@@ -151,7 +151,7 @@
 
             <div v-if="oRefPurchased.length > 0" class="container-fluid">
 
-                <loading :isLoading="loading"></loading>
+
                 <div class="table_head_action">
                     <div class="row">
                         <div class="col-md-6">
@@ -353,7 +353,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.allData = response.data.allData;
                         this.oRefPurchased = response.data.oRefPurchased;
                         this.oSettings = response.data.oSettings;
@@ -370,7 +370,7 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

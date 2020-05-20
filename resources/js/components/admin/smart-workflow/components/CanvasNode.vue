@@ -1,6 +1,6 @@
 <template>
     <div class="row" style="margin-left:0px;margin-right:0px;">
-        <loading :isLoading="loading"></loading>
+
         <!--Connector-->
         <div class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
             <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="prepareToAddAction"><i class="ri-add-fill"></i></a>
@@ -235,7 +235,7 @@
                 this.getSplitNodeInfo(this.event);
             }
             if(this.nodeType == 'decision'){
-                this.loading = true;
+                this.showLoading(true);
                 this.getDecisionNodeInfo(this.event);
             }
         },
@@ -425,11 +425,11 @@
                     axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/getDecisionInfo', formData).then(response => {
                         if(response.data.status == 'success'){
                             this.decisionNodeInfo = response.data.decisionData;
-                            this.loading = false;
+                            this.showLoading(false);
                         }
                     });
                 }
-                this.loading = false;
+                this.showLoading(false);
             },
             setAddActionPropsDecision: function(event){
                 this.$emit('setAddActionProps', event, 'decision');

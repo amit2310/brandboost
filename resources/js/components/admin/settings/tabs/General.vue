@@ -329,7 +329,7 @@
                 axios.get('/admin/settings')
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.settingsData = response.data.settingsData;
@@ -347,7 +347,7 @@
                     });
             },
             saveGeneralInfo: function () {
-                this.loading = false;
+                this.showLoading(false);
 
                 axios.post('/admin/settings/saveGeneralInfo',{
                     // this.oUser
@@ -365,13 +365,13 @@
                 })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                     });
             },
 
             savePublicProfile: function () {
-                this.loading = false;
+                this.showLoading(false);
 
                 axios.post('/admin/settings/savePublicProfile',{
                     // this.oUser
@@ -386,7 +386,7 @@
                 })
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.loadData();
                     });
             },

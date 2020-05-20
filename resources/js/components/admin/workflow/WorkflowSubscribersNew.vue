@@ -31,7 +31,7 @@
     </div>
     <div class="content-area">
 
-        <loading :isLoading="loading"></loading>
+
         <div class="container-fluid">
             <div class="table_head_action" v-if="(subscribers.length > 0 || searchBy.length>0)">
                 <h3 class="htxt_medium_16 dark_400" style="display: none;">{{ allData.total }} Contact Lists</h3>
@@ -305,7 +305,7 @@
                 window.location.href='/admin#/contacts/profile/'+id;
             },
             applySort: function(sortVal){
-                this.loading = true;
+                this.showLoading(true);
 
                 this.sortBy = sortVal;
                 this.deletedItems = [];
@@ -313,10 +313,10 @@
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
                     if(confirm('Are you sure you want to delete selected item(s)?')){
-                        this.loading = true;
+                        this.showLoading(true);
                         axios.post('/admin/contacts/deleteBulkContacts', {_token:this.csrf_token(), multipal_record_id:this.deletedItems})
                             .then(response => {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.loadPaginatedData();
                             });
                     }
@@ -382,7 +382,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.id>0){
@@ -394,7 +394,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.id ='';
                             document.querySelector('.js-contact-slidebox').click();
@@ -407,7 +407,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         //alert('All form fields are required');
@@ -425,7 +425,7 @@
                         this.activeCount = response.data.activeCount;
                         this.archiveCount = response.data.archiveCount;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             addNewContact : function(e){
@@ -500,17 +500,17 @@
                 this.$emit('syncContacts', {contactId});
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

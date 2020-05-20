@@ -24,7 +24,7 @@
         <div class="content-area">
             <div class="container-fluid">
 
-                <loading :isLoading="loading"></loading>
+
                 <div v-if="!oTags" class="row">
                         <div class="col-md-12">
                             <div class="card card_shadow min-h-280">
@@ -220,7 +220,7 @@
             loadPaginatedData: function () {
                 axios.get('/admin/tags/tagsreview?page=' + this.current_page)
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         //console.log(response.data);
@@ -234,23 +234,23 @@
                 this.navigatePagination(current_page);
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             submitAddTagReview: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/tags/addTagReviews', this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'New Tag Added successfully');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         //error.response.data
                         alert('All form fields are required');
                     });

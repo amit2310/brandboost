@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -106,7 +106,7 @@
                     this.makeBreadcrumb(this.breadcrumb);
                     this.moduleName = response.data.moduleName;
                     this.campaign = response.data.brandboostData;
-                    this.loading = false;
+                    this.showLoading(false);
                     //loadJQScript(this.user.id);
 
                 });
@@ -123,14 +123,14 @@
                 window.location.href = path;
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/publishOnsiteStatusBB', {
                     brandboostID: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == 2){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');

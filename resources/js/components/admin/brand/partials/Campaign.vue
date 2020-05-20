@@ -2,7 +2,7 @@
 
     <div id="Campaign" class="tab-pane fade">
 
-        <loading :isLoading="loading"></loading>
+
         <div class="p20 bbot pt10 pb10">
             <p class="text-uppercase m-0 fw400 dark_200">Select Campaign  <a class="float-right" href="javascript:void(0);"><i class="icon-arrow-down12 fsize15"></i></a></p>
         </div>
@@ -56,14 +56,14 @@
                 }
             },
             saveSelectedCampaigns: function(){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/brandboost/addBrandCampaign', {
                     campaign: this.selectedCampaigns,
                     _token: this.csrf_token()
                 })
                     .then(response => {
                         this.displayMessage('success', 'Configuration saved successfully!!');
-                        this.loading = false;
+                        this.showLoading(false);
 
                     });
             }

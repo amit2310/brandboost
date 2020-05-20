@@ -20,7 +20,7 @@
         <!--Content Area-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="container-fluid">
                 <div class="table_head_action">
@@ -402,7 +402,6 @@
 										<input :checked="campaign.gallery_design_type == 'vertical'" id="radiocheck_sp_4" type="radio" v-model="campaign.gallery_design_type" name="widgetDesignType" class="selectwidget1" value="vertical">
 										<span class="custmo_checkmark purple"></span>
 									</span>
-
                                                     <figure><img src="http://brandboost.io/assets/images/media_square_6_vert.png"></figure>
                                                     <div class="text_sec">
                                                         <p><strong>Vertical Gallery</strong></p>
@@ -479,7 +478,7 @@
                         this.campaign = response.data.galleryData;
                         this.reviewsData = response.data.reviewsData;
                         this.preview = response.data.setupPreview;
-                        this.loading = false;
+                        this.showLoading(false);
                         // this.formLabel = 'Update';
                         this.displayForm(this.campaign);
                         this.imageSlider();
@@ -645,7 +644,7 @@
                 document.querySelector('.js-media-widget-slidebox1').click();
             },
             updateSingleField: function (fieldName, fieldValue) {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('admin/mediagallery/updateSingleField', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
@@ -655,7 +654,7 @@
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.getMediaWidgetSetup();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
@@ -667,7 +666,7 @@
                 }else{
                     var fieldValue=[review_id];
                 }
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('admin/mediagallery/updateSingleFieldCompress', {
                     _token: this.csrf_token(),
                     fieldName: fieldName,
@@ -677,7 +676,7 @@
 
                     this.displayMessage('success', 'Test email sent successfully!');
                     this.getMediaWidgetSetup();
-                    this.loading = false;
+                    this.showLoading(false);
                 });
 
             },
@@ -690,7 +689,7 @@
                 // document.querySelector('.js-media-widget-slidebox').click();
             },
             updateConfigurations: function(){
-                this.loading = true;
+                this.showLoading(true);
                 //Grab color related values
                 let elem1 = document.querySelector('input[name="web_text_color"]');
                 let elem2 = document.querySelector('input[name="web_int_text_color"]');
@@ -715,7 +714,7 @@
                 axios.post('/admin/mediagallery/updateMediaWidget', this.campaign)
                     .then(response => {
                         this.getMediaWidgetSetup();
-                        this.loading = false;
+                        this.showLoading(false);
                     });
 
             },
@@ -731,7 +730,7 @@
                 }
             },
             updateSettings: function (fieldName, fieldValue,  type) {
-                this.loading = true;
+                this.showLoading(true);
 
                 if(type =='expiry'){
                     this.displayCustomLinkExpiry = fieldValue == 'custom' || fieldName =='txtInteger' || fieldName =='exp_duration' ? true : false;
@@ -744,20 +743,20 @@
                 }).then(response => {
 
                     this.displayMessage('success', 'Test email sent successfully!');
-                    this.loading = false;
+                    this.showLoading(false);
                     this.getMediaWidgetSetup();
                 });
 
             },
             changeCampaignStatus: function(status){
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('admin/mediagallery/updateStatus', {
                     gallery_id: this.campaignId,
                     status: status,
                     _token: this.csrf_token()
                 })
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         if(response.data.status == 'success'){
                             if(status == '0'){
                                 this.displayMessage('success', 'Campaign saved as a draft successfully');

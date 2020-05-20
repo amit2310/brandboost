@@ -196,7 +196,7 @@
             loadPaginatedData: function () {
                 axios.get('/admin/questions/view/' + this.$route.params.id+'/?page='+this.current_page)
                     .then(response => {
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.moduleName = response.data.moduleName;
@@ -208,12 +208,12 @@
                     });
             },
             showPaginationData: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },

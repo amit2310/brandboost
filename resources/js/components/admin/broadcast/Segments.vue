@@ -21,7 +21,7 @@
         **********************-->
         <div class="content-area">
 
-            <loading :isLoading="loading"></loading>
+
             <div class="container-fluid">
                 <div class="table_head_action">
                     <div class="row">
@@ -405,7 +405,7 @@
         },
         methods: {
             applySort: function(sortVal){
-                this.loading = true;
+                this.showLoading(true);
 
                 this.sortBy = sortVal;
                 this.deletedItems = [];
@@ -413,10 +413,10 @@
             deleteSelectedItems: function(){
                 if(this.deletedItems.length>0){
                     if(confirm('Are you sure you want to delete selected item(s)?')){
-                        this.loading = true;
+                        this.showLoading(true);
                         axios.post('/admin/broadcast/deleteMultipalSegment', {_token:this.csrf_token(), multiSegmentid:this.deletedItems})
                             .then(response => {
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.loadPaginatedData();
                             });
                     }
@@ -484,7 +484,7 @@
                     });
             },
             processForm : function(){
-                this.loading = true;
+                this.showLoading(true);
                 let formActionSrc = '';
                 this.form.module_name = this.moduleName;
                 if(this.form.segment_id>0){
@@ -496,7 +496,7 @@
                 axios.post(formActionSrc , this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             //this.form = {};
                             this.form.segment_id ='';
                             document.querySelector('.js-segment-slidebox').click();
@@ -509,7 +509,7 @@
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         console.log(error);
                         //error.response.data
                         alert('All form fields are required');
@@ -523,7 +523,7 @@
                         this.moduleName = response.data.moduleName;
                         this.moduleUnitID = response.data.moduleUnitID;
                         this.moduleAccountID = response.data.moduleAccountID;
-                        this.loading = false;
+                        this.showLoading(false);
                         this.segments = response.data.oSegments;
                         this.allData = response.data.allData;
                     });
@@ -532,34 +532,34 @@
                 window.location.href='#/contacts/segments/subscribers/'+segmentId;
             },
             submitAddSegment: function () {
-                this.loading = true;
+                this.showLoading(true);
                 axios.post('/admin/broadcast/makeSegment', this.form)
                     .then(response => {
                         if (response.data.status == 'success') {
-                            this.loading = false;
+                            this.showLoading(false);
                             this.displayMessage('success', 'Segment Added successfully');
                             this.form = {};
                             this.showPaginationData(this.current_page);
                         }
                     })
                     .catch(error => {
-                        this.loading = false;
+                        this.showLoading(false);
                         //error.response.data
                         alert('All form fields are required');
                     });
             },
             showPaginationData: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
@@ -601,7 +601,7 @@
             },
             syncContacts: function(segmentID) {
                 if(confirm('Are you sure you want to perform this action?')){
-                    this.loading = true;
+                    this.showLoading(true);
                     //Do axios
                     axios.post('/admin/segments/syncSegment', {
                         segmentID:segmentID,
@@ -612,13 +612,13 @@
                         .then(response => {
                             if(response.data.status == 'success'){
                                 syncContactSelectionSources();
-                                this.loading = false;
+                                this.showLoading(false);
                                 this.displayMessage('success', 'Segment contacts have been synced successfully!');
                             }
 
                         })
                         .catch(error => {
-                            this.loading = false;
+                            this.showLoading(false);
                             //error.response.data
                             alert('Something went wrong.');
                         });

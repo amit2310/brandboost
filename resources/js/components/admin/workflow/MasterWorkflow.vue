@@ -34,7 +34,7 @@
         <!--Content Area-->
         <div class="content-area" :class="dynamo" style="padding-left: 310px;">
 
-            <loading :isLoading="loading"></loading>
+
 
             <div class="workflowContainer">
                 <div class="workflowTree" v-show="displayWorkflowTree">
@@ -606,7 +606,7 @@
                     this.editorIframe = 'smsEditorIframe';
                 }
 
-                this.loading = true;
+                this.showLoading(true);
                 let elem = this;
                 setTimeout(function(){
                     elem.displayEditTemplateInterface();
@@ -615,7 +615,7 @@
             },
             deleteNode: function(eventId){
                 if(confirm('Are you sure you want to delete this action from the workflow grid?')){
-                    this.loading = true;
+                    this.showLoading(true);
                     axios.post('/admin/workflow/deleteWorkflowEvent', {_token:this.csrf_token(), moduleName: this.moduleName, event_id:eventId})
                         .then(response => {
                             if(response.data.status == 'success'){

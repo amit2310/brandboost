@@ -173,7 +173,7 @@
                 axios.get('/user/setting')
                     .then(response => {
                         //console.log(response.data);
-                        this.loading = false;
+                        this.showLoading(false);
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
                         this.aUInfo = response.data.aUInfo;

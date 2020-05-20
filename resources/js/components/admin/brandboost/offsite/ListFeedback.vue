@@ -229,7 +229,7 @@
                         this.feedbacks = response.data.result;
                         this.count = response.data.totalResults;
                         this.feedbackTags = response.data.feedbackTags;
-                        this.loading = false;
+                        this.showLoading(false);
                     });
             },
             changeStatus: function(fid, status) {
@@ -251,12 +251,12 @@
                 }
             },
             navigatePagination: function (p) {
-                this.loading = true;
+                this.showLoading(true);
                 this.current_page = p;
                 this.loadPaginatedData();
             },
             showPaginationItemsPerPage: function(p){
-                this.loading=true;
+                this.showLoading(true);
                 this.items_per_page = p;
                 this.loadPaginatedData();
             },
