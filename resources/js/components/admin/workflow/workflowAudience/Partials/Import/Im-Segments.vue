@@ -123,7 +123,7 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-                loading: true,
+
                 segments: '',
                 selected_segments: '',
                 allData: '',

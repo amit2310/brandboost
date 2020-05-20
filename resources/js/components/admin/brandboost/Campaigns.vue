@@ -40,7 +40,7 @@
         components: {UserAvatar, Pagination, OnsiteCampaigns, OffsiteCampaigns},
         data(){
             return {
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: ''

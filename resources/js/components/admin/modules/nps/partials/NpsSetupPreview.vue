@@ -147,7 +147,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 moduleName: 'nps',
                 moduleUnitID: '',

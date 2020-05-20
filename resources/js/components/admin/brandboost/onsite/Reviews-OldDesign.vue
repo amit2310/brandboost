@@ -694,7 +694,7 @@
             return {
                 successMsg : '',
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

@@ -93,7 +93,7 @@
             return {
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 contacts: '',

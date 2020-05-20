@@ -362,7 +362,7 @@
                     segment_id: ''
                 },
                 formLabel: 'Create',
-                loading: true,
+
                 breadcrumb: '',
                 moduleName: '',
                 moduleUnitID: '',

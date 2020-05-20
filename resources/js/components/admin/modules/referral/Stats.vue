@@ -215,7 +215,7 @@
                 programId: this.$route.params.id,
 
 
-                loading: true,
+
                 breadcrumb: '',
                 moduleName: 'referral',
                 moduleUnitID: '',

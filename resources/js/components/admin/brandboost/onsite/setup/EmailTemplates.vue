@@ -126,7 +126,7 @@
                 refreshMessage: 2,
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

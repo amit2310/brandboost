@@ -279,7 +279,7 @@
                 bActiveSubsription: '',
 
 
-                loading: true,
+
                 breadcrumb: '',
                 moduleName: '',
                 moduleUnitID: '',

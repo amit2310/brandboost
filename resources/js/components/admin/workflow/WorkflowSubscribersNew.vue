@@ -249,7 +249,7 @@
         components: {UserAvatar, ContactTags, Pagination},
         data() {
             return {
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

@@ -157,7 +157,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 aUInfo: ''
             }

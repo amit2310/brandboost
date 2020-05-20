@@ -358,7 +358,7 @@
 
                 refreshMessage: '',
 
-                loading: true,
+
                 allData: {},
                 requests : '',
                 oReviews : '',

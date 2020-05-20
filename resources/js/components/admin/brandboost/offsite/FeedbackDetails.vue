@@ -244,7 +244,7 @@
             return {
                 successMsg : '',
 
-                loading: true,
+
                 feedbackId: this.$route.params.id,
                 moduleName: '',
                 breadcrumb: '',

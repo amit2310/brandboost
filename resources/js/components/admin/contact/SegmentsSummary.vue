@@ -189,7 +189,7 @@
         data(){
             return {
                 pageRendered: false,
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

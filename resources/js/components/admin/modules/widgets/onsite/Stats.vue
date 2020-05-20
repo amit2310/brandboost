@@ -247,7 +247,7 @@
                 },
 
 
-                loading: true,
+
                 showHeader:true,
                 current_page: 1,
                 widget_type: '',

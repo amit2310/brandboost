@@ -456,7 +456,7 @@
                 pageRendered: false,
                 successMsg : '',
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',
