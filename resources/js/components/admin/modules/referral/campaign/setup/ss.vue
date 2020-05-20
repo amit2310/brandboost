@@ -383,7 +383,7 @@
                 refreshMessage: 1,
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

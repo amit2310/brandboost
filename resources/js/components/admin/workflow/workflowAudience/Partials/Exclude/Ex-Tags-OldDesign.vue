@@ -76,7 +76,7 @@
             return {
 
 
-                loading: true,
+
                 tags: '',
                 selected_tags: '',
                 allData: '',

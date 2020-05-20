@@ -131,7 +131,7 @@
         components: {Pagination, 'email-template-popups': EmailPopup},
         data(){
             return {
-                loading: true,
+
                 listEmailTemplateSection: true,
                 editTemplateSection: false,
                 hasData : true,

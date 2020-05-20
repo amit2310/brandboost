@@ -131,7 +131,7 @@
                 allData: '',
                 activeCount: 0,
                 archiveCount: 0,
-                loading: true,
+
                 refreshKey: '1'
                 //alert(subscribersData)
             }

@@ -237,7 +237,7 @@ I had a problem with my order, and despite repeated attempts, I could not get Pr
         data(){
             return {
                 refreshMessage: 1,
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

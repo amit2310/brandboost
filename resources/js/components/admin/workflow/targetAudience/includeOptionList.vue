@@ -94,7 +94,7 @@
             return {
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

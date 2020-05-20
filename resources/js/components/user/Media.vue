@@ -88,7 +88,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 myReview:'',
                 mediaURLs: ''

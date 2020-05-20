@@ -244,7 +244,7 @@
                 formLabel: 'Create',
 
 
-                loading: true,
+
                 breadcrumb: '',
                 moduleName: '',
                 moduleUnitID: '',

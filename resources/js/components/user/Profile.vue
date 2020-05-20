@@ -120,7 +120,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 aUInfo: '',
                 oReviews:''

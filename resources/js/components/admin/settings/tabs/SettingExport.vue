@@ -143,7 +143,7 @@
                 refreshMessage: '',
 
 
-                loading: true,
+
                 breadcrumb: '',
                 seletedTab: 1,
                 settingsData: '',

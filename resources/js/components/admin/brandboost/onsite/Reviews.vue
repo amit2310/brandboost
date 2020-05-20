@@ -719,7 +719,7 @@
                 successMsg : '',
                 successMsgPopup : '',
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

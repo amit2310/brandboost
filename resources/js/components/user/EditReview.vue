@@ -103,7 +103,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 myReview: '',
                 starRating: ''

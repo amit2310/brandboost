@@ -389,7 +389,7 @@
             return {
 
 
-                loading: true,
+
                 reviewId: this.$route.params.id,
                 review: '',
                 productData: '',

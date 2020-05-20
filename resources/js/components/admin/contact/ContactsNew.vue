@@ -11,7 +11,7 @@
         components: {'workflow-subscribers': WorkflowSubscribers},
         data() {
             return {
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: ''

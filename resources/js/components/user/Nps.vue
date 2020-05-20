@@ -138,7 +138,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 oFeedbacks: ''
             }

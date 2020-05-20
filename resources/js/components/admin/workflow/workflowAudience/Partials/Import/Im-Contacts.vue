@@ -124,7 +124,7 @@
         components: {UserAvatar, Pagination},
         data() {
             return {
-                loading: true,
+
                 contacts: '',
                 selected_contacts: '',
                 allData: '',

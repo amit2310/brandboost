@@ -154,7 +154,7 @@
             return {
 
 
-                loading: true,
+
                 current_page: 1,
                 otagData: '',
                 allData: ''

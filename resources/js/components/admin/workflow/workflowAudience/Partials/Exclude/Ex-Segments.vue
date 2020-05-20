@@ -124,7 +124,7 @@
             return {
 
 
-                loading: true,
+
                 segments: '',
                 selected_segments: '',
                 allData: '',

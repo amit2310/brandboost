@@ -983,7 +983,7 @@
             return {
 
 
-                loading: true,
+
                 breadcrumb: '',
                 settingsData: '',
                 notificationData: '',

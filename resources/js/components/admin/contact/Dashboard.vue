@@ -59,7 +59,7 @@
         data(){
             return {
                 breadcrumb: {Home:'#/', People:'#/contacts/dashboard', Dashboard:''},
-                loading: true,
+
             }
         },
         created() {

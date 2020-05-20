@@ -287,7 +287,7 @@
                 refreshMessage: 1,
 
 
-                loading: true,
+
                 brandData: '',
                 brandThemeData: '',
                 aBrandbosts: '',

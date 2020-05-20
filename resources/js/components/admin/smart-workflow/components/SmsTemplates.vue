@@ -130,7 +130,7 @@
                 refreshMessage: 3,
 
 
-                loading: true,
+
                 moduleName: '',
                 moduleUnitID: '',
                 moduleAccountID: '',

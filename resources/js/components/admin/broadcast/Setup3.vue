@@ -151,7 +151,7 @@
             return {
 
 
-                loading: true,
+
                 current_page: 1,
                 moduleName: '',
                 moduleUnitID: '',

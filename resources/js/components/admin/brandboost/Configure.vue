@@ -881,7 +881,7 @@
                 refreshMessage: 1,
 
 
-                loading: true,
+
                 showHelp: true,
                 configureCampaign: true,
                 showEmailTemplates: false,

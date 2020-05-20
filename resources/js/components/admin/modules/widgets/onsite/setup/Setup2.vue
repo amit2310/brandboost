@@ -608,7 +608,7 @@
                 refreshMessage: 1,
 
 
-                loading: true,
+
                 settingTab:1,
                 moduleName: '',
                 moduleUnitID: '',
