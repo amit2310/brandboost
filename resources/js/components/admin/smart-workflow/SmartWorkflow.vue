@@ -1758,7 +1758,6 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         if(this.isDecisionNode == true || this.isSplitNode == true){
-                            this.events= '';
                             this.getWorkflowData();
                         }else{
                             this.events = response.data.oEvents;
@@ -2206,9 +2205,7 @@
                     if(response.data.status == 'success'){
                         this.loading = false;
                         if(this.isDecisionNode == true || this.isSplitNode == true){
-                            this.events= '';
                             this.getWorkflowData();
-
                         }else{
                             this.events = response.data.oEvents;
                             this.metaData.selectedClass = response.data.newEventId;
@@ -2691,7 +2688,13 @@
                 this.selected_action_lists = listIds;
             },
             updateTriggerData: function(event, params){
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateTriggerData', {
+                let url='';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateDecisionTriggerData';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/updateTriggerData';
+                }
+                axios.post(url, {
                     id: event.id,
                     moduleName: this.moduleName,
                     moduleUnitID: this.moduleUnitId,

@@ -5619,6 +5619,50 @@ class WorkflowModel extends Model {
             return false;
     }
 
+    /**
+     * get Path related data
+     * @param $id
+     * @param $moduleName
+     * @return bool
+     */
+    public function getPathInfo($id, $moduleName){
+        if (empty($id) || empty($moduleName)) {
+            return false;
+        }
+        switch ($moduleName) {
+            case "brandboost":
+                $mainTableName = 'tbl_brandboost_decision';
+                $pathTableName = 'tbl_brandboost_decision_path';
+                break;
+            case "automation":
+            case "broadcast":
+                $mainTableName = 'tbl_automations_decision';
+                $pathTableName = 'tbl_automations_decision_path';
+                break;
+            case "referral":
+                $mainTableName = 'tbl_referral_automations_decision';
+                $pathTableName = 'tbl_referral_ecision_path';
+                break;
+            case "nps":
+                $mainTableName = 'tbl_nps_automations_decision';
+                $pathTableName = 'tbl_nps_decision_path';
+                break;
+            default :
+                $mainTableName = '';
+                $pathTableName = '';
+        }
+        if(empty($mainTableName)){
+            return false;
+        }
+        $oData = DB::table($pathTableName)
+            ->leftJoin($mainTableName, "{$pathTableName}.decision_id", "=", "{$mainTableName}.id")
+            ->select("{$pathTableName}.*", "{$mainTableName}.*", "{$pathTableName}.id AS pathId", "{$mainTableName}.id AS decisionId")
+            ->where("{$pathTableName}.id", $id)
+            ->first();
+        return $oData;
+
+    }
+
 
 
 }

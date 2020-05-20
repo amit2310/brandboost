@@ -4182,6 +4182,11 @@ class WorkFlow extends Controller {
         $moduleName = strip_tags($request->moduleName);
         $moduleUnitId = strip_tags($request->moduleUnitId);
         $pathId = strip_tags($request->pathId);
+        $parentEventId= '';
+        if($pathId>0){
+            //$oDecision = $mWorkflow->getPathInfo($pathId, $moduleName);
+            //$parentEventId = $oDecision->event_id;
+        }
         $nodeType = strip_tags($request->nodeType);
         $name = strip_tags($request->name);
         $title = strip_tags($request->title);
@@ -4261,7 +4266,7 @@ class WorkFlow extends Controller {
             //Reassemble events Order
             $orderedEvents = sortWorkflowEvents($events);
             $oEvents = $orderedEvents['oEvents'];
-            return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$newNodeEventID];
+            return ['status' => 'success', 'oEvents' => $oEvents, 'newEventId'=>$newNodeEventID, 'parentEventId'=>$parentEventId];
         }else{
             return ['status' => 'error'];
         }
