@@ -25,11 +25,11 @@
                                 </p>-->
                                 <a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-line.svg"></i> &nbsp;Filter</a>
                                 <div class="dropdown-menu p10 mt-1">
-                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Date Created'}" @click="sortBy='Date Created'">ALL</a><br />
-                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Active'}" @click="sortBy='Active'">ACTIVE</a><br />
-                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a><br />
-                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Pending'}" @click="sortBy='Pending'">DRAFT</a><br />
-                                    <a href="javascript:void(0);" :class="{'active': viewType == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="sortBy='Date Created'">ALL</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="sortBy='Active'">ACTIVE</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Inactive'}" @click="sortBy='Inactive'">INACTIVE</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="sortBy='Pending'">DRAFT</a><br />
+                                    <a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="sortBy='Archive'">ARCHIVE</a><br />
                                 </div>
                             </div>
                             <div class="col-md-7 text-right">
@@ -207,7 +207,6 @@
                     segment_id: ''
                 }),
                 formLabel: 'Create',
-                viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: ''
             }

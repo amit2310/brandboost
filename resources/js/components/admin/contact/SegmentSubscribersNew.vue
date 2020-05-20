@@ -22,7 +22,7 @@
                         <!--<button class="circle-icon-40 mr15"><img src="/assets/images/filter.svg"/></button>-->
                         <button class="circle-icon-40 mr15"><img src="assets/images/download-line.svg"/></button>
                         <button class="circle-icon-40 mr15"><img src="assets/images/edit-fill.svg"/></button>
-                        <button class="btn btn-md bkg_blue_200 light_000">ADD New Contact
+                        <button class="btn btn-md bkg_blue_200 light_000 js-segment-contact-slidebox">ADD New Contact
                             <span><img src="/assets/images/blue-plus.svg"/></span>
                         </button>
                     </div>
