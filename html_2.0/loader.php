@@ -19,22 +19,7 @@
 
 
 <style>
-.content_loader {
-	position:fixed;
-	z-index: 9999;
-	width: 100px;
-	height: 100px;
-	text-align: center;
-	left: 50%;
-	margin-left: 75px;
-	top: 50%;
-	margin-top: -50px;
-	opacity:0.2
 
-}
-
-
-.content_loader img{ width:100px; height:100px; }
 	
 </style>
 </head>
