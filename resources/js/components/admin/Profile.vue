@@ -120,7 +120,7 @@
 
                                             <!--====SAVE====-->
 
-                                            <button type="submit" style="float: right;" class="btn dark_btn ml20 bkg_purple" >Save</span> </button>
+                                            <button type="submit" style="float: right;" class="btn dark_btn ml20 bkg_purple" >Save </button>
 
                                         </div>
 
@@ -143,19 +143,19 @@
                                             <div class="form-group">
                                                 <label class="control-label">Current password</label>
                                                 <div class="">
-                                                    <input type="password" name="oldPassword" id="oldPassword" placeholder="Enter current password" class="form-control" required>
+                                                    <input v-model="changePasswordForm.oldPassword" type="password" name="oldPassword" id="oldPassword" placeholder="Enter current password" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">New password</label>
                                                 <div class="">
-                                                    <input type="password" name="newPassword" id="newPassword" placeholder="Enter new password" class="form-control" required>
+                                                    <input v-model="changePasswordForm.newPassword" type="password" name="newPassword" id="newPassword" placeholder="Enter new password" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">Repeat new password</label>
                                                 <div class="">
-                                                    <input type="password" name="rePassword" id="rePassword" placeholder="Repeat new password" class="form-control" required>
+                                                    <input v-model="changePasswordForm.rePassword" type="password" name="rePassword" id="rePassword" placeholder="Repeat new password" class="form-control" required>
                                                 </div>
                                             </div>
 
@@ -167,8 +167,8 @@
                                 <div class="p30">
                                     <div class="row">
                                         <div class="col-md-12 text-right">
-                                            <button type="button" class="btn white_btn ml20 txt_purple" >Cancel</span> </button>
-                                            <button type="submit" class="btn dark_btn ml20 bkg_purple" >Save</span> </button>
+                                            <button type="button" class="btn white_btn ml20 txt_purple" >Cancel </button>
+                                            <button type="button" class="btn dark_btn ml20 bkg_purple" @click="savePassword" >Save </button>
 
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                                         <p>Please note:<br><span class="text-muted">If you delete your account, you won’t be able to reactive it later.</span></p>
                                     </div>
                                     <div class="col-md-7 text-right mt-20">
-                                        <button type="button" class="btn white_btn ml20 txt_purple delete_account" >Delete  account</span> </button>
+                                        <button type="button" class="btn white_btn ml20 txt_purple delete_account" >Delete  account </button>
                                     </div>
                                 </div>
                             </div>
@@ -304,8 +304,11 @@
                     list_id: ''
                 },
                 formLabel: 'Create',
-
-
+                changePasswordForm: {
+                    oldPassword: '',
+                    newPassword: '',
+                    rePassword: ''
+                },
                 loading: true,
                 breadcrumb: '',
                 userDetail: '',
@@ -323,7 +326,6 @@
         },
         mounted() {
             this.loadData();
-
             console.log('Component mounted')
         },
         methods: {
@@ -348,6 +350,24 @@
                         this.countries = response.data.countries;
                         console.log(this.aUInfo);
                     });
+            },
+            savePassword: function(){
+                this.loading=true;
+                this.changePasswordForm._token=this.csrf_token();
+                axios.post('/admin/profile/changePassword', this.changePasswordForm).then(response => {
+                    if(response.data.status == 'success'){
+                        this.loading = false;
+                        this.resetPasswordForm();
+                        this.displayMessage('success', 'Password changed successfully.');
+                    }
+                });
+            },
+            resetPasswordForm: function(){
+                this.changePasswordForm = {
+                    oldPassword: '',
+                    newPassword: '',
+                    rePassword: ''
+                }
             }
         }
     }
