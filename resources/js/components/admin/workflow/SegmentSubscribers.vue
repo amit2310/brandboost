@@ -11,39 +11,18 @@
                             <li class="mr15 "><!--<a class="dark_200" href="#">Match All</a>-->
                                 <select class="match_segment_select dark_200" name="matchType" @change="onMatchTypeChange($event)" v-model="matchSelected">
                                     <option value="MatchAll">Match All</option>
-                                    <option value="SubscriberId">Subscriber Id</option>
-                                    <option value="FullName">Full Name</option>
-                                    <option value="Email">Email</option>
-                                    <option value="Tag">Tag</option>
-                                    <option value="IPAddress">IP Address</option>
-                                    <option value="SubscribeDate">Subscribe Date</option>
-                                    <option value="Country">Country</option>
-                                    <option value="State">State</option>
-                                    <option value="City">City</option>
-                                    <option value="Zip">Zip</option>
-                                    <option value="AreaCode">AreaCode</option>
-                                    <option value="CustomField1">Custom Field-1</option>
-                                    <option value="CustomField2">Custom Field-2</option>
-                                    <option value="CustomField3">Custom Field-3</option>
-                                    <option value="CustomField4">Custom Field-4</option>
-                                    <option value="CustomField5">Custom Field-5</option>
+                                    <option value="MatchOne">Match One</option>
                                 </select>
                             </li>
-                            <li class="mr15 ">
-                                <select class="match_segment_select dark_200" name="operator" @change="onOperatorChange($event)" v-model="operatorSelected">
-                                    <option value="equal">equal</option>
-                                    <option value="notequal">not equal</option>
-                                    <option value="greaterthan">greater than</option>
-                                    <option value="lessthan">less than</option>
-                                    <option value="contain">contain</option>
-                                    <option value="startwith">start with</option>
-                                    <option value="endwith">end with</option>
-                                </select>
-                            </li>
-                            <li><a class="blef pl15" href="javascript:void(0);"><img src="assets/images/at_blue_13.svg"/> &nbsp; <span class="dark_600">{{matchSelected}}</span> is max@makers.co</a></li>
+                            <!--<li><a class="blef pl15" href="javascript:void(0);"><img src="assets/images/at_blue_13.svg"/> &nbsp; <span class="dark_600">{{fieldSelected}}</span> is max@makers.co</a></li>-->
                             <!--<li><a href="javascript:void(0);"><img src="assets/images/hash_16_blue.svg"/> &nbsp; <span class="dark_600">User ID</span>  starts with 12</a></li>-->
-                            <li><a href="javascript:void(0);"><img src="assets/images/plus_green_15.svg"/></a> &nbsp; <a href="javascript:void(0);"><img src="assets/images/minus_red_15.svg"/></a></li>
-
+                            <li v-if="filterItemsArr" v-for="filterItems in filterItemsArr">
+                                <a href="javascript:void(0);" style="text-transform: none;"><span class="dark_600">{{ filterItems[0] }}</span></a>
+                            </li>
+                            <li>
+                                <a class="search_tables_open_close_AF" href="javascript:void(0);" @click="AddFilters"><img src="assets/images/plus_green_15.svg"/></a> &nbsp;
+                                <a href="javascript:void(0);" @click="RemoveFilters"><img src="assets/images/minus_red_15.svg"/></a>
+                            </li>
                         </ul>
                     </div>
 
@@ -61,6 +40,43 @@
                     <div class="form-group m-0 position-relative">
                         <input id="InputToFocus" v-model="searchBy" type="text" placeholder="Search item" class="form-control h48 fsize14 dark_200 fw400 br5"/>
                         <a class="search_tables_open_close_SG searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
+                    </div>
+                </div>
+                <div class="card p20 datasearcharea_AF">
+                    <div class="form-group m-0 position-relative">
+                        <select name="fieldSelected" @change="onFieldChange($event)" v-model="fieldSelected" class="match_segment_select h48 fsize14 fw400 br5" style="height: 48px; background-color: white;">
+                            <option value="SubscriberId">Subscriber Id</option>
+                            <option value="FullName">Full Name</option>
+                            <option value="Email">Email</option>
+                            <option value="Tag">Tag</option>
+                            <option value="IPAddress">IP Address</option>
+                            <option value="SubscribeDate">Subscribe Date</option>
+                            <option value="Country">Country</option>
+                            <option value="State">State</option>
+                            <option value="City">City</option>
+                            <option value="Zip">Zip</option>
+                            <option value="AreaCode">AreaCode</option>
+                            <option value="CustomField1">Custom Field-1</option>
+                            <option value="CustomField2">Custom Field-2</option>
+                            <option value="CustomField3">Custom Field-3</option>
+                            <option value="CustomField4">Custom Field-4</option>
+                            <option value="CustomField5">Custom Field-5</option>
+                        </select>
+                        &nbsp;&nbsp;
+                        <select name="operator" @change="onOperatorChange($event)" v-model="operatorSelected" class="match_segment_select h48 fsize14 fw400 br5" style="height: 48px; background-color: white;">
+                            <option value="equal">equal</option>
+                            <option value="notequal">not equal</option>
+                            <option value="greaterthan">greater than</option>
+                            <option value="lessthan">less than</option>
+                            <option value="contain">contain</option>
+                            <option value="startwith">start with</option>
+                            <option value="endwith">end with</option>
+                        </select>
+                        &nbsp;&nbsp;
+                        <input id="filterValue" v-model="filterValue" type="text" class="h48 fsize14 dark_200 fw400 br5" style="height: 48px;"/>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-md bkg_blue_200 light_000 save_filter" @click="saveFilters">Save Filter</button>
+                        <a class="search_tables_open_close_AF searchcloseicon" href="javascript:void(0);" @click="filterValue=''"><img src="assets/images/close-icon-13.svg"/></a>
                     </div>
                 </div>
             </div>
@@ -321,8 +337,12 @@
                 searchBy: '',
                 deletedItems: [],
                 profileID : this.$route.params.id,
-                matchSelected: 'Email',
+                matchSelected: 'MatchOne',
+                fieldSelected: 'Email',
                 operatorSelected: 'equal',
+                filterValue: '',
+                filterItems: [],
+                filterItemsArr: [],
             }
         },
         mounted() {
@@ -356,8 +376,40 @@
             onMatchTypeChange(event) {
                 this.matchSelected = event.target.value;
             },
+            onFieldChange(event) {
+                this.fieldSelected = event.target.value;
+            },
             onOperatorChange(event) {
-                console.log(event.target.value)
+                this.operatorSelected = event.target.value;
+            },
+            AddFilters: function() {
+                this.filterItems = [];
+            },
+            saveFilters: function() {
+                this.filterItems = [];
+
+                let fieldSymbol = '#', fieldStatement;
+                if(this.fieldSelected == 'Email') {
+                    fieldSymbol = '@';
+                }
+                if(this.operatorSelected == 'Equal') {
+                    this.operatorSelected = 'is';
+                } else if(this.operatorSelected == 'NotEqual') {
+                    this.operatorSelected = 'is not';
+                }
+                fieldStatement = fieldSymbol + ' ' + this.fieldSelected + ' ' + this.operatorSelected  + ' ' + this.filterValue;
+                this.filterItems.push(fieldStatement);
+                /*this.filterItems.push(fieldSymbol, this.fieldSelected, this.operatorSelected, this.filterValue);
+                this.filterItems.push(this.matchSelected);
+                this.filterItems.push(this.fieldSelected);
+                this.filterItems.push(this.operatorSelected);
+                this.filterItems.push(this.filterValue);*/
+                this.filterItemsArr.push(this.filterItems);
+                //console.log(this.filterItemsArr);
+            },
+            RemoveFilters: function() {
+                //this.filterItems.pop();
+                this.filterItems.splice(-1,this.filterItemsArr.length-1);
             },
             loadProfile: function(id){
                 window.location.href='/admin#/contacts/profile/'+id;
@@ -588,6 +640,13 @@
             });
             $('#InputToFocus').focus();
         });
+
+        $(document).on("click", ".search_tables_open_close_AF", function(){
+            $(".datasearcharea_AF").animate({
+                width: "toggle"
+            });
+            $('#filterValue').focus();
+        });
     });
 </script>
 <style>
@@ -595,4 +654,9 @@
     .datasearcharea_SG a.searchcloseicon{ position: absolute; right: 25px;top: 14px;}
 
     .datasearcharea_SG .form-control:focus{box-shadow: none!important}
+
+    .datasearcharea_AF{position:relative;width: 100%;z-index: 1;top: 13px; display: none}
+    .datasearcharea_AF a.searchcloseicon{ position: absolute; right: 25px;top: 14px;}
+
+    .datasearcharea_AF .form-control:focus{box-shadow: none!important}
 </style>
