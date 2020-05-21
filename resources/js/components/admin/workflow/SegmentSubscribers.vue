@@ -43,44 +43,58 @@
                         <a class="search_tables_open_close_SG searchcloseicon" href="javascript:void(0);" @click="searchBy=''"><img src="assets/images/close-icon-13.svg"/></a>
                     </div>
                 </div>
+
                 <div class="card p20 datasearcharea_AF">
-                    <div class="form-group m-0 position-relative">
-                        <select name="fieldSelected" @change="onFieldChange($event)" v-model="fieldSelected" class="match_segment_select h48 fsize14 fw400 br5" style="height: 48px; background-color: white;">
-                            <option value="id">Subscriber Id</option>
-                            <option value="firstname">First Name</option>
-                            <option value="lastname">Last Name</option>
-                            <option value="email">Email</option>
-                            <option value="phone">Phone</option>
-                            <option value="created">Subscribe Date</option>
-                            <option value="country_code">Country</option>
-                            <option value="stateName">State</option>
-                            <option value="cityName">City</option>
-                            <option value="zipCode">Zip</option>
-                            <option value="zipCode">AreaCode</option>
-                            <option value="tagID">Tag</option>
-                            <option value="IPAddress">IP Address</option>
-                            <option value="custom_field_1">Custom Field-1</option>
-                            <option value="custom_field_2">Custom Field-2</option>
-                            <option value="custom_field_3">Custom Field-3</option>
-                            <option value="custom_field_4">Custom Field-4</option>
-                            <option value="custom_field_5">Custom Field-5</option>
-                        </select>
-                        &nbsp;&nbsp;
-                        <select name="operator" @change="onOperatorChange($event)" v-model="operatorSelected" class="match_segment_select h48 fsize14 fw400 br5" style="height: 48px; background-color: white;">
-                            <option value="equal">equal</option>
-                            <option value="notequal">not equal</option>
-                            <option value="greaterthan">greater than</option>
-                            <option value="lessthan">less than</option>
-                            <option value="contain">contain</option>
-                            <option value="startwith">start with</option>
-                            <option value="endwith">end with</option>
-                        </select>
-                        &nbsp;&nbsp;
-                        <input id="filterValue" v-model="filterValue" type="text" class="h48 fsize14 dark_200 fw400 br5" style="height: 48px;"/>
-                        &nbsp;&nbsp;
-                        <button class="btn btn-md bkg_blue_200 light_000 save_filter" @click="applyFilters">Apply Filter</button>
-                        <a class="search_tables_open_close_AF searchcloseicon" href="javascript:void(0);" @click="filterValue=''"><img src="assets/images/close-icon-13.svg"/></a>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group m-0 position-relative">
+                                <select name="fieldSelected" @change="onFieldChange($event)" v-model="fieldSelected"  class="match_segment_select form-control form-control-custom medium h48">
+                                    <option value="id">Subscriber Id</option>
+                                    <option value="firstname">First Name</option>
+                                    <option value="lastname">Last Name</option>
+                                    <option value="email">Email</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="created">Subscribe Date</option>
+                                    <option value="country_code">Country</option>
+                                    <option value="stateName">State</option>
+                                    <option value="cityName">City</option>
+                                    <option value="zipCode">Zip</option>
+                                    <option value="zipCode">AreaCode</option>
+                                    <option value="tagID">Tag</option>
+                                    <option value="IPAddress">IP Address</option>
+                                    <option value="custom_field_1">Custom Field-1</option>
+                                    <option value="custom_field_2">Custom Field-2</option>
+                                    <option value="custom_field_3">Custom Field-3</option>
+                                    <option value="custom_field_4">Custom Field-4</option>
+                                    <option value="custom_field_5">Custom Field-5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group m-0 position-relative">
+                                <select name="operator" @change="onOperatorChange($event)" v-model="operatorSelected" class="match_segment_select form-control form-control-custom medium h48" >
+                                    <option value="equal">equal</option>
+                                    <option value="notequal">not equal</option>
+                                    <option value="greaterthan">greater than</option>
+                                    <option value="lessthan">less than</option>
+                                    <option value="contain">contain</option>
+                                    <option value="startwith">start with</option>
+                                    <option value="endwith">end with</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group m-0 position-relative">
+                                <input id="filterValue" v-model="filterValue" type="text" class="h48 fsize14 dark_200 fw400 br5 form-control" style="height: 48px;">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group m-0 position-relative">
+                                <button class="btn btn-md bkg_blue_200 light_000 save_filter mt-1" @click="applyFilters">Apply Filter</button>
+                            </div>
+                        </div>
                     </div>
+                    <a href="javascript:void(0);" @click="filterValue=''" class="search_tables_open_close_AF searchcloseicon"><img src="assets/images/close-icon-13.svg"></a>
                 </div>
             </div>
             <div v-if="(subscribers.length > 0 || searchBy.length>0)">

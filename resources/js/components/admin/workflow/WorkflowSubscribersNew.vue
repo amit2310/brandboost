@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="top-bar-top-section bbot">
+        <div class="top-bar-top-section bbot">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-7 col-7">
@@ -19,44 +19,53 @@
                     <a class="lh_32 blue_400 htxt_bold_14" href="#/contacts/import">
                         <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"/></button>
                     </a>
-                    <button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">New Contact List <span><img
+                    <!--<button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">Add New Contact <span><img
                         src="/assets/images/blue-plus.svg"/></span></button>
-                    <button class="js-contact-slidebox" v-show="false">
+                        <button class="js-contact-slidebox" v-show="false">
                         Display Form
-                    </button>
+                    </button>-->
+                    <button class="btn btn-md bkg_blue_200 light_000 js-contact-slidebox">Add New Contact <span><img
+                        src="/assets/images/blue-plus.svg"/></span></button>
                 </div>
             </div>
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="content-area">
 
+        <div class="content-area">
 
-        <div class="container-fluid">
-            <div class="table_head_action" v-if="(subscribers.length > 0 || searchBy.length>0)">
+            <div class="container-fluid">
+            <div class="table_head_action">
                 <h3 class="htxt_medium_16 dark_400" style="display: none;">{{ allData.total }} Contact Lists</h3>
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="table_filter">
-                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">ALL</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">ACTIVE</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">DRAFT</a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">ARCHIVE</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')">All</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Active'}" @click="applySort('Active')">Active</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Pending'}" @click="applySort('Pending')">Draft</a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': sortBy == 'Archive'}" @click="applySort('Archive')">Archive</a></li>
 
-                            <li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
+                            <!--<li><a class="" data-toggle="dropdown" aria-expanded="false" href="javascript:void(0);"><i><img src="assets/images/filter-3-fill.svg"></i> &nbsp; FILTER</a>
                                 <div class="dropdown-menu p10 mt-1">
-                                    <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; INACTIVE</a>
-                                    <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; CREATED</a>
+                                    <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; Inactive</a>
+                                    <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
                                 </div>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                     <div class="col-md-6">
                         <ul class="table_filter text-right">
+                            <li>
+                                <a class="" data-toggle="dropdown" aria-expanded="false"  href="javascript:void(0);"><i><img src="assets/images/filter_line_18.svg"></i></a>
+                                <div class="dropdown-menu p10 mt-1">
+                                    <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Inactive'}" @click="applySort('Inactive')"><i class="ri-check-double-fill"></i> &nbsp; Inactive</a>
+                                    <a href="javascript:void(0);" class="dropdown-item" :class="{'active': sortBy == 'Date Created'}" @click="applySort('Date Created')"><i class="ri-check-double-fill"></i> &nbsp; Created</a>
+                                </div>
+                            </li>
                             <li><a class="search_tables_open_close" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg" title="Search"></i></a></li>
                             <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                             <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
-                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
+                            <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_line_18.svg" title="Grid View"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -67,7 +76,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div v-if="(subscribers.length > 0 || searchBy.length > 0)">
+                <div class="row" v-if="viewType == 'List View'">
+
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table table-borderless mb-0">
@@ -108,10 +119,11 @@
                                             :fontsize="12"
                                         ></user-avatar>
                                     </a>
+                                    &nbsp;&nbsp;
                                     <span class="htxt_medium_14 dark_900" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
                                 </td>
                                 <td>{{ contact.email }}</td>
-                                <td>{{ (contact.phone != '' || contact.phone != null) ? phoneNoFormat(contact.phone) : '' }}</td>
+                                <td>{{ (contact.phone != '' || contact.phone != null) ? phoneNoFormat(contact.phone) : '-' }}</td>
                                 <td>
                                     <!--<button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
                                     <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
@@ -154,15 +166,96 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-center mt-3">
-                    <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                    <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
                 </div>
             </div>
-        </div>
 
+            <div class="row" v-if="viewType == 'Grid View'">
+                <div v-for="contact in subscribers" v-if="subscribers" class="col-md-3 d-flex">
+                    <div class="card p0 pt40 text-center animate_top col">
+                        <span v-if="contact.status == '1'" class="status_icon bkg_blue_300"></span>
+                        <span v-else class="status_icon bkg_light_800"></span>
+
+                        <div class="dot_dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="javascript:void(0);" v-if="contact.status != 2" @click="moveToArchive(contact.id)"><i class="dripicons-user text-muted mr-2"></i> Move to Archive</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1"><i class="dripicons-wallet text-muted mr-2"></i> Inactive</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else><i class="dripicons-gear text-muted mr-2"></i> Active</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> Edit</a>
+                                <a class="dropdown-item" v-if="moduleName == 'people'" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)"><i class="dripicons-lock text-muted mr-2"></i> Sync</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                            </div>
+                        </div>
+                        <!--<a href="#" class="circle-icon-56 bkg_brand_000 m0auto"><span class="fsize14 fw500 text-uppercase light_000">am</span></a>-->
+                        <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
+                            <user-avatar
+                                :avatar="contact.avatar"
+                                :firstname="contact.firstname"
+                                :lastname="contact.lastname"
+                                :width="32"
+                                :height="32"
+                                :fontsize="12"
+                            ></user-avatar>
+                        </a>
+                        <h3 class="htxt_medium_14 dark_600 mb-1 mt-4" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</h3>
+                        <p class="fsize14 fw400 dark_400 mb-1 ls_4">{{ contact.email }}</p>
+                        <p class="fsize14 fw400 dark_400 mb30 ls_4">{{ timeAgo(contact.created) }}</p>
+                        <div class="p20 btop">
+                            <!--<button class="tags_btn blue">tags</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
+                            <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 d-flex">
+                    <div class="card p0 pt40 text-center animate_top col js-contact-slidebox">
+                        <a href="#" class="circle-icon-64 bkg_light_200 m0auto mt-4"><img src="assets/images/plus03.svg"> </a>
+                        <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4 mt-4">Create<br>new contact</p>
+                    </div>
+                </div>
+            </div>
+
+            <pagination v-if="viewType == 'Grid View'"
+                :pagination="allData"
+                @paginate="showPaginationData"
+                @paginate_per_page="showPaginationItemsPerPage"
+                :offset="4">
+            </pagination>
+        </div>
+        <div v-else class="row">
+            <div class="col-md-12">
+                <div class="card card_shadow min-h-280">
+
+                    <div class="row mb65">
+                        <div class="col-md-12 text-left">
+                            <a class="lh_32 blue_400 htxt_bold_14" href="#/contacts/import">
+                                <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
+                                Import contacts
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mb65">
+                        <div class="col-md-12 text-center">
+                            <img class="mt40" style="max-width: 250px; " src="assets/images/people_contact_image.svg">
+                            <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any contacts</h3>
+                            <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import contacts!</h3>
+                            <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-contact-slidebox">Add contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-center mt-2">
+                <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+            </div>
+        </div>
     </div>
 
-    <!--Smart Popup-->
-    <div class="box" style="width: 424px;">
+        </div>
+
+        <!--Smart Popup-->
+        <div class="box" style="width: 424px;">
         <div style="width: 424px;overflow: hidden; height: 100%;">
             <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"><a class="cross_icon js-contact-slidebox"><i
                 class=""><img src="/assets/images/cross.svg"/></i></a>
