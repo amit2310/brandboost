@@ -19,11 +19,13 @@
                     <a class="lh_32 blue_400 htxt_bold_14" href="#/contacts/import">
                         <button class="circle-icon-40 mr15"><img src="assets/images/download-fill.svg"/></button>
                     </a>
-                    <button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">Add New Contact <span><img
+                    <!--<button class="btn btn-md bkg_blue_200 light_000" @click="displayForm('Create')">Add New Contact <span><img
                         src="/assets/images/blue-plus.svg"/></span></button>
-                    <button class="js-contact-slidebox" v-show="false">
+                        <button class="js-contact-slidebox" v-show="false">
                         Display Form
-                    </button>
+                    </button>-->
+                    <button class="btn btn-md bkg_blue_200 light_000 js-contact-slidebox">Add New Contact <span><img
+                        src="/assets/images/blue-plus.svg"/></span></button>
                 </div>
             </div>
         </div>
