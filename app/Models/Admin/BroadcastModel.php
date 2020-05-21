@@ -917,7 +917,7 @@ class BroadcastModel extends Model {
      * @param type $userID
      * @return type
      */
-    public static function getSegmentSubscribers($segmentID, $userID, $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10') {
+    public static function getSegmentSubscribers($segmentID, $userID, $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10', $filter_data='') {
         $query = DB::table('tbl_segments_users')
                 ->leftJoin('tbl_subscribers', 'tbl_segments_users.subscriber_id', '=', 'tbl_subscribers.id')
                 ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
@@ -930,6 +930,50 @@ class BroadcastModel extends Model {
             $query->where('tbl_subscribers.firstname', 'LIKE', "%$searchBy%");
             $query->orWhere('tbl_subscribers.lastname', 'LIKE', "%$searchBy%");
             $query->orWhere('tbl_subscribers.email', 'LIKE', "%$searchBy%");
+        }
+
+        if(!empty($filter_data)) {
+            $query->where('tbl_subscribers.owner_id', $userID);
+            $filter_data_arr = ($filter_data != '' ? json_decode($filter_data, true) : '');
+            //pre($filter_data_arr);
+            $match_param = $filter_data_arr['match_param'];
+            $filtersArr = $filter_data_arr['filters'];
+            if($match_param == 'one') {
+                $selectStr = 'orWhere';
+            } else {
+                $selectStr = 'where';
+            }
+
+            if(!empty($filtersArr)) {
+                foreach($filtersArr as $fKey => $fVal) {
+
+                    //echo $fVal['field_name']."----".$fVal['operator']."----".$fVal['field_value'];
+                    $field_name = $fVal['field_name'];
+                    $operator = $fVal['operator'];
+                    $field_value = $fVal['field_value'];
+
+                    if($field_name == 'IPAddress') {
+
+                    } else {
+                        if($operator == 'equal' || $operator == 'is') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '=', $field_value);
+                        } else if($operator == 'greaterthan') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '>', $field_value);
+                        } else if($operator == 'lessthan') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '<', $field_value);
+                        } else if($operator == 'contain') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, 'LIKE', "%$field_value%");
+                        } else if($operator == 'startwith') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, 'LIKE', "$field_value%");
+                        } else if($operator == 'endwith') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, 'LIKE', "%$field_value");
+                        } else {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '!=', $field_value);
+                        }
+                    }
+
+                }
+            }
         }
 
         if($paginated == true){

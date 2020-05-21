@@ -3316,8 +3316,10 @@ class Broadcast extends Controller {
 
         //Get Segment Info
         $oSegment = $mBroadcast->getSegmentInfo($segmentID);
+        $filter_data = $oSegment->filter_data;
+        //$filter_data_arr = ($filter_data != '' ? json_decode($filter_data, true) : '');
 
-        $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID, true, $searchBy, $sortBy, $items_per_page);
+        $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID, true, $searchBy, $sortBy, $items_per_page, $filter_data);
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
