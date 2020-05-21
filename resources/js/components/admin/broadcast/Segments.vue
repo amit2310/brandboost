@@ -92,7 +92,7 @@
                                         </span>
                                         </td>
                                         <td>
-                                            <span class="table-img mr15">
+                                            <span class="table-img mr15" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
                                                 <span class="circle_icon_24 bkg_blue_200"><img src="assets/images/pie_chart_fill_12.svg"/></span>
                                             </span> {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}
                                         </td>
