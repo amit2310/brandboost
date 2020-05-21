@@ -93,6 +93,7 @@
                         <canvas-decision-node
                             v-for="oEvent in decisionEventsPathA"
                             :event="oEvent"
+                            :pathId="decisionPathA"
                             :unitInfo="unitInfo"
                             :metaData="metaData"
                             :moduleName="moduleName"
@@ -109,7 +110,7 @@
                         <div v-if="decisionEventsPathA" class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
                             <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="addCoherentActionDecision(decisionPathA)"><i class="ri-add-fill"></i></a>
                         </div>
-                        <div v-else class="workflow_card top_line_20 slideAddNodebox" @click="addCoherentActionDecision(decisionPathA)" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;">
+                        <div v-else class="workflow_card top_line_20 slideAddNodebox mb30" @click="addCoherentActionDecision(decisionPathA)" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;">
                             <img class="mb-2" src="assets/images/plus_circle_36.svg"><br>
                             <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
                         </div>
@@ -120,6 +121,7 @@
                         <canvas-decision-node
                             v-for="oEvent in decisionEventsPathB"
                             :event="oEvent"
+                            :pathId="decisionPathB"
                             :unitInfo="unitInfo"
                             :metaData="metaData"
                             :moduleName="moduleName"
@@ -136,7 +138,7 @@
                         <div v-if="decisionEventsPathB" class="col-12 text-center droppable_grid" @drop="onDrop($event)" @dragover="$event.preventDefault()">
                             <a class="workflowadds slideAddNodebox" href="javascript:void(0);" @click="addCoherentActionDecision(decisionPathB)"><i class="ri-add-fill"></i></a>
                         </div>
-                        <div v-else class="workflow_card top_line_20 slideAddNodebox" @click="addCoherentActionDecision(decisionPathB)" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;">
+                        <div v-else class="workflow_card top_line_20 slideAddNodebox mb30" @click="addCoherentActionDecision(decisionPathB)" @drop="onDrop($event)" @dragover="$event.preventDefault()" style="cursor:pointer;">
                             <img class="mb-2" src="assets/images/plus_circle_36.svg"><br>
                             <a class="blue_300 fw500 fsize11" href="javascript:void(0);"> ADD NODE</a>
                         </div>
@@ -431,8 +433,8 @@
                 }
                 this.showLoading(false);
             },
-            setAddActionPropsDecision: function(event){
-                this.$emit('setAddActionProps', event, 'decision');
+            setAddActionPropsDecision: function(event, pathId){
+                this.$emit('setAddActionProps', event, 'decision', pathId);
             },
             deleteEventNodeDecision: function(event){
                 this.$emit('deleteEventNode', event, 'decision');

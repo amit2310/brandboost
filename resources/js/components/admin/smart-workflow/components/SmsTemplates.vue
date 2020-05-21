@@ -22,8 +22,24 @@
             </div>
 
 
-            <div class="col-md-3 d-flex" v-for="template in templates" @click="addTemplateToCampaign(template.id)" style="cursor:pointer;">
+            <div class="col-md-3 d-flex" v-for="template in templates">
                 <div class="card p-1 pb0 animate_top col">
+                    <div class="dot_dropdown" v-if="template.user_id==user.id">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="javascript:void(0);" @click="cloneTemplate(template.id, 'sms')"><i class="dripicons-user text-muted mr-2"></i> Clone</a>
+                            <a class="dropdown-item wfEmailMyTemplates" href="javascript:void(0);" @click="displayTemplatePreview(template)"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0);" @click="deleteTemplate(template.id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a></div>
+                    </div>
+                    <div class="dot_dropdown" v-else>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img class="" src="assets/images/dots.svg" alt="profile-user"> </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item wfEmailMyTemplates" href="javascript:void(0);" @click="displayTemplatePreview(template)"><i class="dripicons-wallet text-muted mr-2"></i> Preview</a>
+                        </div>
+                    </div>
                     <div class="sms_template_outer">
                         <div class="sms_box" v-html="getDecodeContent(template.stripo_compiled_html)">
                             <img :src="template.thumbnail" style="transform: scale(2.5);margin-top:35%;">
@@ -124,15 +140,9 @@
 <script>
     import jq from 'jquery';
     export default {
-        props: ['templates', 'user', 'event_id', 'moduleName', 'moduleUnitId'],
+        props: ['categories','templates', 'templatesAllData', 'user', 'event_id', 'moduleName', 'moduleUnitId', 'isDecisionNode', 'isSplitNode'],
         data() {
             return {
-                refreshMessage: 3,
-
-
-
-                moduleName: '',
-                moduleUnitID: '',
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
                 greetings: '',
@@ -140,7 +150,16 @@
                 content: '',
                 selected_campaignId: '',
                 sendTestBox: false,
-                selectedTemplateName: ''
+                selectedTemplateName: '',
+                current_page: 1,
+                form: {
+                    templateName: '',
+                    templateCategory: '',
+                    templateType: 'sms',
+                    templateDescription: '',
+                    templateId: ''
+                },
+                searchBy: '',
             }
         },
         created() {
@@ -153,6 +172,9 @@
             'introduction': function(){
                 jq("#wf_edit_sms_template_introduction_EDITOR").text(this.introduction);
             },
+            'searchBy': function(){
+                this.loadCategoriedTemplates(this.activeClass);
+            }
         },
         methods: {
             backToConfiguration: function(){
@@ -161,7 +183,13 @@
             },
             saveEditChanges: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/updateWorkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/updateWorkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     greeting: this.greetings,
@@ -179,7 +207,13 @@
             },
             sendTestSMS: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/sendTestSMSworkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == ture){
+                    url = '/admin/workflow/sendTestSMSworkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/sendTestSMSworkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     moduleUnitID: this.moduleUnitId,
@@ -199,7 +233,13 @@
             },
             loadPreview: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/previewWorkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/previewWorkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     campaignId: this.selected_campaignId,
@@ -216,7 +256,15 @@
             addTemplateToCampaign: function(templateId){
                 this.showLoading(true);
                 //Save Template into the database
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addDecisionEndCampaignToEvent';
+                }else if(this.isSplitNode == true){
+                    url = '';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent';
+                }
+                axios.post(url, {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     template_id: templateId,
@@ -234,7 +282,55 @@
             },
             loadEmailReviewTemplates: function(){
                 this.showLoading(false);
-            }
+            },
+            loadCategoriedTemplates: function(action){
+                this.activeClass = action;
+                this.$emit("loadCategoriedTemplates", {actionName: action, campaign_type: 'sms', currentPage: this.current_page, searchBy:this.searchBy});
+            },
+            displayTemplatePreview: function (data) {
+                this.selectedTemplate = data.id;
+                this.previewTemplate = this.getDecodeContent(data.stripo_compiled_html);
+                document.querySelector("#emailTemplatePreview").click();
+            },
+            cloneTemplate: function(templateId,templateType) {
+                if(confirm('Are you sure you want to clone this template?')){
+                    this.showLoading(true);
+                    //Do axios
+                    axios.post('/admin/templates/cloneTemplate', {
+                        templateId:templateId,
+                        templateType:templateType,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                this.showLoading(false);
+                                this.displayMessage('success', 'Template cloned and saved into your templates!');
+                                this.loadCategoriedTemplates('my');
+                                document.querySelector(".hideEmailTemplatePreview").click();
+                            }
+
+                        });
+                }
+            },
+            deleteTemplate: function(templateId) {
+                if(confirm('Are you sure you want to delete this template?')){
+                    //Do axios
+                    axios.post('/admin/templates/deleteTemplate', {
+                        templateId:templateId,
+                        moduleName: this.moduleName,
+                        moduleUnitId: this.moduleUnitId,
+                        _token: this.csrf_token()
+                    })
+                        .then(response => {
+                            if(response.data.status == 'success'){
+                                this.loadCategoriedTemplates('my');
+                            }
+
+                        });
+                }
+            },
         }
     }
     $(document).ready(function(){

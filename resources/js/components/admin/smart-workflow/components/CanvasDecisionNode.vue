@@ -69,7 +69,7 @@
 </template>
 <script>
     export default {
-        props: ['event', 'unitInfo', 'metaData', 'moduleName', 'moduleUnitId'],
+        props: ['event', 'pathId', 'unitInfo', 'metaData', 'moduleName', 'moduleUnitId'],
         data(){
           return {
               column_index: 0,
@@ -174,7 +174,7 @@
         },
         methods: {
             prepareToAddAction: function(){
-                this.$emit('setAddActionPropsDecision', this.event);
+                this.$emit('setAddActionPropsDecision', this.event, this.pathId);
             },
             deleteEvent: function(){
                 if(confirm("Are you sure you want to delete this node?")){
