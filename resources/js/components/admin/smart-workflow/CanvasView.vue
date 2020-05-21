@@ -121,8 +121,8 @@
             }
         },
         methods: {
-            setAddActionProps: function(eventData, nodeCat){
-                this.$emit("setActionProps", eventData, nodeCat);
+            setAddActionProps: function(eventData, nodeCat, pathId){
+                this.$emit("setActionProps", eventData, nodeCat, pathId);
             },
             deleteEventNode: function(eventData, nodeCat){
                 alert('++'+nodeCat);

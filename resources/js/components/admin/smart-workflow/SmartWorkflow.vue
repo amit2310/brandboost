@@ -205,6 +205,8 @@
                     :event_id=actionEditId
                     :moduleName="moduleName"
                     :moduleUnitId="moduleUnitId"
+                    :isDecisionNode="isDecisionNode"
+                    :isSplitNode="isSplitNode"
                     @loadCategoriedTemplates="loadCategoriedTemplates"
                     @hideEmailTemplate="closeEmailTemplates"
                     @updateEmailCampaignId="setEmailCampaignId"
@@ -218,6 +220,8 @@
                     :event_id=actionEditId
                     :moduleName="moduleName"
                     :moduleUnitId="moduleUnitId"
+                    :isDecisionNode="isDecisionNode"
+                    :isSplitNode="isSplitNode"
                     @loadCategoriedTemplates="loadCategoriedTemplates"
                     @hideSMSTemplate="closeSMSTemplates"
                     @updateSMSCampaignId="setSMSCampaignId"
@@ -245,16 +249,17 @@
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddDecisionbox" style="cursor: pointer;">
+                                        <div
+                                            class="card border shadow-none p20 pl10 pr10 mb10"
+                                            :class="isDecisionNode==true ? '': 'slideAddNodebox slideAddDecisionbox'"
+                                            :style="isDecisionNode==true ? 'cursor:not-allowed;': 'cursor:pointer;'"
+                                            >
                                             <span class="circle-icon-44 bkg_yellow_500 m-auto br12 "><i class="ri-mail-open-fill light_000 fsize18"></i></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Decision</p>
                                             <p class="fw400 fsize12 dark_300 m0">Send people down a single path based on selected criteria.</p>
                                         </div>
                                     </div>
-                                </div>
 
-
-                                <div class="row">
                                     <div class="col-6 pr5 text-center">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddDelaybox" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_reviews_300 m-auto  "><i class="ri-time-fill light_000 fsize18"></i></span>
@@ -263,16 +268,17 @@
                                         </div>
                                     </div>
                                     <div class="col-6 pl5 text-center">
-                                        <div class="card border shadow-none p20 pl10 pr10 mb10 slideAddNodebox slideAddSplitbox" style="cursor: pointer;">
+                                        <div
+                                            class="card border shadow-none p20 pl10 pr10 mb10"
+                                            :class="isDecisionNode==true ? '': 'slideAddNodebox slideAddSplitbox'"
+                                            :style="isDecisionNode==true ? 'cursor:not-allowed;': 'cursor:pointer;'"
+                                        >
                                             <span class="circle-icon-44 bkg_email_300 m-auto br12 "><img src="assets/images/split.svg"/></span>
                                             <p class="fw500 fsize14 dark_600 mt-2 mb-1">Split Test</p>
                                             <p class="fw400 fsize12 dark_300 m0">Split trafic to determine which is the most effective</p>
                                         </div>
                                     </div>
-                                </div>
 
-
-                                <div class="row">
                                     <div class="col-6 pr5 text-center d-flex">
                                         <div class="card border shadow-none p20 pl10 pr10 mb10 col" style="cursor: pointer;">
                                             <span class="circle-icon-44 bkg_sms_400 m-auto "><i class="ri-checkbox-circle-fill light_000 fsize18"></i></span>
@@ -290,9 +296,6 @@
                                 </div>
 
 
-
-
-
                             </div>
                         </div>
                     </div>
@@ -301,7 +304,7 @@
                 <!--Trigger Modal-->
                 <div class="box triggerBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideTriggerbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideTriggerbox"><i class=""><img alt="close" src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="44" src="assets/images/trigger_grey_45.png"/>
@@ -554,8 +557,8 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="actionName" class="fsize11 fw500 dark_600 ls4">ACTION NAME</label>
-                                            <input type="text" class="form-control h50" v-model="actionTitle" id="actionName" placeholder="Enter new action name" />
+                                            <label for="actionTitle" class="fsize11 fw500 dark_600 ls4">ACTION NAME</label>
+                                            <input type="text" class="form-control h50" v-model="actionTitle" id="actionTitle" placeholder="Enter new action name" />
                                         </div>
 
 
@@ -663,7 +666,7 @@
                 <!--Edit Field Alias-->
                 <div class="box editAliasBoxContent" style="width: 424px; display:none;">
                     <div style="width: 424px;overflow: hidden; height: 100%;">
-                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideEditAliasbox" id="slideEditAliasbox"><i class=""><img src="assets/images/cross.svg"/></i></a>
+                        <div style="height: 100%; overflow-y:auto; overflow-x: hidden;"> <a class="cross_icon slideEditAliasbox" id="slideEditAliasbox"><i class=""><img alt="close" src="assets/images/cross.svg"/></i></a>
                             <div class="p40">
                                 <div class="row">
                                     <div class="col-md-12"> <img width="44" src="assets/images/add_action_44.svg"/>
@@ -936,8 +939,8 @@
                                         <hr class="mt20" />
 
                                         <div class="form-group">
-                                            <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATH 1</label>
-                                            <select class="form-control h50 form-control-custom dark_800">
+                                            <label for="decisionPathA" class="fsize11 fw500 dark_600 ls4">PATH 1</label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="decisionPathA">
                                                 <option>Select segment </option>
                                                 <option>Submitted a form</option>
                                                 <option>Choose a trigger...</option>
@@ -945,8 +948,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="campaignname" class="fsize11 fw500 dark_600 ls4">PATH 2</label>
-                                            <select class="form-control h50 form-control-custom dark_800">
+                                            <label for="decisionPathB" class="fsize11 fw500 dark_600 ls4">PATH 2</label>
+                                            <select class="form-control h50 form-control-custom dark_800" id="decisionPathB">
                                                 <option>Select segment </option>
                                                 <option>Submitted a form</option>
                                                 <option>Choose a trigger...</option>
@@ -2230,10 +2233,20 @@
                     moduleUnitId: this.moduleUnitId,
                     eventData: this.selectedEvent
                 };
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction', formData).then(response => {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowDecisionBlankAction';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction';
+                }
+                axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.showLoading(false);
-                        this.events = response.data.oEvents;
+                        if(this.isDecisionNode == true){
+                            this.getWorkflowData();
+                        }else{
+                            this.events = response.data.oEvents;
+                        }
                         this.metaData.selectedClass = response.data.newEventId;
                     }
                 });
@@ -2266,7 +2279,8 @@
                     eventData: this.selectedEvent,
                 };
                 let url = '';
-                if(nodeCat == 'decision'){
+                if(nodeCat == 'decision' || this.isDecisionNode == true){
+                    formData.pathId = this.decisionPathId;
                     url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowDecisionBlankAction';
                 }else{
                     url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/createWorkflowBlankAction';
@@ -2274,7 +2288,11 @@
                 axios.post(url, formData).then(response => {
                     if(response.data.status == 'success'){
                         this.showLoading(false);
-                        this.events = response.data.oEvents;
+                        if(nodeCat == 'decision' || this.isDecisionNode == true){
+                            this.getWorkflowData();
+                        }else{
+                            this.events = response.data.oEvents;
+                        }
                         this.metaData.selectedClass = response.data.newEventId;
                     }
                 });

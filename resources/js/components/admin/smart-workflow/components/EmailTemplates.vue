@@ -262,12 +262,10 @@
     import Pagination from '@/components/helpers/Pagination';
     import jq from 'jquery';
     export default {
-        props: ['categories','templates', 'templatesAllData', 'user', 'event_id', 'moduleName', 'moduleUnitId'],
+        props: ['categories','templates', 'templatesAllData', 'user', 'event_id', 'moduleName', 'moduleUnitId', 'isDecisionNode', 'isSplitNode'],
         components: {Pagination},
         data() {
             return {
-                refreshMessage: 2,
-
                 moduleAccountID: '',
                 campaignId: this.$route.params.id,
                 greetings: '',
@@ -330,7 +328,13 @@
             },
             saveEditChanges: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/updateWorkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/updateWorkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     greeting: this.greetings,
@@ -346,7 +350,13 @@
             },
             sendTestEmail: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == ture){
+                    url = '/admin/workflow/sendTestEmailworkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/sendTestEmailworkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     moduleUnitID: this.moduleUnitId,
@@ -365,7 +375,13 @@
             },
             loadPreview: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/previewWorkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/previewWorkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     campaignId: this.selected_campaignId,
@@ -382,7 +398,15 @@
             addTemplateToCampaign: function(templateId){
                 this.showLoading(true);
                 //Save Template into the database
-                axios.post('/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addDecisionEndCampaignToEvent';
+                }else if(this.isSplitNode == true){
+                    url = '';
+                }else{
+                    url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/addEndCampaignToEvent';
+                }
+                axios.post(url, {
                     moduleName: this.moduleName,
                     moduleUnitId: this.moduleUnitId,
                     template_id: templateId,
@@ -397,7 +421,12 @@
                             let templateType = response.data.templateType;
                             if(templateType == 'dynamic'){
                                 this.editGrapesEditor = true;
-                                this.grapesEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.selected_campaignId + '/' + this.moduleUnitId;
+                                if(this.isDecisionNode == true){
+                                    this.grapesEditorSrc= '/admin/workflow/loadDecisionStripoCampaign/' + this.moduleName + '/' + this.selected_campaignId + '/' + this.moduleUnitId;
+                                }else{
+                                    this.grapesEditorSrc= '/admin/workflow/loadStripoCampaign/' + this.moduleName + '/' + this.selected_campaignId + '/' + this.moduleUnitId;
+                                }
+
                                 //Open grapesJs editor
                             }else{
                                 this.loadPreview();

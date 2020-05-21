@@ -558,13 +558,17 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/workflow/updateWorkflowTemplate', 'Admin\WorkFlow@updateWorkflowTemplate');
     Route::post('admin/workflow/sendTestEmailworkflowCampaign', 'Admin\WorkFlow@sendTestEmailworkflowCampaign');
     Route::post('admin/workflow/sendTestSMSworkflowCampaign', 'Admin\WorkFlow@sendTestSMSworkflowCampaign');
+    Route::post('admin/workflow/sendTestSMSworkflowDecisionCampaign', 'Admin\WorkFlow@sendTestSMSworkflowDecisionCampaign');
     Route::post('admin/workflow/previewWorkflowCampaign', 'Admin\WorkFlow@previewWorkflowCampaign');
+    Route::post('admin/workflow/previewWorkflowDecisionCampaign', 'Admin\WorkFlow@previewWorkflowDecisionCampaign');
     Route::post('admin/workflow/getWorkflowCampaign', 'Admin\WorkFlow@getWorkflowCampaign');
     Route::post('admin/workflow/getWorkflowTemplate', 'Admin\WorkFlow@getWorkflowTemplate');
     Route::post('admin/workflow/deleteWorkflowEvent', 'Admin\WorkFlow@deleteWorkflowEvent');
     Route::post('admin/workflow/deleteWorkflowDraft', 'Admin\WorkFlow@deleteWorkflowDraft');
     Route::get('admin/workflow/loadStripoCampaign/{module_name}/{campaign_id}/{module_unit_id?}', 'Admin\WorkFlow@loadStripoCampaign');
+    Route::get('admin/workflow/loadDecisionStripoCampaign/{module_name}/{campaign_id}/{module_unit_id?}', 'Admin\WorkFlow@loadDecisionStripoCampaign');
     Route::get('admin/workflow/loadStripoSMSCampaign/{module_name}/{campaign_id}/{module_unit_id?}', 'Admin\WorkFlow@loadStripoSMSCampaign');
+    Route::get('admin/workflow/loadDecisionStripoSMSCampaign/{module_name}/{campaign_id}/{module_unit_id?}', 'Admin\WorkFlow@loadDecisionStripoSMSCampaign');
     Route::get('admin/workflow/loadStripoTemplate', 'Admin\WorkFlow@loadStripoTemplate');
     Route::get('admin/workflow/loadStripoTemplatePreview', 'Admin\WorkFlow@loadStripoTemplatePreview');
     Route::post('admin/workflow/loadStripoTemplatePreview', 'Admin\WorkFlow@loadStripoTemplatePreview');

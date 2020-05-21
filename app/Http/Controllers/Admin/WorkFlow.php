@@ -4633,6 +4633,109 @@ class WorkFlow extends Controller {
     }
 
     /**
+     * Used to send decision Test SMS
+     * @param Request $request
+     */
+    public function sendTestSMSworkflowDecisionCampaign(Request $request) {
+        $response = array();
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        $campaignID = strip_tags($request->campaignId);
+        $moduleName = strip_tags($request->moduleName);
+        $moduleUnitID = strip_tags($request->moduleUnitID);
+        $number = strip_tags($request->number);
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $oResponse = $mWorkflow->getWorkflowDecisionCampaign($campaignID, $moduleName);
+        if (!empty($oResponse)) {
+            $templateSource = $oResponse->template_source;
+            if ($templateSource > 0) {
+                $oDefaultTemplate = $mWorkflow->getCommonTemplateInfo($templateSource);
+                $defaultGreeting = $oDefaultTemplate->greeting;
+                $defaultIntroduction = $oDefaultTemplate->introduction;
+            }
+
+            $oUnitData = $mWorkflow->getModuleUnitInfo($moduleName, $moduleUnitID);
+
+            $greeting = (!empty($oResponse->greeting)) ? $oResponse->greeting : $defaultGreeting;
+            $introduction = (!empty($oResponse->introduction)) ? $oResponse->introduction : $defaultIntroduction;
+
+            $content = base64_decode($oResponse->stripo_compiled_html);
+
+            $content = str_replace(array('{{GREETING}}', '{GREETING}', '{{INTRODUCTION}}', '{INTRODUCTION}', 'wf_edit_template_introduction', 'wf_edit_sms_template_introduction'), array($greeting, $greeting, $introduction, $introduction, 'wf_edit_template_introduction_EDITOR', 'wf_edit_sms_template_introduction_EDITOR'), $content);
+            $content = str_replace(array('{FIRST_NAME}', '{LAST_NAME}', '{EMAIL}'), array($aUser->firstname, $aUser->lastname, $aUser->email), $content);
+
+            if ($moduleName == 'nps') {
+                $content = $mWorkflow->parseModuleStatictemplate($moduleName, $content, strtolower($oResponse->campaign_type), $oUnitData);
+            }
+
+            if ($moduleName == 'referral') {
+                //Parse templates
+
+                $content = $this->referralEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
+            }
+
+            if ($moduleName == 'onsite' || $moduleName == 'offsite' || $moduleName == 'brandboost') {
+                //Parse few more template tags if have any
+                $content = $this->brandboostEmailTagReplace($moduleUnitID, $content, $oResponse->content_type, $aUser);
+            }
+
+            $content = str_replace('<br>', "\n", $content);
+            $content = str_replace('<br/>', "\n", $content);
+            $content = str_replace('<br />', "\n", $content);
+            $content = strip_tags(nl2br($content));
+
+
+
+            //Get Twilio Info of client
+            $aTwilioAc = getTwilioAccountCustom($userID);
+            if (!empty($aTwilioAc)) {
+                $sid = $aTwilioAc->account_sid;
+                $token = $aTwilioAc->account_token;
+                $from = $aTwilioAc->contact_no;
+                $aSmsData = array(
+                    'sid' => $sid,
+                    'token' => $token,
+                    'to' => $number,
+                    'from' => $from,
+                    'msg' => $content
+                );
+                //pre($aSmsData);
+                //Send Sms now
+                $response = sendClinetSMS($aSmsData);
+                $aUsage = array(
+                    'client_id' => $userID,
+                    'usage_type' => 'sms',
+                    'direction' => 'outbound',
+                    'content' => $content,
+                    'spend_to' => $number,
+                    'spend_from' => $from,
+                    'module_name' => $moduleName,
+                    'module_unit_id' => ''
+                );
+                //$this->mInviter->updateUsage($aUsage);
+                $charCount = strlen($content);
+                $totatMessageCount = ceil($charCount / 160);
+                if ($totatMessageCount > 1) {
+                    for ($i = 0; $i < $totatMessageCount; $i++) {
+                        $aUsage['segment'] = $i + 1;
+                        updateCreditUsage($aUsage);
+                    }
+                } else {
+                    $aUsage['segment'] = 1;
+                    updateCreditUsage($aUsage);
+                }
+                $response = array('status' => 'success', 'msg' => 'SMS sent successfully');
+            }
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
      * Display decision campaign preview
      */
     public function previewWorkflowDecisionCampaign(Request $request) {
@@ -4742,6 +4845,39 @@ class WorkFlow extends Controller {
             return ['status'=>'error', 'campaignInfo'=>'', 'templateInfo'=>''];
         }
 
+    }
+
+    /**
+     * Get decision end campaing details
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function loadDecisionStripoCampaign(Request $request) {
+        $moduleName = $request->module_name;
+        $campaignID = $request->campaign_id;
+        $moduleUnitID = $request->module_unit_id;
+
+        //Instantiate workflow model to get its methods and properties
+        $mWorkflow = new WorkflowModel();
+
+        $templateTags = $mWorkflow->getWorkflowCampaignTags($moduleName);
+        $oResponse = $mWorkflow->getWorkflowDecisionCampaign($campaignID, $moduleName);
+        $subject = $oResponse->subject;
+        $preheader = $oResponse->preheader;
+        $template_source = $oResponse->template_source;
+        $compiledSource = $oResponse->stripo_compiled_html;
+        $aData = array(
+            'campaignID' => $campaignID,
+            'moduleUnitID' => $moduleUnitID,
+            'moduleName' => $moduleName,
+            'subject' => $subject,
+            'preheader' => $preheader,
+            'tags' => $templateTags,
+            'template_source' => $template_source,
+            'compiledSource' => $compiledSource,
+            'nodeType' => 'decision'
+        );
+        return view('admin.workflow2.stripo', $aData);
     }
 
 }
