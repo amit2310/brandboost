@@ -4,7 +4,7 @@
 
 
         <div class="container-fluid">
-            <div class="table_head_action" v-if="(subscribers.length > 0 || searchBy.length>0)">
+            <div class="table_head_action">
                 <div class="row">
                     <div class="col-md-8">
                         <ul class="table_filter new">
@@ -29,7 +29,7 @@
 
                     <div class="col-md-4 pl-0">
                         <ul class="table_filter text-right">
-                            <li><a href="#" class="save_segment_btn fsize14 dark_600 fw500 pl15 pr15"><img class="float-left" style="margin-top:2px;" src="assets/images/pi-line-blue.svg"/> &nbsp; Save Segment</a></li>
+                            <li><a href="javascript:void(0);" class="save_segment_btn fsize14 dark_600 fw500 pl15 pr15"><img class="float-left" style="margin-top:2px;" src="assets/images/pi-line-blue.svg"/> &nbsp; Save Segment</a></li>
                             <li><a class="search_tables_open_close_SG" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
                             <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                             <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
@@ -46,22 +46,24 @@
                 <div class="card p20 datasearcharea_AF">
                     <div class="form-group m-0 position-relative">
                         <select name="fieldSelected" @change="onFieldChange($event)" v-model="fieldSelected" class="match_segment_select h48 fsize14 fw400 br5" style="height: 48px; background-color: white;">
-                            <option value="SubscriberId">Subscriber Id</option>
-                            <option value="FullName">Full Name</option>
-                            <option value="Email">Email</option>
-                            <option value="Tag">Tag</option>
+                            <option value="id">Subscriber Id</option>
+                            <option value="firstname">First Name</option>
+                            <option value="lastname">Last Name</option>
+                            <option value="email">Email</option>
+                            <option value="phone">Phone</option>
+                            <option value="created">Subscribe Date</option>
+                            <option value="country_code">Country</option>
+                            <option value="stateName">State</option>
+                            <option value="cityName">City</option>
+                            <option value="zipCode">Zip</option>
+                            <option value="zipCode">AreaCode</option>
+                            <option value="tagID">Tag</option>
                             <option value="IPAddress">IP Address</option>
-                            <option value="SubscribeDate">Subscribe Date</option>
-                            <option value="Country">Country</option>
-                            <option value="State">State</option>
-                            <option value="City">City</option>
-                            <option value="Zip">Zip</option>
-                            <option value="AreaCode">AreaCode</option>
-                            <option value="CustomField1">Custom Field-1</option>
-                            <option value="CustomField2">Custom Field-2</option>
-                            <option value="CustomField3">Custom Field-3</option>
-                            <option value="CustomField4">Custom Field-4</option>
-                            <option value="CustomField5">Custom Field-5</option>
+                            <option value="custom_field_1">Custom Field-1</option>
+                            <option value="custom_field_2">Custom Field-2</option>
+                            <option value="custom_field_3">Custom Field-3</option>
+                            <option value="custom_field_4">Custom Field-4</option>
+                            <option value="custom_field_5">Custom Field-5</option>
                         </select>
                         &nbsp;&nbsp;
                         <select name="operator" @change="onOperatorChange($event)" v-model="operatorSelected" class="match_segment_select h48 fsize14 fw400 br5" style="height: 48px; background-color: white;">
@@ -81,148 +83,174 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row" v-if="viewType=='List View'">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-borderless mb-0">
-                            <tbody>
-                            <tr class="headings">
-                                <td width="20">
+            <div v-if="(subscribers.length > 0 || searchBy.length>0)">
+                <div class="row" v-if="viewType=='List View'">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                <tr class="headings">
+                                    <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
                                         <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
-                                </td>
-                                <td><span class="fsize10 fw500">name </span></td>
-                                <td><span class="fsize10 fw500">Email</span></td>
-                                <td><span class="fsize10 fw500">Phone</span></td>
-                                <td><span class="fsize10 fw500">Tags  </span></td>
-                                <td><span class="fsize10 fw500">Update <img src="assets/images/arrow-down-line-14.svg"></span></td>
-                                <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
-                            </tr>
-                            <tr v-for="contact in subscribers" v-if="subscribers">
-                                <td width="20">
+                                    </td>
+                                    <td><span class="fsize10 fw500">name </span></td>
+                                    <td><span class="fsize10 fw500">Email</span></td>
+                                    <td><span class="fsize10 fw500">Phone</span></td>
+                                    <td><span class="fsize10 fw500">Tags  </span></td>
+                                    <td><span class="fsize10 fw500">Update <img src="assets/images/arrow-down-line-14.svg"></span></td>
+                                    <td class="text-right"><span class="fsize10 fw500"><img src="assets/images/settings-2-line.svg"></span></td>
+                                </tr>
+                                <tr v-for="contact in subscribers" v-if="subscribers">
+                                    <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
                                         <input type="checkbox" :checked="deletedItems.indexOf(contact.id)>-1" @change="addtoDeleteCollection(contact.id, $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
-                                        <user-avatar
-                                            :avatar="contact.avatar"
-                                            :firstname="contact.firstname"
-                                            :lastname="contact.lastname"
-                                            :width="32"
-                                            :height="32"
-                                            :fontsize="12"
-                                        ></user-avatar>
-                                    </a>
-                                    <span class="htxt_medium_14 dark_900" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
-                                </td>
-                                <td>{{ contact.email }}</td>
-                                <td>{{ (contact.phone != '' || contact.phone != null) ? phoneNoFormat(contact.phone) : '' }}</td>
-                                <td>
-                                    <!--<button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
-                                    <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
-                                </td>
-                                <td><span class="">{{ timeAgo(contact.created) }} </span></td>
-                                <td>
-                                    <div class="float-right">
-                                        <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
-                                            <span><img src="assets/images/more-vertical.svg"/></span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                               v-if="contact.status != 2"
-                                               @click="moveToArchive(contact.id)"
-                                            >Move to Archive</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1">Inactive</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else>Active</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">View Details</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)">Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)">Delete</a>
-                                            <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)">Sync</a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
+                                            <user-avatar
+                                                :avatar="contact.avatar"
+                                                :firstname="contact.firstname"
+                                                :lastname="contact.lastname"
+                                                :width="32"
+                                                :height="32"
+                                                :fontsize="12"
+                                            ></user-avatar>
+                                        </a>
+                                        <span class="htxt_medium_14 dark_900" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</span>
+                                    </td>
+                                    <td>{{ contact.email }}</td>
+                                    <td>{{ (contact.phone != '' || contact.phone != null) ? phoneNoFormat(contact.phone) : '' }}</td>
+                                    <td>
+                                        <!--<button class="tags_btn blue">customer</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
+                                        <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
+                                    </td>
+                                    <td><span class="">{{ timeAgo(contact.created) }} </span></td>
+                                    <td>
+                                        <div class="float-right">
+                                            <button type="button" class="dropdown-toggle table_dots_dd" data-toggle="dropdown">
+                                                <span><img src="assets/images/more-vertical.svg"/></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                   v-if="contact.status != 2"
+                                                   @click="moveToArchive(contact.id)"
+                                                >Move to Archive</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1">Inactive</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else>Active</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">View Details</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)">Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)">Delete</a>
+                                                <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)">Sync</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
+                                        <div>
                                 <span class="float-right">
                                 <span v-if="contact.status == '1'" class="status_icon bkg_blue_300"></span>
                                 <span v-else class="status_icon bkg_grey"></span>
                             </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <pagination
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <pagination
+                                :pagination="allData"
+                                @paginate="showPaginationData"
+                                @paginate_per_page="showPaginationItemsPerPage"
+                                :offset="4">
+                            </pagination>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mt-3">
+                        <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
+                    </div>
+                </div>
+
+                <div class="row" v-if="viewType == 'Grid View'">
+                    <div v-for="contact in subscribers" class="col-md-3 d-flex">
+                        <div class="card p0 pt40 text-center animate_top col">
+                            <span class="status_icon bkg_light_800"></span>
+
+                            <div class="dot_dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="javascript:void(0);"v-if="contact.status != 2" @click="moveToArchive(contact.id)"><i class="dripicons-user text-muted mr-2"></i> Move to Archive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1"><i class="dripicons-wallet text-muted mr-2"></i> Inactive</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else><i class="dripicons-gear text-muted mr-2"></i> Active</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> View Details</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> Edit</a>
+                                    <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)"><i class="dripicons-lock text-muted mr-2"></i> Sync</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
+                                <user-avatar
+                                    :avatar="contact.avatar"
+                                    :firstname="contact.firstname"
+                                    :lastname="contact.lastname"
+                                    :width="32"
+                                    :height="32"
+                                    :fontsize="12"
+                                ></user-avatar>
+                            </a>
+                            <h3 class="htxt_medium_14 dark_600 mb-1 mt-4" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</h3>
+                            <p class="fsize14 fw400 dark_400 mb-1 ls_4">{{ contact.email }}</p>
+                            <p class="fsize14 fw400 dark_400 mb30 ls_4">{{ timeAgo(contact.created) }}</p>
+                            <div class="p20 btop">
+                                <!--<button class="tags_btn blue">tags</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
+                                <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex js-segment-contact-slidebox" style="cursor: pointer;">
+                        <div class="card p0 pt40 text-center animate_top col">
+                            <a href="javascript:void(0);" class="circle-icon-64 bkg_light_200 m0auto mt-4"><img src="assets/images/plus03.svg"> </a>
+                            <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4 mt-4">Create<br>new contact</p>
+                        </div>
+                    </div>
+                </div>
+                <pagination v-if="viewType == 'Grid View'"
                             :pagination="allData"
                             @paginate="showPaginationData"
                             @paginate_per_page="showPaginationItemsPerPage"
                             :offset="4">
-                        </pagination>
-                    </div>
-                </div>
-                <div class="col-md-12 text-center mt-3">
-                    <a href="#" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"> &nbsp; LEARN MORE ABOUT PEOPLE</a>
-                </div>
+                </pagination>
             </div>
-
-            <div class="row" v-if="viewType == 'Grid View'">
-                <div v-for="contact in subscribers" class="col-md-3 d-flex">
-                    <div class="card p0 pt40 text-center animate_top col">
-                        <span class="status_icon bkg_light_800"></span>
-
-                        <div class="dot_dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> <img class="" src="assets/images/more-2-fill.svg" alt="profile-user"> </a>
-                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-136px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="javascript:void(0);"v-if="contact.status != 2" @click="moveToArchive(contact.id)"><i class="dripicons-user text-muted mr-2"></i> Move to Archive</a>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 0)" v-if="contact.status ==1 && contact.globalStatus == 1"><i class="dripicons-wallet text-muted mr-2"></i> Inactive</a>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="changeContactStatus(contact.id, 1)" v-else><i class="dripicons-gear text-muted mr-2"></i> Active</a>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> View Details</a>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="prepareContactUpdate(contact.subscriber_id)"><i class="dripicons-lock text-muted mr-2"></i> Edit</a>
-                                <a v-if="moduleName == 'people'" class="dropdown-item" href="javascript:void(0);" @click="doSyncContacts(contact.segment_id)"><i class="dripicons-lock text-muted mr-2"></i> Sync</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0);" @click="deleteContact(contact.subscriber_id)"><i class="dripicons-exit text-muted mr-2"></i> Delete</a>
+            <div v-else class="row">
+                <div class="col-md-12">
+                    <div class="card card_shadow min-h-280">
+                        <div class="row mb65">
+                            <div class="col-md-12 text-left">
+                                <a class="lh_32 blue_400 htxt_bold_14" href="javascript:void(0);">
+                                    <span class="circle-icon-32 float-left bkg_blue_000 mr10"><img src="assets/images/download-fill.svg"/></span>
+                                    Import contacts
+                                </a>
                             </div>
                         </div>
-                        <a href="javascript:void(0);" @click="loadProfile(contact.subscriber_id)">
-                            <user-avatar
-                                :avatar="contact.avatar"
-                                :firstname="contact.firstname"
-                                :lastname="contact.lastname"
-                                :width="32"
-                                :height="32"
-                                :fontsize="12"
-                            ></user-avatar>
-                        </a>
-                        <h3 class="htxt_medium_14 dark_600 mb-1 mt-4" style="cursor:pointer;" @click="loadProfile(contact.subscriber_id)">{{ capitalizeFirstLetter(contact.firstname) }} {{ capitalizeFirstLetter(contact.lastname) }}</h3>
-                        <p class="fsize14 fw400 dark_400 mb-1 ls_4">{{ contact.email }}</p>
-                        <p class="fsize14 fw400 dark_400 mb30 ls_4">{{ timeAgo(contact.created) }}</p>
-                        <div class="p20 btop">
-                            <!--<button class="tags_btn blue">tags</button> <button class="tags_btn">user</button> <button class="tags_btn">+2 </button>-->
-                            <contact-tags :subscriber_id="contact.subscriber_id"></contact-tags>
+                        <div class="row mb65">
+                            <div class="col-md-12 text-center">
+                                <img class="mt40" style="max-width: 250px; " src="assets/images/people_contact_image.svg">
+                                <h3 class="htxt_bold_18 dark_700 mt30">Looks like you don’t have any contacts</h3>
+                                <h3 class="htxt_regular_14 dark_200 mt20 mb25">It’s very easy to create or import contacts!</h3>
+                                <button class="btn btn-sm bkg_blue_000 pr20 blue_300 js-segment-contact-slidebox">Add contact</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 d-flex js-segment-contact-slidebox" style="cursor: pointer;">
-                    <div class="card p0 pt40 text-center animate_top col">
-                        <a href="#" class="circle-icon-64 bkg_light_200 m0auto mt-4"><img src="assets/images/plus03.svg"> </a>
-                        <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4 mt-4">Create<br>new contact</p>
-                    </div>
+                <div class="col-md-12 text-center mt-2">
+                    <a href="javascript:void(0);" class="text-uppercase htxt_medium_10 light_800 ls_4"><img src="assets/images/information-fill.svg"/> &nbsp; LEARN MORE ABOUT PEOPLE</a>
                 </div>
             </div>
-            <pagination v-if="viewType == 'Grid View'"
-                        :pagination="allData"
-                        @paginate="showPaginationData"
-                        @paginate_per_page="showPaginationItemsPerPage"
-                        :offset="4">
-            </pagination>
         </div>
 
         <!--Smart Popup-->
@@ -339,7 +367,7 @@
                 deletedItems: [],
                 profileID : this.$route.params.id,
                 matchSelected: 'MatchOne',
-                fieldSelected: 'Email',
+                fieldSelected: 'email',
                 operatorSelected: 'equal',
                 filterValue: '',
                 filterItems: [],
@@ -433,6 +461,8 @@
                             .then(response => {
                                 this.showLoading(false);
                                 this.displayMessage('success', 'Action completed successfully.');
+
+                                this.loadPaginatedData();
                             });
                     }
                 }
