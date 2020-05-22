@@ -22,7 +22,7 @@
                             <li>
                                 <a class="search_tables_open_close_AF" href="javascript:void(0);" @click="AddFilters"><img src="assets/images/plus_green_15.svg"/></a> &nbsp;
                                 <a href="javascript:void(0);" @click="RemoveFilters(filterItemsArr, (filterItemsArr.length - 1))"><img src="assets/images/minus_red_15.svg"/></a>
-                                <button v-if="filterItemsArr.length > 0" class="btn btn-md bkg_blue_200 light_000 save_filter" @click="addFiltersToSegment">Save Filters</button>
+                                <!--<button v-if="filterItemsArr.length > 0" class="btn btn-md bkg_blue_200 light_000 save_filter" @click="addFiltersToSegment">Save Filters</button>-->
                             </li>
                         </ul>
                     </div>
@@ -386,6 +386,7 @@
                 filterValue: '',
                 filterItems: [],
                 filterItemsArr: [],
+                afFlag: '0'
             }
         },
         mounted() {
@@ -455,7 +456,27 @@
                 this.filterItemsArr.push(this.filterItems);
                 //console.log(this.filterItemsArr);
 
-                this.loadPaginatedData();
+                if(this.filterItemsArr.length > 0) {
+                    //if(confirm('Are you sure you want to a apply filter item(s)?')){
+                        this.showLoading(true);
+
+                        /*axios.post('/admin/broadcast/applyFiltersToSubscribers', {_token:this.csrf_token(), segment_id: this.profileID, subscribersCnt:this.subscribers.length, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
+                            .then(response => {
+                                this.showLoading(false);
+                                this.displayMessage('success', 'Action completed successfully.');
+
+                                this.loadPaginatedData();
+                            });*/
+
+                        axios.post('/admin/broadcast/addFiltersToSegment', {_token:this.csrf_token(), segment_id: this.profileID, subscribersCnt:this.subscribers.length, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
+                            .then(response => {
+                                this.showLoading(false);
+                                this.displayMessage('success', 'Action completed successfully.');
+                                this.afFlag = '1';
+                                this.loadPaginatedData();
+                            });
+                    //}
+                }
             },
             RemoveFilters: function(arr, index) {
                 var i = 0;
@@ -467,11 +488,11 @@
                     }
                 }
             },
-            addFiltersToSegment: function(){
-                if(this.filterItemsArr.length>0){
+            addFiltersToSegment: function() {
+                if(this.filterItemsArr.length > 0) {
                     if(confirm('Are you sure you want to a save filter item(s)?')){
                         this.showLoading(true);
-                        axios.post('/admin/broadcast/addFiltersToSegment', {_token:this.csrf_token(), segment_id: this.profileID, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
+                        axios.post('/admin/broadcast/addFiltersToSegment', {_token:this.csrf_token(), segment_id: this.profileID, subscribersCnt:this.subscribers.length, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
                             .then(response => {
                                 this.showLoading(false);
                                 this.displayMessage('success', 'Action completed successfully.');
@@ -594,7 +615,7 @@
                     });
             },
             loadPaginatedData : function() {
-                axios.get('/admin/broadcast/segmentcontacts/'+this.profileID +'?page='+this.current_page+'&items_per_page='+this.items_per_page+'&search='+this.searchBy+'&sortBy='+this.sortBy)
+                axios.get('/admin/broadcast/segmentcontacts/'+this.profileID +'?page='+this.current_page+'&items_per_page='+this.items_per_page+'&search='+this.searchBy+'&sortBy='+this.sortBy+'&afFlag='+this.afFlag)
                     .then(response => {
                         this.breadcrumb = response.data.breadcrumb;
                         this.makeBreadcrumb(this.breadcrumb);
