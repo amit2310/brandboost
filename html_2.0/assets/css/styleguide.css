@@ -104,6 +104,7 @@ FORMS GROUP
 .form-group select.form-control-custom{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 97% 20px no-repeat #fff}
 .form-group select.form-control-custom2{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 97% 10px no-repeat #fff}
 .form-group select.form-control-custom.small{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 85% 20px no-repeat #fff}
+.form-group select.form-control-custom.medium{-webkit-appearance: none;   -moz-appearance:none;   appearance:none; background: url(../images/select_bkg.svg) 90% 20px no-repeat #fff}
 
 
 .phonenumber{border: 1px solid #E1E9F6;box-sizing: border-box;border-radius: 4px; height: 48px; padding: 5px 17px;}

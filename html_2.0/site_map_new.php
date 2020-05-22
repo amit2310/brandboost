@@ -204,10 +204,10 @@
      		<h3 class="htxt_bold_16 reviews_400">People Tags</h3>
      		<hr>
      		<ul>
-     			<li><a target="_blank" href="people_tag1.php">People Tags 1</a></li>
-     			<li><a target="_blank" href="people_tag2.php">People Tags 2</a></li>
-     			<li><a target="_blank" href="people_tag3.php">People Tags 3</a></li>
-     			<li><a target="_blank" href="people_tag4.php">People Tags 4</a></li>
+     			<li><a target="_blank" href="people_tag_new_a.php">People Tags 1</a></li>
+     			<li><a target="_blank" href="people_tag_new_b.php">People Tags 2</a></li>
+     			<li><a target="_blank" href="people_tag_new_c.php">People Tags 3</a></li>
+     			<li><a target="_blank" href="people_tag_new_d.php">People Tags 4</a></li>
      		</ul>
      		</div>
             
