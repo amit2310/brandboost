@@ -552,11 +552,13 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::get('admin/workflow/createEventNode', 'Admin\WorkFlow@createEventNode');
     Route::get('admin/workflow/createWorkflowEventNode', 'Admin\WorkFlow@createWorkflowEventNode');
     Route::post('admin/workflow/updateWorkflowCampaign', 'Admin\WorkFlow@updateWorkflowCampaign');
+    Route::post('admin/workflow/updateWorkflowDecisionCampaign', 'Admin\WorkFlow@updateWorkflowDecisionCampaign');
     Route::post('admin/workflow/saveWorkflowDraft', 'Admin\WorkFlow@saveWorkflowDraft');
     Route::post('admin/workflow/savetoMyTemplates', 'Admin\WorkFlow@savetoMyTemplates');
     Route::post('admin/workflow/updateWorkflowDraft', 'Admin\WorkFlow@updateWorkflowDraft');
     Route::post('admin/workflow/updateWorkflowTemplate', 'Admin\WorkFlow@updateWorkflowTemplate');
     Route::post('admin/workflow/sendTestEmailworkflowCampaign', 'Admin\WorkFlow@sendTestEmailworkflowCampaign');
+    Route::post('admin/workflow/sendTestEmailworkflowDecisionCampaign', 'Admin\WorkFlow@sendTestEmailworkflowDecisionCampaign');
     Route::post('admin/workflow/sendTestSMSworkflowCampaign', 'Admin\WorkFlow@sendTestSMSworkflowCampaign');
     Route::post('admin/workflow/sendTestSMSworkflowDecisionCampaign', 'Admin\WorkFlow@sendTestSMSworkflowDecisionCampaign');
     Route::post('admin/workflow/previewWorkflowCampaign', 'Admin\WorkFlow@previewWorkflowCampaign');

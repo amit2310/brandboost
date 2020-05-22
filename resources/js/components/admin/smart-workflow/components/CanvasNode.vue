@@ -22,9 +22,9 @@
                                 <img v-if="nodeType=='goal'" width="18" src="assets/images/checkbox-circle-fill-white.svg">
                                 <img v-if="nodeType=='exit'" width="18" src="assets/images/flag-2-fill.svg">
                             </div>
-                            <div class="edit_delete" v-if="nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms'">
+                            <!--<div class="edit_delete" v-if="nodeName.toLowerCase() == 'email' || nodeName.toLowerCase() == 'sms'">
                                 <a href="javascript:void(0);" @click="deleteEvent"><i class="icon-bin2 fsize10 dark_100"></i></a>
-                            </div>
+                            </div>-->
                             <p class="dark_100 fsize11 fw500 mb-1 text-uppercase ls_4">{{nodeType.toUpperCase()}}</p>
                             <template v-if="nodeType.toLowerCase() == 'delay'">
                                 <p class="dark_600 fsize13 fw500 mb15" v-if="nodeTitle">{{capitalizeFirstLetter(nodeTitle)}}</p>

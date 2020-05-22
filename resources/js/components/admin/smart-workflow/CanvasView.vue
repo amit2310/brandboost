@@ -125,7 +125,6 @@
                 this.$emit("setActionProps", eventData, nodeCat, pathId);
             },
             deleteEventNode: function(eventData, nodeCat){
-                alert('++'+nodeCat);
                 this.$emit("deleteWorkflowNode", eventData, nodeCat);
             },
             editEventNode: function(nodeType, eventData, nodeCat){
