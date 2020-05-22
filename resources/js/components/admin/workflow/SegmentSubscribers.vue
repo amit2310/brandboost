@@ -489,7 +489,7 @@
                             .then(response => {
                                 this.showLoading(false);
                                 this.displayMessage('success', 'Action completed successfully.');
-
+                                this.afFlag = '0';
                                 this.loadPaginatedData();
                             });
                     }

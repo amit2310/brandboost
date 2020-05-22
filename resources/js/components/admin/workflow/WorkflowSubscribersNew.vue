@@ -171,6 +171,21 @@
             </div>
 
             <div class="row" v-if="viewType == 'Grid View'">
+                <div class="col">
+                    <div class="custom_pagination grey mb30">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="mr-4">{{ allData.total }} CONTACTS</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <select style="width:55px;"><option>SORT</option><option>SORT</option><option>15</option><option>20</option></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" v-if="viewType == 'Grid View'">
                 <div v-for="contact in subscribers" v-if="subscribers" class="col-md-3 d-flex">
                     <div class="card p0 pt40 text-center animate_top col">
                         <span v-if="contact.status == '1'" class="status_icon bkg_blue_300"></span>
