@@ -57,7 +57,211 @@ class SmartBrandboost extends Command {
      * @return mixed
      */
     public function handle() {
-        $this->startCampaign();
+        $this->startWorkflow();
+    }
+
+    public function startWorkflow() {
+        //Instantiate cron manager model to access its properties and methods
+        $mCron = new ManagerModel();
+
+        //Instantiate Email Model to access its properties and methods
+        $mInviter = new BrandboostModel();
+
+        //Check Cron Lock
+        $bLocked = false;
+        $oCron = $mCron->checkCronStatus('smart-reviews');
+        if ($oCron->locked == true) {
+            die("Currently cron is locked");
+        }
+
+        if ($oCron->locked == false) {
+            //Lock Cron
+            $bLocked = $mCron->lockCron('smart-reviews');
+        }
+
+        if ($bLocked == false) {
+            die("Currently cron is locked!!");
+        }
+        $aEventsData = $mInviter->getInviterEvents();
+        //Arrange all the events in order
+        $aEvents = sortWorkflowEvents($aEventsData);
+        if (!empty($aEvents)) {
+            foreach ($aEvents as $aEvent) {
+                $bActiveSubscription = false;
+                $userID = $aEvent->client_id;
+                if ($userID > 0) {
+                    $bActiveSubscription = UsersModel::isActiveSubscription($userID);
+                    if ($bActiveSubscription == true) {
+                        $eventType = $aEvent->event_type;
+                        switch ($eventType) {
+                            case "send-invite":
+                            case "main":
+                                $this->processMainEvents($aEvent);
+                                break;
+                            case "followup":
+                                $this->processFollowup($aEvent);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        //Release Cron
+        $mCron->releaseCron('smart-reviews');
+        echo "Script Ended";
+    }
+
+    /**
+     * Processes Send Invites(Main Event)
+     * @param type $aEvent
+     * @param type $aEvent
+     */
+    public function processMainEvents($aEvent = array()) {
+        //Instantiate Email Model to access its properties and methods
+        $mInviter = new BrandboostModel();
+
+        if (!empty($aEvent)) {
+
+            $bbID = $aEvent->brandboost_id;
+            $inviterID = $aEvent->id;
+            $oParams = json_decode($aEvent->data);
+            //Get all subscriber and then find eligible subscribers only
+            $oSubscribers = $mInviter->getInviterEligibleSubscribers($bbID);
+            $aProcessedSubscribers = $mInviter->getTriggeredSubscribers($inviterID);
+            $aEligibleSubscriber = array();
+
+            if (!empty($oSubscribers)) {
+                foreach ($oSubscribers as $oSubs) {
+                    if (!in_array($oSubs->id, $aProcessedSubscribers)) {
+                        $aEligibleSubscriber[] = $oSubs;
+                    }
+                }
+            }
+
+            if (!empty($aEligibleSubscriber)) {
+                $aFireData = array(
+                    'inviter_data' => $aEvent,
+                    'subscribers' => $aEligibleSubscriber
+                );
+                $this->fireAutomation($aFireData);
+            }
+        }
+    }
+
+    public function fireAutomation($aData = array()) {
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        if(!empty($oEvent)){
+            $oParams = json_decode($oEvent->data);
+            $nodeType = $oParams->node_type;
+            switch ($nodeType){
+                case 'action':
+                    $this->processActions($aData);
+                    break;
+                case 'decision':
+                    $this->processDecision($aData);
+                    break;
+                case 'delay':
+                    $this->processDelay($aData);
+                    break;
+                case 'split':
+                    $this->processSplit($aData);
+                    break;
+                case 'goal':
+                    $this->processGoal($aData);
+                    break;
+                case 'exit':
+                    $this->processExit($aData);
+                    break;
+            }
+        }
+
+    }
+
+    public function processActions($aData){
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $actionName = $oParams->name;
+        switch ($actionName){
+            case 'field':
+                $this->setField($aData);
+                break;
+            case 'tag':
+                $this->applyTag($aData);
+                break;
+            case 'list':
+                $this->addToList($aData);
+                break;
+            case 'segment':
+                $this->addToSegment($aData);
+                break;
+            case 'status':
+                $this->setStatus($aData);
+                break;
+            case 'webhook':
+                $this->executeWebhook($aData);
+                break;
+            case 'email':
+                $this->sendEmailCampaign($aData);
+                break;
+            case 'sms':
+                $this->sendSMSCampaign($aData);
+                break;
+        }
+
+    }
+
+    public function setField($aData){
+
+    }
+
+    public function applyTag($aData){
+
+    }
+
+    public function addToList($aData){
+
+    }
+
+    public function addToSegment($aData){
+
+    }
+
+    public function setStatus($aData){
+
+    }
+
+    public function executeWebhook($aData){
+
+    }
+
+    public function sendEmailCampaign($aData){
+
+    }
+
+    public function sendSMSCampaign($aData){
+
+    }
+
+    public function processDecision($aData){
+
+    }
+
+    public function processDelay($aData){
+
+    }
+
+    public function processSplit($aData){
+
+    }
+
+    public function processGoal($aData){
+
+    }
+
+    public function processExit($aData){
+
     }
 
     /**
@@ -90,15 +294,15 @@ class SmartBrandboost extends Command {
         //die;
         if (!empty($aEvents)) {
             foreach ($aEvents as $aEvent) {
-                $bActiveSubsription = false;
+                $bActiveSubscription = false;
                 //$bbID = $aEvent->brandboost_id;
                 $userID = $aEvent->client_id;
                 //if ($userID > 0 && $bbID == 126) {
                 if ($userID > 0) {
-                    $bActiveSubsription = UsersModel::isActiveSubscription($userID);
-                    //echo "Subscription status ". $bActiveSubsription;
+                    $bActiveSubscription = UsersModel::isActiveSubscription($userID);
+                    //echo "Subscription status ". $bActiveSubscription;
                     //die;
-                    if ($bActiveSubsription == true) {
+                    if ($bActiveSubscription == true) {
                         /* if ($bbID != '60') {
                           break;
                           } */
