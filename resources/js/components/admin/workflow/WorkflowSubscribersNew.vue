@@ -587,7 +587,8 @@
                 }
             },
             prepareContactUpdate: function(contactId) {
-                this.$emit('prepareUpdate', {contactId});
+                //this.$emit('prepareUpdate', {contactId});
+                this.getContactInfo(contactId);
             },
             doSyncContacts: function(contactId) {
                 this.$emit('syncContacts', {contactId});
