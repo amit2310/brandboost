@@ -91,8 +91,8 @@
                                             </label>
                                         </span>
                                         </td>
-                                        <td>
-                                            <span class="table-img mr15" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                        <td @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
+                                            <span class="table-img mr15">
                                                 <span class="circle_icon_24 bkg_blue_200"><img src="assets/images/pie_chart_fill_12.svg"/></span>
                                             </span> {{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}
                                         </td>
@@ -164,15 +164,16 @@
                                         <a class="dropdown-item" href="javascript:void(0);" @click="deleteSegment(segment.id)"><i class="dripicons-user text-muted mr-2"></i> Delete</a>
                                     </div>
                                 </div>
-                                <a v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" href="javascript:void(0);" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
-                                <a v-else href="javascript:void(0);" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
+                                <!--<a v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" href="javascript:void(0);" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
+                                <a v-else href="javascript:void(0);" class="circle-icon-64 bkg_light_600 m0auto"><img src="assets/images/filter-3-f.svg"> </a>-->
+                                <a @click="showSegmentSubscribers(segment.id)" href="javascript:void(0);" class="circle-icon-64 bkg_brand_000 m0auto"><img src="assets/images/filter-3-f.svg"> </a>
                                 <div v-if="segment.segmentSubscribers.data.length > 0" @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
                                     <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
                                     <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
                                         {{capitalizeFirstLetter(segment.source_module_name)}}
                                     </p>
                                 </div>
-                                <div v-else>
+                                <div v-else @click="showSegmentSubscribers(segment.id)" style="cursor:pointer;">
                                     <h3 class="htxt_bold_16 dark_700 mb-1 mt-4">{{capitalizeFirstLetter(setStringLimit(segment.segment_name, 20))}}, USA, 25+</h3>
                                     <p class="fsize11 fw500 dark_200 text-uppercase mb30 ls_4">
                                         {{capitalizeFirstLetter(segment.source_module_name)}}
