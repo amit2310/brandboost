@@ -29,9 +29,9 @@
 
                     <div class="col-md-4 pl-0">
                         <ul class="table_filter text-right">
-                            <li><a href="javascript:void(0);" class="save_segment_btn fsize14 dark_600 fw500 pl15 pr15"><img class="float-left" style="margin-top:2px;" src="assets/images/pi-line-blue.svg"/> &nbsp; Save Segment</a></li>
+                            <li v-show="selectedItems.length>0"><a href="javascript:void(0);" @click="createSegmentWithSavedFilters" class="save_segment_btn fsize14 dark_600 fw500 pl15 pr15"><img class="float-left" style="margin-top:2px;" src="assets/images/pi-line-blue.svg"/> &nbsp; Save Segment</a></li>
                             <li><a class="search_tables_open_close_SG" href="javascript:void(0);"><i><img src="assets/images/search-2-line_grey.svg"></i></a></li>
-                            <li v-show="deletedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
+                            <li v-show="selectedItems.length>0 && sortBy !='archive'"><a href="javascript:void(0);" @click="deleteSelectedItems"><i><img width="16" src="assets/images/delete-bin-7-line.svg"></i></a></li>
                             <li><a href="javascript:void(0);" :class="{'active': viewType == 'List View'}" @click="viewType='List View'"><i><img src="assets/images/sort_16_grey.svg" title="List View"></i></a></li>
                             <li><a href="javascript:void(0);" :class="{'active': viewType == 'Grid View'}" @click="viewType='Grid View'"><i><img src="assets/images/cards_16_grey.svg" title="Grid View"></i></a></li>
                         </ul>
@@ -107,7 +107,7 @@
                                     <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox" :checked="allChecked" @change="addtoDeleteCollection('all', $event.target)">
+                                        <input type="checkbox" :checked="allChecked" @change="addtoSelectCollection('all', $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
@@ -123,7 +123,7 @@
                                     <td width="20">
                                 <span>
                                     <label class="custmo_checkbox pull-left">
-                                        <input type="checkbox" :checked="deletedItems.indexOf(contact.id)>-1" @change="addtoDeleteCollection(contact.id, $event.target)">
+                                        <input type="checkbox" :checked="selectedItems.indexOf(contact.id)>-1" @change="addtoSelectCollection(contact.id, $event.target)">
                                         <span class="custmo_checkmark blue"></span>
                                     </label>
                                 </span>
@@ -378,7 +378,7 @@
                 viewType: 'List View',
                 sortBy: 'Date Created',
                 searchBy: '',
-                deletedItems: [],
+                selectedItems: [],
                 profileID : this.$route.params.id,
                 matchSelected: 'MatchOne',
                 fieldSelected: 'email',
@@ -408,7 +408,7 @@
             'allChecked' : function () {
                 let notFound = '';
                 this.subscribers.forEach(camp => {
-                    let idx = this.deletedItems.indexOf(camp.id);
+                    let idx = this.selectedItems.indexOf(camp.id);
                     if(idx == -1){
                         notFound = true;
                     }
@@ -460,14 +460,6 @@
                     //if(confirm('Are you sure you want to a apply filter item(s)?')){
                         this.showLoading(true);
 
-                        /*axios.post('/admin/broadcast/applyFiltersToSubscribers', {_token:this.csrf_token(), segment_id: this.profileID, subscribersCnt:this.subscribers.length, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
-                            .then(response => {
-                                this.showLoading(false);
-                                this.displayMessage('success', 'Action completed successfully.');
-
-                                this.loadPaginatedData();
-                            });*/
-
                         axios.post('/admin/broadcast/addFiltersToSegment', {_token:this.csrf_token(), segment_id: this.profileID, subscribersCnt:this.subscribers.length, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
                             .then(response => {
                                 this.showLoading(false);
@@ -488,11 +480,12 @@
                     }
                 }
             },
-            addFiltersToSegment: function() {
-                if(this.filterItemsArr.length > 0) {
-                    if(confirm('Are you sure you want to a save filter item(s)?')){
+            createSegmentWithSavedFilters: function() {
+                if(this.filterItemsArr.length > 0 && this.selectedItems.length > 0) {
+                    if(confirm('Are you sure you want to create a segment with saved filter item(s)?')){
                         this.showLoading(true);
-                        axios.post('/admin/broadcast/addFiltersToSegment', {_token:this.csrf_token(), segment_id: this.profileID, subscribersCnt:this.subscribers.length, matchSelected: this.matchSelected, multipleFIlterItems:this.filterItemsArr})
+
+                        axios.post('/admin/broadcast/createSegmentWithSavedFilters', {_token:this.csrf_token(), segment_id: this.profileID, multiSubscriberId:this.selectedItems})
                             .then(response => {
                                 this.showLoading(false);
                                 this.displayMessage('success', 'Action completed successfully.');
@@ -509,13 +502,13 @@
                 this.showLoading(true);
 
                 this.sortBy = sortVal;
-                this.deletedItems = [];
+                this.selectedItems = [];
             },
             deleteSelectedItems: function(){
-                if(this.deletedItems.length>0){
+                if(this.selectedItems.length>0){
                     if(confirm('Are you sure you want to delete selected item(s)?')){
                         this.showLoading(true);
-                        axios.post('/admin/broadcast/deleteMultipalSegmentUser', {_token:this.csrf_token(), multiSegmentUserid:this.deletedItems})
+                        axios.post('/admin/broadcast/deleteMultipalSegmentUser', {_token:this.csrf_token(), multiSegmentUserid:this.selectedItems})
                             .then(response => {
                                 this.showLoading(false);
                                 this.loadPaginatedData();
@@ -523,22 +516,22 @@
                     }
                 }
             },
-            addtoDeleteCollection: function(itemId, elem){
+            addtoSelectCollection: function(itemId, elem){
                 if(itemId == 'all'){
                     if(elem.checked){
                         if(this.subscribers.length>0){
                             this.subscribers.forEach(camp => {
-                                let idxx = this.deletedItems.indexOf(camp.id);
+                                let idxx = this.selectedItems.indexOf(camp.id);
                                 if(idxx == -1){
-                                    this.deletedItems.push(camp.id);
+                                    this.selectedItems.push(camp.id);
                                 }
                             });
                         }
                     }else{
                         this.subscribers.forEach(camp => {
-                            let idxx = this.deletedItems.indexOf(camp.id);
+                            let idxx = this.selectedItems.indexOf(camp.id);
                             if(idxx > -1){
-                                this.deletedItems.splice(idxx, 1);
+                                this.selectedItems.splice(idxx, 1);
                             }
                         });
                     }
@@ -546,11 +539,11 @@
                 }
 
                 if(elem.checked){
-                    this.deletedItems.push(itemId);
+                    this.selectedItems.push(itemId);
                 }else{
-                    let idx = this.deletedItems.indexOf(itemId);
+                    let idx = this.selectedItems.indexOf(itemId);
                     if (idx > -1) {
-                        this.deletedItems.splice(idx, 1);
+                        this.selectedItems.splice(idx, 1);
                     }
                 }
 

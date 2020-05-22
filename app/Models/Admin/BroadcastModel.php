@@ -683,7 +683,7 @@ class BroadcastModel extends Model {
      * @param type $sendingMethod
      * @return boolean
      */
-    public function addSegmentSubscribers($segmentID, $campaignID, $segmentType, $campaignType, $moduleName = '', $sendingMethod = 'normal') {
+    public function addSegmentSubscribers($segmentID, $campaignID='', $segmentType='', $campaignType='', $moduleName='', $sendingMethod='normal', $subscriberID='') {
         $aUser = getLoggedUser();
         $userID = $aUser->id;
 
@@ -692,6 +692,18 @@ class BroadcastModel extends Model {
         if (!empty($oExistingSubscribers)) {
             foreach ($oExistingSubscribers as $oSubs) {
                 $aExistingSubsID[] = $oSubs->subscriber_id;
+            }
+        }
+
+        if ($sendingMethod == 'filter') {
+            if (!in_array($subscriberID, $aExistingSubsID)) {
+                $str = "(" . $userID . "," . $segmentID . "," . $subscriberID . "," . "'" . date("Y-m-d H:i:s") . "')";
+                $aSqlParam[] = $str;
+
+                $sql = "INSERT INTO `tbl_segments_users` (`user_id`, `segment_id`, `subscriber_id`, `created`) VALUES " . implode(",", $aSqlParam);
+
+                $result = DB::statement($sql);
+                return true;
             }
         }
 

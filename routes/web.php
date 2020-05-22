@@ -703,6 +703,7 @@ Route::group(['middleware' => ['bb_authorize']], function () {
     Route::post('admin/broadcast/getExportedProperties', 'Admin\Broadcast@getExportedProperties');
     Route::post('admin/broadcast/loadBroadcastAudience', 'Admin\Broadcast@loadBroadcastAudience');
     Route::post('admin/broadcast/multipalDeleteRecord', 'Admin\Broadcast@multipalDeleteRecord');
+    Route::post('admin/broadcast/createSegmentWithSavedFilters', 'Admin\Broadcast@createSegmentWithSavedFilters');
     Route::get('admin/broadcast/report/{broadcastID}', 'Admin\Broadcast@report');
 
 //Tags
