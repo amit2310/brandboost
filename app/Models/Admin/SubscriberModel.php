@@ -15,7 +15,7 @@ class SubscriberModel extends Model {
      * @param type $userID
      * @return type
      */
-    public static function getGlobalSubscribers($userID, $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10') {
+    public static function getGlobalSubscribers($userID, $paginated = true, $searchBy='', $sortBy='Active', $items_per_page='10', $filter_data='') {
         $query = DB::table('tbl_subscribers')
                 ->leftJoin('tbl_users', 'tbl_subscribers.user_id', '=', 'tbl_users.id')
                 ->select('tbl_subscribers.*', 'tbl_subscribers.id as subscriber_id', 'tbl_subscribers.id AS global_user_id', 'tbl_subscribers.status AS globalStatus', 'tbl_users.avatar')
@@ -23,11 +23,61 @@ class SubscriberModel extends Model {
                 ->where('tbl_subscribers.firstname', '!=', 'NA')
                 /*->where('tbl_subscribers.status', 1)*/
                 ->orderBy('tbl_subscribers.id', 'desc');
+
         if(!empty($searchBy)){
             $query->where('tbl_subscribers.owner_id', $userID);
             $query->where('tbl_subscribers.firstname', 'LIKE', "%$searchBy%");
             $query->orWhere('tbl_subscribers.lastname', 'LIKE', "%$searchBy%");
             $query->orWhere('tbl_subscribers.email', 'LIKE', "%$searchBy%");
+        }
+
+        if(!empty($filter_data)) {
+            //$query->where('tbl_subscribers.owner_id', $userID);
+            $filter_data_arr = ($filter_data != '' ? json_decode($filter_data, true) : '');
+            //pre($filter_data_arr);
+            $match_param = $filter_data_arr['match_param'];
+            $filtersArr = $filter_data_arr['filters'];
+
+            if(!empty($filtersArr)) {
+                foreach($filtersArr as $fKey => $fVal) {
+
+                    if($match_param == 'one') {
+                        if($fKey == 0) {
+                            $selectStr = 'where';
+                        } else {
+                            $selectStr = 'orWhere';
+                        }
+                    } else {
+                        $selectStr = 'where';
+                    }
+
+                    //echo $fVal['field_name']."----".$fVal['operator']."----".$fVal['field_value'];
+                    $field_name = $fVal['field_name'];
+                    $operator = $fVal['operator'];
+                    $field_value = $fVal['field_value'];
+
+                    if($field_name == 'IPAddress') {
+
+                    } else {
+                        if($operator == 'equal' || $operator == 'is') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '=', $field_value);
+                        } else if($operator == 'greaterthan') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '>', $field_value);
+                        } else if($operator == 'lessthan') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '<', $field_value);
+                        } else if($operator == 'contain') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, 'LIKE', "%$field_value%");
+                        } else if($operator == 'startwith') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, 'LIKE', "$field_value%");
+                        } else if($operator == 'endwith') {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, 'LIKE', "%$field_value");
+                        } else {
+                            $query->$selectStr('tbl_subscribers.'.$field_name, '!=', $field_value);
+                        }
+                    }
+
+                }
+            }
         }
 
         if(!empty($sortBy)){
@@ -56,6 +106,7 @@ class SubscriberModel extends Model {
         }else{
             $oData = $query->get();
         }
+
         return $oData;
     }
 

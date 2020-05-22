@@ -3307,19 +3307,29 @@ class Broadcast extends Controller {
             'Segments' => '#/contacts/segments',
             'Subscribers' => ''
         );
+
+        $afFlag = $request->get('afFlag');
         $sortBy = $request->get('sortBy');
         $searchBy = $request->get('search');
         $items_per_page = !empty($request->get('items_per_page')) ? $request->get('items_per_page') : '10';
 
         //Instantiate Broadcast model to get its methods and properties
         $mBroadcast = new BroadcastModel();
+        $mSubscriber = new SubscriberModel();
 
         //Get Segment Info
         $oSegment = $mBroadcast->getSegmentInfo($segmentID);
         $filter_data = $oSegment->filter_data;
         //$filter_data_arr = ($filter_data != '' ? json_decode($filter_data, true) : '');
 
-        $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID, true, $searchBy, $sortBy, $items_per_page, $filter_data);
+        //echo "--------".$afFlag."---------";
+        if($afFlag == '0') {
+            $oSubscribers = $mBroadcast->getSegmentSubscribers($segmentID, $userID, true, $searchBy, $sortBy, $items_per_page, '');
+        } else {
+            $oSubscribers = $mSubscriber->getGlobalSubscribers($userID, true, $searchBy, $sortBy, $items_per_page, $filter_data);
+        }
+        //pre($oSubscribers);
+
         $breadcrumb = '<ul class="nav navbar-nav hidden-xs bradcrumbs">
                         <li><a class="sidebar-control hidden-xs" href="' . base_url('admin/') . '">Home</a> </li>
                         <li><a style="cursor:text;" class="sidebar-control hidden-xs slace">/</a></li>
@@ -3362,6 +3372,7 @@ class Broadcast extends Controller {
         $response = array();
 
         $segmentID = $request->segment_id;
+        $subscribersCnt = $request->subscribersCnt;
         $matchSelected = ($request->matchSelected == 'MatchOne' ? 'one' : 'all');
         $multipleFIlterItems = $request->multipleFIlterItems;
        // pre($multipleFIlterItems);
