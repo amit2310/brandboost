@@ -103,7 +103,14 @@
         <div class="row mt40">
             <div class="col-md-12"><hr class="mb25"></div>
             <div class="col-6"><button class="btn btn-sm bkg_none border dark_200 pl10 min_w_96" @click="backToConfiguration"> <span class="ml0 mr10"><img src="assets/images/arrow-left-line.svg"></span>Back</button></div>
-            <div class="col-6"><button class="btn btn-sm bkg_email_300 light_000 float-right" @click="backToConfiguration">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button></div>
+            <div class="col-6">
+                <button class="btn btn-sm bkg_email_300 light_000 float-right" @click="backToConfiguration">Save and continue <span><img src="assets/images/arrow-right-line.svg"></span></button>
+                <a
+                    class="dark_200 fw500 d-inline-block mt10 pull-right mr20"
+                    href="javascript:void(0);"
+                    @click="deleteNode"
+                >Delete &nbsp; <i class="ri-delete-bin-6-line"></i></a>
+            </div>
         </div>
 
         <!--Edit Preview Popup-->
@@ -322,6 +329,12 @@
             }
         },
         methods: {
+            deleteNode: function(){
+                if(confirm("Are you sure you want to delete this node?")){
+                    this.$emit("deleteWorkflowEvent", {id:this.event_id});
+                    this.backToConfiguration();
+                }
+            },
             backToConfiguration: function(){
                 document.querySelector('#hidePreviewForm').click();
                 this.$emit("hideEmailTemplate")

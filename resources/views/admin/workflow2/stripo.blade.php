@@ -698,8 +698,14 @@
             var compliledHtml = returnHtml();
             var silentMod = $(this).attr('notification-mod');
             window.parent.$('.overlaynew').show();
+            var url = '';
+            <?php if($nodeType == 'decision'): ?>
+                url = '/admin/workflow/updateWorkflowDecisionCampaign';
+            <?php else: ?>
+                url = '/admin/workflow/updateWorkflowCampaign';
+            <?php endif; ?>
             $.ajax({
-                url: '/admin/workflow/updateWorkflowCampaign',
+                url: url,
                 type: "POST",
                 data: {
                     _token: '{{csrf_token()}}',

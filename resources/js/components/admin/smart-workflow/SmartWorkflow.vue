@@ -210,6 +210,7 @@
                     @loadCategoriedTemplates="loadCategoriedTemplates"
                     @hideEmailTemplate="closeEmailTemplates"
                     @updateEmailCampaignId="setEmailCampaignId"
+                    @deleteWorkflowEvent="deleteWorkflowNode"
                 ></email-templates>
                 <sms-templates
                     v-if="showSMSTemplates"
@@ -225,6 +226,7 @@
                     @loadCategoriedTemplates="loadCategoriedTemplates"
                     @hideSMSTemplate="closeSMSTemplates"
                     @updateSMSCampaignId="setSMSCampaignId"
+                    @deleteWorkflowEvent="deleteWorkflowNode"
                 ></sms-templates>
 
                 <!--Add Node Modal-->
@@ -1743,7 +1745,7 @@
               this.clearSplitProperties();
               this.clearDecisionProperties();
             },
-            deleteWorkflowNode: function(event){
+            deleteWorkflowNode: function(event, nodeCat){
                 this.clearActionProps();
                 this.showLoading(true);
                 let formData = {
@@ -1752,7 +1754,7 @@
                     event_id: event.id
                 };
                 let url='';
-                if(this.isDecisionNode == true){
+                if(this.isDecisionNode == true || nodeCat == 'decision'){
                     url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowDecisionEvent';
                 }else{
                     url = '/f9e64c81dd00b76e5c47ed7dc27b193733a847c0f/deleteWorkflowEvent';
@@ -2072,7 +2074,13 @@
             loadEmailPreview: function(campaignId){
                 this.selected_emailCampaignId = campaignId;
                 this.showLoading(true);
-                axios.post('/admin/workflow/previewWorkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/previewWorkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/previewWorkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     campaignId: campaignId,
@@ -2541,7 +2549,13 @@
             },
             saveEditChanges: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/updateWorkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/updateWorkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/updateWorkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     greeting: this.greetings,
@@ -2557,7 +2571,13 @@
             },
             sendTestEmail: function(){
                 this.showLoading(true);
-                axios.post('/admin/workflow/sendTestEmailworkflowCampaign', {
+                let url = '';
+                if(this.isDecisionNode == true){
+                    url = '/admin/workflow/sendTestEmailworkflowDecisionCampaign';
+                }else{
+                    url = '/admin/workflow/sendTestEmailworkflowCampaign';
+                }
+                axios.post(url, {
                     _token: this.csrf_token(),
                     moduleName: this.moduleName,
                     moduleUnitID: this.moduleUnitId,
