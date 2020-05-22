@@ -3408,6 +3408,43 @@ class Broadcast extends Controller {
     }
 
     /**
+     * Used to delete segment users in bulk
+     */
+    public function createSegmentWithSavedFilters(Request $request) {
+        $aUser = getLoggedUser();
+        $userID = $aUser->id;
+
+        //Instantiate Broadcast model to get its methods and properties
+        $mBroadcast = new BroadcastModel();
+        $mSubscriber = new SubscriberModel();
+
+        $response = array();
+
+        $segment_id = $request->segment_id;
+        $multiSubscriberId = $request->multiSubscriberId;
+
+        if ($segment_id > 0) {
+            if(!empty($multiSubscriberId)) {
+                foreach ($multiSubscriberId as $subscriberID) {
+                    //echo "-----------" . $subscriberID;
+
+                    //Enter list of contacts in the segment
+                    $result = $mBroadcast->addSegmentSubscribers($segment_id, '', '', '', '', 'filter', $subscriberID);
+                }
+            }
+        }
+
+        if ($result) {
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = "Error";
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    /**
      * Used to delete segments in bulk
      */
     public function deleteMultipalSegment(Request $request) {
