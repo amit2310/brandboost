@@ -19,11 +19,7 @@
 
 
 <style>
-.datasearcharea_AF a.searchcloseicon {
-	position: absolute;
-	right: 30px;
-	top: 32px;
-}
+
 	
 </style>
 </head>
@@ -31,10 +27,6 @@
 
 
 <body id="PeopleSection" class="pagewithleftsidebar">
-  
-
-
-
 
 <div class="page-wrapper ">
  <!--******************
@@ -45,7 +37,7 @@
  
   <div class="page-content">
 
-
+  
 
   
   
@@ -65,7 +57,7 @@
    <div class="row">
    	<div class="col-md-6 col-6">
    	<span class="float-left mr20"><img src="assets/images/BACK.svg"/></span>
-   	<h3 class="htxt_medium_24 dark_700">General Electric</h3>
+   	<h3 class="htxt_medium_24 dark_700">Business</h3>
    	</div>
    	<div class="col-md-6 col-6 text-right">
    		<button class="circle-icon-40 mr15"><img src="assets/images/download-line.svg"/></button>
@@ -94,15 +86,15 @@
     <div style="width:279px;">
 	 	<div class="p20 bbot top_headings">
 	 		<div class="row">
-	 			<div class="col"><p>People</p></div>
-	 			<!--<div class="col text-right"><p><a class="close_sidebar" href="#">OPEN MENU &nbsp; <img src="assets/images/menu-2-line.svg"/></a></p></div>-->
+	 			<div class="col"><p>PEOPLE</p></div>
+	 			
 	 		</div>
 	 	</div>
        
        <div class="p20 pt30 pb10">
 	 		<div class="row">
-	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Lists</h3></div>
-	 			<div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/download-line.svg"></button></div>
+	 			<div class="col"><h3 class="htxt_medium_24 dark_800">Tags</h3></div>
+	 			<div class="col text-right"><button class="circle-icon-32 shadow3"><img src="assets/images/add-fill-14-blue.svg"></button></div>
 	 		</div>
 	 	</div>
       
@@ -118,33 +110,42 @@
       <div class="p20 pt0 pb0 bkg_light_050">
         	<ul class="list_with_icons3">
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span>Facebook</span>
+        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span>customer</span>
         	<strong>1,492</strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_green_200"><img src="assets/images/folder_white_12.svg"></span>General Electric</span>
+        	<span><span class="circle_icon_24 bkg_green_200"><img src="assets/images/price-tag-12-white.svg"></span>ui</span>
         	<strong>854</strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_review_200"><img src="assets/images/folder_white_12.svg"></span>Louis Vuitton</span>
+        	<span><span class="circle_icon_24 bkg_review_200"><img src="assets/images/price-tag-12-white.svg"></span>review</span>
         	<strong>216</strong>
         	</li>
         	<li class="d-flex active">
-        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span>Apple</span>
+        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span>user</span>
         	<strong>108</strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_red_200"><img src="assets/images/folder_white_12.svg"></span>IBM</span>
+        	<span><span class="circle_icon_24 bkg_red_200"><img src="assets/images/price-tag-12-white.svg"></span>business</span>
         	<strong>63</strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/folder_white_12.svg"></span>General Electric</span>
+        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span>email</span>
         	<strong>492</strong>
         	</li>
         	<li class="d-flex">
-        	<span><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/folder_white_12.svg"></span>Louis Vuitton</span>
+        	<span><span class="circle_icon_24 bkg_yellow_200"><img src="assets/images/price-tag-12-white.svg"></span>campaign</span>
         	<strong>200</strong>
         	</li>
+        	<li class="d-flex">
+        	<span><span class="circle_icon_24 bkg_blue_200"><img src="assets/images/price-tag-12-white.svg"></span>ticket</span>
+        	<strong>1,492</strong>
+        	</li>
+        	<li class="d-flex">
+        	<span><span class="circle_icon_24 bkg_green_200"><img src="assets/images/price-tag-12-white.svg"></span>response</span>
+        	<strong>854</strong>
+        	</li>
+        	
         	
         	
         	
@@ -159,8 +160,9 @@
         </div>
        
         
+        
          <div class="clearfix"></div>   
-       </div>
+</div> 
 
     
     <div class="clearfix"></div>   
@@ -192,68 +194,7 @@
     	</div>
     </div>
     </div>
-    
-    
-    
-    <div class="card p20 datasearcharea_AF" style="display: block;">
-  <div class="row">
-    <div class="col-3">
-      <div class="form-group m-0 position-relative">
-        <select name="fieldSelected" class="match_segment_select form-control form-control-custom medium h48">
-          <option value="id">Subscriber Id</option>
-          <option value="firstname">First Name</option>
-          <option value="lastname">Last Name</option>
-          <option value="email">Email</option>
-          <option value="phone">Phone</option>
-          <option value="created">Subscribe Date</option>
-          <option value="country_code">Country</option>
-          <option value="stateName">State</option>
-          <option value="cityName">City</option>
-          <option value="zipCode">Zip</option>
-          <option value="zipCode">AreaCode</option>
-          <option value="tagID">Tag</option>
-          <option value="IPAddress">IP Address</option>
-          <option value="custom_field_1">Custom Field-1</option>
-          <option value="custom_field_2">Custom Field-2</option>
-          <option value="custom_field_3">Custom Field-3</option>
-          <option value="custom_field_4">Custom Field-4</option>
-          <option value="custom_field_5">Custom Field-5</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="form-group m-0 position-relative">
-        <select name="operator" class="match_segment_select form-control form-control-custom medium h48" >
-          <option value="equal">equal</option>
-          <option value="notequal">not equal</option>
-          <option value="greaterthan">greater than</option>
-          <option value="lessthan">less than</option>
-          <option value="contain">contain</option>
-          <option value="startwith">start with</option>
-          <option value="endwith">end with</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="form-group m-0 position-relative">
-        <input id="filterValue" type="text" class="h48 fsize14 dark_200 fw400 br5 form-control" style="height: 48px;">
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="form-group m-0 position-relative">
-        <button class="btn btn-md bkg_blue_200 light_000 save_filter mt-1">Apply Filter</button>
-      </div>
-    </div>
-  </div>
-  <a href="javascript:void(0);" class="search_tables_open_close_AF searchcloseicon"><img src="assets/images/close-icon-13.svg"></a> </div>
-
-                    
-                    
-                    
-                    
-    
-    
-     <div class="row d-none">
+     <div class="row">
     	<div class="col-md-12">
     		<div class="table-responsive">
     			<table class="table table-borderless mb-0">
@@ -534,8 +475,7 @@
  <!--******************
   Create Saved Reply Sliding Smart Popup
  **********************-->
- <?php include("saved_reply_create_smart_popup.php"); ?>
- 
+<?php include("people_contact_create_smart_popup.php"); ?> 
     
 
  
@@ -560,12 +500,19 @@
 	});
 
 </script>
-
-
-<div class="content_loader">
- <img src="assets/images/ShorttermUntidyHamadryas-small.gif"/>
- </div>
- 
- 
+<script>
+var color_picker = $('.colorpickerplus-dropdown .colorpickerplus-container');
+        color_picker.colorpickerembed();
+        color_picker.on('changeColor', function(e,color){
+			var el = $('.color-fill-icon', $('#color_picker'));
+			if(color==null) {
+			  //when select transparent color
+			  el.addClass('colorpicker-color');
+			} else {
+			  el.removeClass('colorpicker-color');
+        	  el.css('background-color', color);
+			}
+        });
+</script>
 </body>
 </html>
