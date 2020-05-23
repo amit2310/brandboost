@@ -838,5 +838,164 @@ class BrandboostModel extends Model {
                 ->exists();
         return $oData;
     }
+    //****************************Smart Workflow Queires**************************
+
+    /**
+     * Used to update subscriber fields
+     * @param $id
+     * @param $aData
+     * @return bool
+     */
+    public function updateField($id, $aData){
+        if(empty($id) || $id<0){
+            return false;
+        }
+        $oData = DB::table('tbl_subscribers')->where('id', $id)->update($aData);
+        if ($oData > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Used to log workflow activity
+     * @param $aData
+     * @return mixed
+     */
+    public function saveLog($aData) {
+        /* All module activity tables
+        -tbl_brandboost_log
+        -tbl_automation_log
+        -tbl_referral_log
+        -tbl_nps_log
+
+        -tbl_brandboost_decision_log
+        -tbl_automation_decision_log
+        -tbl_referral_decision_log
+        -tbl_nps_decision_log*/
+
+        $insertID = DB::table('tbl_brandboost_log')->insertGetId($aData);
+        return $insertID;
+    }
+
+    /**
+     * Used to apply tag
+     * @param $id
+     * @param $aTagIds
+     * @return bool
+     */
+    public function applyTag($id, $aTagIds){
+        if(empty($aTagIds)){
+            return false;
+        }
+        $timeNow = date("Y-m-d H:i:s");
+        foreach($aTagIds as $tagId){
+            $sql = "INSERT IGNORE INTO tbl_subscriber_tags SET `tag_id`='{$tagId}', `subscriber_id`='{$id}', `applied_tag_created`='{$timeNow}'";
+            DB::raw($sql);
+        }
+        return true;
+    }
+
+    /**
+     * Used to add subscriber into lists
+     * @param $id
+     * @param $aListIds
+     * @return bool
+     */
+    public function addToList($id, $aListIds){
+        if(empty($aListIds)){
+            return false;
+        }
+        $timeNow = date("Y-m-d H:i:s");
+        $aLists = $this->getSubscriberLists($id);
+        foreach($aListIds as $listId){
+            if(!in_array($listId, $aLists)){
+                $sql = "INSERT INTO tbl_automation_users SET `list_id`='{$listId}', `subscriber_id`='{$id}', `created`='{$timeNow}'";
+                DB::raw($sql);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Used to add subscriber into segments
+     * @param $id
+     * @param $aSegmentIds
+     * @return bool
+     */
+    public function addToSegment($id, $aSegmentIds){
+        if(empty($aSegmentIds)){
+            return false;
+        }
+        $timeNow = date("Y-m-d H:i:s");
+        $aSegments = $this->getSubscriberSegments($id);
+        foreach($aSegments as $segmentId){
+            if(!in_array($segmentId, $aSegments)){
+                $sql = "INSERT INTO tbl_segments_users SET `segment_id`='{$segmentId}', `subscriber_id`='{$id}', `created`='{$timeNow}'";
+                DB::raw($sql);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Used to get all lists to which a subscriber added
+     * @param $subscriberId
+     * @return array
+     */
+    public function getSubscriberLists($subscriberId){
+        $oData = DB::table('tbl_automation_users')
+            ->select('list_id')
+            ->where('subscriber_id', $subscriberId)
+            ->groupBy('list_id')
+            ->get();
+        $aListId = [];
+        if(!empty($oData)){
+            foreach($oData as $listId){
+                $aListId[] = $listId;
+            }
+        }
+        return $aListId;
+    }
+
+    /**
+     * Used to get all segments assoicated with a subscriber
+     * @param $subscriberId
+     * @return array
+     */
+    public function getSubscriberSegments($subscriberId){
+        $oData = DB::table('tbl_segments_users')
+            ->select('segment_id')
+            ->where('subscriber_id', $subscriberId)
+            ->groupBy('segment_id')
+            ->get();
+        $aSegmentId = [];
+        if(!empty($oData)){
+            foreach($oData as $segmentId){
+                $aSegmentId[] = $segmentId;
+            }
+        }
+        return $aSegmentId;
+    }
+
+    /**
+     * Used to update subscriber status
+     * @param $id
+     * @param $aData
+     * @return bool
+     */
+    public function updateStatus($id, $aData){
+        if(empty($id) || $id<0){
+            return false;
+        }
+        $oData = DB::table('tbl_subscribers')->where('id', $id)->update($aData);
+        if ($oData > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }

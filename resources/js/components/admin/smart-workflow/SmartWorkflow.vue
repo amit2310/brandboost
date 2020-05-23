@@ -780,9 +780,12 @@
                                     </div>
 
                                         <div class="form-group" v-if="editActionItem =='field'">
-                                            <label for="fieldControl" class="fsize11 fw500 dark_600 ls4">SELECT FIELD &nbsp;<a href="javascript:void(0);" class=" fsize12 slideEditActionItembox slideEditAliasbox"><i>(Rename Fields)</i></a> </label>
+                                            <label for="fieldControl" class="fsize11 fw500 dark_600 ls4">SELECT FIELD &nbsp;<a href="javascript:void(0);" class=" fsize12 slideEditActionItembox slideEditAliasbox"><i>(Rename Custom Fields)</i></a> </label>
                                             <select class="form-control h50 form-control-custom dark_800" id="fieldControl" v-model="selected_action_field_name">
                                                 <option value="">Choose a field...</option>
+                                                <option v-for="fieldId in ['firstname', 'lastname', 'email', 'ip_address', 'country', 'state', 'city', 'zip', 'area_code']" :value="fieldId">
+                                                    {{capitalizeFirstLetter(fieldId.replace('_', ' '))}}
+                                                </option>
                                                 <option v-for="fieldId in [1,2,3,4,5]" :value="fieldId">
                                                     {{fieldAlias['custom_field_'+fieldId] ? capitalizeFirstLetter(fieldAlias['custom_field_'+fieldId]) : 'Custom Field '+fieldId}}
                                                 </option>

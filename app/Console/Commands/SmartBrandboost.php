@@ -212,28 +212,253 @@ class SmartBrandboost extends Command {
 
     }
 
+    /**
+     * Used to execute field action
+     * @param $aData
+     * @return bool
+     */
     public function setField($aData){
+        $mInviter = new BrandboostModel();
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $oFieldParams = $oParams->field_properties;
+        if(!empty($oFieldParams)){
+            $field = $oFieldParams->field_name;
+            $value = $oFieldParams->field_value;
+            //Check for security breach
+            if(in_array($field, ['password','owner_id'])){
+                return false;
+            }
+
+            $aUpdateData = [
+                $field => db_in($value)
+            ];
+            //Update contacts
+            if(!empty($aSubscribers)){
+                foreach ($aSubscribers as $subscriber){
+                    $subscriberId = $subscriber->id;
+                    //Update Field
+                    $bUpdated = $mInviter->updateField($subscriberId, $aUpdateData);
+                    if($bUpdated){
+                        //Log Tracking
+                        $logData = [
+                            'inviter_id' => $oEvent->id,
+                            'subscriber_id' => $subscriberId,
+                            'preceded_by' => $oEvent->previous_event_id,
+                            'event_id' => $oEvent->id,
+                            'unit_id' => $oEvent->brandboost_id,
+                            'node_type' => 'action',
+                            'node_name' => 'field',
+                            'data' => $oEvent->data,
+                            'status' => 'success'
+                        ];
+                        $this->saveWorkflowLog($logData);
+                    }
+                }
+            }
+        }
+
 
     }
 
+    /**
+     * Used to apply tag to the contacts
+     * @param $aData
+     */
     public function applyTag($aData){
+        $mInviter = new BrandboostModel();
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $oTagParams = $oParams->tag_properties;
+        if(!empty($oTagParams)){
+            $tagIds = $oTagParams->tag_ids;
+            //Apply tags
+            if(!empty($aSubscribers) && !empty($tagIds)){
+                foreach ($aSubscribers as $subscriber){
+                    $subscriberId = $subscriber->id;
+                    $bUpdated = $mInviter->applyTag($subscriberId, $tagIds);
+                    if($bUpdated){
+                        //Log Tracking
+                        $logData = [
+                            'inviter_id' => $oEvent->id,
+                            'subscriber_id' => $subscriberId,
+                            'preceded_by' => $oEvent->previous_event_id,
+                            'event_id' => $oEvent->id,
+                            'unit_id' => $oEvent->brandboost_id,
+                            'node_type' => 'action',
+                            'node_name' => 'tag',
+                            'data' => $oEvent->data,
+                            'status' => 'success'
+                        ];
+                        $this->saveWorkflowLog($logData);
+                    }
+                }
+            }
+        }
 
     }
 
+    /**
+     * Used to add subscriber into lists
+     * @param $aData
+     */
     public function addToList($aData){
-
+        $mInviter = new BrandboostModel();
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $oListParams = $oParams->list_properties;
+        if(!empty($oListParams)){
+            $listIds = $oListParams->list_ids;
+            //Apply tags
+            if(!empty($aSubscribers) && !empty($listIds)){
+                foreach ($aSubscribers as $subscriber){
+                    $subscriberId = $subscriber->id;
+                    $bUpdated = $mInviter->addToList($subscriberId, $listIds);
+                    if($bUpdated){
+                        //Log Tracking
+                        $logData = [
+                            'inviter_id' => $oEvent->id,
+                            'subscriber_id' => $subscriberId,
+                            'preceded_by' => $oEvent->previous_event_id,
+                            'event_id' => $oEvent->id,
+                            'unit_id' => $oEvent->brandboost_id,
+                            'node_type' => 'action',
+                            'node_name' => 'list',
+                            'data' => $oEvent->data,
+                            'status' => 'success'
+                        ];
+                        $this->saveWorkflowLog($logData);
+                    }
+                }
+            }
+        }
     }
 
+    /**
+     * Used to add subscriber into segments
+     * @param $aData
+     */
     public function addToSegment($aData){
-
+        $mInviter = new BrandboostModel();
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $oSegmentParams = $oParams->segment_properties;
+        if(!empty($oSegmentParams)){
+            $segmentIds = $oSegmentParams->segment_ids;
+            //Apply tags
+            if(!empty($aSubscribers) && !empty($segmentIds)){
+                foreach ($aSubscribers as $subscriber){
+                    $subscriberId = $subscriber->id;
+                    $bUpdated = $mInviter->addToSegment($subscriberId, $segmentIds);
+                    if($bUpdated){
+                        //Log Tracking
+                        $logData = [
+                            'inviter_id' => $oEvent->id,
+                            'subscriber_id' => $subscriberId,
+                            'preceded_by' => $oEvent->previous_event_id,
+                            'event_id' => $oEvent->id,
+                            'unit_id' => $oEvent->brandboost_id,
+                            'node_type' => 'action',
+                            'node_name' => 'segment',
+                            'data' => $oEvent->data,
+                            'status' => 'success'
+                        ];
+                        $this->saveWorkflowLog($logData);
+                    }
+                }
+            }
+        }
     }
 
+    /**
+     * Used to update subscriber status
+     * @param $aData
+     */
     public function setStatus($aData){
-
+        $mInviter = new BrandboostModel();
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $oStatusParams = $oParams->status_properties;
+        $finalVal = '';
+        if(!empty($oStatusParams)){
+            $value = $oStatusParams->status;
+            if($value == 'active'){
+                $finalVal = 1;
+            }else if($value == 'inactive' || $value == 'draft'){
+                $finalVal = 0;
+            }else if($value == 'archive'){
+                $finalVal = 2;
+            }else{
+                $finalVal = '';
+            }
+            $aUpdateData = [
+                'status' => $finalVal
+            ];
+            //Update contacts
+            if(!empty($aSubscribers)){
+                foreach ($aSubscribers as $subscriber){
+                    $subscriberId = $subscriber->id;
+                    //Update Field
+                    $bUpdated = $mInviter->updateStatus($subscriberId, $aUpdateData);
+                    if($bUpdated){
+                        //Log Tracking
+                        $logData = [
+                            'inviter_id' => $oEvent->id,
+                            'subscriber_id' => $subscriberId,
+                            'preceded_by' => $oEvent->previous_event_id,
+                            'event_id' => $oEvent->id,
+                            'unit_id' => $oEvent->brandboost_id,
+                            'node_type' => 'action',
+                            'node_name' => 'status',
+                            'data' => $oEvent->data,
+                            'status' => 'success'
+                        ];
+                        $this->saveWorkflowLog($logData);
+                    }
+                }
+            }
+        }
     }
 
+    /**
+     * Used to send webhook data
+     * @param $aData
+     */
     public function executeWebhook($aData){
-
+        $mInviter = new BrandboostModel();
+        $oEvent = $aData['inviter_data'];
+        $aSubscribers = $aData['subscribers'];
+        $oParams = json_decode($oEvent->data);
+        $oWebhookParams = $oParams->webhook_properties;
+        if(!empty($oWebhookParams)){
+            //Update contacts
+            if(!empty($aSubscribers)){
+                foreach ($aSubscribers as $subscriber){
+                    $subscriberId = $subscriber->id;
+                    $bExecuted = $this->runWebhook($oWebhookParams, $subscriber);
+                    if($bExecuted){
+                        //Log Tracking
+                        $logData = [
+                            'inviter_id' => $oEvent->id,
+                            'subscriber_id' => $subscriberId,
+                            'preceded_by' => $oEvent->previous_event_id,
+                            'event_id' => $oEvent->id,
+                            'unit_id' => $oEvent->brandboost_id,
+                            'node_type' => 'action',
+                            'node_name' => 'webhook',
+                            'data' => $oEvent->data,
+                            'status' => 'success'
+                        ];
+                        $this->saveWorkflowLog($logData);
+                    }
+                }
+            }
+        }
     }
 
     public function sendEmailCampaign($aData){
@@ -262,6 +487,128 @@ class SmartBrandboost extends Command {
 
     public function processExit($aData){
 
+    }
+
+    /**
+     * Used to run webhook command
+     * @param $oParams
+     * @param $subscriber
+     * @return bool
+     */
+    public function runWebhook($oParams, $subscriber){
+        $url = $oParams->url;
+        $method = $oParams->method;
+        $webhookData = $oParams->webhook_data;
+        if(!empty($webhookData)){
+            //Parse values
+            foreach($webhookData as $key => $value){
+                if($value == '{subscriber_id}'){
+                    $webhookData[$key] = $subscriber.id;
+                }else if($value == '{firstname}'){
+                    $webhookData[$key] = $subscriber.firstname;
+                }else if($value == '{lastname}'){
+                    $webhookData[$key] = $subscriber.lastname;
+                }else if($value == '{email}'){
+                    $webhookData[$key] = $subscriber.email;
+                }else if($value == '{phone}'){
+                    $webhookData[$key] = $subscriber.phone;
+                }else if($value == '{note}'){
+                    $webhookData[$key] = $subscriber.subscriber_desc;
+                }else if($value == '{ip_address}'){
+                    $webhookData[$key] = $subscriber.ip_address;
+                }else if($value == '{country}'){
+                    $webhookData[$key] = $subscriber.country;
+                }else if($value == '{state}'){
+                    $webhookData[$key] = $subscriber.state;
+                }else if($value == '{city}'){
+                    $webhookData[$key] = $subscriber.city;
+                }else if($value == '{zip}'){
+                    $webhookData[$key] = $subscriber.zip;
+                }else if($value == '{area_code}'){
+                    $webhookData[$key] = $subscriber.area_code;
+                }else if($value == '{custom_field_1}'){
+                    $webhookData[$key] = $subscriber.custom_field_1;
+                }else if($value == '{custom_field_2}'){
+                    $webhookData[$key] = $subscriber.custom_field_2;
+                }else if($value == '{custom_field_3}'){
+                    $webhookData[$key] = $subscriber.custom_field_3;
+                }else if($value == '{custom_field_4}'){
+                    $webhookData[$key] = $subscriber.custom_field_4;
+                }else if($value == '{custom_field_5}'){
+                    $webhookData[$key] = $subscriber.custom_field_5;
+                }else if($value == '{custom_field_6}'){
+                    $webhookData[$key] = $subscriber.custom_field_6;
+                }else if($value == '{custom_field_7}'){
+                    $webhookData[$key] = $subscriber.custom_field_7;
+                }else if($value == '{custom_field_8}'){
+                    $webhookData[$key] = $subscriber.custom_field_8;
+                }else if($value == '{custom_field_9}'){
+                    $webhookData[$key] = $subscriber.custom_field_9;
+                }else if($value == '{custom_field_10}'){
+                    $webhookData[$key] = $subscriber.custom_field_10;
+                }
+            }
+        }
+
+        if($method == 'get'){
+            $url = $url.'?';
+            foreach($webhookData as $key=>$value){
+                $url = $url. "&{$key}={$value}";
+            }
+        }else if($method == 'post'){
+            $params = [];
+            foreach($webhookData as $key=>$value){
+                $params[$key] = $value;
+            }
+        }
+
+        if(!empty($url)){
+            $session = curl_init($url);
+            if($method == 'post'){
+                curl_setopt($session, CURLOPT_POST, true);
+                curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+            }
+            curl_setopt($session, CURLOPT_HEADER, false);
+            curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+            curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($session);
+            curl_close($session);
+        }
+        return true;
+    }
+
+    /**
+     * Used to log workflow activity
+     * @param $aData
+     */
+    public function saveWorkflowLog($aData) {
+        //Instantiate Email Model to access its properties and methods
+        $mInviter = new BrandboostModel();
+        $timeNow = date("Y-m-d H:i:s");
+        $insertID = 0;
+        if (!empty($aData)) {
+            $aTriggerData = array(
+                'inviter_id' => $aData['inviter_id'],
+                'subscriber_id' => $aData['subscriber_id'],
+                'preceded_by' => $aData['preceded_by'],
+                'start_at' => $timeNow,
+                'created_at' => $timeNow
+            );
+            $insertID = $mInviter->saveTriggerData($aTriggerData);
+        }
+        //Track Log
+        $aTrackData = array(
+            'subscriber_id' => $aData['subscriber_id'],
+            'trigger_id' => $insertID,
+            'event_id' => $aData['event_id'],
+            'unit_id' => $aData['unit_id'],
+            'node_type' => $aData['node_type'],
+            'node_name' => $aData['node_name'],
+            'data' => $aData['data'],
+            'status' => $aData['status'],
+            'created' => date("Y-m-d H:i:s"),
+        );
+        $mInviter->saveLog($aTrackData);
     }
 
     /**
