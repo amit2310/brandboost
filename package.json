@@ -25,7 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "apexcharts": "^3.15.5",
+        "apexcharts": "^3.24.0",
         "javascript-time-ago": "^2.0.2",
         "luxon": "^1.21.3",
         "papaparse": "^5.1.0",
