@@ -35,6 +35,6 @@
         "vue-socket.io": "^3.0.7",
         "vue-upload-component": "^2.8.20",
         "weekstart": "^1.0.1",
-        "xlsx": "^0.15.1"
+        "xlsx": "^0.17.0"
     }
 }
