@@ -27,7 +27,7 @@
     "dependencies": {
         "apexcharts": "^3.15.5",
         "javascript-time-ago": "^2.0.2",
-        "luxon": "^1.21.3",
+        "luxon": "^2.5.2",
         "papaparse": "^5.1.0",
         "sweetalert": "^2.1.2",
         "vue-apexcharts": "^1.5.2",
